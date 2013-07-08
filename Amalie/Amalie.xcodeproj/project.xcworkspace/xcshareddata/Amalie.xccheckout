@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EBD35288-070F-4227-8442-9017099B29E6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Amalie</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>20280B26-D208-45B1-9C2F-82A7BFB05A7E</key>
+		<string>https://github.com/keith27staines/Amalie.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Amalie/Amalie.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>20280B26-D208-45B1-9C2F-82A7BFB05A7E</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/keith27staines/Amalie.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>20280B26-D208-45B1-9C2F-82A7BFB05A7E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>20280B26-D208-45B1-9C2F-82A7BFB05A7E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Amalie</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="untitled.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3381.3" systemVersion="13A497d" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ExpressionsEntity" syncable="YES">
+        <attribute name="originalString" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="symbol" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="VariablesEntity" syncable="YES">
+        <attribute name="number" optional="YES" attributeType="Double" minValueString="2" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="symbol" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ExpressionsEntity" positionX="-2034" positionY="-3087" width="171" height="73"/>
+        <element name="VariablesEntity" positionX="-2322" positionY="-3087" width="180" height="73"/>
+    </elements>
 </model>

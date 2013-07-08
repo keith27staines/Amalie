@@ -7,12 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EF91789CC11002BE03A /* AMAppController.m */; };
+		784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */; };
+		784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */; };
+		785247C317848A4A00F6A7AD /* AMToolboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C217848A4A00F6A7AD /* AMToolboxViewController.m */; };
+		785247C617848D7D00F6A7AD /* AMInsertableDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C517848D7D00F6A7AD /* AMInsertableDefinition.m */; };
+		785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C8178552A700F6A7AD /* AMWorksheetView.m */; };
+		785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CB1785532F00F6A7AD /* AMToolboxView.m */; };
+		785247CF1785722700F6A7AD /* AMInsertableObjectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CE1785722700F6A7AD /* AMInsertableObjectView.m */; };
+		785247D21786AC9300F6A7AD /* AMExpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247D11786AC9300F6A7AD /* AMExpressionView.m */; };
 		787B3043178361BC001851C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3042178361BC001851C0 /* Cocoa.framework */; };
 		787B304D178361BC001851C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 787B304B178361BC001851C0 /* InfoPlist.strings */; };
 		787B304F178361BC001851C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B304E178361BC001851C0 /* main.m */; };
 		787B3053178361BC001851C0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 787B3051178361BC001851C0 /* Credits.rtf */; };
-		787B3056178361BC001851C0 /* AMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3055178361BC001851C0 /* AMDocument.m */; };
-		787B3059178361BC001851C0 /* AMDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMDocument.xib */; };
+		787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3055178361BC001851C0 /* AMWorksheetController.m */; };
+		787B3059178361BC001851C0 /* AMWorksheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMWorksheetController.xib */; };
 		787B305C178361BC001851C0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B305A178361BC001851C0 /* MainMenu.xib */; };
 		787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */; };
 		787B3061178361BC001851C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787B3060178361BC001851C0 /* Images.xcassets */; };
@@ -20,6 +29,27 @@
 		787B3069178361BC001851C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3042178361BC001851C0 /* Cocoa.framework */; };
 		787B3071178361BC001851C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 787B306F178361BC001851C0 /* InfoPlist.strings */; };
 		787B3073178361BC001851C0 /* AmalieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3072178361BC001851C0 /* AmalieTests.m */; };
+		787B308617836485001851C0 /* KSMPrimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B307F17836485001851C0 /* KSMPrimeTests.m */; };
+		787B308717836485001851C0 /* KSMPrimeDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308017836485001851C0 /* KSMPrimeDecompositionTests.m */; };
+		787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308117836485001851C0 /* NSString_KSMathTests.m */; };
+		787B308917836485001851C0 /* KSMExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308217836485001851C0 /* KSMExpressionTests.m */; };
+		787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308317836485001851C0 /* KSMWorksheetsTests.m */; };
+		787B308B17836485001851C0 /* KSMExpressionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308417836485001851C0 /* KSMExpressionBuilderTests.m */; };
+		787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */; };
+		787B3097178364B8001851C0 /* KSMExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308E178364B8001851C0 /* KSMExpression.m */; };
+		787B3098178364B8001851C0 /* KSMExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308E178364B8001851C0 /* KSMExpression.m */; };
+		787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3090178364B8001851C0 /* NSString+KSMMath.m */; };
+		787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3090178364B8001851C0 /* NSString+KSMMath.m */; };
+		787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3092178364B8001851C0 /* KSMExpressionBuilder.m */; };
+		787B309C178364B8001851C0 /* KSMExpressionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3092178364B8001851C0 /* KSMExpressionBuilder.m */; };
+		787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
+		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
+		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
+		787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
+		78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
+		78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
+		78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */; };
+		78DE824C1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +63,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		784D6EF81789CC11002BE03A /* AMAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMAppController.h; sourceTree = "<group>"; };
+		784D6EF91789CC11002BE03A /* AMAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMAppController.m; sourceTree = "<group>"; };
+		784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesWindowController.h; sourceTree = "<group>"; };
+		784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesWindowController.m; sourceTree = "<group>"; };
+		784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMPreferencesWindow.xib; sourceTree = "<group>"; };
+		785247C117848A4A00F6A7AD /* AMToolboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMToolboxViewController.h; sourceTree = "<group>"; };
+		785247C217848A4A00F6A7AD /* AMToolboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMToolboxViewController.m; sourceTree = "<group>"; };
+		785247C417848D7D00F6A7AD /* AMInsertableDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableDefinition.h; sourceTree = "<group>"; };
+		785247C517848D7D00F6A7AD /* AMInsertableDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableDefinition.m; sourceTree = "<group>"; };
+		785247C7178552A700F6A7AD /* AMWorksheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetView.h; sourceTree = "<group>"; };
+		785247C8178552A700F6A7AD /* AMWorksheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetView.m; sourceTree = "<group>"; };
+		785247CA1785532F00F6A7AD /* AMToolboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMToolboxView.h; sourceTree = "<group>"; };
+		785247CB1785532F00F6A7AD /* AMToolboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMToolboxView.m; sourceTree = "<group>"; };
+		785247CD1785722700F6A7AD /* AMInsertableObjectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableObjectView.h; sourceTree = "<group>"; };
+		785247CE1785722700F6A7AD /* AMInsertableObjectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableObjectView.m; sourceTree = "<group>"; };
+		785247D01786AC9300F6A7AD /* AMExpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionView.h; sourceTree = "<group>"; };
+		785247D11786AC9300F6A7AD /* AMExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionView.m; sourceTree = "<group>"; };
 		787B303F178361BC001851C0 /* Amalie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3042178361BC001851C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		787B3045178361BC001851C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -43,9 +90,9 @@
 		787B304E178361BC001851C0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		787B3050178361BC001851C0 /* Amalie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Amalie-Prefix.pch"; sourceTree = "<group>"; };
 		787B3052178361BC001851C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		787B3054178361BC001851C0 /* AMDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMDocument.h; sourceTree = "<group>"; };
-		787B3055178361BC001851C0 /* AMDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMDocument.m; sourceTree = "<group>"; };
-		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMDocument.xib; sourceTree = "<group>"; };
+		787B3054178361BC001851C0 /* AMWorksheetController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMWorksheetController.h; sourceTree = "<group>"; };
+		787B3055178361BC001851C0 /* AMWorksheetController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetController.m; sourceTree = "<group>"; };
+		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMWorksheetController.xib; sourceTree = "<group>"; };
 		787B305B178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		787B305E178361BC001851C0 /* AMDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDocument.xcdatamodel; sourceTree = "<group>"; };
 		787B3060178361BC001851C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -54,6 +101,29 @@
 		787B306E178361BC001851C0 /* AmalieTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AmalieTests-Info.plist"; sourceTree = "<group>"; };
 		787B3070178361BC001851C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		787B3072178361BC001851C0 /* AmalieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmalieTests.m; sourceTree = "<group>"; };
+		787B307C178362FA001851C0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = AmalieTests/README.md; sourceTree = SOURCE_ROOT; };
+		787B307E17836485001851C0 /* KSMPrimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimeTests.h; sourceTree = "<group>"; };
+		787B307F17836485001851C0 /* KSMPrimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimeTests.m; sourceTree = "<group>"; };
+		787B308017836485001851C0 /* KSMPrimeDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimeDecompositionTests.m; sourceTree = "<group>"; };
+		787B308117836485001851C0 /* NSString_KSMathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_KSMathTests.m; sourceTree = "<group>"; };
+		787B308217836485001851C0 /* KSMExpressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionTests.m; sourceTree = "<group>"; };
+		787B308317836485001851C0 /* KSMWorksheetsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheetsTests.m; sourceTree = "<group>"; };
+		787B308417836485001851C0 /* KSMExpressionBuilderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionBuilderTests.m; sourceTree = "<group>"; };
+		787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluatorTests.m; sourceTree = "<group>"; };
+		787B308D178364B8001851C0 /* KSMExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpression.h; sourceTree = "<group>"; };
+		787B308E178364B8001851C0 /* KSMExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpression.m; sourceTree = "<group>"; };
+		787B308F178364B8001851C0 /* NSString+KSMMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KSMMath.h"; sourceTree = "<group>"; };
+		787B3090178364B8001851C0 /* NSString+KSMMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KSMMath.m"; sourceTree = "<group>"; };
+		787B3091178364B8001851C0 /* KSMExpressionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpressionBuilder.h; sourceTree = "<group>"; };
+		787B3092178364B8001851C0 /* KSMExpressionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionBuilder.m; sourceTree = "<group>"; };
+		787B3093178364B8001851C0 /* KSMExpressionEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpressionEvaluator.h; sourceTree = "<group>"; };
+		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
+		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
+		787B3096178364B8001851C0 /* KSMWorksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheet.m; sourceTree = "<group>"; };
+		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
+		78DE823E1783664400C7EE10 /* KSMPrimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimes.m; sourceTree = "<group>"; };
+		78DE82431783664400C7EE10 /* KSMPrimeDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimeDecomposition.h; sourceTree = "<group>"; };
+		78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimeDecomposition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +147,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		785247BD1784067900F6A7AD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */,
+				78DE823C178365DC00C7EE10 /* KSMPrime */,
+				787B307D1783638D001851C0 /* KSMMath */,
+				785247C417848D7D00F6A7AD /* AMInsertableDefinition.h */,
+				785247C517848D7D00F6A7AD /* AMInsertableDefinition.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		785247BE178406A600F6A7AD /* Views and NIBs */ = {
+			isa = PBXGroup;
+			children = (
+				785247C0178406D200F6A7AD /* Nibs */,
+				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
+				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
+				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
+				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
+				785247CD1785722700F6A7AD /* AMInsertableObjectView.h */,
+				785247CE1785722700F6A7AD /* AMInsertableObjectView.m */,
+				785247D01786AC9300F6A7AD /* AMExpressionView.h */,
+				785247D11786AC9300F6A7AD /* AMExpressionView.m */,
+			);
+			name = "Views and NIBs";
+			sourceTree = "<group>";
+		};
+		785247BF178406B000F6A7AD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				787B3054178361BC001851C0 /* AMWorksheetController.h */,
+				787B3055178361BC001851C0 /* AMWorksheetController.m */,
+				785247C117848A4A00F6A7AD /* AMToolboxViewController.h */,
+				785247C217848A4A00F6A7AD /* AMToolboxViewController.m */,
+				784D6EF81789CC11002BE03A /* AMAppController.h */,
+				784D6EF91789CC11002BE03A /* AMAppController.m */,
+				784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */,
+				784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		785247C0178406D200F6A7AD /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				787B3057178361BC001851C0 /* AMWorksheetController.xib */,
+				787B305A178361BC001851C0 /* MainMenu.xib */,
+				784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */,
+			);
+			name = Nibs;
+			sourceTree = "<group>";
+		};
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
@@ -119,12 +242,10 @@
 		787B3048178361BC001851C0 /* Amalie */ = {
 			isa = PBXGroup;
 			children = (
-				787B3054178361BC001851C0 /* AMDocument.h */,
-				787B3055178361BC001851C0 /* AMDocument.m */,
-				787B3057178361BC001851C0 /* AMDocument.xib */,
-				787B305A178361BC001851C0 /* MainMenu.xib */,
+				785247BF178406B000F6A7AD /* Controllers */,
+				785247BE178406A600F6A7AD /* Views and NIBs */,
+				785247BD1784067900F6A7AD /* Models */,
 				787B3060178361BC001851C0 /* Images.xcassets */,
-				787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */,
 				787B3049178361BC001851C0 /* Supporting Files */,
 			);
 			path = Amalie;
@@ -133,6 +254,7 @@
 		787B3049178361BC001851C0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				787B307C178362FA001851C0 /* README.md */,
 				787B304A178361BC001851C0 /* Amalie-Info.plist */,
 				787B304B178361BC001851C0 /* InfoPlist.strings */,
 				787B304E178361BC001851C0 /* main.m */,
@@ -145,6 +267,14 @@
 		787B306C178361BC001851C0 /* AmalieTests */ = {
 			isa = PBXGroup;
 			children = (
+				787B307E17836485001851C0 /* KSMPrimeTests.h */,
+				787B307F17836485001851C0 /* KSMPrimeTests.m */,
+				787B308017836485001851C0 /* KSMPrimeDecompositionTests.m */,
+				787B308117836485001851C0 /* NSString_KSMathTests.m */,
+				787B308217836485001851C0 /* KSMExpressionTests.m */,
+				787B308317836485001851C0 /* KSMWorksheetsTests.m */,
+				787B308417836485001851C0 /* KSMExpressionBuilderTests.m */,
+				787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */,
 				787B3072178361BC001851C0 /* AmalieTests.m */,
 				787B306D178361BC001851C0 /* Supporting Files */,
 			);
@@ -158,6 +288,34 @@
 				787B306F178361BC001851C0 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		787B307D1783638D001851C0 /* KSMMath */ = {
+			isa = PBXGroup;
+			children = (
+				787B308D178364B8001851C0 /* KSMExpression.h */,
+				787B308E178364B8001851C0 /* KSMExpression.m */,
+				787B308F178364B8001851C0 /* NSString+KSMMath.h */,
+				787B3090178364B8001851C0 /* NSString+KSMMath.m */,
+				787B3091178364B8001851C0 /* KSMExpressionBuilder.h */,
+				787B3092178364B8001851C0 /* KSMExpressionBuilder.m */,
+				787B3093178364B8001851C0 /* KSMExpressionEvaluator.h */,
+				787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */,
+				787B3095178364B8001851C0 /* KSMWorksheet.h */,
+				787B3096178364B8001851C0 /* KSMWorksheet.m */,
+			);
+			name = KSMMath;
+			sourceTree = "<group>";
+		};
+		78DE823C178365DC00C7EE10 /* KSMPrime */ = {
+			isa = PBXGroup;
+			children = (
+				78DE823D1783664400C7EE10 /* KSMPrimes.h */,
+				78DE823E1783664400C7EE10 /* KSMPrimes.m */,
+				78DE82431783664400C7EE10 /* KSMPrimeDecomposition.h */,
+				78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */,
+			);
+			name = KSMPrime;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,10 +395,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				787B3059178361BC001851C0 /* AMDocument.xib in Resources */,
+				787B3059178361BC001851C0 /* AMWorksheetController.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
 				787B304D178361BC001851C0 /* InfoPlist.strings in Resources */,
 				787B3053178361BC001851C0 /* Credits.rtf in Resources */,
+				784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */,
 				787B305C178361BC001851C0 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,9 +419,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				787B3056178361BC001851C0 /* AMDocument.m in Sources */,
+				785247C617848D7D00F6A7AD /* AMInsertableDefinition.m in Sources */,
+				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
+				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
+				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
+				785247CF1785722700F6A7AD /* AMInsertableObjectView.m in Sources */,
+				787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
+				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
+				785247D21786AC9300F6A7AD /* AMExpressionView.m in Sources */,
+				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
+				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
+				78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
+				787B3097178364B8001851C0 /* KSMExpression.m in Sources */,
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,
+				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
+				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
+				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,
+				785247C317848A4A00F6A7AD /* AMToolboxViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +445,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				787B3073178361BC001851C0 /* AmalieTests.m in Sources */,
+				787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
+				787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */,
+				787B309C178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
+				78DE824C1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
+				787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */,
+				787B308717836485001851C0 /* KSMPrimeDecompositionTests.m in Sources */,
+				787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */,
+				787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */,
+				787B308617836485001851C0 /* KSMPrimeTests.m in Sources */,
+				787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */,
+				787B308917836485001851C0 /* KSMExpressionTests.m in Sources */,
+				78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */,
+				787B3098178364B8001851C0 /* KSMExpression.m in Sources */,
+				787B308B17836485001851C0 /* KSMExpressionBuilderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,12 +489,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		787B3057178361BC001851C0 /* AMDocument.xib */ = {
+		787B3057178361BC001851C0 /* AMWorksheetController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				787B3058178361BC001851C0 /* Base */,
 			);
-			name = AMDocument.xib;
+			name = AMWorksheetController.xib;
 			sourceTree = "<group>";
 		};
 		787B305A178361BC001851C0 /* MainMenu.xib */ = {
@@ -360,7 +548,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -393,7 +581,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -402,7 +590,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Amalie/Amalie-Prefix.pch";
@@ -417,7 +605,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Amalie/Amalie-Prefix.pch";
@@ -487,6 +675,7 @@
 				787B3078178361BC001851C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		787B3079178361BC001851C0 /* Build configuration list for PBXNativeTarget "AmalieTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +684,7 @@
 				787B307B178361BC001851C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
