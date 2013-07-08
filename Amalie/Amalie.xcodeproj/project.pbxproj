@@ -46,6 +46,8 @@
 		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
 		787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
+		789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
+		789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */; };
@@ -120,6 +122,8 @@
 		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
 		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
 		787B3096178364B8001851C0 /* KSMWorksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheet.m; sourceTree = "<group>"; };
+		789CB121178B0BCB00B5AF58 /* AMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstants.h; sourceTree = "<group>"; };
+		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
 		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
 		78DE823E1783664400C7EE10 /* KSMPrimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimes.m; sourceTree = "<group>"; };
 		78DE82431783664400C7EE10 /* KSMPrimeDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimeDecomposition.h; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
+				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
+				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
 				787B3048178361BC001851C0 /* Amalie */,
 				787B306C178361BC001851C0 /* AmalieTests */,
 				787B3041178361BC001851C0 /* Frameworks */,
@@ -422,6 +428,7 @@
 				785247C617848D7D00F6A7AD /* AMInsertableDefinition.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
+				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableObjectView.m in Sources */,
 				787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
@@ -455,6 +462,7 @@
 				787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				787B308617836485001851C0 /* KSMPrimeTests.m in Sources */,
 				787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */,
+				789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */,
 				787B308917836485001851C0 /* KSMExpressionTests.m in Sources */,
 				78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */,
 				787B3098178364B8001851C0 /* KSMExpression.m in Sources */,

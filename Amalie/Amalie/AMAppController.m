@@ -6,10 +6,13 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+#import "AMConstants.h"
 #import "AMAppController.h"
 #import "AMPreferencesWindowController.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
+
+
 
 @interface AMAppController()
 {
@@ -33,6 +36,10 @@ NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
     [self.preferencesController showWindow:self];
 }
 
++(void)initialize
+{
+    [AMPreferencesWindowController registerDefaultPreferences];
+}
 
 
 @end
