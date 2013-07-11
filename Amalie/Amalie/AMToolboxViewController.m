@@ -9,6 +9,8 @@
 #import "AMToolboxViewController.h"
 #import "AMInsertableDefinition.h"
 #import "AMInsertableObjectView.h"
+#import "AMAppController.h"
+#import "AMConstants.h"
 
 @interface AMToolboxViewController()
 @property (copy) NSString* dragString;
@@ -78,19 +80,39 @@
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [self.insertableDefinitions count];
+    return [self.appControllerDelegate trayRowCount];
 }
 
 -(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    if ([[tableView identifier] isEqualToString:@"InsertableDefinitions"]) {
+    // Which table are we dealing with?
+    if ([[tableView identifier] isEqualToString:kAMTrayDictionaryKey]) {
         
-        AMInsertableDefinition * definition = self.insertableDefinitions[row];
-        NSString * fullDescription = [definition.name stringByAppendingString:definition.text];
-        NSTableCellView * view = [tableView makeViewWithIdentifier:@"InsertableDefinition" owner:self];
-        [[view imageView] setImage:definition.icon];
-        [[view textField] setStringValue:fullDescription];
-        return view;
+        // The table is the tray of insertable items.
+        NSArray * trayItems = [self.appControllerDelegate arrayOfTrayRows];
+        
+        // Which column?
+        if ( [tableColumn.identifier isEqualToString:kAMTrayDictionaryKey] ) {
+            
+            // So far, only one column, but this column's cell view has multiple subviews
+            NSDictionary * properties = trayItems[row];
+            NSString * title = [properties objectForKey:kAMTrayItemTitleKey];
+            NSString * descr = [properties objectForKey:kAMTrayItemDescriptionKey];
+            NSString * iconName = [properties objectForKey:kAMTrayItemIconKey];
+            NSImage * icon = [self.appControllerDelegate iconForTrayItemWithName:iconName];
+            NSString * fullDescription = [title stringByAppendingString:@" - "];
+            fullDescription = [fullDescription stringByAppendingString:descr];
+            NSRange titleRange = NSMakeRange(0, [title length]);
+            NSMutableAttributedString * attrString = [[NSMutableAttributedString alloc] initWithString:fullDescription];
+            [attrString addAttribute:NSFontNameAttribute value:[NSFont boldSystemFontOfSize:0] range:titleRange];
+            
+            NSTableCellView * view = [tableView makeViewWithIdentifier:kAMTrayDictionaryKey owner:self];
+            [[view imageView] setImage:icon];
+            [[view textField] setStringValue:fullDescription];
+            return view;
+        }
+        
+        return nil;
     }
     return nil;
 }

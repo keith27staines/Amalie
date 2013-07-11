@@ -19,6 +19,11 @@
     return self;
 }
 
+-(void)awakeFromNib
+{
+    ;
+}
+
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document

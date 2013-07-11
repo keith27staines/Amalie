@@ -7,10 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMAppController.h"
 
 @interface AMToolboxViewController : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (copy) NSMutableArray* insertableDefinitions;
+
 @property (weak) IBOutlet NSTableView *tableView;
+
+@property (weak) IBOutlet AMAppController * appControllerDelegate;
 
 @end

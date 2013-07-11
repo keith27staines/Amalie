@@ -8,33 +8,56 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSUInteger kAMDefaultWorksheetFontSize;
-extern NSUInteger kAMDefaultWorksheetFontDelta;
-extern NSUInteger kAMDefaultWorksheetMinFontSize;
-
 extern NSString * const kAMPaperSizeA4Portrait;
 extern NSString * const kAMPaperSizeA4Landscape;
 
-extern NSString * const kAMDefaultFixedWidthFontName;
+extern NSString * const kAMKeySuffix;
+
+
+// Default values for strings and integers. Colors are dealt with differently.
 extern NSString * const kAMDefaultFontName;
+extern NSString * const kAMDefaultFixedWidthFontName;
+extern NSUInteger const kAMDefaultFontSize;
+extern NSUInteger const kAMDefaultFixedWidthFontSize;
+extern NSUInteger const kAMDefaultFontDelta;
+extern NSUInteger const kAMDefaultMinFontSize;
 
-extern NSString * const kAMPreferencesWorksheetFontSizeKey;
-extern NSString * const kAMPreferencesWorksheetFontSizeDeltaKey;
-extern NSString * const kAMPreferencesWorksheetMinFontSizeKey;
-extern NSString * const kAMPreferencesWorksheetPaperSizeKey;
+// 
+extern NSString * const kAMFontSizeKey;
+extern NSString * const kAMFixedWidthFontSizeKey;
+extern NSString * const kAMFontSizeDeltaKey;
+extern NSString * const kAMMinFontSizeKey;
+extern NSString * const kAMPaperSizeKey;
 
-extern NSString * const kAMPreferencesFontNameKey;
-extern NSString * const kAMPreferencesBackColorKey;
-extern NSString * const kAMPreferencesForeColorKey;
-extern NSString * const kAMPreferencesFontColorKey;
+// Font property identifiers
+extern NSString * const kAMFontNameKey;
+extern NSString * const kAMFixedWidthFontNameKey;
+extern NSString * const kAMBackColorKey;
+extern NSString * const kAMForeColorKey;
+extern NSString * const kAMFontColorKey;
+
+// Identifies the Preferences panel Tray dictionary has one entry for each tray items
+extern NSString * const kAMTrayDictionaryKey;
+
+// Tray item identifiers
+extern NSString * const kAMTrayDictionaryKey;  // the tray itself, now its contents...
+extern NSString * const kAMConstantKey;
+extern NSString * const kAMVariableKey;
+extern NSString * const kAMExpressionKey;
+extern NSString * const kAMEquationKey;
+extern NSString * const kAMGraph2DKey;
+extern NSString * const kAMMathematicalSetKey;
+extern NSString * const kAMVectorKey;
+extern NSString * const kAMMatrixKey;
 
 
-extern NSString * const kAMPreferencesConstantDictionaryKey;
-extern NSString * const kAMPreferencesVariableDictionaryKey;
-extern NSString * const kAMPreferencesExpressionDictionaryKey;
-extern NSString * const kAMPreferencesEquationDictionaryKey;
-extern NSString * const kAMPreferencesGraph2DDictionaryKey;
-extern NSString * const kAMPreferencesSetKey;
+// Tray item property identifiers
+extern NSString * const kAMTrayItemIconKey;
+extern NSString * const kAMTrayItemTitleKey;
+extern NSString * const kAMTrayItemDescriptionKey;
+extern NSString * const kAMTrayItemBackcolorKey;
+extern NSString * const kAMTrayItemFontColorKey;
+
 
 typedef enum AMColor : NSUInteger {
     AMColorPaleRed = 0,
@@ -43,7 +66,12 @@ typedef enum AMColor : NSUInteger {
     AMColorPaleYellow = 3,
     AMColorPalePurple = 4,
     AMColorPaleAzure = 5,
+    AMColorWhite = 1000,
+    AMColorBlack = 1001,
 } AMColor;
+
+
+
 
 @interface AMConstants : NSObject
 

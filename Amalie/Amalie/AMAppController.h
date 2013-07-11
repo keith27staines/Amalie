@@ -6,34 +6,29 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-extern NSString* const kAMPreferencesWindowController;
-
-extern NSString * const kAMPreferencesWindowNibName;
-extern NSString * const kAMDefaultFixedWidthFontName;
-extern NSString * const kAMDefaultFontName;
-
-extern NSString * const kAMPreferencesWorksheetFontSizeKey;
-extern NSString * const kAMPreferencesWorksheetFontSizeDeltaKey;
-extern NSString * const kAMPreferencesWorksheetBackColorKey;
-extern NSString * const kAMPreferencesWorksheetPaperSizeKey;
-extern NSString * const kAMPreferencesFontNameKey;
-
-extern NSString * const kAMPreferencesConstantDictionaryKey;
-extern NSString * const kAMPreferencesVariableDictionaryKey;
-extern NSString * const kAMPreferencesExpressionDictionaryKey;
-extern NSString * const kAMPreferencesEquationDictionaryKey;
-extern NSString * const kAMPreferencesGraphKey;
-extern NSString * const kAMPreferencesSetKey;
-
-@class AMPreferencesWindowController;
-
 #import <Foundation/Foundation.h>
 
-@interface AMAppController : NSObject
+@class AMPreferencesWindowController;
+@class AMPreferences;
 
--(IBAction) showPreferencesPanel:(id)sender;
+@protocol AMAppController <NSObject>
+-(NSUInteger)trayRowCount;
+-(NSDictionary*)dictionaryOfTrayRows;
+-(NSArray*)arrayOfTrayRows;
+-(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey;
+@end
 
-@property (strong,readonly) AMPreferencesWindowController * preferencesController;
+
+@interface AMAppController : NSObject <AMAppController>
+
+- (IBAction)showPreferencesPanel:(id)sender;
+
++(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey;
++(NSUInteger)trayRowCount;
++(NSDictionary*)dictionaryOfTrayRows;
++(NSArray*)arrayOfTrayRows;
+
+
 
 
 @end

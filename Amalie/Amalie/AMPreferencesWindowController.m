@@ -7,8 +7,14 @@
 //
 
 #import "AMPreferencesWindowController.h"
+#import "AMConstants.h"
+#import "AMAppController.h"
+#import "AMPreferencesTrayTableColorwellCellView.h"
+#import "AMPreferences.h"
 
 @interface AMPreferencesWindowController ()
+
+@property (strong, readonly) AMPreferences * preferences;
 
 @end
 
@@ -25,166 +31,150 @@
     return self;
 }
 
+// Fixed-width font size
+- (IBAction)changedFixedWidthFontSize:(NSTextField *)sender
+{
+    NSUInteger size = ceil([sender doubleValue]);
+    [AMPreferences setWorksheetFixedWidthFontSize:size];
+}
+
+// Normal font size
 -(IBAction)changedNormalFontSize:(NSTextField *)sender
 {
     NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferencesWindowController setWorksheetFontSize:size];
+    [AMPreferences setWorksheetFontSize:size];
 }
 
+// Font size delta
 -(IBAction)changedFontSizeDelta:(NSTextField *)sender
 {
     NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferencesWindowController setWorksheetFontDelta:size];
+    [AMPreferences setWorksheetFontDelta:size];
 }
-
-
-// Smallest font size
+// Smallest font
 -(IBAction)changedSmallestFontSize:(NSTextField *)sender
 {
     NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferencesWindowController setWorksheetSmallestFontSize:size];
+    [AMPreferences setWorksheetSmallestFontSize:size];
 }
 
-+(void)setWorksheetSmallestFontSize:(NSUInteger)size
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMPreferencesWorksheetMinFontSizeKey];
-}
-
-
-+(NSUInteger)worksheetSmallestFontSize
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPreferencesWorksheetMinFontSizeKey];
-}
-
-
-//
+// Fixed width font name
 -(IBAction)changedFixedWidthFontName:(NSTextField *)sender
 {
-    
+    NSString * str = [sender stringValue];
+    [AMPreferences setWorksheetFixedWidthFontName:str];
 }
 
+// Normal font name
 -(IBAction)changedFontName:(NSTextField *)sender
 {
-    
+    NSString * str = [sender stringValue];
+    [AMPreferences setWorksheetFontName:str];
 }
-
-
-+(NSUInteger)worksheetFontDelta
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPreferencesWorksheetFontSizeDeltaKey];
-}
-
-+(NSUInteger)worksheetFontSize
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPreferencesWorksheetFontSizeKey];
-}
-
-+(void)setWorksheetFontDelta:(NSUInteger)delta
-{
-    return [[NSUserDefaults standardUserDefaults] setInteger:delta forKey:kAMPreferencesWorksheetFontSizeDeltaKey];
-}
-
-+(void)setWorksheetFontSize:(NSUInteger)size
-{
-    return [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMPreferencesWorksheetFontSizeKey];
-}
-
 
 - (void)windowDidLoad
 {
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSNumber * size;
     NSString * strSize;
+    NSString * name;
     
     // smallest font
-    size = [defaults objectForKey:kAMPreferencesWorksheetMinFontSizeKey];
+    size = [AMPreferences objectForKey:kAMMinFontSizeKey];
     strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
     self.textSmallestFontSize.stringValue = strSize;
     
     // font delta
-    size = [defaults objectForKey:kAMPreferencesWorksheetMinFontSizeKey];
+    size = [AMPreferences objectForKey:kAMFontSizeDeltaKey];
     strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
-    self.textSmallestFontSize.stringValue = strSize;
+    self.textFontSizeDelta.stringValue = strSize;
+
+    // Normal font size
+    size = [AMPreferences objectForKey:kAMFontSizeKey];
+    strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
+    self.textNormalFontSize.stringValue = strSize;
+    
+    // Fixed width font size
+    size = [AMPreferences objectForKey:kAMFixedWidthFontSizeKey];
+    strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
+    self.textFixedWidthFontSize.stringValue = strSize;
+    
+    // Normal font name
+    name = [AMPreferences objectForKey:kAMFontNameKey];
+    self.textFontName.stringValue = name;
+
+    // Fixed width font name
+    name = [AMPreferences objectForKey:kAMFixedWidthFontNameKey];
+    self.textFixedWidthFontName.stringValue = name;
+
 }
 
-
-+(void)registerDefaultPreferences
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-    NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-    
-    [defaults setObject:kAMPaperSizeA4Portrait forKey:kAMPreferencesWorksheetPaperSizeKey];
-    [defaults setObject:kAMDefaultFontName forKey:kAMDefaultFontName];
-    [defaults setObject:kAMDefaultFixedWidthFontName forKey:kAMDefaultFixedWidthFontName];
-    [defaults setObject:@(kAMDefaultWorksheetFontSize) forKey:kAMPreferencesWorksheetFontSizeKey];
-    [defaults setObject:@(kAMDefaultWorksheetFontDelta) forKey:kAMPreferencesWorksheetFontSizeDeltaKey];
-    [defaults setObject:@(kAMDefaultWorksheetMinFontSize) forKey:kAMPreferencesWorksheetMinFontSizeKey];
-    
-    // Constant dictionary
-    NSDictionary * constantDictionary   = @{kAMPreferencesBackColorKey: colorDataFromName(AMColorPaleRed)};
-    [defaults setObject:constantDictionary forKey:kAMPreferencesConstantDictionaryKey];
-    
-    // Variable dictionary
-    NSDictionary * variableDictionary   = @{kAMPreferencesBackColorKey: colorDataFromName(AMColorPaleGreen)};
-    [defaults setObject:variableDictionary forKey:kAMPreferencesVariableDictionaryKey];
-    
-    // Expression dictionary
-    NSDictionary * expressionDictionary = @{kAMPreferencesBackColorKey: colorDataFromName(AMColorPaleBlue)};
-    [defaults setObject:expressionDictionary forKey:kAMPreferencesExpressionDictionaryKey];
-    
-    // Expression dictionary
-    NSDictionary * equationDictionary   = @{kAMPreferencesBackColorKey: colorDataFromName(AMColorPalePurple)};
-    [defaults setObject:equationDictionary forKey:kAMPreferencesEquationDictionaryKey];
-    
-    // Equation dictionary
-    NSDictionary * graph2DDictionary    = @{kAMPreferencesBackColorKey: colorDataFromName(AMColorPaleYellow)};
-    [defaults setObject:graph2DDictionary forKey:kAMPreferencesGraph2DDictionaryKey];
-    
-    
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-    
-    
-}
-
-#pragma mark - Helper functions -
-
-NSData * colorDataFromName(AMColor color)
-{
-    return dataFromColor(colorFromName(color));
-}
-
-NSColor * colorFromName(AMColor color)
-{
-    switch (color) {
-        case AMColorPaleRed:
-            return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:0.8 alpha:1.0];
-        case AMColorPaleGreen:
-            return [NSColor colorWithCalibratedRed:0.8 green:1.0 blue:0.8 alpha:1.0];
-        case AMColorPaleBlue:
-            return [NSColor colorWithCalibratedRed:0.8 green:0.8 blue:1.0 alpha:1.0];
-        case AMColorPaleYellow:
-            return [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:0.8 alpha:1.0];
-        case AMColorPalePurple:
-            return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:1.0 alpha:1.0];
-        case AMColorPaleAzure:
-            return [NSColor colorWithCalibratedRed:0.8 green:1.0 blue:1.0 alpha:1.0];
-            
-        default:
-            break;
+    // which table are we dealing with?
+    if ( [aTableView.identifier isEqualToString:kAMTrayDictionaryKey] ) {
+        return [AMAppController trayRowCount];
     }
+    return 0;
 }
+
+-(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+
+    NSTableCellView * view = nil;
+    AMPreferencesTrayTableColorWellCellView * colorWellView = nil;
+    
+    // which table are we dealing with?
+    if ( [tableView.identifier isEqualToString:kAMTrayDictionaryKey] ) {
+
+        // We are populating the tray objects table. We will use the table row
+        // to index into the _tray dictionary to obtain the row's content
+        NSDictionary * trayRow = [AMAppController arrayOfTrayRows][row];
+        
+        // Ask the table to make us a nice view to hold the content
+        view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+
+        if ( [tableColumn.identifier isEqualToString:kAMTrayItemIconKey] ) {
+            
+            // This column has an icon and a title in a single cell
+            [view.imageView setImage:[trayRow objectForKey:kAMTrayItemIconKey]];
+            [view.textField setStringValue:[trayRow objectForKey:kAMTrayItemTitleKey]];
+            return view;
+        
+        } else if ( [tableColumn.identifier isEqualToString:kAMTrayItemBackcolorKey] ) {
+            
+            // View just holds a color well and we need to set its color
+            NSData * colorData = [trayRow objectForKey:kAMTrayItemBackcolorKey];
+            NSColor * color = colorFromData(colorData);
+            colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
+            [colorWellView.colorWell setColor:color];
+            return colorWellView;
+        
+        } else if ( [tableColumn.identifier isEqualToString:kAMTrayItemFontColorKey] ) {
+            
+            // View just holds a color well and we need to set its color
+            NSData * colorData = [trayRow objectForKey:kAMTrayItemFontColorKey];
+            NSColor * color = colorFromData(colorData);
+            colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
+            [colorWellView.colorWell setColor:color];
+            return colorWellView;
+        }
+        
+        NSAssert(NO, @"Failed to find a view for the view-based table.");
+        return nil;
+
+    }
+
+    return nil;
+}
+
+#pragma mark - C helper functions -
 
 
 NSColor * colorFromData(NSData* data)
 {
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
-
-NSData * dataFromColor(NSColor* color)
-{
-    return [NSKeyedArchiver archivedDataWithRootObject:color];
-}
-
 @end

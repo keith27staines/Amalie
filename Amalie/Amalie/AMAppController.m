@@ -6,40 +6,78 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMConstants.h"
 #import "AMAppController.h"
+#import "AMPreferences.h"
 #import "AMPreferencesWindowController.h"
+#import "AMConstants.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
-
-
 
 @interface AMAppController()
 {
     AMPreferencesWindowController * _preferencesController;
 }
 
+@property (strong,readonly) AMPreferencesWindowController * preferencesController;
+
 @end
 
 @implementation AMAppController
 
--(AMPreferencesWindowController*)preferencesController
-{
-    if (!_preferencesController) {
-        _preferencesController = [[AMPreferencesWindowController alloc] initWithWindowNibName:kAMPreferencesWindowNibName];
-    }
-    return _preferencesController;
+- (IBAction)showPreferencesPanel:(id)sender {
 }
 
--(IBAction) showPreferencesPanel:(id)sender
+-(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey
 {
-    [self.preferencesController showWindow:self];
+    return [AMAppController iconForTrayItemWithName:trayItemKey];
+}
+
+-(NSUInteger)trayRowCount
+{
+    return [AMAppController trayRowCount];
+}
+
+-(NSDictionary*)dictionaryOfTrayRows
+{
+    return [AMAppController dictionaryOfTrayRows];
+}
+
+-(NSArray*)arrayOfTrayRows
+{
+    return [AMAppController arrayOfTrayRows];
+}
+
+
++(NSUInteger)trayRowCount
+{
+    return [[self dictionaryOfTrayRows] count];
+}
+
++(NSArray*)arrayOfTrayRows
+{
+    return [[self dictionaryOfTrayRows] allValues];
+}
+
++(NSDictionary*)dictionaryOfTrayRows
+{
+    return [[AMPreferences defaults] objectForKey:kAMTrayDictionaryKey];
 }
 
 +(void)initialize
 {
-    [AMPreferencesWindowController registerDefaultPreferences];
+    [AMPreferences registerDefaultPreferences];
 }
 
+
++(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey
+{
+    NSString * resource = trayItemKey;
+    NSString * lastThreeLetters = [trayItemKey substringFromIndex:[trayItemKey length] - [kAMKeySuffix length]];
+    if ( [lastThreeLetters isEqualToString:kAMKeySuffix] ) {
+        resource = [trayItemKey substringToIndex:[trayItemKey length] - [kAMKeySuffix length]];
+    }
+    NSImage * image = [[NSBundle mainBundle] imageForResource:resource];
+    return image;
+}
 
 @end

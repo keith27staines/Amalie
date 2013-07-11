@@ -46,6 +46,9 @@
 		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
 		787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
+		788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */; };
+		788709C5178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
+		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
@@ -97,7 +100,7 @@
 		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMWorksheetController.xib; sourceTree = "<group>"; };
 		787B305B178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		787B305E178361BC001851C0 /* AMDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDocument.xcdatamodel; sourceTree = "<group>"; };
-		787B3060178361BC001851C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		787B3060178361BC001851C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Amalie/Images.xcassets; sourceTree = "<group>"; };
 		787B3066178361BC001851C0 /* AmalieTests.xctest */ = {isa = PBXFileReference; explicitFileType = folder; includeInIndex = 0; path = AmalieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3067178361BC001851C0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		787B306E178361BC001851C0 /* AmalieTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AmalieTests-Info.plist"; sourceTree = "<group>"; };
@@ -122,6 +125,10 @@
 		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
 		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
 		787B3096178364B8001851C0 /* KSMWorksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheet.m; sourceTree = "<group>"; };
+		788709BD178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesTrayTableColorwellCellView.h; sourceTree = "<group>"; };
+		788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesTrayTableColorwellCellView.m; sourceTree = "<group>"; };
+		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
+		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
 		789CB121178B0BCB00B5AF58 /* AMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstants.h; sourceTree = "<group>"; };
 		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
 		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
@@ -159,6 +166,8 @@
 				787B307D1783638D001851C0 /* KSMMath */,
 				785247C417848D7D00F6A7AD /* AMInsertableDefinition.h */,
 				785247C517848D7D00F6A7AD /* AMInsertableDefinition.m */,
+				788709C3178DAEAB008E093A /* AMPreferences.h */,
+				788709C4178DAEAB008E093A /* AMPreferences.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -167,14 +176,9 @@
 			isa = PBXGroup;
 			children = (
 				785247C0178406D200F6A7AD /* Nibs */,
-				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
-				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
-				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
-				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
-				785247CD1785722700F6A7AD /* AMInsertableObjectView.h */,
-				785247CE1785722700F6A7AD /* AMInsertableObjectView.m */,
-				785247D01786AC9300F6A7AD /* AMExpressionView.h */,
-				785247D11786AC9300F6A7AD /* AMExpressionView.m */,
+				788709C1178D35F5008E093A /* Workheet views */,
+				788709C2178D36D7008E093A /* Toolbox views */,
+				788709C0178D35CD008E093A /* Preferences Pane views */,
 			);
 			name = "Views and NIBs";
 			sourceTree = "<group>";
@@ -182,12 +186,12 @@
 		785247BF178406B000F6A7AD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				784D6EF81789CC11002BE03A /* AMAppController.h */,
+				784D6EF91789CC11002BE03A /* AMAppController.m */,
 				787B3054178361BC001851C0 /* AMWorksheetController.h */,
 				787B3055178361BC001851C0 /* AMWorksheetController.m */,
 				785247C117848A4A00F6A7AD /* AMToolboxViewController.h */,
 				785247C217848A4A00F6A7AD /* AMToolboxViewController.m */,
-				784D6EF81789CC11002BE03A /* AMAppController.h */,
-				784D6EF91789CC11002BE03A /* AMAppController.m */,
 				784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */,
 				784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */,
 			);
@@ -207,6 +211,7 @@
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
+				787B3060178361BC001851C0 /* Images.xcassets */,
 				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
 				787B3048178361BC001851C0 /* Amalie */,
@@ -251,7 +256,6 @@
 				785247BF178406B000F6A7AD /* Controllers */,
 				785247BE178406A600F6A7AD /* Views and NIBs */,
 				785247BD1784067900F6A7AD /* Models */,
-				787B3060178361BC001851C0 /* Images.xcassets */,
 				787B3049178361BC001851C0 /* Supporting Files */,
 			);
 			path = Amalie;
@@ -311,6 +315,37 @@
 				787B3096178364B8001851C0 /* KSMWorksheet.m */,
 			);
 			name = KSMMath;
+			sourceTree = "<group>";
+		};
+		788709C0178D35CD008E093A /* Preferences Pane views */ = {
+			isa = PBXGroup;
+			children = (
+				788709BD178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.h */,
+				788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */,
+			);
+			name = "Preferences Pane views";
+			sourceTree = "<group>";
+		};
+		788709C1178D35F5008E093A /* Workheet views */ = {
+			isa = PBXGroup;
+			children = (
+				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
+				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
+				785247CD1785722700F6A7AD /* AMInsertableObjectView.h */,
+				785247CE1785722700F6A7AD /* AMInsertableObjectView.m */,
+				785247D01786AC9300F6A7AD /* AMExpressionView.h */,
+				785247D11786AC9300F6A7AD /* AMExpressionView.m */,
+			);
+			name = "Workheet views";
+			sourceTree = "<group>";
+		};
+		788709C2178D36D7008E093A /* Toolbox views */ = {
+			isa = PBXGroup;
+			children = (
+				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
+				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
+			);
+			name = "Toolbox views";
 			sourceTree = "<group>";
 		};
 		78DE823C178365DC00C7EE10 /* KSMPrime */ = {
@@ -425,6 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */,
 				785247C617848D7D00F6A7AD /* AMInsertableDefinition.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
@@ -443,6 +479,7 @@
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
 				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,
+				788709C5178DAEAB008E093A /* AMPreferences.m in Sources */,
 				785247C317848A4A00F6A7AD /* AMToolboxViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +493,7 @@
 				787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				787B309C178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
 				78DE824C1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
+				788709C6178DAEAB008E093A /* AMPreferences.m in Sources */,
 				787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */,
 				787B308717836485001851C0 /* KSMPrimeDecompositionTests.m in Sources */,
 				787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */,
