@@ -7,10 +7,10 @@
 //
 
 #import "AMToolboxViewController.h"
-#import "AMInsertableDefinition.h"
 #import "AMInsertableObjectView.h"
 #import "AMAppController.h"
 #import "AMConstants.h"
+#import "AMTrayItem.h"
 
 @interface AMToolboxViewController()
 @property (copy) NSString* dragString;
@@ -22,45 +22,12 @@
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    _insertableDefinitions = [NSMutableArray array];
-    AMInsertableDefinition * insertableDef;
-    
-    // add constant
-    insertableDef = [[AMInsertableDefinition alloc] initWithName:@"Constant Definition"
-                                                            text:@" - Define a constant for use in your worksheet."];
-    [_insertableDefinitions addObject:insertableDef];
-
-    // expression
-    insertableDef = [[AMInsertableDefinition alloc] initWithName:@"Expression Definition"
-                                                            text:@" - Define an expression for use in your worksheet."];
-    [_insertableDefinitions addObject:insertableDef];
-
-    // function
-    insertableDef = [[AMInsertableDefinition alloc] initWithName:@"Function Definition"
-                                                            text:@" - Define an expression for use in your worksheet."];
-    [_insertableDefinitions addObject:insertableDef];
-
-    
-    // vector
-    insertableDef = [[AMInsertableDefinition alloc] initWithName:@"Vector Definition"
-                                                            text:@" - Define a vector for use in your worksheet."];
-    [_insertableDefinitions addObject:insertableDef];
-
-    
-    // matrix
-    insertableDef = [[AMInsertableDefinition alloc] initWithName:@"Matrix Definition"
-                                                            text:@" - Define a matrix for use in your worksheet."];
-    [_insertableDefinitions addObject:insertableDef];
-    
     
     // setup the table to be a drag source
     [[self tableView] setDraggingSourceOperationMask:NSDragOperationCopy forLocal:YES];
     [[self tableView] setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
     [[self tableView] setVerticalMotionCanBeginDrag:YES];
-    
     [[self tableView] reloadData];
-    
-    
 }
 
 -(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation
@@ -80,7 +47,7 @@
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [self.appControllerDelegate trayRowCount];
+    return [self.trayDatasource trayItemCount];
 }
 
 -(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
@@ -88,27 +55,16 @@
     // Which table are we dealing with?
     if ([[tableView identifier] isEqualToString:kAMTrayDictionaryKey]) {
         
-        // The table is the tray of insertable items.
-        NSArray * trayItems = [self.appControllerDelegate arrayOfTrayRows];
+        // The table is the tray (of insertable items).
+        AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
         
         // Which column?
         if ( [tableColumn.identifier isEqualToString:kAMTrayDictionaryKey] ) {
             
             // So far, only one column, but this column's cell view has multiple subviews
-            NSDictionary * properties = trayItems[row];
-            NSString * title = [properties objectForKey:kAMTrayItemTitleKey];
-            NSString * descr = [properties objectForKey:kAMTrayItemDescriptionKey];
-            NSString * iconName = [properties objectForKey:kAMTrayItemIconKey];
-            NSImage * icon = [self.appControllerDelegate iconForTrayItemWithName:iconName];
-            NSString * fullDescription = [title stringByAppendingString:@" - "];
-            fullDescription = [fullDescription stringByAppendingString:descr];
-            NSRange titleRange = NSMakeRange(0, [title length]);
-            NSMutableAttributedString * attrString = [[NSMutableAttributedString alloc] initWithString:fullDescription];
-            [attrString addAttribute:NSFontNameAttribute value:[NSFont boldSystemFontOfSize:0] range:titleRange];
-            
             NSTableCellView * view = [tableView makeViewWithIdentifier:kAMTrayDictionaryKey owner:self];
-            [[view imageView] setImage:icon];
-            [[view textField] setStringValue:fullDescription];
+            [[view imageView] setImage:trayItem.icon];
+            [[view textField] setAttributedStringValue:trayItem.attributedDescription];
             return view;
         }
         

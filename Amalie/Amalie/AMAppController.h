@@ -7,26 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMTrayDatasourceProtocol.h"
 
 @class AMPreferencesWindowController;
 @class AMPreferences;
 
-@protocol AMAppController <NSObject>
--(NSUInteger)trayRowCount;
--(NSDictionary*)dictionaryOfTrayRows;
--(NSArray*)arrayOfTrayRows;
--(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey;
-@end
-
-
-@interface AMAppController : NSObject <AMAppController>
+@interface AMAppController : NSObject <AMTrayDatasourceProtocol>
 
 - (IBAction)showPreferencesPanel:(id)sender;
 
-+(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey;
-+(NSUInteger)trayRowCount;
-+(NSDictionary*)dictionaryOfTrayRows;
-+(NSArray*)arrayOfTrayRows;
+
 
 
 

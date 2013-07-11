@@ -117,51 +117,43 @@
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
     
     // Constant dictionary
-    NSDictionary * constantDictionary   = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMConstantKey],
-                                            kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * constantDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:constantDictionary forKey:kAMConstantKey];
     
     // Variable dictionary
-    NSDictionary * variableDictionary   = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMVariableKey],
-                                            kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * variableDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:variableDictionary forKey:kAMVariableKey];
     
     // Expression dictionary
-    NSDictionary * expressionDictionary = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMExpressionKey],
-                                            kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * expressionDictionary = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:expressionDictionary forKey:kAMExpressionKey];
     
     // Equation dictionary
-    NSDictionary * equationDictionary   = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMEquationKey],
-                                            kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * equationDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:equationDictionary forKey:kAMEquationKey];
     
     // Graph dictionary
-    NSDictionary * graph2DDictionary    = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMGraph2DKey],
-                                            kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * graph2DDictionary    = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:graph2DDictionary forKey:kAMGraph2DKey];
     
     // Set dictionary
-    NSDictionary * mSetDictionary    = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMGraph2DKey],
-                                         kAMBackColorKey : colorDataFromName(AMColorPaleRed),
-                                         kAMFontColorKey : colorDataFromName(AMColorBlack)};
+    NSDictionary * mSetDictionary       = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:mSetDictionary forKey:kAMGraph2DKey];
     
     // Vector dictionary
-    NSDictionary * vectorDictionary    = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMVectorKey],
-                                           kAMBackColorKey : colorDataFromName(AMColorPaleRed),
-                                           kAMFontColorKey : colorDataFromName(AMColorBlack)};
+    NSDictionary * vectorDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:vectorDictionary forKey:kAMVectorKey];
     
     // Matrix dictionary
-    NSDictionary * matrixDictionary    = @{kAMTrayItemIconKey : [AMAppController iconForTrayItemWithName:kAMMatrixKey],
-                                           kAMBackColorKey : colorDataFromName(AMColorPaleRed),
-                                           kAMFontColorKey : colorDataFromName(AMColorBlack)};
+    NSDictionary * matrixDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:matrixDictionary forKey:kAMMatrixKey];
     
     return dictionary;
@@ -197,11 +189,6 @@ NSColor * colorFromName(AMColor color)
         default:
             break;
     }
-}
-
-NSData * dataFromColor(NSColor* color)
-{
-    return [NSKeyedArchiver archivedDataWithRootObject:color];
 }
 
 

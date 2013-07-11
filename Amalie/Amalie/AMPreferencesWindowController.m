@@ -11,6 +11,7 @@
 #import "AMAppController.h"
 #import "AMPreferencesTrayTableColorwellCellView.h"
 #import "AMPreferences.h"
+#import "AMTrayItem.h"
 
 @interface AMPreferencesWindowController ()
 
@@ -115,7 +116,7 @@
 {
     // which table are we dealing with?
     if ( [aTableView.identifier isEqualToString:kAMTrayDictionaryKey] ) {
-        return [AMAppController trayRowCount];
+        return [_trayDatasource trayItemCount];
     }
     return 0;
 }
@@ -131,7 +132,7 @@
 
         // We are populating the tray objects table. We will use the table row
         // to index into the _tray dictionary to obtain the row's content
-        NSDictionary * trayRow = [AMAppController arrayOfTrayRows][row];
+        AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
         
         // Ask the table to make us a nice view to hold the content
         view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
@@ -139,26 +140,22 @@
         if ( [tableColumn.identifier isEqualToString:kAMTrayItemIconKey] ) {
             
             // This column has an icon and a title in a single cell
-            [view.imageView setImage:[trayRow objectForKey:kAMTrayItemIconKey]];
-            [view.textField setStringValue:[trayRow objectForKey:kAMTrayItemTitleKey]];
+            [view.imageView setImage:trayItem.icon];
+            [view.textField setStringValue:trayItem.title];
             return view;
         
         } else if ( [tableColumn.identifier isEqualToString:kAMTrayItemBackcolorKey] ) {
             
             // View just holds a color well and we need to set its color
-            NSData * colorData = [trayRow objectForKey:kAMTrayItemBackcolorKey];
-            NSColor * color = colorFromData(colorData);
             colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
-            [colorWellView.colorWell setColor:color];
+            [colorWellView.colorWell setColor:trayItem.backgroundColor];
             return colorWellView;
         
         } else if ( [tableColumn.identifier isEqualToString:kAMTrayItemFontColorKey] ) {
             
             // View just holds a color well and we need to set its color
-            NSData * colorData = [trayRow objectForKey:kAMTrayItemFontColorKey];
-            NSColor * color = colorFromData(colorData);
             colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
-            [colorWellView.colorWell setColor:color];
+            [colorWellView.colorWell setColor:trayItem.fontColor];
             return colorWellView;
         }
         
@@ -170,11 +167,4 @@
     return nil;
 }
 
-#pragma mark - C helper functions -
-
-
-NSColor * colorFromData(NSData* data)
-{
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
-}
 @end

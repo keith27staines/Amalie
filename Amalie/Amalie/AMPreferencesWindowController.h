@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMTrayDatasourceProtocol.h"
 
 @interface AMPreferencesWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -30,5 +31,7 @@
 -(IBAction)changedSmallestFontSize:(NSTextField *)sender;
 -(IBAction)changedFixedWidthFontName:(NSTextField *)sender;
 -(IBAction)changedFontName:(NSTextField *)sender;
+
+@property (weak) id<AMTrayDatasourceProtocol>trayDatasource;
 
 @end

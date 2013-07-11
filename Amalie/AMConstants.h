@@ -71,7 +71,8 @@ typedef enum AMColor : NSUInteger {
 } AMColor;
 
 
-
+NSData * dataFromColor(NSColor* color);
+NSColor * colorFromData(NSData* data);
 
 @interface AMConstants : NSObject
 

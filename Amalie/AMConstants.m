@@ -50,6 +50,16 @@ NSString * const kAMMathematicalSetKey                = @"MathematicalSetKey";
 NSString * const kAMVectorKey                         = @"VectorKey";
 NSString * const kAMMatrixKey                         = @"MatrixKey";
 
+NSData * dataFromColor(NSColor* color)
+{
+    return [NSKeyedArchiver archivedDataWithRootObject:color];
+}
+
+NSColor * colorFromData(NSData* data)
+{
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
 @implementation AMConstants
 
 @end

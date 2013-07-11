@@ -453,10 +453,6 @@ Gw
                 <action selector="orderFrontFontPanel:" destination="388" id="423"/>
             </connections>
         </customObject>
-        <customObject id="bYS-El-5LP" customClass="AMAppController">
-            <connections>
-                <action selector="showPreferencesPanel:" destination="129" id="56S-K6-SGG"/>
-            </connections>
-        </customObject>
+        <customObject id="VQx-XF-xuF" customClass="AMAppController"/>
     </objects>
 </document>

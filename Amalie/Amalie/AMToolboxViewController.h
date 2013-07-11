@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMAppController.h"
+#import "AMTrayDatasourceProtocol.h"
 
 @interface AMToolboxViewController : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
@@ -15,6 +15,6 @@
 
 @property (weak) IBOutlet NSTableView *tableView;
 
-@property (weak) IBOutlet AMAppController * appControllerDelegate;
+@property (weak) id<AMTrayDatasourceProtocol>trayDatasource;
 
 @end

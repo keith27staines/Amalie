@@ -10,8 +10,10 @@
 #import "AMPreferences.h"
 #import "AMPreferencesWindowController.h"
 #import "AMConstants.h"
+#import "AMTrayItem.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
+NSDictionary * _trayDictionary;
 
 @interface AMAppController()
 {
@@ -27,57 +29,49 @@ NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
 - (IBAction)showPreferencesPanel:(id)sender {
 }
 
--(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey
-{
-    return [AMAppController iconForTrayItemWithName:trayItemKey];
-}
-
--(NSUInteger)trayRowCount
-{
-    return [AMAppController trayRowCount];
-}
-
--(NSDictionary*)dictionaryOfTrayRows
-{
-    return [AMAppController dictionaryOfTrayRows];
-}
-
--(NSArray*)arrayOfTrayRows
-{
-    return [AMAppController arrayOfTrayRows];
-}
-
-
-+(NSUInteger)trayRowCount
-{
-    return [[self dictionaryOfTrayRows] count];
-}
-
-+(NSArray*)arrayOfTrayRows
-{
-    return [[self dictionaryOfTrayRows] allValues];
-}
-
-+(NSDictionary*)dictionaryOfTrayRows
-{
-    return [[AMPreferences defaults] objectForKey:kAMTrayDictionaryKey];
-}
-
+// Called before any other method of this class
 +(void)initialize
 {
     [AMPreferences registerDefaultPreferences];
 }
 
+#pragma mark -Implementation of AMTrayDatasourceProtocol-
 
-+(NSImage*)iconForTrayItemWithName:(NSString*)trayItemKey
+-(NSUInteger)trayItemCount
 {
-    NSString * resource = trayItemKey;
-    NSString * lastThreeLetters = [trayItemKey substringFromIndex:[trayItemKey length] - [kAMKeySuffix length]];
-    if ( [lastThreeLetters isEqualToString:kAMKeySuffix] ) {
-        resource = [trayItemKey substringToIndex:[trayItemKey length] - [kAMKeySuffix length]];
+    return [[self dictionaryOfAllTrayItems] count];
+}
+
+-(NSDictionary*)dictionaryOfAllTrayItems
+{
+    if (!_trayDictionary) {
+        
+        NSDictionary * trayPreferences = [[AMPreferences defaults] objectForKey:kAMTrayDictionaryKey];
+        
+        for (NSString * key in trayPreferences) {
+            AMTrayItem * item;
+            NSString * title = key;
+            NSString * iconKey = key;
+            NSString * description = title;
+            item = [[AMTrayItem alloc] initWithKey:key
+                                           iconKey:iconKey
+                                             title:title
+                                       description:description
+                                   backgroundColor:trayPreferences[kAMTrayItemBackcolorKey]
+                                         fontColor:trayPreferences[kAMTrayItemFontColorKey]];
+        }
     }
-    NSImage * image = [[NSBundle mainBundle] imageForResource:resource];
-    return image;
+    return _trayDictionary;
+}
+
+-(AMTrayItem*)trayItemAtIndex:(NSUInteger)index
+{
+    return [self arrayOfAllTrayItems][index];
+}
+
+-(NSArray*)arrayOfAllTrayItems
+{
+    return [[self dictionaryOfAllTrayItems] allValues];
 }
 
 @end
