@@ -13,7 +13,7 @@
 #import "AMTrayItem.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
-NSDictionary * _trayDictionary;
+NSMutableDictionary * _trayDictionary;
 
 @interface AMAppController()
 {
@@ -27,6 +27,12 @@ NSDictionary * _trayDictionary;
 @implementation AMAppController
 
 - (IBAction)showPreferencesPanel:(id)sender {
+    
+    if (!_preferencesController) {
+        _preferencesController = [[AMPreferencesWindowController alloc] initWithWindowNibName:kAMPreferencesWindowNibName];
+        [_preferencesController setTrayDatasource:self];
+    }
+    [_preferencesController showWindow:self];
 }
 
 // Called before any other method of this class
@@ -42,23 +48,43 @@ NSDictionary * _trayDictionary;
     return [[self dictionaryOfAllTrayItems] count];
 }
 
+-(void)mergeTrayPreferences
+{
+    NSDictionary * trayPreferences = [[AMPreferences defaults] objectForKey:kAMTrayDictionaryKey];
+    
+    for (NSString * key in trayPreferences) {
+        
+        NSDictionary * itemPreferences = trayPreferences[key];
+        AMTrayItem * item = [self dictionaryOfAllTrayItems][key];
+
+        item.backgroundColor = colorFromData( itemPreferences[kAMBackColorKey] );
+        item.fontColor = colorFromData( itemPreferences[kAMFontColorKey] );
+    }
+}
+
 -(NSDictionary*)dictionaryOfAllTrayItems
 {
     if (!_trayDictionary) {
         
+        _trayDictionary = [NSMutableDictionary dictionary];
+        
         NSDictionary * trayPreferences = [[AMPreferences defaults] objectForKey:kAMTrayDictionaryKey];
         
         for (NSString * key in trayPreferences) {
+            NSDictionary * itemPreferences = trayPreferences[key];
             AMTrayItem * item;
-            NSString * title = key;
-            NSString * iconKey = key;
+            NSString * title = [self StringByStrippingKeyPrefixAndSuffix:key];
+            NSString * iconKey = title;
             NSString * description = title;
+            NSColor * backgroundColor = colorFromData(itemPreferences[kAMBackColorKey]);
+            NSColor * fontColor = colorFromData(itemPreferences[kAMFontColorKey]);
             item = [[AMTrayItem alloc] initWithKey:key
                                            iconKey:iconKey
                                              title:title
-                                       description:description
-                                   backgroundColor:trayPreferences[kAMTrayItemBackcolorKey]
-                                         fontColor:trayPreferences[kAMTrayItemFontColorKey]];
+                                       info:description
+                                   backgroundColor:backgroundColor
+                                         fontColor:fontColor];
+            [_trayDictionary setObject:item forKey:key];
         }
     }
     return _trayDictionary;
@@ -72,6 +98,20 @@ NSDictionary * _trayDictionary;
 -(NSArray*)arrayOfAllTrayItems
 {
     return [[self dictionaryOfAllTrayItems] allValues];
+}
+
+-(NSString*)StringByStrippingKeyPrefixAndSuffix:(NSString*)string
+{
+    NSString * affix = [string substringFromIndex:([string length] - 3)];
+    if ([affix isEqualToString:kAMKeySuffix]) {
+        string = [string substringToIndex:([string length] - 3)];
+    }
+    affix = [string substringToIndex:[kAMKeyPrefix length]];
+    if ([affix isEqualToString:kAMKeyPrefix]) {
+        string = [string substringFromIndex:[kAMKeyPrefix length]];
+    }
+    
+    return string;
 }
 
 @end

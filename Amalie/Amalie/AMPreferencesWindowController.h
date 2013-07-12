@@ -14,23 +14,31 @@
 
 }
 
+@property (weak) IBOutlet NSTextField *textFontName;
+
+-(IBAction)changedFontName:(NSTextField *)sender;
+
 @property (weak) IBOutlet NSTextField *textNormalFontSize;
+
+-(IBAction)changedNormalFontSize:(NSTextField *)sender;
 
 @property (weak) IBOutlet NSTextField *textFontSizeDelta;
 
+-(IBAction)changedFontSizeDelta:(NSTextField *)sender;
+
 @property (weak) IBOutlet NSTextField *textSmallestFontSize;
+
+-(IBAction)changedSmallestFontSize:(NSTextField *)sender;
+
 
 @property (weak) IBOutlet NSTextField *textFixedWidthFontName;
 
-@property (weak) IBOutlet NSTextField *textFontName;
+-(IBAction)changedFixedWidthFontName:(NSTextField *)sender;
 
 @property (weak) IBOutlet NSTextField *textFixedWidthFontSize;
 
--(IBAction)changedNormalFontSize:(NSTextField *)sender;
--(IBAction)changedFontSizeDelta:(NSTextField *)sender;
--(IBAction)changedSmallestFontSize:(NSTextField *)sender;
--(IBAction)changedFixedWidthFontName:(NSTextField *)sender;
--(IBAction)changedFontName:(NSTextField *)sender;
+- (IBAction)changedFixedWidthFontSize:(id)sender;
+
 
 @property (weak) id<AMTrayDatasourceProtocol>trayDatasource;
 

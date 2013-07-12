@@ -122,37 +122,37 @@
     [dictionary setObject:constantDictionary forKey:kAMConstantKey];
     
     // Variable dictionary
-    NSDictionary * variableDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * variableDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleGreen),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:variableDictionary forKey:kAMVariableKey];
     
     // Expression dictionary
-    NSDictionary * expressionDictionary = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * expressionDictionary = @{kAMBackColorKey : colorDataFromName(AMColorPaleBlue),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:expressionDictionary forKey:kAMExpressionKey];
     
     // Equation dictionary
-    NSDictionary * equationDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * equationDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleYellow),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:equationDictionary forKey:kAMEquationKey];
     
     // Graph dictionary
-    NSDictionary * graph2DDictionary    = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * graph2DDictionary    = @{kAMBackColorKey : colorDataFromName(AMColorPalePurple),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:graph2DDictionary forKey:kAMGraph2DKey];
     
     // Set dictionary
-    NSDictionary * mSetDictionary       = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * mSetDictionary       = @{kAMBackColorKey : colorDataFromName(AMColorPaleAzure),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:mSetDictionary forKey:kAMGraph2DKey];
     
     // Vector dictionary
-    NSDictionary * vectorDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * vectorDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorPaleOrange),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:vectorDictionary forKey:kAMVectorKey];
     
     // Matrix dictionary
-    NSDictionary * matrixDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
+    NSDictionary * matrixDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorBarleyWhite),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:matrixDictionary forKey:kAMMatrixKey];
     
@@ -181,6 +181,10 @@ NSColor * colorFromName(AMColor color)
             return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:1.0 alpha:1.0];
         case AMColorPaleAzure:
             return [NSColor colorWithCalibratedRed:0.8 green:1.0 blue:1.0 alpha:1.0];
+        case AMColorPaleOrange:
+            return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:0.6 alpha:1.0];
+        case AMColorBarleyWhite:
+            return [NSColor colorWithCalibratedRed:1.0 green:0.9 blue:0.8 alpha:1.0];
         case AMColorWhite:
             return [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         case AMColorBlack:

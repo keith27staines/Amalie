@@ -13,7 +13,7 @@
 - (id)initWithKey:(NSString*)key
           iconKey:(NSString*)iconKey
             title:(NSString*)title
-      description:(NSString*)description
+      info:(NSString*)description
   backgroundColor:(NSColor*)backgroundColor
         fontColor:(NSColor*)fontColor;
 
@@ -23,7 +23,7 @@
 @property (readonly) NSString * iconKey;
 @property (readonly) NSImage * icon;
 @property (readonly) NSString * title;
-@property (readonly) NSString * description;
+@property (readonly) NSString * information;
 @property (readonly) NSAttributedString * attributedDescription;
 @property (readwrite) NSData * backgroundColorData;
 @property (readwrite) NSData * fontColorData;

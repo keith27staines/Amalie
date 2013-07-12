@@ -8,47 +8,55 @@
 
 #import "AMConstants.h"
 
-NSString * const kAMKeySuffix                         = @"Key";
-
+#pragma mark - Default values -
 NSUInteger const kAMDefaultFontSize                   = 16;
 NSUInteger const kAMDefaultFixedWidthFontSize         = 16;
 NSUInteger const kAMDefaultFontDelta                  =  2;
 NSUInteger const kAMDefaultMinFontSize                = 10;
+NSString * const kAMDefaultFontName                   = @"Times New Roman";
+NSString * const kAMDefaultFixedWidthFontName         = @"Monaco";
 
+#pragma mark - key affixes -
+NSString * const kAMKeyPrefix                         =@"kAM";
+NSString * const kAMKeySuffix                         = @"Key";
+
+#pragma mark - Page Layout -
+NSString * const kAMPaperSizeKey                      = @"kAMPaperSizeKey";
 NSString * const kAMPaperSizeA4Portrait               = @"A4Portrait";
 NSString * const kAMPaperSizeA4Landscape              = @"A4Landscape";
 
+#pragma mark - Font -
+NSString * const kAMFontNameKey                       = @"kAMFontNameKey";
+NSString * const kAMFontSizeKey                       = @"kAMFontSizeKey";
+NSString * const kAMFontSizeDeltaKey                  = @"kAMFontSizeDeltaKey";
+NSString * const kAMMinFontSizeKey                    = @"kAMMinFontSizeKey";
+NSString * const kAMFixedWidthFontNameKey             = @"kAMFixedWidthFontNameKey";
+NSString * const kAMFixedWidthFontSizeKey             = @"kAMFixedWidthFontSizeKey";
 
-NSString * const kAMDefaultFixedWidthFontName         = @"Monaco";
-NSString * const kAMDefaultFontName                   = @"Times New Roman";
+#pragma mark - Icon and title -
+NSString * const kAMIconKey                           = @"kAMIconKey";
+NSString * const kAMTitleKey                          = @"kAMTitleKey";
+NSString * const kAMInfoKey                           = @"kAMInfoKey";
 
-NSString * const kAMFontSizeKey                       = @"FontSizeKey";
-NSString * const kAMFixedWidthFontSizeKey             = @"FixedWidthFontSizeKey";
-NSString * const kAMFontSizeDeltaKey                  = @"FontSizeDeltaKey";
-NSString * const kAMMinFontSizeKey                    = @"MinFontSizeKey";
-NSString * const kAMPaperSizeKey                      = @"PaperSizeKey";
+NSString * const kAMBackColorKey                      = @"kAMBackColorKey";
+NSString * const kAMForeColorKey                      = @"kAMForeColorKey";
+NSString * const kAMFontColorKey                      = @"kAMFontColorKey";
 
-NSString * const kAMFontNameKey                       = @"FontNameKey";
-NSString * const kAMFixedWidthFontNameKey             = @"FixedWidthFontNameKey";
-NSString * const kAMBackColorKey                      = @"BackColorKey";
-NSString * const kAMForeColorKey                      = @"ForeColorKey";
-NSString * const kAMFontColorKey                      = @"FontColorKey";
+#pragma mark - Keys for dictionaries controlled by AppController -
+NSString * const kAMTrayDictionaryKey                 = @"kAMTrayDictionaryKey";
 
-NSString * const kAMTrayDictionaryKey                 = @"TrayDictionary";
-NSString * const kAMTrayItemIconKey                   = @"TrayIconKey";
-NSString * const kAMTrayItemTitleKey                  = @"TrayTitleKey";
-NSString * const kAMTrayItemDescriptionKey            = @"TrayDescriptionKey";
-NSString * const kAMTrayItemBackcolorKey              = @"TrayBackcolorKey";
-NSString * const kAMTrayItemFontColorKey              = @"TrayFontColorKey";
+#pragma mark - Members of the kAMTrayDictionary -
+NSString * const kAMConstantKey                       = @"kAMConstantKey";
+NSString * const kAMVariableKey                       = @"kAMVariableKey";
+NSString * const kAMExpressionKey                     = @"kAMExpressionKey";
+NSString * const kAMEquationKey                       = @"kAMEquationKey";
+NSString * const kAMGraph2DKey                        = @"kAMGraph2DKey";
+NSString * const kAMMathematicalSetKey                = @"kAMMathematicalSetKey";
+NSString * const kAMVectorKey                         = @"kAMVectorKey";
+NSString * const kAMMatrixKey                         = @"kAMMatrixKey";
 
-NSString * const kAMConstantKey                       = @"ConstantKey";
-NSString * const kAMVariableKey                       = @"VariableKey";
-NSString * const kAMExpressionKey                     = @"ExpressionKey";
-NSString * const kAMEquationKey                       = @"EquationKey";
-NSString * const kAMGraph2DKey                        = @"Graph2DKey";
-NSString * const kAMMathematicalSetKey                = @"MathematicalSetKey";
-NSString * const kAMVectorKey                         = @"VectorKey";
-NSString * const kAMMatrixKey                         = @"MatrixKey";
+
+#pragma mark - Helper C functions -
 
 NSData * dataFromColor(NSColor* color)
 {

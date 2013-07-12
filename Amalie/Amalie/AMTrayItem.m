@@ -20,17 +20,17 @@
 -(id)initWithPropertiesDictionary:(NSDictionary*)dictionary
 {
     return [self initWithKey:dictionary[kAMKeySuffix]
-                     iconKey:dictionary[kAMTrayItemIconKey]
-                       title:dictionary[kAMTrayItemTitleKey]
-                 description:dictionary[kAMTrayItemDescriptionKey]
-             backgroundColor:colorFromData( dictionary[kAMTrayItemBackcolorKey] )
-                   fontColor:colorFromData( dictionary[kAMTrayItemFontColorKey] )];
+                     iconKey:dictionary[kAMIconKey]
+                       title:dictionary[kAMTitleKey]
+                 info:dictionary[kAMInfoKey]
+             backgroundColor:colorFromData( dictionary[kAMBackColorKey] )
+                   fontColor:colorFromData( dictionary[kAMFontColorKey] )];
 }
 
 - (id)initWithKey:(NSString*)key
           iconKey:(NSString*)iconKey
             title:(NSString*)title
-      description:(NSString*)description
+      info:(NSString*)description
   backgroundColor:(NSColor*)backgroundColor
         fontColor:(NSColor*)fontColor
 {
@@ -39,7 +39,7 @@
         _key = key;
         _iconKey = iconKey;
         _title = title;
-        _description = description;
+        _information = description;
         _backgroundColorData = dataFromColor(backgroundColor);
         _fontColorData = dataFromColor(fontColor);
     }
@@ -49,7 +49,7 @@
 -(NSAttributedString*)attributedDescription
 {
     NSString * fullDescription = [self.title stringByAppendingString:@" - "];
-    fullDescription = [fullDescription stringByAppendingString:self.description];
+    fullDescription = [fullDescription stringByAppendingString:self.information];
     NSRange titleRange = NSMakeRange(0, [self.title length]);
     NSMutableAttributedString * attrString = [[NSMutableAttributedString alloc] initWithString:fullDescription];
     [attrString addAttribute:NSFontNameAttribute value:[NSFont boldSystemFontOfSize:0] range:titleRange];
@@ -86,11 +86,11 @@
 -(NSDictionary*)properties
 {
     return @{kAMKeySuffix : self.key ,
-             kAMTrayItemIconKey : self.iconKey ,
-             kAMTrayItemTitleKey : self.title ,
-             kAMTrayItemDescriptionKey : self.description ,
-             kAMTrayItemBackcolorKey : self.backgroundColorData ,
-             kAMTrayItemFontColorKey : self.fontColorData};
+             kAMIconKey : self.iconKey ,
+             kAMTitleKey : self.title ,
+             kAMInfoKey : self.information ,
+             kAMBackColorKey : self.backgroundColorData ,
+             kAMFontColorKey : self.fontColorData};
 }
 
 @end

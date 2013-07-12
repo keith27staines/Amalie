@@ -8,39 +8,44 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kAMPaperSizeA4Portrait;
-extern NSString * const kAMPaperSizeA4Landscape;
-
-extern NSString * const kAMKeySuffix;
-
-
-// Default values for strings and integers. Colors are dealt with differently.
-extern NSString * const kAMDefaultFontName;
-extern NSString * const kAMDefaultFixedWidthFontName;
+#pragma mark - Default values -
 extern NSUInteger const kAMDefaultFontSize;
 extern NSUInteger const kAMDefaultFixedWidthFontSize;
 extern NSUInteger const kAMDefaultFontDelta;
 extern NSUInteger const kAMDefaultMinFontSize;
+extern NSString * const kAMDefaultFontName;
+extern NSString * const kAMDefaultFixedWidthFontName;
 
-// 
+#pragma mark - key affixes -
+extern NSString * const kAMKeyPrefix;
+extern NSString * const kAMKeySuffix;
+
+#pragma mark - Page Layout -
+extern NSString * const kAMPaperSizeKey;
+extern NSString * const kAMPaperSizeA4Portrait;
+extern NSString * const kAMPaperSizeA4Landscape;
+
+#pragma mark - Font -
+extern NSString * const kAMFontNameKey;
 extern NSString * const kAMFontSizeKey;
-extern NSString * const kAMFixedWidthFontSizeKey;
 extern NSString * const kAMFontSizeDeltaKey;
 extern NSString * const kAMMinFontSizeKey;
-extern NSString * const kAMPaperSizeKey;
-
-// Font property identifiers
-extern NSString * const kAMFontNameKey;
 extern NSString * const kAMFixedWidthFontNameKey;
+extern NSString * const kAMFixedWidthFontSizeKey;
+
+#pragma mark - Icon and title -
+extern NSString * const kAMIconKey;
+extern NSString * const kAMTitleKey;
+extern NSString * const kAMInfoKey;
+
 extern NSString * const kAMBackColorKey;
 extern NSString * const kAMForeColorKey;
 extern NSString * const kAMFontColorKey;
 
-// Identifies the Preferences panel Tray dictionary has one entry for each tray items
+#pragma mark - Keys for dictionaries controlled by AppController -
 extern NSString * const kAMTrayDictionaryKey;
 
-// Tray item identifiers
-extern NSString * const kAMTrayDictionaryKey;  // the tray itself, now its contents...
+#pragma mark - Members of the kAMTrayDictionary -
 extern NSString * const kAMConstantKey;
 extern NSString * const kAMVariableKey;
 extern NSString * const kAMExpressionKey;
@@ -51,14 +56,6 @@ extern NSString * const kAMVectorKey;
 extern NSString * const kAMMatrixKey;
 
 
-// Tray item property identifiers
-extern NSString * const kAMTrayItemIconKey;
-extern NSString * const kAMTrayItemTitleKey;
-extern NSString * const kAMTrayItemDescriptionKey;
-extern NSString * const kAMTrayItemBackcolorKey;
-extern NSString * const kAMTrayItemFontColorKey;
-
-
 typedef enum AMColor : NSUInteger {
     AMColorPaleRed = 0,
     AMColorPaleGreen = 1,
@@ -66,6 +63,8 @@ typedef enum AMColor : NSUInteger {
     AMColorPaleYellow = 3,
     AMColorPalePurple = 4,
     AMColorPaleAzure = 5,
+    AMColorPaleOrange = 6,
+    AMColorBarleyWhite = 7,
     AMColorWhite = 1000,
     AMColorBlack = 1001,
 } AMColor;

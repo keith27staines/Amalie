@@ -137,21 +137,21 @@
         // Ask the table to make us a nice view to hold the content
         view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
-        if ( [tableColumn.identifier isEqualToString:kAMTrayItemIconKey] ) {
+        if ( [tableColumn.identifier isEqualToString:kAMIconKey] ) {
             
             // This column has an icon and a title in a single cell
             [view.imageView setImage:trayItem.icon];
             [view.textField setStringValue:trayItem.title];
             return view;
         
-        } else if ( [tableColumn.identifier isEqualToString:kAMTrayItemBackcolorKey] ) {
+        } else if ( [tableColumn.identifier isEqualToString:kAMBackColorKey] ) {
             
             // View just holds a color well and we need to set its color
             colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
             [colorWellView.colorWell setColor:trayItem.backgroundColor];
             return colorWellView;
         
-        } else if ( [tableColumn.identifier isEqualToString:kAMTrayItemFontColorKey] ) {
+        } else if ( [tableColumn.identifier isEqualToString:kAMFontColorKey] ) {
             
             // View just holds a color well and we need to set its color
             colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;

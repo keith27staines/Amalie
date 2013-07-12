@@ -8,6 +8,8 @@
 
 #import "AMPreferencesTrayTableColorWellCellView.h"
 
+NSUInteger const colorWellTag = 1;
+
 @implementation AMPreferencesTrayTableColorWellCellView
 
 - (id)initWithFrame:(NSRect)frame
@@ -18,6 +20,11 @@
     }
     
     return self;
+}
+
+-(void)awakeFromNib
+{
+    _colorWell = [self viewWithTag:colorWellTag];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

@@ -67,7 +67,6 @@
             [[view textField] setAttributedStringValue:trayItem.attributedDescription];
             return view;
         }
-        
         return nil;
     }
     return nil;
