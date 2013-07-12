@@ -8,6 +8,14 @@
 
 #import "AMWorksheetView.h"
 #import "AMInsertableObjectView.h"
+#import "AMInsertableConstantView.h"
+#import "AMInsertableVariableView.h"
+#import "AMInsertableExpressionView.h"
+#import "AMInsertableEquationView.h"
+#import "AMInsertableVectorView.h"
+#import "AMInsertableMatrixView.h"
+#import "AMInsertableMathematicalSetView.h"
+#import "AMInsertableGraph2DView.h"
 
 @implementation AMWorksheetView
 
@@ -24,9 +32,57 @@
 -(void)awakeFromNib
 {
     // Determine the class name for draggable types
-    AMInsertableObjectView * ami = [[AMInsertableObjectView alloc] init];
-    NSArray * utArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [self registerForDraggedTypes:utArray];
+    NSMutableArray * allTypes = [NSMutableArray array];
+    AMInsertableObjectView * ami;
+    NSArray * typesArray;
+    
+    // Add pasteboard types for each type of insertable object
+    
+    // insertable object base class - for testing purposes only really
+    ami = [[AMInsertableObjectView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable constants
+    ami = [[AMInsertableConstantView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable variables
+    ami = [[AMInsertableVariableView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+    
+    // Insertable expressions
+    ami = [[AMInsertableExpressionView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable expressions
+    ami = [[AMInsertableEquationView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable expressions
+    ami = [[AMInsertableMathematicalSetView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable expressions
+    ami = [[AMInsertableGraph2DView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    
+    // register them all in one hit...
+    [self registerForDraggedTypes:allTypes];
+}
+
+-(void)drawRect:(NSRect)dirtyRect
+{
+    [[NSColor whiteColor] set];
+    NSRectFill(dirtyRect);
+    [super drawRect:dirtyRect];
 }
 
 -(NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
@@ -69,17 +125,25 @@
 {
     // Place dragged object into view hierarchy
     NSPasteboard * pb = [sender draggingPasteboard];
-    NSArray * classes = @[ [AMInsertableObjectView class] ];
+    NSArray * classes = @[ [AMInsertableObjectView class],
+                           [AMInsertableConstantView class],
+                           [AMInsertableVariableView class],
+                           [AMInsertableExpressionView class],
+                           [AMInsertableEquationView class],
+                           [AMInsertableVectorView class],
+                           [AMInsertableMatrixView class],
+                           [AMInsertableGraph2DView class] ];
     NSArray * objects = [pb readObjectsForClasses:classes options:nil];
     
     AMInsertableObjectView * view = objects[0];
     
     if (view) {
+        view.trayDataSource = self.trayDataSource;
         NSPoint windowPoint = [sender draggingLocation];
         NSPoint viewPoint = [self convertPoint:windowPoint fromView:nil];
         [view setFrameOrigin:viewPoint];
         [self addSubview:view];
-        [self setNeedsDisplay:YES];
+        [self setNeedsDisplayInRect:view.frame];
         return YES;
     }
     
@@ -90,11 +154,6 @@
 {
     // Could improve this by working out the dirty rectangle and calling setNeedsDisplayInRect instead, but this will do for now.
     [self setNeedsDisplay:YES];
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    // Drawing code here.
 }
 
 @end

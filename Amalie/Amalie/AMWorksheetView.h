@@ -7,7 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import"AMTrayDatasourceProtocol.h"
 
 @interface AMWorksheetView : NSView <NSDraggingDestination>
+
+@property IBOutlet id<AMTrayDatasourceProtocol>trayDataSource;
 
 @end

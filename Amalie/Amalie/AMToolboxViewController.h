@@ -15,6 +15,6 @@
 
 @property (weak) IBOutlet NSTableView *tableView;
 
-@property (weak) id<AMTrayDatasourceProtocol>trayDatasource;
+@property (weak) IBOutlet id<AMTrayDatasourceProtocol>trayDatasource;
 
 @end

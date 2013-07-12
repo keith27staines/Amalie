@@ -7,30 +7,32 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMTrayDatasourceProtocol.h"
+#import "AMTrayItem.h"
 
 typedef enum AMInsertableObjectState : NSInteger {
-    AMObjectInTray = 0,
-    AMObjectSelectedInTray = 500,
-    AMObjectMovingInTray = 1000,
-    AMObjectMovingOutsideOfTray = 2000,
-    AMObjectInsertable = 3000,
-    AMObjectInsertedCollapsed = 4000,
-    AMObjectInsertedForReading = 5000,
-    AMObjectInsertedForInpsecting = 6000,
-    AMObjectInsertedForEditing = 7000,
-    AMObjectInsertedForEditingAdvanced = 8000
+    AMObjectCollapsed = 1000,
+    AMObjectNormal = 2000,
+    AMObjectForInpsecting = 3000,
+    AMObjectForEditing = 4000,
+    AMObjectForEditingAdvanced = 5000
 } AMInsertableObjectState;
 
 @interface AMInsertableObjectView : NSView <NSPasteboardWriting,NSPasteboardReading>
 {
-    NSColor* _baseColor;
-    AMInsertableObjectState _insertionState;
+
+    AMInsertableObjectState _objectState;
 
 }
 
-@property AMInsertableObjectState insertionState;
-@property (readonly) NSColor * backColor;
-@property (readonly) NSColor * baseColor;
+@property AMInsertableObjectState objectState;
+@property NSColor * backColor;
+
+// Must override this in subclasses, since there will be one subclass for each tray item
+-(NSInteger)trayIndex;
+
+@property id<AMTrayDatasourceProtocol>trayDataSource;
+
 
 
 @end
