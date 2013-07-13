@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Sets have index 6
-    return 6;
+    return kAMMathematicalSetKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

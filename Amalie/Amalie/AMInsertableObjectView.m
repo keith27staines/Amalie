@@ -27,9 +27,10 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    return -1;  // MUST override!
+    [NSException raise:@"Subclasses must override this method." format:nil];
+    return nil;  // MUST override!
 }
 
 -(void)setObjectState:(AMInsertableObjectState)objectState
@@ -49,7 +50,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    AMTrayItem * item = [self.trayDataSource trayItemAtIndex:self.trayIndex];
+    AMTrayItem * item = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
     [item.backgroundColor set];
     [NSBezierPath fillRect:dirtyRect];
 }

@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Variables have index 1
-    return 1;
+    return kAMVariableKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

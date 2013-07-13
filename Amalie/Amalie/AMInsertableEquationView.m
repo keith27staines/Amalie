@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Equations have index 3
-    return 3;
+    return kAMEquationKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

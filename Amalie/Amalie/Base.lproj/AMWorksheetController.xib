@@ -120,6 +120,14 @@
                 <outlet property="trayDatasource" destination="HyB-ib-tvE" id="rNS-GD-P6n"/>
             </connections>
         </customObject>
+        <button verticalHuggingPriority="750" id="yH6-dJ-pah">
+            <rect key="frame" x="0.0" y="0.0" width="116" height="25"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="roundTextured" title="Round Textured" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6y0-D7-fna">
+                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                <font key="font" metaFont="system"/>
+            </buttonCell>
+        </button>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

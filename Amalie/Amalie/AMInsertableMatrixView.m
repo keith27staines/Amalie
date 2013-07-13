@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Matrices have index 5
-    return 5;
+    return kAMMatrixKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

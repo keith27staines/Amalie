@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Vectors have index 4
-    return 4;
+    return kAMVectorKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

@@ -157,6 +157,7 @@
 		78D5FD971790739B003D6AC6 /* AMInsertableMathematicalSetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableMathematicalSetView.m; sourceTree = "<group>"; };
 		78D5FD99179073C6003D6AC6 /* AMInsertableVectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableVectorView.h; sourceTree = "<group>"; };
 		78D5FD9A179073C6003D6AC6 /* AMInsertableVectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableVectorView.m; sourceTree = "<group>"; };
+		78D5FD9C17918E88003D6AC6 /* AMInsertables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertables.h; sourceTree = "<group>"; };
 		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
 		78DE823E1783664400C7EE10 /* KSMPrimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimes.m; sourceTree = "<group>"; };
 		78DE82431783664400C7EE10 /* KSMPrimeDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimeDecomposition.h; sourceTree = "<group>"; };
@@ -214,6 +215,7 @@
 			children = (
 				784D6EF81789CC11002BE03A /* AMAppController.h */,
 				784D6EF91789CC11002BE03A /* AMAppController.m */,
+				78D5FD9C17918E88003D6AC6 /* AMInsertables.h */,
 				787B3054178361BC001851C0 /* AMWorksheetController.h */,
 				787B3055178361BC001851C0 /* AMWorksheetController.m */,
 				785247C117848A4A00F6A7AD /* AMToolboxViewController.h */,

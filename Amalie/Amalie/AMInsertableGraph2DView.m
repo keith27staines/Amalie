@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // 2D graphs have index 7
-    return 7;
+    return kAMGraph2DKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

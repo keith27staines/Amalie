@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Constants have index 0
-    return 0;
+    return kAMConstantKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

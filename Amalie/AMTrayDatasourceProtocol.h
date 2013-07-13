@@ -14,4 +14,5 @@
 -(NSDictionary*)dictionaryOfAllTrayItems;
 -(NSArray*)arrayOfAllTrayItems;
 -(AMTrayItem*)trayItemAtIndex:(NSUInteger)index;
+-(AMTrayItem*)trayItemWithKey:(NSString*)key;
 @end

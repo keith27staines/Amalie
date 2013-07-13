@@ -20,10 +20,9 @@
     return self;
 }
 
--(NSInteger)trayIndex
+-(NSString*)trayItemKey
 {
-    // Expressions have index 1
-    return 2;
+    return kAMExpressionKey;
 }
 
 - (void)drawRect:(NSRect)dirtyRect

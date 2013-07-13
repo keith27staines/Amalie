@@ -7,15 +7,7 @@
 //
 
 #import "AMWorksheetView.h"
-#import "AMInsertableObjectView.h"
-#import "AMInsertableConstantView.h"
-#import "AMInsertableVariableView.h"
-#import "AMInsertableExpressionView.h"
-#import "AMInsertableEquationView.h"
-#import "AMInsertableVectorView.h"
-#import "AMInsertableMatrixView.h"
-#import "AMInsertableMathematicalSetView.h"
-#import "AMInsertableGraph2DView.h"
+#import "AMInsertables.h"
 
 @implementation AMWorksheetView
 
@@ -58,8 +50,18 @@
     typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
 
-    // Insertable expressions
+    // Insertable Equations
     ami = [[AMInsertableEquationView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable Vectors
+    ami = [[AMInsertableVectorView alloc] init];
+    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+
+    // Insertable Matrix
+    ami = [[AMInsertableMatrixView alloc] init];
     typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
 
@@ -72,7 +74,6 @@
     ami = [[AMInsertableGraph2DView alloc] init];
     typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
-
     
     // register them all in one hit...
     [self registerForDraggedTypes:allTypes];
@@ -152,8 +153,7 @@
 
 -(void)concludeDragOperation:(id<NSDraggingInfo>)sender
 {
-    // Could improve this by working out the dirty rectangle and calling setNeedsDisplayInRect instead, but this will do for now.
-    [self setNeedsDisplay:YES];
+
 }
 
 @end

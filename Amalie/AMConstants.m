@@ -17,8 +17,9 @@ NSString * const kAMDefaultFontName                   = @"Times New Roman";
 NSString * const kAMDefaultFixedWidthFontName         = @"Monaco";
 
 #pragma mark - key affixes -
-NSString * const kAMKeyPrefix                         =@"kAM";
+NSString * const kAMKeyPrefix                         = @"kAM";
 NSString * const kAMKeySuffix                         = @"Key";
+NSString * const kAMClassNameKey                      = @"kAMClassNameKey";
 
 #pragma mark - Page Layout -
 NSString * const kAMPaperSizeKey                      = @"kAMPaperSizeKey";

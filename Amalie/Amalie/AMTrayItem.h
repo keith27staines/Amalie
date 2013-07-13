@@ -15,7 +15,8 @@
             title:(NSString*)title
       info:(NSString*)description
   backgroundColor:(NSColor*)backgroundColor
-        fontColor:(NSColor*)fontColor;
+        fontColor:(NSColor*)fontColor
+   insertableType:(NSString*)className;
 
 -(id)initWithPropertiesDictionary:(NSDictionary*)dictionary;
 
@@ -28,6 +29,7 @@
 @property (readwrite) NSData * backgroundColorData;
 @property (readwrite) NSData * fontColorData;
 @property (readonly) NSDictionary * properties;
+@property (readonly) NSString * insertableClassName;
 
 @property (weak, readwrite) NSColor * backgroundColor;
 @property (weak, readwrite) NSColor * fontColor;

@@ -17,6 +17,8 @@
     return nil;
 }
 
+
+
 -(id)initWithPropertiesDictionary:(NSDictionary*)dictionary
 {
     return [self initWithKey:dictionary[kAMKeySuffix]
@@ -24,7 +26,8 @@
                        title:dictionary[kAMTitleKey]
                  info:dictionary[kAMInfoKey]
              backgroundColor:colorFromData( dictionary[kAMBackColorKey] )
-                   fontColor:colorFromData( dictionary[kAMFontColorKey] )];
+                   fontColor:colorFromData( dictionary[kAMFontColorKey] )
+         insertableType:kAMClassNameKey];
 }
 
 - (id)initWithKey:(NSString*)key
@@ -33,6 +36,7 @@
       info:(NSString*)description
   backgroundColor:(NSColor*)backgroundColor
         fontColor:(NSColor*)fontColor
+   insertableType:(NSString*)className
 {
     self = [super init];
     if (self) {
@@ -42,6 +46,7 @@
         _information = description;
         _backgroundColorData = dataFromColor(backgroundColor);
         _fontColorData = dataFromColor(fontColor);
+        _insertableClassName = className;
     }
     return self;
 }

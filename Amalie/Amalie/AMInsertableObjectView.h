@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AMTrayDatasourceProtocol.h"
 #import "AMTrayItem.h"
+#import "AMConstants.h"
 
 typedef enum AMInsertableObjectState : NSInteger {
     AMObjectCollapsed = 1000,
@@ -29,7 +30,7 @@ typedef enum AMInsertableObjectState : NSInteger {
 @property NSColor * backColor;
 
 // Must override this in subclasses, since there will be one subclass for each tray item
--(NSInteger)trayIndex;
+-(NSString*)trayItemKey;
 
 @property id<AMTrayDatasourceProtocol>trayDataSource;
 

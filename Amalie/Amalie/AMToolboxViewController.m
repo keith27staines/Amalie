@@ -7,15 +7,7 @@
 //
 
 #import "AMToolboxViewController.h"
-#import "AMInsertableObjectView.h"
-#import "AMInsertableConstantView.h"
-#import "AMInsertableVariableView.h"
-#import "AMInsertableExpressionView.h"
-#import "AMInsertableEquationView.h"
-#import "AMInsertableVectorView.h"
-#import "AMInsertableMatrixView.h"
-#import "AMInsertableMathematicalSetView.h"
-#import "AMInsertableGraph2DView.h"
+#import "AMInsertables.h"
 #import "AMAppController.h"
 #import "AMConstants.h"
 #import "AMTrayItem.h"
@@ -86,18 +78,12 @@
 -(id<NSPasteboardWriting>)tableView:(NSTableView *)tableView
              pasteboardWriterForRow:(NSInteger)row
 {
-    switch (row) {
-        case 0: return [[AMInsertableConstantView alloc] init];
-        case 1: return [[AMInsertableVariableView alloc] init];
-        case 2: return [[AMInsertableExpressionView alloc] init];
-        case 3: return [[AMInsertableEquationView alloc] init];
-        case 4: return [[AMInsertableVectorView alloc] init];
-        case 5: return [[AMInsertableMatrixView alloc] init];
-        case 6: return [[AMInsertableMathematicalSetView alloc] init];
-        case 7: return [[AMInsertableGraph2DView alloc] init];
-        default: return [[AMInsertableObjectView alloc] init];
-    }
-    return [[AMInsertableObjectView alloc] init];
+    
+    // The table is the tray (of insertable items).
+    AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
+    NSString * className = trayItem.insertableClassName;
+    AMInsertableObjectView * insertableView = [[NSClassFromString(className) alloc] init];
+    return insertableView;
 }
 
 

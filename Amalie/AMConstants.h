@@ -19,6 +19,7 @@ extern NSString * const kAMDefaultFixedWidthFontName;
 #pragma mark - key affixes -
 extern NSString * const kAMKeyPrefix;
 extern NSString * const kAMKeySuffix;
+extern NSString * const kAMClassNameKey;
 
 #pragma mark - Page Layout -
 extern NSString * const kAMPaperSizeKey;
