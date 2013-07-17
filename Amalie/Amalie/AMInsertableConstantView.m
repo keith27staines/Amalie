@@ -30,5 +30,14 @@
     [super drawRect:dirtyRect];
 }
 
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // decode ivars for this subclass
+    }
+    return self;
+}
+
 
 @end

@@ -8,6 +8,8 @@
 
 #import "AMWorksheetView.h"
 #import "AMInsertables.h"
+#import "AMWorksheetController.h"
+
 
 @implementation AMWorksheetView
 
@@ -29,11 +31,6 @@
     NSArray * typesArray;
     
     // Add pasteboard types for each type of insertable object
-    
-    // insertable object base class - for testing purposes only really
-    ami = [[AMInsertableObjectView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
 
     // Insertable constants
     ami = [[AMInsertableConstantView alloc] init];
@@ -70,7 +67,7 @@
     typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
 
-    // Insertable expressions
+    // Insertable 2D graphs
     ami = [[AMInsertableGraph2DView alloc] init];
     typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
@@ -88,64 +85,100 @@
 
 -(NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
-    // check type and see if we can accept
-    if (![sender draggingSource]) {
-        // source of drag is external to application
-        return NSDragOperationNone;
-    } else {
-        // dragging source is us
-        return NSDragOperationCopy;
+    
+    NSLog(@"%@ - draggingEntered" , [self.class description]);
+    
+    // check type and see if we can accept, and if we can, what we will do with it
+    NSDragOperation operation = NSDragOperationNone;
+    id source = [sender draggingSource];
+    
+    if (source)
+    {
+        // dragging source is in this application
+        if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
+            // Object being dropped in from the tray
+            operation = NSDragOperationCopy;
+        } else {
+            operation = NSDragOperationMove;
+        }
     }
     
-    return NSDragOperationNone;
+    return operation;
 }
 
 -(NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
 {
-    // modify mouse pointer according to destination, etc
-    return NSDragOperationCopy;
+    NSDragOperation operation = NSDragOperationNone;
+    id source = [sender draggingSource];
+    
+    if ( [[source identifier] isEqualToString:kAMTrayDictionaryKey] ) {
+        // Object being dropped in from the tray
+        operation = NSDragOperationCopy;
+    } else {
+        operation = NSDragOperationMove;
+    }
+    
+    return operation;
+    
 }
 
 -(void)draggingEnded:(id<NSDraggingInfo>)sender
 {
-    // item was dragged out of the view
+    NSLog(@"%@ - draggingEnded" , [self.class description]);
+
 }
 
 -(void)draggingExited:(id<NSDraggingInfo>)sender
 {
-    // mouse released
+    NSLog(@"%@ - draggingExited" , [self.class description]);
+
 }
 
 -(BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender
 {
-    // We are always prepared. Maybe change this later if editing something for example.
+    // We are always prepared. Maybe change this later if doing something that can't be interrupted (editing something for example?).
+    NSLog(@"%@ - prepareForDragOperation" , [self.class description]);
+
     return YES;
 }
 
 -(BOOL)performDragOperation:(id<NSDraggingInfo>)sender
 {
+    NSLog(@"%@ - performDragOperation" , [self.class description]);
+    static NSArray * classes;
+    
+    if (!classes) {
+        classes = @[ [AMInsertableConstantView class],
+                     [AMInsertableVariableView class],
+                     [AMInsertableExpressionView class],
+                     [AMInsertableEquationView class],
+                     [AMInsertableVectorView class],
+                     [AMInsertableMatrixView class],
+                     [AMInsertableGraph2DView class]
+                   ];
+    }
+
     // Place dragged object into view hierarchy
     NSPasteboard * pb = [sender draggingPasteboard];
-    NSArray * classes = @[ [AMInsertableObjectView class],
-                           [AMInsertableConstantView class],
-                           [AMInsertableVariableView class],
-                           [AMInsertableExpressionView class],
-                           [AMInsertableEquationView class],
-                           [AMInsertableVectorView class],
-                           [AMInsertableMatrixView class],
-                           [AMInsertableGraph2DView class] ];
     NSArray * objects = [pb readObjectsForClasses:classes options:nil];
-    
     AMInsertableObjectView * view = objects[0];
     
     if (view) {
-        view.trayDataSource = self.trayDataSource;
-        NSPoint windowPoint = [sender draggingLocation];
-        NSPoint viewPoint = [self convertPoint:windowPoint fromView:nil];
-        [view setFrameOrigin:viewPoint];
-        [self addSubview:view];
-        [self setNeedsDisplayInRect:view.frame];
+
+        NSPoint draggingLocation = [sender draggingLocation];
+        draggingLocation = [self convertPoint:draggingLocation fromView:nil];
+        
+        // Deal with items coming from the tray (library of insertable objects)
+        if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
+            // convert from window to view coordinates and set this as the view's frame origin
+            [self.delegate addInsertableObject:view atPosition:draggingLocation];
+            return YES;
+        }
+        
+        // Dragging source is the view itself, which is being repositioned in the worksheet
+        [self.delegate moveInsertableObject:view toPosition:draggingLocation];
         return YES;
+
     }
     
     return NO;
@@ -153,7 +186,7 @@
 
 -(void)concludeDragOperation:(id<NSDraggingInfo>)sender
 {
-
+    NSLog(@"%@ - prepareForDragOperation" , [self.class description]);
 }
 
 @end

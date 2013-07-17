@@ -1,5 +1,5 @@
 //
-//  AMTrayDatasourceProtocol.h
+//  AMTrayDatasource.h
 //  Amalie
 //
 //  Created by Keith Staines on 11/07/2013.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @class AMTrayItem;
 
-@protocol AMTrayDatasourceProtocol <NSObject>
+@protocol AMTrayDatasource <NSObject>
 -(NSUInteger)trayItemCount;
 -(NSDictionary*)dictionaryOfAllTrayItems;
 -(NSArray*)arrayOfAllTrayItems;

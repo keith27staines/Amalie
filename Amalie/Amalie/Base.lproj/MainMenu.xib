@@ -455,7 +455,7 @@ Gw
         </customObject>
         <customObject id="VQx-XF-xuF" customClass="AMAppController">
             <connections>
-                <action selector="showPreferencesPanel:" destination="129" id="jxz-y0-zTG"/>
+                <action selector="showPreferencesPanel:" destination="129" id="R5h-9h-ZEW"/>
             </connections>
         </customObject>
     </objects>

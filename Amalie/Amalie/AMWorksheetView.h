@@ -6,11 +6,26 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@class AMWorksheetController;
+@class AMAppController;
+
 #import <Cocoa/Cocoa.h>
-#import"AMTrayDatasourceProtocol.h"
+#import "AMTrayDatasource.h"
+#import "AMInsertableObjectViewDelegate.h"
+
 
 @interface AMWorksheetView : NSView <NSDraggingDestination>
 
-@property IBOutlet id<AMTrayDatasourceProtocol>trayDataSource;
+/*!
+ * A delegate from which we get all document structure and behaviour of items
+ * contained within the document.
+ */
+@property (weak) IBOutlet AMWorksheetController * delegate;
+
+/*!
+ * The trayDataSource is a delegate that allows us to load tray items into the 
+ * tray table.
+ */
+@property (weak) IBOutlet AMAppController * trayDataSource;
 
 @end

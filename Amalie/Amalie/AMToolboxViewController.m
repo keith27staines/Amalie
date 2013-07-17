@@ -25,7 +25,7 @@
     
     // setup the table to be a drag source
     [[self tableView] setDraggingSourceOperationMask:NSDragOperationCopy forLocal:YES];
-    [[self tableView] setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+    [[self tableView] setDraggingSourceOperationMask:NSDragOperationNone forLocal:NO];
     [[self tableView] setVerticalMotionCanBeginDrag:YES];
     [[self tableView] reloadData];
 }

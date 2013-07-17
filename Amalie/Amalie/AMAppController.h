@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AMTrayDatasourceProtocol.h"
+#import "AMTrayDatasource.h"
 
 @class AMPreferencesWindowController;
 @class AMPreferences;
 
-@interface AMAppController : NSObject <AMTrayDatasourceProtocol>
+/*!
+ * Manages the main menu items not related to the current document. 
+ * Also manages objects and data structures that are referenced by
+ * more than one window, such as user preferences.
+ */
+@interface AMAppController : NSObject <AMTrayDatasource>
 
 - (IBAction)showPreferencesPanel:(id)sender;
 

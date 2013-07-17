@@ -8,7 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMWorksheetController">
             <connections>
+                <outlet property="appController" destination="GkH-jk-e4m" id="ZQd-0w-0o0"/>
                 <outlet property="window" destination="5" id="18"/>
+                <outlet property="worksheetView" destination="74f-2O-Z87" id="8Ns-7F-ve4"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -27,7 +29,8 @@
                         <rect key="frame" x="0.0" y="237" width="894" height="533"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <connections>
-                            <outlet property="trayDataSource" destination="HyB-ib-tvE" id="Sbe-84-NK3"/>
+                            <outlet property="delegate" destination="-2" id="Vw5-c8-Mrp"/>
+                            <outlet property="trayDataSource" destination="GkH-jk-e4m" id="r1w-XL-YGm"/>
                         </connections>
                     </customView>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJD-vM-bCf" customClass="AMToolboxView">
@@ -73,7 +76,7 @@
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNY-yz-5Iz">
                                                                     <rect key="frame" x="47" y="3" width="200" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" allowsEditingTextAttributes="YES" id="Ipe-RU-qVT">
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ipe-RU-qVT">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -89,8 +92,8 @@
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
-                                                <outlet property="dataSource" destination="FLp-Ap-0nb" id="Fik-sf-HMS"/>
-                                                <outlet property="delegate" destination="FLp-Ap-0nb" id="Pk2-qw-Ht1"/>
+                                                <outlet property="dataSource" destination="o5b-PQ-KZl" id="igo-Uv-I1u"/>
+                                                <outlet property="delegate" destination="o5b-PQ-KZl" id="4UE-gb-KhD"/>
                                             </connections>
                                         </tableView>
                                     </subviews>
@@ -114,20 +117,27 @@
             </connections>
         </window>
         <customObject id="-3" userLabel="Application"/>
-        <customObject id="HyB-ib-tvE" customClass="AMAppController"/>
-        <customObject id="FLp-Ap-0nb" customClass="AMToolboxViewController">
+        <customObject id="o5b-PQ-KZl" customClass="AMToolboxViewController">
             <connections>
-                <outlet property="trayDatasource" destination="HyB-ib-tvE" id="rNS-GD-P6n"/>
+                <outlet property="appController" destination="GkH-jk-e4m" id="1eC-Ph-Yim"/>
+                <outlet property="tableView" destination="Irp-Yf-VE1" id="t0l-qu-13n"/>
+                <outlet property="trayDatasource" destination="GkH-jk-e4m" id="3Jw-kU-K2N"/>
             </connections>
         </customObject>
-        <button verticalHuggingPriority="750" id="yH6-dJ-pah">
-            <rect key="frame" x="0.0" y="0.0" width="116" height="25"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="roundTextured" title="Round Textured" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6y0-D7-fna">
-                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                <font key="font" metaFont="system"/>
-            </buttonCell>
-        </button>
+        <customObject id="GkH-jk-e4m" customClass="AMAppController"/>
+        <menu id="OHA-0p-6Jl">
+            <items>
+                <menuItem title="Item 1" id="KL2-wU-Af5">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="SZh-O8-n4v">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 3" id="PDr-sZ-yzc">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

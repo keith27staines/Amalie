@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMTrayDatasourceProtocol.h"
+#import "AMTrayDatasource.h"
 
 @interface AMPreferencesWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -40,6 +40,6 @@
 - (IBAction)changedFixedWidthFontSize:(id)sender;
 
 
-@property (weak) id<AMTrayDatasourceProtocol>trayDatasource;
+@property (weak) id<AMTrayDatasource>trayDatasource;
 
 @end

@@ -6,20 +6,24 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@import QuartzCore;
 #import <Cocoa/Cocoa.h>
-#import "AMTrayDatasourceProtocol.h"
+#import "AMTrayDatasource.h"
 #import "AMTrayItem.h"
 #import "AMConstants.h"
+#import "AMInsertableObjectViewDelegate.h"
 
 typedef enum AMInsertableObjectState : NSInteger {
-    AMObjectCollapsed = 1000,
-    AMObjectNormal = 2000,
-    AMObjectForInpsecting = 3000,
-    AMObjectForEditing = 4000,
+    AMObjectNormal             = 0000,
+    AMObjectCollapsed          = 1000,
+    AMObjectForInpsecting      = 3000,
+    AMObjectForEditing         = 4000,
     AMObjectForEditingAdvanced = 5000
 } AMInsertableObjectState;
 
-@interface AMInsertableObjectView : NSView <NSPasteboardWriting,NSPasteboardReading>
+@interface AMInsertableObjectView : NSView <NSPasteboardWriting,
+                                            NSPasteboardReading,
+                                            NSCoding>
 {
 
     AMInsertableObjectState _objectState;
@@ -28,11 +32,25 @@ typedef enum AMInsertableObjectState : NSInteger {
 
 @property AMInsertableObjectState objectState;
 @property NSColor * backColor;
+@property NSEvent * mouseDownEvent;
+@property (readonly) BOOL isDragging;
+@property (readonly) NSImage * dragImage;
+@property float frameTop;
+@property float frameLeft;
+@property float frameBottom;
+@property float frameRight;
+@property float frameMidY;
+@property NSPoint frameTopLeft;
+@property (readonly) float frameWidth;
+@property (readonly) float frameHeight;
+@property NSString * uuid;
 
 // Must override this in subclasses, since there will be one subclass for each tray item
 -(NSString*)trayItemKey;
 
-@property id<AMTrayDatasourceProtocol>trayDataSource;
+@property id <AMTrayDatasource> trayDataSource;
+@property id <AMInsertableObjectViewDelegate> insertableObjectDelegate;
+
 
 
 

@@ -53,11 +53,20 @@
 
 -(NSAttributedString*)attributedDescription
 {
-    NSString * fullDescription = [self.title stringByAppendingString:@" - "];
-    fullDescription = [fullDescription stringByAppendingString:self.information];
+    NSString * hyphenAndInfo = [@" - " stringByAppendingString:self.information];
+    NSString * fullDescription = [self.title stringByAppendingString:hyphenAndInfo];
+    
+    NSFont * fnt = [NSFont fontWithName:@"Calibri Bold" size:0];
+    
+    
     NSRange titleRange = NSMakeRange(0, [self.title length]);
+    //NSRange infoRange = [fullDescription rangeOfString:hyphenAndInfo];
+    NSRange fullRange = NSMakeRange(0, [fullDescription length]);
     NSMutableAttributedString * attrString = [[NSMutableAttributedString alloc] initWithString:fullDescription];
-    [attrString addAttribute:NSFontNameAttribute value:[NSFont boldSystemFontOfSize:0] range:titleRange];
+    [attrString addAttribute:NSFontNameAttribute value:fnt range:fullRange];
+    
+    [attrString applyFontTraits:NSFontBoldTrait | NSFontExpandedTrait range:titleRange];
+
     
     return attrString;
 }
@@ -95,7 +104,8 @@
              kAMTitleKey : self.title ,
              kAMInfoKey : self.information ,
              kAMBackColorKey : self.backgroundColorData ,
-             kAMFontColorKey : self.fontColorData};
+             kAMFontColorKey : self.fontColorData ,
+             kAMClassNameKey : self.className};
 }
 
 @end
