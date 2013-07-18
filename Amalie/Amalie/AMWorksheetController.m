@@ -6,12 +6,15 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@import QuartzCore;
+
 #import "AMWorksheetController.h"
 #import "AMWorksheetView.h"
 #import "AMInsertables.h"
 
 NSUInteger const kAMDefaultLineSpace = 20;
 NSUInteger const kAMDefaultLeftMargin = 36;
+NSUInteger const kAMDefaultTopMargin = 36;
 
 
 @interface AMWorksheetController()
@@ -60,30 +63,33 @@ NSUInteger const kAMDefaultLeftMargin = 36;
 
 #pragma mark - AMInsertableObjectViewDelegate -
 
--(void)addInsertableObject:(AMInsertableObjectView*)object atPosition:(NSPoint)topLeft
+-(void)addInsertableObject:(AMInsertableObjectView*)view atPosition:(NSPoint)frameOrigin
 {
     
-    if (!object) return;
+    if (!view) return;
     
-    object.uuid = [NSUUID UUID];
+    view.uuid = [NSUUID UUID];
     
     // Add the object to our list of inserted objects
-    [_insertsArray addObject:object];
-    [_insertsDictionary setObject:object forKey:object.uuid];
-    object.insertableObjectDelegate = self;
-    [object setFrameOrigin:topLeft];
-    [self.worksheetView addSubview:object];
-
+    [_insertsArray addObject:view];
+    [_insertsDictionary setObject:view forKey:view.uuid];
+    view.insertableObjectDelegate = self;
+    [self.worksheetView addSubview:view];
+    [view setFrameOrigin:frameOrigin];
     
     // The following line causes a compiler warning. It would be easy to cast the problem away using (id<AMTrayDatasource>) but I haven't done so because I want to fix it more fundamentally. Ideally, the appController outlet should be replaced with an id<AMTrayDatasource> outlet, but when I do this, IB doesn't let me connect the outlet to the app controller, even though the appcontroller does implement the required AMTrayDatasource protocol.
-    object.trayDataSource = self.appController;
+    view.trayDataSource = self.appController;
+    [self scheduleLayout];
 
+}
 
-    // We've added an object, but this object is likely to disturb the placement of other objects, so we should check to see if they need to be repositioned.
-    [self.worksheetView setNeedsDisplay:[self layoutInserts]];
-    
-    // Inserted the view so we need to display it
-    [object setNeedsDisplay:YES];
+-(void)scheduleLayout
+{
+    [NSTimer scheduledTimerWithTimeInterval:0.001
+                                     target:self
+                                   selector:NSSelectorFromString(@"layoutInsertsAfterTimer:")
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 -(AMInsertableObjectView*)insertableObjectForKey:(NSString*)uuid
@@ -95,7 +101,7 @@ NSUInteger const kAMDefaultLeftMargin = 36;
  * Determines whether the layout has changed and repositions views if required.
  * @Returns Returns YES if layout changes have been made, otherwise NO.
  */
--(BOOL)layoutInserts
+-(BOOL)layoutInsertsAfterTimer:(NSTimer*)timer
 {
     BOOL layoutChanged = YES;  // !!!!!! this wasn't working so good
     
@@ -124,17 +130,15 @@ NSUInteger const kAMDefaultLeftMargin = 36;
 
 -(void)layoutInsertsFromIndex:(NSUInteger)index
 {
-    // Make sure that the view at index is correctly positioned
-    AMInsertableObjectView * previouseView = _insertsArray[index];
-    previouseView.frameTopLeft = NSMakePoint(kAMDefaultLeftMargin, previouseView.frameTop);
-    
-    // Now iterate through array from this now correctly positioned view, using the most recently repositioned view as a baseline to establish the positioning of the next view.
-    for (NSUInteger i = index + 1; i < [_insertsArray count]; i++) {
-        AMInsertableObjectView * adjustedView = _insertsArray[i-1];
-        AMInsertableObjectView * nextViewToAdjust = _insertsArray[i];
-        NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, adjustedView.frameBottom - kAMDefaultLineSpace);
-        nextViewToAdjust.frameTopLeft = newTopLeft;
+    [CATransaction begin];
+    float firstTop = self.worksheetView.frame.size.height - kAMDefaultTopMargin;
+    NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
+ 
+    for (AMInsertableConstantView * view in _insertsArray) {
+        [view setFrameTopLeft:newTopLeft animate:YES];
+        newTopLeft = NSMakePoint(newTopLeft.x, newTopLeft.y - view.frameHeight - kAMDefaultLineSpace);
     }
+    [CATransaction commit];
 }
 
 -(void)sortInserts
@@ -176,7 +180,7 @@ NSUInteger const kAMDefaultLeftMargin = 36;
     [_insertsDictionary removeObjectForKey:object.uuid];
     object.insertableObjectDelegate = nil;
     [object removeFromSuperview];
-    [self.worksheetView setNeedsDisplay:[self layoutInserts]];
+    [self scheduleLayout];
 
 }
 
@@ -186,10 +190,8 @@ NSUInteger const kAMDefaultLeftMargin = 36;
     AMInsertableObjectView * actualObject = [self actualFromPossibleShadow:object];
     
     // Move it
-    actualObject.frameLeft = newTopLeft.x;
-    actualObject.frameTop = newTopLeft.y;
-    [self.worksheetView setNeedsDisplay:[self layoutInserts]];
-
+    [actualObject setFrameTopLeft:newTopLeft animate:NO];
+    [self scheduleLayout];
 }
 
 -(AMInsertableObjectView*)actualFromPossibleShadow:(AMInsertableObjectView*)shadow
@@ -203,5 +205,13 @@ NSUInteger const kAMDefaultLeftMargin = 36;
     return actual;
 }
 
+-(void)draggingDidStart
+{
+    [self.worksheetView pushCursor:([NSCursor closedHandCursor])];
+}
+-(void)draggingDidEnd;
+{
+    [self.worksheetView popCursor];
+}
 @end
 

@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@import QuartzCore;
+
+#import "AMTrayItem.h"
 #import "AMInsertableObjectView.h"
 
 float const kAMSMallDistance = 3.0f;
@@ -102,6 +105,18 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     return self;
 }
 
+-(void)viewDidMoveToWindow
+{
+    static BOOL previouslyEntered = NO;
+    
+    if ( !previouslyEntered ) {
+        previouslyEntered = YES;
+
+        [self setWantsLayer:YES];
+        
+    }
+}
+
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
     [super encodeWithCoder:aCoder];
@@ -194,7 +209,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
             break;
 
         case NSDragOperationMove:
-            // We've already been moved by the handler in the partent worksheetView
+            // We've already been moved by the handler in the parent worksheetView
             [self concludeDragging];
         
         case NSDragOperationNone:
@@ -229,23 +244,16 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 -(void)mouseUp:(NSEvent *)theEvent
 {
     NSLog(@"%@ - mouseUp",[self class]);
-
-//    if (self.isDragging) {
-//        NSPoint mouseDown = [self.mouseDownEvent locationInWindow];
-//        NSPoint mouseUp = [theEvent locationInWindow];
-//        
-//        float dx = mouseUp.x - mouseDown.x;
-//        float dy = mouseUp.y - mouseDown.y;
-//        float newOriginX = self.frame.origin.x + dx;
-//        float newOriginY = self.frame.origin.y + dy;
-//        NSRect newFrame = NSMakeRect(newOriginX, newOriginY, self.frame.size.width, self.frame.size.height);
-//        [self setFrame:newFrame];
-//    }
-//    [self concludeDragging];
 }
 
 -(void)concludeDragging
 {
+    // restore previous cursor
+    [NSCursor pop];
+    
+    // the item has moved, we need to reset our cursor rectangle
+    [self.insertableObjectDelegate draggingDidEnd];
+    
     self.mouseDownEvent = nil;
     _dragImage = nil;
     _isDragging = NO;
@@ -269,6 +277,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
         
     }
     
+    [self.insertableObjectDelegate draggingDidStart];
     [self setHidden:YES];
     
     originalPoint = NSMakePoint(0, 0);
@@ -343,10 +352,16 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     return NSMakePoint(self.frameLeft, self.frameTop);
 }
 
--(void)setFrameTopLeft:(NSPoint)topLeft
+-(void)setFrameTopLeft:(NSPoint)topLeft animate:(BOOL)animate;
 {
-    [self setFrameOrigin:NSMakePoint(topLeft.x, topLeft.y - self.frameHeight)];
+    NSPoint newOrigin = NSMakePoint(topLeft.x, topLeft.y - self.frameHeight);
+    if (animate) {
+        [[self animator] setFrameOrigin:newOrigin];
+    } else {
+        [self setFrameOrigin:newOrigin];
+    }
 }
+
 
 -(void)setFrameTop:(float)top
 {

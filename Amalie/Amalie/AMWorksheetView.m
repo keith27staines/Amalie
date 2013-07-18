@@ -76,6 +76,7 @@
     [self registerForDraggedTypes:allTypes];
 }
 
+
 -(void)drawRect:(NSRect)dirtyRect
 {
     [[NSColor whiteColor] set];
@@ -170,8 +171,9 @@
         
         // Deal with items coming from the tray (library of insertable objects)
         if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
-            // convert from window to view coordinates and set this as the view's frame origin
+            [view setFrameOrigin:draggingLocation];
             [self.delegate addInsertableObject:view atPosition:draggingLocation];
+            [self.delegate moveInsertableObject:view toPosition:draggingLocation];
             return YES;
         }
         
@@ -187,6 +189,16 @@
 -(void)concludeDragOperation:(id<NSDraggingInfo>)sender
 {
     NSLog(@"%@ - prepareForDragOperation" , [self.class description]);
+}
+
+-(void)pushCursor:(NSCursor*)cursor
+{
+    [cursor push];
+}
+-(void)popCursor
+{
+    [NSCursor pop];
+    [[self window] invalidateCursorRectsForView:self];
 }
 
 @end

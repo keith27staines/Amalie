@@ -6,20 +6,23 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@import QuartzCore;
+
 #import <Cocoa/Cocoa.h>
-#import "AMTrayDatasource.h"
-#import "AMTrayItem.h"
+
+// Importing constants common to all of Amalie
 #import "AMConstants.h"
+
+// Importing delegate protocols
+#import "AMTrayDatasource.h"
 #import "AMInsertableObjectViewDelegate.h"
 
-typedef enum AMInsertableObjectState : NSInteger {
+typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
     AMObjectNormal             = 0000,
     AMObjectCollapsed          = 1000,
     AMObjectForInpsecting      = 3000,
     AMObjectForEditing         = 4000,
     AMObjectForEditingAdvanced = 5000
-} AMInsertableObjectState;
+};
 
 @interface AMInsertableObjectView : NSView <NSPasteboardWriting,
                                             NSPasteboardReading,
@@ -40,7 +43,6 @@ typedef enum AMInsertableObjectState : NSInteger {
 @property float frameBottom;
 @property float frameRight;
 @property float frameMidY;
-@property NSPoint frameTopLeft;
 @property (readonly) float frameWidth;
 @property (readonly) float frameHeight;
 @property NSString * uuid;
@@ -51,6 +53,7 @@ typedef enum AMInsertableObjectState : NSInteger {
 @property id <AMTrayDatasource> trayDataSource;
 @property id <AMInsertableObjectViewDelegate> insertableObjectDelegate;
 
+-(void)setFrameTopLeft:(NSPoint)topLeft animate:(BOOL)animate;
 
 
 

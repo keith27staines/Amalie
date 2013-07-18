@@ -28,4 +28,7 @@
  */
 @property (weak) IBOutlet AMAppController * trayDataSource;
 
+-(void)pushCursor:(NSCursor*)cursor;
+-(void)popCursor;
+
 @end
