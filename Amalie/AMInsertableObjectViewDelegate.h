@@ -11,9 +11,9 @@
 #import <Foundation/Foundation.h>
 
 @protocol AMInsertableObjectViewDelegate <NSObject>
--(void)addInsertableObject:(AMInsertableObjectView*)view atPosition:(NSPoint)topLeft;
+-(void)addInsertableObject:(AMInsertableObjectView*)view withTopLeftAtPosition:(NSPoint)topLeft;
 -(void)removeInsertableObject:(AMInsertableObjectView*)object;
--(void)moveInsertableObject:(AMInsertableObjectView*)object toPosition:(NSPoint)newTopLeft;
+-(void)moveInsertableObject:(AMInsertableObjectView*)object withTopLeftAtPosition:(NSPoint)newTopLeft;
 -(void)draggingDidStart;
 -(void)draggingDidEnd;
 @end

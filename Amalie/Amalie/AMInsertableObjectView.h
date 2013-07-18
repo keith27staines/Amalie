@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
 @property AMInsertableObjectState objectState;
 @property NSColor * backColor;
 @property NSEvent * mouseDownEvent;
+@property NSPoint mouseDownWindowPoint;
 @property (readonly) BOOL isDragging;
 @property (readonly) NSImage * dragImage;
 @property float frameTop;

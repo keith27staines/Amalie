@@ -63,7 +63,7 @@ NSUInteger const kAMDefaultTopMargin = 36;
 
 #pragma mark - AMInsertableObjectViewDelegate -
 
--(void)addInsertableObject:(AMInsertableObjectView*)view atPosition:(NSPoint)frameOrigin
+-(void)addInsertableObject:(AMInsertableObjectView*)view withTopLeftAtPosition:(NSPoint)frameOrigin
 {
     
     if (!view) return;
@@ -184,7 +184,7 @@ NSUInteger const kAMDefaultTopMargin = 36;
 
 }
 
--(void)moveInsertableObject:(AMInsertableObjectView*)object toPosition:(NSPoint)newTopLeft
+-(void)moveInsertableObject:(AMInsertableObjectView*)object withTopLeftAtPosition:(NSPoint)newTopLeft
 {
     // object might just be a "shadow" object, a temporary copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
     AMInsertableObjectView * actualObject = [self actualFromPossibleShadow:object];

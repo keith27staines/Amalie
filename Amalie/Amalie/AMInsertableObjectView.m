@@ -36,9 +36,22 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     if (self) {
         // Initialization code here.
         _uuid = @"";
+        _mouseDownWindowPoint = NSMakePoint(-100, -100);
     }
     
     return self;
+}
+
+-(void)viewDidMoveToWindow
+{
+    static BOOL previouslyEntered = NO;
+    
+    if ( !previouslyEntered ) {
+        previouslyEntered = YES;
+        
+        [self setWantsLayer:YES];
+        
+    }
 }
 
 #pragma mark - State -
@@ -96,6 +109,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
         
         _uuid = [aDecoder decodeObjectForKey:@"uuid"];
         _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
+        _mouseDownWindowPoint = [aDecoder decodePointForKey:@"mouseDownWindowPoint"];
         
         if ( [aDecoder containsValueForKey:@"dragImage"] ) {
             _dragImage = [aDecoder decodeObjectForKey:@"dragImage"];
@@ -105,24 +119,13 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     return self;
 }
 
--(void)viewDidMoveToWindow
-{
-    static BOOL previouslyEntered = NO;
-    
-    if ( !previouslyEntered ) {
-        previouslyEntered = YES;
-
-        [self setWantsLayer:YES];
-        
-    }
-}
-
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
     [super encodeWithCoder:aCoder];
     
     [aCoder encodeObject:self.uuid forKey:@"uuid"];
     [aCoder encodeBool:self.isDragging forKey:@"isDragging"];
+    [aCoder encodePoint:self.mouseDownWindowPoint forKey:@"mouseDownWindowPoint"];
     
     if (_dragImage) {
         [aCoder encodeObject:self.dragImage forKey:@"dragImage"];
@@ -186,7 +189,6 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     return NSDragOperationMove | NSDragOperationDelete;
 }
 
-
 #pragma mark - Event handling -
 
 -(BOOL)acceptsFirstResponder
@@ -239,6 +241,8 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 -(void)mouseDown:(NSEvent *)theEvent
 {
     self.mouseDownEvent = theEvent;
+    self.mouseDownWindowPoint = [theEvent locationInWindow];
+    [[NSCursor closedHandCursor] push];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent
@@ -254,7 +258,9 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     // the item has moved, we need to reset our cursor rectangle
     [self.insertableObjectDelegate draggingDidEnd];
     
+    // self.mouseDownEvent = nil;
     self.mouseDownEvent = nil;
+    self.mouseDownWindowPoint = NSMakePoint(-100, -100);
     _dragImage = nil;
     _isDragging = NO;
     [self setHidden:NO];
@@ -262,10 +268,9 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
-    NSPoint originalPoint = [self.mouseDownEvent locationInWindow];
     NSPoint currentPoint = [theEvent locationInWindow];
 
-    if ( pointsAreClose(originalPoint, currentPoint) )
+    if ( pointsAreClose(self.mouseDownWindowPoint, currentPoint) )
     {
         _isDragging = NO;
         return;
@@ -280,14 +285,14 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     [self.insertableObjectDelegate draggingDidStart];
     [self setHidden:YES];
     
-    originalPoint = NSMakePoint(0, 0);
+    NSPoint originPoint = NSMakePoint(0, 0);
     
     // start the drag
     NSPasteboard * pb = [NSPasteboard pasteboardWithName:NSDragPboard];
     [pb clearContents];
     [pb declareTypes:[self readableTypesForPasteBoard:pb] owner:self];
     if ( [pb writeObjects:@[self] ] ) {
-        [self dragImage:_dragImage at:originalPoint offset:NSZeroSize event:self.mouseDownEvent pasteboard:pb source:self slideBack:YES];
+        [self dragImage:_dragImage at:originPoint offset:NSZeroSize event:self.mouseDownEvent pasteboard:pb source:self slideBack:YES];
     } else NSAssert(NO, @"Failed to write to pasteboard");
 }
 

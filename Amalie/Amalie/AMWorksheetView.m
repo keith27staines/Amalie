@@ -165,20 +165,24 @@
     AMInsertableObjectView * view = objects[0];
     
     if (view) {
-
+        
         NSPoint draggingLocation = [sender draggingLocation];
         draggingLocation = [self convertPoint:draggingLocation fromView:nil];
         
         // Deal with items coming from the tray (library of insertable objects)
         if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
             [view setFrameOrigin:draggingLocation];
-            [self.delegate addInsertableObject:view atPosition:draggingLocation];
-            [self.delegate moveInsertableObject:view toPosition:draggingLocation];
+            [self.delegate addInsertableObject:view withTopLeftAtPosition:draggingLocation];
             return YES;
         }
         
         // Dragging source is the view itself, which is being repositioned in the worksheet
-        [self.delegate moveInsertableObject:view toPosition:draggingLocation];
+        NSPoint mouseDownWindowPoint = view.mouseDownWindowPoint;
+        NSPoint mouseDownViewPoint = [self convertPoint:mouseDownWindowPoint fromView:nil];
+        float deltaX = draggingLocation.x - mouseDownViewPoint.x;
+        float deltaY = draggingLocation.y - mouseDownViewPoint.y;
+        NSPoint newTopLeft = NSMakePoint(view.frameLeft + deltaX, view.frameTop + deltaY);
+        [self.delegate moveInsertableObject:view withTopLeftAtPosition:newTopLeft];
         return YES;
 
     }
