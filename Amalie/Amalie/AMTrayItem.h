@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+// forward declare enums used in interface
+enum AMInsertableType : NSUInteger;
+
 @interface AMTrayItem : NSObject
 
 - (id)initWithKey:(NSString*)key
@@ -16,7 +19,8 @@
       info:(NSString*)description
   backgroundColor:(NSColor*)backgroundColor
         fontColor:(NSColor*)fontColor
-   insertableType:(NSString*)className;
+  insertableClass:(NSString*)className
+   insertableType:(enum AMInsertableType)insertableType;
 
 -(id)initWithPropertiesDictionary:(NSDictionary*)dictionary;
 
@@ -30,6 +34,7 @@
 @property (readwrite) NSData * fontColorData;
 @property (readonly) NSDictionary * properties;
 @property (readonly) NSString * insertableClassName;
+@property (readonly) enum AMInsertableType insertableType;
 
 @property (weak, readwrite) NSColor * backgroundColor;
 @property (weak, readwrite) NSColor * fontColor;

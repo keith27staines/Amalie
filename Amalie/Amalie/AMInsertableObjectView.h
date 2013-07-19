@@ -9,8 +9,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-// Importing constants common to all of Amalie
-#import "AMConstants.h"
+// Forward declare
+enum AMInsertableType : NSUInteger;
 
 // Importing delegate protocols
 #import "AMTrayDatasource.h"
@@ -27,14 +27,11 @@ typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
 @interface AMInsertableObjectView : NSView <NSPasteboardWriting,
                                             NSPasteboardReading,
                                             NSCoding>
-{
 
-    AMInsertableObjectState _objectState;
 
-}
-
+@property enum AMInsertableType insertableType;
 @property AMInsertableObjectState objectState;
-@property NSColor * backColor;
+@property (readonly) NSColor * backColor;
 @property NSEvent * mouseDownEvent;
 @property NSPoint mouseDownWindowPoint;
 @property (readonly) BOOL isDragging;
@@ -47,6 +44,19 @@ typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
 @property (readonly) float frameWidth;
 @property (readonly) float frameHeight;
 @property NSString * uuid;
+
+/*!
+ Convenience method, not part of the NSPasteboardWriting protocol, but useful. With this class method, no instance of an AMInsertableOjbect needs to be set up in order to setup the drag source.
+ */
++(NSArray*)writableTypesForPasteboard:(NSPasteboard *)pasteboard;
+
+/*!
+ Designated initializer
+ */
+- (id)initWithFrame:(NSRect)frame insertableType:(enum AMInsertableType)insertableType;
+
+-(id)initWithInsertableType:(enum AMInsertableType)insertableType;
+
 
 // Must override this in subclasses, since there will be one subclass for each tray item
 -(NSString*)trayItemKey;

@@ -10,7 +10,7 @@
 
 #import "AMWorksheetController.h"
 #import "AMWorksheetView.h"
-#import "AMInsertables.h"
+#import "AMInsertableObjectView.h"
 
 NSUInteger const kAMDefaultLineSpace = 20;
 NSUInteger const kAMDefaultLeftMargin = 36;
@@ -23,6 +23,11 @@ NSUInteger const kAMDefaultTopMargin = 36;
     NSMutableDictionary * _insertsDictionary;
 }
 
+/*!
+ * view controllers to manage the loading of views for insertable objects
+ */
+@property NSMutableDictionary * viewControllers;
+
 @end
 
 @implementation AMWorksheetController
@@ -34,6 +39,7 @@ NSUInteger const kAMDefaultTopMargin = 36;
         // Add your subclass-specific initialization here.
         _insertsArray = [NSMutableArray array];
         _insertsDictionary = [NSMutableDictionary dictionary];
+        _viewControllers = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -133,8 +139,8 @@ NSUInteger const kAMDefaultTopMargin = 36;
     [CATransaction begin];
     float firstTop = self.worksheetView.frame.size.height - kAMDefaultTopMargin;
     NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
- 
-    for (AMInsertableConstantView * view in _insertsArray) {
+    
+    for (AMInsertableObjectView * view in _insertsArray) {
         [view setFrameTopLeft:newTopLeft animate:YES];
         newTopLeft = NSMakePoint(newTopLeft.x, newTopLeft.y - view.frameHeight - kAMDefaultLineSpace);
     }

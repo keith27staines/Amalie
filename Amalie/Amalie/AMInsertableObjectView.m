@@ -8,22 +8,24 @@
 
 @import QuartzCore;
 
-#import "AMTrayItem.h"
+#import "AMConstants.h"
 #import "AMInsertableObjectView.h"
+#import "AMTrayItem.h"
 
 float const kAMSMallDistance = 3.0f;
+NSString * const kFrameKey = @"AMFrameKey";
+NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
+
+@interface AMInsertableObjectView()
+{
+    AMInsertableObjectState _objectState;
+    AMInsertableType        _insertableType;
+}
+@end
 
 @implementation AMInsertableObjectView
 
 #pragma mark - Initializers -
-
-NSString * const kFrameKey = @"AMFrameKey";
-NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
-
--(id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type
-{
-    return [self initWithFrame:defaultRect()];
-}
 
 -(id)init
 {
@@ -32,13 +34,22 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 
 - (id)initWithFrame:(NSRect)frame
 {
+    return [self initWithFrame:frame insertableType:AMInsertableTypeConstant];
+}
+
+-(id)initWithInsertableType:(AMInsertableType)insertableType
+{
+    return [self initWithFrame:defaultRect() insertableType:insertableType];
+}
+
+- (id)initWithFrame:(NSRect)frame insertableType:(AMInsertableType)insertableType
+{
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
         _uuid = @"";
         _mouseDownWindowPoint = NSMakePoint(-100, -100);
+        _insertableType = insertableType;
     }
-    
     return self;
 }
 
@@ -58,8 +69,17 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 
 -(NSString*)trayItemKey
 {
-    [NSException raise:@"Subclasses must override this method." format:nil];
-    return nil;  // MUST override!
+    switch (self.insertableType) {
+        case AMInsertableTypeConstant           : return kAMConstantKey;
+        case AMInsertableTypeVariable           : return kAMVariableKey;
+        case AMInsertableTypeExpression         : return kAMExpressionKey;
+        case AMInsertableTypeEquation           : return kAMEquationKey;
+        case AMInsertableTypeVector             : return kAMVectorKey;
+        case AMInsertableTypeMatrix             : return kAMMatrixKey;
+        case AMInsertableTypeMathematicalSet    : return kAMMathematicalSetKey;
+        case AMInsertableTypeGraph2D            : return kAMGraph2DKey;
+    }
+    return nil;
 }
 
 -(void)setObjectState:(AMInsertableObjectState)objectState
@@ -97,6 +117,12 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     }
 }
 
+-(NSColor*)backColor
+{
+    AMTrayItem * trayItem = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
+    return [trayItem backgroundColor];
+}
+
 #pragma mark - Archiving support -
 
 -(id)initWithCoder:(NSCoder *)aDecoder
@@ -110,6 +136,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
         _uuid = [aDecoder decodeObjectForKey:@"uuid"];
         _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
         _mouseDownWindowPoint = [aDecoder decodePointForKey:@"mouseDownWindowPoint"];
+        _insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
         
         if ( [aDecoder containsValueForKey:@"dragImage"] ) {
             _dragImage = [aDecoder decodeObjectForKey:@"dragImage"];
@@ -126,6 +153,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     [aCoder encodeObject:self.uuid forKey:@"uuid"];
     [aCoder encodeBool:self.isDragging forKey:@"isDragging"];
     [aCoder encodePoint:self.mouseDownWindowPoint forKey:@"mouseDownWindowPoint"];
+    [aCoder encodeInteger:self.insertableType forKey:@"insertableType"];
     
     if (_dragImage) {
         [aCoder encodeObject:self.dragImage forKey:@"dragImage"];
@@ -134,9 +162,14 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 
 #pragma mark - Pasteboard support -
 
--(NSArray*)writableTypesForPasteboard:(NSPasteboard *)pasteboard
++(NSArray*)writableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
     return [self.class readableTypesForPasteboard:pasteboard];
+}
+
+-(NSArray*)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    return [self.class writableTypesForPasteboard:pasteboard];
 }
 
 -(BOOL)writeToPasteboard:(NSPasteboard *)pb
@@ -242,7 +275,6 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 {
     self.mouseDownEvent = theEvent;
     self.mouseDownWindowPoint = [theEvent locationInWindow];
-    [[NSCursor closedHandCursor] push];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent
@@ -283,7 +315,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     }
     
     [self.insertableObjectDelegate draggingDidStart];
-    [self setHidden:YES];
+    //[self setHidden:YES];
     
     NSPoint originPoint = NSMakePoint(0, 0);
     

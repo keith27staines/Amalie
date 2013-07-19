@@ -81,8 +81,7 @@
     
     // The table is the tray (of insertable items).
     AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
-    NSString * className = trayItem.insertableClassName;
-    AMInsertableObjectView * insertableView = [[NSClassFromString(className) alloc] init];
+    AMInsertableObjectView * insertableView = [[AMInsertableObjectView alloc] initWithInsertableType:trayItem.insertableType];
     return insertableView;
 }
 

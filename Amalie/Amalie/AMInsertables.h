@@ -10,13 +10,6 @@
 #define Amalie_Header_h
 
 #import "AMInsertableObjectView.h"
-#import "AMInsertableConstantView.h"
-#import "AMInsertableVariableView.h"
-#import "AMInsertableExpressionView.h"
-#import "AMInsertableEquationView.h"
-#import "AMInsertableVectorView.h"
-#import "AMInsertableMatrixView.h"
-#import "AMInsertableMathematicalSetView.h"
-#import "AMInsertableGraph2DView.h"
+
 
 #endif

@@ -20,6 +20,7 @@ extern NSString * const kAMDefaultFixedWidthFontName;
 extern NSString * const kAMKeyPrefix;
 extern NSString * const kAMKeySuffix;
 extern NSString * const kAMClassNameKey;
+extern NSString * const kAMTypeKey;
 
 #pragma mark - Page Layout -
 extern NSString * const kAMPaperSizeKey;
@@ -56,19 +57,31 @@ extern NSString * const kAMMathematicalSetKey;
 extern NSString * const kAMVectorKey;
 extern NSString * const kAMMatrixKey;
 
+typedef NS_ENUM(NSUInteger, AMInsertableType){
+    AMInsertableTypeConstant,
+    AMInsertableTypeVariable,
+    AMInsertableTypeExpression,
+    AMInsertableTypeEquation,
+    AMInsertableTypeGraph2D,
+    AMInsertableTypeMathematicalSet,
+    AMInsertableTypeVector,
+    AMInsertableTypeMatrix,
+};
 
 typedef enum AMColor : NSUInteger {
-    AMColorPaleRed = 0,
-    AMColorPaleGreen = 1,
-    AMColorPaleBlue = 2,
-    AMColorPaleYellow = 3,
-    AMColorPalePurple = 4,
-    AMColorPaleAzure = 5,
-    AMColorPaleOrange = 6,
-    AMColorBarleyWhite = 7,
-    AMColorWhite = 1000,
-    AMColorBlack = 1001,
+    AMColorPaleRed          = 0,
+    AMColorPaleGreen        = 1,
+    AMColorPaleBlue         = 2,
+    AMColorPaleYellow       = 3,
+    AMColorPalePurple       = 4,
+    AMColorPaleAzure        = 5,
+    AMColorPaleOrange       = 6,
+    AMColorBarleyWhite      = 7,
+    AMColorWhite            = 1000,
+    AMColorBlack            = 1001,
 } AMColor;
+
+
 
 
 NSData * dataFromColor(NSColor* color);

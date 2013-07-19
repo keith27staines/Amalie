@@ -52,14 +52,6 @@
 		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
-		78D5FD8517905C04003D6AC6 /* AMInsertableConstantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD8417905C04003D6AC6 /* AMInsertableConstantView.m */; };
-		78D5FD8817905C3C003D6AC6 /* AMInsertableVariableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD8717905C3C003D6AC6 /* AMInsertableVariableView.m */; };
-		78D5FD8C17907338003D6AC6 /* AMInsertableExpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD8B17907338003D6AC6 /* AMInsertableExpressionView.m */; };
-		78D5FD8F1790734C003D6AC6 /* AMInsertableEquationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD8E1790734C003D6AC6 /* AMInsertableEquationView.m */; };
-		78D5FD921790736B003D6AC6 /* AMInsertableGraph2DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD911790736B003D6AC6 /* AMInsertableGraph2DView.m */; };
-		78D5FD9517907383003D6AC6 /* AMInsertableMatrixView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD9417907383003D6AC6 /* AMInsertableMatrixView.m */; };
-		78D5FD981790739B003D6AC6 /* AMInsertableMathematicalSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD971790739B003D6AC6 /* AMInsertableMathematicalSetView.m */; };
-		78D5FD9B179073C6003D6AC6 /* AMInsertableVectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D5FD9A179073C6003D6AC6 /* AMInsertableVectorView.m */; };
 		78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */; };
@@ -142,22 +134,6 @@
 		789B85C717952E44005FD5C7 /* AMInsertableObjectViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableObjectViewDelegate.h; sourceTree = "<group>"; };
 		789CB121178B0BCB00B5AF58 /* AMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstants.h; sourceTree = "<group>"; };
 		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
-		78D5FD8317905C04003D6AC6 /* AMInsertableConstantView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableConstantView.h; sourceTree = "<group>"; };
-		78D5FD8417905C04003D6AC6 /* AMInsertableConstantView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableConstantView.m; sourceTree = "<group>"; };
-		78D5FD8617905C3C003D6AC6 /* AMInsertableVariableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableVariableView.h; sourceTree = "<group>"; };
-		78D5FD8717905C3C003D6AC6 /* AMInsertableVariableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableVariableView.m; sourceTree = "<group>"; };
-		78D5FD8A17907338003D6AC6 /* AMInsertableExpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableExpressionView.h; sourceTree = "<group>"; };
-		78D5FD8B17907338003D6AC6 /* AMInsertableExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableExpressionView.m; sourceTree = "<group>"; };
-		78D5FD8D1790734C003D6AC6 /* AMInsertableEquationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableEquationView.h; sourceTree = "<group>"; };
-		78D5FD8E1790734C003D6AC6 /* AMInsertableEquationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableEquationView.m; sourceTree = "<group>"; };
-		78D5FD901790736B003D6AC6 /* AMInsertableGraph2DView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableGraph2DView.h; sourceTree = "<group>"; };
-		78D5FD911790736B003D6AC6 /* AMInsertableGraph2DView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableGraph2DView.m; sourceTree = "<group>"; };
-		78D5FD9317907383003D6AC6 /* AMInsertableMatrixView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableMatrixView.h; sourceTree = "<group>"; };
-		78D5FD9417907383003D6AC6 /* AMInsertableMatrixView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableMatrixView.m; sourceTree = "<group>"; };
-		78D5FD961790739B003D6AC6 /* AMInsertableMathematicalSetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableMathematicalSetView.h; sourceTree = "<group>"; };
-		78D5FD971790739B003D6AC6 /* AMInsertableMathematicalSetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableMathematicalSetView.m; sourceTree = "<group>"; };
-		78D5FD99179073C6003D6AC6 /* AMInsertableVectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableVectorView.h; sourceTree = "<group>"; };
-		78D5FD9A179073C6003D6AC6 /* AMInsertableVectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableVectorView.m; sourceTree = "<group>"; };
 		78D5FD9C17918E88003D6AC6 /* AMInsertables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMInsertables.h; path = Amalie/AMInsertables.h; sourceTree = "<group>"; };
 		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
 		78DE823E1783664400C7EE10 /* KSMPrimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimes.m; sourceTree = "<group>"; };
@@ -383,22 +359,6 @@
 			children = (
 				785247CD1785722700F6A7AD /* AMInsertableObjectView.h */,
 				785247CE1785722700F6A7AD /* AMInsertableObjectView.m */,
-				78D5FD8317905C04003D6AC6 /* AMInsertableConstantView.h */,
-				78D5FD8417905C04003D6AC6 /* AMInsertableConstantView.m */,
-				78D5FD8617905C3C003D6AC6 /* AMInsertableVariableView.h */,
-				78D5FD8717905C3C003D6AC6 /* AMInsertableVariableView.m */,
-				78D5FD8A17907338003D6AC6 /* AMInsertableExpressionView.h */,
-				78D5FD8B17907338003D6AC6 /* AMInsertableExpressionView.m */,
-				78D5FD8D1790734C003D6AC6 /* AMInsertableEquationView.h */,
-				78D5FD8E1790734C003D6AC6 /* AMInsertableEquationView.m */,
-				78D5FD99179073C6003D6AC6 /* AMInsertableVectorView.h */,
-				78D5FD9A179073C6003D6AC6 /* AMInsertableVectorView.m */,
-				78D5FD9317907383003D6AC6 /* AMInsertableMatrixView.h */,
-				78D5FD9417907383003D6AC6 /* AMInsertableMatrixView.m */,
-				78D5FD961790739B003D6AC6 /* AMInsertableMathematicalSetView.h */,
-				78D5FD971790739B003D6AC6 /* AMInsertableMathematicalSetView.m */,
-				78D5FD901790736B003D6AC6 /* AMInsertableGraph2DView.h */,
-				78D5FD911790736B003D6AC6 /* AMInsertableGraph2DView.m */,
 			);
 			name = "Insertable Objects";
 			sourceTree = "<group>";
@@ -516,7 +476,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */,
-				78D5FD9B179073C6003D6AC6 /* AMInsertableVectorView.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
@@ -526,22 +485,15 @@
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
 				785247D21786AC9300F6A7AD /* AMExpressionView.m in Sources */,
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
-				78D5FD8C17907338003D6AC6 /* AMInsertableExpressionView.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
 				7832744C178F1D810051290B /* AMTrayItem.m in Sources */,
-				78D5FD921790736B003D6AC6 /* AMInsertableGraph2DView.m in Sources */,
 				78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
-				78D5FD8517905C04003D6AC6 /* AMInsertableConstantView.m in Sources */,
-				78D5FD9517907383003D6AC6 /* AMInsertableMatrixView.m in Sources */,
 				787B3097178364B8001851C0 /* KSMExpression.m in Sources */,
-				78D5FD8F1790734C003D6AC6 /* AMInsertableEquationView.m in Sources */,
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
-				78D5FD981790739B003D6AC6 /* AMInsertableMathematicalSetView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
 				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,
-				78D5FD8817905C3C003D6AC6 /* AMInsertableVariableView.m in Sources */,
 				788709C5178DAEAB008E093A /* AMPreferences.m in Sources */,
 				785247C317848A4A00F6A7AD /* AMToolboxViewController.m in Sources */,
 			);

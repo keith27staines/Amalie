@@ -7,6 +7,7 @@
 //
 
 #import "AMWorksheetView.h"
+#import "AMConstants.h"
 #import "AMInsertables.h"
 #import "AMWorksheetController.h"
 
@@ -32,44 +33,8 @@
     
     // Add pasteboard types for each type of insertable object
 
-    // Insertable constants
-    ami = [[AMInsertableConstantView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-
-    // Insertable variables
-    ami = [[AMInsertableVariableView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-    
-    // Insertable expressions
-    ami = [[AMInsertableExpressionView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-
-    // Insertable Equations
-    ami = [[AMInsertableEquationView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-
-    // Insertable Vectors
-    ami = [[AMInsertableVectorView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-
-    // Insertable Matrix
-    ami = [[AMInsertableMatrixView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-
-    // Insertable expressions
-    ami = [[AMInsertableMathematicalSetView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
-    [allTypes addObjectsFromArray:typesArray];
-
-    // Insertable 2D graphs
-    ami = [[AMInsertableGraph2DView alloc] init];
-    typesArray = [ami writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    // Insertable object
+    typesArray = [AMInsertableObjectView writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
     
     // register them all in one hit...
@@ -149,14 +114,7 @@
     static NSArray * classes;
     
     if (!classes) {
-        classes = @[ [AMInsertableConstantView class],
-                     [AMInsertableVariableView class],
-                     [AMInsertableExpressionView class],
-                     [AMInsertableEquationView class],
-                     [AMInsertableVectorView class],
-                     [AMInsertableMatrixView class],
-                     [AMInsertableGraph2DView class]
-                   ];
+        classes = @[ [AMInsertableObjectView class] ];
     }
 
     // Place dragged object into view hierarchy

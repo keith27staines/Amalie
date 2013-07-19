@@ -11,7 +11,7 @@
 #import "AMPreferencesWindowController.h"
 #import "AMConstants.h"
 #import "AMTrayItem.h"
-#import "AMInsertables.h"
+#import "AMInsertableObjectView.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
 NSMutableDictionary * _trayDictionary;
@@ -78,70 +78,82 @@ NSMutableDictionary * _trayDictionary;
             NSString * iconKey = title;
             NSString * info;
             NSString * className;
+            AMInsertableType insertableType = 1000;
             
-            [self getClassName:&className info:&info forTrayItemWithKey:key];
+            [self getInsertableClassName:&className
+                           insertableTye:&insertableType
+                                    info:&info
+                      forTrayItemWithKey:key];
             
             NSColor * backgroundColor = colorFromData(itemPreferences[kAMBackColorKey]);
             NSColor * fontColor = colorFromData(itemPreferences[kAMFontColorKey]);
             item = [[AMTrayItem alloc] initWithKey:key
                                            iconKey:iconKey
                                              title:title
-                                       info:info
+                                              info:info
                                    backgroundColor:backgroundColor
                                          fontColor:fontColor
-                                    insertableType:className];
+                                   insertableClass:className
+                                    insertableType:insertableType];
+            
             [_trayDictionary setObject:item forKey:key];
         }
     }
     return _trayDictionary;
 }
 
--(void)getClassName:(NSString**)className info:(NSString**)info forTrayItemWithKey:(NSString*)key
+-(void)getInsertableClassName:(NSString**)className
+                insertableTye:(AMInsertableType*)insertableType
+                         info:(NSString**)info
+           forTrayItemWithKey:(NSString*)key
 {
+    
+    *className = [AMInsertableObjectView description];
+    
     if ( [key isEqualToString:kAMConstantKey] ) {
-        *className = [AMInsertableConstantView description];
+        *insertableType = AMInsertableTypeConstant;
         *info = @"Define a constant and assigns it a value. Once a constant is defined, you may refer to it anywhere on the worksheet, but you cannot change its value.";
         return;
     }
 
     if ( [key isEqualToString:kAMVariableKey] ) {
-        *className = [AMInsertableVariableView description];
+        *insertableType = AMInsertableTypeVariable;
         *info = @"Define a variable and assigns it a value. Once a variable is defined, you may refer to it anywhere on the worksheet below the position where it is introduced. At any later position, you can change its value either by explicitly assiging it a new value or implicitly, by referencing it in a set or range of values.";
         return;
     }
 
     if ( [key isEqualToString:kAMExpressionKey] ) {
-        *className = [AMInsertableExpressionView description];
+        insertableType = AMInsertableTypeExpression;
         *info = @"Define an algebraic expression. The expression can reference other mathematic objects defined above it. If all the objects it references can be evaluated, the expression itself can be evaluated.";
         return;
     }
     
     if ( [key isEqualToString:kAMEquationKey] ) {
-        *className = [AMInsertableEquationView description];
+        *insertableType = AMInsertableTypeEquation;
         *info = @"Define an equation.";
         return;
     }
 
     if ( [key isEqualToString:kAMVectorKey] ) {
-        *className = [AMInsertableVectorView description];
+        *insertableType = AMInsertableTypeVector;
         *info = @"Define a vector.";
         return;
     }
     
     if ( [key isEqualToString:kAMMatrixKey] ) {
-        *className = [AMInsertableMatrixView description];
+        *insertableType = AMInsertableTypeMatrix;
         *info = @"Define a matrix.";
         return;
     }
 
     if ( [key isEqualToString:kAMMathematicalSetKey] ) {
-        *className = [AMInsertableMathematicalSetView description];
+        *insertableType = AMInsertableTypeMathematicalSet;
         *info = @"Define a set (technically a finite set).";
         return;
     }
     
     if ( [key isEqualToString:kAMGraph2DKey] ) {
-        *className = [AMInsertableGraph2DView description];
+        *insertableType = AMInsertableTypeGraph2D;
         *info = @"Defines a 2D graph.";
         return;
     }
