@@ -1,5 +1,5 @@
 //
-//  AMInsertableObjectView.m
+//  AMInsertableViewView.m
 //  Amalie
 //
 //  Created by Keith Staines on 04/07/2013.
@@ -9,27 +9,33 @@
 @import QuartzCore;
 
 #import "AMConstants.h"
-#import "AMInsertableObjectView.h"
+#import "AMInsertableView.h"
 #import "AMTrayItem.h"
 
-float const kAMSMallDistance = 3.0f;
-NSString * const kFrameKey = @"AMFrameKey";
-NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
+static float const kAMSMallDistance = 3.0f;
+static NSString * const kFrameKey = @"AMFrameKey";
+static NSString * const kAMDraggedInsertableView = @"kAMDraggedInsertableView";
 
-@interface AMInsertableObjectView()
+static NSRect am_defaultRect();
+static float am_hypotenuse(float x1, float y1, float x2, float y2);
+static bool am_pointsAreClose(NSPoint p, NSPoint q);
+
+static CABasicAnimation * animateOrigin;
+
+@interface AMInsertableView()
 {
-    AMInsertableObjectState _objectState;
+    AMInsertableViewState _objectState;
     AMInsertableType        _insertableType;
 }
 @end
 
-@implementation AMInsertableObjectView
+@implementation AMInsertableView
 
 #pragma mark - Initializers -
 
 -(id)init
 {
-    return [self initWithFrame:defaultRect()];
+    return [self initWithFrame:am_defaultRect()];
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -39,7 +45,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 
 -(id)initWithInsertableType:(AMInsertableType)insertableType
 {
-    return [self initWithFrame:defaultRect() insertableType:insertableType];
+    return [self initWithFrame:am_defaultRect() insertableType:insertableType];
 }
 
 - (id)initWithFrame:(NSRect)frame insertableType:(AMInsertableType)insertableType
@@ -82,12 +88,12 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     return nil;
 }
 
--(void)setObjectState:(AMInsertableObjectState)objectState
+-(void)setObjectState:(AMInsertableViewState)objectState
 {
     _objectState = objectState;
 }
 
--(AMInsertableObjectState)objectState
+-(AMInsertableViewState)objectState
 {
     return _objectState;
 }
@@ -130,7 +136,7 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     self = [super initWithCoder:aDecoder];
     if (self) {
         if (self.frame.size.height == 0) {
-            self.frame = defaultRect();
+            self.frame = am_defaultRect();
         }
         
         _uuid = [aDecoder decodeObjectForKey:@"uuid"];
@@ -217,9 +223,73 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     return [NSKeyedArchiver archivedDataWithRootObject:self];
 }
 
+#pragma mark - NSDraggingSource -
+
 -(NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag
 {
+    NSLog(@"%@ - draggingSourceOperationMaskForLocal:",[self class]);
     return NSDragOperationMove | NSDragOperationDelete;
+}
+
+-(void)draggingSession:(NSDraggingSession*)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
+{
+    NSLog(@"%@ - draggingSession:endedAtPoint:operation:",[self class]);
+    
+    switch (operation) {
+        case NSDragOperationDelete:
+            // Remove object by calling controller
+            break;
+            
+        case NSDragOperationMove:
+            // We've already been moved by the handler in the parent worksheetView
+            [self concludeDragging];
+            
+        case NSDragOperationNone:
+            // something cancelled the drag
+            [self concludeDragging];
+            
+            break;
+        default:
+            [self concludeDragging];
+            break;
+    }
+}
+
+- (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
+{
+    NSLog(@"%@ - draggingSession:sourceOperationMaskForDraggingContext:",[self class]);
+    switch(context) {
+        case NSDraggingContextOutsideApplication:
+            return NSDragOperationNone;
+            break;
+            
+        case NSDraggingContextWithinApplication:
+            return NSDragOperationMove;
+            
+        default:
+            return NSDragOperationNone;
+            break;
+    }
+}
+
+- (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
+{
+    NSLog(@"%@ - draggingSession:willBeginAtPoint:",[self class])
+    ;
+}
+
+-(void)concludeDragging
+{
+    // restore previous cursor
+    [NSCursor pop];
+    [[self window] invalidateCursorRectsForView:self];
+    
+    // self.mouseDownEvent = nil;
+    self.mouseDownEvent = nil;
+    self.mouseDownWindowPoint = NSMakePoint(-100, -100);
+    _dragImage = nil;
+    _isDragging = NO;
+    [self setHidden:NO];
 }
 
 #pragma mark - Event handling -
@@ -233,31 +303,6 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 {
     return YES;
 }
-
--(void)draggedImage:(NSImage *)image endedAt:(NSPoint)screenPoint operation:(NSDragOperation)operation
-{
-    NSLog(@"%@ - draggedImage",[self class]);
- 
-    switch (operation) {
-        case NSDragOperationDelete:
-            // Remove object by calling controller
-            break;
-
-        case NSDragOperationMove:
-            // We've already been moved by the handler in the parent worksheetView
-            [self concludeDragging];
-        
-        case NSDragOperationNone:
-            // something cancelled the drag
-            [self concludeDragging];
-            
-            break;
-        default:
-            [self concludeDragging];
-            break;
-    }
-}
-
 
 -(BOOL)becomeFirstResponder
 {
@@ -273,36 +318,19 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
+    NSLog(@"%@ - mouseDown",[self class]);
     self.mouseDownEvent = theEvent;
     self.mouseDownWindowPoint = [theEvent locationInWindow];
-}
-
--(void)mouseUp:(NSEvent *)theEvent
-{
-    NSLog(@"%@ - mouseUp",[self class]);
-}
-
--(void)concludeDragging
-{
-    // restore previous cursor
-    [NSCursor pop];
-    
-    // the item has moved, we need to reset our cursor rectangle
-    [self.insertableObjectDelegate draggingDidEnd];
-    
-    // self.mouseDownEvent = nil;
-    self.mouseDownEvent = nil;
-    self.mouseDownWindowPoint = NSMakePoint(-100, -100);
-    _dragImage = nil;
-    _isDragging = NO;
-    [self setHidden:NO];
+    [[NSCursor closedHandCursor] push];
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
+    NSLog(@"%@ - mouseDragged:",[self class]);
+    
     NSPoint currentPoint = [theEvent locationInWindow];
-
-    if ( pointsAreClose(self.mouseDownWindowPoint, currentPoint) )
+    
+    if ( am_pointsAreClose(self.mouseDownWindowPoint, currentPoint) )
     {
         _isDragging = NO;
         return;
@@ -313,9 +341,6 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
         _dragImage = [self makeImageSnapshot];
         
     }
-    
-    [self.insertableObjectDelegate draggingDidStart];
-    //[self setHidden:YES];
     
     NSPoint originPoint = NSMakePoint(0, 0);
     
@@ -328,6 +353,12 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     } else NSAssert(NO, @"Failed to write to pasteboard");
 }
 
+
+-(void)mouseUp:(NSEvent *)theEvent
+{
+    NSLog(@"%@ - mouseUp",[self class]);
+    [self concludeDragging];
+}
 
 /*!
  * draws a snapshot of the receiver into the image (useful for setting the image
@@ -393,12 +424,16 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
 {
     NSPoint newOrigin = NSMakePoint(topLeft.x, topLeft.y - self.frameHeight);
     if (animate) {
+        [self setWantsLayer:YES];
+        CABasicAnimation * anim = [self originAnimation];
+        [anim setFromValue:[NSValue valueWithPoint:self.frame.origin]];
+        [anim setToValue:[NSValue valueWithPoint:newOrigin]];
+        [self setAnimations:@{@"frameOrigin": anim}];
         [[self animator] setFrameOrigin:newOrigin];
     } else {
         [self setFrameOrigin:newOrigin];
     }
 }
-
 
 -(void)setFrameTop:(float)top
 {
@@ -419,21 +454,37 @@ NSString * const kAMDraggedInsertableObject = @"kAMDraggedInsertableObject";
     [self setFrameOrigin:NSMakePoint(self.frameBottom, right - self.frameWidth)];
 }
 
+#pragma mark - Animation -
+
+-(CABasicAnimation *)originAnimation
+{
+    if (!animateOrigin) {
+        animateOrigin = [CABasicAnimation animation];
+        CAMediaTimingFunction * timing = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+        [animateOrigin setTimingFunction:timing];
+        [animateOrigin setDuration:0.5f];
+    }
+    return animateOrigin;
+}
 
 
 #pragma mark - Helper C functions -
 
-NSRect defaultRect() { return NSMakeRect(0, 0, 100, 50); }
+NSRect am_defaultRect() { return NSMakeRect(0, 0, 100, 50); }
 
-float hypotenuse(float x1, float y1, float x2, float y2)
+float am_hypotenuse(float x1, float y1, float x2, float y2)
 {
     return sqrtf( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) );
 }
 
-bool pointsAreClose(NSPoint p, NSPoint q)
+bool am_pointsAreClose(NSPoint p, NSPoint q)
 {
-    float h = hypotenuse(p.x, p.y, q.x, q.y);
+    float h = am_hypotenuse(p.x, p.y, q.x, q.y);
     return (h < kAMSMallDistance) ? true : false;
 }
+
+
+
+
 
 @end

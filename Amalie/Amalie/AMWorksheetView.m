@@ -28,13 +28,12 @@
 {
     // Determine the class name for draggable types
     NSMutableArray * allTypes = [NSMutableArray array];
-    AMInsertableObjectView * ami;
     NSArray * typesArray;
     
     // Add pasteboard types for each type of insertable object
 
     // Insertable object
-    typesArray = [AMInsertableObjectView writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    typesArray = [AMInsertableView writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
     [allTypes addObjectsFromArray:typesArray];
     
     // register them all in one hit...
@@ -114,13 +113,13 @@
     static NSArray * classes;
     
     if (!classes) {
-        classes = @[ [AMInsertableObjectView class] ];
+        classes = @[ [AMInsertableView class] ];
     }
 
     // Place dragged object into view hierarchy
     NSPasteboard * pb = [sender draggingPasteboard];
     NSArray * objects = [pb readObjectsForClasses:classes options:nil];
-    AMInsertableObjectView * view = objects[0];
+    AMInsertableView * view = objects[0];
     
     if (view) {
         
@@ -130,7 +129,7 @@
         // Deal with items coming from the tray (library of insertable objects)
         if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
             [view setFrameOrigin:draggingLocation];
-            [self.delegate addInsertableObject:view withTopLeftAtPosition:draggingLocation];
+            [self.delegate workheetView:self wantsViewInserted:view withOrigin:draggingLocation];
             return YES;
         }
         
@@ -140,7 +139,7 @@
         float deltaX = draggingLocation.x - mouseDownViewPoint.x;
         float deltaY = draggingLocation.y - mouseDownViewPoint.y;
         NSPoint newTopLeft = NSMakePoint(view.frameLeft + deltaX, view.frameTop + deltaY);
-        [self.delegate moveInsertableObject:view withTopLeftAtPosition:newTopLeft];
+        [self.delegate workheetView:self wantsViewMoved:view newTopLeft:newTopLeft];
         return YES;
 
     }
@@ -150,17 +149,8 @@
 
 -(void)concludeDragOperation:(id<NSDraggingInfo>)sender
 {
-    NSLog(@"%@ - prepareForDragOperation" , [self.class description]);
+    NSLog(@"%@ - concludeDragOperation" , [self.class description]);
 }
 
--(void)pushCursor:(NSCursor*)cursor
-{
-    [cursor push];
-}
--(void)popCursor
-{
-    [NSCursor pop];
-    [[self window] invalidateCursorRectsForView:self];
-}
 
 @end

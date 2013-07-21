@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 // forward declare enums used in interface
-enum AMInsertableType : NSUInteger;
+enum AMInsertableType : NSInteger;
 
 @interface AMTrayItem : NSObject
 

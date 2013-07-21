@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMWorksheetController">
             <connections>
                 <outlet property="appController" destination="GkH-jk-e4m" id="ZQd-0w-0o0"/>
+                <outlet property="trayDataSource" destination="GkH-jk-e4m" id="Yaj-Gy-wWI"/>
                 <outlet property="window" destination="5" id="18"/>
                 <outlet property="worksheetView" destination="74f-2O-Z87" id="8Ns-7F-ve4"/>
             </connections>
@@ -29,8 +30,7 @@
                         <rect key="frame" x="0.0" y="237" width="894" height="533"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <connections>
-                            <outlet property="delegate" destination="-2" id="Vw5-c8-Mrp"/>
-                            <outlet property="trayDataSource" destination="GkH-jk-e4m" id="r1w-XL-YGm"/>
+                            <outlet property="delegate" destination="-2" id="Id3-hf-RJ7"/>
                         </connections>
                     </customView>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJD-vM-bCf" customClass="AMToolboxView">

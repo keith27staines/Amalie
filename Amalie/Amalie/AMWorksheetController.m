@@ -10,12 +10,11 @@
 
 #import "AMWorksheetController.h"
 #import "AMWorksheetView.h"
-#import "AMInsertableObjectView.h"
+#import "AMInsertableView.h"
 
-NSUInteger const kAMDefaultLineSpace = 20;
-NSUInteger const kAMDefaultLeftMargin = 36;
-NSUInteger const kAMDefaultTopMargin = 36;
-
+static NSUInteger const kAMDefaultLineSpace = 20;
+static NSUInteger const kAMDefaultLeftMargin = 36;
+static NSUInteger const kAMDefaultTopMargin = 36;
 
 @interface AMWorksheetController()
 {
@@ -31,6 +30,8 @@ NSUInteger const kAMDefaultTopMargin = 36;
 @end
 
 @implementation AMWorksheetController
+
+#pragma - Initializers -
 
 - (id)init
 {
@@ -67,11 +68,10 @@ NSUInteger const kAMDefaultTopMargin = 36;
     return YES;
 }
 
-#pragma mark - AMInsertableObjectViewDelegate -
+#pragma mark - AMWorksheetViewDelegate -
 
--(void)addInsertableObject:(AMInsertableObjectView*)view withTopLeftAtPosition:(NSPoint)frameOrigin
+-(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)view withOrigin:(NSPoint)origin
 {
-    
     if (!view) return;
     
     view.uuid = [NSUUID UUID];
@@ -79,18 +79,56 @@ NSUInteger const kAMDefaultTopMargin = 36;
     // Add the object to our list of inserted objects
     [_insertsArray addObject:view];
     [_insertsDictionary setObject:view forKey:view.uuid];
-    view.insertableObjectDelegate = self;
+    view.InsertableViewDelegate = self;
     [self.worksheetView addSubview:view];
-    [view setFrameOrigin:frameOrigin];
+    [view setFrameOrigin:origin];
     
-    // The following line causes a compiler warning. It would be easy to cast the problem away using (id<AMTrayDatasource>) but I haven't done so because I want to fix it more fundamentally. Ideally, the appController outlet should be replaced with an id<AMTrayDatasource> outlet, but when I do this, IB doesn't let me connect the outlet to the app controller, even though the appcontroller does implement the required AMTrayDatasource protocol.
-    view.trayDataSource = self.appController;
+    // Tell the view where to get color and presentation info from
+    view.trayDataSource = self.trayDataSource;
+    
+    // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
     [self scheduleLayout];
-
 }
 
+-(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)view
+{
+    [_insertsArray removeObject:view];
+    [_insertsDictionary removeObjectForKey:view.uuid];
+    view.InsertableViewDelegate = nil;
+    [view removeFromSuperview];
+    [self scheduleLayout];
+}
+
+-(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
+{
+    // view will be a "shadow" object, a temporary copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
+    AMInsertableView * actualView = [self actualViewFromPossibleTemporaryCopy:view];
+    
+    // Move it
+    [actualView setFrameTopLeft:topLeft animate:NO];
+    [self scheduleLayout];
+}
+
+-(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
+{
+    AMInsertableView * actual = [self insertableViewForKey:shadow.uuid];
+    
+    if (actual != shadow) {
+        NSLog(@"Warning - a shadow view object was passed to AMWorksheetController");
+    }
+    
+    return actual;
+}
+
+#pragma - Layout -
+
+/*!
+ Use this method to layout. Performing the layout synchronously somehow blocks the animations, but this method works fine because the layout is scheduled to occur only after a timer fires (very short delay).
+ */
 -(void)scheduleLayout
 {
+    
+    // single-shot timer, will self-invalidate (and remove from runloop) after first fire.
     [NSTimer scheduledTimerWithTimeInterval:0.001
                                      target:self
                                    selector:NSSelectorFromString(@"layoutInsertsAfterTimer:")
@@ -98,49 +136,30 @@ NSUInteger const kAMDefaultTopMargin = 36;
                                     repeats:NO];
 }
 
--(AMInsertableObjectView*)insertableObjectForKey:(NSString*)uuid
+-(AMInsertableView*)insertableViewForKey:(NSString*)uuid
 {
     return _insertsDictionary[uuid];
 }
 
 /*!
- * Determines whether the layout has changed and repositions views if required.
- * @Returns Returns YES if layout changes have been made, otherwise NO.
+ On receipt of the timer event, this method calls layoutNow:.
  */
--(BOOL)layoutInsertsAfterTimer:(NSTimer*)timer
+-(void)layoutInsertsAfterTimer:(NSTimer*)timer
 {
-    BOOL layoutChanged = YES;  // !!!!!! this wasn't working so good
-    
-    // Make a copy of the old array so we can check for differences
-    NSArray * old = [_insertsArray copy];
-    
-    // Sort the array
-    [self sortInserts];
-    
-    NSInteger layoutRequiredFromIndex = -1;
-    for (NSUInteger i = 0; i < [_insertsArray count]; i++) {
-        if (old[i] != _insertsArray[i]) {
-            // mismatch - this is where the insert starts to affect layout;
-            layoutRequiredFromIndex = i;
-            layoutChanged = YES;
-        }
-    }
-    
-    // layout the affected objects
-//    if (layoutRequiredFromIndex >= 0)
-    layoutRequiredFromIndex = 0;
-    [self layoutInsertsFromIndex:layoutRequiredFromIndex];
-    
-    return layoutChanged;
+    [self layoutInsertsNow];
 }
 
--(void)layoutInsertsFromIndex:(NSUInteger)index
+/*!
+ Layout all the top level inserts on the worksheet. The inserts are moved inside a CATransaction so that everything appears to smoothly flow into place
+ */
+-(void)layoutInsertsNow
 {
+    [self sortInserts];
     [CATransaction begin];
     float firstTop = self.worksheetView.frame.size.height - kAMDefaultTopMargin;
     NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
     
-    for (AMInsertableObjectView * view in _insertsArray) {
+    for (AMInsertableView * view in _insertsArray) {
         [view setFrameTopLeft:newTopLeft animate:YES];
         newTopLeft = NSMakePoint(newTopLeft.x, newTopLeft.y - view.frameHeight - kAMDefaultLineSpace);
     }
@@ -151,8 +170,8 @@ NSUInteger const kAMDefaultTopMargin = 36;
 {
     [_insertsArray sortUsingComparator: ^(id obj1, id obj2) {
         
-        AMInsertableObjectView * ami1 = obj1;
-        AMInsertableObjectView * ami2 = obj2;
+        AMInsertableView * ami1 = obj1;
+        AMInsertableView * ami2 = obj2;
         
         // Deal with both objects at same horizontal level
         if (ami1.frameTop == ami2.frameTop) {
@@ -180,44 +199,5 @@ NSUInteger const kAMDefaultTopMargin = 36;
     }];
 }
 
--(void)removeInsertableObject:(AMInsertableObjectView*)object
-{
-    [_insertsArray removeObject:object];
-    [_insertsDictionary removeObjectForKey:object.uuid];
-    object.insertableObjectDelegate = nil;
-    [object removeFromSuperview];
-    [self scheduleLayout];
-
-}
-
--(void)moveInsertableObject:(AMInsertableObjectView*)object withTopLeftAtPosition:(NSPoint)newTopLeft
-{
-    // object might just be a "shadow" object, a temporary copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
-    AMInsertableObjectView * actualObject = [self actualFromPossibleShadow:object];
-    
-    // Move it
-    [actualObject setFrameTopLeft:newTopLeft animate:NO];
-    [self scheduleLayout];
-}
-
--(AMInsertableObjectView*)actualFromPossibleShadow:(AMInsertableObjectView*)shadow
-{
-    AMInsertableObjectView * actual = [self insertableObjectForKey:shadow.uuid];
-    
-    if (actual != shadow) {
-        NSLog(@"Warning - a shadow view object was passed to AMWorksheetController");
-    }
-
-    return actual;
-}
-
--(void)draggingDidStart
-{
-    [self.worksheetView pushCursor:([NSCursor closedHandCursor])];
-}
--(void)draggingDidEnd;
-{
-    [self.worksheetView popCursor];
-}
 @end
 

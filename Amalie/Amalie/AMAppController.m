@@ -11,7 +11,7 @@
 #import "AMPreferencesWindowController.h"
 #import "AMConstants.h"
 #import "AMTrayItem.h"
-#import "AMInsertableObjectView.h"
+#import "AMInsertableView.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
 NSMutableDictionary * _trayDictionary;
@@ -108,7 +108,7 @@ NSMutableDictionary * _trayDictionary;
            forTrayItemWithKey:(NSString*)key
 {
     
-    *className = [AMInsertableObjectView description];
+    *className = [AMInsertableView description];
     
     if ( [key isEqualToString:kAMConstantKey] ) {
         *insertableType = AMInsertableTypeConstant;
@@ -123,7 +123,7 @@ NSMutableDictionary * _trayDictionary;
     }
 
     if ( [key isEqualToString:kAMExpressionKey] ) {
-        insertableType = AMInsertableTypeExpression;
+        *insertableType = AMInsertableTypeExpression;
         *info = @"Define an algebraic expression. The expression can reference other mathematic objects defined above it. If all the objects it references can be evaluated, the expression itself can be evaluated.";
         return;
     }

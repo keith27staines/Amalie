@@ -1,5 +1,5 @@
 //
-//  AMInsertableObjectView.h
+//  AMInsertableViewView.h
 //  Amalie
 //
 //  Created by Keith Staines on 04/07/2013.
@@ -10,13 +10,13 @@
 #import <Cocoa/Cocoa.h>
 
 // Forward declare
-enum AMInsertableType : NSUInteger;
+enum AMInsertableType : NSInteger;
 
 // Importing delegate protocols
 #import "AMTrayDatasource.h"
-#import "AMInsertableObjectViewDelegate.h"
+#import "AMWorksheetViewDelegate.h"
 
-typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
+typedef NS_ENUM(NSInteger, AMInsertableViewState) {
     AMObjectNormal             = 0000,
     AMObjectCollapsed          = 1000,
     AMObjectForInpsecting      = 3000,
@@ -24,13 +24,13 @@ typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
     AMObjectForEditingAdvanced = 5000
 };
 
-@interface AMInsertableObjectView : NSView <NSPasteboardWriting,
+@interface AMInsertableView : NSView <NSPasteboardWriting,
                                             NSPasteboardReading,
-                                            NSCoding>
+                                            NSCoding,NSDraggingSource>
 
 
 @property enum AMInsertableType insertableType;
-@property AMInsertableObjectState objectState;
+@property AMInsertableViewState objectState;
 @property (readonly) NSColor * backColor;
 @property NSEvent * mouseDownEvent;
 @property NSPoint mouseDownWindowPoint;
@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
 @property NSString * uuid;
 
 /*!
- Convenience method, not part of the NSPasteboardWriting protocol, but useful. With this class method, no instance of an AMInsertableOjbect needs to be set up in order to setup the drag source.
+ Convenience method, not part of the NSPasteboardWriting protocol, but useful becauser with this class method, no instance of an AMInsertableOjbect needs to be set up in order to setup the drag source.
  */
 +(NSArray*)writableTypesForPasteboard:(NSPasteboard *)pasteboard;
 
@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, AMInsertableObjectState) {
 -(NSString*)trayItemKey;
 
 @property id <AMTrayDatasource> trayDataSource;
-@property id <AMInsertableObjectViewDelegate> insertableObjectDelegate;
+@property id <AMWorksheetViewDelegate> InsertableViewDelegate;
 
 -(void)setFrameTopLeft:(NSPoint)topLeft animate:(BOOL)animate;
 

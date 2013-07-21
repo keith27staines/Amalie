@@ -7,24 +7,22 @@
 //
 
 @class AMWorksheetView;
-@class AMInsertableObjectView;
-@class AMAppController;
 
 #import <Cocoa/Cocoa.h>
-#import "AMInsertableObjectViewDelegate.h"
+#import "AMWorksheetViewDelegate.h"
 #import "AMTrayDatasource.h"
 
-@interface AMWorksheetController : NSPersistentDocument <AMInsertableObjectViewDelegate>
+@interface AMWorksheetController : NSPersistentDocument <AMWorksheetViewDelegate>
 
 /*!
- Our worksheet view is the main view in our document window - basically it IS the document. Other views are associated with controls used to edit the document. or else represent objects on the document.
+ Our worksheet view IS the document we are controlling.
  */
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 
 /*!
- We need this appController reference to pass on to objects we manage.
+ WARNING! We need this trayDataSource reference to pass on to subviews that we programmatically introduce onto the worksheet. Make sure this IBOutlet is connected in IB. Usually, the appController will be the primary tray datasource, so in IB, connect the appController to it.
  */
-@property (weak) IBOutlet AMAppController * appController;
+@property (weak) IBOutlet id<AMTrayDatasource> trayDataSource;
 
 
 @end

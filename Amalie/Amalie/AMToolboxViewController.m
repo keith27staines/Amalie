@@ -81,7 +81,7 @@
     
     // The table is the tray (of insertable items).
     AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
-    AMInsertableObjectView * insertableView = [[AMInsertableObjectView alloc] initWithInsertableType:trayItem.insertableType];
+    AMInsertableView * insertableView = [[AMInsertableView alloc] initWithInsertableType:trayItem.insertableType];
     return insertableView;
 }
 

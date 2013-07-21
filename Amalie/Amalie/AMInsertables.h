@@ -9,7 +9,7 @@
 #ifndef Amalie_Header_h
 #define Amalie_Header_h
 
-#import "AMInsertableObjectView.h"
+#import "AMInsertableView.h"
 
 
 #endif

@@ -57,7 +57,7 @@ extern NSString * const kAMMathematicalSetKey;
 extern NSString * const kAMVectorKey;
 extern NSString * const kAMMatrixKey;
 
-typedef NS_ENUM(NSUInteger, AMInsertableType){
+typedef NS_ENUM(NSInteger, AMInsertableType){
     AMInsertableTypeConstant,
     AMInsertableTypeVariable,
     AMInsertableTypeExpression,
