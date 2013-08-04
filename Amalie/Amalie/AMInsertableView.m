@@ -1,5 +1,5 @@
 //
-//  AMInsertableViewView.m
+//  AMInsertableView.m
 //  Amalie
 //
 //  Created by Keith Staines on 04/07/2013.
@@ -11,6 +11,7 @@
 #import "AMConstants.h"
 #import "AMInsertableView.h"
 #import "AMTrayItem.h"
+#import "AMContentView.h"
 
 static float const kAMSMallDistance = 3.0f;
 static NSString * const kFrameKey = @"AMFrameKey";
@@ -27,6 +28,9 @@ static CABasicAnimation * animateOrigin;
     AMInsertableViewState _objectState;
     AMInsertableType        _insertableType;
 }
+@property (readwrite) NSEvent * mouseDownEvent;
+@property (readwrite) NSPoint mouseDownWindowPoint;
+
 @end
 
 @implementation AMInsertableView
@@ -52,7 +56,7 @@ static CABasicAnimation * animateOrigin;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _uuid = @"";
+        _uuid = [NSUUID UUID];
         _mouseDownWindowPoint = NSMakePoint(-100, -100);
         _insertableType = insertableType;
     }
@@ -61,14 +65,29 @@ static CABasicAnimation * animateOrigin;
 
 -(void)viewDidMoveToWindow
 {
-    static BOOL previouslyEntered = NO;
+    NSLog(@"%@ - viewDidMoveToWindow",self.class);
+    AMContentView * contentView;
+    contentView = [self.delegate insertableView:self
+                      requiresContentViewOfType:self.insertableType];
     
-    if ( !previouslyEntered ) {
-        previouslyEntered = YES;
-        
-        [self setWantsLayer:YES];
-        
-    }
+    self.box = self.subviews[0];
+    [contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.box setContentView:contentView];
+    self.box.title = @"Expression";
+    [self.box setNextResponder:self];
+    [self.box setNextKeyView:self];
+
+    NSArray * constraints;
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[content]-|"
+                                                          options:0
+                                                          metrics:nil
+                                                            views:@{@"content": contentView}];
+    [self.box addConstraints:constraints];
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[content]-|"
+                                                          options:0
+                                                          metrics:nil
+                                                            views:@{@"content": contentView}];
+    [self.box addConstraints:constraints];
 }
 
 #pragma mark - State -
@@ -102,24 +121,31 @@ static CABasicAnimation * animateOrigin;
 
 -(BOOL)isOpaque
 {
-    return (self.backColor.alphaComponent == 0) ? NO : YES;
+    return NO;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [NSGraphicsContext saveGraphicsState];
+    [[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.0] set];
+    NSRectFill(dirtyRect);
     AMTrayItem * item = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
     [item.backgroundColor set];
-    [NSBezierPath fillRect:dirtyRect];
+    NSBezierPath *path = [NSBezierPath bezierPath];
+    [path setFlatness:0.3];
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.5, 0.5) xRadius:10 yRadius:10];
+    [path fill];
     [self drawFocusRing];
+    [NSGraphicsContext restoreGraphicsState];
 }
 
 -(void)drawFocusRing
 {
     if ( ( [self.window firstResponder] == self ) && [NSGraphicsContext currentContextDrawingToScreen]) {
-        [NSGraphicsContext saveGraphicsState];
-        NSSetFocusRingStyle( NSFocusRingOnly );
-        [NSBezierPath fillRect:self.bounds];
-        [NSGraphicsContext restoreGraphicsState];
+        [[NSColor blackColor] set];
+        NSBezierPath *path = [NSBezierPath bezierPath];
+        [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 2, 2) xRadius:10 yRadius:10];
+        [path stroke];
     }
 }
 

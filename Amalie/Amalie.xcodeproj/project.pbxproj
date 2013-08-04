@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		780EE8081799BEA200D0B38C /* AMInsertableVariableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 780EE8061799BEA200D0B38C /* AMInsertableVariableViewController.m */; };
-		780EE8091799BEA200D0B38C /* AMInsertableVariableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 780EE8071799BEA200D0B38C /* AMInsertableVariableViewController.xib */; };
+		7811D2C617A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
+		7811D2C717A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
+		7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2CA17A255380024839B /* AMRefTreeNode.m */; };
+		7811D2CC17A255380024839B /* AMRefTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2CA17A255380024839B /* AMRefTreeNode.m */; };
+		7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */; };
+		7811D2D017A257710024839B /* AMReferencedObjectHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */; };
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EF91789CC11002BE03A /* AMAppController.m */; };
@@ -18,13 +22,19 @@
 		785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C8178552A700F6A7AD /* AMWorksheetView.m */; };
 		785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CB1785532F00F6A7AD /* AMToolboxView.m */; };
 		785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CE1785722700F6A7AD /* AMInsertableView.m */; };
-		785247D21786AC9300F6A7AD /* AMExpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247D11786AC9300F6A7AD /* AMExpressionView.m */; };
+		785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247D11786AC9300F6A7AD /* AMExpressionContentView.m */; };
+		785D9A21179C5930004D39B5 /* AMExpressionContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */; };
+		785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */; };
+		785D9A26179D716D004D39B5 /* AMInsertableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A24179D716D004D39B5 /* AMInsertableViewController.m */; };
+		785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A2D179D9BED004D39B5 /* AMContentViewController.m */; };
+		785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A2F179DE475004D39B5 /* AMInsertableView.xib */; };
+		785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A32179DFFAF004D39B5 /* AMContentView.m */; };
 		787B3043178361BC001851C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3042178361BC001851C0 /* Cocoa.framework */; };
 		787B304D178361BC001851C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 787B304B178361BC001851C0 /* InfoPlist.strings */; };
 		787B304F178361BC001851C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B304E178361BC001851C0 /* main.m */; };
 		787B3053178361BC001851C0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 787B3051178361BC001851C0 /* Credits.rtf */; };
 		787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3055178361BC001851C0 /* AMWorksheetController.m */; };
-		787B3059178361BC001851C0 /* AMWorksheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMWorksheetController.xib */; };
+		787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMWorksheet.xib */; };
 		787B305C178361BC001851C0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B305A178361BC001851C0 /* MainMenu.xib */; };
 		787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */; };
 		787B3061178361BC001851C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787B3060178361BC001851C0 /* Images.xcassets */; };
@@ -52,8 +62,34 @@
 		788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */; };
 		788709C5178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
+		7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */; };
+		7899B2D417ACF596008BDB75 /* KSMReferenceCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */; };
+		7899B2D817AD0DB9008BDB75 /* AMConstantContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2D617AD0DB9008BDB75 /* AMConstantContentViewController.m */; };
+		7899B2D917AD0DB9008BDB75 /* AMConstantContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2D717AD0DB9008BDB75 /* AMConstantContentView.xib */; };
+		7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2DB17AD0DFC008BDB75 /* AMVariableContentViewController.m */; };
+		7899B2DE17AD0DFC008BDB75 /* AMVariableContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2DC17AD0DFC008BDB75 /* AMVariableContentView.xib */; };
+		7899B2E217AD0E16008BDB75 /* AMEquationContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2E017AD0E15008BDB75 /* AMEquationContentViewController.m */; };
+		7899B2E317AD0E16008BDB75 /* AMEquationContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2E117AD0E15008BDB75 /* AMEquationContentView.xib */; };
+		7899B2E717AD0E26008BDB75 /* AMVectorContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2E517AD0E26008BDB75 /* AMVectorContentViewController.m */; };
+		7899B2E817AD0E26008BDB75 /* AMVectorContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2E617AD0E26008BDB75 /* AMVectorContentView.xib */; };
+		7899B2EC17AD0E42008BDB75 /* AMMatrixContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2EA17AD0E42008BDB75 /* AMMatrixContentViewController.m */; };
+		7899B2ED17AD0E42008BDB75 /* AMMatrixContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2EB17AD0E42008BDB75 /* AMMatrixContentView.xib */; };
+		7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2EF17AD0E58008BDB75 /* AMMathematicalSetContentViewController.m */; };
+		7899B2F217AD0E58008BDB75 /* AMMathematicalSetContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2F017AD0E58008BDB75 /* AMMathematicalSetContentView.xib */; };
+		7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2F417AD0E6A008BDB75 /* AMGraph2DContentViewController.m */; };
+		7899B2F717AD0E6A008BDB75 /* AMGraph2DContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2F517AD0E6A008BDB75 /* AMGraph2DContentView.xib */; };
+		7899B2FB17AD3A27008BDB75 /* AMConstantContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2FA17AD3A27008BDB75 /* AMConstantContentView.m */; };
+		7899B2FE17AD3A64008BDB75 /* AMVariableConentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2FD17AD3A64008BDB75 /* AMVariableConentView.m */; };
+		7899B30117AD3AA2008BDB75 /* AMEquationContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30017AD3AA2008BDB75 /* AMEquationContentView.m */; };
+		7899B30417AD3ACD008BDB75 /* AMVectorContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30317AD3ACD008BDB75 /* AMVectorContentView.m */; };
+		7899B30717AD3AEB008BDB75 /* AMMatrixContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30617AD3AEB008BDB75 /* AMMatrixContentView.m */; };
+		7899B30A17AD3B0B008BDB75 /* AMMathematicalSetContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30917AD3B0B008BDB75 /* AMMathematicalSetContentView.m */; };
+		7899B30D17AD3B2F008BDB75 /* AMGraph2DContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30C17AD3B2F008BDB75 /* AMGraph2DContentView.m */; };
 		789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
+		78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
+		78AEEB5C179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
+		78AEEB5F179EF96C00BFF474 /* AMInsertableRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */; };
 		78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */; };
@@ -71,9 +107,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		780EE8051799BEA200D0B38C /* AMInsertableVariableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableVariableViewController.h; sourceTree = "<group>"; };
-		780EE8061799BEA200D0B38C /* AMInsertableVariableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableVariableViewController.m; sourceTree = "<group>"; };
-		780EE8071799BEA200D0B38C /* AMInsertableVariableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMInsertableVariableViewController.xib; sourceTree = "<group>"; };
+		7811D2C417A2550E0024839B /* AMRefTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRefTree.h; sourceTree = "<group>"; };
+		7811D2C517A2550E0024839B /* AMRefTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMRefTree.m; sourceTree = "<group>"; };
+		7811D2C917A255380024839B /* AMRefTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRefTreeNode.h; sourceTree = "<group>"; };
+		7811D2CA17A255380024839B /* AMRefTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMRefTreeNode.m; sourceTree = "<group>"; };
+		7811D2CD17A257710024839B /* AMReferencedObjectHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMReferencedObjectHolder.h; sourceTree = "<group>"; };
+		7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMReferencedObjectHolder.m; sourceTree = "<group>"; };
 		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
 		7832744A178F1D810051290B /* AMTrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayItem.h; sourceTree = "<group>"; };
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
@@ -90,8 +129,19 @@
 		785247CB1785532F00F6A7AD /* AMToolboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMToolboxView.m; sourceTree = "<group>"; };
 		785247CD1785722700F6A7AD /* AMInsertableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableView.h; sourceTree = "<group>"; };
 		785247CE1785722700F6A7AD /* AMInsertableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableView.m; sourceTree = "<group>"; };
-		785247D01786AC9300F6A7AD /* AMExpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionView.h; sourceTree = "<group>"; };
-		785247D11786AC9300F6A7AD /* AMExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionView.m; sourceTree = "<group>"; };
+		785247D01786AC9300F6A7AD /* AMExpressionContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContentView.h; sourceTree = "<group>"; };
+		785247D11786AC9300F6A7AD /* AMExpressionContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContentView.m; sourceTree = "<group>"; };
+		785D9A1E179C5930004D39B5 /* AMExpressionContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContentViewController.h; sourceTree = "<group>"; };
+		785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContentViewController.m; sourceTree = "<group>"; };
+		785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMExpressionContentView.xib; sourceTree = "<group>"; };
+		785D9A23179D716D004D39B5 /* AMInsertableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableViewController.h; sourceTree = "<group>"; };
+		785D9A24179D716D004D39B5 /* AMInsertableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableViewController.m; sourceTree = "<group>"; };
+		785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableViewDelegate.h; sourceTree = "<group>"; };
+		785D9A2C179D9BED004D39B5 /* AMContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContentViewController.h; sourceTree = "<group>"; };
+		785D9A2D179D9BED004D39B5 /* AMContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContentViewController.m; sourceTree = "<group>"; };
+		785D9A2F179DE475004D39B5 /* AMInsertableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AMInsertableView.xib; path = ../AMInsertableView.xib; sourceTree = "<group>"; };
+		785D9A31179DFFAF004D39B5 /* AMContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContentView.h; sourceTree = "<group>"; };
+		785D9A32179DFFAF004D39B5 /* AMContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContentView.m; sourceTree = "<group>"; };
 		787B303F178361BC001851C0 /* Amalie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3042178361BC001851C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		787B3045178361BC001851C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -104,11 +154,11 @@
 		787B3052178361BC001851C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		787B3054178361BC001851C0 /* AMWorksheetController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMWorksheetController.h; sourceTree = "<group>"; };
 		787B3055178361BC001851C0 /* AMWorksheetController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetController.m; sourceTree = "<group>"; };
-		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMWorksheetController.xib; sourceTree = "<group>"; };
+		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMWorksheet.xib; sourceTree = "<group>"; };
 		787B305B178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		787B305E178361BC001851C0 /* AMDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDocument.xcdatamodel; sourceTree = "<group>"; };
 		787B3060178361BC001851C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Amalie/Images.xcassets; sourceTree = "<group>"; };
-		787B3066178361BC001851C0 /* AmalieTests.xctest */ = {isa = PBXFileReference; explicitFileType = folder; includeInIndex = 0; path = AmalieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		787B3066178361BC001851C0 /* AmalieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmalieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3067178361BC001851C0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		787B306E178361BC001851C0 /* AmalieTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AmalieTests-Info.plist"; sourceTree = "<group>"; };
 		787B3070178361BC001851C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -136,10 +186,52 @@
 		788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesTrayTableColorwellCellView.m; sourceTree = "<group>"; };
 		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
 		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
+		7899B2D117ACF596008BDB75 /* KSMReferenceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMReferenceCounter.h; sourceTree = "<group>"; };
+		7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMReferenceCounter.m; sourceTree = "<group>"; };
+		7899B2D517AD0DB9008BDB75 /* AMConstantContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstantContentViewController.h; sourceTree = "<group>"; };
+		7899B2D617AD0DB9008BDB75 /* AMConstantContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstantContentViewController.m; sourceTree = "<group>"; };
+		7899B2D717AD0DB9008BDB75 /* AMConstantContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMConstantContentView.xib; sourceTree = "<group>"; };
+		7899B2DA17AD0DFC008BDB75 /* AMVariableContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVariableContentViewController.h; sourceTree = "<group>"; };
+		7899B2DB17AD0DFC008BDB75 /* AMVariableContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVariableContentViewController.m; sourceTree = "<group>"; };
+		7899B2DC17AD0DFC008BDB75 /* AMVariableContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMVariableContentView.xib; sourceTree = "<group>"; };
+		7899B2DF17AD0E15008BDB75 /* AMEquationContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMEquationContentViewController.h; sourceTree = "<group>"; };
+		7899B2E017AD0E15008BDB75 /* AMEquationContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMEquationContentViewController.m; sourceTree = "<group>"; };
+		7899B2E117AD0E15008BDB75 /* AMEquationContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMEquationContentView.xib; sourceTree = "<group>"; };
+		7899B2E417AD0E26008BDB75 /* AMVectorContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVectorContentViewController.h; sourceTree = "<group>"; };
+		7899B2E517AD0E26008BDB75 /* AMVectorContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVectorContentViewController.m; sourceTree = "<group>"; };
+		7899B2E617AD0E26008BDB75 /* AMVectorContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMVectorContentView.xib; sourceTree = "<group>"; };
+		7899B2E917AD0E42008BDB75 /* AMMatrixContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMatrixContentViewController.h; sourceTree = "<group>"; };
+		7899B2EA17AD0E42008BDB75 /* AMMatrixContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMatrixContentViewController.m; sourceTree = "<group>"; };
+		7899B2EB17AD0E42008BDB75 /* AMMatrixContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMMatrixContentView.xib; sourceTree = "<group>"; };
+		7899B2EE17AD0E58008BDB75 /* AMMathematicalSetContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathematicalSetContentViewController.h; sourceTree = "<group>"; };
+		7899B2EF17AD0E58008BDB75 /* AMMathematicalSetContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathematicalSetContentViewController.m; sourceTree = "<group>"; };
+		7899B2F017AD0E58008BDB75 /* AMMathematicalSetContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMMathematicalSetContentView.xib; sourceTree = "<group>"; };
+		7899B2F317AD0E6A008BDB75 /* AMGraph2DContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGraph2DContentViewController.h; sourceTree = "<group>"; };
+		7899B2F417AD0E6A008BDB75 /* AMGraph2DContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGraph2DContentViewController.m; sourceTree = "<group>"; };
+		7899B2F517AD0E6A008BDB75 /* AMGraph2DContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMGraph2DContentView.xib; sourceTree = "<group>"; };
+		7899B2F917AD3A27008BDB75 /* AMConstantContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstantContentView.h; sourceTree = "<group>"; };
+		7899B2FA17AD3A27008BDB75 /* AMConstantContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstantContentView.m; sourceTree = "<group>"; };
+		7899B2FC17AD3A64008BDB75 /* AMVariableConentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVariableConentView.h; sourceTree = "<group>"; };
+		7899B2FD17AD3A64008BDB75 /* AMVariableConentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVariableConentView.m; sourceTree = "<group>"; };
+		7899B2FF17AD3AA2008BDB75 /* AMEquationContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMEquationContentView.h; sourceTree = "<group>"; };
+		7899B30017AD3AA2008BDB75 /* AMEquationContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMEquationContentView.m; sourceTree = "<group>"; };
+		7899B30217AD3ACD008BDB75 /* AMVectorContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVectorContentView.h; sourceTree = "<group>"; };
+		7899B30317AD3ACD008BDB75 /* AMVectorContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVectorContentView.m; sourceTree = "<group>"; };
+		7899B30517AD3AEB008BDB75 /* AMMatrixContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMatrixContentView.h; sourceTree = "<group>"; };
+		7899B30617AD3AEB008BDB75 /* AMMatrixContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMatrixContentView.m; sourceTree = "<group>"; };
+		7899B30817AD3B0B008BDB75 /* AMMathematicalSetContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathematicalSetContentView.h; sourceTree = "<group>"; };
+		7899B30917AD3B0B008BDB75 /* AMMathematicalSetContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathematicalSetContentView.m; sourceTree = "<group>"; };
+		7899B30B17AD3B2F008BDB75 /* AMGraph2DContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGraph2DContentView.h; sourceTree = "<group>"; };
+		7899B30C17AD3B2F008BDB75 /* AMGraph2DContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGraph2DContentView.m; sourceTree = "<group>"; };
 		789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetViewDelegate.h; sourceTree = "<group>"; };
 		789CB121178B0BCB00B5AF58 /* AMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstants.h; sourceTree = "<group>"; };
 		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
-		78D5FD9C17918E88003D6AC6 /* AMInsertables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMInsertables.h; path = Amalie/AMInsertables.h; sourceTree = "<group>"; };
+		78AEEB59179EF38900BFF474 /* AMNameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameRules.h; sourceTree = "<group>"; };
+		78AEEB5A179EF38900BFF474 /* AMNameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameRules.m; sourceTree = "<group>"; };
+		78AEEB5D179EF96C00BFF474 /* AMInsertableRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableRecord.h; sourceTree = "<group>"; };
+		78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableRecord.m; sourceTree = "<group>"; };
+		78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableViewDataSource.h; sourceTree = "<group>"; };
+		78D5FD9C17918E88003D6AC6 /* AMInsertableContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMInsertableContent.h; path = Amalie/AMInsertableContent.h; sourceTree = "<group>"; };
 		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
 		78DE823E1783664400C7EE10 /* KSMPrimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimes.m; sourceTree = "<group>"; };
 		78DE82431783664400C7EE10 /* KSMPrimeDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimeDecomposition.h; sourceTree = "<group>"; };
@@ -167,6 +259,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7811D2C817A255150024839B /* AM ReferenceCounted Tree */ = {
+			isa = PBXGroup;
+			children = (
+				7811D2C417A2550E0024839B /* AMRefTree.h */,
+				7811D2C517A2550E0024839B /* AMRefTree.m */,
+				7811D2C917A255380024839B /* AMRefTreeNode.h */,
+				7811D2CA17A255380024839B /* AMRefTreeNode.m */,
+				7811D2CD17A257710024839B /* AMReferencedObjectHolder.h */,
+				7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */,
+			);
+			name = "AM ReferenceCounted Tree";
+			sourceTree = "<group>";
+		};
 		785247BD1784067900F6A7AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +282,11 @@
 				7832744B178F1D810051290B /* AMTrayItem.m */,
 				78DE823C178365DC00C7EE10 /* KSMPrime */,
 				787B307D1783638D001851C0 /* KSMMath */,
+				78AEEB59179EF38900BFF474 /* AMNameRules.h */,
+				78AEEB5A179EF38900BFF474 /* AMNameRules.m */,
+				78AEEB5D179EF96C00BFF474 /* AMInsertableRecord.h */,
+				78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */,
+				7811D2C817A255150024839B /* AM ReferenceCounted Tree */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -211,10 +321,11 @@
 		785247C0178406D200F6A7AD /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				780EE8071799BEA200D0B38C /* AMInsertableVariableViewController.xib */,
-				787B3057178361BC001851C0 /* AMWorksheetController.xib */,
 				787B305A178361BC001851C0 /* MainMenu.xib */,
-				784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */,
+				787B3057178361BC001851C0 /* AMWorksheet.xib */,
+				785D9A2F179DE475004D39B5 /* AMInsertableView.xib */,
+				785D9A2A179D79E9004D39B5 /* Content views */,
+				785D9A28179D78D0004D39B5 /* Subsiduary Window Nibs */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -222,19 +333,62 @@
 		785D9A1D179BDD19004D39B5 /* Controllers for insertable views */ = {
 			isa = PBXGroup;
 			children = (
-				780EE8051799BEA200D0B38C /* AMInsertableVariableViewController.h */,
-				780EE8061799BEA200D0B38C /* AMInsertableVariableViewController.m */,
+				785D9A23179D716D004D39B5 /* AMInsertableViewController.h */,
+				785D9A24179D716D004D39B5 /* AMInsertableViewController.m */,
+				785D9A29179D79B8004D39B5 /* Controllers for Content Views */,
 			);
 			name = "Controllers for insertable views";
+			sourceTree = "<group>";
+		};
+		785D9A28179D78D0004D39B5 /* Subsiduary Window Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */,
+			);
+			name = "Subsiduary Window Nibs";
+			sourceTree = "<group>";
+		};
+		785D9A29179D79B8004D39B5 /* Controllers for Content Views */ = {
+			isa = PBXGroup;
+			children = (
+				785D9A2C179D9BED004D39B5 /* AMContentViewController.h */,
+				785D9A2D179D9BED004D39B5 /* AMContentViewController.m */,
+				7899B2D517AD0DB9008BDB75 /* AMConstantContentViewController.h */,
+				7899B2D617AD0DB9008BDB75 /* AMConstantContentViewController.m */,
+				7899B2DA17AD0DFC008BDB75 /* AMVariableContentViewController.h */,
+				7899B2DB17AD0DFC008BDB75 /* AMVariableContentViewController.m */,
+				785D9A1E179C5930004D39B5 /* AMExpressionContentViewController.h */,
+				785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */,
+				7899B2DF17AD0E15008BDB75 /* AMEquationContentViewController.h */,
+				7899B2E017AD0E15008BDB75 /* AMEquationContentViewController.m */,
+				7899B2E417AD0E26008BDB75 /* AMVectorContentViewController.h */,
+				7899B2E517AD0E26008BDB75 /* AMVectorContentViewController.m */,
+				7899B2E917AD0E42008BDB75 /* AMMatrixContentViewController.h */,
+				7899B2EA17AD0E42008BDB75 /* AMMatrixContentViewController.m */,
+				7899B2EE17AD0E58008BDB75 /* AMMathematicalSetContentViewController.h */,
+				7899B2EF17AD0E58008BDB75 /* AMMathematicalSetContentViewController.m */,
+				7899B2F317AD0E6A008BDB75 /* AMGraph2DContentViewController.h */,
+				7899B2F417AD0E6A008BDB75 /* AMGraph2DContentViewController.m */,
+			);
+			name = "Controllers for Content Views";
+			sourceTree = "<group>";
+		};
+		785D9A2A179D79E9004D39B5 /* Content views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Content views";
 			sourceTree = "<group>";
 		};
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
 				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
+				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
+				78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */,
 				78327449178F14920051290B /* AMTrayDatasource.h */,
 				787B3060178361BC001851C0 /* Images.xcassets */,
-				78D5FD9C17918E88003D6AC6 /* AMInsertables.h */,
+				78D5FD9C17918E88003D6AC6 /* AMInsertableContent.h */,
 				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
 				787B3048178361BC001851C0 /* Amalie */,
@@ -336,6 +490,8 @@
 				787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */,
 				787B3095178364B8001851C0 /* KSMWorksheet.h */,
 				787B3096178364B8001851C0 /* KSMWorksheet.m */,
+				7899B2D117ACF596008BDB75 /* KSMReferenceCounter.h */,
+				7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */,
 			);
 			name = KSMMath;
 			sourceTree = "<group>";
@@ -368,13 +524,45 @@
 			name = "Toolbox views";
 			sourceTree = "<group>";
 		};
+		7899B2F817AD3829008BDB75 /* Content Views */ = {
+			isa = PBXGroup;
+			children = (
+				785D9A31179DFFAF004D39B5 /* AMContentView.h */,
+				785D9A32179DFFAF004D39B5 /* AMContentView.m */,
+				7899B2D717AD0DB9008BDB75 /* AMConstantContentView.xib */,
+				7899B2F917AD3A27008BDB75 /* AMConstantContentView.h */,
+				7899B2FA17AD3A27008BDB75 /* AMConstantContentView.m */,
+				7899B2DC17AD0DFC008BDB75 /* AMVariableContentView.xib */,
+				7899B2FC17AD3A64008BDB75 /* AMVariableConentView.h */,
+				7899B2FD17AD3A64008BDB75 /* AMVariableConentView.m */,
+				785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */,
+				785247D01786AC9300F6A7AD /* AMExpressionContentView.h */,
+				785247D11786AC9300F6A7AD /* AMExpressionContentView.m */,
+				7899B2E117AD0E15008BDB75 /* AMEquationContentView.xib */,
+				7899B2FF17AD3AA2008BDB75 /* AMEquationContentView.h */,
+				7899B30017AD3AA2008BDB75 /* AMEquationContentView.m */,
+				7899B2E617AD0E26008BDB75 /* AMVectorContentView.xib */,
+				7899B30217AD3ACD008BDB75 /* AMVectorContentView.h */,
+				7899B30317AD3ACD008BDB75 /* AMVectorContentView.m */,
+				7899B2EB17AD0E42008BDB75 /* AMMatrixContentView.xib */,
+				7899B30517AD3AEB008BDB75 /* AMMatrixContentView.h */,
+				7899B30617AD3AEB008BDB75 /* AMMatrixContentView.m */,
+				7899B2F017AD0E58008BDB75 /* AMMathematicalSetContentView.xib */,
+				7899B30817AD3B0B008BDB75 /* AMMathematicalSetContentView.h */,
+				7899B30917AD3B0B008BDB75 /* AMMathematicalSetContentView.m */,
+				7899B2F517AD0E6A008BDB75 /* AMGraph2DContentView.xib */,
+				7899B30B17AD3B2F008BDB75 /* AMGraph2DContentView.h */,
+				7899B30C17AD3B2F008BDB75 /* AMGraph2DContentView.m */,
+			);
+			name = "Content Views";
+			sourceTree = "<group>";
+		};
 		78D5FD8917905CA0003D6AC6 /* Insertable Views */ = {
 			isa = PBXGroup;
 			children = (
 				785247CD1785722700F6A7AD /* AMInsertableView.h */,
 				785247CE1785722700F6A7AD /* AMInsertableView.m */,
-				785247D01786AC9300F6A7AD /* AMExpressionView.h */,
-				785247D11786AC9300F6A7AD /* AMExpressionView.m */,
+				7899B2F817AD3829008BDB75 /* Content Views */,
 			);
 			name = "Insertable Views";
 			sourceTree = "<group>";
@@ -467,13 +655,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				780EE8091799BEA200D0B38C /* AMInsertableVariableViewController.xib in Resources */,
-				787B3059178361BC001851C0 /* AMWorksheetController.xib in Resources */,
+				787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
+				7899B2DE17AD0DFC008BDB75 /* AMVariableContentView.xib in Resources */,
+				7899B2E317AD0E16008BDB75 /* AMEquationContentView.xib in Resources */,
 				787B304D178361BC001851C0 /* InfoPlist.strings in Resources */,
+				7899B2D917AD0DB9008BDB75 /* AMConstantContentView.xib in Resources */,
+				785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */,
+				7899B2E817AD0E26008BDB75 /* AMVectorContentView.xib in Resources */,
 				787B3053178361BC001851C0 /* Credits.rtf in Resources */,
 				784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */,
 				787B305C178361BC001851C0 /* MainMenu.xib in Resources */,
+				7899B2F217AD0E58008BDB75 /* AMMathematicalSetContentView.xib in Resources */,
+				7899B2ED17AD0E42008BDB75 /* AMMatrixContentView.xib in Resources */,
+				785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */,
+				7899B2F717AD0E6A008BDB75 /* AMGraph2DContentView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,19 +691,42 @@
 				788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
+				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
+				7899B2E717AD0E26008BDB75 /* AMVectorContentViewController.m in Sources */,
+				7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */,
+				785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */,
+				78AEEB5F179EF96C00BFF474 /* AMInsertableRecord.m in Sources */,
+				7899B30417AD3ACD008BDB75 /* AMVectorContentView.m in Sources */,
+				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
-				780EE8081799BEA200D0B38C /* AMInsertableVariableViewController.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
 				787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
-				785247D21786AC9300F6A7AD /* AMExpressionView.m in Sources */,
+				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
+				7899B2FE17AD3A64008BDB75 /* AMVariableConentView.m in Sources */,
+				7899B2FB17AD3A27008BDB75 /* AMConstantContentView.m in Sources */,
+				7899B2EC17AD0E42008BDB75 /* AMMatrixContentViewController.m in Sources */,
+				785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */,
+				7899B2D817AD0DB9008BDB75 /* AMConstantContentViewController.m in Sources */,
+				7899B30717AD3AEB008BDB75 /* AMMatrixContentView.m in Sources */,
+				7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */,
+				7899B30117AD3AA2008BDB75 /* AMEquationContentView.m in Sources */,
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
 				7832744C178F1D810051290B /* AMTrayItem.m in Sources */,
+				7899B30A17AD3B0B008BDB75 /* AMMathematicalSetContentView.m in Sources */,
+				785D9A26179D716D004D39B5 /* AMInsertableViewController.m in Sources */,
 				78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
 				787B3097178364B8001851C0 /* KSMExpression.m in Sources */,
+				785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */,
+				7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,
+				7899B2E217AD0E16008BDB75 /* AMEquationContentViewController.m in Sources */,
+				7899B30D17AD3B2F008BDB75 /* AMGraph2DContentView.m in Sources */,
+				78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */,
+				785D9A21179C5930004D39B5 /* AMExpressionContentViewController.m in Sources */,
+				7811D2C617A2550E0024839B /* AMRefTree.m in Sources */,
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
@@ -522,6 +741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				787B3073178361BC001851C0 /* AmalieTests.m in Sources */,
+				7811D2C717A2550E0024839B /* AMRefTree.m in Sources */,
 				787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
 				7832744D178F1D810051290B /* AMTrayItem.m in Sources */,
 				787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */,
@@ -530,12 +750,16 @@
 				788709C6178DAEAB008E093A /* AMPreferences.m in Sources */,
 				787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */,
 				787B308717836485001851C0 /* KSMPrimeDecompositionTests.m in Sources */,
+				78AEEB5C179EF38900BFF474 /* AMNameRules.m in Sources */,
+				7811D2D017A257710024839B /* AMReferencedObjectHolder.m in Sources */,
+				7811D2CC17A255380024839B /* AMRefTreeNode.m in Sources */,
 				787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */,
 				787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				787B308617836485001851C0 /* KSMPrimeTests.m in Sources */,
 				787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */,
 				789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */,
 				787B308917836485001851C0 /* KSMExpressionTests.m in Sources */,
+				7899B2D417ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */,
 				787B3098178364B8001851C0 /* KSMExpression.m in Sources */,
 				787B308B17836485001851C0 /* KSMExpressionBuilderTests.m in Sources */,
@@ -569,12 +793,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		787B3057178361BC001851C0 /* AMWorksheetController.xib */ = {
+		787B3057178361BC001851C0 /* AMWorksheet.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				787B3058178361BC001851C0 /* Base */,
 			);
-			name = AMWorksheetController.xib;
+			name = AMWorksheet.xib;
 			sourceTree = "<group>";
 		};
 		787B305A178361BC001851C0 /* MainMenu.xib */ = {

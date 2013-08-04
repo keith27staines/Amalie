@@ -1,14 +1,14 @@
 //
-//  AMExpressionView.m
+//  AMMatrixContentView.m
 //  Amalie
 //
-//  Created by Keith Staines on 05/07/2013.
+//  Created by Keith Staines on 03/08/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMExpressionView.h"
+#import "AMMatrixContentView.h"
 
-@implementation AMExpressionView
+@implementation AMMatrixContentView
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -16,12 +16,13 @@
     if (self) {
         // Initialization code here.
     }
-    
     return self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+	[super drawRect:dirtyRect];
+	
     // Drawing code here.
 }
 

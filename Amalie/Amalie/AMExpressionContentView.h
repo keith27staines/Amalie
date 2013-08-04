@@ -1,5 +1,5 @@
 //
-//  AMExpressionView.h
+//  AMExpressionContentView.h
 //  Amalie
 //
 //  Created by Keith Staines on 05/07/2013.
@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMContentView.h"
 
-@interface AMExpressionView : NSView
+@interface AMExpressionContentView : AMContentView
 
 @end

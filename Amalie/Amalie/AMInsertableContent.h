@@ -1,5 +1,5 @@
 //
-//  AMInsertables.h
+//  AMInsertableContent.h
 //  Amalie
 //
 //  Created by Keith Staines on 13/07/2013.
@@ -9,7 +9,7 @@
 #ifndef Amalie_Header_h
 #define Amalie_Header_h
 
-#import "AMInsertableView.h"
+#import "AMExpressionContentViewController.h"
 
 
 #endif

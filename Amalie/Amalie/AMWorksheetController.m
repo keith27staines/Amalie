@@ -9,24 +9,35 @@
 @import QuartzCore;
 
 #import "AMWorksheetController.h"
+#import "AMConstants.h"
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
+#import "KSMWorksheet.h"
+#import "AMInsertableContent.h"
+#import "AMContentView.h"
+#import "AMNameRules.h"
+#import "AMInsertableRecord.h"
 
-static NSUInteger const kAMDefaultLineSpace = 20;
-static NSUInteger const kAMDefaultLeftMargin = 36;
-static NSUInteger const kAMDefaultTopMargin = 36;
+static NSUInteger const kAMDefaultLineSpace   = 20;
+static NSUInteger const kAMDefaultLeftMargin  = 36;
+static NSUInteger const kAMDefaultTopMargin   = 36;
 
 @interface AMWorksheetController()
 {
-    NSMutableArray * _insertsArray;
+    NSMutableArray      * _insertsArray;
+    NSMutableDictionary * _insertedRecords;
     NSMutableDictionary * _insertsDictionary;
+    KSMWorksheet        * _mathSheet;
+    AMNameRules         * _nameRules;
 }
 
 /*!
  * view controllers to manage the loading of views for insertable objects
  */
-@property NSMutableDictionary * viewControllers;
-
+@property (strong) NSMutableDictionary * viewControllers;
+@property (strong, readonly) KSMWorksheet * mathSheet;
+@property (strong, readonly) AMNameRules * nameRules;
+@property (readonly) NSMutableDictionary * insertedRecords;
 @end
 
 @implementation AMWorksheetController
@@ -38,9 +49,11 @@ static NSUInteger const kAMDefaultTopMargin = 36;
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
-        _insertsArray = [NSMutableArray array];
+        _insertsArray      = [NSMutableArray array];
+        _insertedRecords   = [NSMutableDictionary dictionary];
         _insertsDictionary = [NSMutableDictionary dictionary];
-        _viewControllers = [NSMutableDictionary dictionary];
+        _viewControllers   = [NSMutableDictionary dictionary];
+        _mathSheet         = [[KSMWorksheet alloc] init];
     }
     return self;
 }
@@ -50,11 +63,20 @@ static NSUInteger const kAMDefaultTopMargin = 36;
     ;
 }
 
+-(AMNameRules*)nameRules
+{
+    if (!_nameRules) {
+        _nameRules = [[AMNameRules alloc] init];
+    }
+    return _nameRules;
+}
+
+
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"AMWorksheetController";
+    return @"AMWorksheet";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
@@ -74,34 +96,46 @@ static NSUInteger const kAMDefaultTopMargin = 36;
 {
     if (!view) return;
     
-    view.uuid = [NSUUID UUID];
+    // create the record for the datastore
+    [self setupInsertableRecord:view];
     
     // Add the object to our list of inserted objects
     [_insertsArray addObject:view];
     [_insertsDictionary setObject:view forKey:view.uuid];
-    view.InsertableViewDelegate = self;
+    view.delegate = self;
+    view.trayDataSource = self.trayDataSource;
+    
     [self.worksheetView addSubview:view];
     [view setFrameOrigin:origin];
     
-    // Tell the view where to get color and presentation info from
-    view.trayDataSource = self.trayDataSource;
-    
     // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
     [self scheduleLayout];
+}
+
+-(void)setupInsertableRecord:(AMInsertableView*)view
+{
+    NSString * defaultName;
+    defaultName = [[self.nameRules suggestNameForType:view.insertableType] string];
+    AMInsertableRecord * record;
+    record = [[AMInsertableRecord alloc] initWithName:defaultName
+                                                 uuid:view.uuid
+                                                 type:view.insertableType
+                                            mathSheet:self.mathSheet];
+    [self.insertedRecords setObject:record forKey:view.uuid];
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)view
 {
     [_insertsArray removeObject:view];
     [_insertsDictionary removeObjectForKey:view.uuid];
-    view.InsertableViewDelegate = nil;
+    view.delegate = nil;
     [view removeFromSuperview];
     [self scheduleLayout];
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
 {
-    // view will be a "shadow" object, a temporary copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
+    // view will be a "shadow" object, an incomplete copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
     AMInsertableView * actualView = [self actualViewFromPossibleTemporaryCopy:view];
     
     // Move it
@@ -109,15 +143,16 @@ static NSUInteger const kAMDefaultTopMargin = 36;
     [self scheduleLayout];
 }
 
--(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
+#pragma mark - AMInsertableViewDelegate -
+-(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    AMInsertableView * actual = [self insertableViewForKey:shadow.uuid];
-    
-    if (actual != shadow) {
-        NSLog(@"Warning - a shadow view object was passed to AMWorksheetController");
-    }
-    
-    return actual;
+
+    AMContentViewController * vc = [AMContentViewController contentViewControllerWithParent:self content:type];
+
+    AMContentView * contentView = (AMContentView*)[vc view];
+    contentView.delegate = self;
+    contentView.datasource = self;
+    return contentView;
 }
 
 #pragma - Layout -
@@ -197,6 +232,53 @@ static NSUInteger const kAMDefaultTopMargin = 36;
         // since we dealt with the possibility of both being at the same height earlier, the only possibility left is that obj 2 is above obj 1
         return (NSComparisonResult)NSOrderedDescending;
     }];
+}
+
+#pragma mark - AMInsertableViewDataSource -
+
+-(NSAttributedString*)attributedNameForView:(AMInsertableView*)view
+{
+    AMInsertableRecord * record = self.insertedRecords[view.uuid];
+    return [[NSAttributedString alloc] initWithString:record.name attributes:nil];
+}
+
+-(KSMExpression*)view:(AMInsertableView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index
+{
+    AMInsertableRecord * record = self.insertedRecords[view.uuid];
+    return [record expressionFromString:string atIndex:index];
+}
+
+-(KSMExpression*)view:(AMInsertableView*)view wantsExpressionAtIndex:(NSUInteger)index
+{
+    AMInsertableRecord * record = self.insertedRecords[view.uuid];
+    return [record expressionForIndex:index];
+}
+
+
+-(BOOL)view:(AMInsertableView*)view wantsNameChangedTo:(NSAttributedString*)attributedName error:(NSError**)error
+{
+    NSString * string = [attributedName string];
+    return [self.nameRules checkName:string
+                             forType:view.insertableType
+                               error:error];
+}
+
+#pragma - KSM maths library -
+
+-(KSMWorksheet*)mathSheet
+{
+    if (!_mathSheet) {
+        _mathSheet = [[KSMWorksheet alloc] init];
+    }
+    return _mathSheet;
+}
+
+
+#pragma - Misc -
+
+-(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
+{
+    return [self insertableViewForKey:shadow.uuid];
 }
 
 @end

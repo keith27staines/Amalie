@@ -8,7 +8,7 @@
 
 #import "AMWorksheetView.h"
 #import "AMConstants.h"
-#import "AMInsertables.h"
+#import "AMInsertableView.h"
 #import "AMWorksheetController.h"
 
 
@@ -128,7 +128,6 @@
         
         // Deal with items coming from the tray (library of insertable objects)
         if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
-            [view setFrameOrigin:draggingLocation];
             [self.delegate workheetView:self wantsViewInserted:view withOrigin:draggingLocation];
             return YES;
         }

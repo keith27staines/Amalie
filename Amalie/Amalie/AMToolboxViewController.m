@@ -7,10 +7,11 @@
 //
 
 #import "AMToolboxViewController.h"
-#import "AMInsertables.h"
+#import "AMInsertableView.h"
 #import "AMAppController.h"
 #import "AMConstants.h"
 #import "AMTrayItem.h"
+#import "AMInsertableViewController.h"
 
 @interface AMToolboxViewController()
 @property (copy) NSString* dragString;
@@ -81,7 +82,10 @@
     
     // The table is the tray (of insertable items).
     AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
-    AMInsertableView * insertableView = [[AMInsertableView alloc] initWithInsertableType:trayItem.insertableType];
+    AMInsertableViewController * viewController = [[AMInsertableViewController alloc] init];
+    AMInsertableView * insertableView = (AMInsertableView*)[viewController view];
+    insertableView.insertableType = trayItem.insertableType;
+    
     return insertableView;
 }
 

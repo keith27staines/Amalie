@@ -11,11 +11,16 @@
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
 #import "AMTrayDatasource.h"
+#import "AMInsertableViewDelegate.h"
+#import "AMInsertableViewDataSource.h"
 
-@interface AMWorksheetController : NSPersistentDocument <AMWorksheetViewDelegate>
+@interface AMWorksheetController : NSPersistentDocument
+<AMWorksheetViewDelegate,
+ AMInsertableViewDelegate,
+ AMInsertableViewDataSource>
 
 /*!
- Our worksheet view IS the document we are controlling.
+ Our worksheet view IS the document view we are controlling.
  */
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 

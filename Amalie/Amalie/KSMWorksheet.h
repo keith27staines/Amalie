@@ -11,8 +11,9 @@
 @class KSMExpressionEvaluator;
 
 #import <Foundation/Foundation.h>
+#import "KSMReferenceCounter.h"
 
-@interface KSMWorksheet : NSObject
+@interface KSMWorksheet : NSObject <KSMReferenceCounterDelegate>
 
 @property (copy, readwrite) NSString* title;
 @property (strong, readonly) KSMExpressionBuilder * builder;
@@ -46,6 +47,19 @@
  * @Returns The simplified expression
  */
 -(KSMExpression*)simplifiedExpressionFromExpression:(KSMExpression*)expression;
+
+/*!
+ Decrements the internal reference count for the specified expression. The 
+ expression will be deleted when the reference count reaches zero. Call this 
+ method when a particular instance of the the expression is to be removed from
+ the worksheet. Note that registerExpression and buildAndRegisterExpression both
+ automatically increment the reference count, whether or not the expression being
+ registered already exists. Thus there is no need for an explicit method to 
+ increment the reference count. Also note that this reference count is not the 
+ standard objective C reference count.
+ @Param expression The expression whose reference count is to be decremented.
+ */
+-(void)decrementReferenceCountForExpression:(KSMExpression*)expression;
 
 -(BOOL)isExpressionWithSymbolRegistered:(NSString*)symbol;
 -(KSMExpression*)expressionForSymbol:(NSString*)symbol;
