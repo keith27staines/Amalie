@@ -131,9 +131,13 @@ static CABasicAnimation * animateOrigin;
     AMTrayItem * item = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
     [item.backgroundColor set];
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path setFlatness:0.3];
     [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.5, 0.5) xRadius:10 yRadius:10];
     [path fill];
+    [[NSColor blackColor] set];
+    path = [NSBezierPath bezierPath];
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 2, 2) xRadius:10 yRadius:10];
+    [path stroke];
+
     [self drawFocusRing];
     [NSGraphicsContext restoreGraphicsState];
 }
@@ -141,10 +145,14 @@ static CABasicAnimation * animateOrigin;
 -(void)drawFocusRing
 {
     if ( ( [self.window firstResponder] == self ) && [NSGraphicsContext currentContextDrawingToScreen]) {
-        [[NSColor blackColor] set];
-        NSBezierPath *path = [NSBezierPath bezierPath];
-        [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 2, 2) xRadius:10 yRadius:10];
-        [path stroke];
+        
+        NSShadow * shadow = [[NSShadow alloc] init];
+        [shadow setShadowBlurRadius:20];
+        [shadow setShadowColor:[NSColor blackColor]];
+        [shadow setShadowOffset:NSMakeSize(0, -20)];
+        [self setShadow:shadow];
+    } else {
+        [self setShadow:nil];
     }
 }
 

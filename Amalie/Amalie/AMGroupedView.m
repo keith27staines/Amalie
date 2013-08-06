@@ -38,16 +38,6 @@
     return [NSUUID UUID];
 }
 
--(void)setGroupID:(NSString *)groupID
-{
-    ; // default implementation is to do nothing
-}
-
--(NSString*)groupID
-{
-    return _groupID;
-}
-
 #pragma mark - Archiving support -
 
 -(id)initWithCoder:(NSCoder *)aDecoder

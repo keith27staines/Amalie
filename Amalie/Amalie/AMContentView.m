@@ -19,7 +19,13 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    [[NSColor whiteColor] set];
+    [NSBezierPath fillRect:dirtyRect];
+}
+
+-(BOOL)isOpaque
+{
+    return YES;
 }
 
 @end

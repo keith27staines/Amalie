@@ -39,12 +39,30 @@
         _uuid = uuid;
         _type = type;
         _worksheet = sheet;
-        NSString * symbol = [_worksheet buildAndRegisterExpressionFromString:@"x"];
-        _expressions = [NSMutableArray array];
-        KSMExpression * e = [_worksheet expressionForSymbol:symbol];
-        _expressions[0] = e;
+        [self setupExpressionArrayForType:type];
     }
     return self;
+}
+
+-(void)setupExpressionArrayForType:(AMInsertableType)type
+{
+    _expressions = [NSMutableArray array];
+    NSUInteger expressions = 0;
+    switch (type) {
+        case AMInsertableTypeEquation:
+            expressions = 1;
+            break;
+            
+        default:
+            expressions = 0;
+            break;
+    }
+    
+    NSString * symbol = [_worksheet buildAndRegisterExpressionFromString:@"x"];
+    KSMExpression * expr = [_worksheet expressionForSymbol:symbol];
+    for (NSUInteger i = 0; i < expressions; i++) {
+        _expressions[i] = expr;
+    }
 }
 
 -(NSMutableArray*)expressions

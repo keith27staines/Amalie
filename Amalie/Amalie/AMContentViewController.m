@@ -84,15 +84,15 @@
         
     }
     
-    if (vc) {
-        _parentController = parent;
-        _insertableType = type;
-        AMContentView * contentView = (AMContentView*)[vc view];
-        contentView.datasource = vc;
-        contentView.groupID = groupParentView.groupID;
-        vc.groupID = groupParentView.groupID;
-        vc.record = record;
-    }
+    if (!vc) [NSException raise:@"Failed to create view controller." format:nil];
+    
+    _parentController = parent;
+    _insertableType = type;
+    AMContentView * contentView = (AMContentView*)[vc view];
+    contentView.datasource = vc;
+    contentView.groupID = groupParentView.groupID;
+    vc.groupID = groupParentView.groupID;
+    vc.record = record;
     return vc;
 }
 
