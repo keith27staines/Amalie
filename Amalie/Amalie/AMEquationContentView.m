@@ -26,4 +26,9 @@
     // Drawing code here.
 }
 
+
+-(void)viewDidMoveToWindow
+{
+    ;
+}
 @end

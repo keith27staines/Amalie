@@ -7,6 +7,11 @@
 //
 
 #import "AMEquationContentViewController.h"
+#import "KSMExpression.h"
+#import "AMInsertableRecord.h"
+#import "AMInteriorExpressionView.h"
+
+static NSUInteger const kAMIndexRHS;
 
 @interface AMEquationContentViewController ()
 
@@ -22,5 +27,22 @@
     }
     return self;
 }
+
+- (IBAction)nameWasEdited:(NSTextField *)sender
+{
+    ;
+
+}
+
+- (IBAction)expressionStringWasEdited:(NSTextField *)sender
+{
+    AMInsertableRecord * record;
+    record = self.record;
+    KSMExpression * expr;
+    expr = [record expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
+    self.expressionView.expression = expr;
+    [self.expressionView setNeedsDisplay:YES];
+}
+
 
 @end

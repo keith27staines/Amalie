@@ -79,7 +79,7 @@
 		7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2F417AD0E6A008BDB75 /* AMGraph2DContentViewController.m */; };
 		7899B2F717AD0E6A008BDB75 /* AMGraph2DContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7899B2F517AD0E6A008BDB75 /* AMGraph2DContentView.xib */; };
 		7899B2FB17AD3A27008BDB75 /* AMConstantContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2FA17AD3A27008BDB75 /* AMConstantContentView.m */; };
-		7899B2FE17AD3A64008BDB75 /* AMVariableConentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2FD17AD3A64008BDB75 /* AMVariableConentView.m */; };
+		7899B2FE17AD3A64008BDB75 /* AMVariableContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2FD17AD3A64008BDB75 /* AMVariableContentView.m */; };
 		7899B30117AD3AA2008BDB75 /* AMEquationContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30017AD3AA2008BDB75 /* AMEquationContentView.m */; };
 		7899B30417AD3ACD008BDB75 /* AMVectorContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30317AD3ACD008BDB75 /* AMVectorContentView.m */; };
 		7899B30717AD3AEB008BDB75 /* AMMatrixContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B30617AD3AEB008BDB75 /* AMMatrixContentView.m */; };
@@ -90,6 +90,9 @@
 		78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
 		78AEEB5C179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
 		78AEEB5F179EF96C00BFF474 /* AMInsertableRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */; };
+		78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC75717AF843A00BDC8D7 /* AMGroupedView.m */; };
+		78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */; };
+		78CDC76717B0F1F400BDC8D7 /* AMInteriorExpressionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC76617B0F1F400BDC8D7 /* AMInteriorExpressionView.m */; };
 		78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE823E1783664400C7EE10 /* KSMPrimes.m */; };
 		78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE82441783664400C7EE10 /* KSMPrimeDecomposition.m */; };
@@ -211,8 +214,8 @@
 		7899B2F517AD0E6A008BDB75 /* AMGraph2DContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMGraph2DContentView.xib; sourceTree = "<group>"; };
 		7899B2F917AD3A27008BDB75 /* AMConstantContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstantContentView.h; sourceTree = "<group>"; };
 		7899B2FA17AD3A27008BDB75 /* AMConstantContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstantContentView.m; sourceTree = "<group>"; };
-		7899B2FC17AD3A64008BDB75 /* AMVariableConentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVariableConentView.h; sourceTree = "<group>"; };
-		7899B2FD17AD3A64008BDB75 /* AMVariableConentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVariableConentView.m; sourceTree = "<group>"; };
+		7899B2FC17AD3A64008BDB75 /* AMVariableContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVariableContentView.h; sourceTree = "<group>"; };
+		7899B2FD17AD3A64008BDB75 /* AMVariableContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMVariableContentView.m; sourceTree = "<group>"; };
 		7899B2FF17AD3AA2008BDB75 /* AMEquationContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMEquationContentView.h; sourceTree = "<group>"; };
 		7899B30017AD3AA2008BDB75 /* AMEquationContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMEquationContentView.m; sourceTree = "<group>"; };
 		7899B30217AD3ACD008BDB75 /* AMVectorContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMVectorContentView.h; sourceTree = "<group>"; };
@@ -231,7 +234,13 @@
 		78AEEB5D179EF96C00BFF474 /* AMInsertableRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableRecord.h; sourceTree = "<group>"; };
 		78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableRecord.m; sourceTree = "<group>"; };
 		78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableViewDataSource.h; sourceTree = "<group>"; };
-		78D5FD9C17918E88003D6AC6 /* AMInsertableContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMInsertableContent.h; path = Amalie/AMInsertableContent.h; sourceTree = "<group>"; };
+		78CDC75617AF843A00BDC8D7 /* AMGroupedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGroupedView.h; sourceTree = "<group>"; };
+		78CDC75717AF843A00BDC8D7 /* AMGroupedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGroupedView.m; sourceTree = "<group>"; };
+		78CDC75C17AFA30700BDC8D7 /* AMViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMViewHelper.h; sourceTree = "<group>"; };
+		78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMViewHelper.m; sourceTree = "<group>"; };
+		78CDC76017AFFE6000BDC8D7 /* AMContentViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContentViewDataSource.h; sourceTree = "<group>"; };
+		78CDC76517B0F1F400BDC8D7 /* AMInteriorExpressionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInteriorExpressionView.h; sourceTree = "<group>"; };
+		78CDC76617B0F1F400BDC8D7 /* AMInteriorExpressionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInteriorExpressionView.m; sourceTree = "<group>"; };
 		78DE823D1783664400C7EE10 /* KSMPrimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimes.h; sourceTree = "<group>"; };
 		78DE823E1783664400C7EE10 /* KSMPrimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimes.m; sourceTree = "<group>"; };
 		78DE82431783664400C7EE10 /* KSMPrimeDecomposition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMPrimeDecomposition.h; sourceTree = "<group>"; };
@@ -323,7 +332,6 @@
 			children = (
 				787B305A178361BC001851C0 /* MainMenu.xib */,
 				787B3057178361BC001851C0 /* AMWorksheet.xib */,
-				785D9A2F179DE475004D39B5 /* AMInsertableView.xib */,
 				785D9A2A179D79E9004D39B5 /* Content views */,
 				785D9A28179D78D0004D39B5 /* Subsiduary Window Nibs */,
 			);
@@ -383,14 +391,12 @@
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
-				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
-				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
-				78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */,
-				78327449178F14920051290B /* AMTrayDatasource.h */,
-				787B3060178361BC001851C0 /* Images.xcassets */,
-				78D5FD9C17918E88003D6AC6 /* AMInsertableContent.h */,
 				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
+				78CDC75C17AFA30700BDC8D7 /* AMViewHelper.h */,
+				78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */,
+				78CDC75F17AFA66000BDC8D7 /* Protocols */,
+				787B3060178361BC001851C0 /* Images.xcassets */,
 				787B3048178361BC001851C0 /* Amalie */,
 				787B306C178361BC001851C0 /* AmalieTests */,
 				787B3041178361BC001851C0 /* Frameworks */,
@@ -533,8 +539,8 @@
 				7899B2F917AD3A27008BDB75 /* AMConstantContentView.h */,
 				7899B2FA17AD3A27008BDB75 /* AMConstantContentView.m */,
 				7899B2DC17AD0DFC008BDB75 /* AMVariableContentView.xib */,
-				7899B2FC17AD3A64008BDB75 /* AMVariableConentView.h */,
-				7899B2FD17AD3A64008BDB75 /* AMVariableConentView.m */,
+				7899B2FC17AD3A64008BDB75 /* AMVariableContentView.h */,
+				7899B2FD17AD3A64008BDB75 /* AMVariableContentView.m */,
 				785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */,
 				785247D01786AC9300F6A7AD /* AMExpressionContentView.h */,
 				785247D11786AC9300F6A7AD /* AMExpressionContentView.m */,
@@ -553,13 +559,38 @@
 				7899B2F517AD0E6A008BDB75 /* AMGraph2DContentView.xib */,
 				7899B30B17AD3B2F008BDB75 /* AMGraph2DContentView.h */,
 				7899B30C17AD3B2F008BDB75 /* AMGraph2DContentView.m */,
+				78CDC76417B0F12700BDC8D7 /* Interior object views */,
 			);
 			name = "Content Views";
+			sourceTree = "<group>";
+		};
+		78CDC75F17AFA66000BDC8D7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
+				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
+				78327449178F14920051290B /* AMTrayDatasource.h */,
+				78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */,
+				78CDC76017AFFE6000BDC8D7 /* AMContentViewDataSource.h */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		78CDC76417B0F12700BDC8D7 /* Interior object views */ = {
+			isa = PBXGroup;
+			children = (
+				78CDC76517B0F1F400BDC8D7 /* AMInteriorExpressionView.h */,
+				78CDC76617B0F1F400BDC8D7 /* AMInteriorExpressionView.m */,
+			);
+			name = "Interior object views";
 			sourceTree = "<group>";
 		};
 		78D5FD8917905CA0003D6AC6 /* Insertable Views */ = {
 			isa = PBXGroup;
 			children = (
+				78CDC75617AF843A00BDC8D7 /* AMGroupedView.h */,
+				78CDC75717AF843A00BDC8D7 /* AMGroupedView.m */,
+				785D9A2F179DE475004D39B5 /* AMInsertableView.xib */,
 				785247CD1785722700F6A7AD /* AMInsertableView.h */,
 				785247CE1785722700F6A7AD /* AMInsertableView.m */,
 				7899B2F817AD3829008BDB75 /* Content Views */,
@@ -698,13 +729,16 @@
 				785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */,
 				78AEEB5F179EF96C00BFF474 /* AMInsertableRecord.m in Sources */,
 				7899B30417AD3ACD008BDB75 /* AMVectorContentView.m in Sources */,
+				78CDC76717B0F1F400BDC8D7 /* AMInteriorExpressionView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
 				787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
 				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
-				7899B2FE17AD3A64008BDB75 /* AMVariableConentView.m in Sources */,
+				7899B2FE17AD3A64008BDB75 /* AMVariableContentView.m in Sources */,
+				78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */,
+				78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */,
 				7899B2FB17AD3A27008BDB75 /* AMConstantContentView.m in Sources */,
 				7899B2EC17AD0E42008BDB75 /* AMMatrixContentViewController.m in Sources */,
 				785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */,

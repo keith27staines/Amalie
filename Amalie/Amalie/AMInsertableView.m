@@ -13,19 +13,14 @@
 #import "AMTrayItem.h"
 #import "AMContentView.h"
 
-static float const kAMSMallDistance = 3.0f;
-static NSString * const kFrameKey = @"AMFrameKey";
 static NSString * const kAMDraggedInsertableView = @"kAMDraggedInsertableView";
 
-static NSRect am_defaultRect();
-static float am_hypotenuse(float x1, float y1, float x2, float y2);
-static bool am_pointsAreClose(NSPoint p, NSPoint q);
 
 static CABasicAnimation * animateOrigin;
 
 @interface AMInsertableView()
 {
-    AMInsertableViewState _objectState;
+    AMInsertableViewState   _objectState;
     AMInsertableType        _insertableType;
 }
 @property (readwrite) NSEvent * mouseDownEvent;
@@ -37,26 +32,29 @@ static CABasicAnimation * animateOrigin;
 
 #pragma mark - Initializers -
 
--(id)init
-{
-    return [self initWithFrame:am_defaultRect()];
-}
 
-- (id)initWithFrame:(NSRect)frame
+- (id)initWithFrame:(NSRect)frame groupID:(NSString *)groupID
 {
-    return [self initWithFrame:frame insertableType:AMInsertableTypeConstant];
+    return [self initWithFrame:frame
+                       groupID:groupID
+                insertableType:AMInsertableTypeConstant];
 }
 
 -(id)initWithInsertableType:(AMInsertableType)insertableType
 {
-    return [self initWithFrame:am_defaultRect() insertableType:insertableType];
+    return [self initWithFrame:am_defaultRect()
+                       groupID:nil
+                insertableType:insertableType];
 }
 
-- (id)initWithFrame:(NSRect)frame insertableType:(AMInsertableType)insertableType
+- (id)initWithFrame:(NSRect)frame
+            groupID:(NSString*)groupID
+     insertableType:(AMInsertableType)insertableType
 {
-    self = [super initWithFrame:frame];
+    if (frame.size.height == 0) frame = am_defaultRect();
+
+    self = [super initWithFrame:frame groupID:groupID];
     if (self) {
-        _uuid = [NSUUID UUID];
         _mouseDownWindowPoint = NSMakePoint(-100, -100);
         _insertableType = insertableType;
     }
@@ -69,25 +67,26 @@ static CABasicAnimation * animateOrigin;
     AMContentView * contentView;
     contentView = [self.delegate insertableView:self
                       requiresContentViewOfType:self.insertableType];
+    //[contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     self.box = self.subviews[0];
-    [contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.box setFrameFromContentFrame:contentView.frame];
     [self.box setContentView:contentView];
-    self.box.title = @"Expression";
-    [self.box setNextResponder:self];
-    [self.box setNextKeyView:self];
+    self.box.title = [contentView className];
+    
+    [self setFrame:NSMakeRect(self.frame.origin.x, self.frame.origin.y, self.box.frame.size.width+40, self.box.frame.size.height+26)];
 
-    NSArray * constraints;
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[content]-|"
-                                                          options:0
-                                                          metrics:nil
-                                                            views:@{@"content": contentView}];
-    [self.box addConstraints:constraints];
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[content]-|"
-                                                          options:0
-                                                          metrics:nil
-                                                            views:@{@"content": contentView}];
-    [self.box addConstraints:constraints];
+//    NSArray * constraints;
+//    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[box]-|"
+//                                                          options:0
+//                                                          metrics:nil
+//                                                            views:@{@"box": self.box}];
+//    [self.box addConstraints:constraints];
+//    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[box]-|"
+//                                                          options:0
+//                                                          metrics:nil
+//                                                            views:@{@"box": self.box}];
+//    [self.box addConstraints:constraints];
 }
 
 #pragma mark - State -
@@ -165,7 +164,6 @@ static CABasicAnimation * animateOrigin;
             self.frame = am_defaultRect();
         }
         
-        _uuid = [aDecoder decodeObjectForKey:@"uuid"];
         _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
         _mouseDownWindowPoint = [aDecoder decodePointForKey:@"mouseDownWindowPoint"];
         _insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
@@ -182,7 +180,6 @@ static CABasicAnimation * animateOrigin;
 {
     [super encodeWithCoder:aCoder];
     
-    [aCoder encodeObject:self.uuid forKey:@"uuid"];
     [aCoder encodeBool:self.isDragging forKey:@"isDragging"];
     [aCoder encodePoint:self.mouseDownWindowPoint forKey:@"mouseDownWindowPoint"];
     [aCoder encodeInteger:self.insertableType forKey:@"insertableType"];
@@ -492,25 +489,5 @@ static CABasicAnimation * animateOrigin;
     }
     return animateOrigin;
 }
-
-
-#pragma mark - Helper C functions -
-
-NSRect am_defaultRect() { return NSMakeRect(0, 0, 100, 50); }
-
-float am_hypotenuse(float x1, float y1, float x2, float y2)
-{
-    return sqrtf( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) );
-}
-
-bool am_pointsAreClose(NSPoint p, NSPoint q)
-{
-    float h = am_hypotenuse(p.x, p.y, q.x, q.y);
-    return (h < kAMSMallDistance) ? true : false;
-}
-
-
-
-
 
 @end

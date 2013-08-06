@@ -9,14 +9,12 @@
 @class KSMExpression;
 
 #import <Cocoa/Cocoa.h>
-#import "AMInsertableViewDelegate.h"
-#import "AMInsertableViewDataSource.h"
+#import "AMGroupedView.h"
+#import "AMContentViewDataSource.h"
 
-@interface AMContentView : NSView
+@interface AMContentView : AMGroupedView
 
-@property (weak) KSMExpression * expression;
-@property (weak) id<AMInsertableViewDelegate>delegate;
-@property (weak) id<AMInsertableViewDataSource>datasource;
+@property (weak) IBOutlet id<AMContentViewDataSource>datasource;
 
 @end
 

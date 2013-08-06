@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-
-#import <Cocoa/Cocoa.h>
-
 // Forward declare
 enum AMInsertableType : NSInteger;
 
+#import <Cocoa/Cocoa.h>
+
 // Importing delegate protocols
+#import "AMGroupedView.h"
 #import "AMTrayDatasource.h"
 #import "AMInsertableViewDelegate.h"
 
@@ -24,9 +24,13 @@ typedef NS_ENUM(NSInteger, AMInsertableViewState) {
     AMObjectForEditingAdvanced = 5000
 };
 
-@interface AMInsertableView : NSView <NSPasteboardWriting,
-                                            NSPasteboardReading,
-                                            NSCoding,NSDraggingSource>
+@interface AMInsertableView : AMGroupedView
+<
+NSPasteboardWriting,
+NSPasteboardReading,
+NSCoding,
+NSDraggingSource
+>
 
 
 @property enum AMInsertableType insertableType;
@@ -36,7 +40,6 @@ typedef NS_ENUM(NSInteger, AMInsertableViewState) {
 @property (readonly) NSPoint mouseDownWindowPoint;
 @property (readonly) BOOL isDragging;
 @property (readonly) NSImage * dragImage;
-@property (readonly) NSString * uuid;
 
 // Frame positioning
 @property (readonly) float frameWidth;
@@ -58,7 +61,9 @@ typedef NS_ENUM(NSInteger, AMInsertableViewState) {
 /*!
  Designated initializer
  */
-- (id)initWithFrame:(NSRect)frame insertableType:(enum AMInsertableType)insertableType;
+- (id)initWithFrame:(NSRect)frame
+            groupID:(NSString *)groupID
+     insertableType:(enum AMInsertableType)insertableType;
 
 -(id)initWithInsertableType:(enum AMInsertableType)insertableType;
 

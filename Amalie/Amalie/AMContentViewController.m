@@ -16,7 +16,10 @@
 #import "AMMatrixContentViewController.h"
 #import "AMMathematicalSetContentViewController.h"
 #import "AMGraph2DContentViewController.h"
-
+#import "KSMExpression.h"
+#import "AMContentView.h"
+#import "AMInsertableRecord.h"
+#import "AMInsertableView.h"
 
 @interface AMContentViewController ()
 {
@@ -39,6 +42,8 @@
                bundle:(NSBundle *)nibBundleOrNil
                parent:(AMWorksheetController*)parent
               content:(AMInsertableType)type
+      groupParentView:(AMInsertableView*)groupParentView
+               record:(AMInsertableRecord*)record
 {
     AMContentViewController * vc;
     
@@ -82,15 +87,39 @@
     if (vc) {
         _parentController = parent;
         _insertableType = type;
+        AMContentView * contentView = (AMContentView*)[vc view];
+        contentView.datasource = vc;
+        contentView.groupID = groupParentView.groupID;
+        vc.groupID = groupParentView.groupID;
+        vc.record = record;
     }
     return vc;
 }
 
 +(id)contentViewControllerWithParent:(AMWorksheetController*)parent
                              content:(AMInsertableType)type
+                     groupParentView:(AMInsertableView*)groupParentView record:(AMInsertableRecord*)record
 {
     AMContentViewController * vc = [AMContentViewController alloc];
-    return [vc initWithNibName:nil bundle:nil parent:parent content:type];
+    return [vc initWithNibName:nil
+                        bundle:nil
+                        parent:parent
+                       content:type
+               groupParentView:groupParentView
+                        record:record];
 }
+
+#pragma mark - AMContentViewDataSource -
+
+-(KSMExpression*)view:(AMContentView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index
+{
+    return [self.record expressionFromString:string atIndex:index];
+}
+
+-(KSMExpression*)view:(AMContentView*)view wantsExpressionAtIndex:(NSUInteger)index
+{
+    return [self.record expressionForIndex:index];
+}
+
 
 @end

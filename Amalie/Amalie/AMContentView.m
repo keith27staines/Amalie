@@ -10,33 +10,12 @@
 
 @interface AMContentView()
 {
-    __weak KSMExpression * _expression;
+
 }
 
 @end
 
 @implementation AMContentView
-
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-
-    }
-    
-    return self;
-}
-
--(void)setExpression:(KSMExpression *)expression
-{
-    _expression = expression;
-    [self setNeedsDisplay:YES];
-}
-
--(KSMExpression*)expression
-{
-    return _expression;
-}
 
 - (void)drawRect:(NSRect)dirtyRect
 {

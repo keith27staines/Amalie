@@ -13,10 +13,10 @@
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
 #import "KSMWorksheet.h"
-#import "AMInsertableContent.h"
 #import "AMContentView.h"
 #import "AMNameRules.h"
 #import "AMInsertableRecord.h"
+#import "AMGroupedView.h"
 
 static NSUInteger const kAMDefaultLineSpace   = 20;
 static NSUInteger const kAMDefaultLeftMargin  = 36;
@@ -27,6 +27,7 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     NSMutableArray      * _insertsArray;
     NSMutableDictionary * _insertedRecords;
     NSMutableDictionary * _insertsDictionary;
+    NSMutableDictionary * _contentControllers;
     KSMWorksheet        * _mathSheet;
     AMNameRules         * _nameRules;
 }
@@ -34,7 +35,7 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 /*!
  * view controllers to manage the loading of views for insertable objects
  */
-@property (strong) NSMutableDictionary * viewControllers;
+@property (strong) NSMutableDictionary * contentControllers;
 @property (strong, readonly) KSMWorksheet * mathSheet;
 @property (strong, readonly) AMNameRules * nameRules;
 @property (readonly) NSMutableDictionary * insertedRecords;
@@ -49,11 +50,11 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
-        _insertsArray      = [NSMutableArray array];
-        _insertedRecords   = [NSMutableDictionary dictionary];
-        _insertsDictionary = [NSMutableDictionary dictionary];
-        _viewControllers   = [NSMutableDictionary dictionary];
-        _mathSheet         = [[KSMWorksheet alloc] init];
+        _insertsArray       = [NSMutableArray array];
+        _insertedRecords    = [NSMutableDictionary dictionary];
+        _insertsDictionary  = [NSMutableDictionary dictionary];
+        _contentControllers = [NSMutableDictionary dictionary];
+        _mathSheet          = [[KSMWorksheet alloc] init];
     }
     return self;
 }
@@ -96,12 +97,9 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 {
     if (!view) return;
     
-    // create the record for the datastore
-    [self setupInsertableRecord:view];
-    
     // Add the object to our list of inserted objects
     [_insertsArray addObject:view];
-    [_insertsDictionary setObject:view forKey:view.uuid];
+    [_insertsDictionary setObject:view forKey:view.groupID];
     view.delegate = self;
     view.trayDataSource = self.trayDataSource;
     
@@ -112,22 +110,25 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     [self scheduleLayout];
 }
 
--(void)setupInsertableRecord:(AMInsertableView*)view
+-(AMInsertableRecord*)insertableRecordForGroupView:(AMInsertableView*)view
 {
+    AMInsertableRecord * record;
     NSString * defaultName;
     defaultName = [[self.nameRules suggestNameForType:view.insertableType] string];
-    AMInsertableRecord * record;
     record = [[AMInsertableRecord alloc] initWithName:defaultName
-                                                 uuid:view.uuid
+                                                 uuid:view.groupID
                                                  type:view.insertableType
                                             mathSheet:self.mathSheet];
-    [self.insertedRecords setObject:record forKey:view.uuid];
+
+    [self.insertedRecords setObject:record forKey:view.groupID];
+    return record;
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)view
 {
     [_insertsArray removeObject:view];
-    [_insertsDictionary removeObjectForKey:view.uuid];
+    [_insertsDictionary removeObjectForKey:view.groupID];
+    [_contentControllers removeObjectForKey:view.groupID];
     view.delegate = nil;
     [view removeFromSuperview];
     [self scheduleLayout];
@@ -146,13 +147,15 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 #pragma mark - AMInsertableViewDelegate -
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
+    AMInsertableRecord * record = [self insertableRecordForGroupView:view];
 
-    AMContentViewController * vc = [AMContentViewController contentViewControllerWithParent:self content:type];
-
-    AMContentView * contentView = (AMContentView*)[vc view];
-    contentView.delegate = self;
-    contentView.datasource = self;
-    return contentView;
+    AMContentViewController * vc;
+    vc = [AMContentViewController contentViewControllerWithParent:self
+                                                          content:type groupParentView:view
+                                                           record:record];
+    
+    [self.contentControllers setObject:vc forKey:vc.groupID];
+    return (AMContentView*)vc.view;
 }
 
 #pragma - Layout -
@@ -238,22 +241,9 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 
 -(NSAttributedString*)attributedNameForView:(AMInsertableView*)view
 {
-    AMInsertableRecord * record = self.insertedRecords[view.uuid];
+    AMInsertableRecord * record = self.insertedRecords[view.groupID];
     return [[NSAttributedString alloc] initWithString:record.name attributes:nil];
 }
-
--(KSMExpression*)view:(AMInsertableView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index
-{
-    AMInsertableRecord * record = self.insertedRecords[view.uuid];
-    return [record expressionFromString:string atIndex:index];
-}
-
--(KSMExpression*)view:(AMInsertableView*)view wantsExpressionAtIndex:(NSUInteger)index
-{
-    AMInsertableRecord * record = self.insertedRecords[view.uuid];
-    return [record expressionForIndex:index];
-}
-
 
 -(BOOL)view:(AMInsertableView*)view wantsNameChangedTo:(NSAttributedString*)attributedName error:(NSError**)error
 {
@@ -278,7 +268,7 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 
 -(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
 {
-    return [self insertableViewForKey:shadow.uuid];
+    return [self insertableViewForKey:shadow.groupID];
 }
 
 @end
