@@ -22,6 +22,8 @@
 #import "AMInsertableView.h"
 #import "AMWorksheetController.h"
 #import "AMNameRules.h"
+#import "AMAppController.h"
+#import "AMPreferences.h"
 
 @interface AMContentViewController ()
 {
@@ -42,14 +44,15 @@
 // The new designated initializer
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-               worksheetController:(AMWorksheetController*)worksheet
-              content:(AMInsertableType)type
+        appController:(AMAppController*)appController
+               worksheetController:(AMWorksheetController*)worksheetController
+              content:(AMInsertableType)insertableType
       groupParentView:(AMInsertableView*)groupParentView
                record:(AMInsertableRecord*)record
 {
     
     // Initialization code here.
-    switch (type) {
+    switch (insertableType) {
         case AMInsertableTypeConstant:
             self = [[AMConstantContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
@@ -87,8 +90,9 @@
     
     if (self)
     {
-        _parentWorksheetController = worksheet;
-        _insertableType = type;
+        _appController = appController;
+        _parentWorksheetController = worksheetController;
+        _insertableType = insertableType;
         AMContentView * contentView = (AMContentView*)[self view];
         contentView.datasource = self;
         contentView.groupID = groupParentView.groupID;
@@ -104,15 +108,17 @@
     NSLog(@"Warning... populateContent has not been overridden.");
 }
 
-+(id)contentViewControllerWithWorksheet:(AMWorksheetController*)worksheetController
-                             content:(AMInsertableType)type
++(id)contentViewControllerWithAppController:(AMAppController*)appContoller
+                        worksheetController:(AMWorksheetController*)worksheetController
+                             content:(AMInsertableType)insertableType
                      groupParentView:(AMInsertableView*)groupParentView record:(AMInsertableRecord*)record
 {
     AMContentViewController * vc = [AMContentViewController alloc];
     return [vc initWithNibName:nil
                         bundle:nil
+                 appController:appContoller
                         worksheetController:worksheetController
-                       content:type
+                       content:insertableType
                groupParentView:groupParentView
                         record:record];
 }
@@ -142,6 +148,11 @@
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error
 {
     return [self.record changeAttributedNameIfValid:proposedName error:error];
+}
+
+-(AMPreferences*)preferenceController
+{
+    return self.appController.preferenceContoller;
 }
 
 @end

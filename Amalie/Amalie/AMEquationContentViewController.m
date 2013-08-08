@@ -10,6 +10,7 @@
 #import "KSMExpression.h"
 #import "AMInsertableRecord.h"
 #import "AMInteriorExpressionView.h"
+#import "AMPreferences.h"
 
 static NSUInteger const kAMIndexRHS;
 
@@ -55,6 +56,18 @@ static NSUInteger const kAMIndexRHS;
 -(void)populateContent
 {
     self.nameField.attributedStringValue = self.record.attributedName;
+    KSMExpression * expr = [self.record expressionForIndex:0];
+    self.expressionString.stringValue = expr.string;
+    
+    NSDictionary * fonts = [AMPreferences fonts];
+    NSFont * standardFont = fonts[kAMFontNameKey];
+    NSFont * fixedWidthFont = fonts[kAMFixedWidthFontNameKey];
+    
+    [self.expressionString setFont:fixedWidthFont];
+    [self.nameField setFont:standardFont];
+
+    self.expressionView.standardFont = standardFont;
+    self.expressionView.expression = expr;
 }
 
 @end

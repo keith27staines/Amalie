@@ -10,12 +10,16 @@
 @class AMInsertableRecord;
 @class AMInsertableView;
 @class AMNameRules;
+@class AMAppController;
+@class AMPreferences;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
 #import "AMContentViewDataSource.h"
 
 @interface AMContentViewController : NSViewController <AMContentViewDataSource>
+
+@property (weak) AMAppController * appController;
 
 @property (weak, readonly) AMWorksheetController * parentWorksheetController;
 @property (readonly) AMInsertableType insertableType;
@@ -27,6 +31,7 @@
  Designated initializer
  @Param nibNameOrNil This parameter is ignored. The receiver knows the nib to use.
  @Param nibBundleOrNil This parameter is ignored. The receiver knows the bundle to use.
+ @Param appController The appController is required as the source of user default data.
  @Param worksheetController The parent worksheet controller. The receiver holds a weak reference.
  @Param groupID Identifies the group of nested views that comprise an inserted object.
  @Param record The record (data model object) whose data is to be displayed by the receiver.
@@ -34,12 +39,14 @@
  */
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
+        appController:(AMAppController*)appController
                worksheetController:(AMWorksheetController*)worksheetController
               content:(enum AMInsertableType)type
       groupParentView:(AMInsertableView*)view
                record:(AMInsertableRecord*)record;
 
-+(id)contentViewControllerWithWorksheet:(AMWorksheetController*)worksheetController
++(id)contentViewControllerWithAppController:(AMAppController*)appContoller
+                        worksheetController:(AMWorksheetController*)worksheetController
                              content:(enum AMInsertableType)type
                      groupParentView:(AMInsertableView*)groupParentview
                               record:(AMInsertableRecord*)record;
@@ -56,5 +63,10 @@
  populateContent offers the opportunity for the receiver to populate its view's subviews. The default implementation is to do nothing. This method should be overridden in subclasses.
  */
 -(void)populateContent;
+
+/*!
+ preferences
+ */
+@property (readonly) AMPreferences * preferenceController;
 
 @end

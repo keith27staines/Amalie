@@ -23,7 +23,7 @@
     i++;
     NSString * firstLetter = @"K";
     NSString * followingString = [NSString stringWithFormat:@"%ld",i];
-    NSDictionary * subscriptAttributes = @{NSSuperscriptAttributeName: @-6};
+    NSDictionary * subscriptAttributes = @{NSSuperscriptAttributeName: @-1};
     NSAttributedString * subscript;
     subscript = [[NSAttributedString alloc] initWithString:(NSString *)followingString attributes:subscriptAttributes];
     NSMutableAttributedString * ms = [[NSMutableAttributedString alloc] initWithString:firstLetter attributes:nil];

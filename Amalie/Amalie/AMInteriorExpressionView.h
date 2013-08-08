@@ -14,4 +14,6 @@
 
 @property (weak) KSMExpression * expression;
 
+@property NSFont * standardFont;
+
 @end

@@ -9,8 +9,8 @@
 #import "AMConstants.h"
 
 #pragma mark - Default values -
-NSUInteger const kAMDefaultFontSize                   = 16;
-NSUInteger const kAMDefaultFixedWidthFontSize         = 16;
+NSUInteger const kAMDefaultFontSize                   = 17;
+NSUInteger const kAMDefaultFixedWidthFontSize         = 17;
 NSUInteger const kAMDefaultFontDelta                  =  2;
 NSUInteger const kAMDefaultMinFontSize                = 10;
 NSString * const kAMDefaultFontName                   = @"Times New Roman";

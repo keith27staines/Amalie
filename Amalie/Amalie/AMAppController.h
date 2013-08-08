@@ -23,7 +23,7 @@
 
 
 
-
+@property (readonly) AMPreferences * preferenceContoller;
 
 
 @end

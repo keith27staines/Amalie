@@ -17,6 +17,7 @@
 +(NSUInteger)worksheetSmallestFontSize;
 +(NSString*)worksheetFontName;
 +(NSString*)worksheetFixedWidthFontName;
++(NSDictionary*)fonts;
 
 +(void)setWorksheetFixedWidthFontSize:(NSUInteger)size;
 +(void)setWorksheetFontSize:(NSUInteger)size;

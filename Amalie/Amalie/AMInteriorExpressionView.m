@@ -8,6 +8,7 @@
 
 #import "AMInteriorExpressionView.h"
 #import "KSMExpression.h"
+#import <CoreText/CoreText.h>
 
 @implementation AMInteriorExpressionView
 
@@ -22,19 +23,39 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    [[[self window] graphicsContext] setShouldAntialias:YES];
     [[NSColor whiteColor] set];
     [NSBezierPath fillRect:dirtyRect];
     [[NSColor blackColor] set];
     [NSBezierPath strokeRect:dirtyRect];
     
     if (self.expression) {
+        
+        NSFontManager *fontManager = [NSFontManager sharedFontManager];
+        
+        
+        
+        NSFont * normalFont = self.standardFont;
+        NSFont *italicFont = [fontManager fontWithFamily:normalFont.familyName
+                                                  traits:NSItalicFontMask
+                                                  weight:0
+                                                    size:self.standardFont.pointSize];
+        
+        
+        NSDictionary * attributes = @{NSFontAttributeName: italicFont};
         NSString * string = [self.expression string];
-        NSSize size = [string sizeWithAttributes:nil];
+        NSAttributedString * attributedString = [[NSAttributedString alloc] initWithString:string attributes:attributes];
+        
+        
+        
+        NSSize size = [attributedString size];
         NSRect txtBounds = am_rectFromSize(size);
         NSRect centered = am_centeredRectInRect(txtBounds, self.bounds);
-        [string drawInRect:centered withAttributes:nil];
+        [attributedString drawInRect:centered];
     }
 }
+
+
 
 NSRect am_rectFromSize(NSSize size)
 {

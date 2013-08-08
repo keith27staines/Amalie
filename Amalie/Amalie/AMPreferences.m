@@ -10,6 +10,8 @@
 #import "AMConstants.h"
 #import "AMAppController.h"
 
+static NSMutableDictionary * AMFonts;
+
 @interface AMPreferences()
 
 @end
@@ -84,6 +86,16 @@
 +(NSString*)worksheetFontName
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kAMFontNameKey];
+}
+
++(NSDictionary*)fonts
+{
+    NSFont * fixedWidthFont = [NSFont fontWithName:[AMPreferences worksheetFixedWidthFontName] size:[AMPreferences worksheetFontSize]];
+
+    NSFont * standardFont = [NSFont fontWithName:[AMPreferences worksheetFontName]
+                                            size:27];
+    
+    return @{kAMFixedWidthFontNameKey: fixedWidthFont, kAMFontNameKey:standardFont};
 }
 
 +(void)registerDefaultPreferences

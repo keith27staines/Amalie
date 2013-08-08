@@ -148,9 +148,10 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     AMInsertableRecord * record = [self insertableRecordForGroupView:view];
 
     AMContentViewController * vc;
-    vc = [AMContentViewController contentViewControllerWithWorksheet:self
-                                                          content:type groupParentView:view
-                                                           record:record];
+    vc = [AMContentViewController contentViewControllerWithAppController:nil
+                                                     worksheetController:self
+                                                                 content:type groupParentView:view
+                                                                  record:record];
     
     [self.contentControllers setObject:vc forKey:vc.groupID];
     return (AMContentView*)vc.view;

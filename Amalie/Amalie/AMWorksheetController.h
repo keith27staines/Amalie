@@ -8,6 +8,7 @@
 
 @class AMWorksheetView;
 @class AMNameRules;
+@class AMAppController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
@@ -29,7 +30,14 @@
  */
 @property (weak) IBOutlet id<AMTrayDatasource> trayDataSource;
 
+/*!
+ appController is required by various members of the receiver
+ */
+@property (weak) IBOutlet AMAppController * appController;
 
+/*!
+ nameRules is required by various members of the receiver
+ */
 @property (strong, readonly) AMNameRules * nameRules;
 
 @end

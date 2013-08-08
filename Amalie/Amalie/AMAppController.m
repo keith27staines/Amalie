@@ -42,7 +42,7 @@ NSMutableDictionary * _trayDictionary;
     [AMPreferences registerDefaultPreferences];
 }
 
-#pragma mark -Implementation of AMTrayDatasourceProtocol-
+#pragma mark - Implementation of AMTrayDatasourceProtocol -
 
 -(NSUInteger)trayItemCount
 {
