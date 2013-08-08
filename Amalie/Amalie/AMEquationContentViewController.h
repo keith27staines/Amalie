@@ -13,11 +13,11 @@
 @interface AMEquationContentViewController : AMContentViewController
 {
     
-    __weak NSTextField *_name;
+    __weak NSTextField *_nameField;
     __weak NSTextField *_expressionString;
 }
 
-@property (weak) IBOutlet NSTextField *name;
+@property (weak) IBOutlet NSTextField *nameField;
 
 @property (weak) IBOutlet NSTextField *expressionString;
 

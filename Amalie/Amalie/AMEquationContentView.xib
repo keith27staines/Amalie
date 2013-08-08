@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A538g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMEquationContentViewController">
@@ -10,6 +10,7 @@
                 <outlet property="expressionString" destination="iG3-a1-4HF" id="u0H-U0-7ZB"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
                 <outlet property="name" destination="kcq-A5-puI" id="knl-go-yZL"/>
+                <outlet property="nameField" destination="kcq-A5-puI" id="Ofh-QH-Vwy"/>
                 <outlet property="view" destination="1" id="2"/>
             </connections>
         </customObject>

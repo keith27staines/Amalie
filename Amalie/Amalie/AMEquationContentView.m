@@ -29,6 +29,6 @@
 
 -(void)viewDidMoveToWindow
 {
-    ;
+
 }
 @end

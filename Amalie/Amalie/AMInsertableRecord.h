@@ -8,13 +8,14 @@
 
 @class KSMWorksheet;
 @class KSMExpression;
+@class AMNameRules;
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
 @interface AMInsertableRecord : NSObject
 
-@property (copy) NSString * name;
+@property (copy) NSAttributedString * attributedName;
 @property (weak, readonly) NSString * uuid;
 @property (weak, readonly) KSMWorksheet * worksheet;
 @property (readonly) AMInsertableType type;
@@ -22,17 +23,20 @@
 
 /*
  Designated initializer.
- @Param name The name of the object (if the object is a mathematical object, the
- name should obey standard mathemtical conventions but this is not enfored here.
+ @Param attributedName The name of the object (if the object is a mathematical object, the name should obey standard mathemtical conventions but this is not enfored here.
+ @Param nameRules A rules engine to validate proposed name changes.
  @Param uuid The uuid of the record.
  @Param type The type of the record.
  @Param mathSheet The KSMWorksheet that manages mathematical objects.
  @Return An initialized object.
  */
-- (id)initWithName:(NSString*)name
+- (id)initWithName:(NSAttributedString*)attributedName
+         nameRules:(AMNameRules*)nameRules
               uuid:(NSString*)uuid
               type:(AMInsertableType)type
          mathSheet:(KSMWorksheet*)sheet;
+
+
 
 /*
  Returns the expression at the specified index. For example, if the receiver 
@@ -71,4 +75,13 @@
             atIndex:(NSUInteger)index;
 
 
+/*!
+ Changes the attributed name if the name rules and uniqueness requirement is
+ satisfied, otherwise does nothing.
+ @Param proposedName attributed string containing the proposed name.
+ @Param error A pointer to an NSError object. The pointer will only be valid if the proposed name fails the naming rules.
+ @Return YES if the proposed name is valid and the requested name change is performed.
+ */
+-(BOOL)changeAttributedNameIfValid:(NSAttributedString*)proposedName
+                             error:(NSError**)error;
 @end

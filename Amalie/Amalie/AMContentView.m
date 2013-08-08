@@ -20,7 +20,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     [[NSColor whiteColor] set];
-    [NSBezierPath fillRect:dirtyRect];
+    NSRectFill(dirtyRect);
 }
 
 -(BOOL)isOpaque

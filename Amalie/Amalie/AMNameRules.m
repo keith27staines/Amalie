@@ -21,8 +21,14 @@
 {
     static NSUInteger i;
     i++;
-    NSString * str = [NSString stringWithFormat:@"K%ld",i];
-    return [[NSAttributedString alloc] initWithString:str attributes:nil];
+    NSString * firstLetter = @"K";
+    NSString * followingString = [NSString stringWithFormat:@"%ld",i];
+    NSDictionary * subscriptAttributes = @{NSSuperscriptAttributeName: @-6};
+    NSAttributedString * subscript;
+    subscript = [[NSAttributedString alloc] initWithString:(NSString *)followingString attributes:subscriptAttributes];
+    NSMutableAttributedString * ms = [[NSMutableAttributedString alloc] initWithString:firstLetter attributes:nil];
+    [ms appendAttributedString:subscript];
+    return [ms copy];
 }
 
 @end

@@ -16,5 +16,7 @@
 
 -(KSMExpression*)view:(AMContentView*)view wantsExpressionAtIndex:(NSUInteger)index;
 
+-(NSAttributedString*)viewWantsAttributedName:(AMContentView*)view;
+
 
 @end

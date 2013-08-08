@@ -9,6 +9,7 @@
 #import "AMInsertableRecord.h"
 #import "KSMWorksheet.h"
 #import "KSMExpression.h"
+#import "AMNameRules.h"
 
 @interface AMInsertableRecord()
 {
@@ -16,6 +17,7 @@
 }
 
 @property (readonly) NSMutableArray * expressions;
+@property (readonly) AMNameRules * nameRules;
 
 @end
 
@@ -28,17 +30,22 @@
     return nil;
 }
 
-- (id)initWithName:(NSString*)name
+- (id)initWithName:(NSAttributedString*)attributedName
+         nameRules:(AMNameRules*)nameRules
               uuid:(NSString *)uuid
               type:(AMInsertableType)type
          mathSheet:(KSMWorksheet *)sheet
 {
     self = [super init];
     if (self) {
-        _name = name;
+        _attributedName = attributedName;
+        if (!_attributedName) {
+            _attributedName = [nameRules suggestNameForType:type];
+        }
         _uuid = uuid;
         _type = type;
         _worksheet = sheet;
+    
         [self setupExpressionArrayForType:type];
     }
     return self;
@@ -109,6 +116,17 @@
         return newExpr;
     }
     return nil;
+}
+
+-(BOOL)changeAttributedNameIfValid:(NSAttributedString*)proposedName
+                             error:(NSError**)error
+{
+    BOOL isValid = [self.nameRules checkName:proposedName
+                                 forType:self.type
+                                   error:error];
+
+    if (isValid) self.attributedName = proposedName;
+    return isValid;
 }
 
 - (void)dealloc

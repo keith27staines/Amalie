@@ -7,6 +7,7 @@
 //
 
 @class AMWorksheetView;
+@class AMNameRules;
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
@@ -16,8 +17,7 @@
 
 @interface AMWorksheetController : NSPersistentDocument
 <AMWorksheetViewDelegate,
- AMInsertableViewDelegate,
- AMInsertableViewDataSource>
+ AMInsertableViewDelegate> 
 
 /*!
  Our worksheet view IS the document view we are controlling.
@@ -29,5 +29,7 @@
  */
 @property (weak) IBOutlet id<AMTrayDatasource> trayDataSource;
 
+
+@property (strong, readonly) AMNameRules * nameRules;
 
 @end

@@ -37,7 +37,6 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
  */
 @property (strong) NSMutableDictionary * contentControllers;
 @property (strong, readonly) KSMWorksheet * mathSheet;
-@property (strong, readonly) AMNameRules * nameRules;
 @property (readonly) NSMutableDictionary * insertedRecords;
 @end
 
@@ -113,9 +112,8 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 -(AMInsertableRecord*)insertableRecordForGroupView:(AMInsertableView*)view
 {
     AMInsertableRecord * record;
-    NSString * defaultName;
-    defaultName = [[self.nameRules suggestNameForType:view.insertableType] string];
-    record = [[AMInsertableRecord alloc] initWithName:defaultName
+    record = [[AMInsertableRecord alloc] initWithName:nil
+                                            nameRules:self.nameRules
                                                  uuid:view.groupID
                                                  type:view.insertableType
                                             mathSheet:self.mathSheet];
@@ -150,7 +148,7 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     AMInsertableRecord * record = [self insertableRecordForGroupView:view];
 
     AMContentViewController * vc;
-    vc = [AMContentViewController contentViewControllerWithParent:self
+    vc = [AMContentViewController contentViewControllerWithWorksheet:self
                                                           content:type groupParentView:view
                                                            record:record];
     
@@ -235,22 +233,6 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
         // since we dealt with the possibility of both being at the same height earlier, the only possibility left is that obj 2 is above obj 1
         return (NSComparisonResult)NSOrderedDescending;
     }];
-}
-
-#pragma mark - AMInsertableViewDataSource -
-
--(NSAttributedString*)attributedNameForView:(AMInsertableView*)view
-{
-    AMInsertableRecord * record = self.insertedRecords[view.groupID];
-    return [[NSAttributedString alloc] initWithString:record.name attributes:nil];
-}
-
--(BOOL)view:(AMInsertableView*)view wantsNameChangedTo:(NSAttributedString*)attributedName error:(NSError**)error
-{
-    NSString * string = [attributedName string];
-    return [self.nameRules checkName:string
-                             forType:view.insertableType
-                               error:error];
 }
 
 #pragma - KSM maths library -

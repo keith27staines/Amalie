@@ -20,6 +20,8 @@
 #import "AMContentView.h"
 #import "AMInsertableRecord.h"
 #import "AMInsertableView.h"
+#import "AMWorksheetController.h"
+#import "AMNameRules.h"
 
 @interface AMContentViewController ()
 {
@@ -40,76 +42,87 @@
 // The new designated initializer
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-               parent:(AMWorksheetController*)parent
+               worksheetController:(AMWorksheetController*)worksheet
               content:(AMInsertableType)type
       groupParentView:(AMInsertableView*)groupParentView
                record:(AMInsertableRecord*)record
 {
-    AMContentViewController * vc;
     
     // Initialization code here.
     switch (type) {
         case AMInsertableTypeConstant:
-            vc = [[AMConstantContentViewController alloc] initWithNibName:nil
+            self = [[AMConstantContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
             break;
         case AMInsertableTypeVariable:
-            vc = [[AMVariableContentViewController alloc] initWithNibName:nil
+            self = [[AMVariableContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
             break;
         case AMInsertableTypeExpression:
-            vc = [[AMExpressionContentViewController alloc] initWithNibName:nil
+            self = [[AMExpressionContentViewController alloc] initWithNibName:nil
                                                                      bundle:nil];
             break;
         case AMInsertableTypeEquation:
-            vc = [[AMEquationContentViewController alloc] initWithNibName:nil
+            self = [[AMEquationContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
             break;
         case AMInsertableTypeVector:
-            vc = [[AMVectorContentViewController alloc] initWithNibName:nil
+            self = [[AMVectorContentViewController alloc] initWithNibName:nil
                                                                  bundle:nil];
             break;
         case AMInsertableTypeMatrix:
-            vc = [[AMMatrixContentViewController alloc] initWithNibName:nil
+            self = [[AMMatrixContentViewController alloc] initWithNibName:nil
                                                                  bundle:nil];
             break;
         case AMInsertableTypeMathematicalSet:
-            vc = [[AMMathematicalSetContentViewController alloc] initWithNibName:nil
+            self = [[AMMathematicalSetContentViewController alloc] initWithNibName:nil
                                                                           bundle:nil];
             break;
         case AMInsertableTypeGraph2D:
-            vc = [[AMGraph2DContentViewController alloc] initWithNibName:nil
+            self = [[AMGraph2DContentViewController alloc] initWithNibName:nil
                                                                   bundle:nil];
             break;
         
     }
     
-    if (!vc) [NSException raise:@"Failed to create view controller." format:nil];
-    
-    _parentController = parent;
-    _insertableType = type;
-    AMContentView * contentView = (AMContentView*)[vc view];
-    contentView.datasource = vc;
-    contentView.groupID = groupParentView.groupID;
-    vc.groupID = groupParentView.groupID;
-    vc.record = record;
-    return vc;
+    if (self)
+    {
+        _parentWorksheetController = worksheet;
+        _insertableType = type;
+        AMContentView * contentView = (AMContentView*)[self view];
+        contentView.datasource = self;
+        contentView.groupID = groupParentView.groupID;
+        self.groupID = groupParentView.groupID;
+        self.record = record;
+        [self populateContent];
+    }
+    return self;
 }
 
-+(id)contentViewControllerWithParent:(AMWorksheetController*)parent
+-(void)populateContent
+{
+    NSLog(@"Warning... populateContent has not been overridden.");
+}
+
++(id)contentViewControllerWithWorksheet:(AMWorksheetController*)worksheetController
                              content:(AMInsertableType)type
                      groupParentView:(AMInsertableView*)groupParentView record:(AMInsertableRecord*)record
 {
     AMContentViewController * vc = [AMContentViewController alloc];
     return [vc initWithNibName:nil
                         bundle:nil
-                        parent:parent
+                        worksheetController:worksheetController
                        content:type
                groupParentView:groupParentView
                         record:record];
 }
 
 #pragma mark - AMContentViewDataSource -
+
+-(NSAttributedString*)viewWantsAttributedName:(AMContentView *)view
+{
+    return self.record.attributedName;
+}
 
 -(KSMExpression*)view:(AMContentView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index
 {
@@ -121,5 +134,14 @@
     return [self.record expressionForIndex:index];
 }
 
+-(NSAttributedString*)attributedName
+{
+    return self.record.attributedName;
+}
+
+-(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error
+{
+    return [self.record changeAttributedNameIfValid:proposedName error:error];
+}
 
 @end

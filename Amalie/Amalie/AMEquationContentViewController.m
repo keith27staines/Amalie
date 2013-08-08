@@ -23,14 +23,22 @@ static NSUInteger const kAMIndexRHS;
 {
     self = [super initWithNibName:@"AMEquationContentView" bundle:nil];
     if (self) {
-        // Expression content specific initialization
+
     }
     return self;
 }
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+}
+
 - (IBAction)nameWasEdited:(NSTextField *)sender
 {
-    ;
+    NSAttributedString * proposedName = sender.attributedStringValue;
+    if ( ! [self changeNameIfValid:proposedName error:nil] )
+        sender.attributedStringValue = self.attributedName;
 
 }
 
@@ -44,5 +52,9 @@ static NSUInteger const kAMIndexRHS;
     [self.expressionView setNeedsDisplay:YES];
 }
 
+-(void)populateContent
+{
+    self.nameField.attributedStringValue = self.record.attributedName;
+}
 
 @end

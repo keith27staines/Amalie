@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.1" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A524d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMWorksheetController">
             <connections>
-                <outlet property="appController" destination="GkH-jk-e4m" id="ZQd-0w-0o0"/>
                 <outlet property="trayDataSource" destination="GkH-jk-e4m" id="Yaj-Gy-wWI"/>
                 <outlet property="window" destination="5" id="18"/>
-                <outlet property="worksheetView" destination="74f-2O-Z87" id="8Ns-7F-ve4"/>
+                <outlet property="worksheetView" destination="Amu-yo-u4Q" id="csM-fh-5Pu"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -19,39 +18,32 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="133" y="235" width="894" height="770"/>
+            <rect key="contentRect" x="133" y="235" width="1036" height="971"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="94" height="86"/>
             <view key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="894" height="770"/>
+                <rect key="frame" x="0.0" y="0.0" width="1036" height="971"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="74f-2O-Z87" customClass="AMWorksheetView">
-                        <rect key="frame" x="0.0" y="237" width="894" height="533"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <connections>
-                            <outlet property="delegate" destination="-2" id="Id3-hf-RJ7"/>
-                        </connections>
-                    </customView>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJD-vM-bCf" customClass="AMToolboxView">
-                        <rect key="frame" x="0.0" y="0.0" width="894" height="229"/>
+                    <customView identifier="AMToolboxView" translatesAutoresizingMaskIntoConstraints="NO" id="gJD-vM-bCf" customClass="AMToolboxView">
+                        <rect key="frame" x="0.0" y="8" width="1036" height="229"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMQ-RN-CA1">
-                                <rect key="frame" x="20" y="20" width="252" height="189"/>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMQ-RN-CA1">
+                                <rect key="frame" x="0.0" y="40" width="280" height="192"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" ambiguous="YES" misplaced="YES" id="laH-9q-gSM">
-                                    <rect key="frame" x="1" y="1" width="250" height="187"/>
+                                <clipView key="contentView" id="laH-9q-gSM">
+                                    <rect key="frame" x="1" y="1" width="278" height="190"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="kAMTrayDictionaryKey" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="Irp-Yf-VE1">
-                                            <rect key="frame" x="0.0" y="0.0" width="250" height="187"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="278" height="190"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="kAMIconKey" width="247" minWidth="40" maxWidth="1000" id="Zan-f7-Gql">
+                                                <tableColumn identifier="kAMIconKey" width="275" minWidth="40" maxWidth="1000" id="Zan-f7-Gql">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +57,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="kAMIconKey" id="s7Q-il-0qV">
-                                                            <rect key="frame" x="1" y="1" width="247" height="49"/>
+                                                            <rect key="frame" x="1" y="1" width="275" height="49"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Stt-ZJ-Zdv">
@@ -74,7 +66,7 @@
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="DLZ-0h-kMn"/>
                                                                 </imageView>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNY-yz-5Iz">
-                                                                    <rect key="frame" x="47" y="3" width="200" height="46"/>
+                                                                    <rect key="frame" x="47" y="3" width="228" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ipe-RU-qVT">
                                                                         <font key="font" metaFont="system"/>
@@ -109,8 +101,33 @@
                                 </scroller>
                             </scrollView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="uMQ-RN-CA1" firstAttribute="top" secondItem="gJD-vM-bCf" secondAttribute="top" constant="-3" id="d8l-wH-Q5q"/>
+                            <constraint firstAttribute="trailing" secondItem="uMQ-RN-CA1" secondAttribute="trailing" constant="756" id="e3v-Ko-DKQ"/>
+                            <constraint firstItem="uMQ-RN-CA1" firstAttribute="leading" secondItem="gJD-vM-bCf" secondAttribute="leading" id="hB2-Yl-hUh"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uMQ-RN-CA1" secondAttribute="trailing" constant="20" symbolic="YES" id="qv3-5S-UmB"/>
+                            <constraint firstAttribute="bottom" secondItem="uMQ-RN-CA1" secondAttribute="bottom" constant="40" id="trL-GV-E9s"/>
+                        </constraints>
                     </customView>
+                    <view identifier="AMWorksheetView" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Amu-yo-u4Q" userLabel="AMWorksheetView" customClass="AMWorksheetView" colorLabel="IBBuiltInLabel-Red">
+                        <rect key="frame" x="0.0" y="245" width="1036" height="726"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="Lbc-IA-T9o"/>
+                        </connections>
+                    </view>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="gJD-vM-bCf" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="0JG-Tg-0Lf"/>
+                    <constraint firstAttribute="trailing" secondItem="gJD-vM-bCf" secondAttribute="trailing" id="1Aq-nT-NzV"/>
+                    <constraint firstItem="gJD-vM-bCf" firstAttribute="top" secondItem="6" secondAttribute="top" constant="734" id="JtV-Vo-QxK"/>
+                    <constraint firstItem="Amu-yo-u4Q" firstAttribute="top" secondItem="6" secondAttribute="top" id="Kjq-NV-Yfu"/>
+                    <constraint firstItem="gJD-vM-bCf" firstAttribute="trailing" secondItem="Amu-yo-u4Q" secondAttribute="trailing" id="TwZ-aL-0hY"/>
+                    <constraint firstAttribute="bottom" secondItem="gJD-vM-bCf" secondAttribute="bottom" constant="8" id="bCP-UJ-QAI"/>
+                    <constraint firstItem="gJD-vM-bCf" firstAttribute="top" secondItem="Amu-yo-u4Q" secondAttribute="bottom" constant="8" symbolic="YES" id="evY-FS-8cw"/>
+                    <constraint firstItem="gJD-vM-bCf" firstAttribute="leading" secondItem="Amu-yo-u4Q" secondAttribute="leading" id="uNy-dD-Duh"/>
+                </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="17"/>
