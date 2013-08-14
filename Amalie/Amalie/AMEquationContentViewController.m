@@ -9,7 +9,7 @@
 #import "AMEquationContentViewController.h"
 #import "KSMExpression.h"
 #import "AMInsertableRecord.h"
-#import "AMInteriorExpressionView.h"
+#import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
 
 static NSUInteger const kAMIndexRHS;
@@ -66,7 +66,6 @@ static NSUInteger const kAMIndexRHS;
     [self.expressionString setFont:fixedWidthFont];
     [self.nameField setFont:standardFont];
 
-    self.expressionView.standardFont = standardFont;
     self.expressionView.expression = expr;
 }
 

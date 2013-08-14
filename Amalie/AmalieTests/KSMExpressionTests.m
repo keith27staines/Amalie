@@ -236,8 +236,8 @@ NSString * dollar = @"$";
     string = @"a-b+c*-e";
     regularizedString = [KSMExpression regularizeLeadingMinusInString:string];
 
-    XCTAssertEquals(string, regularizedString, @"String should be unchanged.");
-
+    XCTAssertEqual(string, regularizedString, @"String should be unchanged.");
+    
     string = @"-a-b+c*-e";
     regularizedString = [KSMExpression regularizeLeadingMinusInString:string];
     XCTAssertTrue([@"0-a-b+c*-e" isEqualToString:regularizedString], @"String should now be prefixed by '0-'");
@@ -249,7 +249,7 @@ NSString * dollar = @"$";
     string = @"a-b+c*-e";
     regularizedString = [KSMExpression regularizeLeadingMinusInString:string];
     
-    XCTAssertEquals(string, regularizedString, @"String should be unchanged.");
+    XCTAssertEqual(string, regularizedString, @"String should be unchanged.");
     
 
 }
@@ -367,6 +367,13 @@ NSString * dollar = @"$";
     NSString * string = @"a+b";
     string = [KSMExpression encloseInBrackets:string];
     XCTAssertTrue([string isEqualToString:@"(a+b)"], @"String was not clothed in brackets correctly.");
+}
+
+- (void)testExpressionType
+{
+    KSMExpression * expression = [[KSMExpression alloc] initWithString:@"x"];
+    KSMExpressionType t = expression.expressionType;
+    XCTAssertTrue(t == KSMExpressionTypeVariable, @"expression type is incorrect.");
 }
 
 ////////////////////////////////////////////////////////////////////////////////

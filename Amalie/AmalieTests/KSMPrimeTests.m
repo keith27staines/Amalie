@@ -117,14 +117,14 @@
     NSUInteger highPrime = 997;
     BOOL isHighPrime = [primes isPrime:highPrime];
     if (!isHighPrime) {
-        XCTFail(@"%d was not identified as prime.", highPrime);
+        XCTFail(@"%ld was not identified as prime.", highPrime);
     }
     
     // test high non-prime
     NSUInteger highNonPrime = 995;
     isHighPrime = [primes isPrime:highNonPrime];
     if (isHighPrime) {
-        XCTFail(@"%d was incorrectly identified as prime.", highNonPrime);
+        XCTFail(@"%ld was incorrectly identified as prime.", highNonPrime);
     }
 
 }
@@ -141,13 +141,13 @@
                 // dealing with a known prime
                 if ( ![primes isPrime:i]) {
                     // dsagreement!
-                    XCTFail(@"%d is prime but was not identified as such. BlockSize was %d", i, blockSize);
+                    XCTFail(@"%ld is prime but was not identified as such. BlockSize was %ld", i, blockSize);
                 }
             } else {
                 // dealing with a composite number
                 if ([primes isPrime:i]) {
                     // disagreement
-                    XCTFail(@"%d is not prime but was identified as prime. BlockSize was %d", i, blockSize);
+                    XCTFail(@"%ld is not prime but was identified as prime. BlockSize was %ld", i, blockSize);
                 }
             }
         }
@@ -169,7 +169,7 @@
             NSUInteger calcPrime = [primes primeAtIndex:i];
             if ( iKnownPrime != calcPrime ) {
                 // mismatch
-                XCTFail(@"Known prime at index %ld is %ld, but calculated prime at same index is %ld. Blocksize was %d", i, iKnownPrime, calcPrime, blockSize);
+                XCTFail(@"Known prime at index %ld is %ld, but calculated prime at same index is %ld. Blocksize was %ld", i, iKnownPrime, calcPrime, blockSize);
             }
         }
     }

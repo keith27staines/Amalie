@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMInteriorExpressionView;
+@class AMExpressionNodeView;
 
 #import "AMContentViewController.h"
 
@@ -21,7 +21,7 @@
 
 @property (weak) IBOutlet NSTextField *expressionString;
 
-@property (weak) IBOutlet AMInteriorExpressionView * expressionView;
+@property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
 - (IBAction)nameWasEdited:(NSTextField *)sender;
 

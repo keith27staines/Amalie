@@ -146,7 +146,7 @@
     // test a variety of non numbers
     XCTAssertFalse([@"" KSMpureNumber],    @"%@ is not a number.",@"empty string");
     XCTAssertFalse([@"1a" KSMpureNumber],  @"%@ is not a number.",@"1a");
-    XCTAssertFalse([@"/2" KSMpureNumber],  @"/2 is not a number.",@"/2");
+    XCTAssertFalse([@"/2" KSMpureNumber],  @"%@ is not a number.",@"/2");
     XCTAssertFalse([@"+1" KSMpureNumber],  @"%@ is not a number (for our purposes, we regard it as an arithmetic operation).",@"+1");
     
     // test a variety of numbers
