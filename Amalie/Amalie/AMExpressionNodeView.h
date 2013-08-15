@@ -17,8 +17,8 @@
 @property (weak, readonly)  AMExpressionNodeView * rootNode;
 @property (weak, readwrite) KSMExpression        * expression;
 @property                   BOOL                   useQuotientAlignment;
-@property (readonly)        AMExpressionNodeView * leftOperandNode;
-@property (readonly)        AMExpressionNodeView * rightOperandNode;
+@property (weak, readonly)  AMExpressionNodeView * leftOperandNode;
+@property (weak, readonly)  AMExpressionNodeView * rightOperandNode;
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 

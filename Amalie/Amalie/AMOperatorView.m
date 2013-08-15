@@ -59,10 +59,10 @@
         _translatedString = @"×";
     
     if ([operatorString isEqualToString:@"+"])
-        _translatedString = @"＋";  // full width plus sign
+        _translatedString = @"+"; //  @"＋";  // full width plus sign
     
     if ([operatorString isEqualToString:@"-"])
-        _translatedString = @"－"; // full width minus sign
+        _translatedString = @"–";// @"－"; // full width minus sign
     
     if ([operatorString isEqualToString:@"^"])
         _translatedString = @"^";
@@ -116,6 +116,7 @@
             [path setLineWidth:1.0];
             [[NSColor blackColor] set];
             [path lineToPoint:NSMakePoint(self.bounds.size.width, 1)];
+            [path stroke];
         }
     }
     

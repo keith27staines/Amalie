@@ -113,22 +113,31 @@ typedef enum AMOrientation : NSUInteger {
     return _expression;
 }
 
+-(void)prepareForExpressionSet
+{
+    _backColor = [NSColor colorWithCalibratedRed:0.99 green:0.8 blue:0.8 alpha:1.0];
+    _instrinsicSize = NSMakeSize(kAM_MINWIDTH, kAM_MINHEIGHT);
+
+    NSArray * viewsToRemove = [[self subviews] copy];
+    for (NSView * v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    
+    [self.childNodes removeAllObjects];
+    _leftOperandNode = nil;
+    _rightOperandNode = nil;
+    self.stringToDisplay = nil;
+}
+
 -(void)setExpression:(KSMExpression *)expression
 {
-    _instrinsicSize = NSMakeSize(kAM_MINWIDTH, kAM_MINHEIGHT);
     if (expression == _expression) return;
-
+    
+    [self prepareForExpressionSet];
+    
     if (expression)
     {
-        NSArray * viewsToRemove = [[self subviews] copy];
-        for (NSView * v in viewsToRemove) {
-            [v removeFromSuperview];
-        }
-        
-        [self.childNodes removeAllObjects];
         _expression = expression;
-        self.stringToDisplay = nil;
-        _backColor = [NSColor colorWithCalibratedRed:0.99 green:0.8 blue:0.8 alpha:1.0];
         switch (expression.expressionType) {
             case KSMExpressionTypeUnrecognized:
             {
@@ -150,6 +159,7 @@ typedef enum AMOrientation : NSUInteger {
             }
             case KSMExpressionTypeBinary:
             {
+                _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeLiteral]};
                 [self addBinaryChildNodeViews];
                 _backColor = [NSColor colorWithCalibratedRed:0.8 green:0.8 blue:0.99 alpha:1.0];
                 [self am_layout];
@@ -251,7 +261,7 @@ typedef enum AMOrientation : NSUInteger {
     [self addSubview:left];
     [self addOperatorViewWithAttributes:_attributes];
     [self addSubview:right];
-    [self setNeedsDisplay:YES];
+    [_operatorView setNeedsDisplay:YES];
     _leftOperandNode = left;
     _rightOperandNode = right;
 }
@@ -287,7 +297,7 @@ typedef enum AMOrientation : NSUInteger {
         }
         case AMOrientationVertical:
         {
-            [self alignViews:views verticallyWithPadding:padding];
+            [self alignViews:views verticallyWithPadding:0];
             break;
         }
     }
@@ -312,10 +322,10 @@ typedef enum AMOrientation : NSUInteger {
     
     height = maxExtentAboveBaseline + baseline;
 
-    for (NSView * view in views) {
-        CGFloat yOffset = baseline - view.baselineOffsetFromBottom;
-        [view setFrameOrigin:NSMakePoint(width, yOffset)];
-        width += view.frame.size.width + padding;
+    for (NSView * aView in views) {
+        CGFloat yOffset = baseline - aView.baselineOffsetFromBottom;
+        [aView setFrameOrigin:NSMakePoint(width, yOffset)];
+        width += aView.frame.size.width + padding;
     }
     width -= padding;
     _instrinsicSize = NSMakeSize(width, height);
@@ -340,11 +350,14 @@ typedef enum AMOrientation : NSUInteger {
         i++;
         CGFloat xOffset = (width - view.frame.size.width) / 2.0f;
         height = height - view.frame.size.height;
-        [view setFrameOrigin:NSMakePoint(xOffset, height)];
         if (i == 2) {
+            [view setFrameOrigin:NSMakePoint(0, height)];
             [view setFrameSize:NSMakeSize(width, view.intrinsicContentSize.height)];
             [view setNeedsDisplay:YES];
+        } else {
+            [view setFrameOrigin:NSMakePoint(xOffset, height)];
         }
+        
         height -= padding;
     }
     _instrinsicSize = NSMakeSize(width, totalHeight);
