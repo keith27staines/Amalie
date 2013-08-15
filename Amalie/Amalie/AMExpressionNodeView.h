@@ -13,11 +13,14 @@
 
 @interface AMExpressionNodeView : AMContentView
 
-@property (weak, readonly)          AMExpressionNodeView * parentNode;
-@property (weak, readonly)          AMExpressionNodeView * rootNode;
-@property (weak, readwrite)                KSMExpression * expression;
-@property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
+@property (weak, readonly)  AMExpressionNodeView * parentNode;
+@property (weak, readonly)  AMExpressionNodeView * rootNode;
+@property (weak, readwrite) KSMExpression        * expression;
+@property                   BOOL                   useQuotientAlignment;
+@property (readonly)        AMExpressionNodeView * leftOperandNode;
+@property (readonly)        AMExpressionNodeView * rightOperandNode;
 
+@property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
 - (id)initWithFrame:(NSRect)frame
             groupID:(NSString *)groupID
@@ -25,5 +28,8 @@
          parentNode:(AMExpressionNodeView*)parent
          expression:(KSMExpression*)expression
      displayOptions:(AMExpressionDisplayOptions*)displayOptions;
+
+-(BOOL)requiresQuotientAlignment;
+
 
 @end

@@ -123,4 +123,13 @@
 
 }
 
+-(CGFloat)baselineOffsetFromBottom
+{
+    if (self.useQuotientAlignment) {
+        return self.fittingSize.height / 2.0;
+    } else {
+        return 0.0f;
+    }
+}
+
 @end

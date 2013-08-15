@@ -34,6 +34,10 @@ typedef enum AMOrientation : NSUInteger {
     NSString                    * _stringToDisplay;
     NSDictionary                * _attributes;
     NSColor                     * _backColor;
+    CGFloat                       _baselineOffsetFromBottom;
+    CGFloat                       _baselineOffsetFromBottomUsingQuotientRules;
+    __weak AMExpressionNodeView * _leftOperandNode;
+    __weak AMExpressionNodeView * _rightOperandNode;
 }
 
 @property (readonly) NSMutableArray * childNodes;
@@ -88,6 +92,20 @@ typedef enum AMOrientation : NSUInteger {
         
     }
     return self;
+}
+
+-(CGFloat)baselineOffsetFromBottom
+{
+    if (self.useQuotientAlignment) {
+        return _baselineOffsetFromBottomUsingQuotientRules;
+    } else {
+        return _baselineOffsetFromBottom;
+    }
+}
+
+-(void)setBaselineOffsetFromBottom:(CGFloat)offsetFromBottom
+{
+    _baselineOffsetFromBottom = offsetFromBottom;
 }
 
 -(KSMExpression*)expression
@@ -153,6 +171,8 @@ typedef enum AMOrientation : NSUInteger {
     } else {
         _instrinsicSize = NSMakeSize(0, 0);
     }
+    _baselineOffsetFromBottom = 0.0f;
+    _baselineOffsetFromBottomUsingQuotientRules = _instrinsicSize.height / 2.0f;
     [self setFrameSize:_instrinsicSize];
 }
 
@@ -210,34 +230,30 @@ typedef enum AMOrientation : NSUInteger {
 {
     if (self.expression.expressionType != KSMExpressionTypeBinary) return;
     
-    KSMExpression           * expression = self.expression;
-    AMExpressionNodeView    * leftChildNode;
-    AMExpressionNodeView    * rightChildNode;
-    KSMExpression           * leftChildExpression;
-    KSMExpression           * rightChildExpression;
+    AMExpressionNodeView * left;
+    AMExpressionNodeView * right;
+    left = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
+                                               groupID:self.groupID
+                                              rootNode:self.rootNode
+                                            parentNode:self
+                                            expression:[self leftSubExpression]
+                                        displayOptions:nil];
     
-    leftChildExpression = [self expressionForSubSymbol:expression.leftOperand];
-    rightChildExpression = [self expressionForSubSymbol:expression.rightOperand];
+    right = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
+                                                groupID:self.groupID
+                                               rootNode:self.rootNode
+                                             parentNode:self
+                                             expression:[self rightSubExpression]
+                                         displayOptions:nil];
     
-    leftChildNode = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
-                                                        groupID:self.groupID
-                                                       rootNode:self.rootNode
-                                                     parentNode:self
-                                                     expression:leftChildExpression
-                                                 displayOptions:nil];
-    
-    rightChildNode = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
-                                                         groupID:self.groupID
-                                                        rootNode:self.rootNode
-                                                      parentNode:self
-                                                      expression:rightChildExpression
-                                                  displayOptions:nil];
-    [self.childNodes addObject:leftChildNode];
-    [self.childNodes addObject:rightChildNode];
-    [self addSubview:leftChildNode];
+    [self.childNodes addObject:left];
+    [self.childNodes addObject:right];
+    [self addSubview:left];
     [self addOperatorViewWithAttributes:_attributes];
-    [self addSubview:rightChildNode];
+    [self addSubview:right];
     [self setNeedsDisplay:YES];
+    _leftOperandNode = left;
+    _rightOperandNode = right;
 }
 
 -(void)drawRect:(NSRect)dirtyRect
@@ -284,10 +300,16 @@ typedef enum AMOrientation : NSUInteger {
 
 -(void)alignViews:(NSArray*)views horizontallyWithPadding:(CGFloat)padding
 {
-    CGFloat width               = 0.0f;
-    CGFloat height              = 0.0f;
+    if ( [self requiresQuotientAlignment] ) {
+        self.leftOperandNode.useQuotientAlignment  = YES;
+        self.rightOperandNode.useQuotientAlignment = YES;
+        _operatorView.useQuotientAlignment         = YES;
+    }
+    CGFloat width                    = 0.0f;
+    CGFloat height                   = 0.0f;
     CGFloat maxExtentAboveBaseline   = [self greatestExtentAboveBaseLine:views];
     CGFloat baseline                 = [self greatestExtentBeneathBaseline:views];
+    
     height = maxExtentAboveBaseline + baseline;
 
     for (NSView * view in views) {
@@ -297,6 +319,9 @@ typedef enum AMOrientation : NSUInteger {
     }
     width -= padding;
     _instrinsicSize = NSMakeSize(width, height);
+    _baselineOffsetFromBottom = 0.0f;
+    _baselineOffsetFromBottomUsingQuotientRules = height/2.0f;
+    
 }
 
 -(void)alignViews:(NSArray*)views verticallyWithPadding:(CGFloat)padding
@@ -323,6 +348,8 @@ typedef enum AMOrientation : NSUInteger {
         height -= padding;
     }
     _instrinsicSize = NSMakeSize(width, totalHeight);
+    _baselineOffsetFromBottom = _operatorView.frame.origin.y + 0.5 * _operatorView.frame.size.height;
+    _baselineOffsetFromBottomUsingQuotientRules = _baselineOffsetFromBottom;
 }
 
 -(CGFloat)greatestExtentBeneathBaseline:(NSArray*)views
@@ -399,6 +426,7 @@ typedef enum AMOrientation : NSUInteger {
         view.attributes = fontAttributes;
         [self addSubview:view];
         _operatorView = view;
+        view.parentExpressionNode = self;
     }
     return _operatorView;
 }
@@ -425,9 +453,70 @@ typedef enum AMOrientation : NSUInteger {
     return _instrinsicSize;
 }
 
+-(BOOL)requiresQuotientAlignment
+{
+    switch (self.expression.expressionType) {
+        case KSMExpressionTypeLiteral:
+            return NO;
+        case KSMExpressionTypeVariable:
+            return NO;
+        case KSMExpressionTypeBinary:
+        {
+            BOOL yn = NO;
+            // Quick out if we are a division expression ourselves
+            if ( [self.expression.operator isEqualToString:@"/"] )
+                yn = YES;
+            else {
+                // otherwise need to check our operands
+                AMExpressionNodeView * left  = [self leftOperandNode];
+                AMExpressionNodeView * right = [self rightOperandNode];
+                yn = ( [left requiresQuotientAlignment] || [right requiresQuotientAlignment] );
+            }
+            
+            if (yn) {
+                self.useQuotientAlignment = YES;
+            }
+            
+            return yn;
+        }
+        case KSMExpressionTypeCompound:
+        {
+            return NO;
+        }
+        case KSMExpressionTypeUnrecognized:
+        {
+            return NO;
+        }
+    }
+}
 
+-(AMExpressionNodeView*)leftOperandNode
+{
+    return _leftOperandNode;
+}
 
+-(AMExpressionNodeView*)rightOperandNode
+{
+    return _rightOperandNode;
+}
 
+-(KSMExpression*)leftSubExpression
+{
+    if (self.expression.expressionType == KSMExpressionTypeBinary) {
+        NSString * symbol = self.expression.leftOperand;
+        return [self expressionForSubSymbol:symbol];
+    }
+    return nil;
+}
+
+-(KSMExpression*)rightSubExpression
+{
+    if (self.expression.expressionType == KSMExpressionTypeBinary) {
+        NSString * symbol = self.expression.rightOperand;
+        return [self expressionForSubSymbol:symbol];
+    }
+    return nil;
+}
 
 
 @end
