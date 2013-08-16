@@ -53,6 +53,7 @@ typedef enum AMOrientation : NSUInteger {
                       rootNode:nil
                     parentNode:nil
                     expression:nil
+                    datasource:nil
                 displayOptions:nil];
 }
 
@@ -61,7 +62,8 @@ typedef enum AMOrientation : NSUInteger {
            rootNode:(AMExpressionNodeView *)rootNode
          parentNode:(AMExpressionNodeView *)parentNode
         expression:(KSMExpression *)expression
-    displayOptions:(AMExpressionDisplayOptions *)displayOptions
+         datasource:(id<AMContentViewDataSource>)datasource
+     displayOptions:(AMExpressionDisplayOptions *)displayOptions
 {
     if (rootNode && !parentNode)
         [NSException raise:@"Inconsistent root and parent node." format:nil];
@@ -70,6 +72,7 @@ typedef enum AMOrientation : NSUInteger {
     if (self) {
         [self setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self setAutoresizesSubviews:NO];
+        self.datasource = datasource;
         if (expression)
         {
             self.expression = expression;
@@ -86,10 +89,8 @@ typedef enum AMOrientation : NSUInteger {
                 _parentNode = nil;
             }
         }
-        
         _childNodes = [NSMutableArray array];
         _displayOptions = displayOptions;
-        
     }
     return self;
 }
@@ -247,6 +248,7 @@ typedef enum AMOrientation : NSUInteger {
                                               rootNode:self.rootNode
                                             parentNode:self
                                             expression:[self leftSubExpression]
+                                            datasource:self.datasource
                                         displayOptions:nil];
     
     right = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
@@ -254,6 +256,7 @@ typedef enum AMOrientation : NSUInteger {
                                                rootNode:self.rootNode
                                              parentNode:self
                                              expression:[self rightSubExpression]
+                                             datasource:self.datasource
                                          displayOptions:nil];
     
     [self.childNodes addObject:left];
@@ -456,8 +459,12 @@ typedef enum AMOrientation : NSUInteger {
 
 -(KSMExpression*)expressionForSubSymbol:(NSString*)symbol
 {
-    NSDictionary * subExpressions = [self.expression subExpressions];
-    return (KSMExpression*) subExpressions[symbol];
+    KSMExpression * expr;
+    expr = [[self datasource] view:self requiresExpressionForSymbol:symbol];
+    
+    NSAssert(expr, @"No expression known for symbol %@.",symbol);
+    
+    return expr;
 }
 
 
@@ -515,20 +522,24 @@ typedef enum AMOrientation : NSUInteger {
 
 -(KSMExpression*)leftSubExpression
 {
+    KSMExpression * expr;
     if (self.expression.expressionType == KSMExpressionTypeBinary) {
         NSString * symbol = self.expression.leftOperand;
-        return [self expressionForSubSymbol:symbol];
+        expr = [self expressionForSubSymbol:symbol];
+        NSAssert(expr, @"Missing left operand expression for symbol %@.",symbol);
     }
-    return nil;
+    return expr;
 }
 
 -(KSMExpression*)rightSubExpression
 {
+    KSMExpression * expr;
     if (self.expression.expressionType == KSMExpressionTypeBinary) {
         NSString * symbol = self.expression.rightOperand;
-        return [self expressionForSubSymbol:symbol];
+        expr = [self expressionForSubSymbol:symbol];
+        NSAssert(expr, @"Missing right operand expression for symbol %@.",symbol);
     }
-    return nil;
+    return expr;
 }
 
 

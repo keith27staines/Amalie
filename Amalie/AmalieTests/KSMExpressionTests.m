@@ -83,6 +83,21 @@ NSString * dollar = @"$";
     
 }
 
+-(void)testDifficultExpressions
+{
+    // Test the case a+a+a+a. Here, we expect a+a to be replaced by a symble, $x, so that the resulting binary string should be $x+$x, where $x = correct symbol for a+a
+    
+    NSString * symbolAPlusA = [self correctSymbolFromBareString:@"a+a"];
+    NSString * expectedString = [symbolAPlusA stringByAppendingString:@"+"];
+    expectedString = [expectedString stringByAppendingString:symbolAPlusA];
+    KSMExpression * exp;
+    
+    exp = [[KSMExpression alloc] initWithString:@"a+a+a+a"];
+    XCTAssertTrue(exp, @"Failed to initialise: test didn't return a valid id.");
+    XCTAssertTrue([exp.string isEqualToString:expectedString], @"Expression isn't returning its equivalent string.");
+   
+}
+
 - (void)testUnclotheString
 {
     NSString * clothedString = @"(a)";

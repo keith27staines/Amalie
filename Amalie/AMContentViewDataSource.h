@@ -16,6 +16,8 @@
 
 -(KSMExpression*)view:(AMContentView*)view wantsExpressionAtIndex:(NSUInteger)index;
 
+-(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol;
+
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView*)view;
 
 

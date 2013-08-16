@@ -135,9 +135,16 @@
     return [self.record expressionFromString:string atIndex:index];
 }
 
+
 -(KSMExpression*)view:(AMContentView*)view wantsExpressionAtIndex:(NSUInteger)index
 {
     return [self.record expressionForIndex:index];
+}
+
+-(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol
+{
+    // Get expression for symbol from KSMWorksheet
+    return [self.record expressionFromSymbol:symbol];
 }
 
 -(NSAttributedString*)attributedName

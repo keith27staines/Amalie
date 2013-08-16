@@ -91,7 +91,7 @@ NSString * const kSubtract = @"-";
 {
     if (!_symbol) {
         NSUInteger hash = [self.bareString hash];
-        _symbol = [kSymbolPrefix stringByAppendingFormat:@"%ld",hash];
+        _symbol = [kSymbolPrefix stringByAppendingFormat:@"%lud",(unsigned long)hash];
     }
     return _symbol;
 }
@@ -121,12 +121,14 @@ NSString * const kSubtract = @"-";
         self.validityType = KSMExpressionValidityInvalidZeroLength;
         return;
     }
-    
+
+    // TODO: remove these lines permanently if proved unnecessary
     // string cannot (initially) have any occurrences of $ sign
     if ([self.string KSMcontainsCharactersInString:kSymbolPrefix]) {
-        self.expressionType = KSMExpressionTypeUnrecognized;
-        self.validityType = KSMExpressionValidityInvalidContainsDollar;
-        return;
+        NSLog(@"String contains dollar but why is this a problem?");
+//        self.expressionType = KSMExpressionTypeUnrecognized;
+//        self.validityType = KSMExpressionValidityInvalidContainsDollar;
+//        return;
     }
     
     // string must have valid bracket syntax if we are to analyse it
@@ -576,7 +578,7 @@ NSString * const kSubtract = @"-";
     leftTokenRange = [KSMExpression rangeInExpressionString:string
                            ofTokenPreviousToIndex:operatorRange.location-1
                                        delimitedByoperators:operators];
-    if (leftTokenRange.location == NSNotFound) return NO; // left op missing
+    if (leftTokenRange.location == NSNotFound) return NO; // left operand missing
     
     
     // Attempt to find the token on the right of the operator

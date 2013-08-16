@@ -10,6 +10,7 @@
 @class AMExpressionDisplayOptions;
 
 #import "AMContentView.h"
+#import "AMContentViewDataSource.h"
 
 @interface AMExpressionNodeView : AMContentView
 
@@ -27,6 +28,7 @@
            rootNode:(AMExpressionNodeView*)root
          parentNode:(AMExpressionNodeView*)parent
          expression:(KSMExpression*)expression
+         datasource:(id<AMContentViewDataSource>)datasource
      displayOptions:(AMExpressionDisplayOptions*)displayOptions;
 
 -(BOOL)requiresQuotientAlignment;

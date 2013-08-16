@@ -118,6 +118,11 @@
     return nil;
 }
 
+-(KSMExpression*)expressionFromSymbol:(NSString*)symbol
+{
+    return [self.worksheet expressionForSymbol:symbol];
+}
+
 -(BOOL)changeAttributedNameIfValid:(NSAttributedString*)proposedName
                              error:(NSError**)error
 {

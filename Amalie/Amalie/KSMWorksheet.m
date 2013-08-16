@@ -95,12 +95,20 @@
 
 -(KSMExpression*)expressionForKey:(NSString*)symbol;
 {
-    return [self.expressionsDictionary objectForKey:symbol];
+    KSMExpression * expr = [self.expressionsDictionary objectForKey:symbol];
+    if (!expr) {
+        NSLog(@"Failed to locate expression for key %@",symbol);
+    }
+    return expr;
 }
 
 -(KSMExpression*)expressionForSymbol:(NSString*)symbol
 {
-    return [self expressionForKey:symbol];
+    KSMExpression * expr = [self expressionForKey:symbol];
+    if (!expr) {
+        NSLog(@"Failed to locate expression for key %@",symbol);
+    }
+    return expr;
 }
 
 -(KSMExpression*)expressionForOriginalString:(NSString*)string
