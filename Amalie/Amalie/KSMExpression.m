@@ -121,15 +121,6 @@ NSString * const kSubtract = @"-";
         self.validityType = KSMExpressionValidityInvalidZeroLength;
         return;
     }
-
-    // TODO: remove these lines permanently if proved unnecessary
-    // string cannot (initially) have any occurrences of $ sign
-    if ([self.string KSMcontainsCharactersInString:kSymbolPrefix]) {
-        NSLog(@"String contains dollar but why is this a problem?");
-//        self.expressionType = KSMExpressionTypeUnrecognized;
-//        self.validityType = KSMExpressionValidityInvalidContainsDollar;
-//        return;
-    }
     
     // string must have valid bracket syntax if we are to analyse it
     if ( ![self isBracketSyntaxGood]) {

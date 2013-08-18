@@ -193,6 +193,7 @@
 		788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesTrayTableColorwellCellView.m; sourceTree = "<group>"; };
 		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
 		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
+		788F637717BF586B00EC68CC /* AMQuotientBaselining.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMQuotientBaselining.h; path = Amalie/AMQuotientBaselining.h; sourceTree = "<group>"; };
 		7899B2D117ACF596008BDB75 /* KSMReferenceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMReferenceCounter.h; sourceTree = "<group>"; };
 		7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMReferenceCounter.m; sourceTree = "<group>"; };
 		7899B2D517AD0DB9008BDB75 /* AMConstantContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstantContentViewController.h; sourceTree = "<group>"; };
@@ -578,6 +579,7 @@
 				78327449178F14920051290B /* AMTrayDatasource.h */,
 				78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */,
 				78CDC76017AFFE6000BDC8D7 /* AMContentViewDataSource.h */,
+				788F637717BF586B00EC68CC /* AMQuotientBaselining.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

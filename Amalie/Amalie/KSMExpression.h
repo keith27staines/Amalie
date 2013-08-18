@@ -37,9 +37,8 @@ typedef enum KSMExpressionValidity : NSInteger {
     KSMExpressionValidityValid = 0,
     KSMExpressionValidityInvalid = 1,
     KSMExpressionValidityInvalidZeroLength = 2,
-    KSMExpressionValidityInvalidContainsDollar = 4,
-    KSMExpressionValidityInvalidBracketSyntax = 8,
-    KSMExpressionValidityInvalidOperatorSyntaxOrVariableName = 16
+    KSMExpressionValidityInvalidBracketSyntax = 4,
+    KSMExpressionValidityInvalidOperatorSyntaxOrVariableName = 8
 } KSMExpressionValidity;
 
 /*!

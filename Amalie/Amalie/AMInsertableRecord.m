@@ -99,9 +99,15 @@
 -(KSMExpression*)expressionFromString:(NSString *)string atIndex:(NSUInteger)index
 {
     if (index < self.expressionCount) {
+
+        KSMExpression * oldExpr = [self expressionForIndex:index];
+        KSMExpression * existingExpression = [self.worksheet expressionForOriginalString:string];
+        
+        if (existingExpression && oldExpr == existingExpression) {
+            return oldExpr;
+        }
         
         // Remove the expression that already exists at the specified index
-        KSMExpression * oldExpr = [self expressionForIndex:index];
         if (oldExpr) {
             [self.worksheet decrementReferenceCountForExpression:oldExpr];
         }

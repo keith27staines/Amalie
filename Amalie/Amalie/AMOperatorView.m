@@ -7,6 +7,7 @@
 //
 
 #import "AMOperatorView.h"
+#import "AMQuotientBaselining.h"
 
 @interface AMOperatorView()
 {
@@ -14,7 +15,7 @@
     NSString            * _translatedString;
     NSDictionary        * _attributes;
     BOOL                  _isGraphic;
-
+    BOOL                  _useQuotientBaselining;
 }
 
 @property (readonly) NSString * translatedString;
@@ -22,6 +23,16 @@
 @end
 
 @implementation AMOperatorView
+
+-(BOOL)translatesAutoresizingMaskIntoConstraints
+{
+    return YES;
+}
+
+-(BOOL)autoresizesSubviews
+{
+    return NO;
+}
 
 -(id)initWithFrame:(NSRect)frameRect
 {
@@ -126,11 +137,63 @@
 
 -(CGFloat)baselineOffsetFromBottom
 {
-    if (self.useQuotientAlignment) {
-        return self.fittingSize.height / 2.0;
+    if (self.requiresQuotientBaselining) {
+        return self.fittingSize.height / 2.0f;
     } else {
         return 0.0f;
     }
 }
+
+
+-(NSPoint)midPoint
+{
+    return NSMakePoint(self.frame.size.width/2.0f, self.frame.size.height/2);
+}
+
+-(NSPoint)midPointInCoordinatesOfView:(NSView*)view
+{
+    return [self convertPoint:[self midPoint] toView:view];
+}
+
+#pragma mark - AMQuotientBaselining protocol -
+
+-(CGFloat)verticalMidPoint
+{
+    return self.frame.origin.y + self.frame.size.height / 2.0f;
+}
+
+-(BOOL)useQuotientBaselining
+{
+    return _useQuotientBaselining;
+}
+
+-(void)setUseQuotientBaselining:(BOOL)useQuotientBaselining
+{
+    _useQuotientBaselining = useQuotientBaselining;
+}
+
+-(BOOL)requiresQuotientBaselining
+{
+    if ( self.useQuotientBaselining || [self.operatorString isEqualToString:@"/"] ) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+-(AMOperatorView*)baselineDefiningDivideView
+{
+    if ( [self.operatorString isEqualToString:@"/"] ) {
+        return self;
+    } else {
+        return nil;
+    }
+}
+
+-(CGFloat)extentAboveOwnBaseline
+{
+    return self.intrinsicContentSize.height - self.baselineOffsetFromBottom;
+}
+
 
 @end

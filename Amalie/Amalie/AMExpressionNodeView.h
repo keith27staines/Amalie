@@ -8,18 +8,20 @@
 
 @class KSMExpression;
 @class AMExpressionDisplayOptions;
+@class AMOperatorView;
 
 #import "AMContentView.h"
 #import "AMContentViewDataSource.h"
+#import "AMQuotientBaselining.h"
 
-@interface AMExpressionNodeView : AMContentView
+@interface AMExpressionNodeView : AMContentView <AMQuotientBaselining>
 
-@property (weak, readonly)  AMExpressionNodeView * parentNode;
-@property (weak, readonly)  AMExpressionNodeView * rootNode;
-@property (weak, readwrite) KSMExpression        * expression;
-@property                   BOOL                   useQuotientAlignment;
-@property (weak, readonly)  AMExpressionNodeView * leftOperandNode;
-@property (weak, readonly)  AMExpressionNodeView * rightOperandNode;
+@property (weak, readonly)   AMExpressionNodeView * parentNode;
+@property (weak, readonly)   AMExpressionNodeView * rootNode;
+@property (weak, readwrite)  KSMExpression        * expression;
+@property (weak, readonly)   AMExpressionNodeView * leftOperandNode;
+@property (weak, readonly)   AMExpressionNodeView * rightOperandNode;
+@property (weak, readonly)   AMOperatorView       * operatorView;
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
@@ -31,7 +33,8 @@
          datasource:(id<AMContentViewDataSource>)datasource
      displayOptions:(AMExpressionDisplayOptions*)displayOptions;
 
--(BOOL)requiresQuotientAlignment;
 
+-(AMOperatorView*)baselineDefiningDivideView;
+-(void)am_layout;
 
 @end

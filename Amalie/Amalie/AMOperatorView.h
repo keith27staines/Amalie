@@ -9,11 +9,14 @@
 @class AMExpressionNodeView;
 
 #import <Cocoa/Cocoa.h>
+#import "AMQuotientBaselining.h"
 
-@interface AMOperatorView : NSView
+@interface AMOperatorView : NSView <AMQuotientBaselining>
 
 @property (copy) NSString             * operatorString;
 @property NSDictionary                * attributes;
 @property (weak) AMExpressionNodeView * parentExpressionNode;
-@property BOOL                          useQuotientAlignment;
+
+-(NSPoint)midPointInCoordinatesOfView:(NSView*)view;
+
 @end
