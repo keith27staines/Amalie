@@ -40,4 +40,6 @@
  */
 @property (strong, readonly) AMNameRules * nameRules;
 
+-(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction;
+
 @end

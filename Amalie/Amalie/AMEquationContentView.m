@@ -26,6 +26,10 @@
     // Drawing code here.
 }
 
+-(BOOL)autoresizesSubviews
+{
+    return NO;
+}
 
 -(void)viewDidMoveToWindow
 {

@@ -67,26 +67,9 @@ static CABasicAnimation * animateOrigin;
     AMContentView * contentView;
     contentView = [self.delegate insertableView:self
                       requiresContentViewOfType:self.insertableType];
-    //[contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    self.box = self.subviews[0];
-    [self.box setFrameFromContentFrame:contentView.frame];
-    [self.box setContentView:contentView];
-    self.box.title = [contentView className];
-    
-    [self setFrame:NSMakeRect(self.frame.origin.x, self.frame.origin.y, self.box.frame.size.width+40, self.box.frame.size.height+26)];
 
-//    NSArray * constraints;
-//    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[box]-|"
-//                                                          options:0
-//                                                          metrics:nil
-//                                                            views:@{@"box": self.box}];
-//    [self.box addConstraints:constraints];
-//    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[box]-|"
-//                                                          options:0
-//                                                          metrics:nil
-//                                                            views:@{@"box": self.box}];
-//    [self.box addConstraints:constraints];
+    [self addSubview:contentView];
+    [self setFrame:NSMakeRect(self.frame.origin.x, self.frame.origin.y, contentView.frame.size.width, contentView.frame.size.height)];
 }
 
 #pragma mark - State -
@@ -104,6 +87,11 @@ static CABasicAnimation * animateOrigin;
         case AMInsertableTypeGraph2D            : return kAMGraph2DKey;
     }
     return nil;
+}
+
+-(BOOL)autoresizesSubviews
+{
+    return NO;
 }
 
 -(void)setObjectState:(AMInsertableViewState)objectState

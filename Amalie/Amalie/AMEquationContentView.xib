@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMEquationContentViewController">
             <connections>
+                <outlet property="equationView" destination="1" id="P4H-Za-vXj"/>
                 <outlet property="expressionString" destination="iG3-a1-4HF" id="u0H-U0-7ZB"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
                 <outlet property="name" destination="kcq-A5-puI" id="knl-go-yZL"/>
@@ -61,6 +62,13 @@
                     </connections>
                 </customView>
             </subviews>
+            <connections>
+                <outlet property="equalsSignView" destination="vBV-uR-IGt" id="xFE-Cf-rel"/>
+                <outlet property="expressionStringView" destination="iG3-a1-4HF" id="7Qz-1c-dYZ"/>
+                <outlet property="expressionView" destination="O6I-Qg-1kO" id="C9f-MZ-ePq"/>
+                <outlet property="nameField" destination="kcq-A5-puI" id="T2j-9u-o2Z"/>
+                <outlet property="nameView" destination="kcq-A5-puI" id="HDH-fB-ujE"/>
+            </connections>
         </customView>
     </objects>
 </document>

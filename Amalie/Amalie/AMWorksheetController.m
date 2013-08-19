@@ -203,6 +203,12 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     [CATransaction commit];
 }
 
+-(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction
+{
+    [self layoutInsertsNow];
+    
+}
+
 -(void)sortInserts
 {
     [_insertsArray sortUsingComparator: ^(id obj1, id obj2) {
