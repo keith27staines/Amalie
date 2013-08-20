@@ -28,9 +28,5 @@
     return YES;
 }
 
--(void)populate
-{
-    // subclasses should override
-}
 
 @end

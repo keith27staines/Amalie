@@ -8,10 +8,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMEquationContentViewController">
             <connections>
                 <outlet property="equationView" destination="1" id="P4H-Za-vXj"/>
-                <outlet property="expressionString" destination="iG3-a1-4HF" id="u0H-U0-7ZB"/>
+                <outlet property="expressionStringView" destination="iG3-a1-4HF" id="hjY-x2-kxt"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
-                <outlet property="name" destination="kcq-A5-puI" id="knl-go-yZL"/>
-                <outlet property="nameField" destination="kcq-A5-puI" id="Ofh-QH-Vwy"/>
+                <outlet property="nameView" destination="YNe-VI-N9B" id="vXH-hL-3KI"/>
                 <outlet property="view" destination="1" id="2"/>
             </connections>
         </customObject>
@@ -21,18 +20,6 @@
             <rect key="frame" x="0.0" y="0.0" width="729" height="124"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="kcq-A5-puI">
-                    <rect key="frame" x="20" y="57" width="96" height="47"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="Name" drawsBackground="YES" allowsEditingTextAttributes="YES" id="pJG-ZG-7kp">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <action selector="nameWasEdited:" target="-2" id="6De-H4-zad"/>
-                    </connections>
-                </textField>
                 <textField verticalHuggingPriority="750" id="iG3-a1-4HF">
                     <rect key="frame" x="136" y="7" width="573" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -45,15 +32,6 @@
                         <action selector="expressionStringWasEdited:" target="-2" id="bsb-lA-Scw"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vBV-uR-IGt">
-                    <rect key="frame" x="121" y="72" width="15" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="=" id="onS-mV-FsJ">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <customView id="O6I-Qg-1kO" customClass="AMExpressionNodeView">
                     <rect key="frame" x="136" y="51" width="573" height="59"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -61,13 +39,18 @@
                         <outlet property="datasource" destination="-2" id="lgP-ek-xhJ"/>
                     </connections>
                 </customView>
+                <customView id="YNe-VI-N9B" customClass="AMNameView">
+                    <rect key="frame" x="20" y="51" width="74" height="59"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <connections>
+                        <action selector="nameAction:" target="-2" id="XFz-Nf-a9E"/>
+                    </connections>
+                </customView>
             </subviews>
             <connections>
-                <outlet property="equalsSignView" destination="vBV-uR-IGt" id="xFE-Cf-rel"/>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="7Qz-1c-dYZ"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="C9f-MZ-ePq"/>
-                <outlet property="nameField" destination="kcq-A5-puI" id="T2j-9u-o2Z"/>
-                <outlet property="nameView" destination="kcq-A5-puI" id="HDH-fB-ujE"/>
+                <outlet property="nameView" destination="YNe-VI-N9B" id="4PS-cl-C79"/>
             </connections>
         </customView>
     </objects>

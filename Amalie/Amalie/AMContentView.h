@@ -16,10 +16,7 @@
 
 @property (weak) IBOutlet id<AMContentViewDataSource>datasource;
 
-/*!
- Subclasses should override the default implementation which does nothing. This method is called when the content view is first added, and is a good opportunity to load the view with appropriate data if necessary
- */
--(void)populate;
+
 
 @end
 

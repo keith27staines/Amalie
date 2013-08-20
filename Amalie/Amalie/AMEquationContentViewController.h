@@ -8,6 +8,7 @@
 
 @class AMExpressionNodeView;
 @class AMEquationContentView;
+@class AMNameView;
 
 #import "AMContentViewController.h"
 
@@ -15,18 +16,18 @@
 {
     
     __weak NSTextField *_nameField;
-    __weak NSTextField *_expressionString;
+    __weak NSTextField *_expressionStringView;
 }
 
-@property (weak) IBOutlet NSTextField *nameField;
+@property (weak) IBOutlet AMNameView *nameView;
 
-@property (weak) IBOutlet NSTextField *expressionString;
+@property (weak) IBOutlet NSTextField *expressionStringView;
 
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
 @property (strong) IBOutlet AMEquationContentView *equationView;
 
-- (IBAction)nameWasEdited:(NSTextField *)sender;
+- (IBAction)nameAction:(AMNameView *)sender;
 
 - (IBAction)expressionStringWasEdited:(NSTextField *)sender;
 

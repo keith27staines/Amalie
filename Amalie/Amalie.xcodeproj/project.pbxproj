@@ -30,6 +30,7 @@
 		785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A2D179D9BED004D39B5 /* AMContentViewController.m */; };
 		785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A2F179DE475004D39B5 /* AMInsertableView.xib */; };
 		785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A32179DFFAF004D39B5 /* AMContentView.m */; };
+		78702B9417C3510E006A4331 /* AMNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78702B9317C3510E006A4331 /* AMNameView.m */; };
 		787B3043178361BC001851C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3042178361BC001851C0 /* Cocoa.framework */; };
 		787B304D178361BC001851C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 787B304B178361BC001851C0 /* InfoPlist.strings */; };
 		787B304F178361BC001851C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B304E178361BC001851C0 /* main.m */; };
@@ -149,6 +150,8 @@
 		785D9A2F179DE475004D39B5 /* AMInsertableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AMInsertableView.xib; path = ../AMInsertableView.xib; sourceTree = "<group>"; };
 		785D9A31179DFFAF004D39B5 /* AMContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContentView.h; sourceTree = "<group>"; };
 		785D9A32179DFFAF004D39B5 /* AMContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContentView.m; sourceTree = "<group>"; };
+		78702B9217C3510E006A4331 /* AMNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameView.h; sourceTree = "<group>"; };
+		78702B9317C3510E006A4331 /* AMNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameView.m; sourceTree = "<group>"; };
 		787B303F178361BC001851C0 /* Amalie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3042178361BC001851C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		787B3045178361BC001851C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -593,6 +596,8 @@
 				7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */,
 				78A0471F17BBEEF900B5703E /* AMOperatorView.h */,
 				78A0472017BBEEF900B5703E /* AMOperatorView.m */,
+				78702B9217C3510E006A4331 /* AMNameView.h */,
+				78702B9317C3510E006A4331 /* AMNameView.m */,
 			);
 			name = "Interior object views";
 			sourceTree = "<group>";
@@ -747,6 +752,7 @@
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
+				78702B9417C3510E006A4331 /* AMNameView.m in Sources */,
 				787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
 				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
