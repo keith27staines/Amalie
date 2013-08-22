@@ -85,7 +85,7 @@ NSString * const kSubtract = @"-";
         
 
         // Record the bare string, with spaces removed. The bare string will be the basis of the hash (and thus is used to build the symbol, as returned by the symbol property).
-        _bareString = [string copy];
+        _bareString = [_string copy];
         
         _operatorsArray = @[kPower, kMultiply, kDivide, kAdd, kSubtract];
         _leftOperand    = nil;

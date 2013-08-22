@@ -405,7 +405,7 @@ NSString * dollar = @"$";
     NSAssert(originalString, @"The string must not be nil");
     NSAssert([originalString length] > 0, @"The string must not be empty");
     NSUInteger hash = [originalString hash];
-    NSString * correctSymbol = [NSString stringWithFormat:@"%@%ld",dollar,hash];
+    NSString * correctSymbol = [NSString stringWithFormat:@"%@%lud",dollar,(unsigned long)hash];
     return correctSymbol;
 }
 

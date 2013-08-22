@@ -57,9 +57,9 @@ typedef enum KSMExpressionValidity : NSInteger {
 @property (readonly) NSString * string;
 
 /*!
- * the bare string, with spaces and enclosing braces removed and leading minus 
- * regularised. The bare string will be the basis of the hash (and thus is used 
- * to build the symbol returned by the symbol property).
+ * The original string, with spaces removed. The bare string will be the basis of
+ * the hash (and thus is used to build the symbol returned by the symbol 
+ * property).
  */
 @property (readonly) NSString * bareString;
 

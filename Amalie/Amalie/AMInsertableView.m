@@ -69,8 +69,6 @@ static CABasicAnimation * animateOrigin;
                       requiresContentViewOfType:self.insertableType];
 
     [self addSubview:contentView];
-
-    [self setFrame:NSMakeRect(self.frame.origin.x, self.frame.origin.y, contentView.frame.size.width, contentView.frame.size.height)];
 }
 
 #pragma mark - State -
