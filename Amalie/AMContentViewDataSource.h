@@ -9,6 +9,7 @@
 @class AMContentView, KSMExpression;
 
 #import <Foundation/Foundation.h>
+#import "AMConstants.h"
 
 @protocol AMContentViewDataSource <NSObject>
 
@@ -19,6 +20,10 @@
 -(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol;
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView*)view;
+
+-(NSColor*)backgroundColorForType:(AMInsertableType)type;
+
+-(void)populateView:(AMContentView*)view;
 
 
 @end

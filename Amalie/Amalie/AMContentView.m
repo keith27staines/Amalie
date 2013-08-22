@@ -7,10 +7,11 @@
 //
 
 #import "AMContentView.h"
+#import "AMContentViewDataSource.h"
 
 @interface AMContentView()
 {
-
+    __weak id<AMContentViewDataSource> _datasource;
 }
 
 @end
@@ -28,5 +29,20 @@
     return YES;
 }
 
+
+-(id<AMContentViewDataSource>)datasource
+{
+    return _datasource;
+}
+
+-(void)setDatasource:(id<AMContentViewDataSource>)datasource
+{
+    _datasource = datasource;
+}
+
+-(void)viewDidMoveToWindow
+{
+    [self.datasource populateView:self];
+}
 
 @end

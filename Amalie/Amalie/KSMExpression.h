@@ -103,6 +103,8 @@ typedef enum KSMExpressionValidity : NSInteger {
 @property (readonly) NSString * leftOperand;
 @property (readonly) NSString * rightOperand;
 @property (readonly) NSString * operator;
+@property (readonly) BOOL       isBracketed;
+@property (readonly) BOOL       hasAddedLogicalLeadingZero;
 
 /*!
  * Do not use init.

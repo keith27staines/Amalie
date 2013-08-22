@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMQuotientBaselining.h"
+#import "AMContentViewDataSource.h"
 
-@interface AMNameView : NSControl <AMQuotientBaselining>
+@interface AMNameView : NSTextField <AMQuotientBaselining>
 
-
+@property (copy) NSString * groupID;
+@property (weak) id<AMContentViewDataSource> dataSource;
 
 @end

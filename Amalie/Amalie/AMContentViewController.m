@@ -24,6 +24,8 @@
 #import "AMNameRules.h"
 #import "AMAppController.h"
 #import "AMPreferences.h"
+#import "AMTrayDatasource.h"
+#import "AMTrayItem.h"
 
 @interface AMContentViewController ()
 {
@@ -98,14 +100,8 @@
         contentView.groupID = groupParentView.groupID;
         self.groupID = groupParentView.groupID;
         self.record = record;
-        [self populateContent];
     }
     return self;
-}
-
--(void)populateContent
-{
-    NSLog(@"Warning... populateContent has not been overridden.");
 }
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
@@ -123,7 +119,14 @@
                         record:record];
 }
 
+
 #pragma mark - AMContentViewDataSource -
+
+-(void)populateView:(AMContentView *)view
+{
+    NSLog(@"Warning... populateContent has not been overridden.");
+}
+
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView *)view
 {
@@ -160,6 +163,14 @@
 -(AMPreferences*)preferenceController
 {
     return self.appController.preferenceContoller;
+}
+
+-(NSColor *)backgroundColorForType:(AMInsertableType)type
+{
+    id<AMTrayDatasource> tray = self.parentWorksheetController.trayDataSource;
+    NSString * key = [tray keyForType:type];
+    AMTrayItem * trayItem =[tray trayItemWithKey:key];
+    return [trayItem backgroundColor];
 }
 
 @end

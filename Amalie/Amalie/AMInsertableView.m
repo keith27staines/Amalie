@@ -69,6 +69,7 @@ static CABasicAnimation * animateOrigin;
                       requiresContentViewOfType:self.insertableType];
 
     [self addSubview:contentView];
+
     [self setFrame:NSMakeRect(self.frame.origin.x, self.frame.origin.y, contentView.frame.size.width, contentView.frame.size.height)];
 }
 
@@ -119,11 +120,13 @@ static CABasicAnimation * animateOrigin;
     AMTrayItem * item = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
     [item.backgroundColor set];
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.5, 0.5) xRadius:10 yRadius:10];
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.0, 0.0) xRadius:10 yRadius:10];
     [path fill];
     [[NSColor blackColor] set];
     path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 2, 2) xRadius:10 yRadius:10];
+    
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:10 yRadius:10];
+    
     [path stroke];
 
     [self drawFocusRing];

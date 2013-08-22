@@ -43,7 +43,8 @@ NSString * const kSubtract = @"-";
 @property (readwrite) NSString * leftOperand;
 @property (readwrite) NSString * rightOperand;
 @property (readwrite) NSString * operator;
-
+@property (readwrite) BOOL       isBracketed;
+@property (readwrite) BOOL       hasAddedLogicalLeadingZero;
 
 @end
 
@@ -75,9 +76,17 @@ NSString * const kSubtract = @"-";
     if (self) {
         if (!string) [NSException raise:@"The string is nil." format:nil];
         
+        // The original string, exactly as presented to us.
         _originalString = [string copy];
+        
+        // _string is our working string, and will be modified during processing
         _string = [string stringByReplacingOccurrencesOfString:kSpace
                                                     withString:kEmpty];
+        
+
+        // Record the bare string, with spaces removed. The bare string will be the basis of the hash (and thus is used to build the symbol, as returned by the symbol property).
+        _bareString = [string copy];
+        
         _operatorsArray = @[kPower, kMultiply, kDivide, kAdd, kSubtract];
         _leftOperand    = nil;
         _rightOperand   = nil;
@@ -115,14 +124,15 @@ NSString * const kSubtract = @"-";
 
 -(void)analyse
 {
-    // empty string cannot be a legal expression
+    
+    // Empty string cannot be a legal expression
     if (!self.string || [self.string length] == 0) {
         self.expressionType = KSMExpressionTypeUnrecognized;
         self.validityType = KSMExpressionValidityInvalidZeroLength;
         return;
     }
     
-    // string must have valid bracket syntax if we are to analyse it
+    // String must have valid bracket syntax if we are to analyse it
     if ( ![self isBracketSyntaxGood]) {
         self.expressionType = KSMExpressionTypeUnrecognized;
         self.validityType = KSMExpressionValidityInvalidBracketSyntax;
@@ -130,12 +140,10 @@ NSString * const kSubtract = @"-";
     }
     
     // Ensure that there are NO outer brackets and that any leading minus signs are regularised - i.e, -a -> 0-a
+    self.isBracketed = [KSMExpression isEnclosedInBrackets:self.string];
     self.string = [KSMExpression stripEnclosingBrackets:self.string];
     self.string = [self regularizeLeadingMinus];
     [self determineExpressionType];
-    
-    // record the bare string, with spaces and enclosing braces removed and leading minus regularised. The bare string will be the basis of the hash (and thus is used to build the symbol, as returned by the symbol property).
-    self.bareString = [self.string copy];
     
     // If we are a variable or a number, we're done.
     if (self.expressionType == KSMExpressionTypeLiteral ||
@@ -369,7 +377,11 @@ NSString * const kSubtract = @"-";
 /// convert expressions like (-a + b) into (0 - a + b)
 -(NSString*)regularizeLeadingMinus
 {
-    return [KSMExpression regularizeLeadingMinusInString:self.string];
+    if ( ![KSMExpression isLeadingMinusRegularizedInString:self.string] ) {
+        self.hasAddedLogicalLeadingZero = YES;
+        return [KSMExpression regularizeLeadingMinusInString:self.string];
+    }
+    return self.string;
 }
 
 /*! 

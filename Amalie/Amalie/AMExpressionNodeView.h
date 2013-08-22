@@ -25,6 +25,8 @@
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
+@property (readonly) BOOL isBracketed;
+
 - (id)initWithFrame:(NSRect)frame
             groupID:(NSString *)groupID
            rootNode:(AMExpressionNodeView*)root

@@ -10,7 +10,6 @@
 
 @interface AMNameView()
 {
-    NSAttributedString * _attributedStringValue;
     BOOL _useQuotientBaselining;
 }
 
@@ -25,28 +24,10 @@
     if (self) {
         // Initialization code here.
         self.attributedStringValue = [[NSAttributedString alloc] initWithString:@"Name" attributes:nil];
+        self.allowsEditingTextAttributes = YES;
+        
     }
     return self;
-}
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-    [[NSColor colorWithCalibratedRed:5 green:.8 blue:1 alpha:1] set];
-    NSRectFill(dirtyRect);
-    [self.attributedStringValue drawAtPoint:NSMakePoint(0, 0)];
-}
-
--(NSAttributedString *)attributedStringValue
-{
-    if (!_attributedStringValue) {
-        _attributedStringValue = [[NSAttributedString alloc] initWithString:self.stringValue attributes:nil];
-    }
-    return _attributedStringValue;
-}
-
--(void)setAttributedStringValue:(NSAttributedString *)attributedString
-{
-    _attributedStringValue = attributedString;
 }
 
 -(NSSize)intrinsicContentSize

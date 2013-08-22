@@ -103,6 +103,8 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     view.trayDataSource = self.trayDataSource;
     
     [self.worksheetView addSubview:view];
+
+    
     [view setFrameOrigin:origin];
     
     // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.

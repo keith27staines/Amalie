@@ -59,73 +59,78 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)layoutInsertedView
 {
-    CGFloat viewMargin = 15.0f;
+    [CATransaction begin];
+
+    CGFloat const AM_VIEW_MARGIN      = 15.0f;
+    CGFloat const AM_MIN_STRING_WIDTH = 300.0f;
 
     AMExpressionNodeView * expressionView = self.expressionView;
-    NSView * expressionString = self.expressionStringView;
+    NSTextField * expressionString = self.expressionStringView;
     AMEquationContentView * equationView = self.equationView;
     NSView * container = [equationView superview];
     AMNameView * name = [equationView nameView];
-    [name setFrameSize:[name intrinsicContentSize]];
+    [name sizeToFit];
+    NSLog(@"name width %f",name.frame.size.width);
     [name setUseQuotientBaselining:expressionView.requiresQuotientBaselining];
-    [expressionString setFrameSize:NSMakeSize(150.0f, expressionString.frame.size.height)];
-
+    
     // The sizes of the important nested and sibling views
     NSSize expressionSize   = expressionView.intrinsicContentSize;
-    NSSize stringSize = expressionString.frame.size;
-    if (expressionSize.width < 100) expressionSize.width = 100;
-    expressionSize.width = fmaxf(expressionSize.width, stringSize.width);
-    stringSize.width = expressionSize.width;
-    NSSize equationSize = NSMakeSize(viewMargin + name.frame.size.width + viewMargin + expressionSize.width + viewMargin,
-                                      viewMargin + expressionSize.height + viewMargin + stringSize.height + viewMargin);
+    NSSize stringSize =  NSMakeSize( [[expressionString stringValue] sizeWithAttributes:@{NSFontAttributeName: expressionString.font}].width + 10, expressionString.frame.size.height);
+    
+    if (stringSize.width < AM_MIN_STRING_WIDTH) stringSize.width = AM_MIN_STRING_WIDTH;
+    stringSize.width = fmaxf(expressionSize.width, stringSize.width);
+
+    NSSize equationSize = NSMakeSize(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN + stringSize.width + AM_VIEW_MARGIN,
+                                      AM_VIEW_MARGIN + expressionSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
     
     // do the resizing
-    [CATransaction begin];
-    [[equationView animator]     setFrameSize:equationSize];
+    [[equationView animator] setFrameSize:equationSize];
     [[expressionView animator]   setFrameSize:expressionSize];
     [[expressionString animator] setFrameSize:stringSize];
     
     // and repositioning
 
-    NSPoint expressionOrigin = NSMakePoint(viewMargin + name.intrinsicContentSize.width + viewMargin,
-                                           equationSize.height - viewMargin - expressionSize.height);
+    NSPoint expressionOrigin = NSMakePoint(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN,
+                                           equationSize.height - AM_VIEW_MARGIN - expressionSize.height);
     
     if (expressionView.useQuotientBaselining) {
         NSPoint baseline = NSMakePoint(0,[expressionView baselineOffsetFromBottom]);
         baseline = [equationView convertPoint:baseline fromView:expressionView];
-        [name setFrameOrigin:NSMakePoint(viewMargin, baseline.y - name.baselineOffsetFromBottom)];
+        [name setFrameOrigin:NSMakePoint(AM_VIEW_MARGIN, baseline.y - name.baselineOffsetFromBottom)];
     } else {
-        [name setFrameOrigin:NSMakePoint(viewMargin, expressionOrigin.y)];
+        [name setFrameOrigin:NSMakePoint(AM_VIEW_MARGIN, expressionOrigin.y)];
     }
 
     
-    NSPoint stringOrigin = NSMakePoint(expressionOrigin.x, expressionOrigin.y - viewMargin - stringSize.height);
+    NSPoint stringOrigin = NSMakePoint(expressionOrigin.x, expressionOrigin.y - AM_VIEW_MARGIN - stringSize.height);
+    [expressionView setFrameOrigin:expressionOrigin];
     [[expressionString animator] setFrameOrigin:stringOrigin];
-    [[expressionView animator]   setFrameOrigin:expressionOrigin];
     
     // Make the box fit the equation view
-    [container setFrameSize:NSMakeSize(equationSize.width+2*viewMargin, equationSize.height + 2*viewMargin)];
-    [equationView setFrameOrigin:NSMakePoint(viewMargin, viewMargin)];
+    [container setFrameSize:NSMakeSize(equationSize.width+2*AM_VIEW_MARGIN, equationSize.height + 2*AM_VIEW_MARGIN)];
+    [equationView setFrameOrigin:NSMakePoint(AM_VIEW_MARGIN, AM_VIEW_MARGIN)];
 
     [CATransaction commit];
     [[self parentWorksheetController] contentViewController:self isResizingContentTo:expressionView.frame.size  usingAnimationTransaction:NO];
 }
 
--(void)populateContent
+-(void)populateView:(AMContentView *)view
 {
-    self.nameView.attributedStringValue = self.record.attributedName;
-    KSMExpression * expr = [self.record expressionForIndex:0];
-    self.expressionStringView.stringValue = expr.string;
-    
-    NSDictionary * fonts = [AMPreferences fonts];
-    NSFont * standardFont = fonts[kAMFontNameKey];
-    NSFont * fixedWidthFont = fonts[kAMFixedWidthFontNameKey];
-    
-    [self.expressionStringView setFont:fixedWidthFont];
-    [self.nameView setFont:standardFont];
-
-    self.expressionView.expression = expr;
-    [self layoutInsertedView];
+    if (view == self.equationView) {
+        self.nameView.attributedStringValue = self.record.attributedName;
+        KSMExpression * expr = [self.record expressionForIndex:0];
+        self.expressionStringView.stringValue = expr.string;
+        
+        NSDictionary * fonts = [AMPreferences fonts];
+        NSFont * standardFont = fonts[kAMFontNameKey];
+        NSFont * fixedWidthFont = fonts[kAMFixedWidthFontNameKey];
+        
+        [self.expressionStringView setFont:fixedWidthFont];
+        [self.nameView setFont:standardFont];
+        
+        self.expressionView.expression = expr;
+        [self layoutInsertedView];
+    }
 }
 
 @end

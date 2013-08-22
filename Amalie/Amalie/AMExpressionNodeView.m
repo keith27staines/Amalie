@@ -13,10 +13,12 @@
 #import "AMExpressionDisplayOptions.h"
 #import "AMQuotientBaselining.h"
 #import "AMOperatorView.h"
+#import "AMConstants.h"
 
 CGFloat const kAM_MINWIDTH  = 20.0f;
 CGFloat const kAM_MINHEIGHT = 20.0f;
 
+static NSMutableDictionary * bracketBeziers;
 
 typedef enum AMOrientation : NSUInteger {
     AMOrientationHorizontal = 0,
@@ -30,7 +32,7 @@ typedef enum AMOrientation : NSUInteger {
     __weak KSMExpression        * _expression;
     NSMutableArray              * _childNodes;
     AMExpressionDisplayOptions  * _displayOptions;
-    NSSize _instrinsicSize;
+    NSSize                        _intrinsicContentSize;
     __weak AMOperatorView       * _operatorView;
     NSString                    * _stringToDisplay;
     NSDictionary                * _attributes;
@@ -113,7 +115,7 @@ typedef enum AMOrientation : NSUInteger {
 -(void)prepareForExpressionSet
 {
     _backColor = [NSColor colorWithCalibratedRed:0.99 green:0.8 blue:0.8 alpha:1.0];
-    _instrinsicSize = NSMakeSize(kAM_MINWIDTH, kAM_MINHEIGHT);
+    _intrinsicContentSize = NSMakeSize(kAM_MINWIDTH, kAM_MINHEIGHT);
 
     NSArray * viewsToRemove = [[self subviews] copy];
     for (NSView * v in viewsToRemove) {
@@ -145,29 +147,34 @@ typedef enum AMOrientation : NSUInteger {
             case KSMExpressionTypeLiteral:
             {
                 _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeLiteral]};
+                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeConstant];
+
                 self.stringToDisplay = expression.bareString;
                 break;
             }
             case KSMExpressionTypeVariable:
             {
                 _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeAlgebra]};
+                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeVariable];
                 self.stringToDisplay = expression.bareString;
+                
                 break;
             }
             case KSMExpressionTypeBinary:
             {
                 _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeLiteral]};
                 [self addBinaryChildNodeViews];
-                _backColor = [NSColor colorWithCalibratedRed:0.8 green:0.8 blue:0.99 alpha:1.0];
+                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeExpression];
                 break;
             }
             case KSMExpressionTypeCompound:
             {
+                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeExpression];
                 break;
             }
         }
-
         [self am_layout];
+        [self setNeedsDisplay:YES];
     }
 }
 
@@ -175,27 +182,155 @@ typedef enum AMOrientation : NSUInteger {
 {
     _stringToDisplay = string;
     if (_stringToDisplay) {
-        _instrinsicSize = [_stringToDisplay sizeWithAttributes:_attributes];
+        _intrinsicContentSize = [_stringToDisplay sizeWithAttributes:_attributes];
     } else {
-        _instrinsicSize = NSMakeSize(0, 0);
+        _intrinsicContentSize = NSMakeSize(0, 0);
     }
     _baselineOffsetFromBottom = 0.0f;
-    _baselineOffsetFromBottomUsingQuotientRules = _instrinsicSize.height / 2.0f;
-    [self setFrameSize:_instrinsicSize];
+    _baselineOffsetFromBottomUsingQuotientRules = _intrinsicContentSize.height / 2.0f;
+    [self setFrameSize:_intrinsicContentSize];
 }
 
 -(void)am_layout
 {
     CGFloat padding = 3.0f;
+    NSSize size;
     
     if (self.expression.expressionType == KSMExpressionTypeBinary) {
         
         [self alignViews:self.subviews withPadding:padding orientation:[self subViewStackingOrientation]];
+        size = self.intrinsicContentSize;
+        if (self.isBracketed) {
+            // add room for bracket graphics
+            NSBezierPath * leftBracket = [AMExpressionNodeView leftBracketWithHeight:size.height];
+            NSSize bracketSize = [leftBracket bounds].size;
+            _intrinsicContentSize = NSMakeSize(size.width + bracketSize.width * 2.0f + 2.0f, size.height);
+            for (NSView * subView in self.subviews) {
+                // shift all subviews over by width of one bracket
+                [subView setFrameOrigin:NSMakePoint(subView.frame.origin.x +bracketSize.width + 1, subView.frame.origin.y)];
+            }
+        }
     }
+
+    size = self.intrinsicContentSize;
     NSPoint origin = self.frame.origin;
-    NSSize size = self.intrinsicContentSize;
     [self setFrame:NSMakeRect(origin.x, origin.y, size.width, size.height)];
 }
+
+-(BOOL)isBracketed
+{
+    return self.expression.isBracketed;
+}
+
++(NSBezierPath*)leftBracketWithHeight:(NSUInteger)heightInPoints
+{
+    return [[self bracketBeziersWithHeight:heightInPoints][0] copy];
+}
+
++(NSBezierPath*)rightBracketWithHeight:(NSUInteger)heightInPoints
+{
+    return [[self bracketBeziersWithHeight:heightInPoints][1] copy];
+}
+
+
++(NSArray*)bracketBeziersWithHeight:(NSUInteger)heightInPoints
+{
+    NSString * key = [NSString stringWithFormat:@"%lu",(unsigned long)heightInPoints];
+    NSMutableDictionary * bracketBeziersDictionary;
+    bracketBeziersDictionary = [self bracketBeziersDictionary];
+    NSArray * leftAndRightPair = bracketBeziersDictionary[key];
+    if (!leftAndRightPair) {
+        leftAndRightPair = [self generateBeziersForBracketsWithHeight:heightInPoints];
+        bracketBeziersDictionary[key] = leftAndRightPair;
+    }
+    return leftAndRightPair;
+}
+
++(NSArray*)generateBeziersForBracketsWithHeight:(NSUInteger)heightInPoints
+{
+    [[NSColor blackColor] set];
+    heightInPoints = 0.9 * heightInPoints;
+
+    NSBezierPath * left = [[NSBezierPath alloc] init];
+    NSBezierPath * right = [[NSBezierPath alloc] init];
+
+    [left setFlatness:0.1];
+    [left setLineWidth:1];
+    [right setFlatness:0.1];
+    [right setLineWidth:1];
+    
+    NSPoint p = NSMakePoint(0, 0);
+    NSPoint q = NSMakePoint(0, heightInPoints);
+    NSPoint c1, c2;
+    
+    c1 = NSMakePoint(p.x + 0.3 * (q.y - p.y),
+                     p.y + 0.3 *(q.y - p.y));
+    
+    c2 = NSMakePoint(p.x + 0.3 * (q.y - p.y),
+                     p.y + 0.7 *(q.y - p.y));
+    
+    
+    [right moveToPoint:p];
+    [right curveToPoint:q controlPoint1:c1 controlPoint2:c2];
+    
+    p.x = p.x + (q.y-p.y)/200.0f * 10.0f;
+    q.x = q.x + (q.y-p.y)/200.0f * 10.0f;
+    
+    [right lineToPoint:q];
+    
+    
+    CGFloat delta = (q.y-p.y)/200.0f * 0.02f;
+    
+    c2 = NSMakePoint(p.x + (0.3 + delta) * (q.y - p.y),
+                     p.y + 0.3 * (q.y - p.y));
+    
+    c1 = NSMakePoint(p.x + (0.3 + delta) * (q.y - p.y),
+                     p.y + 0.7 * (q.y - p.y));
+    [right curveToPoint:p controlPoint1:c1 controlPoint2:c2];
+    [right closePath];
+
+    CGFloat dx = [right bounds].size.width;
+    
+    p = NSMakePoint(dx, 0);
+    q = NSMakePoint(dx, heightInPoints);
+    
+    c1 = NSMakePoint(p.x - 0.3 * (q.y - p.y),
+                     p.y + 0.3 *(q.y - p.y));
+    
+    c2 = NSMakePoint(p.x - 0.3 * (q.y - p.y),
+                     p.y + 0.7 *(q.y - p.y));
+    
+    
+    [left moveToPoint:p];
+    [left curveToPoint:q controlPoint1:c1 controlPoint2:c2];
+    
+    p.x = p.x - (q.y-p.y)/200.0f * 10.0f;
+    q.x = q.x - (q.y-p.y)/200.0f * 10.0f;
+    
+    [left lineToPoint:q];
+    
+    
+    delta = (q.y-p.y)/200.0f * 0.02f;
+    
+    c2 = NSMakePoint(p.x - (0.3 + delta) * (q.y - p.y),
+                     p.y + 0.3 * (q.y - p.y));
+    
+    c1 = NSMakePoint(p.x - (0.3 + delta) * (q.y - p.y),
+                     p.y + 0.7 * (q.y - p.y));
+    [left curveToPoint:p controlPoint1:c1 controlPoint2:c2];
+    [left closePath];
+    
+    return @[left,right];
+}
+
++(NSMutableDictionary*)bracketBeziersDictionary
+{
+    if (!bracketBeziers) {
+        bracketBeziers = [NSMutableDictionary dictionary];
+    }
+    return bracketBeziers;
+}
+
 
 -(AMOrientation)subViewStackingOrientation
 {
@@ -278,9 +413,19 @@ typedef enum AMOrientation : NSUInteger {
     if (_stringToDisplay) {
         [_stringToDisplay drawAtPoint:NSMakePoint(0, 0) withAttributes:_attributes];
     } else {
-        
+        if (self.isBracketed) {
+            [[NSColor blackColor] set];
+            NSBezierPath * left = [AMExpressionNodeView leftBracketWithHeight:self.intrinsicContentSize.height];
+            [left fill];
+            NSBezierPath * right = [AMExpressionNodeView rightBracketWithHeight:self.intrinsicContentSize.height];
+            NSAffineTransform * transform = [[NSAffineTransform alloc] init];
+            CGFloat dx = self.intrinsicContentSize.width - [right bounds].size.width;
+            [transform translateXBy: dx yBy: 0.0];
+            [right transformUsingAffineTransform: transform];
+            [right fill];
+        }
     }
-    [self am_layout];
+
     [[[self window] graphicsContext] restoreGraphicsState];
 
 }
@@ -330,7 +475,7 @@ typedef enum AMOrientation : NSUInteger {
         width += aView.frame.size.width + padding;
     }
     width -= padding;
-    _instrinsicSize = NSMakeSize(width, height);
+    _intrinsicContentSize = NSMakeSize(width, height);
     _baselineOffsetFromBottom = baseline;
     _baselineOffsetFromBottomUsingQuotientRules = baseline;
     
@@ -362,7 +507,7 @@ typedef enum AMOrientation : NSUInteger {
         
         height -= padding;
     }
-    _instrinsicSize = NSMakeSize(width, totalHeight);
+    _intrinsicContentSize = NSMakeSize(width, totalHeight);
     AMOperatorView * baselineView = [self baselineDefiningDivideView];
     NSAssert(baselineView, @"baseline view was determined to be nil but is not nil.");
     
@@ -465,7 +610,7 @@ typedef enum AMOrientation : NSUInteger {
       withAttributes:(NSDictionary*)attributes
                 draw:(BOOL)doDrawing
 {
-    _instrinsicSize = [string sizeWithAttributes:attributes];
+    _intrinsicContentSize = [string sizeWithAttributes:attributes];
     if (doDrawing)
         [string drawAtPoint:NSMakePoint(0, 0) withAttributes:attributes];
 
@@ -484,7 +629,7 @@ typedef enum AMOrientation : NSUInteger {
 
 -(NSSize)intrinsicContentSize
 {
-    return _instrinsicSize;
+    return _intrinsicContentSize;
 }
 
 -(AMExpressionNodeView*)leftOperandNode

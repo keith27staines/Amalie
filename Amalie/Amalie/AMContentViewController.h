@@ -60,11 +60,6 @@
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 
 /*!
- populateContent offers the opportunity for the receiver to populate its view's subviews. The default implementation is to do nothing. This method should be overridden in subclasses.
- */
--(void)populateContent;
-
-/*!
  preferences
  */
 @property (readonly) AMPreferences * preferenceController;

@@ -191,4 +191,54 @@ NSMutableDictionary * _trayDictionary;
     return string;
 }
 
+-(NSString*)keyForType:(AMInsertableType)type
+{
+    switch (type) {
+        case AMInsertableTypeConstant:
+            return kAMConstantKey;
+            break;
+        case AMInsertableTypeVariable:
+            return kAMVariableKey;
+            break;
+
+        case AMInsertableTypeExpression:
+            return kAMExpressionKey;
+            break;
+
+        case AMInsertableTypeEquation:
+            return kAMEquationKey;
+            break;
+
+        case AMInsertableTypeVector:
+            return kAMVectorKey;
+            break;
+
+        case AMInsertableTypeMatrix:
+            return kAMMatrixKey;
+            break;
+
+        case AMInsertableTypeMathematicalSet:
+            return kAMMathematicalSetKey;
+            break;
+
+        case AMInsertableTypeGraph2D:
+            return kAMGraph2DKey;
+            break;
+    }
+}
+
+-(AMInsertableType)typeForKey:(NSString*)key
+{
+    if ([key isEqualToString:kAMConstantKey])   return AMInsertableTypeConstant;
+    if ([key isEqualToString:kAMVariableKey])   return AMInsertableTypeVariable;
+    if ([key isEqualToString:kAMExpressionKey]) return AMInsertableTypeExpression;
+    if ([key isEqualToString:kAMEquationKey])   return AMInsertableTypeEquation;
+    if ([key isEqualToString:kAMVectorKey])     return AMInsertableTypeVector;
+    if ([key isEqualToString:kAMMatrixKey])     return AMInsertableTypeMatrix;
+    if ([key isEqualToString:kAMMathematicalSetKey]) return AMInsertableTypeMathematicalSet;
+    if ([key isEqualToString:kAMGraph2DKey]) return AMInsertableTypeGraph2D;
+    [NSException raise:@"Unknown key" format:@"There is no known type for key %@",key];
+    return 0;
+}
+
 @end

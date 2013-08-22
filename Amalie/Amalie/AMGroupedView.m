@@ -23,12 +23,15 @@
 
 - (id)initWithFrame:(NSRect)frame groupID:(NSString*)groupID
 {
-    if (!groupID) {
-        groupID = [self.class generateGroupIdentifier];
-    }
     self = [super initWithFrame:frame];
     if (self) {
-        _groupID = groupID;
+        if (!groupID) {
+            groupID = [self.class generateGroupIdentifier];
+        }
+        self = [super initWithFrame:frame];
+        if (self) {
+            _groupID = groupID;
+        }
     }
     return self;
 }
