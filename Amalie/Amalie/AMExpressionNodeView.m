@@ -14,6 +14,7 @@
 #import "AMQuotientBaselining.h"
 #import "AMOperatorView.h"
 #import "AMConstants.h"
+#import "AMExpressionNodeView.h"
 
 CGFloat const kAM_MINWIDTH  = 20.0f;
 CGFloat const kAM_MINHEIGHT = 20.0f;
@@ -42,6 +43,8 @@ typedef enum AMOrientation : NSUInteger {
     __weak AMExpressionNodeView * _leftOperandNode;
     __weak AMExpressionNodeView * _rightOperandNode;
     BOOL                          _useQuotientBaselining;
+    NSInteger                     _superscriptLevel;
+    CGFloat                       _scaleFactor;
 }
 
 @property (readonly) NSMutableArray * childNodes;
@@ -68,7 +71,8 @@ typedef enum AMOrientation : NSUInteger {
                     parentNode:nil
                     expression:nil
                     datasource:nil
-                displayOptions:nil];
+                displayOptions:nil
+                   scaleFactor:1.0];
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -78,17 +82,16 @@ typedef enum AMOrientation : NSUInteger {
         expression:(KSMExpression *)expression
          datasource:(id<AMContentViewDataSource>)datasource
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
+        scaleFactor:(CGFloat)scaleFactor
 {
     if (rootNode && !parentNode)
         [NSException raise:@"Inconsistent root and parent node." format:nil];
     
     self = [super initWithFrame:frame groupID:groupID];
     if (self) {
+        self.scaleFactor = scaleFactor;
         self.datasource = datasource;
-        if (expression)
-        {
-            self.expression = expression;
-        }
+        _displayOptions = displayOptions;
         _parentNode = parentNode;
         if (rootNode) {
             _rootNode = rootNode;
@@ -102,7 +105,10 @@ typedef enum AMOrientation : NSUInteger {
             }
         }
         _childNodes = [NSMutableArray array];
-        _displayOptions = displayOptions;
+        if (expression)
+        {
+            self.expression = expression;
+        }
     }
     return self;
 }
@@ -128,6 +134,16 @@ typedef enum AMOrientation : NSUInteger {
     self.stringToDisplay = nil;
 }
 
+-(void)assignAttributesForFontType:(AMFontType)type
+{
+    CGFloat scale = self.scaleFactor;
+    NSAssert(scale >0, @"Bad scale factor");
+    _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:type]};
+    NSFont * font = _attributes[NSFontAttributeName];
+    font = [NSFont fontWithName:font.fontName size:font.pointSize * self.scaleFactor];
+    _attributes = @{NSFontAttributeName: font};
+}
+
 -(void)setExpression:(KSMExpression *)expression
 {
     if (expression == _expression) return;
@@ -140,13 +156,13 @@ typedef enum AMOrientation : NSUInteger {
         switch (expression.expressionType) {
             case KSMExpressionTypeUnrecognized:
             {
-                _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeLiteral]};
-                self.stringToDisplay = @"Could not interpret expression.";
+                [self assignAttributesForFontType:AMFontTypeLiteral];
+                self.stringToDisplay = @"?";
                 break;
             }
             case KSMExpressionTypeLiteral:
             {
-                _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeLiteral]};
+                [self assignAttributesForFontType:AMFontTypeLiteral];
                 _backColor = [self.datasource backgroundColorForType:AMInsertableTypeConstant];
 
                 self.stringToDisplay = expression.bareString;
@@ -154,7 +170,7 @@ typedef enum AMOrientation : NSUInteger {
             }
             case KSMExpressionTypeVariable:
             {
-                _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeAlgebra]};
+                [self assignAttributesForFontType:AMFontTypeAlgebra];
                 _backColor = [self.datasource backgroundColorForType:AMInsertableTypeVariable];
                 self.stringToDisplay = expression.bareString;
                 
@@ -162,7 +178,7 @@ typedef enum AMOrientation : NSUInteger {
             }
             case KSMExpressionTypeBinary:
             {
-                _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:AMFontTypeLiteral]};
+                [self assignAttributesForFontType:AMFontTypeLiteral];
                 [self addBinaryChildNodeViews];
                 _backColor = [self.datasource backgroundColorForType:AMInsertableTypeExpression];
                 break;
@@ -176,6 +192,16 @@ typedef enum AMOrientation : NSUInteger {
         [self am_layout];
         [self setNeedsDisplay:YES];
     }
+}
+
+-(void)setScaleFactor:(CGFloat)scaleFactor
+{
+    _scaleFactor = scaleFactor;
+}
+
+-(CGFloat)scaleFactor
+{
+    return _scaleFactor;
 }
 
 -(void)setStringToDisplay:(NSString*)string
@@ -373,6 +399,8 @@ typedef enum AMOrientation : NSUInteger {
 {
     if (self.expression.expressionType != KSMExpressionTypeBinary) return;
     
+    CGFloat scaleFactor = self.scaleFactor;
+    
     AMExpressionNodeView * left;
     AMExpressionNodeView * right;
     NSRect initialRect = NSMakeRect(0, 0, 10, 10);
@@ -382,7 +410,11 @@ typedef enum AMOrientation : NSUInteger {
                                             parentNode:self
                                             expression:[self leftSubExpression]
                                             datasource:self.datasource
-                                        displayOptions:nil];
+                                        displayOptions:nil
+                                           scaleFactor:scaleFactor];
+    
+    if ( [self.expression.operator isEqualToString:@"^"] )
+        scaleFactor = 0.7 * self.scaleFactor;
     
     right = [[AMExpressionNodeView alloc] initWithFrame:initialRect
                                                 groupID:self.groupID
@@ -390,7 +422,8 @@ typedef enum AMOrientation : NSUInteger {
                                              parentNode:self
                                              expression:[self rightSubExpression]
                                              datasource:self.datasource
-                                         displayOptions:nil];
+                                         displayOptions:nil
+                                            scaleFactor:scaleFactor];
     
     [self.childNodes addObject:left];
     [self.childNodes addObject:right];
@@ -400,6 +433,8 @@ typedef enum AMOrientation : NSUInteger {
     _leftOperandNode = left;
     _rightOperandNode = right;
 }
+
+
 
 -(void)drawRect:(NSRect)dirtyRect
 {
@@ -468,13 +503,24 @@ typedef enum AMOrientation : NSUInteger {
     CGFloat baseline                 = [self greatestExtentBeneathBaseline:views];
     
     height = maxExtentAboveBaseline + baseline;
-
+    NSString * operatorString = self.expression.operator;
+    BOOL isPower = [operatorString isEqualToString:@"^"];
     for (NSView * aView in views) {
         CGFloat yOffset = baseline - aView.baselineOffsetFromBottom;
-        [aView setFrameOrigin:NSMakePoint(width, yOffset)];
-        width += aView.frame.size.width + padding;
+        if ( !(aView == self.rightOperandNode) || !isPower) {
+            [aView setFrameOrigin:NSMakePoint(width, yOffset)];
+            width += aView.frame.size.width;
+            if (!isPower) {
+                width += padding;
+            }
+        } else {
+            [aView setFrameOrigin:NSMakePoint(width, yOffset+aView.intrinsicContentSize.height/3.0)];
+            width += aView.frame.size.width;
+        }
     }
-    width -= padding;
+    
+    if (!isPower) width -= padding;
+    
     _intrinsicContentSize = NSMakeSize(width, height);
     _baselineOffsetFromBottom = baseline;
     _baselineOffsetFromBottomUsingQuotientRules = baseline;
@@ -546,11 +592,16 @@ typedef enum AMOrientation : NSUInteger {
 {
     CGFloat max     = 0.0f;
     CGFloat current = 0.0f;
-    for (NSView * view in views) {
-        if (view == self.operatorView) {
-            current = [(AMOperatorView*)view extentAboveOwnBaseline];
+    for (id<AMQuotientBaselining> quotientBaseliner in views) {
+        if (quotientBaseliner == self.operatorView) {
+            current = [quotientBaseliner extentAboveOwnBaseline];
         } else {
-            current = [(AMExpressionNodeView*)view extentAboveOwnBaseline];
+            if (quotientBaseliner == self.leftOperandNode || ![self.expression.operator isEqualToString:@"^"]) {
+                current = [quotientBaseliner extentAboveOwnBaseline];
+            } else {
+                NSView * v = (NSView*)quotientBaseliner;
+                current = [quotientBaseliner extentAboveOwnBaseline] + v.intrinsicContentSize.height / 3.0;
+            }
         }
         if (current > max) {
             max = current;

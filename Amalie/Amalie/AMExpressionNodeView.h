@@ -22,6 +22,7 @@
 @property (weak, readonly)   AMExpressionNodeView * leftOperandNode;
 @property (weak, readonly)   AMExpressionNodeView * rightOperandNode;
 @property (weak, readonly)   AMOperatorView       * operatorView;
+@property (readwrite)        CGFloat                scaleFactor;
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
@@ -33,7 +34,8 @@
          parentNode:(AMExpressionNodeView*)parent
          expression:(KSMExpression*)expression
          datasource:(id<AMContentViewDataSource>)datasource
-     displayOptions:(AMExpressionDisplayOptions*)displayOptions;
+     displayOptions:(AMExpressionDisplayOptions*)displayOptions
+        scaleFactor:(CGFloat)scaleFactor;
 
 
 -(AMOperatorView*)baselineDefiningDivideView;

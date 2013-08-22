@@ -28,7 +28,7 @@ NSString * const kSubtract = @"-";
 {
     NSString * _symbol;
     NSString * _originalString;
-    NSString * _bareString;
+    NSString * _blackString;
     NSString * _string;
     NSArray * _operatorsArray;
     NSMutableDictionary * _subExpressions;
@@ -37,7 +37,7 @@ NSString * const kSubtract = @"-";
 }
 
 @property (readwrite) KSMExpressionType expressionType;
-@property (readwrite) NSString * bareString;
+@property (readwrite) NSString * blackString;
 @property (readwrite) NSString * string;
 @property (readwrite) KSMExpressionValidity validityType;
 @property (readwrite) NSString * leftOperand;
@@ -49,6 +49,12 @@ NSString * const kSubtract = @"-";
 @end
 
 @implementation KSMExpression
+
+-(NSString *)bareString
+{
+    NSString * blackCopy = [self.blackString copy];
+    return [KSMExpression stripEnclosingBrackets:blackCopy];
+}
 
 -(BOOL)terminal
 {
@@ -85,7 +91,7 @@ NSString * const kSubtract = @"-";
         
 
         // Record the bare string, with spaces removed. The bare string will be the basis of the hash (and thus is used to build the symbol, as returned by the symbol property).
-        _bareString = [_string copy];
+        _blackString = [_string copy];
         
         _operatorsArray = @[kPower, kMultiply, kDivide, kAdd, kSubtract];
         _leftOperand    = nil;
@@ -99,7 +105,7 @@ NSString * const kSubtract = @"-";
 -(NSString *)symbol
 {
     if (!_symbol) {
-        NSUInteger hash = [self.bareString hash];
+        NSUInteger hash = [self.blackString hash];
         _symbol = [kSymbolPrefix stringByAppendingFormat:@"%lud",(unsigned long)hash];
     }
     return _symbol;
