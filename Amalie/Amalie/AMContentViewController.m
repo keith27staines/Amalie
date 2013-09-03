@@ -11,6 +11,7 @@
 #import "AMVariableContentViewController.h"
 #import "AMConstantContentViewController.h"
 #import "AMExpressionContentViewController.h"
+#import "AMFunctionContentViewController.h"
 #import "AMEquationContentViewController.h"
 #import "AMVectorContentViewController.h"
 #import "AMMatrixContentViewController.h"
@@ -65,6 +66,9 @@
             break;
         case AMInsertableTypeExpression:
             self = [[AMExpressionContentViewController alloc] initWithNibName:nil
+                                                                     bundle:nil];
+        case AMInsertableTypeFunction:
+            self = [[AMFunctionContentViewController alloc] initWithNibName:nil
                                                                      bundle:nil];
             break;
         case AMInsertableTypeEquation:
@@ -171,6 +175,11 @@
     NSString * key = [tray keyForType:type];
     AMTrayItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];
+}
+
+-(void)dealloc
+{
+    return;
 }
 
 @end

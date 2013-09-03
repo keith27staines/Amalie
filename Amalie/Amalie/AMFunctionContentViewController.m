@@ -1,10 +1,16 @@
 //
-//  AMEquationContentViewController.m
+//  AMFunctionContentViewController.m
 //  Amalie
 //
-//  Created by Keith Staines on 03/08/2013.
+//  Created by Keith Staines on 03/09/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
+
+@class AMExpressionNodeView;
+@class AMEquationContentView;
+@class AMNameView;
+
+#import "AMFunctionContentViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import "AMEquationContentViewController.h"
@@ -22,13 +28,13 @@ static NSUInteger const kAMIndexRHS;
 
 @end
 
-@implementation AMEquationContentViewController
+@implementation AMFunctionContentViewController
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:@"AMEquationContentView" bundle:nil];
+    self = [super initWithNibName:@"AMFunctionContentView" bundle:nil];
     if (self) {
-
+        
     }
     return self;
 }
@@ -60,10 +66,10 @@ static NSUInteger const kAMIndexRHS;
 -(void)layoutInsertedView
 {
     [CATransaction begin];
-
+    
     CGFloat const AM_VIEW_MARGIN      = 15.0f;
     CGFloat const AM_MIN_STRING_WIDTH = 300.0f;
-
+    
     AMExpressionNodeView * expressionView = self.expressionView;
     NSTextField * expressionString = self.expressionStringView;
     AMEquationContentView * equationView = self.equationView;
@@ -79,9 +85,9 @@ static NSUInteger const kAMIndexRHS;
     
     if (stringSize.width < AM_MIN_STRING_WIDTH) stringSize.width = AM_MIN_STRING_WIDTH;
     stringSize.width = fmaxf(expressionSize.width, stringSize.width);
-
+    
     NSSize equationSize = NSMakeSize(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN + stringSize.width + AM_VIEW_MARGIN,
-                                      AM_VIEW_MARGIN + expressionSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
+                                     AM_VIEW_MARGIN + expressionSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
     
     // do the resizing
     [[equationView animator] setFrameSize:equationSize];
@@ -89,7 +95,7 @@ static NSUInteger const kAMIndexRHS;
     [[expressionString animator] setFrameSize:stringSize];
     
     // and repositioning
-
+    
     NSPoint expressionOrigin = NSMakePoint(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN,
                                            equationSize.height - AM_VIEW_MARGIN - expressionSize.height);
     
@@ -100,7 +106,7 @@ static NSUInteger const kAMIndexRHS;
     } else {
         [name setFrameOrigin:NSMakePoint(AM_VIEW_MARGIN, expressionOrigin.y)];
     }
-
+    
     
     NSPoint stringOrigin = NSMakePoint(expressionOrigin.x, expressionOrigin.y - AM_VIEW_MARGIN - stringSize.height);
     [expressionView setFrameOrigin:expressionOrigin];
@@ -109,7 +115,7 @@ static NSUInteger const kAMIndexRHS;
     // Make the box fit the equation view
     [container setFrameSize:NSMakeSize(equationSize.width+4*AM_VIEW_MARGIN, equationSize.height + 4*AM_VIEW_MARGIN)];
     [equationView setFrameOrigin:NSMakePoint(2*AM_VIEW_MARGIN, 2*AM_VIEW_MARGIN)];
-
+    
     [CATransaction commit];
     [[self parentWorksheetController] contentViewController:self isResizingContentTo:expressionView.frame.size  usingAnimationTransaction:NO];
 }
@@ -132,5 +138,9 @@ static NSUInteger const kAMIndexRHS;
         [self layoutInsertedView];
     }
 }
+
+
+
+
 
 @end

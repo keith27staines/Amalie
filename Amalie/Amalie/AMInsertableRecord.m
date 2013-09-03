@@ -109,14 +109,14 @@
         
         // Remove the expression that already exists at the specified index
         if (oldExpr) {
-            [self.worksheet decrementReferenceCountForExpression:oldExpr];
+            [self.worksheet decrementReferenceCountForObject:oldExpr];
         }
         
         NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:string];
         KSMExpression * newExpr = [self.worksheet expressionForSymbol:symbol];
         
         if ( ! [self setExpression:newExpr forIndex:index] ) {
-            [self.worksheet decrementReferenceCountForExpression:newExpr];
+            [self.worksheet decrementReferenceCountForObject:newExpr];
             return nil;
         }
         return newExpr;
@@ -143,7 +143,7 @@
 - (void)dealloc
 {
     for (KSMExpression * expr in self.expressions) {
-        [self.worksheet decrementReferenceCountForExpression:expr];
+        [self.worksheet decrementReferenceCountForObject:expr];
     }
     _expressions = nil;
 }

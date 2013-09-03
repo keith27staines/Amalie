@@ -51,6 +51,7 @@ NSString * const kAMTrayDictionaryKey                 = @"kAMTrayDictionaryKey";
 NSString * const kAMConstantKey                       = @"kAMConstantKey";
 NSString * const kAMVariableKey                       = @"kAMVariableKey";
 NSString * const kAMExpressionKey                     = @"kAMExpressionKey";
+NSString * const kAMFunctionKey                       = @"kAMFunctionKey";
 NSString * const kAMEquationKey                       = @"kAMEquationKey";
 NSString * const kAMGraph2DKey                        = @"kAMGraph2DKey";
 NSString * const kAMMathematicalSetKey                = @"kAMMathematicalSetKey";

@@ -18,4 +18,6 @@
 -(AMContentView*)insertableView:(AMInsertableView*)view
       requiresContentViewOfType:(AMInsertableType)type;
 
+-(void)insertableViewWantsRemoval:(AMInsertableView*)view;
+
 @end

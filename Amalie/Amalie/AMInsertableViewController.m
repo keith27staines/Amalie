@@ -22,4 +22,6 @@ NSString * const kAMBNibName = @"AMInsertableView";
 }
 
 
+- (IBAction)close:(NSButton *)sender {
+}
 @end

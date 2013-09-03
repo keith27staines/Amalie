@@ -9,17 +9,23 @@
 @class KSMExpression;
 @class KSMExpressionBuilder;
 @class KSMExpressionEvaluator;
+@class KSMFunction;
+@class KSMFunctionArgumentList;
+@class KSMFunctionArgument;
 
 #import <Foundation/Foundation.h>
 #import "KSMReferenceCounter.h"
+#import "KSMReferenceCountedObject.h"
+#import "KSMMathValue.h"
 
 @interface KSMWorksheet : NSObject <KSMReferenceCounterDelegate>
 
-@property (copy, readwrite) NSString* title;
-@property (strong, readonly) KSMExpressionBuilder * builder;
+@property (copy, readwrite) NSString                * title;
+@property (strong, readonly) KSMExpressionBuilder   * builder;
 @property (strong, readonly) KSMExpressionEvaluator * evaluator;
-@property (strong, readonly) NSMutableDictionary * variablesDictionary;
-@property (strong, readonly) NSMutableDictionary * expressionsDictionary;
+@property (strong, readonly) NSMutableDictionary    * variablesDictionary;
+@property (strong, readonly) NSMutableDictionary    * expressionsDictionary;
+@property (strong, readonly) NSMutableDictionary    * functionsDictionary;
 
 /*!
  * Registers the expression in the receiver's store. The
@@ -49,9 +55,9 @@
 -(KSMExpression*)simplifiedExpressionFromExpression:(KSMExpression*)expression;
 
 /*!
- Decrements the internal reference count for the specified expression. The 
- expression will be deleted when the reference count reaches zero. Call this 
- method when a particular instance of the the expression is to be removed from
+ Decrements the internal reference count for the specified object. The
+ object will be deleted when the reference count reaches zero. Call this
+ method when a particular instance of the object is to be removed from
  the worksheet. Note that registerExpression and buildAndRegisterExpression both
  automatically increment the reference count, whether or not the expression being
  registered already exists. Thus there is no need for an explicit method to 
@@ -59,13 +65,43 @@
  standard objective C reference count.
  @Param expression The expression whose reference count is to be decremented.
  */
--(void)decrementReferenceCountForExpression:(KSMExpression*)expression;
+-(void)decrementReferenceCountForObject:(id<KSMReferenceCountedObject>)object;
 
--(BOOL)isExpressionWithSymbolRegistered:(NSString*)symbol;
+-(BOOL)isObjectRegistered:(id<KSMReferenceCountedObject>)symbol;
 -(KSMExpression*)expressionForSymbol:(NSString*)symbol;
+-(KSMFunction*)functionForSymbol:(NSString*)symbol;
+-(NSNumber*)variableForSymbol:(NSString*)symbol;
+
 -(KSMExpression*)expressionForOriginalString:(NSString*)string;
 -(KSMExpression*)expressionForString:(NSString*)string;
--(NSNumber*)variableForSymbol:(NSString*)symbol;
+-(KSMFunction*)functionForName:(NSString*)name;
+
 -(void)setValue:(NSNumber*)number forVariableWithSymbol:(NSString*)symbol;
+
+/*!
+ Creates and registers a function with a fully specified argument list, return 
+ type, and expression (rule). 
+ @Param name The name of the function to build and register. If the expression
+ is already registered, an error is returned and no new function is built.
+ @Param argumentList The named arguments that the function requires as inputs. 
+ @Param returnType The type of value that the function returns.
+ @Param expression The algebraic rule used to compute the function's value from
+ the inputs. If the expression is not already registered with the worksheet it 
+ will be registered during the construction process. The rule can use any 
+ argument from the argument list, and any other constant or variable already 
+ explicitly registered with the worksheet or implicitly, as part of the expression
+ rule.
+ @Param error Error will only be populated if the construction of the function 
+ fails. The reasons for failure are: (1) A function of the required name already
+ exists; (2) The name is invalid.
+ @Return The value of the function as computed using the expression rule, using 
+ values currently explicitly assigned in the argument list and other constants 
+ and variable values from the worksheet.
+ */
+-(KSMFunction*)buildAndRegisterUserFunctionWithName:(NSString*)name
+                                       argumentList:(KSMFunctionArgumentList*)arguments
+                                         returnType:(KSMValueType)type
+                                         expression:(KSMExpression*)expression
+                                              error:(NSError**)error;
 
 @end

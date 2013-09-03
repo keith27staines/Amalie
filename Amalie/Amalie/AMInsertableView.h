@@ -50,7 +50,10 @@ NSDraggingSource
 @property float frameRight;
 @property float frameMidY;
 
-@property (weak) IBOutlet NSBox * box;
+@property (weak) id <AMTrayDatasource> trayDataSource;
+@property (weak) id <AMInsertableViewDelegate> delegate;
+
+- (IBAction)closeButtonClicked:(NSButton *)sender;
 
 
 /*!
@@ -69,9 +72,6 @@ NSDraggingSource
 
 
 -(NSString*)trayItemKey;
-
-@property (weak) id <AMTrayDatasource> trayDataSource;
-@property (weak) id <AMInsertableViewDelegate> delegate;
 
 /*!
  Sets the receiver's frame's top-left position with the option to animate

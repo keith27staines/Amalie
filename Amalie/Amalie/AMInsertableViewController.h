@@ -15,4 +15,6 @@
 
 @interface AMInsertableViewController : NSViewController
 
+- (IBAction)close:(NSButton *)sender;
+
 @end

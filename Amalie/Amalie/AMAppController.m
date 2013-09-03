@@ -128,6 +128,12 @@ NSMutableDictionary * _trayDictionary;
         return;
     }
     
+    if ( [key isEqualToString:kAMFunctionKey]) {
+        *insertableType = AMInsertableTypeFunction;
+        *info = @"Define a function, including its name, argument list and return type. The function can also reference other mathematical objects defined above it.";
+        return;
+    }
+    
     if ( [key isEqualToString:kAMEquationKey] ) {
         *insertableType = AMInsertableTypeEquation;
         *info = @"Define an equation.";
@@ -204,6 +210,10 @@ NSMutableDictionary * _trayDictionary;
         case AMInsertableTypeExpression:
             return kAMExpressionKey;
             break;
+            
+        case AMInsertableTypeFunction:
+            return kAMFunctionKey;
+            break;
 
         case AMInsertableTypeEquation:
             return kAMEquationKey;
@@ -232,6 +242,7 @@ NSMutableDictionary * _trayDictionary;
     if ([key isEqualToString:kAMConstantKey])   return AMInsertableTypeConstant;
     if ([key isEqualToString:kAMVariableKey])   return AMInsertableTypeVariable;
     if ([key isEqualToString:kAMExpressionKey]) return AMInsertableTypeExpression;
+    if ([key isEqualToString:kAMFunctionKey])   return AMInsertableTypeFunction;
     if ([key isEqualToString:kAMEquationKey])   return AMInsertableTypeEquation;
     if ([key isEqualToString:kAMVectorKey])     return AMInsertableTypeVector;
     if ([key isEqualToString:kAMMatrixKey])     return AMInsertableTypeMatrix;

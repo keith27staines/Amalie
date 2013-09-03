@@ -157,7 +157,13 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     return (AMContentView*)vc.view;
 }
 
-#pragma - Layout -
+-(void)insertableViewWantsRemoval:(AMInsertableView*)view
+{
+    AMWorksheetView * worksheetView = (AMWorksheetView *)view.superview;
+    [self workheetView:worksheetView wantsViewRemoved:view];
+}
+
+#pragma mark - Layout -
 
 /*!
  Use this method to layout. Performing the layout synchronously somehow blocks the animations, but this method works fine because the layout is scheduled to occur only after a timer fires (very short delay).

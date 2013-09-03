@@ -143,6 +143,11 @@ static NSMutableDictionary * AMFonts;
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};
     [dictionary setObject:expressionDictionary forKey:kAMExpressionKey];
     
+    // Function dictionary
+    NSDictionary * functionDictionary = @{kAMBackColorKey : colorDataFromName(AMColorPaleGreen),
+                                          kAMFontColorKey: colorDataFromName(AMColorBlack)};
+    [dictionary setObject:functionDictionary forKey:kAMFunctionKey];
+    
     // Equation dictionary
     NSDictionary * equationDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleYellow),
                                             kAMFontColorKey : colorDataFromName(AMColorBlack)};

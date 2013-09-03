@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KSMReferenceCountedObject.h"
 
 extern NSString * const kOperatorsString;
 extern NSString * const kBinaryOperatorsString;
@@ -42,9 +43,9 @@ typedef enum KSMExpressionValidity : NSInteger {
 } KSMExpressionValidity;
 
 /*!
- * The KSMExpression class represents a mathematical expression
+ * The KSMExpression class represents a mathematical expression.
  */
-@interface KSMExpression : NSObject
+@interface KSMExpression : NSObject <KSMReferenceCountedObject>
 
 /*!
  * Gets the string that the expression was initialised with.
@@ -113,7 +114,7 @@ typedef enum KSMExpressionValidity : NSInteger {
 @property (readonly) BOOL       hasAddedLogicalLeadingZero;
 
 /*!
- * Do not use init.
+ * Do not use. Use the designated initializer instead.
  * Unit test coverage: Full.
  */
 -(id)init;

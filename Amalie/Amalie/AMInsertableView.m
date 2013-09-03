@@ -79,6 +79,7 @@ static CABasicAnimation * animateOrigin;
         case AMInsertableTypeConstant           : return kAMConstantKey;
         case AMInsertableTypeVariable           : return kAMVariableKey;
         case AMInsertableTypeExpression         : return kAMExpressionKey;
+        case AMInsertableTypeFunction           : return kAMFunctionKey;
         case AMInsertableTypeEquation           : return kAMEquationKey;
         case AMInsertableTypeVector             : return kAMVectorKey;
         case AMInsertableTypeMatrix             : return kAMMatrixKey;
@@ -118,12 +119,12 @@ static CABasicAnimation * animateOrigin;
     AMTrayItem * item = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
     [item.backgroundColor set];
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.0, 0.0) xRadius:10 yRadius:10];
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.0, 0.0) xRadius:8 yRadius:8];
     [path fill];
     [[NSColor blackColor] set];
     path = [NSBezierPath bezierPath];
     
-    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:10 yRadius:10];
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:8 yRadius:8];
     
     [path stroke];
 
@@ -334,6 +335,11 @@ static CABasicAnimation * animateOrigin;
 {
     [self setNeedsDisplay:YES];
     return YES;
+}
+
+-(void)closeButtonClicked:(NSButton *)sender
+{
+    [self.delegate insertableViewWantsRemoval:self];
 }
 
 -(void)mouseDown:(NSEvent *)theEvent

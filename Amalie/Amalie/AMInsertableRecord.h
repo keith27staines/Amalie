@@ -69,14 +69,14 @@
  @Param index The index for the expression being set.
  @Return The new expression (already registered with the worksheet) if 
  successful. If the specified index is greater than expressionCount, then the 
- internal state of the received is unchanged andnil is returned.
+ internal state of the received is unchanged and nil is returned.
  */
 -(KSMExpression*)expressionFromString:(NSString*)string
             atIndex:(NSUInteger)index;
 
 
 /*!
- Returns the existing that corresponds to the symbol from the worksheet. Note
+ Returns the expression that corresponds to the symbol from the worksheet. Note
  that it is important to let the receiver manage the creation, reference 
  counting of the expression. In order to prevent memory leaks, it is important 
  never to retain strong references to expressions.

@@ -51,6 +51,7 @@ extern NSString * const kAMTrayDictionaryKey;
 extern NSString * const kAMConstantKey;
 extern NSString * const kAMVariableKey;
 extern NSString * const kAMExpressionKey;
+extern NSString * const kAMFunctionKey;
 extern NSString * const kAMEquationKey;
 extern NSString * const kAMGraph2DKey;
 extern NSString * const kAMMathematicalSetKey;
@@ -61,6 +62,7 @@ typedef NS_ENUM(NSInteger, AMInsertableType){
     AMInsertableTypeConstant,
     AMInsertableTypeVariable,
     AMInsertableTypeExpression,
+    AMInsertableTypeFunction,
     AMInsertableTypeEquation,
     AMInsertableTypeGraph2D,
     AMInsertableTypeMathematicalSet,
