@@ -18,13 +18,6 @@
 #import "AMInsertableRecord.h"
 #import "AMGroupedView.h"
 
-static NSUInteger const kAMDefaultLineSpace   = 20;
-static NSUInteger const kAMDefaultLeftMargin  = 36;
-static NSUInteger const kAMDefaultTopMargin   = 36;
-
-static CGFloat const MINWIDTH  = 600.0;
-static CGFloat const MINHEIGHT = 600.0;
-
 @interface AMWorksheetController()
 {
     NSMutableArray      * _insertsArray;
@@ -33,21 +26,19 @@ static CGFloat const MINHEIGHT = 600.0;
     NSMutableDictionary * _contentControllers;
     KSMWorksheet        * _mathSheet;
     AMNameRules         * _nameRules;
-    CGFloat               _intrinsicWidth;
-    CGFloat               _intrinsicHeight;
 }
 
 /*!
  * view controllers to manage the loading of views for insertable objects
  */
-@property (strong) NSMutableDictionary * contentControllers;
+@property (strong) NSMutableDictionary    * contentControllers;
 @property (strong, readonly) KSMWorksheet * mathSheet;
-@property (readonly) NSMutableDictionary * insertedRecords;
+@property (readonly) NSMutableDictionary  * insertedRecords;
 @end
 
 @implementation AMWorksheetController
 
-#pragma mark - Initializers -
+#pragma mark - Initializers and setup -
 
 - (id)init
 {
@@ -59,9 +50,6 @@ static CGFloat const MINHEIGHT = 600.0;
         _insertsDictionary  = [NSMutableDictionary dictionary];
         _contentControllers = [NSMutableDictionary dictionary];
         _mathSheet          = [[KSMWorksheet alloc] init];
-        _intrinsicHeight    = 0.0;
-        _intrinsicWidth     = 0.0;
-        
     }
     return self;
 }
@@ -82,15 +70,6 @@ static CGFloat const MINHEIGHT = 600.0;
     [slider setContinuous:YES];
 }
 
--(AMNameRules*)nameRules
-{
-    if (!_nameRules) {
-        _nameRules = [[AMNameRules alloc] init];
-    }
-    return _nameRules;
-}
-
-
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
@@ -110,17 +89,6 @@ static CGFloat const MINHEIGHT = 600.0;
 }
 
 #pragma mark - AMWorksheetViewDelegate -
-
--(NSSize)intrinsicSizeForWorksheet:(AMWorksheetView*)worksheet
-{
-    NSSize size = NSMakeSize(_intrinsicWidth, _intrinsicHeight);
-    if ( NSEqualSizes(NSZeroSize, size) ) {
-        size = [self determineNewIntrinsicSize];
-        _intrinsicWidth  = size.width;
-        _intrinsicHeight = size.height;
-    }
-    return size;
-}
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)view withOrigin:(NSPoint)origin
 {
@@ -154,9 +122,12 @@ static CGFloat const MINHEIGHT = 600.0;
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)view
 {
+    NSString * groupID = view.groupID;
+    // AMInsertableRecord * record = self.insertedRecords[groupID];
+
     [_insertsArray removeObject:view];
-    [_insertsDictionary removeObjectForKey:view.groupID];
-    [_contentControllers removeObjectForKey:view.groupID];
+    [_insertsDictionary removeObjectForKey:groupID];
+    [_contentControllers removeObjectForKey:groupID];
     view.delegate = nil;
     [view removeFromSuperview];
     [self scheduleLayout];
@@ -223,84 +194,16 @@ static CGFloat const MINHEIGHT = 600.0;
 }
 
 /*!
- Layout all the top level inserts on the worksheet. The inserts are moved inside a CATransaction so that everything appears to smoothly flow into place
+ Use the worksheet view's implementation
  */
 -(void)layoutInsertsNow
 {
-    [self sortInserts];
-    [CATransaction begin];
-    NSSize newSize = [self determineNewIntrinsicSize];
-
-    if (!NSEqualSizes(newSize, self.worksheetView.intrinsicContentSize)) {
-        _intrinsicWidth  = newSize.width;
-        _intrinsicHeight = newSize.height;
-        NSSize scrollViewSize = self.worksheetScrollView.frame.size;
-        newSize.width = fmaxf(_intrinsicWidth,   scrollViewSize.width);
-        newSize.height = fmaxf(_intrinsicHeight, scrollViewSize.height);
-        [self.worksheetView setFrameSize:newSize];
-    }
-    
-    float firstTop = newSize.height - kAMDefaultTopMargin;
-    NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
-    for (AMInsertableView * view in _insertsArray) {
-        [view setFrameTopLeft:newTopLeft animate:YES];
-        newTopLeft = NSMakePoint(newTopLeft.x, newTopLeft.y - view.frameHeight - kAMDefaultLineSpace);
-    }
-    [CATransaction commit];
-}
-
--(NSSize)determineNewIntrinsicSize
-{
-    CGFloat height = 0.0;
-    CGFloat width  = 0.0;
-    for (AMInsertableView * view in _insertsArray) {
-        height += (view.frameHeight + kAMDefaultLineSpace);
-        width = fmaxf(view.frameWidth,width);
-    }
-    width += (2 * kAMDefaultLeftMargin);
-    width  = fmaxf(width, MINWIDTH);
-    if (height >= kAMDefaultLineSpace) height -= kAMDefaultLineSpace;
-    height += (2 * kAMDefaultTopMargin);
-    height = fmaxf(height,MINHEIGHT);
-    return NSMakeSize(width, height);
+    [self.worksheetView layoutInsertsNow];
 }
 
 -(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction
 {
     [self layoutInsertsNow];
-}
-
--(void)sortInserts
-{
-    [_insertsArray sortUsingComparator: ^(id obj1, id obj2) {
-        
-        AMInsertableView * ami1 = obj1;
-        AMInsertableView * ami2 = obj2;
-        
-        // Deal with both objects at same horizontal level
-        if (ami1.frameTop == ami2.frameTop) {
-            
-            if (ami1.frameLeft == ami2.frameLeft) {
-                // obj1 has same left position as obj2
-                return (NSComparisonResult)NSOrderedSame;
-            }
-            if (ami1.frameLeft < ami2.frameLeft) {
-                // obj 1 is to the left of obj2
-                return (NSComparisonResult)NSOrderedAscending;
-            } else {
-                // obj 2 is to the left of obj 1
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-        }
-        
-        // Not at same level, so just need to worry about their y-ordering
-        if (ami1.frameTop > ami2.frameTop) {
-            // obj 1 is above obj 2
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        // since we dealt with the possibility of both being at the same height earlier, the only possibility left is that obj 2 is above obj 1
-        return (NSComparisonResult)NSOrderedDescending;
-    }];
 }
 
 #pragma - KSM maths library -
@@ -327,6 +230,14 @@ static CGFloat const MINHEIGHT = 600.0;
 }
 
 #pragma mark - Misc -
+
+-(AMNameRules*)nameRules
+{
+    if (!_nameRules) {
+        _nameRules = [[AMNameRules alloc] init];
+    }
+    return _nameRules;
+}
 
 -(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
 {

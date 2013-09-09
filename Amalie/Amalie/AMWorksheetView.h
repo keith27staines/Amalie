@@ -28,4 +28,9 @@
  */
 @property (weak) IBOutlet AMAppController * trayDataSource;
 
+/*!
+ Layout all the top level inserts on the worksheet. The inserts are moved inside a CATransaction so that everything appears to smoothly flow into place
+ */
+-(void)layoutInsertsNow;
+
 @end
