@@ -59,6 +59,9 @@
         case AMInsertableTypeEquation:
             expressions = 1;
             break;
+        case AMInsertableTypeFunction:
+            expressions = 1;
+            break;
             
         default:
             expressions = 0;

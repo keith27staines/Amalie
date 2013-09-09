@@ -11,6 +11,7 @@
 #import "AMInsertableView.h"
 #import "AMWorksheetController.h"
 
+static BOOL LOG_DRAG_OPS = NO;
 
 @implementation AMWorksheetView
 
@@ -45,13 +46,20 @@
 {
     [[NSColor whiteColor] set];
     NSRectFill(dirtyRect);
-    [super drawRect:dirtyRect];
+    
+    for (NSView * view in self.subviews) {
+
+        if (NSIntersectsRect(view.frame, dirtyRect)) {
+            NSRect intersect = NSIntersectionRect(view.frame, dirtyRect);
+            [view displayRect:intersect];
+            NSLog(@"Displaying view %@",view);
+        }
+    }
 }
 
 -(NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
-    
-    NSLog(@"%@ - draggingEntered" , [self.class description]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingEntered" , self);
     
     // check type and see if we can accept, and if we can, what we will do with it
     NSDragOperation operation = NSDragOperationNone;
@@ -89,27 +97,25 @@
 
 -(void)draggingEnded:(id<NSDraggingInfo>)sender
 {
-    NSLog(@"%@ - draggingEnded" , [self.class description]);
-
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingEnded" , self);
 }
 
 -(void)draggingExited:(id<NSDraggingInfo>)sender
 {
-    NSLog(@"%@ - draggingExited" , [self.class description]);
-
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingExited" , self);
 }
 
 -(BOOL)prepareForDragOperation:(id<NSDraggingInfo>)sender
 {
     // We are always prepared. Maybe change this later if doing something that can't be interrupted (editing something for example?).
-    NSLog(@"%@ - prepareForDragOperation" , [self.class description]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - prepareForDragOperation" , self);
 
     return YES;
 }
 
 -(BOOL)performDragOperation:(id<NSDraggingInfo>)sender
 {
-    NSLog(@"%@ - performDragOperation" , [self.class description]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - performDragOperation" , self);
     static NSArray * classes;
     
     if (!classes) {
@@ -146,9 +152,31 @@
     return NO;
 }
 
+-(void)resizeWithOldSuperviewSize:(NSSize)oldSize
+{
+    NSSize newSize = self.superview.frame.size;
+    self.frame = NSMakeRect(0, 0, newSize.width, newSize.height);
+    [super resizeWithOldSuperviewSize:oldSize];
+}
+
+-(void)resizeSubviewsWithOldSize:(NSSize)oldSize
+{
+    [super resizeSubviewsWithOldSize:oldSize];
+}
+
+-(NSSize)intrinsicContentSize
+{
+    return [self.delegate intrinsicSizeForWorksheet:self];
+}
+
+-(BOOL)isFlipped
+{
+    return NO;
+}
+
 -(void)concludeDragOperation:(id<NSDraggingInfo>)sender
 {
-    NSLog(@"%@ - concludeDragOperation" , [self.class description]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - concludeDragOperation" , self);
 }
 
 

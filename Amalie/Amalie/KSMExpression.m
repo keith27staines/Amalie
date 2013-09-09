@@ -726,7 +726,10 @@ NSString * const kSubtract = @"-";
 }
 
 
-
+-(void)dealloc
+{
+    NSLog(@"Object %@ with original string %@ deallocated.", self, self.originalString);
+}
 
 
 @end

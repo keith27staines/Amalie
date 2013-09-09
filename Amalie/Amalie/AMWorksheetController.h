@@ -18,7 +18,14 @@
 
 @interface AMWorksheetController : NSPersistentDocument
 <AMWorksheetViewDelegate,
- AMInsertableViewDelegate> 
+ AMInsertableViewDelegate>
+
+
+@property (weak) IBOutlet NSToolbarItem * scaleSliderItem;
+
+- (IBAction)scaleSliderMoved:(NSSlider *)scaleSlider;
+
+@property (weak) IBOutlet NSScrollView *worksheetScrollView;
 
 /*!
  Our worksheet view IS the document view we are controlling.

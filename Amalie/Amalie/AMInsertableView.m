@@ -14,7 +14,7 @@
 #import "AMContentView.h"
 
 static NSString * const kAMDraggedInsertableView = @"kAMDraggedInsertableView";
-
+static BOOL LOG_DRAG_OPS = NO;
 
 static CABasicAnimation * animateOrigin;
 
@@ -63,7 +63,6 @@ static CABasicAnimation * animateOrigin;
 
 -(void)viewDidMoveToWindow
 {
-    NSLog(@"%@ - viewDidMoveToWindow",self.class);
     AMContentView * contentView;
     contentView = [self.delegate insertableView:self
                       requiresContentViewOfType:self.insertableType];
@@ -248,13 +247,13 @@ static CABasicAnimation * animateOrigin;
 
 -(NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag
 {
-    NSLog(@"%@ - draggingSourceOperationMaskForLocal:",[self class]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingSourceOperationMaskForLocal:",[self class]);
     return NSDragOperationMove | NSDragOperationDelete;
 }
 
 -(void)draggingSession:(NSDraggingSession*)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
 {
-    NSLog(@"%@ - draggingSession:endedAtPoint:operation:",[self class]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingSession:endedAtPoint:operation:",[self class]);
     
     switch (operation) {
         case NSDragOperationDelete:
@@ -278,7 +277,7 @@ static CABasicAnimation * animateOrigin;
 
 - (NSDragOperation)draggingSession:(NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context
 {
-    NSLog(@"%@ - draggingSession:sourceOperationMaskForDraggingContext:",[self class]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingSession:sourceOperationMaskForDraggingContext:",[self class]);
     switch(context) {
         case NSDraggingContextOutsideApplication:
             return NSDragOperationNone;
@@ -295,7 +294,7 @@ static CABasicAnimation * animateOrigin;
 
 - (void)draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint
 {
-    NSLog(@"%@ - draggingSession:willBeginAtPoint:",[self class])
+    if (LOG_DRAG_OPS) NSLog(@"%@ - draggingSession:willBeginAtPoint:",[self class])
     ;
 }
 
@@ -344,7 +343,7 @@ static CABasicAnimation * animateOrigin;
 
 -(void)mouseDown:(NSEvent *)theEvent
 {
-    NSLog(@"%@ - mouseDown",[self class]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - mouseDown",[self class]);
     self.mouseDownEvent = theEvent;
     self.mouseDownWindowPoint = [theEvent locationInWindow];
     [[NSCursor closedHandCursor] push];
@@ -352,7 +351,7 @@ static CABasicAnimation * animateOrigin;
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
-    NSLog(@"%@ - mouseDragged:",[self class]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - mouseDragged:",[self class]);
     
     NSPoint currentPoint = [theEvent locationInWindow];
     
@@ -382,7 +381,7 @@ static CABasicAnimation * animateOrigin;
 
 -(void)mouseUp:(NSEvent *)theEvent
 {
-    NSLog(@"%@ - mouseUp",[self class]);
+    if (LOG_DRAG_OPS) NSLog(@"%@ - mouseUp",[self class]);
     [self concludeDragging];
 }
 

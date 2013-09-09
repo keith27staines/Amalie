@@ -22,6 +22,9 @@ static NSUInteger const kAMDefaultLineSpace   = 20;
 static NSUInteger const kAMDefaultLeftMargin  = 36;
 static NSUInteger const kAMDefaultTopMargin   = 36;
 
+static CGFloat const MINWIDTH  = 600.0;
+static CGFloat const MINHEIGHT = 600.0;
+
 @interface AMWorksheetController()
 {
     NSMutableArray      * _insertsArray;
@@ -30,6 +33,8 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     NSMutableDictionary * _contentControllers;
     KSMWorksheet        * _mathSheet;
     AMNameRules         * _nameRules;
+    CGFloat               _intrinsicWidth;
+    CGFloat               _intrinsicHeight;
 }
 
 /*!
@@ -42,7 +47,7 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 
 @implementation AMWorksheetController
 
-#pragma - Initializers -
+#pragma mark - Initializers -
 
 - (id)init
 {
@@ -54,13 +59,27 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
         _insertsDictionary  = [NSMutableDictionary dictionary];
         _contentControllers = [NSMutableDictionary dictionary];
         _mathSheet          = [[KSMWorksheet alloc] init];
+        _intrinsicHeight    = 0.0;
+        _intrinsicWidth     = 0.0;
+        
     }
     return self;
 }
 
 -(void)awakeFromNib
 {
-    ;
+    SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
+    NSNotificationCenter * notifier = [NSNotificationCenter defaultCenter];
+    [notifier addObserver:self selector:selector
+                     name:NSScrollViewDidEndLiveMagnifyNotification
+                   object:self.worksheetScrollView];
+    
+
+    NSSlider * slider = (NSSlider*)(self.scaleSliderItem.view);
+    [slider setMinValue:0.25];
+    [slider setMaxValue:4];
+    [slider setFloatValue:1];
+    [slider setContinuous:YES];
 }
 
 -(AMNameRules*)nameRules
@@ -91,6 +110,17 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 }
 
 #pragma mark - AMWorksheetViewDelegate -
+
+-(NSSize)intrinsicSizeForWorksheet:(AMWorksheetView*)worksheet
+{
+    NSSize size = NSMakeSize(_intrinsicWidth, _intrinsicHeight);
+    if ( NSEqualSizes(NSZeroSize, size) ) {
+        size = [self determineNewIntrinsicSize];
+        _intrinsicWidth  = size.width;
+        _intrinsicHeight = size.height;
+    }
+    return size;
+}
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)view withOrigin:(NSPoint)origin
 {
@@ -199,9 +229,19 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 {
     [self sortInserts];
     [CATransaction begin];
-    float firstTop = self.worksheetView.frame.size.height - kAMDefaultTopMargin;
-    NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
+    NSSize newSize = [self determineNewIntrinsicSize];
+
+    if (!NSEqualSizes(newSize, self.worksheetView.intrinsicContentSize)) {
+        _intrinsicWidth  = newSize.width;
+        _intrinsicHeight = newSize.height;
+        NSSize scrollViewSize = self.worksheetScrollView.frame.size;
+        newSize.width = fmaxf(_intrinsicWidth,   scrollViewSize.width);
+        newSize.height = fmaxf(_intrinsicHeight, scrollViewSize.height);
+        [self.worksheetView setFrameSize:newSize];
+    }
     
+    float firstTop = newSize.height - kAMDefaultTopMargin;
+    NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
     for (AMInsertableView * view in _insertsArray) {
         [view setFrameTopLeft:newTopLeft animate:YES];
         newTopLeft = NSMakePoint(newTopLeft.x, newTopLeft.y - view.frameHeight - kAMDefaultLineSpace);
@@ -209,10 +249,25 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     [CATransaction commit];
 }
 
+-(NSSize)determineNewIntrinsicSize
+{
+    CGFloat height = 0.0;
+    CGFloat width  = 0.0;
+    for (AMInsertableView * view in _insertsArray) {
+        height += (view.frameHeight + kAMDefaultLineSpace);
+        width = fmaxf(view.frameWidth,width);
+    }
+    width += (2 * kAMDefaultLeftMargin);
+    width  = fmaxf(width, MINWIDTH);
+    if (height >= kAMDefaultLineSpace) height -= kAMDefaultLineSpace;
+    height += (2 * kAMDefaultTopMargin);
+    height = fmaxf(height,MINHEIGHT);
+    return NSMakeSize(width, height);
+}
+
 -(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction
 {
     [self layoutInsertsNow];
-    
 }
 
 -(void)sortInserts
@@ -258,13 +313,26 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     return _mathSheet;
 }
 
+#pragma mark - Magnification -
 
-#pragma - Misc -
+-(void)workheetScrollViewDidMagnify
+{
+    NSSlider * slider = (NSSlider*)(self.scaleSliderItem.view);
+    slider.floatValue = self.worksheetScrollView.magnification;
+}
+
+- (IBAction)scaleSliderMoved:(NSSlider *)slider {
+    CGFloat requiredMagnification = slider.floatValue;
+    [self.worksheetScrollView setMagnification:requiredMagnification];
+}
+
+#pragma mark - Misc -
 
 -(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
 {
     return [self insertableViewForKey:shadow.groupID];
 }
+
 
 @end
 

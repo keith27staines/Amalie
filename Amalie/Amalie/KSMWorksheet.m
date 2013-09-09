@@ -63,7 +63,7 @@
     if ( ! [self isObjectRegistered:expression]) {
         
         // register the top level expression
-        refCounter = [[KSMReferenceCounter alloc] initWithUUID:symbol];
+        refCounter = [[KSMReferenceCounter alloc] initWithObject:expression delegate:self];
         self.referenceCountedObjects[symbol] = refCounter;
         self.expressionsDictionary[symbol] = expression;
         
@@ -209,7 +209,7 @@
     KSMReferenceCounter * ref;
     
     if (!self.referenceCountedObjects[symbol]) {
-        ref = [[KSMReferenceCounter alloc] initWithUUID:symbol];
+        ref = [[KSMReferenceCounter alloc] initWithObject:function delegate:self];
         self.referenceCountedObjects[symbol] = ref;
         self.functionsDictionary[symbol] = function;
     }

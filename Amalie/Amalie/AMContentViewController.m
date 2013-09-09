@@ -66,7 +66,9 @@
             break;
         case AMInsertableTypeExpression:
             self = [[AMExpressionContentViewController alloc] initWithNibName:nil
+            
                                                                      bundle:nil];
+            break;
         case AMInsertableTypeFunction:
             self = [[AMFunctionContentViewController alloc] initWithNibName:nil
                                                                      bundle:nil];

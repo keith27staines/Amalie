@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KSMReferenceCountedObject.h"
 
 @class KSMReferenceCounter;
 
@@ -23,10 +24,11 @@
 
 /*!
  Designated initializer.
- @Param uuid The universally unique identifier of the object being reference counted.
+ @Param object The universally unique identifier of the object being reference counted.
  @Return The initialized object.
  */
--(id)initWithUUID:(NSString*)uuid;
+-(id)initWithObject:(id<KSMReferenceCountedObject>)object
+           delegate:(id<KSMReferenceCounterDelegate>)delegate;
 
 - (void)increment;
 - (void)decrement;

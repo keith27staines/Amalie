@@ -13,6 +13,8 @@
 
 @protocol AMWorksheetViewDelegate <NSObject>
 
+-(NSSize)intrinsicSizeForWorksheet:(AMWorksheetView*)worksheet;
+
 - (void)workheetView:(AMWorksheetView*)worksheet
    wantsViewInserted:(AMInsertableView*)view
           withOrigin:(NSPoint)origin;
