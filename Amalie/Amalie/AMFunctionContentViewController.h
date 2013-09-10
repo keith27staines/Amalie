@@ -7,7 +7,7 @@
 //
 
 @class AMExpressionNodeView;
-@class AMEquationContentView;
+@class AMFunctionContentView;
 @class AMNameView;
 
 #import "AMContentViewController.h"
@@ -25,7 +25,7 @@
 
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
-@property (strong) IBOutlet AMEquationContentView *equationView;
+@property (strong) IBOutlet AMFunctionContentView *functionView;
 
 - (IBAction)nameAction:(AMNameView *)sender;
 

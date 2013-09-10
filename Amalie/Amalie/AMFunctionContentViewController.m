@@ -15,7 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AMEquationContentViewController.h"
 #import "KSMExpression.h"
-#import "AMEquationContentView.h"
+#import "AMFunctionContentView.h"
 #import "AMInsertableRecord.h"
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
@@ -24,7 +24,7 @@
 
 static NSUInteger const kAMIndexRHS;
 
-@interface AMEquationContentViewController ()
+@interface AMFunctionContentViewController ()
 
 @end
 
@@ -72,9 +72,9 @@ static NSUInteger const kAMIndexRHS;
     
     AMExpressionNodeView * expressionView = self.expressionView;
     NSTextField * expressionString = self.expressionStringView;
-    AMEquationContentView * equationView = self.equationView;
-    NSView * container = [equationView superview];
-    AMNameView * name = [equationView nameView];
+    AMFunctionContentView * functionView = self.functionView;
+    NSView * container = [functionView superview];
+    AMNameView * name = [functionView nameView];
     [name sizeToFit];
     NSLog(@"name width %f",name.frame.size.width);
     [name setUseQuotientBaselining:expressionView.requiresQuotientBaselining];
@@ -90,7 +90,7 @@ static NSUInteger const kAMIndexRHS;
                                      AM_VIEW_MARGIN + expressionSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
     
     // do the resizing
-    [[equationView animator] setFrameSize:equationSize];
+    [[functionView animator] setFrameSize:equationSize];
     [[expressionView animator]   setFrameSize:expressionSize];
     [[expressionString animator] setFrameSize:stringSize];
     
@@ -101,7 +101,7 @@ static NSUInteger const kAMIndexRHS;
     
     if (expressionView.useQuotientBaselining) {
         NSPoint baseline = NSMakePoint(0,[expressionView baselineOffsetFromBottom]);
-        baseline = [equationView convertPoint:baseline fromView:expressionView];
+        baseline = [functionView convertPoint:baseline fromView:expressionView];
         [name setFrameOrigin:NSMakePoint(AM_VIEW_MARGIN, baseline.y - name.baselineOffsetFromBottom)];
     } else {
         [name setFrameOrigin:NSMakePoint(AM_VIEW_MARGIN, expressionOrigin.y)];
@@ -114,7 +114,7 @@ static NSUInteger const kAMIndexRHS;
     
     // Make the box fit the equation view
     [container setFrameSize:NSMakeSize(equationSize.width+4*AM_VIEW_MARGIN, equationSize.height + 4*AM_VIEW_MARGIN)];
-    [equationView setFrameOrigin:NSMakePoint(2*AM_VIEW_MARGIN, 2*AM_VIEW_MARGIN)];
+    [functionView setFrameOrigin:NSMakePoint(2*AM_VIEW_MARGIN, 2*AM_VIEW_MARGIN)];
     
     [CATransaction commit];
     [[self parentWorksheetController] contentViewController:self isResizingContentTo:expressionView.frame.size  usingAnimationTransaction:NO];
@@ -122,7 +122,7 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)populateView:(AMContentView *)view
 {
-    if (view == self.equationView) {
+    if (view == self.functionView) {
         self.nameView.attributedStringValue = self.record.attributedName;
         KSMExpression * expr = [self.record expressionForIndex:0];
         self.expressionStringView.stringValue = expr.string;

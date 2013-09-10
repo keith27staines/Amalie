@@ -151,7 +151,8 @@
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:nil
                                                      worksheetController:self
-                                                                 content:type groupParentView:view
+                                                                 content:type
+                                                         groupParentView:view
                                                                   record:record];
     
     [self.contentControllers setObject:vc forKey:vc.groupID];

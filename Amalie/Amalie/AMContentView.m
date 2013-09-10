@@ -29,7 +29,6 @@
     return YES;
 }
 
-
 -(id<AMContentViewDataSource>)datasource
 {
     return _datasource;
