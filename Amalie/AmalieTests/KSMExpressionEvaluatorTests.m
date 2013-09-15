@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import <XCTest/XCTest.h>
 #import "KSMWorksheet.h"
-#import "KSMExpressionBuilder.h"
 #import "KSMExpressionEvaluator.h"
 #import "KSMExpression.h"
 @interface KSMExpressionEvaluatorTests : XCTestCase

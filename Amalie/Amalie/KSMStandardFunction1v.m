@@ -190,7 +190,6 @@ NSMutableArray * ksm_standardFunctionsArray;
     return nil;
 }
 
-
 -(KSMMathValue *)evaluate
 {
     KSMFunctionArgument * arg = [self.argumentList argumentAtIndex:0];

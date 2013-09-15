@@ -32,15 +32,15 @@
                         <rect key="frame" x="443" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <scrollView ambiguous="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMQ-RN-CA1">
-                                <rect key="frame" x="20" y="160" width="360" height="420"/>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMQ-RN-CA1">
+                                <rect key="frame" x="20" y="80" width="360" height="500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" ambiguous="YES" id="laH-9q-gSM">
-                                    <rect key="frame" x="1" y="1" width="358" height="418"/>
+                                <clipView key="contentView" id="laH-9q-gSM">
+                                    <rect key="frame" x="1" y="1" width="358" height="498"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="kAMTrayDictionaryKey" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="Irp-Yf-VE1">
-                                            <rect key="frame" x="0.0" y="0.0" width="358" height="418"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="358" height="498"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -96,7 +96,7 @@
                                 </clipView>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="360" id="H9X-6a-37b"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="420" id="IOG-or-aaE"/>
+                                    <constraint firstAttribute="height" constant="500" id="IOG-or-aaE"/>
                                 </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="lNz-ic-g4P">
                                     <rect key="frame" x="1" y="403" width="0.0" height="16"/>
@@ -146,7 +146,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" id="QAX-jf-9Rq">
-                            <rect key="frame" x="426" y="1" width="16" height="598"/>
+                            <rect key="frame" x="427" y="1" width="15" height="598"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>

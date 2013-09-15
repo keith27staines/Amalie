@@ -23,7 +23,20 @@ extern NSString * const kMultiply;
 extern NSString * const kDivide;
 extern NSString * const kAdd;
 extern NSString * const kSubtract;
+extern NSString * const kVectorMultiply;
+extern NSString * const kScalarMultiply;
+extern NSArray * operatorsArray;
 
+typedef enum KSMOperatorType : NSInteger {
+    KSMOperatorTypeUnrecognized = -1,
+    KSMOperatorTypePower = 0,
+    KSMOperatorTypeMultiply = 1,
+    KSMOperatorTypeDivide = 2,
+    KSMOperatorTypeAdd = 3,
+    KSMOperatorTypeSubtract = 4,
+    KSMOperatorTypeVectorMultiply = 5,
+    KSMOperatorTypeScalarMultiply = 6,
+} KSMOperatorType;
 
 typedef enum KSMExpressionType : NSInteger {
     KSMExpressionTypeUnrecognized = -1,
@@ -53,20 +66,25 @@ typedef enum KSMExpressionValidity : NSInteger {
 @property (readonly) NSString * originalString;
 
 /*!
- * Gets the processed string after full-depth analysis.
+ * Gets the processed string after full-depth analysis. It might not bear close
+ * resemblence to the original string, black string or bare string because 
+ * variable names might have been replaced by symbols, and entire subexpressions
+ * with other symbols.
  */
 @property (readonly) NSString * string;
 
 /*!
- * The original string, with white spaces removed. The black string will be the 
- * basis of the hash (and thus is used to build the symbol returned by the symbol
- * property).
+ * The original string with white spaces removed. For non-variable types, the
+ * black string will be the basis of the hash (and thus is used to build the 
+ * symbol returned by the symbol property). For expressions that represent 
+ * variables, the bareString property is used for this purpose.
  */
 @property (readonly) NSString * blackString;
 
 
 /*!
- * The original string, divested of white space and enclosing brackets
+ * The original string, divested of white space and enclosing brackets. This 
+ * string is used for the hash for variable-type expressions.
  */
 @property (readonly) NSString * bareString;
 
@@ -278,5 +296,16 @@ typedef enum KSMExpressionValidity : NSInteger {
  * @Returns YES if the string is fully enclosed by outer brackets, otherwise no.
  */
 +(BOOL)isEnclosedInBrackets:(NSString*)string;
+
+/*!
+ * Returns an array of NSStrings, each string representing one of the operators
+ * allowed in a KSMExpression.
+ */
++(NSArray*)operatorsArray;
+
+/*!
+ * Returns an enumerated type correspondonding to.
+ */
++(KSMOperatorType)operatorTypeFromString:(NSString*)operator;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "KSMWorksheet.h"
-#import "KSMExpressionBuilder.h"
 #import "KSMExpressionEvaluator.h"
 #import "KSMExpression.h"
 #import "KSMFunction.h"
@@ -16,12 +15,11 @@
 
 @interface KSMWorksheet()
 {
-    KSMExpressionBuilder   * _expressionBuilder;
     KSMExpressionEvaluator * _expressionEvaluator;
     NSMutableDictionary    * _referenceCountedObjects;
 }
 
-@property (strong, readwrite) KSMExpressionBuilder * builder;
+//@property (strong, readwrite) KSMExpressionBuilder * builder;
 @property (strong, readwrite) KSMExpressionEvaluator * evaluator;
 @property (strong, readonly) NSMutableDictionary * referenceCountedObjects;
 
@@ -38,7 +36,6 @@
         _expressionsDictionary = [NSMutableDictionary dictionary];
         _variablesDictionary = [NSMutableDictionary dictionary];
         _functionsDictionary = [NSMutableDictionary dictionary];
-        _builder = [[KSMExpressionBuilder alloc] initWithWorksheet:self];
         _evaluator = [[KSMExpressionEvaluator alloc] initWithWorksheet:self];
         [self registerStandardFunctions];
     }
@@ -92,7 +89,7 @@
 
 -(NSString*)buildAndRegisterExpressionFromString:(NSString*)string
 {
-    KSMExpression * expression = [self.builder buildExpressionFromString:string];
+    KSMExpression * expression = [[KSMExpression alloc] initWithString:string];
     return [self registerExpression:expression];
 }
 

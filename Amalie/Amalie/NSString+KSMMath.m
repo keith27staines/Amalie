@@ -72,6 +72,8 @@
 
     NSString * allValidCharacters = [validFirstCharacters stringByAppendingString:[NSString KSMjustNumbers]];
     
+    allValidCharacters = [allValidCharacters stringByAppendingString:@"_"];
+    
     // all valid names must be at least one character
     if ([self length] == 0)return NO;
 

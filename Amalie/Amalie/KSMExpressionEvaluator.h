@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class KSMExpression, KSMWorksheet, KSMNumber;
+@class KSMExpression, KSMWorksheet, KSMNumber, KSMMathValue, KSMFunctionArgumentList;
 
 #import <Foundation/Foundation.h>
 
@@ -43,5 +43,8 @@
 
 -(NSString*)stringByExpandingSymbolsInExpression:(KSMExpression*)expression;
 
+
+-(KSMMathValue*)evaluateExpression:(KSMExpression*)expression
+                    usingArguments:(KSMFunctionArgumentList*)arguments;
 
 @end

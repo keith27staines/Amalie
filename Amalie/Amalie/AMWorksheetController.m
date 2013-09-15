@@ -100,8 +100,8 @@
     view.delegate = self;
     view.trayDataSource = self.trayDataSource;
     
-    [self.worksheetView addSubview:view];
     [view setFrameOrigin:origin];
+    [self.worksheetView addSubview:view];
     
     // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
     [self scheduleLayout];
@@ -149,7 +149,7 @@
     AMInsertableRecord * record = [self insertableRecordForGroupView:view];
 
     AMContentViewController * vc;
-    vc = [AMContentViewController contentViewControllerWithAppController:nil
+    vc = [AMContentViewController contentViewControllerWithAppController:self.appController
                                                      worksheetController:self
                                                                  content:type
                                                          groupParentView:view

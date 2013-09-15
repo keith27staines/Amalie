@@ -27,5 +27,6 @@
 -(KSMFunctionArgument*)argumentWithName:(NSString*)name;
 -(KSMMathValue*)valueAtIndex:(NSUInteger)index;
 -(KSMMathValue*)valueWithName:(NSString*)name;
-
+-(BOOL)validateMathValuesArray:(NSArray*)mathValues;
+-(void)setValuesFromArray:(NSArray*)mathValues;
 @end

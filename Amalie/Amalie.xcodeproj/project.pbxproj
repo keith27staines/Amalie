@@ -49,14 +49,11 @@
 		787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308117836485001851C0 /* NSString_KSMathTests.m */; };
 		787B308917836485001851C0 /* KSMExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308217836485001851C0 /* KSMExpressionTests.m */; };
 		787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308317836485001851C0 /* KSMWorksheetsTests.m */; };
-		787B308B17836485001851C0 /* KSMExpressionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308417836485001851C0 /* KSMExpressionBuilderTests.m */; };
 		787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */; };
 		787B3097178364B8001851C0 /* KSMExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308E178364B8001851C0 /* KSMExpression.m */; };
 		787B3098178364B8001851C0 /* KSMExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308E178364B8001851C0 /* KSMExpression.m */; };
 		787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3090178364B8001851C0 /* NSString+KSMMath.m */; };
 		787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3090178364B8001851C0 /* NSString+KSMMath.m */; };
-		787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3092178364B8001851C0 /* KSMExpressionBuilder.m */; };
-		787B309C178364B8001851C0 /* KSMExpressionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3092178364B8001851C0 /* KSMExpressionBuilder.m */; };
 		787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
@@ -199,14 +196,11 @@
 		787B308117836485001851C0 /* NSString_KSMathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_KSMathTests.m; sourceTree = "<group>"; };
 		787B308217836485001851C0 /* KSMExpressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionTests.m; sourceTree = "<group>"; };
 		787B308317836485001851C0 /* KSMWorksheetsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheetsTests.m; sourceTree = "<group>"; };
-		787B308417836485001851C0 /* KSMExpressionBuilderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionBuilderTests.m; sourceTree = "<group>"; };
 		787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluatorTests.m; sourceTree = "<group>"; };
 		787B308D178364B8001851C0 /* KSMExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpression.h; sourceTree = "<group>"; };
 		787B308E178364B8001851C0 /* KSMExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpression.m; sourceTree = "<group>"; };
 		787B308F178364B8001851C0 /* NSString+KSMMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KSMMath.h"; sourceTree = "<group>"; };
 		787B3090178364B8001851C0 /* NSString+KSMMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KSMMath.m"; sourceTree = "<group>"; };
-		787B3091178364B8001851C0 /* KSMExpressionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpressionBuilder.h; sourceTree = "<group>"; };
-		787B3092178364B8001851C0 /* KSMExpressionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionBuilder.m; sourceTree = "<group>"; };
 		787B3093178364B8001851C0 /* KSMExpressionEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpressionEvaluator.h; sourceTree = "<group>"; };
 		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
 		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
@@ -519,7 +513,6 @@
 				787B308117836485001851C0 /* NSString_KSMathTests.m */,
 				787B308217836485001851C0 /* KSMExpressionTests.m */,
 				787B308317836485001851C0 /* KSMWorksheetsTests.m */,
-				787B308417836485001851C0 /* KSMExpressionBuilderTests.m */,
 				787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */,
 				787B3072178361BC001851C0 /* AmalieTests.m */,
 				787B306D178361BC001851C0 /* Supporting Files */,
@@ -543,8 +536,6 @@
 				787B308E178364B8001851C0 /* KSMExpression.m */,
 				787B308F178364B8001851C0 /* NSString+KSMMath.h */,
 				787B3090178364B8001851C0 /* NSString+KSMMath.m */,
-				787B3091178364B8001851C0 /* KSMExpressionBuilder.h */,
-				787B3092178364B8001851C0 /* KSMExpressionBuilder.m */,
 				787B3093178364B8001851C0 /* KSMExpressionEvaluator.h */,
 				787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */,
 				787B3095178364B8001851C0 /* KSMWorksheet.h */,
@@ -830,7 +821,6 @@
 				78702B9417C3510E006A4331 /* AMNameView.m in Sources */,
 				78EF56A417CCA2E400402847 /* KSMFunctionArgument.m in Sources */,
 				78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */,
-				787B309B178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
 				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
 				7899B2FE17AD3A64008BDB75 /* AMVariableContentView.m in Sources */,
@@ -882,7 +872,6 @@
 				787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
 				7832744D178F1D810051290B /* AMTrayItem.m in Sources */,
 				787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */,
-				787B309C178364B8001851C0 /* KSMExpressionBuilder.m in Sources */,
 				78DE824C1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
 				788709C6178DAEAB008E093A /* AMPreferences.m in Sources */,
 				787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */,
@@ -906,7 +895,6 @@
 				7899B2D417ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				78DE82461783664400C7EE10 /* KSMPrimes.m in Sources */,
 				787B3098178364B8001851C0 /* KSMExpression.m in Sources */,
-				787B308B17836485001851C0 /* KSMExpressionBuilderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

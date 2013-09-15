@@ -81,4 +81,33 @@
     return [self argumentWithName:name].value;
 }
 
+-(BOOL)validateMathValuesArray:(NSArray *)mathValues
+{
+    // Check number of values matches argument count
+    if (!mathValues && self.argumentsCount > 0) return NO;
+    if (mathValues.count != self.argumentsCount) return NO;
+    
+    // check corresponding values and arguments have the same type
+    for (int i = 0; i < self.argumentsCount; i++) {
+        KSMFunctionArgument * arg = self.argumentsArray[i];
+        KSMMathValue * value = mathValues[i];
+        if (arg.type != value.type) return NO;
+    }
+    
+    // Well, okay then!
+    return YES;
+}
+
+-(void)setValuesFromArray:(NSArray*)mathValues
+{
+    if (![self validateMathValuesArray:mathValues]) {
+        [NSException raise:@"values cannot be set from this array." format:nil];
+    }
+
+    for (int i = 0; i < self.argumentsCount; i++) {
+        KSMFunctionArgument * arg = self.argumentsArray[i];
+        KSMMathValue * value = mathValues[i];
+        arg.mathValue = value;
+    }
+}
 @end

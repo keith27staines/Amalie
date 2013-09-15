@@ -7,7 +7,7 @@
 //
 
 #import "KSMVector.h"
-
+#import "KSMMathValue.h"
 
 static KSMVector * _zero3DVector;
 
@@ -37,44 +37,44 @@ static KSMVector * _zero3DVector;
     return [_array copy];
 }
 
--(float)x1
+-(KSMMathValue*)x1
 {
-    return [_array[0] floatValue];
+    return _array[0];
 }
--(float)x2
+-(KSMMathValue*)x2
 {
-    return [_array[1] floatValue];
+    return _array[1];
 }
--(float)x3
+-(KSMMathValue*)x3
 {
-    return [_array[2] floatValue];
-}
-
--(float)r
-{
-    return [_array[0] floatValue];
-}
--(float)theta
-{
-    return [_array[1] floatValue];
-}
--(float)phi
-{
-    return [_array[2] floatValue];
+    return _array[2];
 }
 
+-(KSMMathValue*)r
+{
+    return _array[0];
+}
+-(KSMMathValue*)theta
+{
+    return _array[1];
+}
+-(KSMMathValue*)phi
+{
+    return _array[2];
+}
 
--(float)x
+
+-(KSMMathValue*)x
 {
-    return [_array[0] floatValue];
+    return _array[0];
 }
--(float)y
+-(KSMMathValue*)y
 {
-    return [_array[1] floatValue];
+    return _array[1];
 }
--(float)z
+-(KSMMathValue*)z
 {
-    return [_array[2] floatValue];
+    return _array[2];
 }
 
 - (id)init
@@ -106,8 +106,12 @@ static KSMVector * _zero3DVector;
     return self;
 }
 
++(KSMVector*)zero2DVector
+{
+    return [KSMVector zero3DVector];
+}
 
-+(id)zero3DVector
++(KSMVector*)zero3DVector
 {
     if (!_zero3DVector) {
         _zero3DVector = [[KSMVector alloc] init];
@@ -119,6 +123,67 @@ static KSMVector * _zero3DVector;
 {
     return _dimension;
 }
+
++(KSMVector*)unitVectorFrom:(KSMVector*)vector
+{
+    return nil;
+}
+
+-(KSMVector*)unitVector
+{
+    return [KSMVector unitVectorFrom:self];
+}
+
++(KSMVector*)vectorByAdding:(KSMVector*)u and:(KSMVector *)v
+{
+    return nil;
+}
+
+-(KSMVector*)vectorByAdding:(KSMVector*)rightVector
+{
+    return [KSMVector vectorByAdding:rightVector and:self];
+}
+
++(KSMVector*)vectorBySubtracting:(KSMVector *)u from:(KSMVector*)v
+{
+    return nil;
+}
+
+-(KSMVector*)vectorBySubtracting:(KSMVector *)rightVector
+{
+    return [KSMVector vectorBySubtracting:rightVector from:self];
+}
+
++(KSMVector*)vectorFromProductLeft:(KSMVector*)left withRight:(KSMVector*)right
+{
+    return nil;
+}
+
+-(KSMVector*)vectorProductWith:(KSMVector *)rightVector
+{
+    return [KSMVector vectorFromProductLeft:self withRight:rightVector];
+}
+
++(KSMMathValue*)scalarProduct:(KSMVector*)u with:(KSMVector*)v
+{
+    return nil;
+}
+
+-(KSMMathValue*)scalarProductWith:(KSMVector*)otherVector
+{
+    return [KSMVector scalarProduct:self with:otherVector];
+}
+
+-(KSMMathValue*)magnitude
+{
+    return nil;
+}
+
+-(KSMMathValue*)magnitudeSquared
+{
+    return nil;
+}
+
 
 
 @end

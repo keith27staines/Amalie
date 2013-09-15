@@ -9,9 +9,9 @@
 #import "KSMExpression.h"
 #import "NSString+KSMMath.h"
 
-NSString * const kOperatorsString = @"^*/+-";
-NSString * const kBinaryOperatorsString = @"^*/+-";
-NSString * const kAllowedCharacters = @"$abcdefghijklmnopqrtsuvwxyz0123456789";
+NSString * const kOperatorsString = @"^*/+-∧∘";
+NSString * const kBinaryOperatorsString = @"^*/+-∧∘";
+NSString * const kAllowedCharacters = @"$abcdefghijklmnopqrtsuvwxyz0123456789_";
 NSString * const kLeftBrace = @"(";
 NSString * const kRightBrace = @")";
 NSString * const kSpace = @" ";
@@ -23,6 +23,9 @@ NSString * const kMultiply = @"*";
 NSString * const kDivide = @"/";
 NSString * const kAdd = @"+";
 NSString * const kSubtract = @"-";
+NSString * const kVectorMultiply = @"∧";
+NSString * const kScalarMultiply = @"∘";
+// NSArray * operatorsArray = @[kPower];
 
 @interface KSMExpression()
 {
@@ -93,7 +96,7 @@ NSString * const kSubtract = @"-";
         // Record the bare string, with spaces removed. The bare string will be the basis of the hash (and thus is used to build the symbol, as returned by the symbol property).
         _blackString = [_string copy];
         
-        _operatorsArray = @[kPower, kMultiply, kDivide, kAdd, kSubtract];
+        _operatorsArray = [KSMExpression operatorsArray];
         _leftOperand    = nil;
         _rightOperand   = nil;
         _operator       = nil;
@@ -102,10 +105,34 @@ NSString * const kSubtract = @"-";
     return self;
 }
 
++(NSArray*)operatorsArray
+{
+    return @[kPower, kMultiply, kDivide, kAdd, kSubtract, kScalarMultiply, kVectorMultiply];
+}
+
++(KSMOperatorType)operatorTypeFromString:(NSString *)operator
+{
+    if ([operator isEqualToString:kPower])          return KSMOperatorTypePower;
+    if ([operator isEqualToString:kAdd])            return KSMOperatorTypePower;
+    if ([operator isEqualToString:kSubtract])       return KSMOperatorTypePower;
+    if ([operator isEqualToString:kMultiply])       return KSMOperatorTypePower;
+    if ([operator isEqualToString:kDivide])         return KSMOperatorTypePower;
+    if ([operator isEqualToString:kScalarMultiply]) return KSMOperatorTypePower;
+    if ([operator isEqualToString:kVectorMultiply]) return KSMOperatorTypePower;
+    
+    NSLog(@"Operator %@ is not recognised.",operator);
+    return KSMOperatorTypeUnrecognized;
+}
+
 -(NSString *)symbol
 {
     if (!_symbol) {
-        NSUInteger hash = [self.blackString hash];
+        NSUInteger hash;
+        if (self.expressionType == KSMExpressionTypeVariable) {
+            hash = [self.bareString hash];
+        } else {
+            hash = [self.blackString hash];
+        }
         _symbol = [kSymbolPrefix stringByAppendingFormat:@"%lud",(unsigned long)hash];
     }
     return _symbol;
@@ -172,13 +199,15 @@ NSString * const kSubtract = @"-";
     // We're done
     return;
     
-    //todo: add code to verify and evaluate content of complex brackets eg (sin(x) +exp(y)^2)
+    //TODO: add code to verify and evaluate content of complex brackets eg (sin(x) +exp(y)^2)
     
-    //todo: add code to veryify and evaluate content of brackets of multi-variable functions eg (dist(x,y))
+    //TODO: add code to veryify and evaluate content of brackets of multi-variable functions eg (dist(x,y))
 }
 
 -(KSMExpressionType)determineExpressionType
 {
+    _symbol = nil; // Because what we are doing here may change the symbol. This only matters if the symbol is inspected (and hence set) before this method was called.
+    
     NSUInteger operatorCount = [KSMExpression operatorCountInString:self.string
                                                       operatorArray:self.arrayOfOperators];
     if (operatorCount > 1) {

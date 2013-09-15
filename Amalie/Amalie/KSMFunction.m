@@ -32,10 +32,19 @@
     self = [super init];
     if (self) {
         _argumentList = argumentList;
+        if (!_argumentList) {
+            _argumentList = [[KSMFunctionArgumentList alloc] init];
+        }
         _returnType = returnType;
         _name = @"";
     }
     return self;
+}
+
+-(KSMMathValue *)evaluateWithValues:(NSArray *)mathValues
+{
+    [self.argumentList setValuesFromArray:mathValues];
+    return [self evaluate];
 }
 
 -(KSMMathValue *)evaluate

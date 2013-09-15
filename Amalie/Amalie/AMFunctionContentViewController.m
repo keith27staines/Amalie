@@ -80,24 +80,24 @@ static NSUInteger const kAMIndexRHS;
     [name setUseQuotientBaselining:expressionView.requiresQuotientBaselining];
     
     // The sizes of the important nested and sibling views
-    NSSize expressionSize   = expressionView.intrinsicContentSize;
+    NSSize expressionViewSize   = expressionView.intrinsicContentSize;
     NSSize stringSize =  NSMakeSize( [[expressionString stringValue] sizeWithAttributes:@{NSFontAttributeName: expressionString.font}].width + 10, expressionString.frame.size.height);
     
     if (stringSize.width < AM_MIN_STRING_WIDTH) stringSize.width = AM_MIN_STRING_WIDTH;
-    stringSize.width = fmaxf(expressionSize.width, stringSize.width);
+    stringSize.width = fmaxf(expressionViewSize.width, stringSize.width);
     
-    NSSize equationSize = NSMakeSize(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN + stringSize.width + AM_VIEW_MARGIN,
-                                     AM_VIEW_MARGIN + expressionSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
+    NSSize functionViewSize = NSMakeSize(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN + stringSize.width + AM_VIEW_MARGIN,
+                                     AM_VIEW_MARGIN + expressionViewSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
     
     // do the resizing
-    [[functionView animator] setFrameSize:equationSize];
-    [[expressionView animator]   setFrameSize:expressionSize];
+    [[functionView animator] setFrameSize:functionViewSize];
+    [[expressionView animator]   setFrameSize:expressionViewSize];
     [[expressionString animator] setFrameSize:stringSize];
     
     // and repositioning
     
     NSPoint expressionOrigin = NSMakePoint(AM_VIEW_MARGIN + name.frame.size.width + AM_VIEW_MARGIN,
-                                           equationSize.height - AM_VIEW_MARGIN - expressionSize.height);
+                                           functionViewSize.height - AM_VIEW_MARGIN - expressionViewSize.height);
     
     if (expressionView.useQuotientBaselining) {
         NSPoint baseline = NSMakePoint(0,[expressionView baselineOffsetFromBottom]);
@@ -113,7 +113,7 @@ static NSUInteger const kAMIndexRHS;
     [[expressionString animator] setFrameOrigin:stringOrigin];
     
     // Make the box fit the equation view
-    [container setFrameSize:NSMakeSize(equationSize.width+4*AM_VIEW_MARGIN, equationSize.height + 4*AM_VIEW_MARGIN)];
+    [container setFrameSize:NSMakeSize(functionViewSize.width+4*AM_VIEW_MARGIN, functionViewSize.height + 4*AM_VIEW_MARGIN)];
     [functionView setFrameOrigin:NSMakePoint(2*AM_VIEW_MARGIN, 2*AM_VIEW_MARGIN)];
     
     [CATransaction commit];

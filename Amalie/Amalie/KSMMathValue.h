@@ -19,24 +19,35 @@ typedef enum KSMValueType : NSUInteger {
 
 #import <Foundation/Foundation.h>
 
-@interface KSMMathValue : NSObject
+@interface KSMMathValue : NSObject <NSCopying>
 
-@property (readonly) NSNumber        * integerValue;
-@property (readonly) NSNumber        * doubleValue;
+@property (readonly) NSInteger         integerValue;
+@property (readonly) double            doubleValue;
 @property (readonly, copy) KSMVector * vectorValue;
 @property (readonly, copy) KSMMatrix * matrixValue;
 @property (readonly) KSMValueType type;
 
++(KSMValueType)valueTypeForVariableName:(NSString*)variableName;
++(BOOL)isNumericType:(KSMMathValue*)value;
+-(BOOL)isNumericType;
 
 -(id)initWithInteger:(NSInteger)anInteger;
 -(id)initWithDouble:(double)aDouble;
--(id)initWithIntegerValue:(NSNumber*)integerValue;
--(id)initWithDoubleValue:(NSNumber*)doubleValue;
--(id)initWithVectorValue:(KSMVector*)vectorValue;
--(id)initWithMatrixValue:(KSMMatrix*)matrixValue;
+-(id)initWithVector:(KSMVector*)vectorValue;
+-(id)initWithMatrix:(KSMMatrix*)matrixValue;
+-(id)initWithValue:(KSMMathValue*)value;
 
--(double)valueAsDouble;
--(NSInteger)valueAsInteger;
++(KSMMathValue*)mathValueFromInteger:(NSInteger)i;
++(KSMMathValue*)mathValueFromDouble:(double)d;
++(KSMMathValue*)mathValueFromVector:(KSMVector*)v;
++(KSMMathValue*)mathValueFromMatrix:(KSMMatrix*)m;
++(KSMMathValue*)mathValueFromValue:(KSMMathValue*)v;
 
+-(KSMMathValue*)mathValueByAdding:(KSMMathValue*)other;
+-(KSMMathValue*)mathValueBySubtracting:(KSMMathValue*)other;
+-(KSMMathValue*)mathValueByMultiplying:(KSMMathValue*)other;
+-(KSMMathValue*)mathValueByDividing:(KSMMathValue*)denominator;
+-(KSMMathValue*)mathValueByVectorMultiplying:(KSMMathValue*)rightVector;
+-(KSMMathValue*)mathValueByRaisingToPower:(KSMMathValue*)exponent;
 
 @end

@@ -25,5 +25,6 @@
 
 
 -(KSMMathValue*)evaluate;
+-(KSMMathValue*)evaluateWithValues:(NSArray*)mathValues;
 
 @end

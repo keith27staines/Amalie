@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "KSMWorksheet.h"
-#import "KSMExpressionBuilder.h"
 #import "KSMExpressionEvaluator.h"
 #import "KSMExpression.h"
 
@@ -34,9 +33,7 @@
 {
     KSMWorksheet * worksheet = [[KSMWorksheet alloc] init];
     worksheet.title = @"Test Worksheet";
-    KSMExpressionBuilder * worksheetBuilder = worksheet.builder;
     KSMExpressionEvaluator * worksheetEvaluator = worksheet.evaluator;
-    XCTAssertTrue(worksheetBuilder, @"The worksheet's expression builder is nil.");
     XCTAssertTrue(worksheetEvaluator, @"The worksheet's expression evaluator is nil.");
 }
 
