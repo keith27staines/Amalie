@@ -100,14 +100,15 @@ enum KSMBinaryType {
     NSString * operator = expression.operator;
     
     // Now, can we interpret both as integers? If iLeft and iRight both resolve into proper integers and not NANs, then we are dealing with the simplest case - i,e, expression involving an arithmetic operation between purely integer operands, so expressions like 2 * 4, or 7 / 2, etc.
-    NSInteger iLeft = [self integerValueForLiteralOrVariableExpression:simpleLeft];
-    NSInteger iRight =[self integerValueForLiteralOrVariableExpression:simpleRight];
-    if ( ! (iLeft == NAN || iRight == NAN))
+    KSMMathValue * lv = [self mathValueForExpression:simpleLeft];
+    KSMMathValue * rv = [self mathValueForExpression:simpleRight];
+    
+    if (lv.type == KSMValueInteger && rv.type == KSMValueInteger )
     {
         // Yes, we are dealing with an expression of the form intA * intB where here * stands for any arithmetic operator. The simplification in this sense is mostly trivial, with only intA / intB requiring genuine simplification (as opposed to arithmetic evaluation). Still, in order to keep this method as simple as possible, we will delegate the work to another method...
-        return [self expressionSimplifyingLeftInteger:iLeft
+        return [self expressionSimplifyingLeftInteger:lv.integerValue
                                              operator:operator
-                                         rightInteger:iRight];
+                                         rightInteger:rv.integerValue];
     } else {
     
         // TODO: could either keep things simple for now and just return the expression, effectively saying that we can't simplify expressions more complex that binary arithmetical operations on integer operands, or we take the next step and try to process int + rational fraction, rational fraction + rational fraction, etc
@@ -117,50 +118,57 @@ enum KSMBinaryType {
     }
 }
 
--(NSInteger)integerValueForLiteralOrVariableExpression:(KSMExpression*)expression
+-(KSMMathValue*)mathValueForExpression:(KSMExpression*)expression
 {
-    NSString * string = expression.string;
+    NSInteger KSMIntegerMax = NSIntegerMax;
+    NSInteger KSMIntegerMin = NSIntegerMin;
+    
     switch (expression.expressionType) {
         case KSMExpressionTypeLiteral:
-            return interpretDoubleAsInteger([string doubleValue]);
-
+        {
+            NSDecimalNumber * n = [NSDecimalNumber decimalNumberWithString:expression.bareString];
+            BOOL isNumber = [n isEqualToNumber:[NSDecimalNumber notANumber]];
+            if ( isNumber ) {
+                // Programming error somewhere...
+                NSAssert(isNumber, @"The string %@ cannot be interpreted as a number.",expression.bareString);
+                return nil;
+            }
+            double d = [n doubleValue];
+            if ( d > KSMIntegerMax || d < KSMIntegerMin ) {
+                // Value too big to be represented by an NSInteger
+                return [KSMMathValue mathValueFromDouble:d];
+            }
+            NSInteger i = interpretDoubleAsInteger(d);
+            if ( (double)i == d ) {
+                return [KSMMathValue mathValueFromInteger:i];
+            } else {
+                return [KSMMathValue mathValueFromDouble:d];
+            }
+        }
         case KSMExpressionTypeVariable:
         {
-            NSNumber * n = self.worksheet.variablesDictionary[expression.symbol];
-            return interpretDoubleAsInteger([n doubleValue]);
+            return self.worksheet.variablesDictionary[expression.symbol];
+        }
+        case KSMExpressionTypeBinary:
+        {
+            KSMExpression * leftExpression;
+            KSMExpression * rightExpression;
+            NSString * operator = expression.operator;
+            [self getLeftOperandResult:&leftExpression
+                    rightOperandResult:&rightExpression
+                        fromExpression:expression];
+            KSMMathValue * leftValue  = [self mathValueForExpression:leftExpression];
+            KSMMathValue * rightValue = [self mathValueForExpression:rightExpression];
+            
+            return [KSMMathValue mathValueFromLeftMathValue:leftValue
+                                                   operator:operator
+                                             rightMathValue:rightValue];
         }
         default:
-            break;
-    }
-    return NAN;
-}
-
--(double)doubleValueForExpression:(KSMExpression*)expression
-{
-    if (!expression) return 0;
-    if (!expression.valid) return NAN;
-    if (expression.expressionType == KSMExpressionTypeLiteral)
-        return [expression.string doubleValue];
-    if (expression.expressionType == KSMExpressionTypeVariable) {
-        NSNumber * n = self.worksheet.variablesDictionary[expression.symbol];
-        return [n doubleValue];
+            return nil;
     }
     
-    KSMExpression * leftExpression;
-    KSMExpression * rightExpression;
-    NSString * operator = expression.operator;
-    [self getLeftOperandResult:&leftExpression
-            rightOperandResult:&rightExpression
-                fromExpression:expression];
-    double leftValue = [self doubleValueForExpression:leftExpression];
-    double rightValue = [self doubleValueForExpression:rightExpression];
-    
-    if ([operator isEqualToString:kPower])      return pow(leftValue, rightValue);
-    if ([operator isEqualToString:kMultiply])   return leftValue * rightValue;
-    if ([operator isEqualToString:kDivide])     return leftValue / rightValue;
-    if ([operator isEqualToString:kAdd])        return leftValue + rightValue;
-    if ([operator isEqualToString:kSubtract])   return leftValue - rightValue;
-    return NAN;
+    return nil;
 }
 
 -(void)getLeftOperandResult:(KSMExpression**)leftExpression
@@ -182,7 +190,7 @@ enum KSMBinaryType {
                                          operator:(NSString*)operator
                                      rightInteger:(NSInteger)right
 {
-    NSString * sResult;
+    NSString * simpleExpressionString = nil;
     
     // Division is simplified by dividing both numerator and denominator by their gcd 
     if ([operator isEqualToString:kDivide]) {
@@ -197,9 +205,9 @@ enum KSMBinaryType {
         right = right / g;
         NSString * sLeft = [NSString stringWithFormat:@"%ld", left];
         NSString * sRight = [NSString stringWithFormat:@"%ld", right];
-        sResult = [sLeft stringByAppendingString:kDivide];
-        sResult = [sResult stringByAppendingString:sRight];
-        return [[KSMExpression alloc] initWithString:sResult];
+        simpleExpressionString = [sLeft stringByAppendingString:kDivide];
+        simpleExpressionString = [simpleExpressionString stringByAppendingString:sRight];
+        return [[KSMExpression alloc] initWithString:simpleExpressionString];
     }
     
     // all other operations are much simpler...
@@ -208,8 +216,8 @@ enum KSMBinaryType {
     if ([operator isEqualToString:kMultiply])   iResult = left * right;
     if ([operator isEqualToString:kAdd])        iResult = left + right;
     if ([operator isEqualToString:kSubtract])   iResult = left - right;
-    sResult = [NSString stringWithFormat:@"%ld",iResult];
-    return [[KSMExpression alloc] initWithString:sResult];
+    simpleExpressionString = [NSString stringWithFormat:@"%ld",iResult];
+    return [[KSMExpression alloc] initWithString:simpleExpressionString];
 }
 
 -(NSString*)stringByExpandingSymbolsInExpression:(KSMExpression*)expression

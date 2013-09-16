@@ -37,6 +37,10 @@ typedef enum KSMValueType : NSUInteger {
 -(id)initWithMatrix:(KSMMatrix*)matrixValue;
 -(id)initWithValue:(KSMMathValue*)value;
 
++(KSMMathValue *) mathValueFromLeftMathValue:(KSMMathValue*)left
+                                    operator:(NSString*)operator
+                              rightMathValue:(KSMMathValue*)right;
+
 +(KSMMathValue*)mathValueFromInteger:(NSInteger)i;
 +(KSMMathValue*)mathValueFromDouble:(double)d;
 +(KSMMathValue*)mathValueFromVector:(KSMVector*)v;

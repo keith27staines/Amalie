@@ -25,7 +25,6 @@ NSString * const kAdd = @"+";
 NSString * const kSubtract = @"-";
 NSString * const kVectorMultiply = @"∧";
 NSString * const kScalarMultiply = @"∘";
-// NSArray * operatorsArray = @[kPower];
 
 @interface KSMExpression()
 {

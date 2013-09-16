@@ -10,6 +10,7 @@
 #import "KSMVector.h"
 #import "KSMMatrix.h"
 #import "NSString+KSMMath.h"
+#import "KSMExpression.h"
 
 @interface KSMMathValue()
 {
@@ -166,6 +167,31 @@
             return [[KSMMathValue alloc] initWithVector:[[self vectorValue] copy]];
         case KSMValueMatrix:
             return [[KSMMathValue alloc] initWithMatrix:[[self matrixValue] copy]];
+    }
+}
+
++(KSMMathValue *) mathValueFromLeftMathValue:(KSMMathValue*)left
+                                    operator:(NSString*)operator
+                              rightMathValue:(KSMMathValue*)right
+{
+    KSMOperatorType operatorType = [KSMExpression operatorTypeFromString:operator];
+    switch (operatorType) {
+        case KSMOperatorTypeAdd:
+            return [left mathValueByAdding:right];
+        case KSMOperatorTypeSubtract:
+            return [left mathValueBySubtracting:right];
+        case KSMOperatorTypeMultiply:
+            return [left mathValueByMultiplying:right];
+        case KSMOperatorTypeDivide:
+            return [left mathValueByDividing:right];
+        case KSMOperatorTypeScalarMultiply:
+            return [left mathValueByMultiplying:right];
+        case KSMOperatorTypePower:
+            return [left mathValueByRaisingToPower:right];
+        case KSMOperatorTypeVectorMultiply:
+            return [left mathValueByVectorMultiplying:right];
+        case KSMOperatorTypeUnrecognized:
+            return nil;
     }
 }
 
