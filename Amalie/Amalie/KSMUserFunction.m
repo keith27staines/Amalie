@@ -9,7 +9,7 @@
 #import "KSMUserFunction.h"
 @interface KSMUserFunction()
 {
-    NSString * _name;
+
 }
 @end
 
@@ -21,18 +21,12 @@
        expression:(KSMExpression*)expression
         worksheet:(KSMWorksheet *)worksheet
 {
-    self = [super initWithArgumentList:argumentList returnType:returnType];
+    self = [super initWithArgumentList:argumentList returnType:returnType name:name];
     if (self) {
-        _name = [name copy];
         _expression = expression;
         _worksheet = worksheet;
     }
     return self;
-}
-
--(NSString*)name
-{
-    return _name;
 }
 
 -(KSMMathValue*)evaluate

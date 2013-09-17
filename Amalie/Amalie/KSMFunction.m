@@ -10,9 +10,12 @@
 #import "KSMExpression.h"
 #import "KSMWorksheet.h"
 #import "KSMFunctionArgumentList.h"
+#import "KSMSymbolProvider.h"
 
 @interface KSMFunction()
-
+{
+    NSString * _name;
+}
 @property (readwrite, copy) NSString * name;
 
 @end
@@ -20,14 +23,13 @@
 
 @implementation KSMFunction
 
-
 -(id)init
 {
     return [self initWithArgumentList:nil returnType:KSMValueDouble];
 }
 
 - (id)initWithArgumentList:(KSMFunctionArgumentList*)argumentList
-                returnType:(KSMValueType)returnType
+                returnType:(KSMValueType)returnType name:(NSString*)name
 {
     self = [super init];
     if (self) {
@@ -36,9 +38,16 @@
             _argumentList = [[KSMFunctionArgumentList alloc] init];
         }
         _returnType = returnType;
-        _name = @"";
+        _name = name;
+        NSLog(@"%@",self.name);
     }
     return self;
+}
+
+- (id)initWithArgumentList:(KSMFunctionArgumentList*)argumentList
+                returnType:(KSMValueType)returnType
+{
+    return [self initWithArgumentList:argumentList returnType:returnType name:@""];
 }
 
 -(KSMMathValue *)evaluateWithValues:(NSArray *)mathValues
@@ -56,7 +65,12 @@
 #pragma mark - KSMReferenceCountedObject -
 -(NSString *)symbol
 {
-    return [NSString stringWithFormat:@"%lu",(unsigned long)self.hash];
+    return [[KSMSymbolProvider sharedSymbolProvider] symbolForString:self.name];
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Function named %@",self.name];
 }
 
 @end

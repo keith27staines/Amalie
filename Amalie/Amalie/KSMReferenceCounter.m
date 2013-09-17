@@ -29,6 +29,12 @@ static BOOL LOGGING = YES;
     return nil;
 }
 
++(id)referenceCounterForObject:(id<KSMReferenceCountedObject>)object
+                      delegate:(id<KSMReferenceCounterDelegate>)delegate
+{
+    return [[KSMReferenceCounter alloc] initWithObject:object delegate:delegate];
+}
+
 -(id)initWithObject:(id<KSMReferenceCountedObject>)object
          delegate:(id<KSMReferenceCounterDelegate>)delegate
 {

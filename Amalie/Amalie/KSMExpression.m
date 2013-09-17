@@ -8,6 +8,7 @@
 
 #import "KSMExpression.h"
 #import "NSString+KSMMath.h"
+#import "KSMSymbolProvider.h"
 
 NSString * const kOperatorsString = @"^*/+-∧∘";
 NSString * const kBinaryOperatorsString = @"^*/+-∧∘";
@@ -126,13 +127,12 @@ NSString * const kScalarMultiply = @"∘";
 -(NSString *)symbol
 {
     if (!_symbol) {
-        NSUInteger hash;
+        KSMSymbolProvider * symbolProvider = [KSMSymbolProvider sharedSymbolProvider];
         if (self.expressionType == KSMExpressionTypeVariable) {
-            hash = [self.bareString hash];
+            _symbol = [symbolProvider symbolForString:self.bareString];
         } else {
-            hash = [self.blackString hash];
+            _symbol = [symbolProvider symbolForString:self.blackString];
         }
-        _symbol = [kSymbolPrefix stringByAppendingFormat:@"%lud",(unsigned long)hash];
     }
     return _symbol;
 }

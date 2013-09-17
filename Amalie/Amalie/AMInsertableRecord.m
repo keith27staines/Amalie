@@ -23,6 +23,10 @@
 
 @implementation AMInsertableRecord
 
+-(void)deleteFromStore
+{
+    
+}
 
 - (id)init
 {

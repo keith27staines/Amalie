@@ -30,6 +30,12 @@
 -(id)initWithObject:(id<KSMReferenceCountedObject>)object
            delegate:(id<KSMReferenceCounterDelegate>)delegate;
 
+/*!
+ Convenience method that calls the designated initializer
+ */
++(id)referenceCounterForObject:(id<KSMReferenceCountedObject>)object
+                      delegate:(id<KSMReferenceCounterDelegate>)delegate;
+
 - (void)increment;
 - (void)decrement;
 

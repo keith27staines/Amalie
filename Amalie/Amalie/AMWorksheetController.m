@@ -124,7 +124,11 @@
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)view
 {
     NSString * groupID = view.groupID;
-    // AMInsertableRecord * record = self.insertedRecords[groupID];
+    AMContentView * contentView = view.contentView;
+    [self unregisterContentView:contentView];
+    
+    AMInsertableRecord * record = self.insertedRecords[groupID];
+    [record deleteFromStore];
 
     [_insertsArray removeObject:view];
     [_insertsDictionary removeObjectForKey:groupID];
@@ -132,6 +136,11 @@
     view.delegate = nil;
     [view removeFromSuperview];
     [self scheduleLayout];
+}
+
+-(void)unregisterContentView:(AMContentView*)contentView
+{
+    
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft

@@ -23,6 +23,9 @@
 - (id)initWithArgumentList:(KSMFunctionArgumentList*)argumentList
                 returnType:(KSMValueType)returnType;
 
+- (id)initWithArgumentList:(KSMFunctionArgumentList*)argumentList
+                returnType:(KSMValueType)returnType name:(NSString*)name;
+
 
 -(KSMMathValue*)evaluate;
 -(KSMMathValue*)evaluateWithValues:(NSArray*)mathValues;

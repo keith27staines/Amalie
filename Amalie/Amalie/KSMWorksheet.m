@@ -62,7 +62,7 @@
     if ( ! [self isObjectRegistered:expression]) {
         
         // register the top level expression
-        refCounter = [[KSMReferenceCounter alloc] initWithObject:expression delegate:self];
+        refCounter = [KSMReferenceCounter referenceCounterForObject:expression delegate:self];
         self.referenceCountedObjects[symbol] = refCounter;
         self.expressionsDictionary[symbol] = expression;
         

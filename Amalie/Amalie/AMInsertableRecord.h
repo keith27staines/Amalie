@@ -36,7 +36,7 @@
               type:(AMInsertableType)type
          mathSheet:(KSMWorksheet*)sheet;
 
-
+-(void)deleteFromStore;
 
 /*!
  Returns the expression at the specified index. For example, if the receiver 

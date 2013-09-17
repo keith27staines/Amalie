@@ -63,11 +63,10 @@ static CABasicAnimation * animateOrigin;
 
 -(void)viewDidMoveToWindow
 {
-    AMContentView * contentView;
-    contentView = [self.delegate insertableView:self
-                      requiresContentViewOfType:self.insertableType];
+    _contentView = [self.delegate insertableView:self
+                       requiresContentViewOfType:self.insertableType];
 
-    [self addSubview:contentView];
+    [self addSubview:_contentView];
 }
 
 #pragma mark - State -

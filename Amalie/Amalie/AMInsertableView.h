@@ -40,6 +40,7 @@ NSDraggingSource
 @property (readonly) NSPoint mouseDownWindowPoint;
 @property (readonly) BOOL isDragging;
 @property (readonly) NSImage * dragImage;
+@property (weak, readonly)AMContentView * contentView;
 
 // Frame positioning
 @property (readonly) float frameWidth;

@@ -92,6 +92,8 @@
 		78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
 		78AEEB5C179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
 		78AEEB5F179EF96C00BFF474 /* AMInsertableRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */; };
+		78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */; };
+		78AF0A6917E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */; };
 		78B205C617D5D6F80059773A /* AMFunctionContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */; };
 		78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78B205C717D5DBC50059773A /* AMFunctionContentView.xib */; };
 		78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B205CA17D5DC1D0059773A /* AMFunctionContentView.m */; };
@@ -260,6 +262,8 @@
 		78AEEB5A179EF38900BFF474 /* AMNameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameRules.m; sourceTree = "<group>"; };
 		78AEEB5D179EF96C00BFF474 /* AMInsertableRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableRecord.h; sourceTree = "<group>"; };
 		78AEEB5E179EF96C00BFF474 /* AMInsertableRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableRecord.m; sourceTree = "<group>"; };
+		78AF0A6617E8FB4B00C018DB /* KSMSymbolProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMSymbolProvider.h; sourceTree = "<group>"; };
+		78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMSymbolProvider.m; sourceTree = "<group>"; };
 		78B205C317D47B470059773A /* KSMReferenceCountedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMReferenceCountedObject.h; sourceTree = "<group>"; };
 		78B205C417D5D6F80059773A /* AMFunctionContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionContentViewController.h; sourceTree = "<group>"; };
 		78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionContentViewController.m; sourceTree = "<group>"; };
@@ -563,6 +567,8 @@
 				78EF56AB17CF3B0B00402847 /* KSMVector.m */,
 				78EF56AE17CF3B2200402847 /* KSMMatrix.h */,
 				78EF56AF17CF3B2200402847 /* KSMMatrix.m */,
+				78AF0A6617E8FB4B00C018DB /* KSMSymbolProvider.h */,
+				78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */,
 			);
 			name = KSMMath;
 			sourceTree = "<group>";
@@ -867,6 +873,7 @@
 				78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */,
 				785D9A21179C5930004D39B5 /* AMExpressionContentViewController.m in Sources */,
 				7811D2C617A2550E0024839B /* AMRefTree.m in Sources */,
+				78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */,
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
@@ -904,6 +911,7 @@
 				787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				78BBB30217D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
 				787B308617836485001851C0 /* KSMPrimeTests.m in Sources */,
+				78AF0A6917E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */,
 				78EF56A917CF39F400402847 /* KSMMathValue.m in Sources */,
 				787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */,
 				789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */,

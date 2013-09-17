@@ -16,7 +16,6 @@ NSMutableArray * ksm_standardFunctionsArray;
 @interface KSMStandardFunction1v()
 {
     KSMStandardFunctions      _functionType;
-    NSString                * _name;
 }
 
 @end
@@ -67,7 +66,8 @@ NSMutableArray * ksm_standardFunctionsArray;
     if ([name isEqualToString:@"cos"])     return KSMStandardFunctionCosineFn;
     if ([name isEqualToString:@"tan"])     return KSMStandardFunctionTangentFn;
     if ([name isEqualToString:@"cosec"])   return KSMStandardFunctionCosecantFn;
-    if ([name isEqualToString:@"sec"])     return KSMStandardFunctionCotangentFn;
+    if ([name isEqualToString:@"sec"])     return KSMStandardFunctionSecantFn;
+    if ([name isEqualToString:@"cot"])     return KSMStandardFunctionCotangentFn;
     // inverse trig functions
     if ([name isEqualToString:@"asin"])    return KSMStandardFunctionArcSineFn;
     if ([name isEqualToString:@"acos"])    return KSMStandardFunctionArcCosineFn;
@@ -100,7 +100,8 @@ NSMutableArray * ksm_standardFunctionsArray;
     if (!ksm_standardFunctionsArray) {
         ksm_standardFunctionsArray = [NSMutableArray array];
         for (NSString * fnName in [self arrayOfStandardFunctionNames]) {
-            KSMStandardFunction1v * fn = [[KSMStandardFunction1v alloc] initWithFunctionType:1];
+            KSMStandardFunctions type = [KSMStandardFunction1v functionTypeForName:fnName];
+            KSMStandardFunction1v * fn = [[KSMStandardFunction1v alloc] initWithFunctionType:type];
             [ksm_standardFunctionsArray addObject:fn];
         }
 
@@ -168,11 +169,10 @@ NSMutableArray * ksm_standardFunctionsArray;
     KSMMathValue * value = [[KSMMathValue alloc] initWithDouble:0.0];
     KSMFunctionArgumentList * argList = [[KSMFunctionArgumentList alloc] init];
     [argList addArgumentWithName:@"x" value:value];
-    
-    self = [super initWithArgumentList:argList returnType:KSMValueDouble];
+    NSString * name = [KSMStandardFunction1v standardFunctionNameFromType:functionType];
+    self = [super initWithArgumentList:argList returnType:KSMValueDouble name:name];
     if (self) {
         _functionType = functionType;
-        _name = [KSMStandardFunction1v standardFunctionNameFromType:functionType];
     }
     return self;
 }
@@ -254,6 +254,11 @@ NSMutableArray * ksm_standardFunctionsArray;
     }
     
     return [[KSMMathValue alloc] initWithDouble:d];
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Standard function %@ ",self.name];
 }
 
 @end
