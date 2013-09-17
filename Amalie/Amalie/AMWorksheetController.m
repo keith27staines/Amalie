@@ -13,6 +13,7 @@
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
 #import "KSMWorksheet.h"
+#import "KSMMathValue.h"
 #import "AMContentView.h"
 #import "AMNameRules.h"
 #import "AMInsertableRecord.h"

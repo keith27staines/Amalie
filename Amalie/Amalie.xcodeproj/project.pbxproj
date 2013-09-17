@@ -16,6 +16,8 @@
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */; };
+		784BFBDE17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
+		784BFBDF17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
 		784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EF91789CC11002BE03A /* AMAppController.m */; };
 		784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */; };
 		784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */; };
@@ -140,6 +142,8 @@
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
 		7847ECCE17B777CB00333A84 /* AMExpressionDisplayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionDisplayOptions.h; sourceTree = "<group>"; };
 		7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionDisplayOptions.m; sourceTree = "<group>"; };
+		784BFBDC17E7408800152756 /* KSMMathValueHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMMathValueHolder.h; sourceTree = "<group>"; };
+		784BFBDD17E7408800152756 /* KSMMathValueHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMMathValueHolder.m; sourceTree = "<group>"; };
 		784D6EF81789CC11002BE03A /* AMAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMAppController.h; sourceTree = "<group>"; };
 		784D6EF91789CC11002BE03A /* AMAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMAppController.m; sourceTree = "<group>"; };
 		784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesWindowController.h; sourceTree = "<group>"; };
@@ -324,6 +328,17 @@
 				7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */,
 			);
 			name = "AM ReferenceCounted Tree";
+			sourceTree = "<group>";
+		};
+		784BFBE017E7603700152756 /* KSMMathValue */ = {
+			isa = PBXGroup;
+			children = (
+				78EF56A617CF39F400402847 /* KSMMathValue.h */,
+				78EF56A717CF39F400402847 /* KSMMathValue.m */,
+				784BFBDC17E7408800152756 /* KSMMathValueHolder.h */,
+				784BFBDD17E7408800152756 /* KSMMathValueHolder.m */,
+			);
+			name = KSMMathValue;
 			sourceTree = "<group>";
 		};
 		785247BD1784067900F6A7AD /* Models */ = {
@@ -543,8 +558,7 @@
 				7899B2D117ACF596008BDB75 /* KSMReferenceCounter.h */,
 				7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */,
 				78BBB2FA17D100DA006B8F07 /* KSMFunction */,
-				78EF56A617CF39F400402847 /* KSMMathValue.h */,
-				78EF56A717CF39F400402847 /* KSMMathValue.m */,
+				784BFBE017E7603700152756 /* KSMMathValue */,
 				78EF56AA17CF3B0B00402847 /* KSMVector.h */,
 				78EF56AB17CF3B0B00402847 /* KSMVector.m */,
 				78EF56AE17CF3B2200402847 /* KSMMatrix.h */,
@@ -834,6 +848,7 @@
 				785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */,
 				7899B2D817AD0DB9008BDB75 /* AMConstantContentViewController.m in Sources */,
 				78BBB2FD17D10490006B8F07 /* KSMUserFunction.m in Sources */,
+				784BFBDE17E7408800152756 /* KSMMathValueHolder.m in Sources */,
 				7899B30717AD3AEB008BDB75 /* AMMatrixContentView.m in Sources */,
 				7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */,
 				7899B30117AD3AA2008BDB75 /* AMEquationContentView.m in Sources */,
@@ -873,6 +888,7 @@
 				7832744D178F1D810051290B /* AMTrayItem.m in Sources */,
 				787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				78DE824C1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
+				784BFBDF17E7408800152756 /* KSMMathValueHolder.m in Sources */,
 				788709C6178DAEAB008E093A /* AMPreferences.m in Sources */,
 				787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */,
 				78DE598017CB6EE5003F0181 /* KSMFunction.m in Sources */,

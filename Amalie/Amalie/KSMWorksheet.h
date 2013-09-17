@@ -23,7 +23,6 @@
 @property (copy, readwrite) NSString                * title;
 @property (strong, readonly) KSMExpressionBuilder   * builder;
 @property (strong, readonly) KSMExpressionEvaluator * evaluator;
-@property (strong, readonly) NSMutableDictionary    * variablesDictionary;
 @property (strong, readonly) NSMutableDictionary    * expressionsDictionary;
 @property (strong, readonly) NSMutableDictionary    * functionsDictionary;
 
@@ -70,13 +69,14 @@
 -(BOOL)isObjectRegistered:(id<KSMReferenceCountedObject>)symbol;
 -(KSMExpression*)expressionForSymbol:(NSString*)symbol;
 -(KSMFunction*)functionForSymbol:(NSString*)symbol;
--(NSNumber*)variableForSymbol:(NSString*)symbol;
+-(KSMMathValue*)variableForSymbol:(NSString*)symbol;
+-(KSMMathValue*)variableForName:(NSString*)name;
 
 -(KSMExpression*)expressionForOriginalString:(NSString*)string;
 -(KSMExpression*)expressionForString:(NSString*)string;
 -(KSMFunction*)functionForName:(NSString*)name;
 
--(void)setValue:(NSNumber*)number forVariableWithSymbol:(NSString*)symbol;
+-(void)setValue:(KSMMathValue*)number forVariableWithSymbol:(NSString*)symbol;
 
 /*!
  Creates and registers a function with a fully specified argument list, return 

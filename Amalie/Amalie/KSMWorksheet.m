@@ -8,6 +8,8 @@
 
 #import "KSMWorksheet.h"
 #import "KSMExpressionEvaluator.h"
+#import "KSMMathValue.h"
+#import "KSMMathValueHolder.h"
 #import "KSMExpression.h"
 #import "KSMFunction.h"
 #import "KSMUserFunction.h"
@@ -19,9 +21,9 @@
     NSMutableDictionary    * _referenceCountedObjects;
 }
 
-//@property (strong, readwrite) KSMExpressionBuilder * builder;
+@property (strong, readonly) NSMutableDictionary     * variablesDictionary;
 @property (strong, readwrite) KSMExpressionEvaluator * evaluator;
-@property (strong, readonly) NSMutableDictionary * referenceCountedObjects;
+@property (strong, readonly) NSMutableDictionary     * referenceCountedObjects;
 
 @end
 
@@ -66,8 +68,9 @@
         
         if (expression.expressionType == KSMExpressionTypeVariable) {
             if (![self.variablesDictionary objectForKey:symbol]) {
-                // add the variable identified by symbol and give it the value 0
-                self.variablesDictionary[symbol] = @(0);
+                // add the variable identified by symbol and give it default value
+                KSMMathValueHolder * holder = [[KSMMathValueHolder alloc] initWithName:expression.bareString symbol:expression.symbol];
+                self.variablesDictionary[symbol] = holder;
             }
         }
         
@@ -144,9 +147,21 @@
     return expr;
 }
 
--(NSNumber*)variableForSymbol:(NSString*)symbol
+-(KSMMathValue*)variableForSymbol:(NSString*)symbol
 {
-    return self.variablesDictionary[symbol];
+    KSMMathValueHolder * holder = self.variablesDictionary[symbol];
+    return holder.mathValue;
+}
+
+-(KSMMathValue*)variableForName:(NSString*)name
+{
+    for (NSString * symbol in self.variablesDictionary) {
+        KSMMathValueHolder * holder = self.variablesDictionary[symbol];
+        if ([holder.name isEqualToString:name]) {
+            return holder.mathValue;
+        }
+    }
+    return nil;
 }
 
 -(KSMFunction*)functionForSymbol:(NSString*)symbol
@@ -154,9 +169,10 @@
     return self.functionsDictionary[symbol];
 }
 
--(void)setValue:(NSNumber*)number forVariableWithSymbol:(NSString*)symbol
+-(void)setValue:(KSMMathValue*)mathValue forVariableWithSymbol:(NSString*)symbol
 {
-    self.variablesDictionary[symbol] = number;
+    KSMMathValueHolder * holder = self.variablesDictionary[symbol];
+    holder.mathValue = mathValue;
 }
 
 -(void)decrementReferenceCountForObject:(id<KSMReferenceCountedObject>)object

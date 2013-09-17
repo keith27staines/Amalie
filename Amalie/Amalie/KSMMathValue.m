@@ -11,6 +11,11 @@
 #import "KSMMatrix.h"
 #import "NSString+KSMMath.h"
 #import "KSMExpression.h"
+#import "KSMExpressionEvaluator.h"
+#import "KSMWorksheet.h"
+
+NSInteger const KSMIntegerMax = NSIntegerMax;
+NSInteger const KSMIntegerMin = NSIntegerMin;
 
 @interface KSMMathValue()
 {
@@ -48,6 +53,80 @@
 {
     return [[KSMMathValue alloc] initWithValue:v];
 }
+
++(KSMMathValue*)mathValueFromString:(NSString *)s
+{
+    return [[KSMMathValue alloc] initWithString:s];
+}
+
+-(id)initWithString:(NSString *)string
+{
+    NSDecimalNumber * n = [NSDecimalNumber decimalNumberWithString:string];
+    BOOL isNumber = [n isEqualToNumber:[NSDecimalNumber notANumber]];
+    if ( !isNumber ) {
+        // Programming error somewhere...
+        NSAssert(isNumber, @"The string %@ cannot be interpreted as a number.",string);
+        return nil;
+    }
+    
+    double d = [n doubleValue];
+    if ( d > KSMIntegerMax || d < KSMIntegerMin ) {
+        // Value too big to be represented by an NSInteger
+        return [KSMMathValue mathValueFromDouble:d];
+    }
+    NSInteger i = interpretDoubleAsInteger(d);
+    if ( (double)i == d ) {
+        return [KSMMathValue mathValueFromInteger:i];
+    } else {
+        return [KSMMathValue mathValueFromDouble:d];
+    }
+}
+
++(KSMMathValue*)mathValueFromExpression:(KSMExpression*)expression
+                         usingEvaluator:(KSMExpressionEvaluator*)evaluator
+{
+    return [[KSMMathValue alloc] initWithExpression:expression
+                                     usingEvaluator:evaluator];
+}
+
+-(id)initWithExpression:(KSMExpression*)expression
+         usingEvaluator:(KSMExpressionEvaluator*)evaluator
+{
+    switch (expression.expressionType) {
+        case KSMExpressionTypeLiteral:
+        {
+            return [KSMMathValue mathValueFromString:expression.bareString];
+        }
+        case KSMExpressionTypeVariable:
+        {
+            return [evaluator.worksheet variableForSymbol:expression.symbol];
+        }
+        case KSMExpressionTypeBinary:
+        {
+            KSMExpression * leftExpression;
+            KSMExpression * rightExpression;
+            KSMMathValue  * leftValue;
+            KSMMathValue  * rightValue;
+            NSString * operator = expression.operator;
+            [evaluator getLeftOperandResult:&leftExpression
+                        rightOperandResult:&rightExpression
+                            fromExpression:expression];
+            leftValue  = [KSMMathValue mathValueFromExpression:leftExpression
+                                                usingEvaluator:evaluator];
+            rightValue = [KSMMathValue mathValueFromExpression:rightExpression
+                                                usingEvaluator:evaluator];
+
+            return [KSMMathValue mathValueFromLeftMathValue:leftValue
+                                                   operator:operator
+                                             rightMathValue:rightValue];
+        }
+        default:
+            return nil;
+    }
+    
+    return nil;
+}
+
 
 - (id)init
 {
@@ -174,6 +253,8 @@
                                     operator:(NSString*)operator
                               rightMathValue:(KSMMathValue*)right
 {
+    if (!left || ! right || !operator) return nil;
+    
     KSMOperatorType operatorType = [KSMExpression operatorTypeFromString:operator];
     switch (operatorType) {
         case KSMOperatorTypeAdd:
@@ -350,6 +431,19 @@
         default:
             return NO;
     }
+}
+
+/*!
+ * If the double has no fractional part (in otherwords, can be interpreted as an
+ * integer with no loss of precision, then this function returns that double. If
+ * the fractional part is non-zero, then NAN is returned.
+ * @Param d The double to investigate.
+ * @Return An integer exactly equivalent to d if d has no fractional part,
+ * otherwise returns the integer NAN.
+ */
+NSInteger interpretDoubleAsInteger(double d)
+{
+    return ( (d - (NSInteger)d)==0 ) ? (NSInteger)d : NAN;
 }
 
 @end

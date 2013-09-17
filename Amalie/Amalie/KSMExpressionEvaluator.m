@@ -16,6 +16,8 @@
 #import "KSMMathValue.h"
 #import "KSMMatrix.h"
 #import "KSMFunction.h"
+#import "KSMMathValue.h"
+#import "KSMWorksheet.h"
 #import "NSString+KSMMath.h"
 
 
@@ -65,6 +67,100 @@ enum KSMBinaryType {
     return self;
 }
 
+-(KSMMathValue*)evaluateExpression:(KSMExpression*)expression
+                    usingArguments:(KSMFunctionArgumentList*)arguments
+{
+    if (!expression.valid) {
+        return nil;
+    }
+    
+    KSMMathValue * mv = nil;
+    switch (expression.expressionType) {
+        case KSMExpressionTypeLiteral:
+        {
+            mv = [KSMMathValue mathValueFromString:expression.bareString];
+            return mv;
+        }
+        case KSMExpressionTypeVariable:
+        {
+            KSMFunctionArgument * fa = [arguments argumentWithName:expression.bareString];
+            if (fa) {
+                mv = [fa mathValue];
+            }
+            if (!mv) {
+                mv = [self.worksheet variableForSymbol:expression.symbol];
+            }
+            return mv;
+        }
+        case KSMExpressionTypeBinary:
+        {
+            // For binary expressions we have to process left and right operands recursively
+            KSMExpression * left;
+            KSMExpression * right;
+            [self getLeftOperandResult:&left
+                    rightOperandResult:&right
+                        fromExpression:expression];
+            KSMMathValue * leftVlalue = [self evaluateExpression:left
+                                                  usingArguments:arguments];
+            KSMMathValue * rightValue = [self evaluateExpression:right
+                                                  usingArguments:arguments];
+            KSMOperatorType operatorType = [KSMExpression operatorTypeFromString:expression.operator];
+            mv = [self evaluateLeftValue:leftVlalue
+                              rightValue:rightValue
+                            operatorType:operatorType];
+            return mv;
+        }
+            
+        case KSMExpressionTypeCompound:
+            // TODO: evaluate compound expressions (well, maybe)
+            return nil;
+        case KSMExpressionTypeUnrecognized:
+            // Not a lot we can do with this
+            return nil;
+    }
+}
+
+-(KSMMathValue*)evaluateLeftValue:(KSMMathValue*)left rightValue:(KSMMathValue*)right operatorType:(KSMOperatorType)operatorType
+{
+    switch (operatorType) {
+        case KSMOperatorTypeUnrecognized:
+        {
+            return nil;
+            break;
+        }
+        case KSMOperatorTypePower:
+        {
+            return [left mathValueByRaisingToPower:(right)];
+            break;
+        }
+        case KSMOperatorTypeAdd:
+        {
+            return [left mathValueByAdding:right];
+            break;
+        }
+        case KSMOperatorTypeSubtract:
+        {
+            return [left mathValueBySubtracting:right];
+            break;
+        }
+        case KSMOperatorTypeMultiply: case KSMOperatorTypeScalarMultiply:
+        {
+            return [left mathValueByMultiplying:right];
+            break;
+        }
+        case KSMOperatorTypeDivide:
+        {
+            return [left mathValueByDividing:right];
+            break;
+        }
+        case KSMOperatorTypeVectorMultiply:
+        {
+            return [left mathValueByVectorMultiplying:right];
+            break;
+        }
+    }
+}
+
 -(KSMExpression*)simplifiedExpressionFromExpression:(KSMExpression*)expression
 {
     // deal with non-binary cases first
@@ -100,8 +196,8 @@ enum KSMBinaryType {
     NSString * operator = expression.operator;
     
     // Now, can we interpret both as integers? If iLeft and iRight both resolve into proper integers and not NANs, then we are dealing with the simplest case - i,e, expression involving an arithmetic operation between purely integer operands, so expressions like 2 * 4, or 7 / 2, etc.
-    KSMMathValue * lv = [self mathValueForExpression:simpleLeft];
-    KSMMathValue * rv = [self mathValueForExpression:simpleRight];
+    KSMMathValue * lv = [KSMMathValue mathValueFromExpression:simpleLeft usingEvaluator:self];
+    KSMMathValue * rv = [KSMMathValue mathValueFromExpression:simpleRight usingEvaluator:self];
     
     if (lv.type == KSMValueInteger && rv.type == KSMValueInteger )
     {
@@ -116,59 +212,6 @@ enum KSMBinaryType {
         // Keeping things simple for now...
         return expression;
     }
-}
-
--(KSMMathValue*)mathValueForExpression:(KSMExpression*)expression
-{
-    NSInteger KSMIntegerMax = NSIntegerMax;
-    NSInteger KSMIntegerMin = NSIntegerMin;
-    
-    switch (expression.expressionType) {
-        case KSMExpressionTypeLiteral:
-        {
-            NSDecimalNumber * n = [NSDecimalNumber decimalNumberWithString:expression.bareString];
-            BOOL isNumber = [n isEqualToNumber:[NSDecimalNumber notANumber]];
-            if ( isNumber ) {
-                // Programming error somewhere...
-                NSAssert(isNumber, @"The string %@ cannot be interpreted as a number.",expression.bareString);
-                return nil;
-            }
-            double d = [n doubleValue];
-            if ( d > KSMIntegerMax || d < KSMIntegerMin ) {
-                // Value too big to be represented by an NSInteger
-                return [KSMMathValue mathValueFromDouble:d];
-            }
-            NSInteger i = interpretDoubleAsInteger(d);
-            if ( (double)i == d ) {
-                return [KSMMathValue mathValueFromInteger:i];
-            } else {
-                return [KSMMathValue mathValueFromDouble:d];
-            }
-        }
-        case KSMExpressionTypeVariable:
-        {
-            return self.worksheet.variablesDictionary[expression.symbol];
-        }
-        case KSMExpressionTypeBinary:
-        {
-            KSMExpression * leftExpression;
-            KSMExpression * rightExpression;
-            NSString * operator = expression.operator;
-            [self getLeftOperandResult:&leftExpression
-                    rightOperandResult:&rightExpression
-                        fromExpression:expression];
-            KSMMathValue * leftValue  = [self mathValueForExpression:leftExpression];
-            KSMMathValue * rightValue = [self mathValueForExpression:rightExpression];
-            
-            return [KSMMathValue mathValueFromLeftMathValue:leftValue
-                                                   operator:operator
-                                             rightMathValue:rightValue];
-        }
-        default:
-            return nil;
-    }
-    
-    return nil;
 }
 
 -(void)getLeftOperandResult:(KSMExpression**)leftExpression
@@ -251,14 +294,20 @@ enum KSMBinaryType {
             
         case KSMExpressionTypeVariable:
         {
-            NSNumber * n = self.worksheet.variablesDictionary[symbol];
-            double d = [n doubleValue];
-            NSInteger i = interpretDoubleAsInteger(d);
-            if (i == NAN)
-                substituteString = [NSString stringWithFormat:@"%f",d];
-            else
-                substituteString = [NSString stringWithFormat:@"%ld",i];
-        
+            KSMMathValue * mathValue = [self.worksheet variableForSymbol:symbol];
+            switch ( mathValue.type ) {
+                case KSMValueInteger:
+                    substituteString = [NSString stringWithFormat:@"%ld",
+                                        mathValue.integerValue];
+                    break;
+                case KSMValueDouble:
+                    substituteString = [NSString stringWithFormat:@"%f",
+                                        mathValue.doubleValue];
+                    break;
+                default:
+                    substituteString = nil;
+                    break;
+            }
             break;
         }
         case KSMExpressionTypeBinary:
@@ -305,19 +354,6 @@ enum KSMBinaryType {
 #pragma mark - C Helper functions -
 
 /*!
- * If the double has no fractional part (in otherwords, can be interpreted as an
- * integer with no loss of precision, then this function returns that double. If
- * the fractional part is non-zero, then NAN is returned.
- * @Param d The double to investigate.
- * @Return An integer exactly equivalent to d if d has no fractional part, 
- * otherwise returns the integer NAN.
- */
-NSInteger interpretDoubleAsInteger(double d)
-{
-    return ( (d - (NSInteger)d)==0 ) ? (NSInteger)d : NAN;
-}
-
-/*!
  * Calculates the lowest common multiple of two integers, a and b.
  * @Param a The first of the two integers.
  * @Param b The second of the two integers.
@@ -362,101 +398,5 @@ NSInteger gcd(NSInteger a, NSInteger b)
     }
     return gcd;
 }
-
--(KSMMathValue*)evaluateExpression:(KSMExpression*)expression
-                    usingArguments:(KSMFunctionArgumentList*)arguments
-{
-    if (!expression.valid) {
-        return nil;
-    }
-    
-    KSMMathValue * mv = nil;
-    NSString * string = expression.string;
-    switch (expression.expressionType) {
-        case KSMExpressionTypeLiteral:
-        {
-            double d = [string doubleValue];
-            mv = [[KSMMathValue alloc] initWithDouble:d];
-            return mv;
-        }
-        case KSMExpressionTypeVariable:
-        {
-            KSMFunctionArgument * fa = [arguments argumentWithName:expression.bareString];
-            if (fa) {
-                mv = [fa mathValue];
-            }
-            if (!mv) {
-                mv = self.worksheet.variablesDictionary[expression.symbol];
-            }
-            return mv;
-        }
-        case KSMExpressionTypeBinary:
-        {
-            // For binary expressions we have to process left and right operands recursively
-            KSMExpression * left;
-            KSMExpression * right;
-            [self getLeftOperandResult:&left
-                    rightOperandResult:&right
-                        fromExpression:expression];
-            KSMMathValue * leftVlalue = [self evaluateExpression:left
-                                                  usingArguments:arguments];
-            KSMMathValue * rightValue = [self evaluateExpression:right
-                                                  usingArguments:arguments];
-            KSMOperatorType operatorType = [KSMExpression operatorTypeFromString:expression.operator];
-            mv = [self evaluateLeftValue:leftVlalue
-                              rightValue:rightValue
-                            operatorType:operatorType];
-            return mv;
-        }
-            
-        case KSMExpressionTypeCompound:
-            return nil;
-        case KSMExpressionTypeUnrecognized:
-            return nil;
-    }
-}
-
--(KSMMathValue*)evaluateLeftValue:(KSMMathValue*)left rightValue:(KSMMathValue*)right operatorType:(KSMOperatorType)operatorType
-{
-    switch (operatorType) {
-        case KSMOperatorTypeUnrecognized:
-        {
-            return nil;
-            break;
-        }
-        case KSMOperatorTypePower:
-        {
-            return [left mathValueByRaisingToPower:(right)];
-            break;
-        }
-        case KSMOperatorTypeAdd:
-        {
-            return [left mathValueByAdding:right];
-            break;
-        }
-        case KSMOperatorTypeSubtract:
-        {
-            return [left mathValueBySubtracting:right];
-            break;
-        }
-        case KSMOperatorTypeMultiply: case KSMOperatorTypeScalarMultiply:
-        {
-            return [left mathValueByMultiplying:right];
-            break;
-        }
-        case KSMOperatorTypeDivide:
-        {
-            return [left mathValueByDividing:right];
-            break;
-        }
-        case KSMOperatorTypeVectorMultiply:
-        {
-            return [left mathValueByVectorMultiplying:right];
-            break;
-        }
-    }
-}
-
-
 
 @end

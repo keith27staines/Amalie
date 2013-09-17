@@ -47,4 +47,9 @@
 -(KSMMathValue*)evaluateExpression:(KSMExpression*)expression
                     usingArguments:(KSMFunctionArgumentList*)arguments;
 
+-(void)getLeftOperandResult:(KSMExpression**)leftExpression
+         rightOperandResult:(KSMExpression**)rightExpression
+             fromExpression:(KSMExpression*)expression;
+
+
 @end
