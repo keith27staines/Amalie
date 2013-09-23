@@ -14,7 +14,7 @@ static BOOL LOGGING = YES;
 {
     BOOL       _invalid;
     NSInteger  _referenceCount;
-    NSString * _uuid;
+    NSString * _symbol;
     __weak id<KSMReferenceCountedObject> _referencedCountedObject;
     NSString * _objectDescription;
 }
@@ -46,7 +46,7 @@ static BOOL LOGGING = YES;
         if (object) {
             _referencedCountedObject = object;
             object.referenceCounter = self;
-            _uuid = object.symbol;
+            _symbol = object.symbol;
             _invalid = NO;
             _referenceCount = 1;
             _objectDescription = [object description];

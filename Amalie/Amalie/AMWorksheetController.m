@@ -122,7 +122,7 @@
     if (!record) {
         record = [[AMInsertableRecord alloc] initWithName:nil
                                                 nameRules:self.nameRules
-                                                     uuid:view.groupID
+                                                     groupID:view.groupID
                                                      type:view.insertableType];
         
         [self.insertableRecords setObject:record forKey:view.groupID];

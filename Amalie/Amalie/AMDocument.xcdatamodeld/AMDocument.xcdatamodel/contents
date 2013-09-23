@@ -22,7 +22,7 @@
         <relationship name="name" maxCount="1" deletionRule="Nullify" destinationEntity="AMDNames" inverseName="functionDef" inverseEntity="AMDNames" syncable="YES"/>
     </entity>
     <entity name="AMDInsertedObjects" representedClassName="InsertedObject" isAbstract="YES" syncable="YES">
-        <attribute name="groupID" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="groupID" attributeType="String" syncable="YES"/>
         <attribute name="insertType" attributeType="Integer 64" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="xPosition" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="yPosition" attributeType="Float" defaultValueString="0.0" syncable="YES"/>

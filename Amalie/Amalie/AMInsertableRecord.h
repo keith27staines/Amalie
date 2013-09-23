@@ -14,7 +14,7 @@
 @interface AMInsertableRecord : NSObject
 
 @property (copy) NSAttributedString * attributedName;
-@property (weak, readonly) NSString * uuid;
+@property (weak, readonly) NSString * groupID;
 @property (readonly) AMInsertableType type;
 @property (readonly) NSUInteger expressionCount;
 
@@ -29,7 +29,7 @@
  */
 - (id)initWithName:(NSAttributedString*)attributedName
          nameRules:(AMNameRules*)nameRules
-              uuid:(NSString*)uuid
+              groupID:(NSString*)uuid
               type:(AMInsertableType)type;
 
 /*! Delete the entire record from the store */

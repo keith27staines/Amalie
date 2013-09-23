@@ -34,7 +34,7 @@
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 
 /*!
- mathSheet is the KSMWorksheet that
+ mathSheet performs math operations for this worksheet controller
  */
 @property (strong, readonly) KSMWorksheet * mathSheet;
 

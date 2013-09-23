@@ -20,7 +20,7 @@
 @interface KSMReferenceCounter : NSObject
 
 @property (weak) id <KSMReferenceCounterDelegate>delegate;
-@property (readonly) NSString * uuid;
+@property (readonly) NSString * symbol;
 @property (weak, readonly) id<KSMReferenceCountedObject>referencedCountedObject;
 @property (readonly) BOOL isValid;
 

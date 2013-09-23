@@ -15,7 +15,6 @@
 		7811D2D017A257710024839B /* AMReferencedObjectHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */; };
 		781D17A417EC21EB0008758D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 781D17A317EC21EB0008758D /* QuartzCore.framework */; };
 		781D17A517EC22010008758D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3046178361BC001851C0 /* CoreData.framework */; };
-		781D17A817EECC000008758D /* InsertedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D17A717EECC000008758D /* InsertedObject.m */; };
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */; };
@@ -143,8 +142,6 @@
 		7811D2CD17A257710024839B /* AMReferencedObjectHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMReferencedObjectHolder.h; sourceTree = "<group>"; };
 		7811D2CE17A257710024839B /* AMReferencedObjectHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMReferencedObjectHolder.m; sourceTree = "<group>"; };
 		781D17A317EC21EB0008758D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		781D17A617EECC000008758D /* InsertedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertedObject.h; sourceTree = "<group>"; };
-		781D17A717EECC000008758D /* InsertedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertedObject.m; sourceTree = "<group>"; };
 		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
 		7832744A178F1D810051290B /* AMTrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayItem.h; sourceTree = "<group>"; };
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
@@ -469,8 +466,6 @@
 				78CDC75C17AFA30700BDC8D7 /* AMViewHelper.h */,
 				78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */,
 				787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */,
-				781D17A617EECC000008758D /* InsertedObject.h */,
-				781D17A717EECC000008758D /* InsertedObject.m */,
 				787B3060178361BC001851C0 /* Images.xcassets */,
 				78CDC75F17AFA66000BDC8D7 /* Protocols */,
 				787B3048178361BC001851C0 /* Amalie */,
@@ -848,7 +843,6 @@
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
-				781D17A817EECC000008758D /* InsertedObject.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
 				78702B9417C3510E006A4331 /* AMNameView.m in Sources */,
 				78EF56A417CCA2E400402847 /* KSMFunctionArgument.m in Sources */,

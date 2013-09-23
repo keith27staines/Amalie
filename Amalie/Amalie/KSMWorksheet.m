@@ -188,10 +188,10 @@
 #pragma mark - KSMReferenceCounterDelegate -
 -(void)referenceCountReachedZero:(KSMReferenceCounter *)refCounter
 {
-    [_expressionsDictionary     removeObjectForKey:refCounter.uuid];
-    [_variablesDictionary       removeObjectForKey:refCounter.uuid];
-    [_functionsDictionary       removeObjectForKey:refCounter.uuid];
-    [_referenceCountedObjects   removeObjectForKey:refCounter.uuid];
+    [_expressionsDictionary     removeObjectForKey:refCounter.symbol];
+    [_variablesDictionary       removeObjectForKey:refCounter.symbol];
+    [_functionsDictionary       removeObjectForKey:refCounter.symbol];
+    [_referenceCountedObjects   removeObjectForKey:refCounter.symbol];
 }
 
 

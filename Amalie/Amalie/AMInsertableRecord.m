@@ -35,7 +35,7 @@
 
 - (id)initWithName:(NSAttributedString*)attributedName
          nameRules:(AMNameRules*)nameRules
-              uuid:(NSString *)uuid
+              groupID:(NSString *)groupID
               type:(AMInsertableType)type
 {
     self = [super init];
@@ -44,7 +44,7 @@
         if (!_attributedName) {
             _attributedName = [nameRules suggestNameForType:type];
         }
-        _uuid = uuid;
+        _groupID = groupID;
         _type = type;
 
     }
