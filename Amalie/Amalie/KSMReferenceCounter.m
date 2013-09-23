@@ -15,7 +15,8 @@ static BOOL LOGGING = YES;
     BOOL       _invalid;
     NSInteger  _referenceCount;
     NSString * _uuid;
-    id<KSMReferenceCountedObject> _object;
+    __weak id<KSMReferenceCountedObject> _referencedCountedObject;
+    NSString * _objectDescription;
 }
 
 @end
@@ -40,44 +41,64 @@ static BOOL LOGGING = YES;
 {
     self = [super init];
     if (self) {
-        _object = object;
-        _uuid = object.symbol;
+        NSAssert(object, @"Reference counter is being initialised with a nil object.");
+        _invalid = YES;
+        if (object) {
+            _referencedCountedObject = object;
+            object.referenceCounter = self;
+            _uuid = object.symbol;
+            _invalid = NO;
+            _referenceCount = 1;
+            _objectDescription = [object description];
+        }
         _delegate = delegate;
-        _invalid = !object;
-        if (LOGGING) NSLog(@"Object %@ is being reference counted. Reference count = %ld",_object,(long)_referenceCount);
+        if (LOGGING) NSLog(@"%@ is being reference counted. Reference count = %ld",_referencedCountedObject,(long)_referenceCount);
     }
     return self;
+}
+
+-(BOOL)isValid
+{
+    return !_invalid;
 }
 
 -(void)increment
 {
     [self checkIntegrity];
     ++_referenceCount;
-    if (LOGGING) NSLog(@"Reference count for object %@ was incremented to %ld.",_object,(long)_referenceCount);
+    if (LOGGING) NSLog(@"Reference count for %@ was incremented to %ld.",self.referencedCountedObject, (long)_referenceCount);
 }
 
 - (void)decrement
 {
     [self checkIntegrity];
     --_referenceCount;
-    if (LOGGING) NSLog(@"Reference count for object %@ was decremented to %ld.",_object,(long)_referenceCount);
+    if (LOGGING) NSLog(@"Reference count for %@ was decremented to %ld.",self.referencedCountedObject,(long)_referenceCount);
     
     if (_referenceCount == 0) {
         _invalid = YES;
-    if (LOGGING) NSLog(@"Object %@ should be deallocated",_object);
-        _object = nil;
+    if (LOGGING) NSLog(@"%@ should be deallocated",_referencedCountedObject);
         [self.delegate referenceCountReachedZero:self];
         return;
-    }
-    if (_referenceCount < 0) {
-        [NSException raise:@"Reference count previously reached zero." format:nil];
     }
 }
 
 -(void)checkIntegrity
 {
+    NSAssert(_invalid == NO , @"Reference count for object %@ has previously reached zero.",self.referencedCountedObject);
+    
     if (_invalid) {
-        [NSException raise:@"Reference count error." format:@"Object had symbol %@",_uuid];
+        [NSException raise:@"Reference count error." format:@"Reference count for object %@ has previously reached zero.",self.referencedCountedObject];
+    }
+}
+
+-(void)objectIsDeallocating:(id<KSMReferenceCountedObject>)object
+{
+    NSAssert([_objectDescription isEqualToString:[object description]], @"Deallocating message received from unexpected object %@.",object);
+    if (_referenceCount == 0) {
+        NSLog(@"Object %@ is deallocating normally.", object);
+    } else {
+        NSLog(@"Object %@ is deallocating unexpectedly.", object);
     }
 }
 

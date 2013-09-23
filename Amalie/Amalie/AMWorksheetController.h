@@ -9,6 +9,7 @@
 @class AMWorksheetView;
 @class AMNameRules;
 @class AMAppController;
+@class KSMWorksheet;
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
@@ -31,6 +32,11 @@
  Our worksheet view IS the document view we are controlling.
  */
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
+
+/*!
+ mathSheet is the KSMWorksheet that
+ */
+@property (strong, readonly) KSMWorksheet * mathSheet;
 
 /*!
  WARNING! We need this trayDataSource reference to pass on to subviews that we programmatically introduce onto the worksheet. Make sure this IBOutlet is connected in IB. Usually, the appController will be the primary tray datasource, so in IB, connect the appController to it.

@@ -28,9 +28,13 @@
 #import "AMTrayDatasource.h"
 #import "AMTrayItem.h"
 
+#import "KSMWorksheet.h"
+#import "KSMExpression.h"
+
 @interface AMContentViewController ()
 {
-
+    NSMutableArray * _expressions;
+    KSMWorksheet * _mathSheet;
 }
 
 @end
@@ -125,6 +129,72 @@
                         record:record];
 }
 
+-(KSMWorksheet*)mathSheet
+{
+    return self.parentWorksheetController.mathSheet;
+}
+
+#pragma mark - Expression access -
+-(NSMutableArray *)expressions
+{
+    if (!_expressions) {
+        _expressions = [NSMutableArray array];
+        
+        NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:@"x"];
+        KSMExpression * expr = [self.mathSheet expressionForSymbol:symbol];
+        for (NSUInteger i = 0; i < 1; i++) {
+            _expressions[i] = expr;
+        }
+        
+    }
+    return _expressions;
+}
+
+-(KSMExpression*)expressionForIndex:(NSUInteger)index
+{
+    NSAssert(index >=0 && index < self.expressions.count, @"Invalid index.");
+    return self.expressions[index];
+}
+
+-(BOOL)setExpression:(KSMExpression*)expression forIndex:(NSUInteger)index
+{
+    if (index < self.expressions.count) {
+        self.expressions[index] = expression;
+        return YES;
+    }
+    return NO;
+}
+
+-(KSMExpression*)expressionFromString:(NSString *)string atIndex:(NSUInteger)index
+{
+    
+    KSMExpression * oldExpr = [self expressionForIndex:index];
+    KSMExpression * existingExpression = [self.mathSheet expressionForOriginalString:string];
+    
+    if (existingExpression && oldExpr == existingExpression) {
+        return oldExpr;
+    }
+    
+    // Remove the expression that already exists at the specified index
+    if (oldExpr) {
+        [self.mathSheet decrementReferenceCountForObject:oldExpr];
+        oldExpr = nil;
+    }
+    
+    NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:string];
+    KSMExpression * newExpr = [self.mathSheet expressionForSymbol:symbol];
+    
+    if ( ! [self setExpression:newExpr forIndex:index] ) {
+        [self.mathSheet decrementReferenceCountForObject:newExpr];
+        return nil;
+    }
+    return newExpr;
+}
+
+-(KSMExpression*)expressionFromSymbol:(NSString*)symbol
+{
+    return [self.mathSheet expressionForSymbol:symbol];
+}
 
 #pragma mark - AMContentViewDataSource -
 
@@ -141,19 +211,19 @@
 
 -(KSMExpression*)view:(AMContentView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index
 {
-    return [self.record expressionFromString:string atIndex:index];
+    return [self expressionFromString:string atIndex:index];
 }
 
 
 -(KSMExpression*)view:(AMContentView*)view wantsExpressionAtIndex:(NSUInteger)index
 {
-    return [self.record expressionForIndex:index];
+    return [self expressionForIndex:index];
 }
 
 -(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol
 {
     // Get expression for symbol from KSMWorksheet
-    return [self.record expressionFromSymbol:symbol];
+    return [self expressionFromSymbol:symbol];
 }
 
 -(NSAttributedString*)attributedName
@@ -177,6 +247,14 @@
     NSString * key = [tray keyForType:type];
     AMTrayItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];
+}
+
+-(void)deleteContent
+{
+    for (KSMExpression * expr in self.expressions) {
+        [self.mathSheet decrementReferenceCountForObject:expr];
+    }
+    _expressions = nil;
 }
 
 -(void)dealloc

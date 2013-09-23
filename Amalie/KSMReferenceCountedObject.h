@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+@class KSMReferenceCounter;
 
 @protocol KSMReferenceCountedObject <NSObject>
 @property (readonly) NSString * symbol;
+@property (weak,readwrite) KSMReferenceCounter * referenceCounter;
 
 @end

@@ -74,19 +74,26 @@ typedef enum KSMExpressionValidity : NSInteger {
 @property (readonly) NSString * string;
 
 /*!
- * The original string with white spaces removed. For non-variable types, the
- * black string will be the basis of the hash (and thus is used to build the 
- * symbol returned by the symbol property). For expressions that represent 
- * variables, the bareString property is used for this purpose.
+ * The original string with white spaces removed. Currently, for non-variable 
+ * receiver types, the blackString will be the basis for creating the receiver's 
+ * symbol, while for expressions that represent variables, the bareString 
+ * property is currently used for this purpose. The stringMakingSymbol property
+ * always returns the exact string used in creating the symbol.
  */
 @property (readonly) NSString * blackString;
 
 
 /*!
  * The original string, divested of white space and enclosing brackets. This 
- * string is used for the hash for variable-type expressions.
+ * string is used for creating the symbol for variable-type expressions.
  */
 @property (readonly) NSString * bareString;
+
+/*!
+ * Returns the exact string used to create the receiver's symbol (depending on
+ * the type of the receiver, this may be the blackString or the bareString).
+ */
+@property (readonly) NSString * stringMakingSymbol;
 
 /*!
  * Gets the array of operators that may be employed withing the expression.

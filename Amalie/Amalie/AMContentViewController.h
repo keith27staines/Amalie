@@ -12,6 +12,7 @@
 @class AMNameRules;
 @class AMAppController;
 @class AMPreferences;
+@class KSMWorksheet;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
@@ -26,6 +27,8 @@
 @property (copy) NSString * groupID;
 @property (weak) AMInsertableRecord * record;
 @property (readonly) NSAttributedString * attributedName;
+@property (readonly) NSMutableArray * expressions;
+@property (readonly) KSMWorksheet * mathSheet;
 
 /*!
  Designated initializer
@@ -51,6 +54,8 @@
                      groupParentView:(AMInsertableView*)groupParentview
                               record:(AMInsertableRecord*)record;
 
+-(void)deleteContent;
+
 /*!
  Changes the attributed name of the receiver if the proposed name satisfies the naming rules, including uniqueness.
  @Param proposedName The proposed attributed string to use as the new name.
@@ -58,6 +63,54 @@
  @Returns YES if the proposal is accepted, NO otherwise.
  */
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
+
+/*!
+ Returns the expression at the specified index. For example, if the receiver
+ represents a 2D vector, index 0 might hold an expression representing the
+ x component, and index 1 might hold an expression representing the y component.
+ @Param index The index of the required expression.
+ @Return The expression at the specified index.
+ */
+-(KSMExpression*)expressionForIndex:(NSUInteger)index;
+
+/*!
+ Sets the expression at the specified index. For example, if the receiver
+ represents a 2D vector, index 0 might hold an expression representing the
+ x component, and index 1 might hold an expression representing the y component.
+ @Param expr The expression to set at the specified index.
+ @Param index The index for the expression being set.
+ @Return YES if successful. If the specified index is greater than
+ expressionCount, then the internal state of the received is unchanged and NO is
+ returned.
+ */
+-(BOOL)setExpression:(KSMExpression*)expr
+            forIndex:(NSUInteger)index;
+
+/*!
+ Replaces the expression at the specified index by building a new expression
+ from the specified string. If the receiver represents a 2D vector, index 0
+ might hold an expression representing the x component, and index 1 might hold
+ an expression representing the y component.
+ @Param string An expression string from which the expression is to be built.
+ @Param index The index for the expression being set.
+ @Return The new expression (already registered with the worksheet) if
+ successful. If the specified index is greater than expressionCount, then the
+ internal state of the received is unchanged and nil is returned.
+ */
+-(KSMExpression*)expressionFromString:(NSString*)string
+                              atIndex:(NSUInteger)index;
+
+
+/*!
+ Returns the expression that corresponds to the symbol from the worksheet. Note
+ that it is important to let the receiver manage the creation, reference
+ counting of the expression. In order to prevent memory leaks, it is important
+ never to retain strong references to expressions.
+ @Param symbol The unique hash symbol $hash for the expression.
+ @Return The expression or nil if not found. Store the result in a weak pointer.
+ */
+-(KSMExpression*)expressionFromSymbol:(NSString*)symbol;
+
 
 /*!
  preferences

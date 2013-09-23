@@ -21,6 +21,8 @@
 
 @property (weak) id <KSMReferenceCounterDelegate>delegate;
 @property (readonly) NSString * uuid;
+@property (weak, readonly) id<KSMReferenceCountedObject>referencedCountedObject;
+@property (readonly) BOOL isValid;
 
 /*!
  Designated initializer.
@@ -38,5 +40,7 @@
 
 - (void)increment;
 - (void)decrement;
+
+-(void)objectIsDeallocating:(id<KSMReferenceCountedObject>)object;
 
 @end

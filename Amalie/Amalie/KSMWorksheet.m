@@ -62,7 +62,10 @@
     if ( ! [self isObjectRegistered:expression]) {
         
         // register the top level expression
+        
+        // create a reference counter for the expression (after initialization, the reference counter will then have a reference count of 1).
         refCounter = [KSMReferenceCounter referenceCounterForObject:expression delegate:self];
+        
         self.referenceCountedObjects[symbol] = refCounter;
         self.expressionsDictionary[symbol] = expression;
         
@@ -80,11 +83,12 @@
             [self registerExpression:subExpression];
         }
         
-    }
+    } else {
         
-    // Expression already registered (even if it wasn't before), so just increment the reference count
-    refCounter = self.referenceCountedObjects[symbol];
-    [refCounter increment];
+        // Expression was already registered so just increment the reference count
+        refCounter = self.referenceCountedObjects[symbol];
+        [refCounter increment];
+    }
     
     return symbol;
 }
@@ -225,10 +229,11 @@
         ref = [[KSMReferenceCounter alloc] initWithObject:function delegate:self];
         self.referenceCountedObjects[symbol] = ref;
         self.functionsDictionary[symbol] = function;
+    } else {
+        ref = self.referenceCountedObjects[symbol];
+        [ref increment];        
     }
         
-    ref = self.referenceCountedObjects[symbol];
-    [ref increment];
     return symbol;
 }
 

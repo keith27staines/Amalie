@@ -258,7 +258,7 @@ NSMutableArray * ksm_standardFunctionsArray;
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"Standard function %@ ",self.name];
+    return [NSString stringWithFormat:@"Standard function %@",self.name];
 }
 
 @end

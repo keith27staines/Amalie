@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@import QuartzCore;
-
+#import "QuartzCore/QuartzCore.h"
 #import "AMWorksheetController.h"
 #import "AMConstants.h"
 #import "AMWorksheetView.h"
@@ -18,23 +17,32 @@
 #import "AMNameRules.h"
 #import "AMInsertableRecord.h"
 #import "AMGroupedView.h"
+#import "KSMExpression.h"
+#import "AMInsertableRecord.h"
 
 @interface AMWorksheetController()
 {
-    NSMutableArray      * _insertsArray;
+    NSMutableArray      * _insertableViewArray;
+    NSMutableDictionary * _insertableViewDictionary;
     NSMutableDictionary * _insertedRecords;
-    NSMutableDictionary * _insertsDictionary;
     NSMutableDictionary * _contentControllers;
     KSMWorksheet        * _mathSheet;
     AMNameRules         * _nameRules;
 }
 
 /*!
- * view controllers to manage the loading of views for insertable objects
+ * A dictionary of the AMContentViewControllers. Each content controller manages the content view of an AMInsertedView.
  */
 @property (strong) NSMutableDictionary    * contentControllers;
-@property (strong, readonly) KSMWorksheet * mathSheet;
-@property (readonly) NSMutableDictionary  * insertedRecords;
+
+/*! insertsRecords is the array of all AMInsertableRecord objects the make up the document */
+@property (readonly) NSMutableDictionary  * insertableRecords;
+
+/*! insertableViewArray is the array of all AMInsertableView objects that are currently held in the document. The same data is also held in insertableViewDictionary */
+@property (readonly) NSMutableArray * insertableViewArray;
+
+/*! insertableViewDictionary is the dictionary of all AMInsertableView objects that are currently held in the document. The same data is also held in insertableViewArray */
+@property (readonly) NSMutableDictionary * insertableViewDictionary;
 @end
 
 @implementation AMWorksheetController
@@ -46,11 +54,11 @@
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
-        _insertsArray       = [NSMutableArray array];
-        _insertedRecords    = [NSMutableDictionary dictionary];
-        _insertsDictionary  = [NSMutableDictionary dictionary];
-        _contentControllers = [NSMutableDictionary dictionary];
-        _mathSheet          = [[KSMWorksheet alloc] init];
+        _insertableViewArray        = [NSMutableArray array];
+        _insertableRecords          = [NSMutableDictionary dictionary];
+        _insertableViewDictionary   = [NSMutableDictionary dictionary];
+        _contentControllers         = [NSMutableDictionary dictionary];
+        _mathSheet                  = [[KSMWorksheet alloc] init];
     }
     return self;
 }
@@ -96,8 +104,8 @@
     if (!view) return;
     
     // Add the object to our list of inserted objects
-    [_insertsArray addObject:view];
-    [_insertsDictionary setObject:view forKey:view.groupID];
+    [self.insertableViewArray addObject:view];
+    [self.insertableViewDictionary setObject:view forKey:view.groupID];
     view.delegate = self;
     view.trayDataSource = self.trayDataSource;
     
@@ -110,37 +118,54 @@
 
 -(AMInsertableRecord*)insertableRecordForGroupView:(AMInsertableView*)view
 {
-    AMInsertableRecord * record;
-    record = [[AMInsertableRecord alloc] initWithName:nil
-                                            nameRules:self.nameRules
-                                                 uuid:view.groupID
-                                                 type:view.insertableType
-                                            mathSheet:self.mathSheet];
+    AMInsertableRecord * record = self.insertableRecords[view.groupID];
+    if (!record) {
+        record = [[AMInsertableRecord alloc] initWithName:nil
+                                                nameRules:self.nameRules
+                                                     uuid:view.groupID
+                                                     type:view.insertableType];
+        
+        [self.insertableRecords setObject:record forKey:view.groupID];
+    } else {
+        NSLog(@"Called unexpectedly");
+    }
 
-    [self.insertedRecords setObject:record forKey:view.groupID];
     return record;
 }
 
--(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)view
+-(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)insertableView
 {
-    NSString * groupID = view.groupID;
-    AMContentView * contentView = view.contentView;
-    [self unregisterContentView:contentView];
-    
-    AMInsertableRecord * record = self.insertedRecords[groupID];
-    [record deleteFromStore];
+    [self deleteInsertableView:insertableView];
+}
 
-    [_insertsArray removeObject:view];
-    [_insertsDictionary removeObjectForKey:groupID];
-    [_contentControllers removeObjectForKey:groupID];
-    view.delegate = nil;
-    [view removeFromSuperview];
+/*!
+ deleteInsertableView: first delete the data content (by calling deleteContentForGroupID) and then removes the frame view (which is just the gui container for the content) from the worksheet's subview collection.
+ */
+-(void)deleteInsertableView:(AMInsertableView*)insertableView
+{
+    // First we delete the content, then the frame around the content
+    NSString * groupID = insertableView.groupID;
+    [self deleteContentForGroupID:groupID];
+    [self.insertableViewArray removeObject:insertableView];
+    [self.insertableViewDictionary removeObjectForKey:groupID];
+    insertableView.delegate = nil;
+    [insertableView removeFromSuperview];
     [self scheduleLayout];
 }
 
--(void)unregisterContentView:(AMContentView*)contentView
+/*!
+ deleteContentForGroupID: deletes the data content in two steps: first, the content controller is told to delete the in-memory data, then the AMInsertableRecord is told to delete the corresponding data from the permanent store.  
+ */
+-(void)deleteContentForGroupID:(NSString*)groupID
 {
+    // Pass through to the view controller to delete the content
+    AMContentViewController * vc = self.contentControllers[groupID];
+    [vc deleteContent];
+    [self.contentControllers removeObjectForKey:groupID];
     
+    AMInsertableRecord * record = self.insertableRecords[groupID];
+    [record deleteFromStore];
+    [self.insertableRecords removeObjectForKey:groupID];
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
@@ -183,32 +208,25 @@
 -(void)scheduleLayout
 {
     
-    // single-shot timer, will self-invalidate (and remove from runloop) after first fire.
+    // single-shot timer, will self-invalidate (and remove itself from runloop) after first fire.
     [NSTimer scheduledTimerWithTimeInterval:0.001
                                      target:self
-                                   selector:NSSelectorFromString(@"layoutInsertsAfterTimer:")
+                                   selector:NSSelectorFromString(@"layoutInsertsNow")
                                    userInfo:nil
                                     repeats:NO];
 }
 
 -(AMInsertableView*)insertableViewForKey:(NSString*)uuid
 {
-    return _insertsDictionary[uuid];
+    return self.insertableViewDictionary[uuid];
 }
 
 /*!
- On receipt of the timer event, this method calls layoutNow:.
- */
--(void)layoutInsertsAfterTimer:(NSTimer*)timer
-{
-    [self layoutInsertsNow];
-}
-
-/*!
- Use the worksheet view's implementation
+ Lay out the inserts now
  */
 -(void)layoutInsertsNow
 {
+    // Just pass through to the worksheet view's implementation
     [self.worksheetView layoutInsertsNow];
 }
 

@@ -11,10 +11,12 @@
 #import "KSMWorksheet.h"
 #import "KSMFunctionArgumentList.h"
 #import "KSMSymbolProvider.h"
+#import "KSMReferenceCounter.h"
 
 @interface KSMFunction()
 {
     NSString * _name;
+    KSMReferenceCounter * _referenceCounter;
 }
 @property (readwrite, copy) NSString * name;
 
@@ -68,9 +70,30 @@
     return [[KSMSymbolProvider sharedSymbolProvider] symbolForString:self.name];
 }
 
+-(KSMReferenceCounter *)referenceCounter
+{
+    return _referenceCounter;
+}
+
+-(void)setReferenceCounter:(KSMReferenceCounter *)referenceCounter
+{
+    if (!_referenceCounter) {
+        _referenceCounter = referenceCounter;
+    } else {
+        NSAssert(referenceCounter == _referenceCounter, @"Attempt was made to change the receiver's reference counter.");
+    }
+}
+
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"Function named %@",self.name];
+    return [NSString stringWithFormat:@"%@<%@>",[super description],self.name];
+}
+
+-(void)dealloc
+{
+    if (self.referenceCounter) {
+        [self.referenceCounter objectIsDeallocating:self];
+    }
 }
 
 @end

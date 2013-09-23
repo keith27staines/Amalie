@@ -13,10 +13,9 @@
 
 @interface AMInsertableRecord()
 {
-    NSMutableArray * _expressions;
+
 }
 
-@property (readonly) NSMutableArray * expressions;
 @property (readonly) AMNameRules * nameRules;
 
 @end
@@ -25,7 +24,7 @@
 
 -(void)deleteFromStore
 {
-    
+    // TODO: Add code to delete the record from the store
 }
 
 - (id)init
@@ -38,7 +37,6 @@
          nameRules:(AMNameRules*)nameRules
               uuid:(NSString *)uuid
               type:(AMInsertableType)type
-         mathSheet:(KSMWorksheet *)sheet
 {
     self = [super init];
     if (self) {
@@ -48,93 +46,11 @@
         }
         _uuid = uuid;
         _type = type;
-        _worksheet = sheet;
-    
-        [self setupExpressionArrayForType:type];
+
     }
     return self;
 }
 
--(void)setupExpressionArrayForType:(AMInsertableType)type
-{
-    _expressions = [NSMutableArray array];
-    NSUInteger expressions = 0;
-    switch (type) {
-        case AMInsertableTypeEquation:
-            expressions = 1;
-            break;
-        case AMInsertableTypeFunction:
-            expressions = 1;
-            break;
-            
-        default:
-            expressions = 0;
-            break;
-    }
-    
-    NSString * symbol = [_worksheet buildAndRegisterExpressionFromString:@"x"];
-    KSMExpression * expr = [_worksheet expressionForSymbol:symbol];
-    for (NSUInteger i = 0; i < expressions; i++) {
-        _expressions[i] = expr;
-    }
-}
-
--(NSMutableArray*)expressions
-{
-    return _expressions;
-}
-
--(NSUInteger)expressionCount
-{
-    return [self.expressions count];
-}
-
--(KSMExpression*)expressionForIndex:(NSUInteger)index
-{
-    return self.expressions[index];
-}
-
--(BOOL)setExpression:(KSMExpression*)expr forIndex:(NSUInteger)index
-{
-    if (index < self.expressionCount) {
-        self.expressions[index] = expr;
-        return YES;
-    }
-    return NO;
-}
-
--(KSMExpression*)expressionFromString:(NSString *)string atIndex:(NSUInteger)index
-{
-    if (index < self.expressionCount) {
-
-        KSMExpression * oldExpr = [self expressionForIndex:index];
-        KSMExpression * existingExpression = [self.worksheet expressionForOriginalString:string];
-        
-        if (existingExpression && oldExpr == existingExpression) {
-            return oldExpr;
-        }
-        
-        // Remove the expression that already exists at the specified index
-        if (oldExpr) {
-            [self.worksheet decrementReferenceCountForObject:oldExpr];
-        }
-        
-        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:string];
-        KSMExpression * newExpr = [self.worksheet expressionForSymbol:symbol];
-        
-        if ( ! [self setExpression:newExpr forIndex:index] ) {
-            [self.worksheet decrementReferenceCountForObject:newExpr];
-            return nil;
-        }
-        return newExpr;
-    }
-    return nil;
-}
-
--(KSMExpression*)expressionFromSymbol:(NSString*)symbol
-{
-    return [self.worksheet expressionForSymbol:symbol];
-}
 
 -(BOOL)changeAttributedNameIfValid:(NSAttributedString*)proposedName
                              error:(NSError**)error
@@ -149,10 +65,7 @@
 
 - (void)dealloc
 {
-    for (KSMExpression * expr in self.expressions) {
-        [self.worksheet decrementReferenceCountForObject:expr];
-    }
-    _expressions = nil;
+
 }
 
 @end

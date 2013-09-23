@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@import QuartzCore;
-
+#import "QuartzCore/QuartzCore.h"
 #import "AMConstants.h"
 #import "AMInsertableView.h"
 #import "AMTrayItem.h"

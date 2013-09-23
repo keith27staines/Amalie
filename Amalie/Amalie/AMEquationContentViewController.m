@@ -51,7 +51,7 @@ static NSUInteger const kAMIndexRHS;
     AMInsertableRecord * record;
     record = self.record;
     KSMExpression * expr;
-    expr = [record expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
+    expr = [self expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
     expressionView.expression = expr;
     [self layoutInsertedView];
     [expressionView setNeedsDisplay:YES];
@@ -118,7 +118,7 @@ static NSUInteger const kAMIndexRHS;
 {
     if (view == self.equationView) {
         self.nameView.attributedStringValue = self.record.attributedName;
-        KSMExpression * expr = [self.record expressionForIndex:0];
+        KSMExpression * expr = [self expressionForIndex:0];
         self.expressionStringView.stringValue = expr.string;
         
         NSDictionary * fonts = [AMPreferences fonts];

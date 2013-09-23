@@ -9,6 +9,7 @@
 #import "KSMExpression.h"
 #import "NSString+KSMMath.h"
 #import "KSMSymbolProvider.h"
+#import "KSMReferenceCounter.h"
 
 NSString * const kOperatorsString = @"^*/+-∧∘";
 NSString * const kBinaryOperatorsString = @"^*/+-∧∘";
@@ -37,6 +38,7 @@ NSString * const kScalarMultiply = @"∘";
     NSMutableDictionary * _subExpressions;
     NSUInteger _targetBracketCount;
     KSMExpressionType _expressionType;
+    KSMReferenceCounter * _referenceCounter;
 }
 
 @property (readwrite) KSMExpressionType expressionType;
@@ -105,6 +107,11 @@ NSString * const kScalarMultiply = @"∘";
     return self;
 }
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@<%@>%@",[super description],self.symbol, self.stringMakingSymbol];
+}
+
 +(NSArray*)operatorsArray
 {
     return @[kPower, kMultiply, kDivide, kAdd, kSubtract, kScalarMultiply, kVectorMultiply];
@@ -128,13 +135,32 @@ NSString * const kScalarMultiply = @"∘";
 {
     if (!_symbol) {
         KSMSymbolProvider * symbolProvider = [KSMSymbolProvider sharedSymbolProvider];
-        if (self.expressionType == KSMExpressionTypeVariable) {
-            _symbol = [symbolProvider symbolForString:self.bareString];
-        } else {
-            _symbol = [symbolProvider symbolForString:self.blackString];
-        }
+        _symbol = [symbolProvider symbolForString:[self stringMakingSymbol]];
     }
     return _symbol;
+}
+
+-(KSMReferenceCounter *)referenceCounter
+{
+    return _referenceCounter;
+}
+
+-(void)setReferenceCounter:(KSMReferenceCounter *)referenceCounter
+{
+    if (!_referenceCounter) {
+        _referenceCounter = referenceCounter;
+    } else {
+        NSAssert(referenceCounter == _referenceCounter, @"Attempt was made to change the receiver's reference counter.");
+    }
+}
+
+-(NSString*)stringMakingSymbol
+{
+    if (self.expressionType == KSMExpressionTypeVariable) {
+        return self.bareString;
+    } else {
+        return self.blackString;
+    }
 }
 
 -(BOOL)valid
@@ -753,10 +779,11 @@ NSString * const kScalarMultiply = @"∘";
     return _subExpressions;
 }
 
-
 -(void)dealloc
 {
-    NSLog(@"Object %@ with original string %@ deallocated.", self, self.originalString);
+    if (self.referenceCounter) {
+        [self.referenceCounter objectIsDeallocating:self];
+    }
 }
 
 

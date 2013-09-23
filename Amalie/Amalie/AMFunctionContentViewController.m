@@ -13,8 +13,9 @@
 #import "AMFunctionContentViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import "AMEquationContentViewController.h"
+#import "KSMWorksheet.h"
 #import "KSMExpression.h"
+#import "AMEquationContentViewController.h"
 #import "AMFunctionContentView.h"
 #import "AMInsertableRecord.h"
 #import "AMExpressionNodeView.h"
@@ -25,6 +26,9 @@
 static NSUInteger const kAMIndexRHS;
 
 @interface AMFunctionContentViewController ()
+{
+
+}
 
 @end
 
@@ -42,8 +46,9 @@ static NSUInteger const kAMIndexRHS;
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    
 }
+
+
 
 - (IBAction)nameAction:(AMNameView *)sender {
     NSAttributedString * proposedName = sender.attributedStringValue;
@@ -57,7 +62,7 @@ static NSUInteger const kAMIndexRHS;
     AMInsertableRecord * record;
     record = self.record;
     KSMExpression * expr;
-    expr = [record expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
+    expr = [self expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
     expressionView.expression = expr;
     [self layoutInsertedView];
     [expressionView setNeedsDisplay:YES];
@@ -121,10 +126,10 @@ static NSUInteger const kAMIndexRHS;
 }
 
 -(void)populateView:(AMContentView *)view
-{
+{    
     if (view == self.functionView) {
         self.nameView.attributedStringValue = self.record.attributedName;
-        KSMExpression * expr = [self.record expressionForIndex:0];
+        KSMExpression * expr = self.expressions[0];
         self.expressionStringView.stringValue = expr.string;
         
         NSDictionary * fonts = [AMPreferences fonts];
@@ -139,8 +144,11 @@ static NSUInteger const kAMIndexRHS;
     }
 }
 
+-(void)deleteContent
+{
+    [super deleteContent];
+    // TODO: AMFunctionContentController - specific cleanup.
 
-
-
+}
 
 @end
