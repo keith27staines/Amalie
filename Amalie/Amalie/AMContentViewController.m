@@ -19,7 +19,6 @@
 #import "AMGraph2DContentViewController.h"
 #import "KSMExpression.h"
 #import "AMContentView.h"
-#import "AMInsertableRecord.h"
 #import "AMInsertableView.h"
 #import "AMWorksheetController.h"
 #import "AMNameRules.h"
@@ -31,11 +30,20 @@
 #import "KSMWorksheet.h"
 #import "KSMExpression.h"
 
+// datamodel
+#import <CoreData/CoreData.h>
+#import "AMDInsertedObject.h"
+#import "AMDName.h"
+
+
 @interface AMContentViewController ()
 {
-    NSMutableArray * _expressions;
-    KSMWorksheet * _mathSheet;
+    NSMutableArray                * _expressions;
+    KSMWorksheet                  * _mathSheet;
+    __weak NSManagedObjectContext * _moc;
 }
+
+@property (weak) NSManagedObjectContext * moc;
 
 @end
 
@@ -55,61 +63,79 @@
                worksheetController:(AMWorksheetController*)worksheetController
               content:(AMInsertableType)insertableType
       groupParentView:(AMInsertableView*)groupParentView
-               record:(AMInsertableRecord*)record
+                  moc:(NSManagedObjectContext*)moc
+    amdInsertedObject:(AMDInsertedObject*)amdInsertedObject
+
 {
-    
-    // Initialization code here.
     switch (insertableType) {
         case AMInsertableTypeConstant:
+        {
             self = [[AMConstantContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
             break;
+        }
         case AMInsertableTypeVariable:
+        {
             self = [[AMVariableContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
             break;
+        }
         case AMInsertableTypeExpression:
+        {
             self = [[AMExpressionContentViewController alloc] initWithNibName:nil
             
                                                                      bundle:nil];
             break;
+        }
         case AMInsertableTypeFunction:
+        {
             self = [[AMFunctionContentViewController alloc] initWithNibName:nil
                                                                      bundle:nil];
             break;
+        }
         case AMInsertableTypeEquation:
+        {
             self = [[AMEquationContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
             break;
+        }
         case AMInsertableTypeVector:
+        {
             self = [[AMVectorContentViewController alloc] initWithNibName:nil
                                                                  bundle:nil];
             break;
+        }
         case AMInsertableTypeMatrix:
+        {
             self = [[AMMatrixContentViewController alloc] initWithNibName:nil
                                                                  bundle:nil];
             break;
+        }
         case AMInsertableTypeMathematicalSet:
+        {
             self = [[AMMathematicalSetContentViewController alloc] initWithNibName:nil
-                                                                          bundle:nil];
+                                                                            bundle:nil];
             break;
+        }
         case AMInsertableTypeGraph2D:
+        {
             self = [[AMGraph2DContentViewController alloc] initWithNibName:nil
                                                                   bundle:nil];
             break;
-        
+        }
     }
     
     if (self)
     {
+        self.moc = moc;
+        self.amdInsertedObject = amdInsertedObject;
+        self.groupID = groupParentView.groupID;
         _appController = appController;
         _parentWorksheetController = worksheetController;
         _insertableType = insertableType;
         AMContentView * contentView = (AMContentView*)[self view];
         contentView.datasource = self;
-        contentView.groupID = groupParentView.groupID;
-        self.groupID = groupParentView.groupID;
-        self.record = record;
+        contentView.groupID = self.groupID;
     }
     return self;
 }
@@ -117,7 +143,9 @@
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
                         worksheetController:(AMWorksheetController*)worksheetController
                              content:(AMInsertableType)insertableType
-                     groupParentView:(AMInsertableView*)groupParentView record:(AMInsertableRecord*)record
+                            groupParentView:(AMInsertableView*)groupParentView
+                                        moc:(NSManagedObjectContext*)moc
+                          amdInsertedObject:(AMDInsertedObject*)amdObject
 {
     AMContentViewController * vc = [AMContentViewController alloc];
     return [vc initWithNibName:nil
@@ -126,7 +154,7 @@
                         worksheetController:worksheetController
                        content:insertableType
                groupParentView:groupParentView
-                        record:record];
+                           moc:moc amdInsertedObject:amdObject];
 }
 
 -(KSMWorksheet*)mathSheet
@@ -206,7 +234,7 @@
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView *)view
 {
-    return self.record.attributedName;
+    return self.attributedName;
 }
 
 -(KSMExpression*)view:(AMContentView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index
@@ -228,12 +256,13 @@
 
 -(NSAttributedString*)attributedName
 {
-    return self.record.attributedName;
+    return self.amdInsertedObject.name.attributedString;
 }
 
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error
 {
-    return [self.record changeAttributedNameIfValid:proposedName error:error];
+    // TODO: appropriate validation on name
+    return NO;
 }
 
 -(AMPreferences*)preferenceController

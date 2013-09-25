@@ -25,6 +25,11 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
     KSMMatrix * _matrixValue;
 }
 
+@property (readwrite) NSInteger         integerValue;
+@property (readwrite) double            doubleValue;
+@property (readwrite, copy) KSMVector * vectorValue;
+@property (readwrite, copy) KSMMatrix * matrixValue;
+@property (readwrite) KSMValueType      type;
 @end
 
 @implementation KSMMathValue
@@ -417,6 +422,45 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
     return nil;
 }
 
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeInt64:self.type forKey:@"type"];
+    switch (self.type) {
+        case KSMValueInteger:
+            [coder encodeDouble:self.integerValue forKey:@"integerValue"];
+            break;
+        case KSMValueDouble:
+            [coder encodeDouble:self.doubleValue forKey:@"doubleValue"];
+            break;
+        case KSMValueVector:
+            [coder encodeObject:self.vectorValue forKey:@"vectorValue"];
+            break;
+        case KSMValueMatrix:
+            [coder encodeObject:self.matrixValue forKey:@"matrixValue"];
+            break;
+    }
+}
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self.type = [decoder decodeIntegerForKey:@"type"];
+    switch (self.type) {
+        case KSMValueInteger:
+            self.integerValue = [decoder decodeIntegerForKey:@"integerValue"];
+            break;
+        case KSMValueDouble:
+            self.doubleValue = [decoder decodeDoubleForKey:@"doubleValue"];
+            break;
+        case KSMValueVector:
+            self.vectorValue = [decoder decodeObjectForKey:@"vectorValue"];
+            break;
+        case KSMValueMatrix:
+            self.matrixValue = [decoder decodeObjectForKey:@"matrixValue"];
+            break;
+    }
+    return self;
+}
 
 -(BOOL)isNumericType
 {

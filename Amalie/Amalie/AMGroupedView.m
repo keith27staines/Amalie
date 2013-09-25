@@ -38,7 +38,7 @@
 
 +(NSString*)generateGroupIdentifier
 {
-    return [NSUUID UUID];
+    return [[NSUUID UUID] UUIDString];
 }
 
 #pragma mark - Archiving support -

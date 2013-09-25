@@ -7,12 +7,14 @@
 //
 
 @class AMWorksheetController;
-@class AMInsertableRecord;
+@class AMDInsertedObject;
+@class NSManagedObjectContext;
 @class AMInsertableView;
 @class AMNameRules;
 @class AMAppController;
 @class AMPreferences;
 @class KSMWorksheet;
+@class AMDInsertedObject;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
@@ -25,10 +27,11 @@
 @property (weak, readonly) AMWorksheetController * parentWorksheetController;
 @property (readonly) AMInsertableType insertableType;
 @property (copy) NSString * groupID;
-@property (weak) AMInsertableRecord * record;
+@property (weak) AMDInsertedObject * amdInsertedObject;
 @property (readonly) NSAttributedString * attributedName;
 @property (readonly) NSMutableArray * expressions;
 @property (readonly) KSMWorksheet * mathSheet;
+
 
 /*!
  Designated initializer
@@ -46,13 +49,16 @@
                worksheetController:(AMWorksheetController*)worksheetController
               content:(enum AMInsertableType)type
       groupParentView:(AMInsertableView*)view
-               record:(AMInsertableRecord*)record;
+                  moc:(NSManagedObjectContext*)moc
+    amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
                         worksheetController:(AMWorksheetController*)worksheetController
-                             content:(enum AMInsertableType)type
-                     groupParentView:(AMInsertableView*)groupParentview
-                              record:(AMInsertableRecord*)record;
+                                    content:(enum AMInsertableType)type
+                            groupParentView:(AMInsertableView*)groupParentview
+                                        moc:(NSManagedObjectContext*)moc
+                          amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
+
 
 -(void)deleteContent;
 

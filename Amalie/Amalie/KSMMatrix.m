@@ -14,7 +14,7 @@
     NSMutableArray * _data;
 }
 
-@property (readonly) NSMutableArray * mutableData;
+@property (readwrite) NSMutableArray * mutableData;
 
 @end
 
@@ -24,6 +24,11 @@
 -(NSMutableArray*)mutableData
 {
     return _data;
+}
+
+-(void)setMutableData:(NSMutableArray *)mutableData
+{
+    _data = [mutableData mutableCopy];
 }
 
 - (id)init
@@ -318,6 +323,17 @@
 -(void)setRow:(NSUInteger)row fromValueArray:(NSArray *)rowValues
 {
     [super setRow:row fromValueArray:rowValues];
+}
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.mutableData forKey:@"mutableData"];
+}
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self.mutableData = [decoder decodeObjectForKey:@"mutableData"];
+    return self;
 }
 
 @end

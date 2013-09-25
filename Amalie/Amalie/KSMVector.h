@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface KSMVector : NSObject <NSCopying>
+@interface KSMVector : NSObject <NSCopying, NSCoding>
 
 @property (readonly, copy) NSArray      * componentsArray;
 @property (readonly) KSMMathValue * x1;

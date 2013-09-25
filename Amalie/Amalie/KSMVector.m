@@ -13,10 +13,10 @@ static KSMVector * _zero3DVector;
 
 @interface KSMVector()
 {
-    NSUInteger          _dimension;
     NSArray           * _array;
 }
 
+@property (readwrite) NSArray * array;
 @end
 
 
@@ -86,8 +86,7 @@ static KSMVector * _zero3DVector;
 {
     self = [super init];
     if (self) {
-        _dimension = [components count];
-        _array = components;
+        _array = [components copy];
     }
     return self;
 }
@@ -95,14 +94,12 @@ static KSMVector * _zero3DVector;
 -(id)init2DWithXComponent:(NSNumber*)x yComponent:(NSNumber*)y
 {
     self = [self initWithComponents:@[x , y, @(0)] ];
-    _dimension = 2;
     return self;
 }
 
 -(id)init3DWithXComponent:(NSNumber*)x yComponent:(NSNumber*)y zComponent:(NSNumber*)z
 {
     self = [self initWithComponents:@[x , y, z ] ];
-    _dimension = 3;
     return self;
 }
 
@@ -121,7 +118,7 @@ static KSMVector * _zero3DVector;
 
 -(NSUInteger)dimension
 {
-    return _dimension;
+    return self.array.count;
 }
 
 +(KSMVector*)unitVectorFrom:(KSMVector*)vector
@@ -184,6 +181,15 @@ static KSMVector * _zero3DVector;
     return nil;
 }
 
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.array forKey:@"array"];
+}
 
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self.array = [decoder decodeObjectForKey:@"array"];
+    return self;
+}
 
 @end

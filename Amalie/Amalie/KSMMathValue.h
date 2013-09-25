@@ -24,7 +24,7 @@ typedef enum KSMValueType : NSUInteger {
 
 #import <Foundation/Foundation.h>
 
-@interface KSMMathValue : NSObject <NSCopying>
+@interface KSMMathValue : NSObject <NSCopying, NSCoding>
 
 @property (readonly) NSInteger         integerValue;
 @property (readonly) double            doubleValue;

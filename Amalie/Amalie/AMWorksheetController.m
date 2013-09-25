@@ -15,19 +15,23 @@
 #import "KSMMathValue.h"
 #import "AMContentView.h"
 #import "AMNameRules.h"
-#import "AMInsertableRecord.h"
+#import "AMDInsertedObject.h"
 #import "AMGroupedView.h"
 #import "KSMExpression.h"
-#import "AMInsertableRecord.h"
+#import "AMDataStore.h"
+#import "AMDInsertedObject.h"
 
 @interface AMWorksheetController()
 {
+    BOOL                  _layoutIsScheduled;
     NSMutableArray      * _insertableViewArray;
     NSMutableDictionary * _insertableViewDictionary;
     NSMutableDictionary * _insertedRecords;
     NSMutableDictionary * _contentControllers;
     KSMWorksheet        * _mathSheet;
     AMNameRules         * _nameRules;
+    AMDataStore         * _dataStore;
+    NSEntityDescription * _amdInsertedObjectsEntity;
 }
 
 /*!
@@ -35,14 +39,13 @@
  */
 @property (strong) NSMutableDictionary    * contentControllers;
 
-/*! insertsRecords is the array of all AMInsertableRecord objects the make up the document */
-@property (readonly) NSMutableDictionary  * insertableRecords;
-
 /*! insertableViewArray is the array of all AMInsertableView objects that are currently held in the document. The same data is also held in insertableViewDictionary */
 @property (readonly) NSMutableArray * insertableViewArray;
 
 /*! insertableViewDictionary is the dictionary of all AMInsertableView objects that are currently held in the document. The same data is also held in insertableViewArray */
 @property (readonly) NSMutableDictionary * insertableViewDictionary;
+
+@property (readonly) AMDataStore * dataStore;
 @end
 
 @implementation AMWorksheetController
@@ -54,11 +57,7 @@
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
-        _insertableViewArray        = [NSMutableArray array];
-        _insertableRecords          = [NSMutableDictionary dictionary];
-        _insertableViewDictionary   = [NSMutableDictionary dictionary];
-        _contentControllers         = [NSMutableDictionary dictionary];
-        _mathSheet                  = [[KSMWorksheet alloc] init];
+        [self setupDataStructures];
     }
     return self;
 }
@@ -90,6 +89,36 @@
 {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
+    [self setupGUI];
+}
+
+-(BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError *__autoreleasing *)error
+{
+    if ( ![super readFromURL:absoluteURL ofType:typeName error:error] ) return NO;
+    
+    // Load the document's object model from the datastore
+    [self setupDataStructures];
+
+    for (AMDInsertedObject * insertedObject in [self.dataStore fetchInsertedObjectsInDisplayOrder]) {
+        NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
+                                  insertedObject.yPosition.floatValue,
+                                  insertedObject.width.floatValue,
+                                  insertedObject.height.floatValue);
+        AMInsertableView * insertableView;
+        insertableView = [[AMInsertableView alloc] initWithFrame:frame
+                                                         groupID:insertedObject.groupID
+                                                  insertableType:insertedObject.insertType.integerValue];
+        [self insertView:insertableView withOrigin:insertableView.frame.origin];
+    }
+    
+    [self scheduleLayout];
+    return YES;
+}
+
+-(void)revertDocumentToSaved:(id)sender
+{
+    [super revertDocumentToSaved:sender];
+    [self setupDataStructures];
 }
 
 + (BOOL)autosavesInPlace
@@ -97,10 +126,28 @@
     return YES;
 }
 
-#pragma mark - AMWorksheetViewDelegate -
-
--(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)view withOrigin:(NSPoint)origin
+-(void)setupDataStructures
 {
+    _dataStore                  = [[AMDataStore alloc] initWithManagedObjectContext:self.managedObjectContext];
+    _insertableViewArray        = [NSMutableArray array];
+    _insertableViewDictionary   = [NSMutableDictionary dictionary];
+    _contentControllers         = [NSMutableDictionary dictionary];
+    _mathSheet                  = [[KSMWorksheet alloc] init];
+}
+
+-(void)setupGUI
+{
+    while (self.worksheetView.subviews.count > 0) {
+        NSView * view = self.worksheetView.subviews[0];
+        [view removeFromSuperviewWithoutNeedingDisplay];
+    }
+    _layoutIsScheduled = NO;
+    [self scheduleLayout];
+}
+
+-(void)insertView:(AMInsertableView*)view withOrigin:(NSPoint)origin
+{
+    NSAssert(view, @"Cannot insert a nill view.");
     if (!view) return;
     
     // Add the object to our list of inserted objects
@@ -111,26 +158,20 @@
     
     [view setFrameOrigin:origin];
     [self.worksheetView addSubview:view];
+}
+
+#pragma mark - AMWorksheetViewDelegate -
+
+-(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)view withOrigin:(NSPoint)origin
+{
+    NSAssert(view, @"Cannot insert a nill view.");
+    if (!view) return;
+    
+    // Add the object to our list of inserted objects
+    [self insertView:view withOrigin:origin];
     
     // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
     [self scheduleLayout];
-}
-
--(AMInsertableRecord*)insertableRecordForGroupView:(AMInsertableView*)view
-{
-    AMInsertableRecord * record = self.insertableRecords[view.groupID];
-    if (!record) {
-        record = [[AMInsertableRecord alloc] initWithName:nil
-                                                nameRules:self.nameRules
-                                                     groupID:view.groupID
-                                                     type:view.insertableType];
-        
-        [self.insertableRecords setObject:record forKey:view.groupID];
-    } else {
-        NSLog(@"Called unexpectedly");
-    }
-
-    return record;
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)insertableView
@@ -154,7 +195,7 @@
 }
 
 /*!
- deleteContentForGroupID: deletes the data content in two steps: first, the content controller is told to delete the in-memory data, then the AMInsertableRecord is told to delete the corresponding data from the permanent store.  
+ deleteContentForGroupID: deletes the data content .
  */
 -(void)deleteContentForGroupID:(NSString*)groupID
 {
@@ -162,10 +203,6 @@
     AMContentViewController * vc = self.contentControllers[groupID];
     [vc deleteContent];
     [self.contentControllers removeObjectForKey:groupID];
-    
-    AMInsertableRecord * record = self.insertableRecords[groupID];
-    [record deleteFromStore];
-    [self.insertableRecords removeObjectForKey:groupID];
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
@@ -178,18 +215,19 @@
     [self scheduleLayout];
 }
 
+
 #pragma mark - AMInsertableViewDelegate -
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    AMInsertableRecord * record = [self insertableRecordForGroupView:view];
-
+    
+    AMDInsertedObject * amdInsertedObject = [self.dataStore amdInsertedObjectForInsertedView:view];
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:self.appController
                                                      worksheetController:self
                                                                  content:type
                                                          groupParentView:view
-                                                                  record:record];
-    
+                                                                  moc:self.managedObjectContext
+                                                    amdInsertedObject:amdInsertedObject];
     [self.contentControllers setObject:vc forKey:vc.groupID];
     return (AMContentView*)vc.view;
 }
@@ -207,7 +245,8 @@
  */
 -(void)scheduleLayout
 {
-    
+    if (_layoutIsScheduled) return;
+    _layoutIsScheduled = YES;
     // single-shot timer, will self-invalidate (and remove itself from runloop) after first fire.
     [NSTimer scheduledTimerWithTimeInterval:0.001
                                      target:self
@@ -216,9 +255,9 @@
                                     repeats:NO];
 }
 
--(AMInsertableView*)insertableViewForKey:(NSString*)uuid
+-(AMInsertableView*)insertableViewForKey:(NSString*)key
 {
-    return self.insertableViewDictionary[uuid];
+    return self.insertableViewDictionary[key];
 }
 
 /*!
@@ -228,6 +267,15 @@
 {
     // Just pass through to the worksheet view's implementation
     [self.worksheetView layoutInsertsNow];
+    for (AMInsertableView * view in self.worksheetView.subviews) {
+        NSString * groupID = view.groupID;
+        AMDInsertedObject * amdObject = [self.dataStore fetchInsertedObjectWithGroupID:groupID];
+        amdObject.xPosition = @(view.frame.origin.x);
+        amdObject.yPosition = @(view.frame.origin.y);
+        amdObject.width     = @(view.frame.size.width);
+        amdObject.height    = @(view.frame.size.height);
+    }
+    _layoutIsScheduled = NO;
 }
 
 -(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction
@@ -259,6 +307,11 @@
 }
 
 #pragma mark - Misc -
+
+-(NSString *)defaultDraftName
+{
+    return @"Mathsheet";
+}
 
 -(AMNameRules*)nameRules
 {

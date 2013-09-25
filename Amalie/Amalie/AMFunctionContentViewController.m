@@ -17,11 +17,14 @@
 #import "KSMExpression.h"
 #import "AMEquationContentViewController.h"
 #import "AMFunctionContentView.h"
-#import "AMInsertableRecord.h"
+#import "AMDInsertedObject.h"
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
 #import "AMWorksheetController.h"
 #import "AMNameView.h"
+
+#import "AMDFunctionDef.h"
+#import "AMDName.h"
 
 static NSUInteger const kAMIndexRHS;
 
@@ -59,8 +62,6 @@ static NSUInteger const kAMIndexRHS;
 - (IBAction)expressionStringWasEdited:(NSTextField *)sender
 {
     AMExpressionNodeView * expressionView = self.expressionView;
-    AMInsertableRecord * record;
-    record = self.record;
     KSMExpression * expr;
     expr = [self expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
     expressionView.expression = expr;
@@ -128,7 +129,7 @@ static NSUInteger const kAMIndexRHS;
 -(void)populateView:(AMContentView *)view
 {    
     if (view == self.functionView) {
-        self.nameView.attributedStringValue = self.record.attributedName;
+        self.nameView.attributedStringValue = self.amdInsertedObject.name.attributedString;
         KSMExpression * expr = self.expressions[0];
         self.expressionStringView.stringValue = expr.string;
         

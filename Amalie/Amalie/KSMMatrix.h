@@ -10,7 +10,7 @@
 
 @class KSMMathValue;
 
-@interface KSMMatrix : NSObject  <NSCopying, NSMutableCopying>
+@interface KSMMatrix : NSObject  <NSCopying, NSMutableCopying, NSCoding>
 
 @property (readonly) NSUInteger rows;
 @property (readonly) NSUInteger columns;
