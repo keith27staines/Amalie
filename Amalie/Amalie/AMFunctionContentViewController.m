@@ -17,12 +17,13 @@
 #import "KSMExpression.h"
 #import "AMEquationContentViewController.h"
 #import "AMFunctionContentView.h"
-#import "AMDInsertedObject.h"
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
 #import "AMWorksheetController.h"
 #import "AMNameView.h"
 
+// core data generated objects
+#import "AMDInsertedObject.h"
 #import "AMDFunctionDef.h"
 #import "AMDName.h"
 
@@ -32,6 +33,7 @@ static NSUInteger const kAMIndexRHS;
 {
 
 }
+@property (weak, readonly) AMDFunctionDef * amdFunctionDef;
 
 @end
 
@@ -50,8 +52,6 @@ static NSUInteger const kAMIndexRHS;
 {
     [super awakeFromNib];
 }
-
-
 
 - (IBAction)nameAction:(AMNameView *)sender {
     NSAttributedString * proposedName = sender.attributedStringValue;
@@ -82,7 +82,6 @@ static NSUInteger const kAMIndexRHS;
     NSView * container = [functionView superview];
     AMNameView * name = [functionView nameView];
     [name sizeToFit];
-    NSLog(@"name width %f",name.frame.size.width);
     [name setUseQuotientBaselining:expressionView.requiresQuotientBaselining];
     
     // The sizes of the important nested and sibling views
@@ -143,6 +142,11 @@ static NSUInteger const kAMIndexRHS;
         self.expressionView.expression = expr;
         [self layoutInsertedView];
     }
+}
+
+-(AMDFunctionDef*)amdFunctionDef
+{
+    return (AMDFunctionDef*)self.amdInsertedObject;
 }
 
 -(void)deleteContent

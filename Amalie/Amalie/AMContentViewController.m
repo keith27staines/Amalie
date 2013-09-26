@@ -167,13 +167,11 @@
 {
     if (!_expressions) {
         _expressions = [NSMutableArray array];
-        
         NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:@"x"];
         KSMExpression * expr = [self.mathSheet expressionForSymbol:symbol];
         for (NSUInteger i = 0; i < 1; i++) {
             _expressions[i] = expr;
         }
-        
     }
     return _expressions;
 }

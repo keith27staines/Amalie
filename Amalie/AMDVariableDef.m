@@ -2,12 +2,11 @@
 //  AMDVariableDef.m
 //  Amalie
 //
-//  Created by Keith Staines on 24/09/2013.
+//  Created by Keith Staines on 26/09/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
 #import "AMDVariableDef.h"
-#import "AMDExpression.h"
 #import "AMDMathValue.h"
 
 
@@ -15,7 +14,6 @@
 
 @dynamic isConstant;
 @dynamic symbol;
-@dynamic expressions;
 @dynamic mathValue;
 
 @end

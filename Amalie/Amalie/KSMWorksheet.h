@@ -20,7 +20,6 @@
 
 @interface KSMWorksheet : NSObject <KSMReferenceCounterDelegate>
 
-@property (copy, readwrite) NSString                * title;
 @property (strong, readonly) KSMExpressionBuilder   * builder;
 @property (strong, readonly) KSMExpressionEvaluator * evaluator;
 @property (strong, readonly) NSMutableDictionary    * expressionsDictionary;

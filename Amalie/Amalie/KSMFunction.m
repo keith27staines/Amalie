@@ -41,7 +41,6 @@
         }
         _returnType = returnType;
         _name = name;
-        NSLog(@"%@",self.name);
     }
     return self;
 }

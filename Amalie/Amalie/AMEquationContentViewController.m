@@ -70,7 +70,6 @@ static NSUInteger const kAMIndexRHS;
     NSView * container = [equationView superview];
     AMNameView * name = [equationView nameView];
     [name sizeToFit];
-    NSLog(@"name width %f",name.frame.size.width);
     [name setUseQuotientBaselining:expressionView.requiresQuotientBaselining];
     
     // The sizes of the important nested and sibling views

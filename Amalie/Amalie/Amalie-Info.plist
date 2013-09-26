@@ -9,7 +9,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>binary</string>
+				<string>amalieb</string>
 			</array>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
@@ -19,6 +19,10 @@
 			<string>Binary</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.aldebaran.amalie-doc</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -29,7 +33,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>sqlite</string>
+				<string>amalies</string>
 			</array>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
@@ -39,6 +43,10 @@
 			<string>SQLite</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.aldebaran.amalie-doc</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -49,7 +57,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>xml</string>
+				<string>amaliex</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string></string>
@@ -65,6 +73,10 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.aldebaran.amalie-doc</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
@@ -101,7 +113,25 @@
 	<string>NSApplication</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Amalie mathsheet</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.aldebaran.amalie-doc</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>amaliex</string>
+					<string>amalies</string>
+					<string>amalieb</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>

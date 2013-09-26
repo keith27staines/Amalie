@@ -33,23 +33,13 @@
 {
     self = [super init];
     if (self) {
-        _title = @"Untitled";
         _referenceCountedObjects = [NSMutableDictionary dictionary];
         _expressionsDictionary = [NSMutableDictionary dictionary];
         _variablesDictionary = [NSMutableDictionary dictionary];
         _functionsDictionary = [NSMutableDictionary dictionary];
         _evaluator = [[KSMExpressionEvaluator alloc] initWithWorksheet:self];
-        [self registerStandardFunctions];
     }
     return self;
-}
-
--(void)registerStandardFunctions
-{
-    NSArray * standardFunctions = [KSMStandardFunction1v standardFunctionsArray];
-    for (KSMFunction * f in standardFunctions) {
-        [self registerFunction:f];
-    }
 }
 
 -(NSString*)registerExpression:(KSMExpression*)expression

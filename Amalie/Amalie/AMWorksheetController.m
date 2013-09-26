@@ -88,7 +88,6 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
     [self setupGUI];
 }
 
@@ -98,20 +97,7 @@
     
     // Load the document's object model from the datastore
     [self setupDataStructures];
-
-    for (AMDInsertedObject * insertedObject in [self.dataStore fetchInsertedObjectsInDisplayOrder]) {
-        NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
-                                  insertedObject.yPosition.floatValue,
-                                  insertedObject.width.floatValue,
-                                  insertedObject.height.floatValue);
-        AMInsertableView * insertableView;
-        insertableView = [[AMInsertableView alloc] initWithFrame:frame
-                                                         groupID:insertedObject.groupID
-                                                  insertableType:insertedObject.insertType.integerValue];
-        [self insertView:insertableView withOrigin:insertableView.frame.origin];
-    }
     
-    [self scheduleLayout];
     return YES;
 }
 
@@ -141,8 +127,23 @@
         NSView * view = self.worksheetView.subviews[0];
         [view removeFromSuperviewWithoutNeedingDisplay];
     }
-    _layoutIsScheduled = NO;
+    [self.undoManager disableUndoRegistration];
+    _layoutIsScheduled = YES; // prevent layout while we are setting up...
+    for (AMDInsertedObject * insertedObject in [self.dataStore fetchInsertedObjectsInDisplayOrder]) {
+        NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
+                                  insertedObject.yPosition.floatValue,
+                                  insertedObject.width.floatValue,
+                                  insertedObject.height.floatValue);
+        AMInsertableView * insertableView;
+        insertableView = [[AMInsertableView alloc] initWithFrame:frame
+                                                         groupID:insertedObject.groupID
+                                                  insertableType:insertedObject.insertType.integerValue];
+        [self insertView:insertableView withOrigin:insertableView.frame.origin];
+    }
+    _layoutIsScheduled = NO; // re-enable layout
     [self scheduleLayout];
+    [self.worksheetView setNeedsDisplay:YES];
+    [self.undoManager enableUndoRegistration];
 }
 
 -(void)insertView:(AMInsertableView*)view withOrigin:(NSPoint)origin

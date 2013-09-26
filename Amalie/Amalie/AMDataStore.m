@@ -75,12 +75,14 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
             break;
         }
     }
-    amd.groupID   = view.groupID;
-    amd.name      = [self makeAMDNameForType:view.insertableType];
-    amd.xPosition = @(view.frame.origin.x);
-    amd.yPosition = @(view.frame.origin.y);
-    amd.width     = @(view.frame.size.width);
-    amd.height    = @(view.frame.size.height);
+    amd.groupID    = view.groupID;
+    amd.name       = [self makeAMDNameForType:view.insertableType];
+    amd.xPosition  = @(view.frame.origin.x);
+    amd.yPosition  = @(view.frame.origin.y);
+    amd.width      = @(view.frame.size.width);
+    amd.height     = @(view.frame.size.height);
+    amd.insertType = @(view.insertableType);
+    amd.expressions = [NSMutableOrderedSet orderedSetWithArray:@[[self makeExpression]]];
     
     return amd;
 }
@@ -91,7 +93,6 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
     f = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityFunctionDefs
                                       inManagedObjectContext:self.moc];
     f.argumentList = [self makeArgumentList];
-    f.expressions = [NSMutableOrderedSet orderedSetWithArray:@[[self makeExpression]]];
     f.returnType = @(KSMValueDouble);
     return f;
 }
@@ -100,7 +101,12 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
 {
     AMDArgumentList * l = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArgumentLists
                                                         inManagedObjectContext:self.moc];
-    l.arguments = [NSMutableOrderedSet orderedSetWithArray:@[ [self makeArgument] ]];
+    
+    AMDArgument * a = [self makeArgument];
+    a.index = @(0);
+    a.name.string = @"x";
+    a.name.attributedString = [[NSAttributedString alloc] initWithString:a.name.string];
+    l.arguments = [NSMutableOrderedSet orderedSetWithArray:@[ a ]];
     return l;
 }
 
@@ -115,14 +121,17 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
 
 -(AMDExpression*)makeExpression
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityExpressions
-                                         inManagedObjectContext:self.moc];
+    AMDExpression * e = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityExpressions
+                         
+                                                      inManagedObjectContext:self.moc];
+    return e;
 }
 
 -(AMDMathValue*)makeMathValue
 {
-    // TODO: mathvalue is transformable, so need to make KSMMathValue conform to NSCoding
-    return nil;
+    AMDMathValue * mv = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityMathValues
+                                                      inManagedObjectContext:self.moc];
+    return mv;
 }
 
 -(AMDName*)makeAMDNameForType:(AMInsertableType)type
@@ -225,8 +234,8 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
 
 -(NSArray*)fetchInsertedObjectsInDisplayOrder
 {
-    NSSortDescriptor * sortByY = [[NSSortDescriptor alloc] initWithKey:@"y" ascending:NO];
-    NSSortDescriptor * sortByX = [[NSSortDescriptor alloc] initWithKey:@"x" ascending:YES];
+    NSSortDescriptor * sortByY = [[NSSortDescriptor alloc] initWithKey:@"yPosition" ascending:NO];
+    NSSortDescriptor * sortByX = [[NSSortDescriptor alloc] initWithKey:@"xPosition" ascending:YES];
     return [self fetchInsertedObjectsWithSortDescriptors:@[sortByY, sortByX]];
 }
 

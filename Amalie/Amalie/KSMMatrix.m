@@ -18,18 +18,9 @@
 
 @end
 
+#pragma mark - KSMMatrix -
 
 @implementation KSMMatrix
-
--(NSMutableArray*)mutableData
-{
-    return _data;
-}
-
--(void)setMutableData:(NSMutableArray *)mutableData
-{
-    _data = [mutableData mutableCopy];
-}
 
 - (id)init
 {
@@ -69,38 +60,16 @@
     return [self initWithRows:matrix.rows columns:matrix.columns data:matrix.data];
 }
 
+#pragma mark - Data accessors -
 
--(KSMMatrix*)matrixByRaisingToIntegerPower:(KSMMathValue*)integerPower
+-(NSMutableArray*)mutableData
 {
-    if (self.rows != self.columns) return nil;
-    if (integerPower.type != KSMValueInteger) return nil;
-
-    KSMMatrix * result = [self copy];
-    NSUInteger power = integerPower.integerValue;
-    for (NSUInteger i = 1; power - 1; i++) {
-        result = [result matrixByRightMultiplyingByMatrix:result];
-    }
-    return result;
+    return _data;
 }
 
--(id)copyWithZone:(NSZone *)zone
+-(void)setMutableData:(NSMutableArray *)mutableData
 {
-    return [[KSMMatrix alloc] initWithMatrix:self];
-}
-
--(id)copy
-{
-    return [self copyWithZone:nil];
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone
-{
-    return [[KSMMutableMatrix alloc] initWithMatrix:self];
-}
-
-- (id)mutableCopy
-{
-    return [self mutableCopyWithZone:nil];
+    _data = [mutableData mutableCopy];
 }
 
 -(KSMMathValue*)elementAtRow:(NSUInteger)row column:(NSUInteger)column
@@ -143,6 +112,26 @@
         result[row] = self.data[column + row*self.columns];
     }
     return result.copy;
+}
+
+-(void)setElementAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(KSMMathValue*)value
+{
+    _data[column + row * self.columns] = value;
+}
+
+#pragma mark - Matrix arithmetic -
+
+-(KSMMatrix*)matrixByRaisingToIntegerPower:(KSMMathValue*)integerPower
+{
+    if (self.rows != self.columns) return nil;
+    if (integerPower.type != KSMValueInteger) return nil;
+
+    KSMMatrix * result = [self copy];
+    NSUInteger power = integerPower.integerValue;
+    for (NSUInteger i = 1; power - 1; i++) {
+        result = [result matrixByRightMultiplyingByMatrix:result];
+    }
+    return result;
 }
 
 +(KSMMatrix*)matrixByAddingMatrixA:(KSMMatrix *)A toMatrixB:(KSMMatrix *)B
@@ -249,6 +238,7 @@
     return nil;
 }
 
+#pragma mark - Matrix shape tests -
 +(BOOL)sameShapeMatrixA:(KSMMatrix*)A matrixB:(KSMMatrix*)B
 {
     return (A.rows == B.rows && A.columns == B.columns) ? YES : NO;
@@ -264,51 +254,55 @@
     return (A.columns == B.rows) ? YES : NO;
 }
 
--(void)setElementAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(KSMMathValue*)value
+#pragma mark - NSCopying protocol -
+
+// imutable copy
+-(id)copyWithZone:(NSZone *)zone
 {
-    _data[column + row * self.columns] = value;
+    return [[KSMMatrix alloc] initWithMatrix:self];
 }
 
+// imutable copy
+-(id)copy
+{
+    return [self copyWithZone:nil];
+}
+
+#pragma mark - NSMutableCopying protocol -
+
+// mutable copy
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+    return [[KSMMutableMatrix alloc] initWithMatrix:self];
+}
+
+// mutable copy
+- (id)mutableCopy
+{
+    return [self mutableCopyWithZone:nil];
+}
+
+#pragma mark - NSCoding protocol -
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.mutableData forKey:@"mutableData"];
+}
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    self.mutableData = [decoder decodeObjectForKey:@"mutableData"];
+    return self;
+}
 
 @end
+
+#pragma mark - KSMMutableMatrix -
 
 /*!
  KSMMutableMatrix is the mutable counterpart of KSMMatrix. It provides methods
  for setting individial matrix elements.
  */
 @implementation KSMMutableMatrix
-
-/*!
- Creates and returns an immutable copy of the receiver.
- */
--(id)copyWithZone:(NSZone *)zone
-{
-    return [[KSMMatrix alloc] initWithRows:self.rows columns:self.columns data:self.data];
-}
-
-/*!
- Creates and returns an immutable copy of the receiver.
- */
--(id)copy
-{
-    return [self copyWithZone:nil];
-}
-
-/*!
- Creates and returns a mutable copy of the receiver.
- */
-- (id)mutableCopyWithZone:(NSZone *)zone
-{
-    return [[KSMMutableMatrix alloc] initWithRows:self.rows columns:self.columns data:self.data];
-}
-
-/*!
- Creates and returns a mutable copy of the receiver.
- */
-- (id)mutableCopy
-{
-    return [self mutableCopyWithZone:nil];
-}
 
 -(void)setElementAtRow:(NSUInteger)row column:(NSUInteger)column toValue:(KSMMathValue*)value
 {
@@ -325,15 +319,5 @@
     [super setRow:row fromValueArray:rowValues];
 }
 
--(void)encodeWithCoder:(NSCoder *)coder
-{
-    [coder encodeObject:self.mutableData forKey:@"mutableData"];
-}
-
--(id)initWithCoder:(NSCoder *)decoder
-{
-    self.mutableData = [decoder decodeObjectForKey:@"mutableData"];
-    return self;
-}
 
 @end
