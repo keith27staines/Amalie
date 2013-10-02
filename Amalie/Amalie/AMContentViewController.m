@@ -32,19 +32,24 @@
 
 // datamodel
 #import <CoreData/CoreData.h>
+#import "AMDataStore.h"
 #import "AMDInsertedObject.h"
+#import "AMDIndexedExpression.h"
+#import "AMDExpression.h"
 #import "AMDName.h"
 
 
 @interface AMContentViewController ()
 {
-    NSMutableArray                * _expressions;
-    KSMWorksheet                  * _mathSheet;
+    AMDataStore                   * _dataStore;
+    __weak KSMWorksheet           * _mathSheet;
     __weak NSManagedObjectContext * _moc;
+    NSMutableArray                * _expressions;
 }
 
-@property (weak) NSManagedObjectContext * moc;
-
+@property (readonly,strong) AMDataStore * dataStore;
+@property (readonly) NSArray * expressions;
+@property (readonly) AMInsertableType insertableType;
 @end
 
 @implementation AMContentViewController
@@ -61,7 +66,7 @@
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
                worksheetController:(AMWorksheetController*)worksheetController
-              content:(AMInsertableType)insertableType
+              contentType:(AMInsertableType)insertableType
       groupParentView:(AMInsertableView*)groupParentView
                   moc:(NSManagedObjectContext*)moc
     amdInsertedObject:(AMDInsertedObject*)amdInsertedObject
@@ -128,14 +133,23 @@
     if (self)
     {
         self.moc = moc;
-        self.amdInsertedObject = amdInsertedObject;
-        self.groupID = groupParentView.groupID;
+        self.groupID = [groupParentView.groupID copy];
         _appController = appController;
         _parentWorksheetController = worksheetController;
         _insertableType = insertableType;
+
         AMContentView * contentView = (AMContentView*)[self view];
         contentView.datasource = self;
         contentView.groupID = self.groupID;
+        for (AMDIndexedExpression * iexpr in amdInsertedObject.indexedExpressions) {
+            AMDExpression * amdExpr = iexpr.expression;
+            NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:amdExpr.originalString];
+            if ([amdExpr.symbol isEqualToString:@"?"]) {
+                amdExpr.symbol = symbol;
+            }
+            NSAssert([amdExpr.symbol isEqualToString:symbol], @"Backing store symbol and KSM generated symbol don't match.");  // Somebody messed with the symbol-gen algorithm?
+        }
+        self.amdInsertedObject = amdInsertedObject;
     }
     return self;
 }
@@ -151,8 +165,8 @@
     return [vc initWithNibName:nil
                         bundle:nil
                  appController:appContoller
-                        worksheetController:worksheetController
-                       content:insertableType
+           worksheetController:worksheetController
+                   contentType:insertableType
                groupParentView:groupParentView
                            moc:moc amdInsertedObject:amdObject];
 }
@@ -162,62 +176,91 @@
     return self.parentWorksheetController.mathSheet;
 }
 
+#pragma mark - Datastore access -
+
+-(AMDataStore*)dataStore
+{
+    if (!_dataStore) {
+        _dataStore = [[AMDataStore alloc] initWithManagedObjectContext:self.moc];
+    }
+    return _dataStore;
+}
+
+-(id<AMDIndexedObject>)objectWithIndex:(NSUInteger)index fromSet:(NSSet*)set
+{
+    NSPredicate * pred = [NSPredicate predicateWithFormat:@"index == %lu",index];
+    NSSet * filteredSet = [set filteredSetUsingPredicate:pred];
+    NSAssert(filteredSet.count == 1, @"Unexpected number of items with index %lu",index);
+    // As there is (should be!) only one object in the filtered, it is the one we want.
+    return filteredSet.anyObject;
+}
+
+-(NSArray*)arrayInIndexedOrderFromSet:(NSSet*)set
+{
+    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"index"
+                                                            ascending:YES];
+    return [set sortedArrayUsingDescriptors:@[sort]];
+}
+
 #pragma mark - Expression access -
--(NSMutableArray *)expressions
+
+/*! Returns an array of KSMExpressions. */
+-(NSArray *)expressions
 {
     if (!_expressions) {
         _expressions = [NSMutableArray array];
-        NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:@"x"];
-        KSMExpression * expr = [self.mathSheet expressionForSymbol:symbol];
-        for (NSUInteger i = 0; i < 1; i++) {
-            _expressions[i] = expr;
+        NSArray * amdIndexedExpressions = [self arrayInIndexedOrderFromSet:self.amdInsertedObject.indexedExpressions];
+        
+        for (AMDIndexedExpression * iexpr in amdIndexedExpressions) {
+            NSUInteger index = iexpr.index.integerValue;
+            AMDExpression * amdExpr = iexpr.expression;
+            NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:amdExpr.originalString];
+            KSMExpression * newExpr = [self.mathSheet expressionForSymbol:symbol];
+            _expressions[index] = newExpr;
         }
     }
-    return _expressions;
+    return [_expressions copy];
 }
 
 -(KSMExpression*)expressionForIndex:(NSUInteger)index
 {
-    NSAssert(index >=0 && index < self.expressions.count, @"Invalid index.");
+    NSArray * amdExpressions = self.expressions;
+    NSAssert(index >=0 && index < amdExpressions.count, @"Invalid index.");
     return self.expressions[index];
-}
-
--(BOOL)setExpression:(KSMExpression*)expression forIndex:(NSUInteger)index
-{
-    if (index < self.expressions.count) {
-        self.expressions[index] = expression;
-        return YES;
-    }
-    return NO;
 }
 
 -(KSMExpression*)expressionFromString:(NSString *)string atIndex:(NSUInteger)index
 {
     
-    KSMExpression * oldExpr = [self expressionForIndex:index];
+    KSMExpression * currentExpr = self.expressions[index];
     KSMExpression * existingExpression = [self.mathSheet expressionForOriginalString:string];
     
-    if (existingExpression && oldExpr == existingExpression) {
-        return oldExpr;
+    if (existingExpression && currentExpr == existingExpression) {
+        return currentExpr;
     }
     
     // Remove the expression that already exists at the specified index
-    if (oldExpr) {
-        [self.mathSheet decrementReferenceCountForObject:oldExpr];
-        oldExpr = nil;
+    if (currentExpr) {
+        [self.mathSheet decrementReferenceCountForObject:currentExpr];
+        currentExpr = nil;
     }
     
     NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:string];
     KSMExpression * newExpr = [self.mathSheet expressionForSymbol:symbol];
     
-    if ( ! [self setExpression:newExpr forIndex:index] ) {
-        [self.mathSheet decrementReferenceCountForObject:newExpr];
-        return nil;
-    }
+    _expressions[index] = newExpr;
+    
+    // Now we need to keep the underlying datastore in step...
+    AMDExpression * amdNew = [self.dataStore fetchOrMakeExpressionMatching:newExpr];
+    AMDIndexedExpression * iexpr = [self objectWithIndex:index fromSet:self.amdInsertedObject.indexedExpressions];
+    iexpr.expression = amdNew;
+    
     return newExpr;
 }
 
--(KSMExpression*)expressionFromSymbol:(NSString*)symbol
+
+
+-(KSMExpression*)expressionForSymbol:(NSString*)symbol
 {
     return [self.mathSheet expressionForSymbol:symbol];
 }
@@ -249,7 +292,7 @@
 -(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol
 {
     // Get expression for symbol from KSMWorksheet
-    return [self expressionFromSymbol:symbol];
+    return [self expressionForSymbol:symbol];
 }
 
 -(NSAttributedString*)attributedName
@@ -281,7 +324,6 @@
     for (KSMExpression * expr in self.expressions) {
         [self.mathSheet decrementReferenceCountForObject:expr];
     }
-    _expressions = nil;
 }
 
 -(void)dealloc

@@ -127,6 +127,7 @@
         NSView * view = self.worksheetView.subviews[0];
         [view removeFromSuperviewWithoutNeedingDisplay];
     }
+    
     [self.undoManager disableUndoRegistration];
     _layoutIsScheduled = YES; // prevent layout while we are setting up...
     for (AMDInsertedObject * insertedObject in [self.dataStore fetchInsertedObjectsInDisplayOrder]) {
@@ -143,7 +144,8 @@
     _layoutIsScheduled = NO; // re-enable layout
     [self scheduleLayout];
     [self.worksheetView setNeedsDisplay:YES];
-    [self.undoManager enableUndoRegistration];
+    [self.managedObjectContext processPendingChanges];
+    [self.undoManager removeAllActions];
 }
 
 -(void)insertView:(AMInsertableView*)view withOrigin:(NSPoint)origin
@@ -266,15 +268,31 @@
  */
 -(void)layoutInsertsNow
 {
-    // Just pass through to the worksheet view's implementation
+    // Just pass through to the worksheet view's implementation to do the actual move
     [self.worksheetView layoutInsertsNow];
+    
+    // Need to update the positions in core data too, but care is needed - any assignment to the position and size properties of the inserted object will result in the document being marked as dirty, so to prevent this happening unneccessarily, first test whether the values have in fact changed.
     for (AMInsertableView * view in self.worksheetView.subviews) {
+        
         NSString * groupID = view.groupID;
         AMDInsertedObject * amdObject = [self.dataStore fetchInsertedObjectWithGroupID:groupID];
-        amdObject.xPosition = @(view.frame.origin.x);
-        amdObject.yPosition = @(view.frame.origin.y);
-        amdObject.width     = @(view.frame.size.width);
-        amdObject.height    = @(view.frame.size.height);
+        
+        // Assign new values only if values have genuinely changed
+        if (![amdObject.xPosition  isEqual: @(view.frame.origin.x)]) {
+            amdObject.xPosition = @(view.frame.origin.x);
+        }
+        
+        if (![amdObject.yPosition  isEqual: @(view.frame.origin.y)]) {
+            amdObject.yPosition = @(view.frame.origin.y);
+        }
+        
+        if (![amdObject.width  isEqual: @(view.frame.size.width)]) {
+            amdObject.width     = @(view.frame.size.width);
+        }
+        
+        if (![amdObject.height  isEqual: @(view.frame.size.height)]) {
+            amdObject.height    = @(view.frame.size.height);
+        }
     }
     _layoutIsScheduled = NO;
 }
@@ -282,6 +300,10 @@
 -(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction
 {
     [self layoutInsertsNow];
+}
+
+- (IBAction)checkEditStatus:(id)sender {
+    NSLog(@"Is edited? %d", self.hasUnautosavedChanges);
 }
 
 #pragma - KSM maths library -

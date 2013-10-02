@@ -20,18 +20,23 @@
 #import "AMConstants.h"
 #import "AMContentViewDataSource.h"
 
+@protocol AMDIndexedObject <NSObject>
+@property NSNumber * index;
+@end
+
+
+
 @interface AMContentViewController : NSViewController <AMContentViewDataSource>
 
 @property (weak) AMAppController * appController;
 
 @property (weak, readonly) AMWorksheetController * parentWorksheetController;
-@property (readonly) AMInsertableType insertableType;
-@property (copy) NSString * groupID;
-@property (weak) AMDInsertedObject * amdInsertedObject;
-@property (readonly) NSAttributedString * attributedName;
-@property (readonly) NSMutableArray * expressions;
-@property (readonly) KSMWorksheet * mathSheet;
 
+@property (copy)          NSString               * groupID;
+@property (weak)          AMDInsertedObject      * amdInsertedObject;
+@property (readonly)      NSAttributedString     * attributedName;
+@property (weak,readonly) KSMWorksheet           * mathSheet;
+@property (weak)          NSManagedObjectContext * moc;
 
 /*!
  Designated initializer
@@ -39,15 +44,17 @@
  @Param nibBundleOrNil This parameter is ignored. The receiver knows the bundle to use.
  @Param appController The appController is required as the source of user default data.
  @Param worksheetController The parent worksheet controller. The receiver holds a weak reference.
- @Param groupID Identifies the group of nested views that comprise an inserted object.
- @Param record The record (data model object) whose data is to be displayed by the receiver.
+ @Param contentType The type of mathematical object being inserted.
+ @Param groupParentView The top level view containing all the other content in the group.
+ @Param moc The managed object context that is to be used for accessing the datastore.
+ @Param amdInsertedObject The object in the datastore that represents the insert (and thus contains all content).
  @Returns the initialized object.
  */
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
-               worksheetController:(AMWorksheetController*)worksheetController
-              content:(enum AMInsertableType)type
+  worksheetController:(AMWorksheetController*)worksheetController
+          contentType:(enum AMInsertableType)type
       groupParentView:(AMInsertableView*)view
                   moc:(NSManagedObjectContext*)moc
     amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
@@ -80,19 +87,6 @@
 -(KSMExpression*)expressionForIndex:(NSUInteger)index;
 
 /*!
- Sets the expression at the specified index. For example, if the receiver
- represents a 2D vector, index 0 might hold an expression representing the
- x component, and index 1 might hold an expression representing the y component.
- @Param expr The expression to set at the specified index.
- @Param index The index for the expression being set.
- @Return YES if successful. If the specified index is greater than
- expressionCount, then the internal state of the received is unchanged and NO is
- returned.
- */
--(BOOL)setExpression:(KSMExpression*)expr
-            forIndex:(NSUInteger)index;
-
-/*!
  Replaces the expression at the specified index by building a new expression
  from the specified string. If the receiver represents a 2D vector, index 0
  might hold an expression representing the x component, and index 1 might hold
@@ -115,8 +109,24 @@
  @Param symbol The unique hash symbol $hash for the expression.
  @Return The expression or nil if not found. Store the result in a weak pointer.
  */
--(KSMExpression*)expressionFromSymbol:(NSString*)symbol;
+-(KSMExpression*)expressionForSymbol:(NSString*)symbol;
 
+// The following two methods are required because Coredata support for NSOrderedSets is buggy (As of OSX Mavericks and iOS7). I have therefore chosen to use non-ordered (i.e., standard NSSets) sets and these methods make up for the lack of ordering.
+/*!
+ Returns the required object from an NSSet of items of type <AMDIndexedObject>
+ @Param index The index of the required item.
+ @Param set The set from which to obtain it.
+ @Return the required object.
+ */
+-(id<AMDIndexedObject>)objectWithIndex:(NSUInteger)index
+                               fromSet:(NSSet*)set;
+
+/*!
+ creates an array of objects from an NSSet of items of type <AMDIndexedObject>
+ @Param set The set from which to create the array.
+ @Return the array, arranged in ascending order of object index.
+ */
+-(NSArray*)arrayInIndexedOrderFromSet:(NSSet*)set;
 
 /*!
  preferences

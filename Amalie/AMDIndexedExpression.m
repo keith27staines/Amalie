@@ -1,21 +1,20 @@
 //
-//  AMDName.m
+//  AMDIndexedExpression.m
 //  Amalie
 //
 //  Created by Keith Staines on 01/10/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMDName.h"
-#import "AMDArgument.h"
+#import "AMDIndexedExpression.h"
+#import "AMDExpression.h"
 #import "AMDInsertedObject.h"
 
 
-@implementation AMDName
+@implementation AMDIndexedExpression
 
-@dynamic attributedString;
-@dynamic string;
-@dynamic arguments;
+@dynamic index;
+@dynamic expression;
 @dynamic insertedObject;
 
 @end

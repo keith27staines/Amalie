@@ -25,6 +25,8 @@
 // core data generated objects
 #import "AMDInsertedObject.h"
 #import "AMDFunctionDef.h"
+#import "AMDIndexedExpression.h"
+#import "AMDExpression.h"
 #import "AMDName.h"
 
 static NSUInteger const kAMIndexRHS;
@@ -51,6 +53,20 @@ static NSUInteger const kAMIndexRHS;
 -(void)awakeFromNib
 {
     [super awakeFromNib];
+    NSDictionary * fonts = [AMPreferences fonts];
+    NSFont * standardFont = fonts[kAMFontNameKey];
+    NSFont * fixedWidthFont = fonts[kAMFixedWidthFontNameKey];
+    [self.expressionStringView setFont:fixedWidthFont];
+    [self.nameView setFont:standardFont];
+    SEL callback = NSSelectorFromString(@"expressionStringDidChange:");
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidChangeNotification object:self.expressionStringView];
+    
+    callback = NSSelectorFromString(@"expressionStringDidBeginEditing:");
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidBeginEditingNotification object:self.expressionStringView];
+
+    callback = NSSelectorFromString(@"expressionStringDidEndEditing:");
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidEndEditingNotification object:self.expressionStringView];
+
 }
 
 - (IBAction)nameAction:(AMNameView *)sender {
@@ -59,11 +75,25 @@ static NSUInteger const kAMIndexRHS;
         sender.attributedStringValue = self.attributedName;
 }
 
-- (IBAction)expressionStringWasEdited:(NSTextField *)sender
+
+
+-(void)expressionStringDidBeginEditing:(NSNotification*)notification
 {
+    NSLog(@"Editing began");
+}
+
+-(void)expressionStringDidEndEditing:(NSNotification*)notification
+{
+    NSLog(@"Editing ended");
+}
+
+- (void)expressionStringDidChange:(NSNotification*)notification
+{
+    NSLog(@"Changing...");
+
     AMExpressionNodeView * expressionView = self.expressionView;
     KSMExpression * expr;
-    expr = [self expressionFromString:sender.stringValue atIndex:kAMIndexRHS];
+    expr = [self expressionFromString:self.expressionStringView.stringValue atIndex:kAMIndexRHS];
     expressionView.expression = expr;
     [self layoutInsertedView];
     [expressionView setNeedsDisplay:YES];
@@ -127,20 +157,22 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)populateView:(AMContentView *)view
 {    
+    // populate from the top view down
     if (view == self.functionView) {
-        self.nameView.attributedStringValue = self.amdInsertedObject.name.attributedString;
-        KSMExpression * expr = self.expressions[0];
-        self.expressionStringView.stringValue = expr.string;
+        // Okay, we have the topmost view
+        AMDFunctionDef * funcDef = self.amdFunctionDef;
+        AMDIndexedExpression * iexpr = [self objectWithIndex:0 fromSet:funcDef.indexedExpressions];
+        AMDExpression * amdExpr =iexpr.expression;
         
-        NSDictionary * fonts = [AMPreferences fonts];
-        NSFont * standardFont = fonts[kAMFontNameKey];
-        NSFont * fixedWidthFont = fonts[kAMFixedWidthFontNameKey];
-        
-        [self.expressionStringView setFont:fixedWidthFont];
-        [self.nameView setFont:standardFont];
-        
+        NSString * originalString = amdExpr.originalString;
+        KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
+        self.expressionStringView.stringValue = expr.originalString;
         self.expressionView.expression = expr;
+        
+        self.nameView.attributedStringValue = funcDef.name.attributedString;
         [self layoutInsertedView];
+    } else {
+        // Other views that are sub to self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }
 }
 

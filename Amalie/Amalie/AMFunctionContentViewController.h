@@ -29,9 +29,5 @@
 
 - (IBAction)nameAction:(AMNameView *)sender;
 
-- (IBAction)expressionStringWasEdited:(NSTextField *)sender;
-
-
-
 
 @end

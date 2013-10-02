@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13A584" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AMDArgumentLists" representedClassName="AMDArgumentList" syncable="YES">
-        <relationship name="arguments" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="AMDArguments" inverseName="argumentList" inverseEntity="AMDArguments" syncable="YES"/>
+        <relationship name="arguments" toMany="YES" deletionRule="Cascade" destinationEntity="AMDArguments" inverseName="argumentList" inverseEntity="AMDArguments" syncable="YES"/>
         <relationship name="functionDef" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDFunctionDefs" inverseName="argumentList" inverseEntity="AMDFunctionDefs" syncable="YES"/>
     </entity>
     <entity name="AMDArguments" representedClassName="AMDArgument" syncable="YES">
         <attribute name="index" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="mathValue" optional="YES" attributeType="Transformable" syncable="YES"/>
         <relationship name="argumentList" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDArgumentLists" inverseName="arguments" inverseEntity="AMDArgumentLists" syncable="YES"/>
-        <relationship name="mathValue" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AMDMathValues" inverseName="argument" inverseEntity="AMDMathValues" syncable="YES"/>
         <relationship name="name" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDNames" inverseName="arguments" inverseEntity="AMDNames" syncable="YES"/>
+        <relationship name="transformedByFunction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFunctionDefs" inverseName="transformsArguments" inverseEntity="AMDFunctionDefs" syncable="YES"/>
     </entity>
     <entity name="AMDExpressions" representedClassName="AMDExpression" syncable="YES">
-        <attribute name="originalString" optional="YES" attributeType="String" defaultValueString="x" syncable="YES"/>
-        <relationship name="insertedObjects" toMany="YES" deletionRule="Deny" destinationEntity="AMDInsertedObjects" inverseName="expressions" inverseEntity="AMDInsertedObjects" syncable="YES"/>
+        <attribute name="originalString" attributeType="String" minValueString="1" defaultValueString="x" syncable="YES"/>
+        <attribute name="symbol" attributeType="String" minValueString="1" defaultValueString="?" syncable="YES"/>
+        <relationship name="expressionIndices" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDIndexedExpressions" inverseName="expression" inverseEntity="AMDIndexedExpressions" syncable="YES"/>
     </entity>
     <entity name="AMDFunctionDefs" representedClassName="AMDFunctionDef" parentEntity="AMDInsertedObjects" syncable="YES">
         <attribute name="returnType" attributeType="Integer 64" minValueString="0" defaultValueString="0" syncable="YES"/>
         <relationship name="argumentList" maxCount="1" deletionRule="Cascade" destinationEntity="AMDArgumentLists" inverseName="functionDef" inverseEntity="AMDArgumentLists" syncable="YES"/>
+        <relationship name="transformsArguments" toMany="YES" deletionRule="Deny" destinationEntity="AMDArguments" inverseName="transformedByFunction" inverseEntity="AMDArguments" syncable="YES"/>
+    </entity>
+    <entity name="AMDIndexedExpressions" representedClassName="AMDIndexedExpression" syncable="YES">
+        <attribute name="index" attributeType="Integer 64" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <relationship name="expression" maxCount="1" deletionRule="Cascade" destinationEntity="AMDExpressions" inverseName="expressionIndices" inverseEntity="AMDExpressions" syncable="YES"/>
+        <relationship name="insertedObject" maxCount="1" deletionRule="Nullify" destinationEntity="AMDInsertedObjects" inverseName="indexedExpressions" inverseEntity="AMDInsertedObjects" syncable="YES"/>
     </entity>
     <entity name="AMDInsertedObjects" representedClassName="AMDInsertedObject" isAbstract="YES" syncable="YES">
         <attribute name="groupID" attributeType="String" syncable="YES"/>
@@ -25,14 +33,14 @@
         <attribute name="width" attributeType="Float" minValueString="200" defaultValueString="200" syncable="YES"/>
         <attribute name="xPosition" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="yPosition" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="expressions" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="AMDExpressions" inverseName="insertedObjects" inverseEntity="AMDExpressions" syncable="YES"/>
+        <relationship name="indexedExpressions" toMany="YES" deletionRule="Cascade" destinationEntity="AMDIndexedExpressions" inverseName="insertedObject" inverseEntity="AMDIndexedExpressions" syncable="YES"/>
         <relationship name="name" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDNames" inverseName="insertedObject" inverseEntity="AMDNames" syncable="YES"/>
     </entity>
-    <entity name="AMDMathValues" representedClassName="AMDMathValue" syncable="YES">
-        <attribute name="mathType" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <relationship name="argument" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDArguments" inverseName="mathValue" inverseEntity="AMDArguments" syncable="YES"/>
-        <relationship name="variableDef" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDVariableDefs" inverseName="mathValue" inverseEntity="AMDVariableDefs" syncable="YES"/>
+    <entity name="AMDIntervalDefs" representedClassName="AMDIntervalDef" parentEntity="AMDInsertedObjects" syncable="YES">
+        <attribute name="endMathValue" attributeType="Transformable" syncable="YES"/>
+        <attribute name="includeEnd" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="includeStart" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="startMathValue" attributeType="Transformable" syncable="YES"/>
     </entity>
     <entity name="AMDNames" representedClassName="AMDName" syncable="YES">
         <attribute name="attributedString" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -42,17 +50,18 @@
     </entity>
     <entity name="AMDVariableDefs" representedClassName="AMDVariableDef" parentEntity="AMDInsertedObjects" syncable="YES">
         <attribute name="isConstant" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mathValue" attributeType="Transformable" syncable="YES"/>
         <attribute name="symbol" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="mathValue" maxCount="1" deletionRule="Cascade" destinationEntity="AMDMathValues" inverseName="variableDef" inverseEntity="AMDMathValues" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AMDArgumentLists" positionX="-333" positionY="-2583" width="128" height="73"/>
-        <element name="AMDArguments" positionX="-126" positionY="-2596" width="128" height="103"/>
-        <element name="AMDExpressions" positionX="-135" positionY="-1945" width="128" height="73"/>
-        <element name="AMDFunctionDefs" positionX="-378" positionY="-2205" width="128" height="73"/>
-        <element name="AMDInsertedObjects" positionX="-126" positionY="-2223" width="128" height="163"/>
-        <element name="AMDMathValues" positionX="81" positionY="-2596" width="128" height="103"/>
-        <element name="AMDNames" positionX="-128" positionY="-2421" width="128" height="103"/>
-        <element name="AMDVariableDefs" positionX="90" positionY="-2218" width="128" height="88"/>
+        <element name="AMDArgumentLists" positionX="360" positionY="-471" width="128" height="73"/>
+        <element name="AMDArguments" positionX="421" positionY="-297" width="128" height="120"/>
+        <element name="AMDExpressions" positionX="-74" positionY="36" width="128" height="88"/>
+        <element name="AMDFunctionDefs" positionX="135" positionY="-396" width="128" height="88"/>
+        <element name="AMDIndexedExpressions" positionX="133" positionY="36" width="128" height="88"/>
+        <element name="AMDInsertedObjects" positionX="126" positionY="-180" width="128" height="163"/>
+        <element name="AMDIntervalDefs" positionX="-162" positionY="-378" width="128" height="103"/>
+        <element name="AMDNames" positionX="376" positionY="-72" width="128" height="105"/>
+        <element name="AMDVariableDefs" positionX="-155" positionY="-225" width="128" height="90"/>
     </elements>
 </model>

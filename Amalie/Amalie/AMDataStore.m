@@ -9,26 +9,30 @@
 #import <CoreData/CoreData.h>
 #import "AMInsertableView.h"
 #import "KSMMathValue.h"
+#import "KSMExpression.h"
 
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMDFunctionDef.h"
 #import "AMDExpression.h"
-#import "AMDMathValue.h"
 #import "AMDVariableDef.h"
-#import "AMDMathValue.h"
 #import "AMDArgumentList.h"
 #import "AMDArgument.h"
+#import "AMDIndexedExpression.h"
+
+#import "KSMVector.h"
+#import "KSMMatrix.h"
 
 #import "AMDName.h"
 
-static NSString * const kAMDEntityNames           = @"AMDNames";
-static NSString * const kAMDEntityInsertedObjects = @"AMDInsertedObjects";
-static NSString * const kAMDEntityFunctionDefs    = @"AMDFunctionDefs";
-static NSString * const kAMDEntityExpressions     = @"AMDExpressions";
-static NSString * const kAMDEntityArgumentLists   = @"AMDArgumentLists";
-static NSString * const kAMDEntityArguments       = @"AMDArguments";
-static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
+static NSString * const kAMDEntityNames              = @"AMDNames";
+static NSString * const kAMDEntityInsertedObjects    = @"AMDInsertedObjects";
+static NSString * const kAMDEntityFunctionDefs       = @"AMDFunctionDefs";
+static NSString * const kAMDEntityExpressions        = @"AMDExpressions";
+static NSString * const kAMDEntityArgumentLists      = @"AMDArgumentLists";
+static NSString * const kAMDEntityArguments          = @"AMDArguments";
+static NSString * const kAMDEntityMathValues         = @"AMDMathValues";
+static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
 
 @interface AMDataStore()
 {
@@ -48,7 +52,20 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
     return self;
 }
 
-#pragma mark - Core data glue -
+-(NSArray*)fetchObjectsFromEntityWithName:(NSString*)entityName withSortDescriptors:(NSArray*)sortDescriptors predicate:(NSPredicate*)predicate
+{
+    NSManagedObjectContext * moc = self.moc;
+    NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] init];
+    NSError * fetchError;
+    NSEntityDescription * entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:moc];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    [fetchRequest setPredicate:predicate];
+    NSArray * results = [moc executeFetchRequest:fetchRequest error:&fetchError];
+    return results;
+}
+
+#pragma mark - Inserted Objects -
 
 -(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view
 {
@@ -82,10 +99,36 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
     amd.width      = @(view.frame.size.width);
     amd.height     = @(view.frame.size.height);
     amd.insertType = @(view.insertableType);
-    amd.expressions = [NSMutableOrderedSet orderedSetWithArray:@[[self makeExpression]]];
+
+    AMDIndexedExpression * iexpr = [self makeIndexedExpression];
+    [amd addIndexedExpressionsObject:iexpr];
     
     return amd;
 }
+
+-(AMDInsertedObject*)fetchInsertedObjectWithGroupID:(NSString * )groupID
+{
+    NSPredicate * predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(groupID == %@)", groupID];
+    NSArray * results = [self fetchObjectsFromEntityWithName:kAMDEntityInsertedObjects withSortDescriptors:nil predicate:predicate];
+    NSAssert(results.count < 2, @"Unexpected number of results.");
+    
+    if (results.count == 1) {
+        return results[0];
+    } else {
+        return nil;
+    }
+}
+
+-(NSArray*)fetchInsertedObjectsInDisplayOrder
+{
+    NSSortDescriptor * sortByY = [[NSSortDescriptor alloc] initWithKey:@"yPosition" ascending:NO];
+    NSSortDescriptor * sortByX = [[NSSortDescriptor alloc] initWithKey:@"xPosition" ascending:YES];
+    return [self fetchObjectsFromEntityWithName:kAMDEntityInsertedObjects withSortDescriptors:@[sortByY, sortByX] predicate:nil];
+}
+
+
+#pragma mark - Function Defs -
 
 -(AMDFunctionDef*)makeFunctionDef
 {
@@ -94,30 +137,71 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
                                       inManagedObjectContext:self.moc];
     f.argumentList = [self makeArgumentList];
     f.returnType = @(KSMValueDouble);
+   // f.transformsArguments = [NSMutableSet set];
+    
     return f;
 }
+
+#pragma mark - Argument Lists -
 
 -(AMDArgumentList*)makeArgumentList
 {
     AMDArgumentList * l = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArgumentLists
                                                         inManagedObjectContext:self.moc];
     
-    AMDArgument * a = [self makeArgument];
+    AMDArgument * a = [self makeArgumentOfType:KSMValueDouble];
     a.index = @(0);
     a.name.string = @"x";
     a.name.attributedString = [[NSAttributedString alloc] initWithString:a.name.string];
-    l.arguments = [NSMutableOrderedSet orderedSetWithArray:@[ a ]];
+    [l addArgumentsObject:a];
     return l;
 }
 
--(AMDArgument*)makeArgument
+-(AMDArgument*)makeArgumentOfType:(KSMValueType)mathType
 {
     AMDArgument * a = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArguments
                                                     inManagedObjectContext:self.moc];
     a.name = [self makeAMDNameForType:AMInsertableTypeVariable];
-    a.mathValue = [self makeMathValue];
+    switch (mathType) {
+        case KSMValueInteger:
+            a.mathValue = [KSMMathValue mathValueFromInteger:0];
+            break;
+        case KSMValueDouble:
+            a.mathValue = [KSMMathValue mathValueFromDouble:0.0];
+            break;
+        case KSMValueVector:
+            a.mathValue = [KSMMathValue mathValueFromVector:[KSMVector zero3DVector]];
+            break;
+        case KSMValueMatrix:
+            a.mathValue = [KSMMathValue mathValueFromMatrix:[KSMMatrix zeroMatrixOfDimension:3]];
+            break;
+    }
     return a;
 }
+
+#pragma mark - Indexed expressions -
+-(AMDIndexedExpression*)makeIndexedExpression
+{
+    return [self makeIndexedExpressionWithIndex:0];
+}
+
+-(AMDIndexedExpression*)makeIndexedExpressionWithIndex:(NSUInteger)index
+{
+    AMDIndexedExpression * iexpr = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityIndexedExpressions inManagedObjectContext:self.moc];
+    iexpr.index = @(index);
+    iexpr.expression = [self makeExpression];
+    return iexpr;
+}
+
+
+-(AMDIndexedExpression*)makeIndexedExpressionWithIndex:(NSUInteger)index expression:(AMDExpression*)expression
+{
+    AMDIndexedExpression * iexpr = [self makeIndexedExpressionWithIndex:index];
+    iexpr.expression = expression;
+    return iexpr;
+}
+
+#pragma mark - Expressions -
 
 -(AMDExpression*)makeExpression
 {
@@ -127,12 +211,48 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
     return e;
 }
 
--(AMDMathValue*)makeMathValue
+-(AMDExpression *)fetchOrMakeExpressionMatching:(KSMExpression*)ksmExpression
 {
-    AMDMathValue * mv = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityMathValues
-                                                      inManagedObjectContext:self.moc];
-    return mv;
+    AMDExpression * fetchResult = [self fetchExpressionWithSymbol:ksmExpression.symbol originalString:ksmExpression.originalString];
+    if (!fetchResult) {
+        fetchResult = [self makeExpression];
+        fetchResult.symbol = ksmExpression.symbol;
+        fetchResult.originalString = ksmExpression.originalString;
+    }
+    return fetchResult;
 }
+
+-(AMDExpression *)fetchExpressionWithSymbol:(NSString *)symbol
+{
+    NSPredicate * predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(symbol == %@)", symbol];
+    NSArray * results = [self fetchObjectsFromEntityWithName:kAMDEntityExpressions withSortDescriptors:nil predicate:predicate];
+    NSAssert(results.count < 2, @"Unexpected number of results.");
+    if (results.count == 0) return nil;
+    return results[0];
+}
+
+-(AMDExpression *)fetchExpressionWithOriginalString:(NSString *)originalString
+{
+    NSPredicate * predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(originalString == %@)", originalString];
+    NSArray * results = [self fetchObjectsFromEntityWithName:kAMDEntityExpressions withSortDescriptors:nil predicate:predicate];
+    NSAssert(results.count < 2, @"Unexpected number of results.");
+    if (results.count == 0) return nil;
+    return results[0];
+}
+
+-(AMDExpression *)fetchExpressionWithSymbol:(NSString*)symbol originalString:(NSString *)originalString
+{
+    NSPredicate * predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(symbol == %@ AND originalString == %@)", symbol, originalString];
+    NSArray * results = [self fetchObjectsFromEntityWithName:kAMDEntityExpressions withSortDescriptors:nil predicate:predicate];
+    NSAssert(results.count < 2, @"Unexpected number of results.");
+    if (results.count == 0) return nil;
+    return results[0];
+}
+
+#pragma mark - Names -
 
 -(AMDName*)makeAMDNameForType:(AMInsertableType)type
 {
@@ -179,7 +299,6 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
     return try;
 }
 
-
 -(NSArray*)fetchNames
 {
     NSManagedObjectContext * moc = self.moc;
@@ -201,43 +320,6 @@ static NSString * const kAMDEntityMathValues      = @"AMDMathValues";
     return result;
 }
 
--(AMDInsertedObject*)fetchInsertedObjectWithGroupID:(NSString * )groupID
-{
-    NSArray * insertedObjects = [self fetchInsertedObjectsWithSortDescriptors:nil];
-    NSPredicate * predicate;
-    predicate = [NSPredicate predicateWithFormat:@"(groupID == %@)", groupID];
-    NSArray * result = [insertedObjects filteredArrayUsingPredicate:predicate];
-    NSAssert(result.count < 2, @"Unexpected number of results.");
-    
-    if (result.count == 1) {
-        return result[0];
-    } else {
-        return nil;
-    }
-}
-
--(NSEntityDescription*)amdInsertedObjectsEntity
-{
-    return [NSEntityDescription entityForName:kAMDEntityInsertedObjects
-                       inManagedObjectContext:self.moc];
-}
-
--(NSArray*)fetchInsertedObjectsWithSortDescriptors:(NSArray*)sortDescriptors
-{
-    NSManagedObjectContext * moc = self.moc;
-    NSFetchRequest * fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    NSError * fetchError;
-    [fetchRequest setEntity:[self amdInsertedObjectsEntity]];
-    return [moc executeFetchRequest:fetchRequest error:&fetchError];
-}
-
--(NSArray*)fetchInsertedObjectsInDisplayOrder
-{
-    NSSortDescriptor * sortByY = [[NSSortDescriptor alloc] initWithKey:@"yPosition" ascending:NO];
-    NSSortDescriptor * sortByX = [[NSSortDescriptor alloc] initWithKey:@"xPosition" ascending:YES];
-    return [self fetchInsertedObjectsWithSortDescriptors:@[sortByY, sortByX]];
-}
 
 
 @end

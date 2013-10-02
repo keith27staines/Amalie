@@ -37,7 +37,8 @@
 
 +(KSMMatrix*)matrixByAddingMatrixA:(KSMMatrix*)A toMatrixB:(KSMMatrix*)B;
 +(KSMMatrix*)matrixBySubtractingMatrixA:(KSMMatrix*)A fromMatrix:(KSMMatrix*)B;
-
++(KSMMatrix*)unitMatrixOfDimension:(NSUInteger)d;
++(KSMMatrix*)zeroMatrixOfDimension:(NSUInteger)d;
 
 -(KSMMatrix*)matrixByRaisingToIntegerPower:(KSMMathValue*)integerPower;
 -(KSMMatrix*)matrixByAddingMatrix:(KSMMatrix*)otherMatrix;

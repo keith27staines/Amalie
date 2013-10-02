@@ -54,5 +54,6 @@
 @property (strong, readonly) AMNameRules * nameRules;
 
 -(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction;
+- (IBAction)checkEditStatus:(id)sender;
 
 @end

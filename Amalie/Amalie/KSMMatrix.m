@@ -22,6 +22,21 @@
 
 @implementation KSMMatrix
 
++(KSMMatrix *)unitMatrixOfDimension:(NSUInteger)d
+{
+    KSMMatrix * m = [self zeroMatrixOfDimension:d];
+    for (NSUInteger i = 0; i < d - 1; i++) {
+        [m setElementAtRow:d column:d toValue:[KSMMathValue mathValueFromInteger:1]];
+    }
+    return m;
+}
+
++(KSMMatrix *)zeroMatrixOfDimension:(NSUInteger)d
+{
+    return [[self alloc] initWithRows:d columns:d];
+}
+
+
 - (id)init
 {
     return [self initWithRows:2 columns:2];
@@ -32,7 +47,7 @@
 {
     NSMutableArray * data = [NSMutableArray array];
     for (NSUInteger i = 0; i < rowCount * columnCount; i++) {
-        KSMMathValue * e = [[KSMMathValue alloc] initWithDouble:0.0];
+        KSMMathValue * e = [[KSMMathValue alloc] initWithInteger:0.0];
         [data addObject:e];
     }
     return [self initWithRows:rowCount columns:columnCount data:data];
