@@ -166,15 +166,41 @@ static CGFloat const MINHEIGHT = 600.0;
 
 # pragma mark - Layout -
 
--(void)layoutInsertsNow
+-(void)resizeWithOldSuperviewSize:(NSSize)oldSize
 {
-    NSArray * insertsArray = [self sortInserts];
+    [self resizeToFillScrollView];
+    NSLog(@"New height: %f",self.superview.frame.size.height);
+}
+
+-(NSSize)resizeToFillScrollView
+{
+    NSSize oldSize = self.frame.size;
+    NSSize size = [self requiredSize];
+    float dh = size.height - oldSize.height;
+    [self setFrameSize:size];
+    for (NSView * view in self.subviews) {
+        NSPoint newOrigin = NSMakePoint(view.frame.origin.x, view.frame.origin.y + dh);
+        [view setFrameOrigin:newOrigin];
+    }
+    return size;
+}
+
+-(NSSize)requiredSize
+{
     NSSize size = [self intrinsicContentSize];
-    [CATransaction begin];
     NSSize scrollViewSize = self.superview.frame.size;
     size.width = fmaxf(size.width,   scrollViewSize.width);
     size.height = fmaxf(size.height, scrollViewSize.height);
+    return size;
+}
+
+-(void)layoutInsertsNow
+{
+    NSSize size = [self requiredSize];
     [self setFrameSize:size];
+    NSArray * insertsArray = [self sortInserts];
+
+    [CATransaction begin];
     
     float firstTop = size.height - kAMDefaultTopMargin;
     NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);

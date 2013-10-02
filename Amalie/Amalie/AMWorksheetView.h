@@ -33,4 +33,7 @@
  */
 -(void)layoutInsertsNow;
 
+
+-(NSSize)resizeToFillScrollView;
+
 @end
