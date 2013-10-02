@@ -64,12 +64,14 @@
 
 -(void)awakeFromNib
 {
+    
+    [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
+    
     SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
     NSNotificationCenter * notifier = [NSNotificationCenter defaultCenter];
     [notifier addObserver:self selector:selector
                      name:NSScrollViewDidEndLiveMagnifyNotification
                    object:self.worksheetScrollView];
-    
 
     NSSlider * slider = (NSSlider*)(self.scaleSliderItem.view);
     [slider setMinValue:0.25];
