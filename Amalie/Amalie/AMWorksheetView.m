@@ -35,6 +35,7 @@ static CGFloat const MINHEIGHT = 600.0;
 
 -(void)awakeFromNib
 {
+    
     // Determine the class name for draggable types
     NSMutableArray * allTypes = [NSMutableArray array];
     NSArray * typesArray;
@@ -165,32 +166,22 @@ static CGFloat const MINHEIGHT = 600.0;
 }
 
 # pragma mark - Layout -
+
 -(void)resizeWithOldSuperviewSize:(NSSize)oldSize
 {
-    NSSize newSize = [self requiredSizeGivenFrameSize:self.superview.frame.size];
-    oldSize = [self requiredSizeGivenFrameSize:oldSize];
-    CGFloat dy = newSize.height - oldSize.height;
-    [self setFrameSize:newSize];
-    for (NSView * view in self.subviews) {
-        [view setFrameOrigin:NSMakePoint(view.frame.origin.x, view.frame.origin.y+dy)];
-    }
-}
-
--(NSSize)requiredSizeGivenFrameSize:(NSSize)frameSize
-{
-    NSSize size = [self intrinsicContentSize];
-    size.width = fmaxf(size.width,   frameSize.width);
-    size.height = fmaxf(size.height, frameSize.height);
-    return size;
+    // WARNING: This is essential in order to keep the sheet correctly positioned within the scroll view, yet I don't quite understand it.
+    NSSize superSize = self.superview.bounds.size;
+    [self setFrameOrigin:NSMakePoint(0, superSize.height)];
 }
 
 -(void)layoutInsertsNow
 {
-    NSSize size = [self requiredSizeGivenFrameSize:self.frame.size];
+    [CATransaction begin];
+    NSSize size = [self intrinsicContentSize];
     [self setFrameSize:size];
     NSArray * insertsArray = [self sortInserts];
 
-    [CATransaction begin];
+
     float firstTop = size.height - kAMDefaultTopMargin;
     NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
     for (AMInsertableView * view in insertsArray) {
