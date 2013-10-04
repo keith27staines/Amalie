@@ -11,6 +11,7 @@
 #import "AMConstants.h"
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
+#import "AMInsertableViewController.h"
 #import "KSMWorksheet.h"
 #import "KSMMathValue.h"
 #import "AMContentView.h"
@@ -32,6 +33,7 @@
     AMNameRules         * _nameRules;
     AMDataStore         * _dataStore;
     NSEntityDescription * _amdInsertedObjectsEntity;
+    AMInsertableView    * _selectedView;
 }
 
 /*!
@@ -137,10 +139,13 @@
                                   insertedObject.yPosition.floatValue,
                                   insertedObject.width.floatValue,
                                   insertedObject.height.floatValue);
+        AMInsertableViewController * vc = [[AMInsertableViewController alloc] init];
         AMInsertableView * insertableView;
-        insertableView = [[AMInsertableView alloc] initWithFrame:frame
-                                                         groupID:insertedObject.groupID
-                                                  insertableType:insertedObject.insertType.integerValue];
+        insertableView = (AMInsertableView*)[vc view];
+        insertableView.frame = frame;
+        insertableView.groupID = insertedObject.groupID;
+        insertableView.insertableType = insertedObject.insertType.integerValue;
+        
         [self insertView:insertableView withOrigin:insertableView.frame.origin];
     }
     _layoutIsScheduled = NO; // re-enable layout
@@ -174,6 +179,9 @@
     
     // Add the object to our list of inserted objects
     [self insertView:view withOrigin:origin];
+    
+    // This will be the selected view now
+    [self insertableViewReceivedClick:view];
     
     // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
     [self scheduleLayout];
@@ -241,6 +249,11 @@
 {
     AMWorksheetView * worksheetView = (AMWorksheetView *)view.superview;
     [self workheetView:worksheetView wantsViewRemoved:view];
+}
+
+-(void)insertableViewReceivedClick:(AMInsertableView*)view
+{
+    self.selectedView = view;
 }
 
 #pragma mark - Layout -
@@ -329,6 +342,21 @@
 - (IBAction)scaleSliderMoved:(NSSlider *)slider {
     CGFloat requiredMagnification = slider.floatValue;
     [self.worksheetScrollView setMagnification:requiredMagnification];
+}
+
+#pragma mark - State management -
+
+-(AMInsertableView *)selectedView
+{
+    return _selectedView;
+}
+
+-(void)setSelectedView:(AMInsertableView *)view
+{
+    if (_selectedView == view) return;
+    _selectedView.viewState = AMInsertViewStateNormal;
+    _selectedView = view;
+    _selectedView.viewState = AMInsertViewStateSelected;
 }
 
 #pragma mark - Misc -

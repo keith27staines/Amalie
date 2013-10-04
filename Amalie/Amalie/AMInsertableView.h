@@ -7,6 +7,7 @@
 //
 
 // Forward declare
+
 enum AMInsertableType : NSInteger;
 
 #import <Cocoa/Cocoa.h>
@@ -16,12 +17,11 @@ enum AMInsertableType : NSInteger;
 #import "AMTrayDatasource.h"
 #import "AMInsertableViewDelegate.h"
 
-typedef NS_ENUM(NSInteger, AMInsertableViewState) {
-    AMObjectNormal             = 0000,
-    AMObjectCollapsed          = 1000,
-    AMObjectForInpsecting      = 3000,
-    AMObjectForEditing         = 4000,
-    AMObjectForEditingAdvanced = 5000
+typedef NS_ENUM(NSInteger, AMInsertViewState) {
+    AMInsertViewStateNormal                    = 0000,
+    AMInsertViewStateSelected                  = 1000,
+    AMInsertViewStateEditing                   = 4000,
+    AMInsertViewStateNormalEditingAdvanced     = 5000,
 };
 
 @interface AMInsertableView : AMGroupedView
@@ -34,7 +34,7 @@ NSDraggingSource
 
 
 @property enum AMInsertableType insertableType;
-@property AMInsertableViewState objectState;
+@property AMInsertViewState viewState;
 @property (readonly) NSColor * backColor;
 @property (readonly) NSEvent * mouseDownEvent;
 @property (readonly) NSPoint mouseDownWindowPoint;
@@ -56,6 +56,7 @@ NSDraggingSource
 
 - (IBAction)closeButtonClicked:(NSButton *)sender;
 
+@property (weak) IBOutlet NSButton *closeButton;
 
 /*!
  Convenience method, not part of the NSPasteboardWriting protocol, but useful becauser with this class method, no instance of an AMInsertableOjbect needs to be set up in order to setup the drag source.

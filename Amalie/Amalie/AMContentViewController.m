@@ -144,9 +144,7 @@
         for (AMDIndexedExpression * iexpr in amdInsertedObject.indexedExpressions) {
             AMDExpression * amdExpr = iexpr.expression;
             NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:amdExpr.originalString];
-            if ([amdExpr.symbol isEqualToString:@"?"]) {
-                amdExpr.symbol = symbol;
-            }
+            amdExpr.symbol = symbol;
             NSAssert([amdExpr.symbol isEqualToString:symbol], @"Backing store symbol and KSM generated symbol don't match.");  // Somebody messed with the symbol-gen algorithm?
         }
         self.amdInsertedObject = amdInsertedObject;

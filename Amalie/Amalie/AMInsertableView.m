@@ -11,6 +11,7 @@
 #import "AMInsertableView.h"
 #import "AMTrayItem.h"
 #import "AMContentView.h"
+#import "AMInsertableViewController.h"
 
 static NSString * const kAMDraggedInsertableView = @"kAMDraggedInsertableView";
 static BOOL LOG_DRAG_OPS = NO;
@@ -19,8 +20,9 @@ static CABasicAnimation * animateOrigin;
 
 @interface AMInsertableView()
 {
-    AMInsertableViewState   _objectState;
+    AMInsertViewState       _viewState;
     AMInsertableType        _insertableType;
+    BOOL                    _mouseOver;
 }
 @property (readwrite) NSEvent * mouseDownEvent;
 @property (readwrite) NSPoint mouseDownWindowPoint;
@@ -65,7 +67,13 @@ static CABasicAnimation * animateOrigin;
     _contentView = [self.delegate insertableView:self
                        requiresContentViewOfType:self.insertableType];
 
+    // Add a tracking area so that inserted views know when the mouse is over them
+    NSUInteger taOptions = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
     [self addSubview:_contentView];
+    NSTrackingArea * ta = [[NSTrackingArea alloc] initWithRect:NSZeroRect
+                                                       options:taOptions
+                                                         owner:self userInfo:nil];
+    [self addTrackingArea:ta];
 }
 
 #pragma mark - State -
@@ -91,14 +99,15 @@ static CABasicAnimation * animateOrigin;
     return NO;
 }
 
--(void)setObjectState:(AMInsertableViewState)objectState
+-(void)setViewState:(AMInsertViewState)state
 {
-    _objectState = objectState;
+    _viewState = state;
+    [self setNeedsDisplay:YES];
 }
 
--(AMInsertableViewState)objectState
+-(AMInsertViewState)viewState
 {
-    return _objectState;
+    return _viewState;
 }
 
 #pragma mark - Drawing -
@@ -110,37 +119,66 @@ static CABasicAnimation * animateOrigin;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    if ( ![NSGraphicsContext currentContextDrawingToScreen] ) {
+        // The inserted view itself just contains artefacts related to the gui. If the user is printing, these are of no interest.
+        return;
+    }
+    
     [NSGraphicsContext saveGraphicsState];
-    [[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:0.0] set];
-    NSRectFill(dirtyRect);
-    AMTrayItem * item = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
-    [item.backgroundColor set];
+
+    [self drawClear];
+    
+    if (_mouseOver || self.viewState > AMInsertViewStateNormal) {
+        [self drawFrame];
+    }
+    
+    if (self.viewState > AMInsertViewStateNormal) {
+        [self drawShadow];
+    }
+
+    
+    [NSGraphicsContext restoreGraphicsState];
+    [super drawRect:dirtyRect];
+}
+
+-(void)drawClear
+{
+    [self.closeButton setHidden:YES];
+    [self setShadow:nil];
+    [[NSColor whiteColor] set];
+    NSRectFill(self.bounds);
+}
+
+/*!
+ Draws the "window-like" frame around the inserted view
+ */
+-(void)drawFrame
+{
+    [[self backColor] set];
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.0, 0.0) xRadius:8 yRadius:8];
     [path fill];
-    [[NSColor blackColor] set];
-    path = [NSBezierPath bezierPath];
     
-    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:8 yRadius:8];
+    if (self.viewState > AMInsertViewStateNormal) {
+        [[NSColor blackColor] set];
+        [self.closeButton setHidden:NO];
+        path = [NSBezierPath bezierPath];
+        [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:8 yRadius:8];
+        [path stroke];
+    }
     
-    [path stroke];
-
-    [self drawFocusRing];
-    [NSGraphicsContext restoreGraphicsState];
 }
 
--(void)drawFocusRing
+-(void)drawShadow
 {
-    if ( ( [self.window firstResponder] == self ) && [NSGraphicsContext currentContextDrawingToScreen]) {
-        
-        NSShadow * shadow = [[NSShadow alloc] init];
+    static NSShadow * shadow = nil;
+    if (!shadow) {
+        shadow = [[NSShadow alloc] init];
         [shadow setShadowBlurRadius:20];
         [shadow setShadowColor:[NSColor blackColor]];
-        [shadow setShadowOffset:NSMakeSize(0, -20)];
-        [self setShadow:shadow];
-    } else {
-        [self setShadow:nil];
+        [shadow setShadowOffset:NSMakeSize(20, -20)];
     }
+    self.shadow = shadow;
 }
 
 -(NSColor*)backColor
@@ -158,7 +196,8 @@ static CABasicAnimation * animateOrigin;
         if (self.frame.size.height == 0) {
             self.frame = am_defaultRect();
         }
-        
+        AMInsertableViewController * vc = [[AMInsertableViewController alloc] init];
+        self = (AMInsertableView*)[vc view];
         _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
         _mouseDownWindowPoint = [aDecoder decodePointForKey:@"mouseDownWindowPoint"];
         _insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
@@ -342,6 +381,8 @@ static CABasicAnimation * animateOrigin;
 -(void)mouseDown:(NSEvent *)theEvent
 {
     if (LOG_DRAG_OPS) NSLog(@"%@ - mouseDown",[self class]);
+ 
+    [self.delegate insertableViewReceivedClick:self];
     self.mouseDownEvent = theEvent;
     self.mouseDownWindowPoint = [theEvent locationInWindow];
     [[NSCursor closedHandCursor] push];
@@ -381,6 +422,18 @@ static CABasicAnimation * animateOrigin;
 {
     if (LOG_DRAG_OPS) NSLog(@"%@ - mouseUp",[self class]);
     [self concludeDragging];
+}
+
+-(void)mouseEntered:(NSEvent *)theEvent
+{
+    _mouseOver = YES;
+    [self setNeedsDisplay:YES];
+}
+
+-(void)mouseExited:(NSEvent *)theEvent
+{
+    _mouseOver = NO;
+    [self setNeedsDisplay:YES];
 }
 
 /*!

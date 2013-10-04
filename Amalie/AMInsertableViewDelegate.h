@@ -20,4 +20,7 @@
 
 -(void)insertableViewWantsRemoval:(AMInsertableView*)view;
 
+-(void)insertableViewReceivedClick:(AMInsertableView*)view;
+
+
 @end

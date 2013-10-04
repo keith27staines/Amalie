@@ -22,6 +22,8 @@
  AMInsertableViewDelegate>
 
 
+@property (weak) AMInsertableView * selectedView;
+
 @property (weak) IBOutlet NSToolbarItem * scaleSliderItem;
 
 - (IBAction)scaleSliderMoved:(NSSlider *)scaleSlider;
