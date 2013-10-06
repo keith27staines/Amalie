@@ -114,6 +114,7 @@ static CABasicAnimation * animateOrigin;
 
 -(BOOL)isOpaque
 {
+    if (self.viewState == AMInsertViewStateNormal) return YES;
     return NO;
 }
 
@@ -145,7 +146,11 @@ static CABasicAnimation * animateOrigin;
 {
     [self.closeButton setHidden:YES];
     [self setShadow:nil];
-    [[NSColor whiteColor] set];
+    if (self.viewState == AMInsertViewStateNormal) {
+        [[NSColor whiteColor] set];
+    } else {
+        [[NSColor colorWithCalibratedRed:1 green:1 blue:1 alpha:1] set];
+    }
     NSRectFill(self.bounds);
 }
 
@@ -160,8 +165,8 @@ static CABasicAnimation * animateOrigin;
     [path fill];
     
     if (self.viewState > AMInsertViewStateNormal) {
-        [[NSColor blackColor] set];
         [self.closeButton setHidden:NO];
+        [[NSColor blackColor] set];
         path = [NSBezierPath bezierPath];
         [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:8 yRadius:8];
         [path stroke];
@@ -174,9 +179,9 @@ static CABasicAnimation * animateOrigin;
     static NSShadow * shadow = nil;
     if (!shadow) {
         shadow = [[NSShadow alloc] init];
-        [shadow setShadowBlurRadius:20];
+        [shadow setShadowBlurRadius:5];
         [shadow setShadowColor:[NSColor blackColor]];
-        [shadow setShadowOffset:NSMakeSize(20, -20)];
+        [shadow setShadowOffset:NSMakeSize(5, -5)];
     }
     self.shadow = shadow;
 }

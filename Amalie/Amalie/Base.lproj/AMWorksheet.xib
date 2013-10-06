@@ -116,7 +116,7 @@
                             </button>
                         </subviews>
                     </customView>
-                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" id="Et6-s1-Vqi">
+                    <scrollView wantsLayer="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" id="Et6-s1-Vqi">
                         <rect key="frame" x="0.0" y="0.0" width="443" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="ggt-X2-Nnt">
@@ -138,7 +138,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" id="QAX-jf-9Rq">
-                            <rect key="frame" x="428" y="0.0" width="15" height="600"/>
+                            <rect key="frame" x="427" y="0.0" width="16" height="600"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>

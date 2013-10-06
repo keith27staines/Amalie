@@ -232,7 +232,6 @@
 #pragma mark - AMInsertableViewDelegate -
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    
     AMDInsertedObject * amdInsertedObject = [self.dataStore amdInsertedObjectForInsertedView:view];
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:self.appController
@@ -245,10 +244,54 @@
     return (AMContentView*)vc.view;
 }
 
--(void)insertableViewWantsRemoval:(AMInsertableView*)view
+-(void)removeInsertableView:(AMInsertableView*)view
 {
     AMWorksheetView * worksheetView = (AMWorksheetView *)view.superview;
     [self workheetView:worksheetView wantsViewRemoved:view];
+}
+
+-(void)insertableViewWantsRemoval:(AMInsertableView*)view
+{
+    NSAlert * alert = nil;
+    NSString * name = @"???";
+    NSString * title = nil;
+    NSString * message = @"Do you really want to remove %@ from this document?";;
+    NSString * messageDetail;
+    switch (view.insertableType) {
+        case AMInsertableTypeConstant:
+            title = @"Remove definition?";
+            messageDetail = [NSString stringWithFormat:@"the definition of the constant %@",name];
+            break;
+        case AMInsertableTypeVariable:
+            title = @"Remove definition?";
+            messageDetail = [NSString stringWithFormat:@"the definition of the variable %@",name];
+            break;
+        case AMInsertableTypeFunction:
+            title = @"Remove definition?";
+            messageDetail = [NSString stringWithFormat:@"the definition of the function %@",name];
+            break;
+        default:
+            NSAssert(NO, @"Not implemented yet");
+            break;
+    }
+
+    alert = [NSAlert alertWithMessageText:title
+                            defaultButton:@"Remove"
+                          alternateButton:@"Cancel"
+                              otherButton:nil
+                informativeTextWithFormat:message,messageDetail];
+    
+    [alert beginSheetModalForWindow:self.worksheetView.window
+                      modalDelegate:self
+                     didEndSelector:@selector(removeAlertEnded:code:context:)
+                        contextInfo:(__bridge void *)(view)];
+}
+
+-(void)removeAlertEnded:(NSAlert * ) alert code:(NSInteger)choice context:(void*)v
+{
+    if (choice == NSAlertDefaultReturn) {
+        [self removeInsertableView:(__bridge AMInsertableView*)v];
+    }
 }
 
 -(void)insertableViewReceivedClick:(AMInsertableView*)view
