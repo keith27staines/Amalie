@@ -33,6 +33,11 @@ static CGFloat const MINHEIGHT = 600.0;
     return self;
 }
 
+-(void)viewDidMoveToSuperview
+{
+    [self fitToSize];
+}
+
 -(void)awakeFromNib
 {
     
@@ -48,6 +53,16 @@ static CGFloat const MINHEIGHT = 600.0;
     
     // register them all in one hit...
     [self registerForDraggedTypes:allTypes];
+    
+    [self setPostsFrameChangedNotifications:YES];
+    
+    // setup the page shadow
+    NSShadow * shadow = [[NSShadow alloc] init];
+    [shadow setShadowBlurRadius:5];
+    [shadow setShadowColor:[NSColor blackColor]];
+    [shadow setShadowOffset:NSMakeSize(5, -5)];
+    [self setShadow:shadow];
+    
 }
 
 # pragma mark - Dragging -
@@ -167,21 +182,12 @@ static CGFloat const MINHEIGHT = 600.0;
 
 # pragma mark - Layout -
 
--(void)resizeWithOldSuperviewSize:(NSSize)oldSize
-{
-    // WARNING: This is essential in order to keep the sheet correctly positioned within the scroll view, yet I don't quite understand it.
-    NSSize superSize = self.superview.bounds.size;
-    [self setFrameOrigin:NSMakePoint(0, superSize.height)];
-}
-
 -(void)layoutInsertsNow
 {
     [CATransaction begin];
-    NSSize size = [self intrinsicContentSize];
-    [self setFrameSize:size];
+    NSSize size = [self fitToSize];
+    
     NSArray * insertsArray = [self sortInserts];
-
-
     float firstTop = size.height - kAMDefaultTopMargin;
     NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
     for (AMInsertableView * view in insertsArray) {
@@ -225,6 +231,17 @@ static CGFloat const MINHEIGHT = 600.0;
     }];
     
     return insertsArray;
+}
+
+-(NSSize)fitToSize
+{
+    NSSize oldSize = self.frame.size;
+    NSSize requiredSize = [self intrinsicContentSize];
+
+    if (oldSize.width != requiredSize.width || oldSize.height != requiredSize.height) {
+        [self setFrameSize:requiredSize];
+    }
+    return requiredSize;
 }
 
 -(NSSize)intrinsicContentSize

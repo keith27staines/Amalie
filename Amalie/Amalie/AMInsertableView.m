@@ -149,7 +149,7 @@ static CABasicAnimation * animateOrigin;
     if (self.viewState == AMInsertViewStateNormal) {
         [[NSColor whiteColor] set];
     } else {
-        [[NSColor colorWithCalibratedRed:1 green:1 blue:1 alpha:1] set];
+        [[NSColor colorWithCalibratedRed:1 green:1 blue:1 alpha:0] set];
     }
     NSRectFill(self.bounds);
 }
