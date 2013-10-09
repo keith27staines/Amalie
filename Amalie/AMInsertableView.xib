@@ -17,11 +17,12 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7i-GS-zOV">
-                    <rect key="frame" x="4" y="85" width="18" height="19"/>
+                    <rect key="frame" x="4" y="91" width="14" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSStopProgressTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="kNN-LO-Lij">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="kNN-LO-Lij">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent"></string>
                     </buttonCell>
                     <connections>
                         <action selector="closeButtonClicked:" target="1" id="Vq9-Sd-d34"/>

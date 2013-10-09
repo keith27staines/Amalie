@@ -161,14 +161,14 @@ static CABasicAnimation * animateOrigin;
 {
     [[self backColor] set];
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.0, 0.0) xRadius:8 yRadius:8];
+    [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0.0, 0.0) xRadius:6 yRadius:6];
     [path fill];
     
     if (self.viewState > AMInsertViewStateNormal) {
         [self.closeButton setHidden:NO];
         [[NSColor blackColor] set];
         path = [NSBezierPath bezierPath];
-        [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 1, 1) xRadius:8 yRadius:8];
+        [path appendBezierPathWithRoundedRect:NSInsetRect(self.bounds, 0, 0) xRadius:6 yRadius:6];
         [path stroke];
     }
     

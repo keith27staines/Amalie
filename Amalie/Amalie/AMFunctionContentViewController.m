@@ -103,7 +103,7 @@ static NSUInteger const kAMIndexRHS;
 {
     [CATransaction begin];
     
-    CGFloat const AM_VIEW_MARGIN      = 15.0f;
+    CGFloat const AM_VIEW_MARGIN      = 19.0f;
     CGFloat const AM_MIN_STRING_WIDTH = 300.0f;
     
     AMExpressionNodeView * expressionView = self.expressionView;
@@ -148,8 +148,8 @@ static NSUInteger const kAMIndexRHS;
     [[expressionString animator] setFrameOrigin:stringOrigin];
     
     // Make the box fit the equation view
-    [container setFrameSize:NSMakeSize(functionViewSize.width+4*AM_VIEW_MARGIN, functionViewSize.height + 4*AM_VIEW_MARGIN)];
-    [functionView setFrameOrigin:NSMakePoint(2*AM_VIEW_MARGIN, 2*AM_VIEW_MARGIN)];
+    [container setFrameSize:NSMakeSize(functionViewSize.width+2*AM_VIEW_MARGIN, functionViewSize.height + 2*AM_VIEW_MARGIN)];
+    [functionView setFrameOrigin:NSMakePoint(1*AM_VIEW_MARGIN, 1*AM_VIEW_MARGIN)];
     
     [CATransaction commit];
     [[self parentWorksheetController] contentViewController:self isResizingContentTo:expressionView.frame.size  usingAnimationTransaction:NO];
