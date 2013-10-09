@@ -33,7 +33,7 @@
 @property (weak, readonly) AMWorksheetController * parentWorksheetController;
 
 @property (copy)          NSString               * groupID;
-@property (weak)          AMDInsertedObject      * amdInsertedObject;
+@property (strong)        AMDInsertedObject      * amdInsertedObject;
 @property (readonly)      NSAttributedString     * attributedName;
 @property (weak,readonly) KSMWorksheet           * mathSheet;
 @property (weak)          NSManagedObjectContext * moc;

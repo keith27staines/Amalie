@@ -42,6 +42,7 @@
 @interface AMContentViewController ()
 {
     AMDataStore                   * _dataStore;
+    AMDInsertedObject             * _amdInsertedObject;
     __weak KSMWorksheet           * _mathSheet;
     __weak NSManagedObjectContext * _moc;
     NSMutableArray                * _expressions;
@@ -53,6 +54,16 @@
 @end
 
 @implementation AMContentViewController
+
+-(AMDInsertedObject *)amdInsertedObject
+{
+    return _amdInsertedObject;
+}
+
+-(void)setAmdInsertedObject:(AMDInsertedObject *)amdInsertedObject
+{
+    _amdInsertedObject = amdInsertedObject;
+}
 
 // Override designated initializer of super
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -324,9 +335,9 @@
     }
 }
 
--(void)dealloc
+- (void)dealloc
 {
-    return;
+    NSLog(@"Dealloc AMContentViewController %@",self);
 }
 
 @end

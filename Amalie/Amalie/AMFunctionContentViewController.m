@@ -35,7 +35,7 @@ static NSUInteger const kAMIndexRHS;
 {
 
 }
-@property (weak, readonly) AMDFunctionDef * amdFunctionDef;
+@property (readonly) AMDFunctionDef * amdFunctionDef;
 
 @end
 
@@ -184,7 +184,9 @@ static NSUInteger const kAMIndexRHS;
 -(void)deleteContent
 {
     [super deleteContent];
-    // TODO: AMFunctionContentController - specific cleanup.
+
+    // AMFunctionContentController specific delete
+    [self.moc deleteObject:self.amdFunctionDef];
 
 }
 
