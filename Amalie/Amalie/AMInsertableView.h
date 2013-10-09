@@ -37,7 +37,7 @@ NSDraggingSource
 @property AMInsertViewState viewState;
 @property (readonly) NSColor * backColor;
 @property (readonly) NSEvent * mouseDownEvent;
-@property (readonly) NSPoint mouseDownWindowPoint;
+@property (readonly) NSPoint mouseDownOffsetFromOrigin;
 @property (readonly) BOOL isDragging;
 @property (readonly) NSImage * dragImage;
 @property (weak, readonly)AMContentView * contentView;

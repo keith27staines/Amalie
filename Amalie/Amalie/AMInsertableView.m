@@ -25,7 +25,7 @@ static CABasicAnimation * animateOrigin;
     BOOL                    _mouseOver;
 }
 @property (readwrite) NSEvent * mouseDownEvent;
-@property (readwrite) NSPoint mouseDownWindowPoint;
+@property (readwrite) NSPoint mouseDownOffsetFromOrigin;
 
 @end
 
@@ -56,7 +56,7 @@ static CABasicAnimation * animateOrigin;
 
     self = [super initWithFrame:frame groupID:groupID];
     if (self) {
-        _mouseDownWindowPoint = NSMakePoint(-100, -100);
+        _mouseDownOffsetFromOrigin = self.frame.origin;
         _insertableType = insertableType;
     }
     return self;
@@ -204,12 +204,13 @@ static CABasicAnimation * animateOrigin;
         // Need to be careful here, we are using a view controller to get a new, fully hooked-up view from the nib, and we will eventually return that, but we have to make sure that properties already initialized in the call to super are copied across - especially groupID
         AMInsertableViewController * vc = [[AMInsertableViewController alloc] init];
         AMInsertableView * view = (AMInsertableView*)[vc view];
+        view.frame   = self.frame;
         view.groupID = self.groupID;
         
         // can now abandon the current instance of self and swap to the view from the NIB
         self = view;
         _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
-        _mouseDownWindowPoint = [aDecoder decodePointForKey:@"mouseDownWindowPoint"];
+        _mouseDownOffsetFromOrigin = [aDecoder decodePointForKey:@"mouseDownOffsetFromOrigin"];
         _insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
         
         if ( [aDecoder containsValueForKey:@"dragImage"] ) {
@@ -225,7 +226,7 @@ static CABasicAnimation * animateOrigin;
     [super encodeWithCoder:aCoder];
     
     [aCoder encodeBool:self.isDragging forKey:@"isDragging"];
-    [aCoder encodePoint:self.mouseDownWindowPoint forKey:@"mouseDownWindowPoint"];
+    [aCoder encodePoint:self.mouseDownOffsetFromOrigin forKey:@"mouseDownOffsetFromOrigin"];
     [aCoder encodeInteger:self.insertableType forKey:@"insertableType"];
     
     if (_dragImage) {
@@ -353,7 +354,7 @@ static CABasicAnimation * animateOrigin;
     
     // self.mouseDownEvent = nil;
     self.mouseDownEvent = nil;
-    self.mouseDownWindowPoint = NSMakePoint(-100, -100);
+    self.mouseDownOffsetFromOrigin = self.frame.origin;
     _dragImage = nil;
     _isDragging = NO;
     [self setHidden:NO];
@@ -394,7 +395,9 @@ static CABasicAnimation * animateOrigin;
  
     [self.delegate insertableViewReceivedClick:self];
     self.mouseDownEvent = theEvent;
-    self.mouseDownWindowPoint = [theEvent locationInWindow];
+    NSPoint theLocationInWindow = [theEvent locationInWindow];
+    NSPoint theMouseDownOffsetFromOrigin = [self convertPoint:theLocationInWindow fromView:nil];
+    self.mouseDownOffsetFromOrigin = theMouseDownOffsetFromOrigin;
     [[NSCursor closedHandCursor] push];
 }
 
@@ -402,9 +405,10 @@ static CABasicAnimation * animateOrigin;
 {
     if (LOG_DRAG_OPS) NSLog(@"%@ - mouseDragged:",[self class]);
     
-    NSPoint currentPoint = [theEvent locationInWindow];
+    NSPoint currentPoint = [theEvent locationInWindow];           // in window coords
+    currentPoint = [self convertPoint:currentPoint fromView:nil]; // now in view coords
     
-    if ( am_pointsAreClose(self.mouseDownWindowPoint, currentPoint) )
+    if ( am_pointsAreClose(self.mouseDownOffsetFromOrigin, currentPoint) )
     {
         _isDragging = NO;
         return;
@@ -413,7 +417,6 @@ static CABasicAnimation * animateOrigin;
     if (!self.isDragging) {
         _isDragging = YES;
         _dragImage = [self makeImageSnapshot];
-        
     }
     
     NSPoint originPoint = NSMakePoint(0, 0);

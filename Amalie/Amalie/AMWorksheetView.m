@@ -137,6 +137,7 @@ static CGFloat const MINHEIGHT = 600.0;
     NSArray * objects = [pb readObjectsForClasses:classes options:nil];
     AMInsertableView * view = objects[0];
     
+    
     if (view) {
         
         NSPoint draggingLocation = [sender draggingLocation];
@@ -149,11 +150,9 @@ static CGFloat const MINHEIGHT = 600.0;
         }
         
         // Dragging source is the view itself, which is being repositioned in the worksheet
-        NSPoint mouseDownWindowPoint = view.mouseDownWindowPoint;
-        NSPoint mouseDownViewPoint = [self convertPoint:mouseDownWindowPoint fromView:nil];
-        float deltaX = draggingLocation.x - mouseDownViewPoint.x;
-        float deltaY = draggingLocation.y - mouseDownViewPoint.y;
-        NSPoint newTopLeft = NSMakePoint(view.frameLeft + deltaX, view.frameTop + deltaY);
+        float topLeftX = draggingLocation.x - view.mouseDownOffsetFromOrigin.x;
+        float topLeftY = draggingLocation.y + view.frame.size.height - view.mouseDownOffsetFromOrigin.y;
+        NSPoint newTopLeft = NSMakePoint(topLeftX, topLeftY);
         [self.delegate workheetView:self wantsViewMoved:view newTopLeft:newTopLeft];
         return YES;
     }
