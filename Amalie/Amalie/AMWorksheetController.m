@@ -302,6 +302,7 @@
         AMInsertableView * view = (__bridge AMInsertableView*)v;
         if (view == self.selectedView) {
             self.selectedView = nil;
+            [self.worksheetView.window makeFirstResponder:nil];
         }
         [self removeInsertableView:view];
     }

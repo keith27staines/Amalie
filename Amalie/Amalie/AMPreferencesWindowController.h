@@ -40,6 +40,6 @@
 - (IBAction)changedFixedWidthFontSize:(id)sender;
 
 
-@property (weak) id<AMTrayDatasource>trayDatasource;
+@property (weak) id<AMTrayDataSource>trayDatasource;
 
 @end

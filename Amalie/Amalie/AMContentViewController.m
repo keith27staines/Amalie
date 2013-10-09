@@ -311,7 +311,7 @@
 
 -(NSColor *)backgroundColorForType:(AMInsertableType)type
 {
-    id<AMTrayDatasource> tray = self.parentWorksheetController.trayDataSource;
+    id<AMTrayDataSource> tray = self.parentWorksheetController.trayDataSource;
     NSString * key = [tray keyForType:type];
     AMTrayItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];

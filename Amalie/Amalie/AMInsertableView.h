@@ -51,7 +51,7 @@ NSDraggingSource
 @property float frameRight;
 @property float frameMidY;
 
-@property (weak) id <AMTrayDatasource> trayDataSource;
+@property (weak) id <AMTrayDataSource> trayDataSource;
 @property (weak) id <AMInsertableViewDelegate> delegate;
 
 - (IBAction)closeButtonClicked:(NSButton *)sender;

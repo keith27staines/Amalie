@@ -55,7 +55,7 @@
 /*!
  WARNING! We need this trayDataSource reference to pass on to subviews that we programmatically introduce onto the worksheet. Make sure this IBOutlet is connected in IB. Usually, the appController will be the primary tray datasource, so in IB, connect the appController to it.
  */
-@property (weak) IBOutlet id<AMTrayDatasource> trayDataSource;
+@property (weak) IBOutlet id<AMTrayDataSource> trayDataSource;
 
 
 @property (weak) IBOutlet AMToolboxView *toolboxView;
