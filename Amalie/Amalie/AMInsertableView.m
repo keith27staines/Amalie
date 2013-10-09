@@ -201,8 +201,13 @@ static CABasicAnimation * animateOrigin;
         if (self.frame.size.height == 0) {
             self.frame = am_defaultRect();
         }
+        // Need to be careful here, we are using a view controller to get a new, fully hooked-up view from the nib, and we will eventually return that, but we have to make sure that properties already initialized in the call to super are copied across - especially groupID
         AMInsertableViewController * vc = [[AMInsertableViewController alloc] init];
-        self = (AMInsertableView*)[vc view];
+        AMInsertableView * view = (AMInsertableView*)[vc view];
+        view.groupID = self.groupID;
+        
+        // can now abandon the current instance of self and swap to the view from the NIB
+        self = view;
         _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
         _mouseDownWindowPoint = [aDecoder decodePointForKey:@"mouseDownWindowPoint"];
         _insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
