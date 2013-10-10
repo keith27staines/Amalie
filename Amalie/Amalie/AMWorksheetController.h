@@ -10,8 +10,9 @@
 @class AMNameRules;
 @class AMAppController;
 @class KSMWorksheet;
-@class AMSymbolsView;
+@class AMSymbolsViewContainer;
 @class AMToolboxView;
+@class AMSymbolsViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
@@ -43,9 +44,10 @@
  */
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 
-@property (weak) IBOutlet AMSymbolsView *symbolsView;
+@property (weak) IBOutlet AMSymbolsViewContainer *symbolsViewContainer;
 
 
+@property (strong) IBOutlet AMSymbolsViewController *symbolsViewController;
 
 /*!
  mathSheet performs math operations for this worksheet controller

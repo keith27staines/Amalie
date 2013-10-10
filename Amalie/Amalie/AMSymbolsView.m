@@ -2,7 +2,7 @@
 //  AMSymbolsView.m
 //  Amalie
 //
-//  Created by Keith Staines on 07/10/2013.
+//  Created by Keith Staines on 10/10/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
@@ -19,9 +19,26 @@
     return self;
 }
 
+-(BOOL)translatesAutoresizingMaskIntoConstraints
+{
+    return NO;
+}
+
+
+-(void)resizeWithOldSuperviewSize:(NSSize)oldSize
+{
+    self.frame = self.superview.bounds;
+}
+
+-(void)viewDidMoveToSuperview
+{
+    [self setFrame:[self superview].bounds];
+    [self setNeedsDisplay:YES];
+}
+
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor colorWithCalibratedRed:1 green:0.5 blue:0.5 alpha:1] set];
+    [[NSColor greenColor] set];
     NSRectFill(dirtyRect);
 }
 

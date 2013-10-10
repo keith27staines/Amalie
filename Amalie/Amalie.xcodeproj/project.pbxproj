@@ -20,7 +20,7 @@
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		784001EC18015E6E006B00C1 /* AMCenteringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EB18015E6E006B00C1 /* AMCenteringView.m */; };
-		784001EF1802B091006B00C1 /* AMSymbolsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMSymbolsView.m */; };
+		784001EF1802B091006B00C1 /* AMSymbolsViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMSymbolsViewContainer.m */; };
 		7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */; };
 		784BFBDE17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
 		784BFBDF17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
@@ -39,6 +39,9 @@
 		785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A2F179DE475004D39B5 /* AMInsertableView.xib */; };
 		785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A32179DFFAF004D39B5 /* AMContentView.m */; };
 		78702B9417C3510E006A4331 /* AMNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78702B9317C3510E006A4331 /* AMNameView.m */; };
+		78734E231806B10F00A2EEF3 /* AMSymbolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E211806B10F00A2EEF3 /* AMSymbolsViewController.m */; };
+		78734E241806B10F00A2EEF3 /* AMSymbolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78734E221806B10F00A2EEF3 /* AMSymbolsView.xib */; };
+		78734E271806EA0500A2EEF3 /* AMSymbolsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E261806EA0500A2EEF3 /* AMSymbolsView.m */; };
 		787B3043178361BC001851C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3042178361BC001851C0 /* Cocoa.framework */; };
 		787B304D178361BC001851C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 787B304B178361BC001851C0 /* InfoPlist.strings */; };
 		787B304F178361BC001851C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B304E178361BC001851C0 /* main.m */; };
@@ -161,8 +164,8 @@
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
 		784001EA18015E6E006B00C1 /* AMCenteringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCenteringView.h; sourceTree = "<group>"; };
 		784001EB18015E6E006B00C1 /* AMCenteringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCenteringView.m; sourceTree = "<group>"; };
-		784001ED1802B091006B00C1 /* AMSymbolsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSymbolsView.h; sourceTree = "<group>"; };
-		784001EE1802B091006B00C1 /* AMSymbolsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSymbolsView.m; sourceTree = "<group>"; };
+		784001ED1802B091006B00C1 /* AMSymbolsViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSymbolsViewContainer.h; sourceTree = "<group>"; };
+		784001EE1802B091006B00C1 /* AMSymbolsViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSymbolsViewContainer.m; sourceTree = "<group>"; };
 		7847ECCE17B777CB00333A84 /* AMExpressionDisplayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionDisplayOptions.h; sourceTree = "<group>"; };
 		7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionDisplayOptions.m; sourceTree = "<group>"; };
 		784BFBDC17E7408800152756 /* KSMMathValueHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMMathValueHolder.h; sourceTree = "<group>"; };
@@ -195,6 +198,11 @@
 		785D9A32179DFFAF004D39B5 /* AMContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContentView.m; sourceTree = "<group>"; };
 		78702B9217C3510E006A4331 /* AMNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameView.h; sourceTree = "<group>"; };
 		78702B9317C3510E006A4331 /* AMNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameView.m; sourceTree = "<group>"; };
+		78734E201806B10F00A2EEF3 /* AMSymbolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSymbolsViewController.h; sourceTree = "<group>"; };
+		78734E211806B10F00A2EEF3 /* AMSymbolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSymbolsViewController.m; sourceTree = "<group>"; };
+		78734E221806B10F00A2EEF3 /* AMSymbolsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMSymbolsView.xib; sourceTree = "<group>"; };
+		78734E251806EA0500A2EEF3 /* AMSymbolsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSymbolsView.h; sourceTree = "<group>"; };
+		78734E261806EA0500A2EEF3 /* AMSymbolsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSymbolsView.m; sourceTree = "<group>"; };
 		787B303F178361BC001851C0 /* Amalie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3042178361BC001851C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		787B3045178361BC001851C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -451,6 +459,11 @@
 				784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */,
 				784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */,
 				785D9A1D179BDD19004D39B5 /* Controllers for insertable views */,
+				78734E201806B10F00A2EEF3 /* AMSymbolsViewController.h */,
+				78734E211806B10F00A2EEF3 /* AMSymbolsViewController.m */,
+				78734E251806EA0500A2EEF3 /* AMSymbolsView.h */,
+				78734E261806EA0500A2EEF3 /* AMSymbolsView.m */,
+				78734E221806B10F00A2EEF3 /* AMSymbolsView.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -655,8 +668,8 @@
 				784001EB18015E6E006B00C1 /* AMCenteringView.m */,
 				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
 				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
-				784001ED1802B091006B00C1 /* AMSymbolsView.h */,
-				784001EE1802B091006B00C1 /* AMSymbolsView.m */,
+				784001ED1802B091006B00C1 /* AMSymbolsViewContainer.h */,
+				784001EE1802B091006B00C1 /* AMSymbolsViewContainer.m */,
 				78D5FD8917905CA0003D6AC6 /* Insertable Views */,
 			);
 			name = "Workheet views";
@@ -864,6 +877,7 @@
 				7899B2D917AD0DB9008BDB75 /* AMConstantContentView.xib in Resources */,
 				785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */,
 				7899B2E817AD0E26008BDB75 /* AMVectorContentView.xib in Resources */,
+				78734E241806B10F00A2EEF3 /* AMSymbolsView.xib in Resources */,
 				787B3053178361BC001851C0 /* Credits.rtf in Resources */,
 				784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */,
 				787B305C178361BC001851C0 /* MainMenu.xib in Resources */,
@@ -895,6 +909,7 @@
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
+				78734E271806EA0500A2EEF3 /* AMSymbolsView.m in Sources */,
 				7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */,
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
@@ -910,7 +925,7 @@
 				7899B30417AD3ACD008BDB75 /* AMVectorContentView.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
-				784001EF1802B091006B00C1 /* AMSymbolsView.m in Sources */,
+				784001EF1802B091006B00C1 /* AMSymbolsViewContainer.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,
@@ -937,6 +952,7 @@
 				784001EC18015E6E006B00C1 /* AMCenteringView.m in Sources */,
 				784BFBDE17E7408800152756 /* KSMMathValueHolder.m in Sources */,
 				7899B30717AD3AEB008BDB75 /* AMMatrixContentView.m in Sources */,
+				78734E231806B10F00A2EEF3 /* AMSymbolsViewController.m in Sources */,
 				7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */,
 				7899B30117AD3AA2008BDB75 /* AMEquationContentView.m in Sources */,
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,

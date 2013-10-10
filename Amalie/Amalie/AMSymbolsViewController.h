@@ -1,5 +1,5 @@
 //
-//  AMSymbolsView.h
+//  AMSymbolsViewController.h
 //  Amalie
 //
 //  Created by Keith Staines on 10/10/2013.
@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMSymbolsView : NSView
+@interface AMSymbolsViewController : NSViewController
 
 @end
