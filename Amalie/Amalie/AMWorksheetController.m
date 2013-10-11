@@ -92,6 +92,7 @@
     self.showObjectsPanel = YES;
     NSView * view = [self.symbolsViewController view];
     [self.symbolsViewContainer addSubview:view];
+    [view setNeedsDisplay:YES];
 }
 
 - (NSString *)windowNibName
@@ -163,7 +164,10 @@
     _layoutIsScheduled = NO; // re-enable layout
     [self scheduleLayout];
     [self.worksheetView setNeedsDisplay:YES];
+    [self.symbolsViewContainer setNeedsDisplay:YES];
+    [self.toolboxView setNeedsDisplay:YES];
     [self.managedObjectContext processPendingChanges];
+    [self arrangeSubviews];
     [self.undoManager removeAllActions];
 }
 
@@ -529,6 +533,11 @@
 
 -(void)windowDidResize:(NSNotification*)notification
 {
+    [self arrangeSubviews];
+}
+
+-(void)arrangeSubviews
+{
     // First, calculate and set the frame for the worksheet scrollview, taking into account the visibility of both the toolbox and the symbols views...
     NSRect worksheetScrollRect = [self frameForWorksheetScrollView];
     [self.worksheetScrollView setFrame:worksheetScrollRect];
@@ -545,7 +554,7 @@
         // The symbols view is invisible, so we position it just offscreen, ready to slide back into place
         symbolsRect.origin = [self offWindowOriginForSymbolView];
     }
-
+    
     // size and position the toolbox. First the size. The width is fixed, but the height must be adjusted to match the height of the superview
     NSRect toolboxRect = self.toolboxView.frame;
     toolboxRect.size.height = self.toolboxView.superview.frame.size.height;

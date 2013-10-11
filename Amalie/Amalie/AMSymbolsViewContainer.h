@@ -1,5 +1,5 @@
 //
-//  AMSymbolsView.h
+//  AMSymbolsViewContainer.h
 //  Amalie
 //
 //  Created by Keith Staines on 07/10/2013.

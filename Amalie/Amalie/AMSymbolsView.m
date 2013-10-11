@@ -32,7 +32,7 @@
 
 -(void)viewDidMoveToSuperview
 {
-    [self setFrame:[self superview].bounds];
+    self.frame = self.superview.bounds;
     [self setNeedsDisplay:YES];
 }
 
