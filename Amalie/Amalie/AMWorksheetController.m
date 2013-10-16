@@ -11,7 +11,7 @@
 #import "AMConstants.h"
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
-#import "AMSymbolsViewContainer.h"
+#import "AMKeyboardsViewContainer.h"
 #import "AMInsertableViewController.h"
 #import "KSMWorksheet.h"
 #import "KSMMathValue.h"
@@ -23,7 +23,7 @@
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMToolboxView.h"
-#import "AMSymbolsViewController.h"
+#import "AMKeyboardsViewController.h"
 
 @interface AMWorksheetController()
 {
@@ -90,8 +90,8 @@
     [slider setContinuous:YES];
     self.showSymbolsPanel = YES;
     self.showObjectsPanel = YES;
-    NSView * view = [self.symbolsViewController view];
-    [self.symbolsViewContainer addSubview:view];
+    NSView * view = [self.keyboardsViewController view];
+    [self.keyboardsViewContainer addSubview:view];
     [view setNeedsDisplay:YES];
 }
 
@@ -164,7 +164,7 @@
     _layoutIsScheduled = NO; // re-enable layout
     [self scheduleLayout];
     [self.worksheetView setNeedsDisplay:YES];
-    [self.symbolsViewContainer setNeedsDisplay:YES];
+    [self.keyboardsViewContainer setNeedsDisplay:YES];
     [self.toolboxView setNeedsDisplay:YES];
     [self.managedObjectContext processPendingChanges];
     [self arrangeSubviews];
@@ -476,13 +476,13 @@
         // Was invisible, now visible.
         [CATransaction begin];
         [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.symbolsViewContainer animator] setFrameOrigin:NSMakePoint(0, 0)];
+        [[self.keyboardsViewContainer animator] setFrameOrigin:NSMakePoint(0, 0)];
         [CATransaction commit];
     } else {
         // was visible, now to be invisible
         [CATransaction begin];
         [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.symbolsViewContainer animator] setFrameOrigin:[self offWindowOriginForSymbolView]];
+        [[self.keyboardsViewContainer animator] setFrameOrigin:[self offWindowOriginForSymbolView]];
         [CATransaction commit];
     }
 }
@@ -499,7 +499,7 @@
     
     NSRect worksheetScrollViewRect = [self frameForWorksheetScrollView];
     NSRect toolboxRect = self.toolboxView.frame;
-    NSRect symbolsRect = self.symbolsViewContainer.frame;
+    NSRect symbolsRect = self.keyboardsViewContainer.frame;
     
     if (_showObjectsPanel) {
         // Was invisible, now visible.
@@ -512,11 +512,11 @@
         [[self.toolboxView animator] setFrame:toolboxRect];
         
         if (self.showObjectsPanel) {
-            symbolsRect.size.width = self.symbolsViewContainer.superview.frame.size.width - toolboxRect.size.width;
+            symbolsRect.size.width = self.keyboardsViewContainer.superview.frame.size.width - toolboxRect.size.width;
         } else {
-            symbolsRect.size.width = self.symbolsViewContainer.superview.frame.size.width;
+            symbolsRect.size.width = self.keyboardsViewContainer.superview.frame.size.width;
         }
-        [[self.symbolsViewContainer animator] setFrame:symbolsRect];
+        [[self.keyboardsViewContainer animator] setFrame:symbolsRect];
         
         [CATransaction commit];
 
@@ -526,7 +526,7 @@
         [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
         [[self.toolboxView animator] setFrameOrigin:[self offWindowOriginForToolboxView]];
         symbolsRect.size.width = worksheetScrollViewRect.size.width;
-        [[self.symbolsViewContainer animator] setFrame:symbolsRect];
+        [[self.keyboardsViewContainer animator] setFrame:symbolsRect];
         [CATransaction commit];
     }
 }
@@ -543,7 +543,7 @@
     [self.worksheetScrollView setFrame:worksheetScrollRect];
     
     // Position and size the symbols view. First, the size. The height is fixed, but the width must be adjusted to match the width of the worksheet scroll view...
-    NSRect symbolsRect = self.symbolsViewContainer.frame;
+    NSRect symbolsRect = self.keyboardsViewContainer.frame;
     symbolsRect.size.width = self.worksheetScrollView.frame.size.width;
     
     // Now the position of the symbols view...
@@ -567,9 +567,9 @@
         // Toolbox is invisible, so we place it just offscreen ready to slide back into place if made visible again.
         toolboxRect.origin.x = [self offWindowOriginForToolboxView].x;
     }
-    [self.symbolsViewContainer setFrame:symbolsRect];
+    [self.keyboardsViewContainer setFrame:symbolsRect];
     [self.toolboxView setFrame:toolboxRect];
-    [self.symbolsViewContainer setNeedsDisplay:YES];
+    [self.keyboardsViewContainer setNeedsDisplay:YES];
     [self.toolboxView setNeedsDisplay:YES];
 }
 
@@ -584,7 +584,7 @@
     NSSize size = self.worksheetScrollView.frame.size;
     NSPoint origin = self.worksheetScrollView.frame.origin;
     NSSize superSize = self.worksheetScrollView.superview.bounds.size;
-    NSSize symbolsSize = self.symbolsViewContainer.frame.size;
+    NSSize symbolsSize = self.keyboardsViewContainer.frame.size;
     NSSize toolboxSize = self.toolboxView.frame.size;
     if (self.showSymbolsPanel) {
         size.height = superSize.height - symbolsSize.height;
@@ -606,7 +606,7 @@
 {
     NSRect superviewBounds = self.worksheetScrollView.superview.bounds;
     NSPoint origin = superviewBounds.origin;
-    origin.y = origin.y - self.symbolsViewContainer.frame.size.height;
+    origin.y = origin.y - self.keyboardsViewContainer.frame.size.height;
     return origin;
 }
 

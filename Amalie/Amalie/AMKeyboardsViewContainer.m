@@ -1,14 +1,14 @@
 //
-//  AMSymbolsViewContainer.m
+//  AMAMKeyboardsViewContainer.m
 //  Amalie
 //
 //  Created by Keith Staines on 07/10/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMSymbolsViewContainer.h"
+#import "AMKeyboardsViewContainer.h"
 
-@implementation AMSymbolsViewContainer
+@implementation AMKeyboardsViewContainer
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -36,7 +36,8 @@
     for (NSView * view in self.subviews) {
         NSRect intersection = NSIntersectionRect(dirtyRect, view.frame);
         if ( ! NSIsEmptyRect(intersection) ) {
-            [view setNeedsDisplay:YES];
+            intersection = [view convertRect:intersection fromView:self];
+            [view setNeedsDisplayInRect:intersection];
         }
     }
 }

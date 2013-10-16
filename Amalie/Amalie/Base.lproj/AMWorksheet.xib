@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMWorksheetController">
             <connections>
                 <outlet property="appController" destination="GkH-jk-e4m" id="LCZ-WR-GNO"/>
+                <outlet property="keyboardsViewContainer" destination="h3y-mw-yHM" id="vrz-Fi-y2q"/>
+                <outlet property="keyboardsViewController" destination="jGG-r6-pKc" id="FI1-P9-L7W"/>
                 <outlet property="objectsToggle" destination="hjL-PG-0sP" id="HsO-nS-9fb"/>
                 <outlet property="scaleSlider" destination="mk5-T9-xbF" id="ato-mn-LmC"/>
                 <outlet property="scaleSliderItem" destination="mk5-T9-xbF" id="nZF-Gq-wQd"/>
                 <outlet property="symbolToggle" destination="hjL-PG-0sP" id="lhx-6T-dYc"/>
                 <outlet property="symbolsToggle" destination="hjL-PG-0sP" id="NWb-ud-A22"/>
-                <outlet property="symbolsViewContainer" destination="h3y-mw-yHM" id="uxI-jD-nj0"/>
-                <outlet property="symbolsViewController" destination="jGG-r6-pKc" id="ar5-Qp-mJQ"/>
                 <outlet property="toolboxView" destination="gJD-vM-bCf" id="ZFu-me-k9W"/>
                 <outlet property="trayDataSource" destination="GkH-jk-e4m" id="Yaj-Gy-wWI"/>
                 <outlet property="window" destination="5" id="18"/>
@@ -77,7 +77,7 @@
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="cNY-yz-5Iz">
                                                                     <rect key="frame" x="47" y="3" width="308" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ipe-RU-qVT">
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ipe-RU-qVT">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -157,7 +157,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <customView id="h3y-mw-yHM" customClass="AMSymbolsViewContainer">
+                    <customView id="h3y-mw-yHM" customClass="AMKeyboardsViewContainer">
                         <rect key="frame" x="0.0" y="0.0" width="435" height="226"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
@@ -230,7 +230,7 @@
                 </menuItem>
             </items>
         </menu>
-        <viewController id="jGG-r6-pKc" customClass="AMSymbolsViewController"/>
+        <viewController id="jGG-r6-pKc" customClass="AMKeyboardsViewController"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

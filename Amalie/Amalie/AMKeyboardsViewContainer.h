@@ -1,5 +1,5 @@
 //
-//  AMSymbolsViewContainer.h
+//  AMAMKeyboardsViewContainer.h
 //  Amalie
 //
 //  Created by Keith Staines on 07/10/2013.
@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMSymbolsViewContainer : NSView
+@interface AMKeyboardsViewContainer : NSView
 
 @end
