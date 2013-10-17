@@ -6,8 +6,14 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@class AMKeyboardsViewController;
+
 #import <Cocoa/Cocoa.h>
 
 @interface AMKeyboardView : NSView
+
+@property (weak) IBOutlet AMKeyboardsViewController * keyboardsViewController;
+
+-(void)reloadKeys;
 
 @end

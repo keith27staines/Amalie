@@ -7,7 +7,7 @@
 //
 
 @class AMKeyboardKeyModel;
-@class AMKeyPadContainerView;
+@class AMKeyboardContainerView;
 @class AMKeyboardButtonView;
 
 typedef enum AMKeyboardIndex : NSUInteger {
@@ -28,7 +28,7 @@ typedef enum AMKeyboardIndex : NSUInteger {
 - (IBAction)keyboadSelectorChanged:(NSPopUpButton *)sender;
 
 
-@property (weak) IBOutlet AMKeyPadContainerView * keyPadContainerView;
+@property (weak) IBOutlet AMKeyboardContainerView * keyboardContainerView;
 
 - (IBAction)keyButtonPressed:(AMKeyboardButtonView *)sender;
 

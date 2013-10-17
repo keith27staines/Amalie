@@ -23,7 +23,15 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    NSColor * darkGrey  = [NSColor colorWithCalibratedRed:0.25 green:0.25 blue:0.25 alpha:1.0];
+    NSColor * lightGrey = [NSColor colorWithCalibratedRed:0.30 green:0.30 blue:0.30 alpha:1.0];
+    NSArray * colors = @[darkGrey, lightGrey];
+    NSGradient * gradient = [[NSGradient alloc] initWithColors:colors];
+    [gradient drawInRect:self.bounds angle:0];
+    NSPoint start = self.bounds.origin;
+    NSPoint finish = NSMakePoint(start.x, self.bounds.size.height);
+    [[NSColor blackColor] set];
+    [NSBezierPath strokeLineFromPoint:start toPoint:finish];
 }
 
 @end

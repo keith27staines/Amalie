@@ -9,7 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMWorksheetController">
             <connections>
                 <outlet property="appController" destination="GkH-jk-e4m" id="LCZ-WR-GNO"/>
-                <outlet property="keyboardsViewContainer" destination="h3y-mw-yHM" id="vrz-Fi-y2q"/>
+                <outlet property="keyboardsAreaView" destination="h3y-mw-yHM" id="OtM-gR-VOB"/>
                 <outlet property="keyboardsViewController" destination="jGG-r6-pKc" id="FI1-P9-L7W"/>
                 <outlet property="objectsToggle" destination="hjL-PG-0sP" id="HsO-nS-9fb"/>
                 <outlet property="scaleSlider" destination="mk5-T9-xbF" id="ato-mn-LmC"/>
@@ -27,32 +27,32 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="133" y="235" width="843" height="600"/>
+            <rect key="contentRect" x="133" y="235" width="1078" height="760"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <value key="minSize" type="size" width="600" height="600"/>
+            <value key="minSize" type="size" width="1000" height="600"/>
             <view key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="843" height="600"/>
+                <rect key="frame" x="0.0" y="0.0" width="1078" height="760"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView identifier="AMToolboxView" id="gJD-vM-bCf" customClass="AMToolboxView">
-                        <rect key="frame" x="443" y="0.0" width="400" height="600"/>
+                        <rect key="frame" x="658" y="0.0" width="400" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="uMQ-RN-CA1">
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="uMQ-RN-CA1">
                                 <rect key="frame" x="20" y="80" width="360" height="500"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" id="laH-9q-gSM">
-                                    <rect key="frame" x="1" y="1" width="358" height="498"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="laH-9q-gSM">
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="500"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView identifier="kAMTrayDictionaryKey" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="Irp-Yf-VE1">
-                                            <rect key="frame" x="0.0" y="0.0" width="358" height="498"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="360" height="500"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="kAMIconKey" width="355" minWidth="40" maxWidth="1000" id="Zan-f7-Gql">
+                                                <tableColumn identifier="kAMIconKey" width="357" minWidth="40" maxWidth="1000" id="Zan-f7-Gql">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -66,7 +66,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="kAMIconKey" id="s7Q-il-0qV">
-                                                            <rect key="frame" x="1" y="1" width="355" height="49"/>
+                                                            <rect key="frame" x="1" y="1" width="357" height="49"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Stt-ZJ-Zdv">
@@ -75,9 +75,9 @@
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="DLZ-0h-kMn"/>
                                                                 </imageView>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="cNY-yz-5Iz">
-                                                                    <rect key="frame" x="47" y="3" width="308" height="46"/>
+                                                                    <rect key="frame" x="47" y="3" width="310" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ipe-RU-qVT">
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Ipe-RU-qVT">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -123,10 +123,10 @@
                         </subviews>
                     </customView>
                     <scrollView wantsLayer="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" id="Et6-s1-Vqi">
-                        <rect key="frame" x="0.0" y="234" width="443" height="366"/>
+                        <rect key="frame" x="0.0" y="292" width="659" height="308"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" autoresizesSubviews="NO" copiesOnScroll="NO" id="ggt-X2-Nnt">
-                            <rect key="frame" x="0.0" y="0.0" width="443" height="366"/>
+                            <rect key="frame" x="0.0" y="0.0" width="659" height="308"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="qow-JN-IWk" customClass="AMCenteringView">
@@ -149,16 +149,16 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" verticalHuggingPriority="750" id="dcL-W3-JVi">
-                            <rect key="frame" x="0.0" y="350" width="443" height="16"/>
+                            <rect key="frame" x="0.0" y="292" width="659" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" id="QAX-jf-9Rq">
-                            <rect key="frame" x="427" y="0.0" width="16" height="366"/>
+                            <rect key="frame" x="643" y="0.0" width="16" height="308"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <customView id="h3y-mw-yHM" customClass="AMKeyboardsViewContainer">
-                        <rect key="frame" x="0.0" y="0.0" width="435" height="226"/>
+                    <customView id="h3y-mw-yHM" customClass="AMKeyboardsAreaView">
+                        <rect key="frame" x="0.0" y="0.0" width="650" height="191"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
                 </subviews>

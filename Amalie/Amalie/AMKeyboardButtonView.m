@@ -29,7 +29,6 @@
         [self setAllowsMixedState:NO];
         [self setBordered:YES];
         [self setBezelStyle:NSShadowlessSquareBezelStyle];
-        
     }
     return self;
 }

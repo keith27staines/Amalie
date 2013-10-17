@@ -10,7 +10,7 @@
 @class AMNameRules;
 @class AMAppController;
 @class KSMWorksheet;
-@class AMKeyboardsViewContainer;
+@class AMKeyboardsAreaView;
 @class AMToolboxView;
 @class AMKeyboardsViewController;
 
@@ -44,7 +44,7 @@
  */
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 
-@property (weak) IBOutlet AMKeyboardsViewContainer *keyboardsViewContainer;
+@property (weak) IBOutlet AMKeyboardsAreaView *keyboardsAreaView;
 
 
 @property (strong) IBOutlet AMKeyboardsViewController *keyboardsViewController;

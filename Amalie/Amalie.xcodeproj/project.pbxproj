@@ -22,7 +22,7 @@
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		784001EC18015E6E006B00C1 /* AMCenteringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EB18015E6E006B00C1 /* AMCenteringView.m */; };
-		784001EF1802B091006B00C1 /* AMKeyboardsViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMKeyboardsViewContainer.m */; };
+		784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */; };
 		7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */; };
 		784BFBDE17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
 		784BFBDF17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
@@ -43,7 +43,7 @@
 		78702B9417C3510E006A4331 /* AMNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78702B9317C3510E006A4331 /* AMNameView.m */; };
 		78734E231806B10F00A2EEF3 /* AMKeyboardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */; };
 		78734E241806B10F00A2EEF3 /* AMKeyboardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */; };
-		78734E271806EA0500A2EEF3 /* AMKeyPadContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E261806EA0500A2EEF3 /* AMKeyPadContainerView.m */; };
+		78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E261806EA0500A2EEF3 /* AMKeyboardContainerView.m */; };
 		78734E2A180BD63B00A2EEF3 /* AMKeyboardKeyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */; };
 		78734E2D180BE5DC00A2EEF3 /* AMKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E2C180BE5DC00A2EEF3 /* AMKeyboardButtonView.m */; };
 		78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E32180D980A00A2EEF3 /* AMKeyboardView.m */; };
@@ -164,17 +164,17 @@
 		781D17A317EC21EB0008758D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		781D180B17F31DE70008758D /* AMDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMDataStore.h; path = Amalie/AMDataStore.h; sourceTree = "<group>"; };
 		781D180C17F31DE70008758D /* AMDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMDataStore.m; path = Amalie/AMDataStore.m; sourceTree = "<group>"; };
-		7825D650180E89C30039EB67 /* AMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboard.h; sourceTree = "<group>"; };
-		7825D651180E89C40039EB67 /* AMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboard.m; sourceTree = "<group>"; };
-		7825D653180E91E60039EB67 /* AMKeyboards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboards.h; sourceTree = "<group>"; };
-		7825D654180E91E60039EB67 /* AMKeyboards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboards.m; sourceTree = "<group>"; };
+		7825D650180E89C30039EB67 /* AMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboard.h; path = Amalie/AMKeyboard.h; sourceTree = "<group>"; };
+		7825D651180E89C40039EB67 /* AMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboard.m; path = Amalie/AMKeyboard.m; sourceTree = "<group>"; };
+		7825D653180E91E60039EB67 /* AMKeyboards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboards.h; path = Amalie/AMKeyboards.h; sourceTree = "<group>"; };
+		7825D654180E91E60039EB67 /* AMKeyboards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboards.m; path = Amalie/AMKeyboards.m; sourceTree = "<group>"; };
 		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
 		7832744A178F1D810051290B /* AMTrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayItem.h; sourceTree = "<group>"; };
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
 		784001EA18015E6E006B00C1 /* AMCenteringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCenteringView.h; sourceTree = "<group>"; };
 		784001EB18015E6E006B00C1 /* AMCenteringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCenteringView.m; sourceTree = "<group>"; };
-		784001ED1802B091006B00C1 /* AMKeyboardsViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardsViewContainer.h; sourceTree = "<group>"; };
-		784001EE1802B091006B00C1 /* AMKeyboardsViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardsViewContainer.m; sourceTree = "<group>"; };
+		784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardsAreaView.h; sourceTree = "<group>"; };
+		784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardsAreaView.m; sourceTree = "<group>"; };
 		7847ECCE17B777CB00333A84 /* AMExpressionDisplayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionDisplayOptions.h; sourceTree = "<group>"; };
 		7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionDisplayOptions.m; sourceTree = "<group>"; };
 		784BFBDC17E7408800152756 /* KSMMathValueHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMMathValueHolder.h; sourceTree = "<group>"; };
@@ -207,17 +207,17 @@
 		785D9A32179DFFAF004D39B5 /* AMContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContentView.m; sourceTree = "<group>"; };
 		78702B9217C3510E006A4331 /* AMNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameView.h; sourceTree = "<group>"; };
 		78702B9317C3510E006A4331 /* AMNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameView.m; sourceTree = "<group>"; };
-		78734E201806B10F00A2EEF3 /* AMKeyboardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardsViewController.h; sourceTree = "<group>"; };
-		78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardsViewController.m; sourceTree = "<group>"; };
-		78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMKeyboardsView.xib; sourceTree = "<group>"; };
-		78734E251806EA0500A2EEF3 /* AMKeyPadContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyPadContainerView.h; sourceTree = "<group>"; };
-		78734E261806EA0500A2EEF3 /* AMKeyPadContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyPadContainerView.m; sourceTree = "<group>"; };
-		78734E28180BD63B00A2EEF3 /* AMKeyboardKeyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardKeyModel.h; sourceTree = "<group>"; };
-		78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardKeyModel.m; sourceTree = "<group>"; };
-		78734E2B180BE5DC00A2EEF3 /* AMKeyboardButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardButtonView.h; sourceTree = "<group>"; };
-		78734E2C180BE5DC00A2EEF3 /* AMKeyboardButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardButtonView.m; sourceTree = "<group>"; };
-		78734E31180D980A00A2EEF3 /* AMKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardView.h; sourceTree = "<group>"; };
-		78734E32180D980A00A2EEF3 /* AMKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardView.m; sourceTree = "<group>"; };
+		78734E201806B10F00A2EEF3 /* AMKeyboardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardsViewController.h; path = Amalie/AMKeyboardsViewController.h; sourceTree = "<group>"; };
+		78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardsViewController.m; path = Amalie/AMKeyboardsViewController.m; sourceTree = "<group>"; };
+		78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AMKeyboardsView.xib; path = Amalie/AMKeyboardsView.xib; sourceTree = "<group>"; };
+		78734E251806EA0500A2EEF3 /* AMKeyboardContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardContainerView.h; path = Amalie/AMKeyboardContainerView.h; sourceTree = "<group>"; };
+		78734E261806EA0500A2EEF3 /* AMKeyboardContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardContainerView.m; path = Amalie/AMKeyboardContainerView.m; sourceTree = "<group>"; };
+		78734E28180BD63B00A2EEF3 /* AMKeyboardKeyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardKeyModel.h; path = Amalie/AMKeyboardKeyModel.h; sourceTree = "<group>"; };
+		78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardKeyModel.m; path = Amalie/AMKeyboardKeyModel.m; sourceTree = "<group>"; };
+		78734E2B180BE5DC00A2EEF3 /* AMKeyboardButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardButtonView.h; path = Amalie/AMKeyboardButtonView.h; sourceTree = "<group>"; };
+		78734E2C180BE5DC00A2EEF3 /* AMKeyboardButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardButtonView.m; path = Amalie/AMKeyboardButtonView.m; sourceTree = "<group>"; };
+		78734E31180D980A00A2EEF3 /* AMKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardView.h; path = Amalie/AMKeyboardView.h; sourceTree = "<group>"; };
+		78734E32180D980A00A2EEF3 /* AMKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardView.m; path = Amalie/AMKeyboardView.m; sourceTree = "<group>"; };
 		787B303F178361BC001851C0 /* Amalie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amalie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		787B3042178361BC001851C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		787B3045178361BC001851C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -424,6 +424,39 @@
 			name = "Core Data";
 			sourceTree = "<group>";
 		};
+		7825D656180FD3B10039EB67 /* AMKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */,
+				78734E251806EA0500A2EEF3 /* AMKeyboardContainerView.h */,
+				78734E261806EA0500A2EEF3 /* AMKeyboardContainerView.m */,
+				78734E31180D980A00A2EEF3 /* AMKeyboardView.h */,
+				78734E32180D980A00A2EEF3 /* AMKeyboardView.m */,
+				78734E2B180BE5DC00A2EEF3 /* AMKeyboardButtonView.h */,
+				78734E2C180BE5DC00A2EEF3 /* AMKeyboardButtonView.m */,
+				78734E201806B10F00A2EEF3 /* AMKeyboardsViewController.h */,
+				78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */,
+				7825D650180E89C30039EB67 /* AMKeyboard.h */,
+				7825D651180E89C40039EB67 /* AMKeyboard.m */,
+				7825D653180E91E60039EB67 /* AMKeyboards.h */,
+				7825D654180E91E60039EB67 /* AMKeyboards.m */,
+				78734E28180BD63B00A2EEF3 /* AMKeyboardKeyModel.h */,
+				78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */,
+			);
+			name = AMKeyboard;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		7825D657180FE0440039EB67 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				787B305A178361BC001851C0 /* MainMenu.xib */,
+				784D6EF81789CC11002BE03A /* AMAppController.h */,
+				784D6EF91789CC11002BE03A /* AMAppController.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
 		784BFBE017E7603700152756 /* KSMMathValue */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,30 +498,9 @@
 		785247BF178406B000F6A7AD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				784D6EF81789CC11002BE03A /* AMAppController.h */,
-				784D6EF91789CC11002BE03A /* AMAppController.m */,
-				787B3054178361BC001851C0 /* AMWorksheetController.h */,
-				787B3055178361BC001851C0 /* AMWorksheetController.m */,
-				785247C117848A4A00F6A7AD /* AMToolboxViewController.h */,
-				785247C217848A4A00F6A7AD /* AMToolboxViewController.m */,
 				784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */,
 				784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */,
 				785D9A1D179BDD19004D39B5 /* Controllers for insertable views */,
-				78734E201806B10F00A2EEF3 /* AMKeyboardsViewController.h */,
-				78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */,
-				78734E251806EA0500A2EEF3 /* AMKeyPadContainerView.h */,
-				78734E261806EA0500A2EEF3 /* AMKeyPadContainerView.m */,
-				7825D650180E89C30039EB67 /* AMKeyboard.h */,
-				7825D651180E89C40039EB67 /* AMKeyboard.m */,
-				7825D653180E91E60039EB67 /* AMKeyboards.h */,
-				7825D654180E91E60039EB67 /* AMKeyboards.m */,
-				78734E31180D980A00A2EEF3 /* AMKeyboardView.h */,
-				78734E32180D980A00A2EEF3 /* AMKeyboardView.m */,
-				78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */,
-				78734E2B180BE5DC00A2EEF3 /* AMKeyboardButtonView.h */,
-				78734E2C180BE5DC00A2EEF3 /* AMKeyboardButtonView.m */,
-				78734E28180BD63B00A2EEF3 /* AMKeyboardKeyModel.h */,
-				78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -496,8 +508,6 @@
 		785247C0178406D200F6A7AD /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				787B305A178361BC001851C0 /* MainMenu.xib */,
-				787B3057178361BC001851C0 /* AMWorksheet.xib */,
 				785D9A2A179D79E9004D39B5 /* Content views */,
 				785D9A28179D78D0004D39B5 /* Subsiduary Window Nibs */,
 			);
@@ -606,6 +616,21 @@
 		787B3048178361BC001851C0 /* Amalie */ = {
 			isa = PBXGroup;
 			children = (
+				7825D657180FE0440039EB67 /* App */,
+				787B3057178361BC001851C0 /* AMWorksheet.xib */,
+				784001EA18015E6E006B00C1 /* AMCenteringView.h */,
+				784001EB18015E6E006B00C1 /* AMCenteringView.m */,
+				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
+				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
+				784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */,
+				784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */,
+				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
+				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
+				787B3054178361BC001851C0 /* AMWorksheetController.h */,
+				787B3055178361BC001851C0 /* AMWorksheetController.m */,
+				785247C117848A4A00F6A7AD /* AMToolboxViewController.h */,
+				785247C217848A4A00F6A7AD /* AMToolboxViewController.m */,
+				7825D656180FD3B10039EB67 /* AMKeyboard */,
 				785247BF178406B000F6A7AD /* Controllers */,
 				785247BE178406A600F6A7AD /* Views and NIBs */,
 				785247BD1784067900F6A7AD /* Models */,
@@ -689,12 +714,6 @@
 		788709C1178D35F5008E093A /* Workheet views */ = {
 			isa = PBXGroup;
 			children = (
-				784001EA18015E6E006B00C1 /* AMCenteringView.h */,
-				784001EB18015E6E006B00C1 /* AMCenteringView.m */,
-				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
-				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
-				784001ED1802B091006B00C1 /* AMKeyboardsViewContainer.h */,
-				784001EE1802B091006B00C1 /* AMKeyboardsViewContainer.m */,
 				78D5FD8917905CA0003D6AC6 /* Insertable Views */,
 			);
 			name = "Workheet views";
@@ -703,8 +722,6 @@
 		788709C2178D36D7008E093A /* Toolbox views */ = {
 			isa = PBXGroup;
 			children = (
-				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
-				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
 			);
 			name = "Toolbox views";
 			sourceTree = "<group>";
@@ -934,7 +951,7 @@
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
-				78734E271806EA0500A2EEF3 /* AMKeyPadContainerView.m in Sources */,
+				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
 				7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */,
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
@@ -951,7 +968,7 @@
 				7899B30417AD3ACD008BDB75 /* AMVectorContentView.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
-				784001EF1802B091006B00C1 /* AMKeyboardsViewContainer.m in Sources */,
+				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,

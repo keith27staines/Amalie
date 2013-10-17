@@ -34,7 +34,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	[[NSColor colorWithCalibratedRed:0.7 green:0.8 blue:1 alpha:.2] set];
+	[[NSColor colorWithCalibratedRed:0.73 green:0.75 blue:78 alpha:1] set];
     NSRectFill(dirtyRect);
 }
 

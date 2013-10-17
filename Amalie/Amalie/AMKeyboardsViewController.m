@@ -10,7 +10,7 @@
 
 #import "AMKeyboardsViewController.h"
 #import "AMKeyboardKeyModel.h"
-#import "AMKeyPadContainerView.h"
+#import "AMKeyboardContainerView.h"
 #import "AMKeyboards.h"
 #import "AMKeyboard.h"
 
@@ -52,7 +52,7 @@
 {
     AMKeyboard * keyboard = [[AMKeyboards sharedKeyboards] keyboardWithIndex:keyboardIndex];
     self.keyButtons = [keyboard allKeys];
-    [self.keyPadContainerView reloadKeys];
+    [self.keyboardContainerView reloadKeys];
 }
 
 -(NSUInteger)numberOfKeys

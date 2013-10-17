@@ -11,7 +11,7 @@
 #import "AMConstants.h"
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
-#import "AMKeyboardsViewContainer.h"
+#import "AMKeyboardsAreaView.h"
 #import "AMInsertableViewController.h"
 #import "KSMWorksheet.h"
 #import "KSMMathValue.h"
@@ -24,10 +24,11 @@
 #import "AMDInsertedObject.h"
 #import "AMToolboxView.h"
 #import "AMKeyboardsViewController.h"
+#import "AMKeyboardContainerView.h"
 
 @interface AMWorksheetController()
 {
-    BOOL                  _showSymbolsPanel;
+    BOOL                  _showKeyboardArea;
     BOOL                  _showObjectsPanel;
     BOOL                  _layoutIsScheduled;
     NSMutableArray      * _insertableViewArray;
@@ -54,7 +55,7 @@
 
 @property (readonly) AMDataStore * dataStore;
 
-@property BOOL showSymbolsPanel;
+@property BOOL showKeyboardArea;
 @property BOOL showObjectsPanel;
 @end
 
@@ -74,7 +75,7 @@
 
 -(void)awakeFromNib
 {
-    
+    [self.worksheetView.window setContentMinSize:NSMakeSize(1024,768)];
     [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
     
     SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
@@ -88,11 +89,11 @@
     [slider setMaxValue:4];
     [slider setFloatValue:1];
     [slider setContinuous:YES];
-    self.showSymbolsPanel = YES;
+    self.showKeyboardArea = YES;
     self.showObjectsPanel = YES;
-    NSView * view = [self.keyboardsViewController view];
-    [self.keyboardsViewContainer addSubview:view];
-    [view setNeedsDisplay:YES];
+    AMKeyboardContainerView * keypadContainerView = (AMKeyboardContainerView *)[self.keyboardsViewController view];
+    [self.keyboardsAreaView addSubview:keypadContainerView];
+    [keypadContainerView setNeedsDisplay:YES];
 }
 
 - (NSString *)windowNibName
@@ -164,7 +165,7 @@
     _layoutIsScheduled = NO; // re-enable layout
     [self scheduleLayout];
     [self.worksheetView setNeedsDisplay:YES];
-    [self.keyboardsViewContainer setNeedsDisplay:YES];
+    [self.keyboardsAreaView setNeedsDisplay:YES];
     [self.toolboxView setNeedsDisplay:YES];
     [self.managedObjectContext processPendingChanges];
     [self arrangeSubviews];
@@ -445,8 +446,8 @@
 
 -(void)toggleSymbolsPanel:(NSToolbarItem*)sender
 {
-    self.showSymbolsPanel = !self.showSymbolsPanel;
-    if (_showSymbolsPanel) {
+    self.showKeyboardArea = !self.showKeyboardArea;
+    if (_showKeyboardArea) {
         sender.label = @"Hide";
     } else {
         sender.label = @"Show";
@@ -463,26 +464,26 @@
     }
 }
 
--(BOOL)showSymbolsPanel
+-(BOOL)showKeyboardArea
 {
-    return _showSymbolsPanel;
+    return _showKeyboardArea;
 }
 
--(void)setShowSymbolsPanel:(BOOL)showSymbolsPanel
+-(void)setShowKeyboardArea:(BOOL)showSymbolsPanel
 {
-    if (showSymbolsPanel == _showSymbolsPanel) return;
-    _showSymbolsPanel = showSymbolsPanel;
-    if (_showSymbolsPanel) {
+    if (showSymbolsPanel == _showKeyboardArea) return;
+    _showKeyboardArea = showSymbolsPanel;
+    if (_showKeyboardArea) {
         // Was invisible, now visible.
         [CATransaction begin];
         [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.keyboardsViewContainer animator] setFrameOrigin:NSMakePoint(0, 0)];
+        [[self.keyboardsAreaView animator] setFrameOrigin:NSMakePoint(0, 0)];
         [CATransaction commit];
     } else {
         // was visible, now to be invisible
         [CATransaction begin];
         [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.keyboardsViewContainer animator] setFrameOrigin:[self offWindowOriginForSymbolView]];
+        [[self.keyboardsAreaView animator] setFrameOrigin:[self offWindowOriginForKeyboardAreaView]];
         [CATransaction commit];
     }
 }
@@ -499,7 +500,7 @@
     
     NSRect worksheetScrollViewRect = [self frameForWorksheetScrollView];
     NSRect toolboxRect = self.toolboxView.frame;
-    NSRect symbolsRect = self.keyboardsViewContainer.frame;
+    NSRect symbolsRect = self.keyboardsAreaView.frame;
     
     if (_showObjectsPanel) {
         // Was invisible, now visible.
@@ -512,11 +513,11 @@
         [[self.toolboxView animator] setFrame:toolboxRect];
         
         if (self.showObjectsPanel) {
-            symbolsRect.size.width = self.keyboardsViewContainer.superview.frame.size.width - toolboxRect.size.width;
+            symbolsRect.size.width = self.keyboardsAreaView.superview.frame.size.width - toolboxRect.size.width;
         } else {
-            symbolsRect.size.width = self.keyboardsViewContainer.superview.frame.size.width;
+            symbolsRect.size.width = self.keyboardsAreaView.superview.frame.size.width;
         }
-        [[self.keyboardsViewContainer animator] setFrame:symbolsRect];
+        [[self.keyboardsAreaView animator] setFrame:symbolsRect];
         
         [CATransaction commit];
 
@@ -526,7 +527,7 @@
         [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
         [[self.toolboxView animator] setFrameOrigin:[self offWindowOriginForToolboxView]];
         symbolsRect.size.width = worksheetScrollViewRect.size.width;
-        [[self.keyboardsViewContainer animator] setFrame:symbolsRect];
+        [[self.keyboardsAreaView animator] setFrame:symbolsRect];
         [CATransaction commit];
     }
 }
@@ -543,16 +544,16 @@
     [self.worksheetScrollView setFrame:worksheetScrollRect];
     
     // Position and size the symbols view. First, the size. The height is fixed, but the width must be adjusted to match the width of the worksheet scroll view...
-    NSRect symbolsRect = self.keyboardsViewContainer.frame;
-    symbolsRect.size.width = self.worksheetScrollView.frame.size.width;
+    NSRect keyboardAreaRect = self.keyboardsAreaView.frame;
+    keyboardAreaRect.size.width = self.worksheetScrollView.frame.size.width;
     
     // Now the position of the symbols view...
-    if (self.showSymbolsPanel) {
+    if (self.showKeyboardArea) {
         // The symbols view is visible, and its origin is bottom left
-        symbolsRect.origin.y = 0.0;
+        keyboardAreaRect.origin.y = 0.0;
     } else {
         // The symbols view is invisible, so we position it just offscreen, ready to slide back into place
-        symbolsRect.origin = [self offWindowOriginForSymbolView];
+        keyboardAreaRect.origin = [self offWindowOriginForKeyboardAreaView];
     }
     
     // size and position the toolbox. First the size. The width is fixed, but the height must be adjusted to match the height of the superview
@@ -567,9 +568,10 @@
         // Toolbox is invisible, so we place it just offscreen ready to slide back into place if made visible again.
         toolboxRect.origin.x = [self offWindowOriginForToolboxView].x;
     }
-    [self.keyboardsViewContainer setFrame:symbolsRect];
+    [self.keyboardsAreaView setFrame:keyboardAreaRect];
+    
     [self.toolboxView setFrame:toolboxRect];
-    [self.keyboardsViewContainer setNeedsDisplay:YES];
+    [self.keyboardsAreaView setNeedsDisplay:YES];
     [self.toolboxView setNeedsDisplay:YES];
 }
 
@@ -584,11 +586,11 @@
     NSSize size = self.worksheetScrollView.frame.size;
     NSPoint origin = self.worksheetScrollView.frame.origin;
     NSSize superSize = self.worksheetScrollView.superview.bounds.size;
-    NSSize symbolsSize = self.keyboardsViewContainer.frame.size;
+    NSSize keyboardArea = self.keyboardsAreaView.frame.size;
     NSSize toolboxSize = self.toolboxView.frame.size;
-    if (self.showSymbolsPanel) {
-        size.height = superSize.height - symbolsSize.height;
-        origin.y = symbolsSize.height;
+    if (self.showKeyboardArea) {
+        size.height = superSize.height - keyboardArea.height;
+        origin.y = keyboardArea.height;
     } else {
         size.height = superSize.height;
         origin.y = 0.0;
@@ -602,11 +604,11 @@
     return NSMakeRect(origin.x, origin.y, size.width, size.height);
 }
 
--(NSPoint)offWindowOriginForSymbolView
+-(NSPoint)offWindowOriginForKeyboardAreaView
 {
     NSRect superviewBounds = self.worksheetScrollView.superview.bounds;
     NSPoint origin = superviewBounds.origin;
-    origin.y = origin.y - self.keyboardsViewContainer.frame.size.height;
+    origin.y = origin.y - self.keyboardsAreaView.frame.size.height;
     return origin;
 }
 

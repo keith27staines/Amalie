@@ -1,5 +1,5 @@
 //
-//  AMAMKeyPadContainerView.h
+//  AMKeyboardContainerView.h
 //  Amalie
 //
 //  Created by Keith Staines on 10/10/2013.
@@ -7,14 +7,15 @@
 //
 
 @class AMKeyboardsViewController;
+@class AMKeyboardView;
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMKeyPadContainerView : NSView
+@interface AMKeyboardContainerView : NSView
 
 @property (weak) IBOutlet AMKeyboardsViewController * keyboardsViewController;
 
-@property (weak) IBOutlet NSView *keyPad;
+@property (weak) IBOutlet AMKeyboardView *keyboardView;
 
 -(void)reloadKeys;
 
