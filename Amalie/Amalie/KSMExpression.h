@@ -11,7 +11,6 @@
 
 extern NSString * const kOperatorsString;
 extern NSString * const kBinaryOperatorsString;
-extern NSString * const kAllowedCharacters;
 extern NSString * const kLeftBrace;
 extern NSString * const kRightBrace;
 extern NSString * const kSpace;

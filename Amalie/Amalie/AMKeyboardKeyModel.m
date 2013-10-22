@@ -20,17 +20,56 @@
 
 @implementation AMKeyboardKeyModel
 
-+(AMKeyboardKeyModel *)keyWithName:(NSString*)name
-                     englishName:(NSString *)englishName
-                          keyboardName:(NSString*)keyboardName
-                       upperCase:(BOOL)upperCase
++(AMKeyboardKeyModel *)letterKeyWithName:(NSString*)name
+                             englishName:(NSString *)englishName
+                            keyboardName:(NSString*)keyboardName
+                               upperCase:(BOOL)upperCase
 {
     AMKeyboardKeyModel * key = [[AMKeyboardKeyModel alloc] init];
-    key.name = name;
-    key.englishName = englishName;
+    key.name         = name;
+    key.englishName  = englishName;
     key.keyboardName = keyboardName;
-    key.upperCase = upperCase;
+    key.upperCase    = upperCase;
+    key.isLetter     = YES;
+    key.isMathSymbol = NO;
+    key.isOperator   = NO;
     return key;
 }
 
++(AMKeyboardKeyModel *)operatorKeyWithName:(NSString*)name
+                               englishName:(NSString*)englishName
+                              keyboardName:(NSString*)keyboardName
+{
+    AMKeyboardKeyModel * key = [[AMKeyboardKeyModel alloc] init];
+    key.name         = name;
+    key.englishName  = englishName;
+    key.keyboardName = keyboardName;
+    key.isOperator   = YES;
+    return key;
+}
+
++(AMKeyboardKeyModel *)numberKeyWithName:(NSString*)name
+                             englishName:(NSString*)englishName
+                            keyboardName:(NSString*)keyboardName
+{
+    AMKeyboardKeyModel * key = [[AMKeyboardKeyModel alloc] init];
+    key.name         = name;
+    key.englishName  = englishName;
+    key.keyboardName = keyboardName;
+    key.isNumberOrExpression   = YES;
+    return key;
+}
+
++(AMKeyboardKeyModel *)mathSymbolKeyWithName:(NSString*)name
+                                 englishName:(NSString*)englishName
+                                keyboardName:(NSString*)keyboardName
+{
+    AMKeyboardKeyModel * key = [[AMKeyboardKeyModel alloc] init];
+    key.name         = name;
+    key.englishName  = englishName;
+    key.keyboardName = keyboardName;
+    key.isMathSymbol = YES;
+
+    return key;
+}
 @end

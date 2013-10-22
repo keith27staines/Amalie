@@ -7,6 +7,10 @@
 //
 
 #import "NSString+KSMMath.h"
+#import "AMKeyboards.h"
+#import "AMKeyboardKeyModel.h"
+
+static NSMutableString * _validFirstCharacters;
 
 @implementation NSString (KSMMath)
 
@@ -15,14 +19,15 @@
     return @"0123456789";
 }
 
-+(NSString *)KSMjustLowerCase
++(NSString*)validFirstCharacters
 {
-    return @"abcdefghijklmnopqrstuvwxyz";
-}
-
-+(NSString *)KSMjustUpperCase
-{
-    return [[NSString KSMjustLowerCase] uppercaseString];
+    if (!_validFirstCharacters) {
+        _validFirstCharacters = [NSMutableString stringWithString:@""];
+        for ( AMKeyboardKeyModel * km in [AMKeyboards allLetterKeys] ) {
+            [_validFirstCharacters appendString:km.name];
+        }
+    }
+    return _validFirstCharacters;
 }
 
 -(BOOL)KSMcontainsCharactersInSet:(NSCharacterSet*)set
@@ -68,7 +73,7 @@
 -(BOOL)KSMvalidName
 {
     NSString * dollar = @"$";
-    NSString * validFirstCharacters = [[NSString KSMjustLowerCase] stringByAppendingString:[NSString KSMjustUpperCase]];
+    NSString * validFirstCharacters = [NSString validFirstCharacters];
 
     NSString * allValidCharacters = [validFirstCharacters stringByAppendingString:[NSString KSMjustNumbers]];
     
@@ -106,8 +111,7 @@
 {
     NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
     NSNumber * n = [f numberFromString:self];
-    
-    return (!(n ==nil));
+    return (!(n == nil));
 }
 
 -(NSUInteger)KSMnumberOfOccurencesOfString:(NSString*)str
@@ -122,7 +126,6 @@
         copy = [copy stringByReplacingCharactersInRange:r withString:@""];
         r = [copy rangeOfString:str];
     }
-
     return count;
 }
 

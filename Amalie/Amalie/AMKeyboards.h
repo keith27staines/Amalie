@@ -22,5 +22,7 @@ extern NSString * const kAMKeyboardCapitalGreek;
 -(AMKeyboard*)keyboardWithName:(NSString*)name;
 -(AMKeyboard*)keyboardWithIndex:(NSUInteger)index;
 
++(NSSet*)allLetterKeys;
++(NSSet*)allOperatorKeys;
 
 @end

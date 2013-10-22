@@ -11,22 +11,21 @@
 #import "KSMSymbolProvider.h"
 #import "KSMReferenceCounter.h"
 
-NSString * const kOperatorsString = @"^*/+-∧∘";
+NSString * const kOperatorsString       = @"^*/+-∧∘";
 NSString * const kBinaryOperatorsString = @"^*/+-∧∘";
-NSString * const kAllowedCharacters = @"$abcdefghijklmnopqrtsuvwxyz0123456789_";
-NSString * const kLeftBrace = @"(";
-NSString * const kRightBrace = @")";
-NSString * const kSpace = @" ";
-NSString * const kEmpty = @"";
-NSString * const kSymbolPrefix = @"$";
+NSString * const kLeftBrace             = @"(";
+NSString * const kRightBrace            = @")";
+NSString * const kSpace                 = @" ";
+NSString * const kEmpty                 = @"";
+NSString * const kSymbolPrefix          = @"$";
 
-NSString * const kPower = @"^";
-NSString * const kMultiply = @"*";
-NSString * const kDivide = @"/";
-NSString * const kAdd = @"+";
-NSString * const kSubtract = @"-";
-NSString * const kVectorMultiply = @"∧";
-NSString * const kScalarMultiply = @"∘";
+NSString * const kPower                 = @"^";
+NSString * const kMultiply              = @"*";
+NSString * const kDivide                = @"/";
+NSString * const kAdd                   = @"+";
+NSString * const kSubtract              = @"-";
+NSString * const kVectorMultiply        = @"∧";
+NSString * const kScalarMultiply        = @"∘";
 
 @interface KSMExpression()
 {
