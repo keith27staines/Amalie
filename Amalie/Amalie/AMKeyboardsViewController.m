@@ -13,6 +13,8 @@
 #import "AMKeyboardContainerView.h"
 #import "AMKeyboards.h"
 #import "AMKeyboard.h"
+#import "AMKeyboardButtonView.h"
+#import "AMKeyboardKeyModel.h"
 
 @interface AMKeyboardsViewController ()
 {
@@ -70,6 +72,14 @@
     [self selectKeyboard:sender.indexOfSelectedItem];
 }
 
-- (IBAction)keyButtonPressed:(NSButton *)sender {
+- (IBAction)keyButtonPressed:(AMKeyboardButtonView *)sender
+{
+    id firstResponder = self.keyboardContainerView.window.firstResponder;
+    if (!firstResponder) return;
+    if ( [firstResponder isKindOfClass:[NSTextView class]] ) {
+        AMKeyboardKeyModel * keyboardKey = sender.keyboardKey;
+        NSTextView * textView = (NSTextView *)firstResponder;
+        [textView insertText:keyboardKey.name];
+    }
 }
 @end

@@ -36,12 +36,22 @@
 
 -(void)awakeFromNib
 {
-    self.keyboardView.keyboardsViewController = self.keyboardsViewController;
     NSSize requiredSize = self.keyboardView.intrinsicContentSize;
-    requiredSize.height = requiredSize.height * 1.5;
-    requiredSize.width = requiredSize.width * 1.1;
+    requiredSize.height = requiredSize.height;
+    requiredSize.width = requiredSize.width;
     [self setFrameSize:requiredSize];
     [self centreView:self.keyboardView inContainerView:self];
+}
+
+-(AMKeyboardsViewController *)keyboardsViewController
+{
+    return _keyboardsViewController;
+}
+
+-(void)setKeyboardsViewController:(AMKeyboardsViewController *)keyboardsViewController
+{
+    NSAssert(keyboardsViewController, @"Controller is nil");
+    _keyboardsViewController = keyboardsViewController;
 }
 
 -(void)centreView:(NSView*)view inContainerView:(NSView*)container
@@ -79,7 +89,7 @@
 
 -(void)reloadKeys
 {
-    [self.keyboardView reloadKeys];
+    [self.keyboardView updateKeyLabels];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

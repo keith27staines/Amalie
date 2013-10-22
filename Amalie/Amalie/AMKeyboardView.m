@@ -16,6 +16,14 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
 #import "AMKeyboardButtonView.h"
 #import "AMKeyboardsViewController.h"
 
+@interface AMKeyboardView()
+{
+    __weak AMKeyboardsViewController * _keyboardsViewController;
+}
+
+@end
+
+
 @implementation AMKeyboardView
 
 - (id)initWithFrame:(NSRect)frame
@@ -40,8 +48,18 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
             [keyButton setAlphaValue:1];
             [self addSubview:keyButton];
         }
-        [self setFrameSize:self.intrinsicContentSize];
     }
+    [self setFrameSize:self.intrinsicContentSize];
+}
+
+-(AMKeyboardsViewController *)keyboardsViewController
+{
+    return _keyboardsViewController;
+}
+
+-(void)setKeyboardsViewController:(AMKeyboardsViewController *)keyboardsViewController
+{
+    _keyboardsViewController = keyboardsViewController;
 }
 
 -(NSSize)intrinsicContentSize
@@ -65,10 +83,18 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
     keyButton.keyboardsViewController = self.keyboardsViewController;
     
     [keyButton setFont:font];
+
+    AMKeyboardsViewController * target = self.keyboardsViewController;
+    SEL action = NSSelectorFromString(@"keyButtonPressed:");
+    if (!target) {
+        NSLog(@"Target is nil");
+    }
+    [keyButton setTarget:target];
+    [keyButton setAction:action];
     return keyButton;
 }
 
--(void)reloadKeys
+-(void)updateKeyLabels
 {
     NSUInteger nKeys = [self.keyboardsViewController numberOfKeys];
     

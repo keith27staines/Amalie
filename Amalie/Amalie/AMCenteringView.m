@@ -34,8 +34,13 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	[[NSColor colorWithCalibratedRed:0.73 green:0.75 blue:78 alpha:1] set];
+	[[NSColor colorWithCalibratedRed:0.3 green:0.3 blue:0.3 alpha:1] set];
     NSRectFill(dirtyRect);
+}
+
+-(BOOL)isOpaque
+{
+    return NO;
 }
 
 -(void)resizeWithOldSuperviewSize:(NSSize)oldSize
