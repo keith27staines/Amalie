@@ -34,6 +34,8 @@ static NSString * const kAMDEntityArguments          = @"AMDArguments";
 static NSString * const kAMDEntityMathValues         = @"AMDMathValues";
 static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
 
+static AMDataStore * _sharedDatastore;
+
 @interface AMDataStore()
 {
     __weak NSManagedObjectContext * _moc;
@@ -42,6 +44,14 @@ static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
 @end
 
 @implementation AMDataStore
+
++(AMDataStore*)sharedDataStore
+{
+    if (!_sharedDatastore) {
+        _sharedDatastore = [[AMDataStore alloc] init];
+    }
+    return _sharedDatastore;
+}
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)moc
 {
@@ -146,22 +156,40 @@ static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
 
 -(AMDArgumentList*)makeArgumentList
 {
-    AMDArgumentList * l = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArgumentLists
+    AMDArgumentList * list = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArgumentLists
                                                         inManagedObjectContext:self.moc];
-    
-    AMDArgument * a = [self makeArgumentOfType:KSMValueDouble];
-    a.index = @(0);
-    a.name.string = @"x";
-    a.name.attributedString = [[NSAttributedString alloc] initWithString:a.name.string];
-    [l addArgumentsObject:a];
-    return l;
+    return list;
+}
+
+/*! The inverse of deleteArgument */
+-(void)addArgumentOfType:(KSMValueType)mathType toArgumentList:(AMDArgumentList*)argumentList
+{
+    AMDArgument * argument = [self makeArgumentOfType:mathType];
+    [self addArgument:argument toArgumentList:argumentList];
+}
+
+/*! The inverse of addArgumentOfType:toArgumentList: */
+-(void)deleteArgument:(AMDArgument*)argument
+{
+    [[self moc] deleteObject:argument];
+}
+
+-(AMDArgument*)addArgument:(AMDArgument*)argument toArgumentList:(AMDArgumentList*)argumentList
+{
+    NSUInteger argumentIndex = argumentList.arguments.count;
+    argument.index = @(argumentIndex);
+    argument.name = [self makeAMDNameForType:AMInsertableTypeDummyVariable];
+    argument.name.string = [@"x" stringByAppendingString:[@(argumentIndex) stringValue]];
+    argument.name.attributedString = [[NSAttributedString alloc] initWithString:argument.name.string];
+    [argumentList addArgumentsObject:argument];
+    return argument;
 }
 
 -(AMDArgument*)makeArgumentOfType:(KSMValueType)mathType
 {
     AMDArgument * a = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArguments
                                                     inManagedObjectContext:self.moc];
-    a.name = [self makeAMDNameForType:AMInsertableTypeVariable];
+    a.name = [self makeAMDNameForType:AMInsertableTypeDummyVariable];
     switch (mathType) {
         case KSMValueInteger:
             a.mathValue = [KSMMathValue mathValueFromInteger:0];
@@ -257,32 +285,57 @@ static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
 -(AMDName*)makeAMDNameForType:(AMInsertableType)type
 {
     NSString * defaultName = nil;
-    AMDName * aName = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityNames
-                                                    inManagedObjectContext:self.moc];
+    AMDName * aName;
+    BOOL mustBeUnique;
+    
     switch (type) {
         case AMInsertableTypeConstant:
+        {
             defaultName = @"K";
+            mustBeUnique = YES;
             break;
+        }
         case AMInsertableTypeVariable:
+        {
             defaultName = @"x";
+            mustBeUnique = YES;
             break;
+        }
+        case AMInsertableTypeDummyVariable:
+        {
+            defaultName = @"x";
+            mustBeUnique = NO;
+            break;
+        }
         case AMInsertableTypeFunction:
+        {
             defaultName = @"f";
+            mustBeUnique = YES;
             break;
+        }
         default:
             // TODO: replace default with explicit cases
+            mustBeUnique = YES;
             NSAssert(NO, @"NO IMPLEMENTATION");
             break;
     }
-    aName.string = [self suggestUniqueNameStringBasedOn:defaultName];
-    aName.attributedString = [[NSAttributedString alloc] initWithString:aName.string attributes:nil];
+    
+    if (mustBeUnique) {
+        aName = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityNames
+                                              inManagedObjectContext:self.moc];
+        aName.string = [self suggestMustBeUniqueNameBasedOn:defaultName];
+        aName.attributedString = [[NSAttributedString alloc] initWithString:aName.string attributes:nil];
+    } else {
+        aName = [self fetchDummyVariableWithName:defaultName];
+    }
+    aName.mustBeUnique = @(mustBeUnique);
     return aName;
 }
 
--(NSString*)suggestUniqueNameStringBasedOn:(NSString*)string
+-(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string
 {
     NSString * try = [string copy];
-    NSArray * similarNames = [self fetchNamesLikeThis:string];
+    NSArray * similarNames = [self fetchMustBeUniqueNamesBeginningWith:string];
     BOOL isUnique = NO;
     NSUInteger i = 0;
     while (!isUnique) {
@@ -299,6 +352,19 @@ static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
     return try;
 }
 
+-(AMDName*)fetchDummyVariableWithName:(NSString*)name
+{
+    NSArray * allNames = [self fetchNames];
+    NSPredicate * predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(string like %@) AND (mustBeUnique == %@)", name, @(NO)];
+    NSArray * filtered = [allNames filteredArrayUsingPredicate:predicate];
+    if (filtered.count == 0) {
+        return nil;
+    } else {
+        return filtered[0];
+    }
+}
+
 -(NSArray*)fetchNames
 {
     NSManagedObjectContext * moc = self.moc;
@@ -311,11 +377,11 @@ static NSString * const kAMDEntityIndexedExpressions = @"AMDIndexedExpressions";
     return names;
 }
 
--(NSArray*)fetchNamesLikeThis:(NSString*)pattern
+-(NSArray*)fetchMustBeUniqueNamesBeginningWith:(NSString*)start
 {
     NSArray * allNames = [self fetchNames];
     NSPredicate * predicate;
-    predicate = [NSPredicate predicateWithFormat:@"(string like %@)", pattern];
+    predicate = [NSPredicate predicateWithFormat:@"(string beginsWith %@) AND (mustBeUnique == %@)", start,@(YES)];
     NSArray * result = [allNames filteredArrayUsingPredicate:predicate];
     return result;
 }

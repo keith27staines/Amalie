@@ -40,7 +40,7 @@
             _argumentList = [[KSMFunctionArgumentList alloc] init];
         }
         _returnType = returnType;
-        _name = name;
+        _name = [name copy];
     }
     return self;
 }

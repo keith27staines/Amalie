@@ -44,7 +44,8 @@
     </entity>
     <entity name="AMDNames" representedClassName="AMDName" syncable="YES">
         <attribute name="attributedString" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="string" attributeType="String" minValueString="1" defaultValueString="x" syncable="YES"/>
+        <attribute name="mustBeUnique" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="string" attributeType="String" minValueString="1" defaultValueString="x" indexed="YES" syncable="YES"/>
         <relationship name="arguments" toMany="YES" deletionRule="Deny" destinationEntity="AMDArguments" inverseName="name" inverseEntity="AMDArguments" syncable="YES"/>
         <relationship name="insertedObject" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDInsertedObjects" inverseName="name" inverseEntity="AMDInsertedObjects" syncable="YES"/>
     </entity>
@@ -54,14 +55,14 @@
         <attribute name="symbol" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AMDArgumentLists" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDArguments" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDExpressions" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDFunctionDefs" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDIndexedExpressions" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDInsertedObjects" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDIntervalDefs" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDNames" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="AMDVariableDefs" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDArgumentLists" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="AMDArguments" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="AMDExpressions" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="AMDFunctionDefs" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="AMDIndexedExpressions" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="AMDInsertedObjects" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="AMDIntervalDefs" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="AMDNames" positionX="-477" positionY="-0" width="128" height="118"/>
+        <element name="AMDVariableDefs" positionX="-333" positionY="-252" width="128" height="90"/>
     </elements>
 </model>

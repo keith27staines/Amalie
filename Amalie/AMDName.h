@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * string;
 @property (nonatomic, retain) NSSet *arguments;
 @property (nonatomic, retain) AMDInsertedObject *insertedObject;
+@property (nonatomic, retain) NSNumber * mustBeUnique;
 @end
 
 @interface AMDName (CoreDataGeneratedAccessors)

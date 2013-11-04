@@ -38,12 +38,12 @@ static NSUInteger const kAMIndexRHS;
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    
+
 }
 
 - (IBAction)nameAction:(AMNameView *)sender {
-    NSAttributedString * proposedName = sender.attributedStringValue;
-    if ( ! [self changeNameIfValid:proposedName error:nil] )
+    NSString * proposedName = [sender.attributedStringValue string];
+    if ( ! [self validatedProposedName:proposedName error:nil] )
         sender.attributedStringValue = self.attributedName;
 }
 
@@ -70,6 +70,7 @@ static NSUInteger const kAMIndexRHS;
     NSView * container = [equationView superview];
     AMNameView * name = [equationView nameView];
     [name sizeToFit];
+    [name setNeedsDisplay:YES];
     [name setUseQuotientBaselining:expressionView.requiresQuotientBaselining];
     
     // The sizes of the important nested and sibling views

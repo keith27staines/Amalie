@@ -61,6 +61,7 @@ extern NSString * const kAMMatrixKey;
 typedef NS_ENUM(NSInteger, AMInsertableType){
     AMInsertableTypeConstant,
     AMInsertableTypeVariable,
+    AMInsertableTypeDummyVariable,
     AMInsertableTypeExpression,
     AMInsertableTypeFunction,
     AMInsertableTypeEquation,

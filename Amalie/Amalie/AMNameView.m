@@ -23,16 +23,27 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        self.attributedStringValue = [[NSAttributedString alloc] initWithString:@"Name" attributes:nil];
-        self.allowsEditingTextAttributes = YES;
-        
+        self.stringValue = @"";
     }
     return self;
 }
 
+-(void)awakeFromNib
+{
+    [self.cell setWraps:NO];
+    [self.cell setAlignment:NSCenterTextAlignment];
+    [self.cell setLineBreakMode:NSLineBreakByClipping];
+}
+
 -(NSSize)intrinsicContentSize
 {
-    return [self.attributedStringValue size];
+    return [super intrinsicContentSize];
+}
+
+-(BOOL)textShouldEndEditing:(NSText *)textObject
+{
+    // Validation here
+    return YES;
 }
 
 -(CGFloat)baselineOffsetFromBottom

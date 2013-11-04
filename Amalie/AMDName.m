@@ -17,5 +17,6 @@
 @dynamic string;
 @dynamic arguments;
 @dynamic insertedObject;
+@dynamic mustBeUnique;
 
 @end

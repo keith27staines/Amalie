@@ -12,7 +12,7 @@
 
 #import "AMContentViewController.h"
 
-@interface AMFunctionContentViewController : AMContentViewController
+@interface AMFunctionContentViewController : AMContentViewController <NSTextFieldDelegate>
 {
     
     __weak NSTextField *_nameField;
@@ -26,8 +26,6 @@
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
 @property (strong) IBOutlet AMFunctionContentView *functionView;
-
-- (IBAction)nameAction:(AMNameView *)sender;
 
 
 @end

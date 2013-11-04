@@ -10,7 +10,6 @@
 @class AMDInsertedObject;
 @class NSManagedObjectContext;
 @class AMInsertableView;
-@class AMNameRules;
 @class AMAppController;
 @class AMPreferences;
 @class KSMWorksheet;
@@ -71,11 +70,19 @@
 
 /*!
  Changes the attributed name of the receiver if the proposed name satisfies the naming rules, including uniqueness.
- @Param proposedName The proposed attributed string to use as the new name.
- @Param error A pointer to an error object that is populated only if the proposal is refused.
+ @Param proposedName The proposed name.
+ @Param error A pointer to an error object that is populated only if the proposal is rejected.
  @Returns YES if the proposal is accepted, NO otherwise.
  */
+-(BOOL)validatedProposedName:(NSString*)proposedName error:(NSError**)error;
+
+/*! Change the receiver's name if the proposed name is valid and unique 
+ @Param proposedName The new name, subject to validity checks
+ @Param error An error object holding information about the problem if the validity checks fail
+ @Return YES if the change goes ahead, NO if the change is rejected
+ */
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
+
 
 /*!
  Returns the expression at the specified index. For example, if the receiver

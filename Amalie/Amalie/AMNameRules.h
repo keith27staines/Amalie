@@ -8,10 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
+#import "AMError.h"
+
+
+@class NSManagedObjectContext;
 
 @interface AMNameRules : NSObject
 
--(BOOL)checkName:(NSAttributedString*)proposedName forType:(AMInsertableType)type error:(NSError**)error;
+@property (weak) NSManagedObjectContext * moc;
+
++(AMNameRules *)sharedNameRules;
+
+-(BOOL)validateProposedName:(NSString*)proposedName forType:(AMInsertableType)type error:(NSError**)error;
 
 /*!
  suggestNameForType: generates a reasonable name for the specified type that is unique to the parent worksheet.

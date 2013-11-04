@@ -7,7 +7,6 @@
 //
 
 @class AMWorksheetView;
-@class AMNameRules;
 @class AMAppController;
 @class KSMWorksheet;
 @class AMKeyboardsAreaView;
@@ -66,11 +65,6 @@
  appController is required by various members of the receiver
  */
 @property (weak) IBOutlet AMAppController * appController;
-
-/*!
- nameRules is required by various members of the receiver
- */
-@property (strong, readonly) AMNameRules * nameRules;
 
 -(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction;
 - (IBAction)checkEditStatus:(id)sender;

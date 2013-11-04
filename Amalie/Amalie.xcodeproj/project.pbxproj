@@ -114,6 +114,7 @@
 		78BBB2FE17D10490006B8F07 /* KSMUserFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BBB2FC17D10490006B8F07 /* KSMUserFunction.m */; };
 		78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BBB30017D106C8006B8F07 /* KSMStandardFunction1v.m */; };
 		78BBB30217D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BBB30017D106C8006B8F07 /* KSMStandardFunction1v.m */; };
+		78BFE6341817C2E300D4ADB1 /* AMError.m in Sources */ = {isa = PBXBuildFile; fileRef = 78BFE6331817C2E300D4ADB1 /* AMError.m */; };
 		78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC75717AF843A00BDC8D7 /* AMGroupedView.m */; };
 		78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */; };
 		78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC76617B0F1F400BDC8D7 /* AMExpressionNodeView.m */; };
@@ -317,6 +318,8 @@
 		78BBB2FC17D10490006B8F07 /* KSMUserFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMUserFunction.m; sourceTree = "<group>"; };
 		78BBB2FF17D106C7006B8F07 /* KSMStandardFunction1v.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMStandardFunction1v.h; sourceTree = "<group>"; };
 		78BBB30017D106C8006B8F07 /* KSMStandardFunction1v.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMStandardFunction1v.m; sourceTree = "<group>"; };
+		78BFE6321817C2E300D4ADB1 /* AMError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMError.h; path = Amalie/AMError.h; sourceTree = "<group>"; };
+		78BFE6331817C2E300D4ADB1 /* AMError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMError.m; path = Amalie/AMError.m; sourceTree = "<group>"; };
 		78CDC75617AF843A00BDC8D7 /* AMGroupedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGroupedView.h; sourceTree = "<group>"; };
 		78CDC75717AF843A00BDC8D7 /* AMGroupedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGroupedView.m; sourceTree = "<group>"; };
 		78CDC75C17AFA30700BDC8D7 /* AMViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMViewHelper.h; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
 				78CDC75C17AFA30700BDC8D7 /* AMViewHelper.h */,
 				78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */,
+				78BFE6321817C2E300D4ADB1 /* AMError.h */,
+				78BFE6331817C2E300D4ADB1 /* AMError.m */,
 				781D17E917F046FD0008758D /* Core Data */,
 				787B3060178361BC001851C0 /* Images.xcassets */,
 				78CDC75F17AFA66000BDC8D7 /* Protocols */,
@@ -952,6 +957,7 @@
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
 				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
+				78BFE6341817C2E300D4ADB1 /* AMError.m in Sources */,
 				7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */,
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,

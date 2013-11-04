@@ -234,6 +234,11 @@ NSMutableDictionary * _trayDictionary;
         case AMInsertableTypeGraph2D:
             return kAMGraph2DKey;
             break;
+        case AMInsertableTypeDummyVariable:
+        {
+            [NSException raise:@"Dymmy variables should never be top-level objects" format:nil];
+            return nil;
+        }
     }
 }
 

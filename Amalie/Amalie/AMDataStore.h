@@ -18,6 +18,8 @@
 
 @property (weak, readwrite) NSManagedObjectContext * moc;
 
++(AMDataStore*)sharedDataStore;
+
 -(id)initWithManagedObjectContext:(NSManagedObjectContext*)moc;
 
 // Inserted objects
@@ -27,8 +29,8 @@
 
 // Names
 -(NSArray*)fetchNames;
--(NSArray*)fetchNamesLikeThis:(NSString*)pattern;
--(NSString*)suggestUniqueNameStringBasedOn:(NSString*)string;
+-(NSArray*)fetchMustBeUniqueNamesBeginningWith:(NSString*)start;
+-(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string;
 
 // Expressions
 -(AMDExpression *)fetchOrMakeExpressionMatching:(KSMExpression*)ksmExpression;

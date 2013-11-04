@@ -21,7 +21,6 @@
 #import "AMContentView.h"
 #import "AMInsertableView.h"
 #import "AMWorksheetController.h"
-#import "AMNameRules.h"
 #import "AMAppController.h"
 #import "AMPreferences.h"
 #import "AMTrayDatasource.h"
@@ -31,24 +30,25 @@
 #import "KSMExpression.h"
 
 // datamodel
-#import <CoreData/CoreData.h>
+//#import <CoreData/CoreData.h>
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMDIndexedExpression.h"
 #import "AMDExpression.h"
 #import "AMDName.h"
+#import "AMNameRules.h"
+#import "AMDataStore.h"
 
 
 @interface AMContentViewController ()
 {
-    AMDataStore                   * _dataStore;
     AMDInsertedObject             * _amdInsertedObject;
     __weak KSMWorksheet           * _mathSheet;
     __weak NSManagedObjectContext * _moc;
     NSMutableArray                * _expressions;
 }
 
-@property (readonly,strong) AMDataStore * dataStore;
+@property (readonly,weak) AMDataStore * dataStore;
 @property (readonly) NSArray * expressions;
 @property (readonly) AMInsertableType insertableType;
 @end
@@ -94,6 +94,11 @@
         {
             self = [[AMVariableContentViewController alloc] initWithNibName:nil
                                                                    bundle:nil];
+            break;
+        }
+        case AMInsertableTypeDummyVariable:
+        {
+            [NSException raise:@"Dymmy variables should never be top-level objects" format:nil];
             break;
         }
         case AMInsertableTypeExpression:
@@ -176,7 +181,8 @@
            worksheetController:worksheetController
                    contentType:insertableType
                groupParentView:groupParentView
-                           moc:moc amdInsertedObject:amdObject];
+                           moc:moc
+             amdInsertedObject:amdObject];
 }
 
 -(KSMWorksheet*)mathSheet
@@ -188,10 +194,7 @@
 
 -(AMDataStore*)dataStore
 {
-    if (!_dataStore) {
-        _dataStore = [[AMDataStore alloc] initWithManagedObjectContext:self.moc];
-    }
-    return _dataStore;
+    return [AMDataStore sharedDataStore];
 }
 
 -(id<AMDIndexedObject>)objectWithIndex:(NSUInteger)index fromSet:(NSSet*)set
@@ -266,8 +269,6 @@
     return newExpr;
 }
 
-
-
 -(KSMExpression*)expressionForSymbol:(NSString*)symbol
 {
     return [self.mathSheet expressionForSymbol:symbol];
@@ -279,7 +280,6 @@
 {
     NSLog(@"Warning... populateContent has not been overridden.");
 }
-
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView *)view
 {
@@ -308,10 +308,18 @@
     return self.amdInsertedObject.name.attributedString;
 }
 
--(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error
+-(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 {
-    // TODO: appropriate validation on name
-    return NO;
+    if ( ! [self validatedProposedName:proposedName.string error:error] ) return NO;
+    
+    self.amdInsertedObject.name.string = proposedName.string;
+    self.amdInsertedObject.name.attributedString = proposedName;
+    return YES;
+}
+
+-(BOOL)validatedProposedName:(NSString*)proposedName error:(NSError**)error
+{
+    return [[AMNameRules sharedNameRules] validateProposedName:proposedName forType:AMInsertableTypeFunction error:error];
 }
 
 -(AMPreferences*)preferenceController

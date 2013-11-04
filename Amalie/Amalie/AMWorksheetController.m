@@ -36,8 +36,6 @@
     NSMutableDictionary * _insertedRecords;
     NSMutableDictionary * _contentControllers;
     KSMWorksheet        * _mathSheet;
-    AMNameRules         * _nameRules;
-    AMDataStore         * _dataStore;
     NSEntityDescription * _amdInsertedObjectsEntity;
     AMInsertableView    * _selectedView;
 }
@@ -53,7 +51,8 @@
 /*! insertableViewDictionary is the dictionary of all AMInsertableView objects that are currently held in the document. The same data is also held in insertableViewArray */
 @property (readonly) NSMutableDictionary * insertableViewDictionary;
 
-@property (readonly) AMDataStore * dataStore;
+@property (readonly) AMDataStore * sharedDataStore;
+@property (readonly) AMNameRules * sharedNameRules;
 
 @property BOOL showKeyboardArea;
 @property BOOL showObjectsPanel;
@@ -62,6 +61,16 @@
 @implementation AMWorksheetController
 
 #pragma mark - Initializers and setup -
+
+-(AMDataStore *)sharedDataStore
+{
+    return [AMDataStore sharedDataStore];
+}
+
+-(AMNameRules *)sharedNameRules
+{
+    return [AMNameRules sharedNameRules];
+}
 
 - (id)init
 {
@@ -94,6 +103,9 @@
     AMKeyboardContainerView * keypadContainerView = (AMKeyboardContainerView *)[self.keyboardsViewController view];
     [self.keyboardsAreaView addSubview:keypadContainerView];
     [keypadContainerView setNeedsDisplay:YES];
+    
+    self.sharedDataStore.moc = self.managedObjectContext;
+    self.sharedNameRules.moc = self.managedObjectContext;
 }
 
 - (NSString *)windowNibName
@@ -132,7 +144,6 @@
 
 -(void)setupDataStructures
 {
-    _dataStore                  = [[AMDataStore alloc] initWithManagedObjectContext:self.managedObjectContext];
     _insertableViewArray        = [NSMutableArray array];
     _insertableViewDictionary   = [NSMutableDictionary dictionary];
     _contentControllers         = [NSMutableDictionary dictionary];
@@ -148,7 +159,7 @@
     
     [self.undoManager disableUndoRegistration];
     _layoutIsScheduled = YES; // prevent layout while we are setting up...
-    for (AMDInsertedObject * insertedObject in [self.dataStore fetchInsertedObjectsInDisplayOrder]) {
+    for (AMDInsertedObject * insertedObject in [self.sharedDataStore fetchInsertedObjectsInDisplayOrder]) {
         NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
                                   insertedObject.yPosition.floatValue,
                                   insertedObject.width.floatValue,
@@ -189,19 +200,14 @@
 
 #pragma mark - AMWorksheetViewDelegate -
 
--(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)view withOrigin:(NSPoint)origin
+-(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
 {
-    NSAssert(view, @"Cannot insert a nill view.");
-    if (!view) return;
+    NSAssert(insertableView, @"Cannot insert a nill view.");
+    if (!insertableView) return;
     
-    // Add the object to our list of inserted objects
-    [self insertView:view withOrigin:origin];
+    [insertableView setFrameOrigin:origin];
+    [self addInsertableView:insertableView];
     
-    // This will be the selected view now
-    [self insertableViewReceivedClick:view];
-    
-    // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
-    [self scheduleLayout];
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)insertableView
@@ -209,11 +215,30 @@
     [self deleteInsertableView:insertableView];
 }
 
+-(void)addInsertableView:(AMInsertableView*)insertableView
+{
+    [self.undoManager registerUndoWithTarget:self
+                                    selector:NSSelectorFromString(@"deleteInsertableView:")
+                                      object:insertableView];
+    // Add the object to our list of inserted objects
+    [self insertView:insertableView withOrigin:insertableView.frame.origin];
+    
+    // This will be the selected view now
+    [self insertableViewReceivedClick:insertableView];
+    
+    // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
+    [self scheduleLayout];
+}
+
 /*!
  deleteInsertableView: first delete the data content (by calling deleteContentForGroupID) and then removes the frame view (which is just the gui container for the content) from the worksheet's subview collection.
  */
 -(void)deleteInsertableView:(AMInsertableView*)insertableView
 {
+    [self.undoManager registerUndoWithTarget:self
+                                    selector:NSSelectorFromString(@"addInsertableView:")
+                                      object:insertableView];
+    
     // First we delete the content, then the frame around the content
     NSString * groupID = insertableView.groupID;
     [self deleteContentForGroupID:groupID];
@@ -249,7 +274,7 @@
 #pragma mark - AMInsertableViewDelegate -
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    AMDInsertedObject * amdInsertedObject = [self.dataStore amdInsertedObjectForInsertedView:view];
+    AMDInsertedObject * amdInsertedObject = [self.sharedDataStore amdInsertedObjectForInsertedView:view];
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:self.appController
                                                      worksheetController:self
@@ -355,7 +380,7 @@
     for (AMInsertableView * view in self.worksheetView.subviews) {
         
         NSString * groupID = view.groupID;
-        AMDInsertedObject * amdObject = [self.dataStore fetchInsertedObjectWithGroupID:groupID];
+        AMDInsertedObject * amdObject = [self.sharedDataStore fetchInsertedObjectWithGroupID:groupID];
         
         // Assign new values only if values have genuinely changed
         if (![amdObject.xPosition  isEqual: @(view.frame.origin.x)]) {
@@ -429,14 +454,6 @@
 -(NSString *)defaultDraftName
 {
     return @"Mathsheet";
-}
-
--(AMNameRules*)nameRules
-{
-    if (!_nameRules) {
-        _nameRules = [[AMNameRules alloc] init];
-    }
-    return _nameRules;
 }
 
 -(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow

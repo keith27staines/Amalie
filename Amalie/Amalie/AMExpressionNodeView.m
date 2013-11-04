@@ -14,7 +14,6 @@
 #import "AMQuotientBaselining.h"
 #import "AMOperatorView.h"
 #import "AMConstants.h"
-#import "AMExpressionNodeView.h"
 
 CGFloat const kAM_MINWIDTH  = 20.0f;
 CGFloat const kAM_MINHEIGHT = 20.0f;
@@ -818,7 +817,7 @@ typedef enum AMOrientation : NSUInteger {
             [closeToMiddleViews addObject:wideView];
         }
     }
-    // The arrary might hold more than one "best" view. If so, we arbitrarily choose the first, since this covers the case where there is only one best view.
+    // The array might hold more than one "best" view. If so, we arbitrarily choose the first, since this covers the case where there is only one best view.
     return closeToMiddleViews[0];
 }
 

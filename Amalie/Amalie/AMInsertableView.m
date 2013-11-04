@@ -90,8 +90,12 @@ static CABasicAnimation * animateOrigin;
         case AMInsertableTypeMatrix             : return kAMMatrixKey;
         case AMInsertableTypeMathematicalSet    : return kAMMathematicalSetKey;
         case AMInsertableTypeGraph2D            : return kAMGraph2DKey;
+        case AMInsertableTypeDummyVariable      :
+        {
+            [NSException raise:@"Dymmy variables should never be top-level objects" format:nil];
+            return nil;
+        }
     }
-    return nil;
 }
 
 -(BOOL)autoresizesSubviews
