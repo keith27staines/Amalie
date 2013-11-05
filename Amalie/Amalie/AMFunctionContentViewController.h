@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@class AMDFunctionDef;
 @class AMExpressionNodeView;
 @class AMFunctionContentView;
 @class AMNameView;
@@ -27,5 +28,11 @@
 
 @property (strong) IBOutlet AMFunctionContentView *functionView;
 
+@property (strong) IBOutlet NSPopover *editPopover;
 
+@property (strong, readonly) AMDFunctionDef * amdFunctionDef;
+
+- (IBAction)cancelPopover:(id)sender;
+- (IBAction)showPopover:(NSButton *)sender;
+- (IBAction)acceptEditPopover:(id)sender;
 @end

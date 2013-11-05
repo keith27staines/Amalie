@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMFunctionContentViewController">
             <connections>
-                <outlet property="equationView" destination="1" id="P4H-Za-vXj"/>
+                <outlet property="editPopover" destination="7OI-z7-ogY" id="yGL-Az-LMp"/>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="hjY-x2-kxt"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
                 <outlet property="functionView" destination="1" id="7YI-NG-buK"/>
@@ -30,7 +30,6 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <action selector="expressionEditedAction:" target="-2" id="cUV-I1-xdb"/>
                         <outlet property="nextKeyView" destination="YNe-VI-N9B" id="CFC-Uv-1cf"/>
                     </connections>
                 </textField>
@@ -45,10 +44,20 @@
                     <rect key="frame" x="20" y="51" width="74" height="59"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <connections>
-                        <action selector="nameEditedAction:" target="-2" id="uUV-JC-xB7"/>
                         <outlet property="nextKeyView" destination="iG3-a1-4HF" id="XMM-gr-6iJ"/>
                     </connections>
                 </customView>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="9R0-xP-hzU">
+                    <rect key="frame" x="14" y="2" width="39" height="38"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="round" bezelStyle="circular" imagePosition="above" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="7xD-ro-mkW">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="label"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showPopover:" target="-2" id="RC1-Oy-HlG"/>
+                    </connections>
+                </button>
             </subviews>
             <connections>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="7Qz-1c-dYZ"/>
@@ -56,5 +65,204 @@
                 <outlet property="nameView" destination="YNe-VI-N9B" id="4PS-cl-C79"/>
             </connections>
         </customView>
+        <viewController id="Dz2-JQ-4yb" userLabel="Edit Popover View Controller" customClass="AMFunctionEditorViewController">
+            <connections>
+                <outlet property="argumentTable" destination="joc-pc-pZT" id="A6s-Na-4dA"/>
+                <outlet property="functionContentViewController" destination="-2" id="rtM-fL-goX"/>
+                <outlet property="functionEditorView" destination="Vo6-z5-dbn" id="vSx-3Y-254"/>
+                <outlet property="view" destination="Vo6-z5-dbn" id="kFb-Jq-8Vw"/>
+            </connections>
+        </viewController>
+        <popover behavior="t" id="7OI-z7-ogY" userLabel="Edit Popover">
+            <connections>
+                <outlet property="contentViewController" destination="Dz2-JQ-4yb" id="Ga8-ax-ToU"/>
+                <outlet property="delegate" destination="Dz2-JQ-4yb" id="n71-7U-lcW"/>
+            </connections>
+        </popover>
+        <customView id="Vo6-z5-dbn">
+            <rect key="frame" x="0.0" y="0.0" width="344" height="381"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="YPW-cd-6og">
+                    <rect key="frame" x="18" y="344" width="310" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Define this function's arguments and return type" id="mvn-nq-gkY">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="VSw-uz-lCn">
+                    <rect key="frame" x="52" y="155" width="240" height="132"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" id="Lcp-RL-z8K">
+                        <rect key="frame" x="1" y="1" width="238" height="130"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" id="joc-pc-pZT">
+                                <rect key="frame" x="0.0" y="0.0" width="238" height="130"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="Main cell view" width="235" minWidth="40" maxWidth="1000" id="jSr-j3-PxT">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Argument name">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="u7O-PO-TcS">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <tableCellView identifier="Main cell view" id="E0b-sB-Bhl">
+                                                <rect key="frame" x="1" y="1" width="235" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="87h-cW-9Vo">
+                                                        <rect key="frame" x="0.0" y="3" width="70" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" usesSingleLineMode="YES" id="9zT-Ge-oAc">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="Dz2-JQ-4yb" id="s0K-tW-gqP"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <popUpButton verticalHuggingPriority="750" id="VWv-Uv-WpF">
+                                                        <rect key="frame" x="108" y="-3" width="125" height="26"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oVH-bb-oKb">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                            <menu key="menu" title="OtherViews" id="4bD-Kw-tdB">
+                                                                <items>
+                                                                    <menuItem title="Number" id="wFQ-fX-N4s"/>
+                                                                    <menuItem title="Vector" id="8bb-VJ-tzv"/>
+                                                                    <menuItem title="Matrix" id="O1I-tV-30D"/>
+                                                                </items>
+                                                            </menu>
+                                                        </popUpButtonCell>
+                                                    </popUpButton>
+                                                </subviews>
+                                                <connections>
+                                                    <outlet property="textField" destination="87h-cW-9Vo" id="sHQ-Wq-Erq"/>
+                                                </connections>
+                                            </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <outlet property="dataSource" destination="Dz2-JQ-4yb" id="OkU-CV-uEd"/>
+                                    <outlet property="delegate" destination="Dz2-JQ-4yb" id="oRh-aP-QbG"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="3Gm-5l-178">
+                        <rect key="frame" x="1" y="115" width="238" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="KMc-a1-FdW">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <popUpButton verticalHuggingPriority="750" id="7Nt-ox-xHf">
+                    <rect key="frame" x="162" y="90" width="126" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Number" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bPT-vG-Rvr" id="aWo-NH-44x">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <menu key="menu" title="OtherViews" id="yWq-n1-d5r">
+                            <items>
+                                <menuItem title="Number" state="on" id="bPT-vG-Rvr"/>
+                                <menuItem title="Vector" id="cUn-dV-WR9"/>
+                                <menuItem title="Matrix" id="NLY-ub-l1B"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="changeReturnType:" target="Dz2-JQ-4yb" id="7Li-Ft-EPG"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="TOD-aq-0fb">
+                    <rect key="frame" x="50" y="97" width="108" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Function returns" id="nPG-uT-c02">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button id="scA-1L-Ndb">
+                    <rect key="frame" x="52" y="135" width="19" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SY7-Um-wKL">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="addArgument:" target="Dz2-JQ-4yb" id="FHh-kx-smr"/>
+                    </connections>
+                </button>
+                <button id="cMN-yw-lpW">
+                    <rect key="frame" x="70" y="135" width="19" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TM4-09-InV">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="removeArgument:" target="Dz2-JQ-4yb" id="c5U-ks-0mN"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="sAE-Qt-qve">
+                    <rect key="frame" x="200" y="19" width="92" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="Finished" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hbU-G0-n0f">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="acceptEditPopover:" target="-2" id="57y-q2-1rh"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="pen-3c-ZQU">
+                    <rect key="frame" x="52" y="19" width="82" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundRect" title="Cancel" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gdc-vj-LDA">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelPopover:" target="-2" id="cgX-cX-BBW"/>
+                    </connections>
+                </button>
+            </subviews>
+        </customView>
+        <popUpButtonCell type="bevel" title="Pop Up" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="bezel" imageScaling="proportionallyDown" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="R9J-l6-CRn" id="QmM-ja-PvD">
+            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+            <font key="font" metaFont="smallSystem"/>
+            <menu key="menu" title="OtherViews" id="Bdd-IP-Nja">
+                <items>
+                    <menuItem title="Pop Up" state="on" id="R9J-l6-CRn"/>
+                </items>
+            </menu>
+        </popUpButtonCell>
     </objects>
+    <resources>
+        <image name="NSAddTemplate" width="8" height="8"/>
+        <image name="NSRemoveTemplate" width="8" height="8"/>
+    </resources>
 </document>

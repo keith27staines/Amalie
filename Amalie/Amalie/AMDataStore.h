@@ -11,8 +11,11 @@
 @class AMDInsertedObject;
 @class AMInsertableView;
 @class KSMExpression;
+@class AMDArgumentList;
+@class AMDArgument;
 
 #import <Foundation/Foundation.h>
+#import "KSMMathValue.h"
 
 @interface AMDataStore : NSObject
 
@@ -38,5 +41,9 @@
 -(AMDExpression*)fetchExpressionWithOriginalString:(NSString*)originalString;
 
 // Functions
+
+// Argument List
+-(AMDArgument*)addArgumentOfType:(KSMValueType)mathType toArgumentList:(AMDArgumentList*)argumentList;
+-(void)deleteArgument:(AMDArgument*)argument;
 
 @end

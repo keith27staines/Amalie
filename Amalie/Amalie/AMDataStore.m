@@ -157,20 +157,23 @@ static AMDataStore * _sharedDatastore;
 -(AMDArgumentList*)makeArgumentList
 {
     AMDArgumentList * list = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityArgumentLists
-                                                        inManagedObjectContext:self.moc];
+                                                           inManagedObjectContext:self.moc];
     return list;
 }
 
 /*! The inverse of deleteArgument */
--(void)addArgumentOfType:(KSMValueType)mathType toArgumentList:(AMDArgumentList*)argumentList
+-(AMDArgument*)addArgumentOfType:(KSMValueType)mathType toArgumentList:(AMDArgumentList*)argumentList
 {
     AMDArgument * argument = [self makeArgumentOfType:mathType];
     [self addArgument:argument toArgumentList:argumentList];
+    return argument;
 }
 
 /*! The inverse of addArgumentOfType:toArgumentList: */
 -(void)deleteArgument:(AMDArgument*)argument
 {
+    AMDArgumentList * list = argument.argumentList;
+    [list removeArgumentsObject:argument];
     [[self moc] deleteObject:argument];
 }
 
@@ -320,14 +323,17 @@ static AMDataStore * _sharedDatastore;
             break;
     }
     
-    if (mustBeUnique) {
+    if (!mustBeUnique) {
+        aName = [self fetchDummyVariableWithName:defaultName];
+    }
+    
+    if (!aName) {
         aName = [NSEntityDescription insertNewObjectForEntityForName:kAMDEntityNames
                                               inManagedObjectContext:self.moc];
         aName.string = [self suggestMustBeUniqueNameBasedOn:defaultName];
         aName.attributedString = [[NSAttributedString alloc] initWithString:aName.string attributes:nil];
-    } else {
-        aName = [self fetchDummyVariableWithName:defaultName];
     }
+    
     aName.mustBeUnique = @(mustBeUnique);
     return aName;
 }

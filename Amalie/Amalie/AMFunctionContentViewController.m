@@ -21,6 +21,7 @@
 #import "AMPreferences.h"
 #import "AMWorksheetController.h"
 #import "AMNameView.h"
+#import "AMFunctionEditorViewController.h"
 
 // core data generated objects
 #import "AMDInsertedObject.h"
@@ -36,7 +37,6 @@ static NSUInteger const kAMIndexRHS;
 {
 
 }
-@property (readonly) AMDFunctionDef * amdFunctionDef;
 
 @end
 
@@ -272,5 +272,21 @@ static NSUInteger const kAMIndexRHS;
     [self.moc deleteObject:self.amdFunctionDef];
 
 }
+
+- (IBAction)showPopover:(NSButton *)sender {
+    [self.editPopover showRelativeToRect:sender.frame ofView:self.functionView preferredEdge:NSMaxYEdge];
+    AMFunctionEditorViewController * vc = ((AMFunctionEditorViewController*)self.editPopover.contentViewController);
+    self.editPopover.delegate = vc;
+}
+
+- (IBAction)cancelPopover:(NSButton *)sender {
+    [self.editPopover close];
+    ((AMFunctionEditorViewController*)self.editPopover.contentViewController).popoverShowing = YES;
+}
+
+-(void)acceptEditPopover:(id)sender {
+    ((AMFunctionEditorViewController*)self.editPopover.contentViewController).popoverShowing = YES;
+}
+
 
 @end
