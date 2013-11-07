@@ -104,6 +104,12 @@
     AMDArgument * argument = [self.argumentList argumentAtIndex:row];
     NSAssert(argument, @"argument in list is nil");
     NSTableCellView * view = [tableView makeViewWithIdentifier:@"Main cell view" owner:nil];
+    [self populateRowView:view withArgument:argument];
+    return view;
+}
+
+-(void)populateRowView:(NSTableCellView*)view withArgument:(AMDArgument*)argument
+{
     view.textField.stringValue = argument.name.string;
     
     SEL selector = NSSelectorFromString(@"controlTextDidChange:");
@@ -111,75 +117,42 @@
     if (![self.observedViews containsObject:view]) {
         [center addObserver:self selector:selector name:NSControlTextDidChangeNotification object:view.textField];
     }
-    
-    return view;
 }
 
 - (IBAction)addArgument:(NSButton *)sender {
-    // If a row is selected, we insert beneath that, otherwise at the end
     NSInteger selectedRow = self.argumentTable.selectedRow;
-    if (selectedRow < 0) selectedRow = self.argumentList.arguments.count;
     
-    [[self undoManager] beginUndoGrouping];
-    
-    // Work out which arguments will need updated indexes once the insert has happened
-    NSMutableArray * argumentsToReIndex = [NSMutableArray array];
-    AMDArgument * argument;
-    for (NSInteger i = selectedRow; i < self.argumentList.arguments.count; i++) {
-        [argumentsToReIndex addObject:[self.argumentList argumentAtIndex:i]];
+    // Update datastore. If a row is selected (ie >= 0), we insert beneath that, otherwise at the end.
+    if (selectedRow >=0) selectedRow++;
+    AMDArgument * argument = [self.argumentList addArgumentAtIndex:selectedRow];
+    if ( argument ) {
+        
+        selectedRow = [argument.index integerValue];
+
+        // Keep the displayed table in sync
+        [self.argumentTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
+        
+        NSTableCellView * view = [self.argumentTable viewAtColumn:0 row:selectedRow makeIfNecessary:NO];
+        [self populateRowView:view withArgument:argument];
+
+        // Make sure new row is visible
+        [self.argumentTable scrollRowToVisible:selectedRow];
+        
+        [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
     }
-    
-    // Add a new argument to the datastore
-    argument = [[self sharedDataStore] addArgumentOfType:KSMValueDouble toArgumentList:self.argumentList];
-    
-    // give the argument the right index
-    argument.index = @(selectedRow);
-    
-    // give it a default name to match the index (+1)
-    argument.name.string = [[argument.name.string KSMfirstCharacter] stringByAppendingString:[@(selectedRow+1) stringValue]];
-    
-    // Keep the displayed table in sync
-    [self.argumentTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
-    
-    // Make sure new row is visible
-    [self.argumentTable scrollRowToVisible:selectedRow];
-    
-    // Update the indexes of any arguments that have been downshifted by the insertion
-    for (AMDArgument * argument in argumentsToReIndex) {
-        argument.index =  @(argument.index.integerValue + 1);
-    }
-    
-    [[self undoManager] endUndoGrouping];
 }
 
 - (IBAction)removeArgument:(NSButton *)sender {
-
-    // Quick exit if no row is selected - we aren't just going to delete a random one!
     NSInteger selectedRow = self.argumentTable.selectedRow;
+    
+    // Quick exit if no row is selected - we aren't just going to delete a random one!
     if (selectedRow < 0) return;
 
-    [[self undoManager] beginUndoGrouping];
-    
-    // Work out which arguments will need revised indexes
-    NSMutableArray * argumentsToReIndex = [NSMutableArray array];
-    AMDArgument * argument;
-    for (NSInteger i = selectedRow + 1; i < self.argumentList.arguments.count; i++) {
-        [argumentsToReIndex addObject:[self.argumentList argumentAtIndex:i]];
+    if ([self.argumentList removeArgumentAtIndex:selectedRow]) {
+        // Keep the displayed table in sync with the datastore
+        [self.argumentTable removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
     }
-    
-    // delete the unwanted argument from the datastore
-    argument = [self.argumentList argumentAtIndex:selectedRow];
-    [[self sharedDataStore] deleteArgument:argument];
-
-    // Keep the displayed table in sync with the datastore
-    [self.argumentTable removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
-
-    // revise the indexes of the arguments beyond the one just deleted
-    for (AMDArgument * argument in argumentsToReIndex) {
-        argument.index = @(argument.index.integerValue - 1);
-    }
-    
-    [[self undoManager] endUndoGrouping];
+    [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
 }
 
 -(NSUndoManager*)undoManager

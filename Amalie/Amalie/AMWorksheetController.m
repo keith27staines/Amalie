@@ -17,7 +17,7 @@
 #import "KSMMathValue.h"
 #import "AMContentView.h"
 #import "AMNameRules.h"
-#import "AMDInsertedObject.h"
+#import "AMDInsertedObject+Methods.h"
 #import "AMGroupedView.h"
 #import "KSMExpression.h"
 #import "AMDataStore.h"
@@ -159,7 +159,7 @@
     
     [self.undoManager disableUndoRegistration];
     _layoutIsScheduled = YES; // prevent layout while we are setting up...
-    for (AMDInsertedObject * insertedObject in [self.sharedDataStore fetchInsertedObjectsInDisplayOrder]) {
+    for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
         NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
                                   insertedObject.yPosition.floatValue,
                                   insertedObject.width.floatValue,
@@ -274,7 +274,7 @@
 #pragma mark - AMInsertableViewDelegate -
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    AMDInsertedObject * amdInsertedObject = [self.sharedDataStore amdInsertedObjectForInsertedView:view];
+    AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view];
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:self.appController
                                                      worksheetController:self
@@ -380,7 +380,7 @@
     for (AMInsertableView * view in self.worksheetView.subviews) {
         
         NSString * groupID = view.groupID;
-        AMDInsertedObject * amdObject = [self.sharedDataStore fetchInsertedObjectWithGroupID:groupID];
+        AMDInsertedObject * amdObject = [AMDInsertedObject fetchInsertedObjectWithGroupID:groupID];
         
         // Assign new values only if values have genuinely changed
         if (![amdObject.xPosition  isEqual: @(view.frame.origin.x)]) {

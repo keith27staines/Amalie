@@ -8,7 +8,6 @@
 
 #import "AMDIntervalDef.h"
 
-
 @implementation AMDIntervalDef
 
 @dynamic endMathValue;

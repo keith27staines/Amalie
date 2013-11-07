@@ -12,6 +12,10 @@
 
 @interface AMDArgumentList (Methods)
 
++(AMDArgumentList*)makeArgumentListUsing:(NSManagedObjectContext*)moc;
+
 -(AMDArgument*)argumentAtIndex:(NSUInteger)index;
+-(AMDArgument*)addArgumentAtIndex:(NSInteger)index;
+-(BOOL)removeArgumentAtIndex:(NSUInteger)index;
 
 @end

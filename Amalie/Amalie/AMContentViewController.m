@@ -34,8 +34,8 @@
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMDIndexedExpression.h"
-#import "AMDExpression.h"
-#import "AMDName.h"
+#import "AMDExpression+Methods.h"
+#import "AMDName+Methods.h"
 #import "AMNameRules.h"
 #import "AMDataStore.h"
 
@@ -262,7 +262,7 @@
     _expressions[index] = newExpr;
     
     // Now we need to keep the underlying datastore in step...
-    AMDExpression * amdNew = [self.dataStore fetchOrMakeExpressionMatching:newExpr];
+    AMDExpression * amdNew = [AMDExpression fetchOrMakeExpressionMatching:newExpr];
     AMDIndexedExpression * iexpr = [self objectWithIndex:index fromSet:self.amdInsertedObject.indexedExpressions];
     iexpr.expression = amdNew;
     

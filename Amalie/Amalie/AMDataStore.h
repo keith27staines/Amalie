@@ -25,25 +25,8 @@
 
 -(id)initWithManagedObjectContext:(NSManagedObjectContext*)moc;
 
-// Inserted objects
--(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view;
--(AMDInsertedObject*)fetchInsertedObjectWithGroupID:(NSString * )groupID;
--(NSArray*)fetchInsertedObjectsInDisplayOrder;
-
-// Names
--(NSArray*)fetchNames;
--(NSArray*)fetchMustBeUniqueNamesBeginningWith:(NSString*)start;
--(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string;
-
-// Expressions
--(AMDExpression *)fetchOrMakeExpressionMatching:(KSMExpression*)ksmExpression;
--(AMDExpression*)fetchExpressionWithSymbol:(NSString*)symbol;
--(AMDExpression*)fetchExpressionWithOriginalString:(NSString*)originalString;
-
-// Functions
-
-// Argument List
--(AMDArgument*)addArgumentOfType:(KSMValueType)mathType toArgumentList:(AMDArgumentList*)argumentList;
--(void)deleteArgument:(AMDArgument*)argument;
+-(NSArray*)fetchObjectsFromEntityWithName:(NSString*)entityName
+                      withSortDescriptors:(NSArray*)sortDescriptors
+                                predicate:(NSPredicate*)predicate;
 
 @end

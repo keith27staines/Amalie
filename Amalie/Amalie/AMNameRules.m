@@ -8,6 +8,7 @@
 
 #import "AMNameRules.h"
 #import "AMDataStore.h"
+#import "AMDName+Methods.h"
 #import "NSString+KSMMath.h"
 
 static AMNameRules * _sharedNameRules;
@@ -60,9 +61,7 @@ static AMNameRules * _sharedNameRules;
 
 -(BOOL)nameIsUnique:(NSString*)name error:(NSError**)error
 {
-
-    AMDataStore * dataStore = [AMDataStore sharedDataStore];
-    NSArray * amdNames = [dataStore fetchNames];
+    NSArray * amdNames = [AMDName fetchNames];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"string == %@",name];
     NSArray * filteredNames = [amdNames filteredArrayUsingPredicate:predicate];
     
