@@ -7,6 +7,7 @@
 //
 
 @class AMFunctionContentViewController;
+@class AMArgumentListViewController;
 
 #import <Cocoa/Cocoa.h>
 
@@ -22,6 +23,8 @@
 @property (weak) IBOutlet NSTableView *argumentTable;
 
 @property (weak) IBOutlet AMFunctionContentViewController * functionContentViewController;
+
+@property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
 
 @property (weak) IBOutlet NSView *functionEditorView;
 

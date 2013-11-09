@@ -84,6 +84,9 @@
 		78962FE3182C0A990066BEE9 /* AMDIndexedExpression+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FE2182C0A990066BEE9 /* AMDIndexedExpression+Methods.m */; };
 		78962FE6182C0BB00066BEE9 /* AMDInsertedObject+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FE5182C0BB00066BEE9 /* AMDInsertedObject+Methods.m */; };
 		78962FE9182C0F210066BEE9 /* AMDFunctionDef+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FE8182C0F210066BEE9 /* AMDFunctionDef+Methods.m */; };
+		78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FEB182CEFD90066BEE9 /* AMArgumentListViewController.m */; };
+		78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78962FEC182CEFD90066BEE9 /* AMArgumentListView.xib */; };
+		78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FF1182CF0CC0066BEE9 /* AMArgumentListView.m */; };
 		7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */; };
 		7899B2D417ACF596008BDB75 /* KSMReferenceCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */; };
 		7899B2D817AD0DB9008BDB75 /* AMConstantContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899B2D617AD0DB9008BDB75 /* AMConstantContentViewController.m */; };
@@ -284,6 +287,11 @@
 		78962FE5182C0BB00066BEE9 /* AMDInsertedObject+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMDInsertedObject+Methods.m"; sourceTree = "<group>"; };
 		78962FE7182C0F210066BEE9 /* AMDFunctionDef+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMDFunctionDef+Methods.h"; sourceTree = "<group>"; };
 		78962FE8182C0F210066BEE9 /* AMDFunctionDef+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMDFunctionDef+Methods.m"; sourceTree = "<group>"; };
+		78962FEA182CEFD90066BEE9 /* AMArgumentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentListViewController.h; sourceTree = "<group>"; };
+		78962FEB182CEFD90066BEE9 /* AMArgumentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentListViewController.m; sourceTree = "<group>"; };
+		78962FEC182CEFD90066BEE9 /* AMArgumentListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMArgumentListView.xib; sourceTree = "<group>"; };
+		78962FF0182CF0CC0066BEE9 /* AMArgumentListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentListView.h; sourceTree = "<group>"; };
+		78962FF1182CF0CC0066BEE9 /* AMArgumentListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentListView.m; sourceTree = "<group>"; };
 		7899B2D117ACF596008BDB75 /* KSMReferenceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMReferenceCounter.h; sourceTree = "<group>"; };
 		7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMReferenceCounter.m; sourceTree = "<group>"; };
 		7899B2D517AD0DB9008BDB75 /* AMConstantContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstantContentViewController.h; sourceTree = "<group>"; };
@@ -773,6 +781,18 @@
 			name = "Toolbox views";
 			sourceTree = "<group>";
 		};
+		78962FEF182CEFE50066BEE9 /* ArgumentList */ = {
+			isa = PBXGroup;
+			children = (
+				78962FEC182CEFD90066BEE9 /* AMArgumentListView.xib */,
+				78962FF0182CF0CC0066BEE9 /* AMArgumentListView.h */,
+				78962FF1182CF0CC0066BEE9 /* AMArgumentListView.m */,
+				78962FEA182CEFD90066BEE9 /* AMArgumentListViewController.h */,
+				78962FEB182CEFD90066BEE9 /* AMArgumentListViewController.m */,
+			);
+			name = ArgumentList;
+			sourceTree = "<group>";
+		};
 		7899B2F817AD3829008BDB75 /* Content Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,6 +907,7 @@
 				78B205CA17D5DC1D0059773A /* AMFunctionContentView.m */,
 				78E477001827A52200DEB5FB /* AMFunctionEditorViewController.h */,
 				78E477011827A52200DEB5FB /* AMFunctionEditorViewController.m */,
+				78962FEF182CEFE50066BEE9 /* ArgumentList */,
 			);
 			name = "Function Content";
 			sourceTree = "<group>";
@@ -972,6 +993,7 @@
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
 				7899B2DE17AD0DFC008BDB75 /* AMVariableContentView.xib in Resources */,
 				7899B2E317AD0E16008BDB75 /* AMEquationContentView.xib in Resources */,
+				78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */,
 				78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */,
 				787B304D178361BC001851C0 /* InfoPlist.strings in Resources */,
 				7899B2D917AD0DB9008BDB75 /* AMConstantContentView.xib in Resources */,
@@ -1073,6 +1095,7 @@
 				787B3097178364B8001851C0 /* KSMExpression.m in Sources */,
 				78962FDA182BD7E00066BEE9 /* AMDName+Methods.m in Sources */,
 				785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */,
+				78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */,
 				7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */,
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,
@@ -1085,6 +1108,7 @@
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
 				78E477021827A52200DEB5FB /* AMFunctionEditorViewController.m in Sources */,
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,
+				78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				78E477061827F28D00DEB5FB /* AMDArgumentList+Methods.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,

@@ -16,6 +16,8 @@
 #import "KSMMathValue.h"
 #import "AMFunctionContentViewController.h"
 #import "NSString+KSMMath.h"
+#import "AMArgumentListViewController.h"
+#import "AMArgumentListView.h"
 
 @interface AMFunctionEditorViewController ()
 {
@@ -41,11 +43,25 @@
 
 -(void)awakeFromNib
 {
+    self.argumentListViewController.argumentList = self.argumentList;
+    AMArgumentListView * argumentListView = (AMArgumentListView *)[self.argumentListViewController view];
+    argumentListView.delegate = self.argumentListViewController;
+    [self.functionEditorView addSubview:argumentListView];
+    NSDictionary * controls = @{@"argView": argumentListView, @"argTable" : self.argumentTable};
+    NSArray * constraints;
+    
+    constraints =  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[argView]-25.0-[argTable]"
+                                                                     options:NSLayoutFormatAlignAllLeft
+                                                                     metrics:nil
+                                                                       views:controls];
 
+    [self.view addConstraints:constraints];
+    
 }
 
 -(void)reloadData
 {
+    self.argumentListViewController.argumentList = self.argumentList;
     [self.argumentTable reloadData];
 }
 
@@ -90,6 +106,8 @@
     NSInteger selectedRow = self.argumentTable.selectedRow;
     AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
     argument.name.string = ((NSTextField*)obj.object).stringValue;
+    argument.name.attributedString = [[NSAttributedString alloc] initWithString:argument.name.string attributes:nil];
+    self.argumentListViewController.argumentList = self.argumentList;
     NSLog(@"Text changed");
 }
 
@@ -103,8 +121,13 @@
 {
     AMDArgument * argument = [self.argumentList argumentAtIndex:row];
     NSAssert(argument, @"argument in list is nil");
-    NSTableCellView * view = [tableView makeViewWithIdentifier:@"Main cell view" owner:nil];
-    [self populateRowView:view withArgument:argument];
+    NSTableCellView * view = nil;
+    if ( [tableColumn.identifier isEqualToString:@"NameColumn"] ) {
+        view = [tableView makeViewWithIdentifier:@"NameColumnView" owner:self];
+        [self populateRowView:view withArgument:argument];
+    } else if ([tableColumn.identifier isEqualToString:@"TypeColumn"] ) {
+        view = [tableView makeViewWithIdentifier:@"TypeColumnView" owner:self];
+    }
     return view;
 }
 
@@ -139,6 +162,9 @@
         [self.argumentTable scrollRowToVisible:selectedRow];
         
         [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+        
+        self.argumentListViewController.argumentList = self.argumentList;
+
     }
 }
 
@@ -153,6 +179,9 @@
         [self.argumentTable removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
     }
     [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+    
+    self.argumentListViewController.argumentList = self.argumentList;
+
 }
 
 -(NSUndoManager*)undoManager

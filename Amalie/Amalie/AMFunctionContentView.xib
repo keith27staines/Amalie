@@ -67,6 +67,7 @@
         </customView>
         <viewController id="Dz2-JQ-4yb" userLabel="Edit Popover View Controller" customClass="AMFunctionEditorViewController">
             <connections>
+                <outlet property="argumentListViewController" destination="Ph3-63-S9K" id="lBV-VL-ykW"/>
                 <outlet property="argumentTable" destination="joc-pc-pZT" id="A6s-Na-4dA"/>
                 <outlet property="functionContentViewController" destination="-2" id="rtM-fL-goX"/>
                 <outlet property="functionEditorView" destination="Vo6-z5-dbn" id="vSx-3Y-254"/>
@@ -80,33 +81,34 @@
             </connections>
         </popover>
         <customView id="Vo6-z5-dbn">
-            <rect key="frame" x="0.0" y="0.0" width="344" height="381"/>
+            <rect key="frame" x="0.0" y="0.0" width="369" height="381"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="YPW-cd-6og">
-                    <rect key="frame" x="18" y="344" width="310" height="17"/>
+                    <rect key="frame" x="18" y="344" width="241" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Define this function's arguments and return type" id="mvn-nq-gkY">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Function's arguments and return type" id="mvn-nq-gkY">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="VSw-uz-lCn">
-                    <rect key="frame" x="52" y="155" width="240" height="132"/>
+                    <rect key="frame" x="20" y="165" width="329" height="122"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="Lcp-RL-z8K">
-                        <rect key="frame" x="1" y="1" width="238" height="130"/>
+                        <rect key="frame" x="1" y="18" width="327" height="103"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" rowSizeStyle="automatic" viewBased="YES" id="joc-pc-pZT">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="130"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" rowSizeStyle="automatic" headerView="jze-Dq-jUv" viewBased="YES" id="joc-pc-pZT">
+                                <rect key="frame" x="0.0" y="0.0" width="327" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="Main cell view" width="235" minWidth="40" maxWidth="1000" id="jSr-j3-PxT">
+                                    <tableColumn identifier="NameColumn" width="154.796875" minWidth="40" maxWidth="1000" id="jSr-j3-PxT">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Argument name">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -119,12 +121,12 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="Main cell view" id="E0b-sB-Bhl">
-                                                <rect key="frame" x="1" y="1" width="235" height="22"/>
+                                            <tableCellView identifier="NameColumnView" id="E0b-sB-Bhl">
+                                                <rect key="frame" x="1" y="1" width="155" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="87h-cW-9Vo">
-                                                        <rect key="frame" x="0.0" y="3" width="70" height="17"/>
+                                                        <rect key="frame" x="0.0" y="3" width="148" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" usesSingleLineMode="YES" id="9zT-Ge-oAc">
                                                             <font key="font" metaFont="system"/>
@@ -135,26 +137,41 @@
                                                             <outlet property="delegate" destination="Dz2-JQ-4yb" id="s0K-tW-gqP"/>
                                                         </connections>
                                                     </textField>
-                                                    <popUpButton verticalHuggingPriority="750" id="VWv-Uv-WpF">
-                                                        <rect key="frame" x="108" y="-3" width="125" height="26"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oVH-bb-oKb">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                            <menu key="menu" title="OtherViews" id="4bD-Kw-tdB">
-                                                                <items>
-                                                                    <menuItem title="Number" id="wFQ-fX-N4s"/>
-                                                                    <menuItem title="Vector" id="8bb-VJ-tzv"/>
-                                                                    <menuItem title="Matrix" id="O1I-tV-30D"/>
-                                                                </items>
-                                                            </menu>
-                                                        </popUpButtonCell>
-                                                    </popUpButton>
                                                 </subviews>
                                                 <connections>
                                                     <outlet property="textField" destination="87h-cW-9Vo" id="sHQ-Wq-Erq"/>
                                                 </connections>
                                             </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                    <tableColumn identifier="TypeColumn" width="166" minWidth="10" maxWidth="3.4028234663852886e+38" id="njo-oh-TgV">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Argument type">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="ryd-At-sho">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <popUpButton identifier="TypeColumnView" id="eHA-QI-fc9">
+                                                <rect key="frame" x="159" y="1" width="166" height="18"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <popUpButtonCell key="cell" type="square" title="Number" bezelStyle="shadowlessSquare" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="50R-pb-mOL" id="wif-ME-EEW">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                    <menu key="menu" title="OtherViews" id="oJ0-7j-zP6">
+                                                        <items>
+                                                            <menuItem title="Number" state="on" id="50R-pb-mOL"/>
+                                                            <menuItem title="Vector" id="JQ6-0K-IPM"/>
+                                                            <menuItem title="Matrix" id="0Ae-Hs-PKp"/>
+                                                        </items>
+                                                    </menu>
+                                                </popUpButtonCell>
+                                            </popUpButton>
                                         </prototypeCellViews>
                                     </tableColumn>
                                 </tableColumns>
@@ -167,20 +184,24 @@
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="3Gm-5l-178">
-                        <rect key="frame" x="1" y="115" width="238" height="16"/>
+                        <rect key="frame" x="1" y="105" width="238" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" id="KMc-a1-FdW">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
+                    <tableHeaderView key="headerView" id="jze-Dq-jUv">
+                        <rect key="frame" x="0.0" y="0.0" width="327" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
                 </scrollView>
                 <popUpButton verticalHuggingPriority="750" id="7Nt-ox-xHf">
-                    <rect key="frame" x="162" y="90" width="126" height="26"/>
+                    <rect key="frame" x="171" y="95" width="119" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Number" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bPT-vG-Rvr" id="aWo-NH-44x">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                    <popUpButtonCell key="cell" type="roundRect" title="Number" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="bPT-vG-Rvr" id="aWo-NH-44x">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <menu key="menu" title="OtherViews" id="yWq-n1-d5r">
                             <items>
                                 <menuItem title="Number" state="on" id="bPT-vG-Rvr"/>
@@ -194,16 +215,16 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="TOD-aq-0fb">
-                    <rect key="frame" x="50" y="97" width="108" height="17"/>
+                    <rect key="frame" x="18" y="97" width="151" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Function returns" id="nPG-uT-c02">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="This function returns a:" id="nPG-uT-c02">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button id="scA-1L-Ndb">
-                    <rect key="frame" x="52" y="135" width="19" height="21"/>
+                    <rect key="frame" x="20" y="141" width="19" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SY7-Um-wKL">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -214,7 +235,7 @@
                     </connections>
                 </button>
                 <button id="cMN-yw-lpW">
-                    <rect key="frame" x="70" y="135" width="19" height="21"/>
+                    <rect key="frame" x="38" y="141" width="19" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TM4-09-InV">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -225,7 +246,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="sAE-Qt-qve">
-                    <rect key="frame" x="200" y="19" width="92" height="19"/>
+                    <rect key="frame" x="257" y="19" width="92" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Finished" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hbU-G0-n0f">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -236,7 +257,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="pen-3c-ZQU">
-                    <rect key="frame" x="52" y="19" width="82" height="19"/>
+                    <rect key="frame" x="20" y="19" width="82" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Cancel" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gdc-vj-LDA">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -260,6 +281,7 @@ Gw
                 </items>
             </menu>
         </popUpButtonCell>
+        <viewController id="Ph3-63-S9K" customClass="AMArgumentListViewController"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>
