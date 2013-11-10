@@ -15,6 +15,8 @@
 }
 
 @property (readwrite) NSMutableArray * mutableData;
+@property (readwrite) NSUInteger rows;
+@property (readwrite) NSUInteger columns;
 
 @end
 
@@ -300,12 +302,17 @@
 #pragma mark - NSCoding protocol -
 -(void)encodeWithCoder:(NSCoder *)coder
 {
+    [coder encodeInteger:self.rows forKey:@"rowCount"];
+    [coder encodeInteger:self.columns forKey:@"columnCount"];
     [coder encodeObject:self.mutableData forKey:@"mutableData"];
 }
 
 -(id)initWithCoder:(NSCoder *)decoder
 {
+    self.rows = [decoder decodeIntegerForKey:@"rowCount"];
+    self.columns = [decoder decodeIntegerForKey:@"columnCount"];
     self.mutableData = [decoder decodeObjectForKey:@"mutableData"];
+    NSAssert(self.rows * self.columns == self.mutableData.count, @"Matrix rows * columns != datacount");
     return self;
 }
 

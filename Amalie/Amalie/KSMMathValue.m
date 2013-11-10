@@ -34,6 +34,11 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
 
 @implementation KSMMathValue
 
++(KSMMathValue*)mathValueFromValueType:(KSMValueType)valueType
+{
+    return [[KSMMathValue alloc] initWithValueType:valueType];
+}
+
 +(KSMMathValue*)mathValueFromInteger:(NSInteger)i
 {
     return [[KSMMathValue alloc] initWithInteger:i];
@@ -140,6 +145,23 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
         
     }
     return self;
+}
+
+-(id)initWithValueType:(KSMValueType)valueType
+{
+    switch (valueType) {
+        case KSMValueInteger:
+            return [self initWithInteger:0];
+            break;
+        case KSMValueDouble:
+            return [self initWithDouble:0.0];
+            break;
+        case KSMValueVector:
+            return [self initWithVector:[KSMVector zero3DVector]];
+            break;
+        case KSMValueMatrix:
+            return [self initWithMatrix:[KSMMatrix zeroMatrixOfDimension:3]];
+    }
 }
 
 -(id)initWithInteger:(NSInteger)anInteger
@@ -428,7 +450,7 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
     [coder encodeInt64:self.type forKey:@"type"];
     switch (self.type) {
         case KSMValueInteger:
-            [coder encodeDouble:self.integerValue forKey:@"integerValue"];
+            [coder encodeInteger:self.integerValue forKey:@"integerValue"];
             break;
         case KSMValueDouble:
             [coder encodeDouble:self.doubleValue forKey:@"doubleValue"];

@@ -27,6 +27,7 @@
 @property (strong, readonly) NSMutableSet * observedViews;
 @property (weak, readonly) AMDArgumentList * argumentList;
 
+-(AMDFunctionDef*)functionDef;
 
 @end
 
@@ -43,6 +44,8 @@
 
 -(void)awakeFromNib
 {
+    [self setupValuePopup:self.returnTypePopup];
+
     self.argumentListViewController.argumentList = self.argumentList;
     AMArgumentListView * argumentListView = (AMArgumentListView *)[self.argumentListViewController view];
     argumentListView.delegate = self.argumentListViewController;
@@ -57,17 +60,28 @@
 
     [self.view addConstraints:constraints];
     
+    constraints =  [NSLayoutConstraint constraintsWithVisualFormat:@"H:[argView(argTable)]"
+                                                           options:0
+                                                           metrics:nil
+                                                             views:controls];
+    
+    [self.view addConstraints:constraints];
+    
 }
 
 -(void)reloadData
 {
     self.argumentListViewController.argumentList = self.argumentList;
     [self.argumentTable reloadData];
+    [self.returnTypePopup selectItemWithTag:self.functionDef.returnType.integerValue];
 }
 
 -(void)popoverWillShow:(NSNotification *)notification{
-    // setup notifications for undo/redo
+
     [self reloadData];
+    
+    // setup notifications for undo/redo
+
     NSNotificationCenter * notificationCenter = [NSNotificationCenter defaultCenter];
 
     SEL reloadSelector = NSSelectorFromString(@"reloadData");
@@ -121,17 +135,22 @@
 {
     AMDArgument * argument = [self.argumentList argumentAtIndex:row];
     NSAssert(argument, @"argument in list is nil");
-    NSTableCellView * view = nil;
     if ( [tableColumn.identifier isEqualToString:@"NameColumn"] ) {
+        NSTableCellView * view = nil;
         view = [tableView makeViewWithIdentifier:@"NameColumnView" owner:self];
-        [self populateRowView:view withArgument:argument];
+        [self populateTableNameView:view withArgument:argument];
+        return view;
     } else if ([tableColumn.identifier isEqualToString:@"TypeColumn"] ) {
+        NSPopUpButton * view = nil;
         view = [tableView makeViewWithIdentifier:@"TypeColumnView" owner:self];
+        NSPopUpButton * popupButton = (NSPopUpButton*)view;
+        [self populateTableTypeView:popupButton withArgument:argument];
+        return view;
     }
-    return view;
+    return nil;
 }
 
--(void)populateRowView:(NSTableCellView*)view withArgument:(AMDArgument*)argument
+-(void)populateTableNameView:(NSTableCellView*)view withArgument:(AMDArgument*)argument
 {
     view.textField.stringValue = argument.name.string;
     
@@ -140,6 +159,15 @@
     if (![self.observedViews containsObject:view]) {
         [center addObserver:self selector:selector name:NSControlTextDidChangeNotification object:view.textField];
     }
+}
+
+-(void)populateTableTypeView:(NSPopUpButton*)button withArgument:(AMDArgument*)argument
+{
+    [self setupValuePopup:button];
+    KSMMathValue * mathValue = argument.mathValue;
+    [button selectItemWithTag:mathValue.type];
+    [button setTarget:self];
+    [button setAction:NSSelectorFromString(@"valueTypePopupChanged:")];
 }
 
 - (IBAction)addArgument:(NSButton *)sender {
@@ -156,7 +184,7 @@
         [self.argumentTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
         
         NSTableCellView * view = [self.argumentTable viewAtColumn:0 row:selectedRow makeIfNecessary:NO];
-        [self populateRowView:view withArgument:argument];
+        [self populateTableNameView:view withArgument:argument];
 
         // Make sure new row is visible
         [self.argumentTable scrollRowToVisible:selectedRow];
@@ -189,34 +217,6 @@
     return [AMDataStore sharedDataStore].moc.undoManager;
 }
 
-- (IBAction)changeReturnType:(NSPopUpButton *)sender
-{
-    AMDFunctionDef * f = self.argumentList.functionDef;
-    f.returnType = @([self valueTypeForPopupButton:sender]);
-}
-
--(KSMValueType)valueTypeForPopupButton:(NSPopUpButton *)popupButton
-{
-    switch (popupButton.tag) {
-        case 0:
-            return KSMValueInteger;
-            break;
-        case 1:
-            return KSMValueDouble;
-            break;
-        case 2:
-            return KSMValueVector;
-            break;
-        case 3:
-            return KSMValueMatrix;
-            break;
-        default:
-            NSAssert(NO, @"Unexpected tag");
-            return KSMValueDouble;
-            break;
-    }
-}
-
 -(AMDArgumentList*)argumentList
 {
     return self.functionDef.argumentList;
@@ -237,4 +237,27 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)setupValuePopup:(NSPopUpButton*)popup
+{
+    [popup removeAllItems];
+    [popup addItemWithTitle:@"Integer"];
+    [popup addItemWithTitle:@"Real"];
+    [popup addItemWithTitle:@"Vector"];
+    [popup addItemWithTitle:@"Matrix"];
+    [popup itemAtIndex:0].tag = KSMValueInteger;
+    [popup itemAtIndex:1].tag = KSMValueDouble;
+    [popup itemAtIndex:2].tag = KSMValueVector;
+    [popup itemAtIndex:3].tag = KSMValueMatrix;
+    [popup selectItemAtIndex:1];
+}
+
+- (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender {
+    if (sender == self.returnTypePopup) {
+        self.functionDef.returnType = @(sender.selectedTag);
+    } else {
+        NSInteger row = [self.argumentTable rowForView:sender];
+        AMDArgument * argument = [self.argumentList argumentAtIndex:row];
+        argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
+    }
+}
 @end

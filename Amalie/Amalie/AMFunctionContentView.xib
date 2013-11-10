@@ -69,8 +69,10 @@
             <connections>
                 <outlet property="argumentListViewController" destination="Ph3-63-S9K" id="lBV-VL-ykW"/>
                 <outlet property="argumentTable" destination="joc-pc-pZT" id="A6s-Na-4dA"/>
+                <outlet property="argumentTypePopup" destination="eHA-QI-fc9" id="OLx-7H-TZr"/>
                 <outlet property="functionContentViewController" destination="-2" id="rtM-fL-goX"/>
                 <outlet property="functionEditorView" destination="Vo6-z5-dbn" id="vSx-3Y-254"/>
+                <outlet property="returnTypePopup" destination="7Nt-ox-xHf" id="Zsk-GV-ybI"/>
                 <outlet property="view" destination="Vo6-z5-dbn" id="kFb-Jq-8Vw"/>
             </connections>
         </viewController>
@@ -93,14 +95,14 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="VSw-uz-lCn">
+                <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="VSw-uz-lCn">
                     <rect key="frame" x="20" y="165" width="329" height="122"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="Lcp-RL-z8K">
                         <rect key="frame" x="1" y="18" width="327" height="103"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="22" rowSizeStyle="automatic" headerView="jze-Dq-jUv" viewBased="YES" id="joc-pc-pZT">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="jze-Dq-jUv" viewBased="YES" id="joc-pc-pZT">
                                 <rect key="frame" x="0.0" y="0.0" width="327" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -162,7 +164,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <popUpButtonCell key="cell" type="square" title="Number" bezelStyle="shadowlessSquare" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="50R-pb-mOL" id="wif-ME-EEW">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system"/>
+                                                    <font key="font" metaFont="menu"/>
                                                     <menu key="menu" title="OtherViews" id="oJ0-7j-zP6">
                                                         <items>
                                                             <menuItem title="Number" state="on" id="50R-pb-mOL"/>
@@ -211,7 +213,7 @@
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <action selector="changeReturnType:" target="Dz2-JQ-4yb" id="7Li-Ft-EPG"/>
+                        <action selector="valueTypePopupChanged:" target="Dz2-JQ-4yb" id="LAu-4z-teW"/>
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="TOD-aq-0fb">

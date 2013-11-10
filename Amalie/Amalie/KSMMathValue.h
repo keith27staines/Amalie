@@ -49,11 +49,14 @@ typedef enum KSMValueType : NSUInteger {
  @Returns an initialized object by copying the specified object. */
 -(id)initWithValue:(KSMMathValue*)value;
 
+-(id)initWithValueType:(KSMValueType)valueType;
+
 -(id)initWithString:(NSString*)string;
 
 -(id)initWithExpression:(KSMExpression*)expression
          usingEvaluator:(KSMExpressionEvaluator*)evaluator;
 
++(KSMMathValue*)mathValueFromValueType:(KSMValueType)valueType;
 +(KSMMathValue*)mathValueFromInteger:(NSInteger)i;
 +(KSMMathValue*)mathValueFromDouble:(double)d;
 +(KSMMathValue*)mathValueFromVector:(KSMVector*)v;
