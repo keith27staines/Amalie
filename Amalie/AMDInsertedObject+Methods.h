@@ -7,6 +7,7 @@
 //
 
 @class AMInsertableView;
+@class AMDExpression;
 
 #import "AMDInsertedObject.h"
 
@@ -15,5 +16,8 @@
 +(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view;
 +(AMDInsertedObject*)fetchInsertedObjectWithGroupID:(NSString * )groupID;
 +(NSArray*)fetchInsertedObjectsInDisplayOrder;
+
+
+-(AMDExpression*)expressionAtIndex:(NSUInteger)index;
 
 @end

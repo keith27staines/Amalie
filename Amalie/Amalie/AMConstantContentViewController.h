@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMContentViewController.h"
+#import "AMFunctionContentViewController.h"
 
-@interface AMConstantContentViewController : AMContentViewController
+@interface AMConstantContentViewController : AMFunctionContentViewController
 
 @end

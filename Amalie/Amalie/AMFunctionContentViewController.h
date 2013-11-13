@@ -19,6 +19,8 @@
     __weak NSTextField *_nameField;
     __weak NSTextField *_expressionStringView;
 }
+@property (weak) IBOutlet NSButton *popupButton;
+@property (weak) IBOutlet NSTextField *equalsSignView;
 
 @property (weak) IBOutlet AMNameView *nameView;
 
@@ -26,11 +28,15 @@
 
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
-@property (strong) IBOutlet AMFunctionContentView *functionView;
+@property (strong) AMFunctionContentView *contentView;
 
 @property (strong) IBOutlet NSPopover *editPopover;
 
 @property (strong, readonly) AMDFunctionDef * amdFunctionDef;
+
+
+@property (readonly) BOOL isConstant;
+@property (readonly) BOOL isVariable;
 
 - (IBAction)cancelPopover:(id)sender;
 - (IBAction)showPopover:(NSButton *)sender;

@@ -17,6 +17,8 @@
 @property (nonatomic, retain) NSNumber * returnType;
 @property (nonatomic, retain) AMDArgumentList *argumentList;
 @property (nonatomic, retain) NSSet *transformsArguments;
+@property (nonatomic, retain) NSNumber * isConstant;
+@property (nonatomic, retain) NSNumber * isVariable;
 @end
 
 @interface AMDFunctionDef (CoreDataGeneratedAccessors)

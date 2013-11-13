@@ -16,5 +16,7 @@
 @dynamic returnType;
 @dynamic argumentList;
 @dynamic transformsArguments;
+@dynamic isConstant;
+@dynamic isVariable;
 
 @end

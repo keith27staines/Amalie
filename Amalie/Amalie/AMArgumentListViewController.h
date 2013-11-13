@@ -15,4 +15,6 @@
 
 @property (weak) AMDArgumentList * argumentList;
 
+@property NSFont * font;
+
 @end

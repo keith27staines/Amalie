@@ -67,7 +67,16 @@
     return [self.argumentList argumentAtIndex:index].name.attributedString;
 }
 
+-(NSFont *)font
+{
+    return self.argumentListView.textField.font;
+}
 
-
+-(void)setFont:(NSFont *)font
+{
+    self.argumentListView.textField.font = font;
+    self.argumentListView.leftBrace.font = font;
+    self.argumentListView.rightBrace.font = font;
+}
 
 @end

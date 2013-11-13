@@ -13,6 +13,7 @@
 #import "AMInsertableView.h"
 #import "AMDName+Methods.h"
 #import "AMDIndexedExpression+Methods.h"
+#import "AMDExpression+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 
 static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
@@ -30,11 +31,26 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
 
 +(AMDInsertedObject*)makeAMDInsertedObjectForInsertedView:(AMInsertableView*)view
 {
-    AMDInsertedObject * amd;
+    AMDInsertedObject * amd = nil;
+    AMDIndexedExpression * iexpr = [AMDIndexedExpression makeIndexedExpression];
+
     switch (view.insertableType) {
         case AMInsertableTypeFunction:
         {
             amd = [AMDFunctionDef makeFunctionDef];
+            iexpr.expression.originalString = @"x";
+            break;
+        }
+        case AMInsertableTypeConstant:
+        {
+            amd = [AMDFunctionDef makeFunctionDef];
+            iexpr.expression.originalString = @"0";
+            break;
+        }
+        case AMInsertableTypeVariable:
+        {
+            amd = [AMDFunctionDef makeFunctionDef];
+            iexpr.expression.originalString = @"0";
             break;
         }
         default:
@@ -44,6 +60,9 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
             break;
         }
     }
+    
+    [amd addIndexedExpressionsObject:iexpr];
+    
     amd.groupID    = view.groupID;
     amd.name       = [AMDName makeAMDNameForType:view.insertableType];
     amd.xPosition  = @(view.frame.origin.x);
@@ -52,8 +71,6 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
     amd.height     = @(view.frame.size.height);
     amd.insertType = @(view.insertableType);
     
-    AMDIndexedExpression * iexpr = [AMDIndexedExpression makeIndexedExpression];
-    [amd addIndexedExpressionsObject:iexpr];
     
     return amd;
 }
@@ -82,6 +99,13 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
 +(AMDataStore*)dataStore
 {
     return [AMDataStore sharedDataStore];
+}
+
+
+-(AMDExpression*)expressionAtIndex:(NSUInteger)index;{
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"index == %lu",index];
+    NSSet * set = [self.indexedExpressions filteredSetUsingPredicate:predicate];
+    return set.anyObject;
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AMConstantContentViewController.h"
+#import "AMDFunctionDef+Methods.h"
 
 @interface AMConstantContentViewController ()
 
@@ -16,11 +17,24 @@
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:@"AMConstantContentView" bundle:nil];
+    self = [super initWithNibName:@"AMFunctionContentView" bundle:nil];
     if (self) {
         // Expression content specific initialization
     }
     return self;
+}
+
+-(BOOL)isConstant
+{
+    return YES;
+}
+
+-(void)setAmdInsertedObject:(AMDInsertedObject *)amdInsertedObject
+{
+    [super setAmdInsertedObject:amdInsertedObject];
+    AMDFunctionDef * funcDef = (AMDFunctionDef*)amdInsertedObject;
+    funcDef.isConstant = @(self.isConstant);
+    funcDef.isVariable = @(self.isVariable);
 }
 
 @end

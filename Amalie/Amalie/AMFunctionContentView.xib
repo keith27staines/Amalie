@@ -7,11 +7,14 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMFunctionContentViewController">
             <connections>
+                <outlet property="argumentListViewController" destination="hdE-0X-eOA" id="Hma-Fb-eKw"/>
+                <outlet property="contentView" destination="1" id="166-iN-yH6"/>
                 <outlet property="editPopover" destination="7OI-z7-ogY" id="yGL-Az-LMp"/>
+                <outlet property="equalsSignView" destination="WUp-d3-yd6" id="KJT-TX-r5M"/>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="hjY-x2-kxt"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
-                <outlet property="functionView" destination="1" id="7YI-NG-buK"/>
                 <outlet property="nameView" destination="YNe-VI-N9B" id="vXH-hL-3KI"/>
+                <outlet property="popupButton" destination="9R0-xP-hzU" id="RO8-LI-rxV"/>
                 <outlet property="view" destination="1" id="2"/>
             </connections>
         </customObject>
@@ -58,6 +61,15 @@
                         <action selector="showPopover:" target="-2" id="RC1-Oy-HlG"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="WUp-d3-yd6">
+                    <rect key="frame" x="100" y="72" width="23" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title=" = " id="lKj-mZ-OM0">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <connections>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="7Qz-1c-dYZ"/>
@@ -65,6 +77,7 @@
                 <outlet property="nameView" destination="YNe-VI-N9B" id="4PS-cl-C79"/>
             </connections>
         </customView>
+        <viewController id="hdE-0X-eOA" customClass="AMArgumentListViewController"/>
         <viewController id="Dz2-JQ-4yb" userLabel="Edit Popover View Controller" customClass="AMFunctionEditorViewController">
             <connections>
                 <outlet property="argumentListViewController" destination="Ph3-63-S9K" id="lBV-VL-ykW"/>
@@ -283,7 +296,16 @@ Gw
                 </items>
             </menu>
         </popUpButtonCell>
-        <viewController id="Ph3-63-S9K" customClass="AMArgumentListViewController"/>
+        <viewController id="Ph3-63-S9K" userLabel="Argument List View Controller (popover)" customClass="AMArgumentListViewController"/>
+        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2A6-Wn-PNL">
+            <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="6aw-J4-lTE">
+                <font key="font" metaFont="system"/>
+                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+            </textFieldCell>
+        </textField>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="8" height="8"/>

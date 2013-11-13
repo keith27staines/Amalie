@@ -103,9 +103,7 @@
         }
         case AMInsertableTypeExpression:
         {
-            self = [[AMExpressionContentViewController alloc] initWithNibName:nil
-            
-                                                                     bundle:nil];
+            self = [[AMExpressionContentViewController alloc] initWithNibName:nil bundle:nil];
             break;
         }
         case AMInsertableTypeFunction:
@@ -175,14 +173,15 @@
                           amdInsertedObject:(AMDInsertedObject*)amdObject
 {
     AMContentViewController * vc = [AMContentViewController alloc];
-    return [vc initWithNibName:nil
-                        bundle:nil
-                 appController:appContoller
-           worksheetController:worksheetController
-                   contentType:insertableType
-               groupParentView:groupParentView
-                           moc:moc
-             amdInsertedObject:amdObject];
+    vc = [vc initWithNibName:nil
+                      bundle:nil
+               appController:appContoller
+         worksheetController:worksheetController
+                 contentType:insertableType
+             groupParentView:groupParentView
+                         moc:moc
+           amdInsertedObject:amdObject];
+    return vc;
 }
 
 -(KSMWorksheet*)mathSheet
