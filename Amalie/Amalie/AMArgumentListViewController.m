@@ -27,7 +27,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:@"AMArgumentListView" bundle:nibBundleOrNil];
     if (self) {
         // Initialization code here.
     }

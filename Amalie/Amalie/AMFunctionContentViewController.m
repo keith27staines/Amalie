@@ -39,12 +39,13 @@ static NSUInteger const kAMIndexRHS;
 
 @interface AMFunctionContentViewController ()
 {
+    __weak NSTextField                  *_nameField;
+    __weak NSTextField                  *_expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
-    NSMutableDictionary * _viewDictionary;
+    NSMutableDictionary                 * _viewDictionary;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
-@property (readonly) NSFont * standardFont;
-@property (readonly) NSFont * fixedWidthFont;
+
 @property (readonly) AMArgumentListView * argumentListView;
 @end
 
@@ -76,18 +77,6 @@ static NSUInteger const kAMIndexRHS;
 -(BOOL)isVariable
 {
     return NO;
-}
-
--(NSFont*)standardFont
-{
-    NSDictionary * fonts = [AMPreferences fonts];
-    return fonts[kAMFontNameKey];
-}
-
--(NSFont *)fixedWidthFont
-{
-    NSDictionary * fonts = [AMPreferences fonts];
-    return fonts[kAMFixedWidthFontNameKey];
 }
 
 -(AMArgumentListView *)argumentListView
@@ -209,7 +198,7 @@ static NSUInteger const kAMIndexRHS;
     NSSize size = [self.nameView.attributedStringValue size];
     [self.nameView sizeToFit];
     [self.nameView setFrameSize:NSMakeSize(size.width + 15, self.nameView.frame.size.height)];
-    [self layoutInsertedView];
+    [self layoutInsertedViewAndCloseTransaction:YES];
     [self.nameView setNeedsDisplay:YES];
     if ( [self.nameView.attributedStringValue isEqualToAttributedString:self.attributedName] ) {
         return;
@@ -248,13 +237,13 @@ static NSUInteger const kAMIndexRHS;
     KSMExpression * expr;
     expr = [self expressionFromString:self.expressionStringView.stringValue atIndex:kAMIndexRHS];
     expressionView.expression = expr;
-    [self layoutInsertedView];
+    [self layoutInsertedViewAndCloseTransaction:YES];
     [expressionView setNeedsDisplay:YES];
 }
 
 -(void)setFocusOnView:(NSView*)view
 {
-    BOOL changedFirstResponder = [self.nameView.window makeFirstResponder:view];
+    BOOL changedFirstResponder = [self.contentView.window makeFirstResponder:view];
     if (changedFirstResponder) {
         [self putInsertionPointAtEndOfField];
     }
@@ -267,9 +256,9 @@ static NSUInteger const kAMIndexRHS;
     [textEditor setSelectedRange:range];
 }
 
--(void)layoutInsertedView
+-(void)layoutInsertedViewAndCloseTransaction:(BOOL)closeTransaction
 {
-    [CATransaction begin];
+    [super layoutInsertedViewAndCloseTransaction:NO];
     
     CGFloat const AM_VIEW_MARGIN      = 19.0f;
     CGFloat const AM_MIN_STRING_WIDTH = 300.0f;
@@ -332,8 +321,9 @@ static NSUInteger const kAMIndexRHS;
     [container setFrameSize:NSMakeSize(functionViewSize.width+2*AM_VIEW_MARGIN, functionViewSize.height + 2*AM_VIEW_MARGIN)];
     [functionView setFrameOrigin:NSMakePoint(1*AM_VIEW_MARGIN, 1*AM_VIEW_MARGIN)];
     
-    [CATransaction commit];
-    [[self parentWorksheetController] contentViewController:self isResizingContentTo:expressionView.frame.size  usingAnimationTransaction:NO];
+    if (closeTransaction) {
+        [super closeLayoutTransaction];
+    }
 }
 
 -(void)populateView:(AMContentView *)view
@@ -353,7 +343,7 @@ static NSUInteger const kAMIndexRHS;
         self.nameView.attributedStringValue = funcDef.name.attributedString;
         [self.nameView sizeToFit];
         [self setupArgumentListView];
-        [self layoutInsertedView];
+        [self layoutInsertedViewAndCloseTransaction:YES];
     } else {
         // Other views that are sub to self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }
@@ -387,7 +377,7 @@ static NSUInteger const kAMIndexRHS;
 - (IBAction)acceptEditPopover:(id)sender {
         [self.editPopover close];
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
-    [self layoutInsertedView];
+    [self layoutInsertedViewAndCloseTransaction:YES];
 }
 
 

@@ -44,6 +44,12 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
             mustBeUnique = YES;
             break;
         }
+        case AMInsertableTypeExpression:
+        {
+            defaultName = @"anonymous";
+            mustBeUnique = NO;
+            break;
+        }
         default:
             // TODO: replace default with explicit cases
             mustBeUnique = YES;

@@ -77,7 +77,7 @@
                 <outlet property="nameView" destination="YNe-VI-N9B" id="4PS-cl-C79"/>
             </connections>
         </customView>
-        <viewController id="hdE-0X-eOA" customClass="AMArgumentListViewController"/>
+        <viewController nibName="AMArgumentListView" id="hdE-0X-eOA" customClass="AMArgumentListViewController"/>
         <viewController id="Dz2-JQ-4yb" userLabel="Edit Popover View Controller" customClass="AMFunctionEditorViewController">
             <connections>
                 <outlet property="argumentListViewController" destination="Ph3-63-S9K" id="lBV-VL-ykW"/>
@@ -296,7 +296,7 @@ Gw
                 </items>
             </menu>
         </popUpButtonCell>
-        <viewController id="Ph3-63-S9K" userLabel="Argument List View Controller (popover)" customClass="AMArgumentListViewController"/>
+        <viewController nibName="AMArgumentListView" id="Ph3-63-S9K" userLabel="Argument List View Controller (popover)" customClass="AMArgumentListViewController"/>
         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2A6-Wn-PNL">
             <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

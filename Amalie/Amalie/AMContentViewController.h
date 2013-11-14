@@ -140,4 +140,11 @@
  */
 @property (readonly) AMPreferences * preferenceController;
 
+
+@property (readonly) NSFont * standardFont;
+@property (readonly) NSFont * fixedWidthFont;
+
+-(void)layoutInsertedViewAndCloseTransaction:(BOOL)closeTransaction;
+
+-(void)closeLayoutTransaction;
 @end

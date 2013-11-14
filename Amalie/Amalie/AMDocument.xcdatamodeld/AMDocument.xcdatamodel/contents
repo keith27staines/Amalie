@@ -28,6 +28,7 @@
         <relationship name="expression" maxCount="1" deletionRule="Cascade" destinationEntity="AMDExpressions" inverseName="expressionIndices" inverseEntity="AMDExpressions" syncable="YES"/>
         <relationship name="insertedObject" maxCount="1" deletionRule="Nullify" destinationEntity="AMDInsertedObjects" inverseName="indexedExpressions" inverseEntity="AMDInsertedObjects" syncable="YES"/>
     </entity>
+    <entity name="AMDInsertedExpressions" representedClassName="AMDInsertedExpression" parentEntity="AMDInsertedObjects" syncable="YES"/>
     <entity name="AMDInsertedObjects" representedClassName="AMDInsertedObject" isAbstract="YES" syncable="YES">
         <attribute name="groupID" attributeType="String" syncable="YES"/>
         <attribute name="height" attributeType="Float" minValueString="0" defaultValueString="150" syncable="YES"/>
@@ -60,5 +61,6 @@
         <element name="AMDInsertedObjects" positionX="-171" positionY="132" width="128" height="165"/>
         <element name="AMDIntervalDefs" positionX="-65" positionY="477" width="128" height="105"/>
         <element name="AMDNames" positionX="-477" positionY="-0" width="128" height="118"/>
+        <element name="AMDInsertedExpressions" positionX="-245" positionY="378" width="128" height="43"/>
     </elements>
 </model>

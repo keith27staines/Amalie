@@ -15,6 +15,5 @@
 @property (weak) IBOutlet id<AMContentViewDataSource>datasource;
 
 
-
 @end
 

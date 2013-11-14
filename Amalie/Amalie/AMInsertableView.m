@@ -23,10 +23,13 @@ static CABasicAnimation * animateOrigin;
     AMInsertViewState       _viewState;
     AMInsertableType        _insertableType;
     BOOL                    _mouseOver;
+    BOOL                    _isDragging;
+    NSImage *               _dragImage;
 }
 @property (readwrite) NSEvent * mouseDownEvent;
 @property (readwrite) NSPoint mouseDownOffsetFromOrigin;
-
+@property (readwrite) BOOL isDragging;
+@property (readwrite) NSImage * dragImage;
 @end
 
 @implementation AMInsertableView
@@ -213,12 +216,12 @@ static CABasicAnimation * animateOrigin;
         
         // can now abandon the current instance of self and swap to the view from the NIB
         self = view;
-        _isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
-        _mouseDownOffsetFromOrigin = [aDecoder decodePointForKey:@"mouseDownOffsetFromOrigin"];
-        _insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
+        self.isDragging = [aDecoder decodeBoolForKey:@"isDragging"];
+        self.mouseDownOffsetFromOrigin = [aDecoder decodePointForKey:@"mouseDownOffsetFromOrigin"];
+        self.insertableType = [aDecoder decodeIntegerForKey:@"insertableType"];
         
         if ( [aDecoder containsValueForKey:@"dragImage"] ) {
-            _dragImage = [aDecoder decodeObjectForKey:@"dragImage"];
+            self.dragImage = [aDecoder decodeObjectForKey:@"dragImage"];
         }
         
     }
@@ -233,7 +236,7 @@ static CABasicAnimation * animateOrigin;
     [aCoder encodePoint:self.mouseDownOffsetFromOrigin forKey:@"mouseDownOffsetFromOrigin"];
     [aCoder encodeInteger:self.insertableType forKey:@"insertableType"];
     
-    if (_dragImage) {
+    if (self.dragImage) {
         [aCoder encodeObject:self.dragImage forKey:@"dragImage"];
     }
 }

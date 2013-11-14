@@ -7,6 +7,7 @@
 //
 
 #import "AMExpressionContentView.h"
+#import "AMExpressionNodeView.h"
 
 @implementation AMExpressionContentView
 
@@ -27,7 +28,19 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+    [super drawRect:dirtyRect];
+}
+
+-(void)setDatasource:(id<AMContentViewDataSource>)datasource
+{
+    [super setDatasource:datasource];
+    self.expressionView.datasource = self.datasource;
+}
+
+-(void)setGroupID:(NSString *)groupID
+{
+    [super setGroupID:groupID];
+    self.expressionView.groupID = groupID;
 }
 
 @end

@@ -54,7 +54,6 @@
         if ( [aDecoder containsValueForKey:@"groupID"] ) {
             _groupID = [aDecoder decodeObjectForKey:@"groupID"];
         }
-        
     }
     return self;
 }

@@ -33,11 +33,22 @@
 
 @implementation AMFunctionEditorViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    NSString *nibName = @"FunctionEditorView";
+    NSBundle *bundle = nil;
+    self = [super initWithNibName:nibName bundle:bundle];
     if (self) {
-        // Initialization code here.
+    
+    }
+    return self;
+}
+
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:@"FunctionEditorView" bundle:nil];
+    if (self) {
+        
     }
     return self;
 }
@@ -260,4 +271,5 @@
         argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
     }
 }
+
 @end

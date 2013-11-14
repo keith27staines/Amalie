@@ -15,6 +15,7 @@
 #import "AMDIndexedExpression+Methods.h"
 #import "AMDExpression+Methods.h"
 #import "AMDFunctionDef+Methods.h"
+#import "AMDInsertedExpression+Methods.h"
 
 static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
 
@@ -53,6 +54,12 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
             iexpr.expression.originalString = @"0";
             break;
         }
+        case AMInsertableTypeExpression:
+        {
+            amd = [AMDInsertedExpression makeInsertedExpression];
+            iexpr.expression.originalString = @"x";
+            break;
+        }
         default:
         {
             // TODO: eliminate default:, replace with individual cases
@@ -63,14 +70,13 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
     
     [amd addIndexedExpressionsObject:iexpr];
     
-    amd.groupID    = view.groupID;
     amd.name       = [AMDName makeAMDNameForType:view.insertableType];
+    amd.groupID    = view.groupID;
     amd.xPosition  = @(view.frame.origin.x);
     amd.yPosition  = @(view.frame.origin.y);
     amd.width      = @(view.frame.size.width);
     amd.height     = @(view.frame.size.height);
     amd.insertType = @(view.insertableType);
-    
     
     return amd;
 }

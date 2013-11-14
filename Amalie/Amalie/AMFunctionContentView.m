@@ -30,7 +30,7 @@
 
 -(BOOL)autoresizesSubviews
 {
-    return NO;
+    return YES;
 }
 
 -(void)viewDidMoveToWindow

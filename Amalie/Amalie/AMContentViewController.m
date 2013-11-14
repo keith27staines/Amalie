@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "AMContentViewController.h"
 #import "AMConstantContentViewController.h"
 #import "AMVariableContentViewController.h"
@@ -334,11 +335,38 @@
     return [trayItem backgroundColor];
 }
 
+
+-(NSFont*)standardFont
+{
+    NSDictionary * fonts = [AMPreferences fonts];
+    return fonts[kAMFontNameKey];
+}
+
+-(NSFont *)fixedWidthFont
+{
+    NSDictionary * fonts = [AMPreferences fonts];
+    return fonts[kAMFixedWidthFontNameKey];
+}
+
 -(void)deleteContent
 {
     for (KSMExpression * expr in self.expressions) {
         [self.mathSheet decrementReferenceCountForObject:expr];
     }
+}
+
+-(void)layoutInsertedViewAndCloseTransaction:(BOOL)closeTransaction
+{
+    [CATransaction begin];
+    if (closeTransaction) {
+        [CATransaction commit];
+    }
+}
+
+-(void)closeLayoutTransaction
+{
+    [CATransaction commit];
+    [[self parentWorksheetController] contentViewController:self isResizingContentTo:self.view.frame.size  usingAnimationTransaction:NO];
 }
 
 - (void)dealloc

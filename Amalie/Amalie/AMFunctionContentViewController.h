@@ -14,18 +14,14 @@
 #import "AMContentViewController.h"
 
 @interface AMFunctionContentViewController : AMContentViewController <NSTextFieldDelegate>
-{
-    
-    __weak NSTextField *_nameField;
-    __weak NSTextField *_expressionStringView;
-}
+
+
 @property (weak) IBOutlet NSButton *popupButton;
 @property (weak) IBOutlet NSTextField *equalsSignView;
 
 @property (weak) IBOutlet AMNameView *nameView;
 
 @property (weak) IBOutlet NSTextField *expressionStringView;
-
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
 @property (strong) AMFunctionContentView *contentView;
