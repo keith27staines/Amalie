@@ -14,6 +14,7 @@
 #import "AMDExpression+Methods.h"
 #import "AMDInsertedObject+Methods.h"
 #import "AMDIndexedExpression+Methods.h"
+#import "AMExpressionContentView.h"
 
 @interface AMExpressionContentViewController ()
 {
@@ -97,7 +98,7 @@
     
     AMExpressionNodeView * expressionView = self.expressionView;
     NSTextField * expressionString = self.expressionStringView;
-    AMContentView * contentView = self.contentView;
+    AMExpressionContentView * contentView = self.contentView;
     NSView * container = [contentView superview];
     
     // The sizes of the important nested and sibling views

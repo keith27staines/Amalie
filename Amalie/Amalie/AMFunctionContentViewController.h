@@ -24,7 +24,7 @@
 @property (weak) IBOutlet NSTextField *expressionStringView;
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
-@property (strong) AMFunctionContentView *contentView;
+@property (weak) IBOutlet AMFunctionContentView *contentView;
 
 @property (strong) IBOutlet NSPopover *editPopover;
 

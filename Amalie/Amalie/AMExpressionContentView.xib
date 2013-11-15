@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
@@ -8,8 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMExpressionContentViewController">
             <connections>
-                <outlet property="expressionStringView" destination="zE4-fz-1EG" id="Ui7-rj-AhA"/>
-                <outlet property="expressionView" destination="tne-kt-Ju4" id="nSW-7s-59O"/>
+                <outlet property="contentView" destination="1" id="y0D-DJ-2lP"/>
+                <outlet property="expressionStringView" destination="zE4-fz-1EG" id="bsy-4g-8Ru"/>
+                <outlet property="expressionView" destination="tne-kt-Ju4" id="bOC-Zs-cwe"/>
                 <outlet property="view" destination="1" id="2"/>
             </connections>
         </customObject>
@@ -19,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="379" height="146"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zE4-fz-1EG">
+                <textField verticalHuggingPriority="750" id="zE4-fz-1EG">
                     <rect key="frame" x="20" y="23" width="339" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" usesSingleLineMode="YES" id="fY5-kx-sHg">
@@ -28,7 +29,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tne-kt-Ju4" customClass="AMExpressionNodeView">
+                <customView id="tne-kt-Ju4" customClass="AMExpressionNodeView">
                     <rect key="frame" x="20" y="67" width="339" height="59"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <connections>
@@ -37,7 +38,6 @@
                 </customView>
             </subviews>
             <connections>
-                <outlet property="datasource" destination="-2" id="KYh-qE-OBR"/>
                 <outlet property="expressionStringView" destination="zE4-fz-1EG" id="IRC-Mf-ttP"/>
                 <outlet property="expressionView" destination="tne-kt-Ju4" id="dOa-V6-Ki8"/>
             </connections>

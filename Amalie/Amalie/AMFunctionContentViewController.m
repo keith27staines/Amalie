@@ -39,8 +39,8 @@ static NSUInteger const kAMIndexRHS;
 
 @interface AMFunctionContentViewController ()
 {
-    __weak NSTextField                  *_nameField;
-    __weak NSTextField                  *_expressionStringView;
+    __weak NSTextField                  * _nameField;
+    __weak NSTextField                  * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
     NSMutableDictionary                 * _viewDictionary;
 }

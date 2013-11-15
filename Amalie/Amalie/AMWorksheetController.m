@@ -312,6 +312,10 @@
             title = @"Remove definition?";
             messageDetail = [NSString stringWithFormat:@"the definition of the function %@",name];
             break;
+        case AMInsertableTypeExpression:
+            title = @"Remove expression?";
+            messageDetail = [NSString stringWithFormat:@""];
+            break;
         default:
             NSAssert(NO, @"Not implemented yet");
             break;

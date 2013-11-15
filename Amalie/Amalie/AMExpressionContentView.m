@@ -21,9 +21,14 @@
     return self;
 }
 
+-(BOOL)translatesAutoresizingMaskIntoConstraints
+{
+    return NO;
+}
+
 -(void)viewDidMoveToWindow
 {
-    NSLog(@"%@ - viewDidMoveToWindow",self.class);
+    [super viewDidMoveToWindow];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

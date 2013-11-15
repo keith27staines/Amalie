@@ -18,7 +18,6 @@
 
 @property (weak) IBOutlet NSTextField *expressionStringView;
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
-
-@property (strong) AMExpressionNodeView * contentView;
+@property (weak) IBOutlet AMExpressionContentView * contentView;
 
 @end
