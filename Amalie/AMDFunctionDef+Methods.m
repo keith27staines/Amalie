@@ -12,6 +12,8 @@
 #import "NSString+KSMMath.h"
 #import "AMDataStore.h"
 #import "AMDArgumentList+Methods.h"
+#import "AMDArgument+Methods.h"
+#import "AMDName+Methods.h"
 
 static NSString * const kAMDENTITYNAME = @"AMDFunctionDefs";
 
@@ -22,7 +24,9 @@ static NSString * const kAMDENTITYNAME = @"AMDFunctionDefs";
     AMDFunctionDef * f = nil;
     f = [NSEntityDescription insertNewObjectForEntityForName:kAMDENTITYNAME
                                       inManagedObjectContext:self.moc];
-    f.argumentList = [AMDArgumentList makeArgumentListUsing:self.moc];
+    f.argumentList = [AMDArgumentList makeArgumentList];
+    AMDArgument * argument = [AMDArgument makeArgumentOfType:KSMValueDouble];
+    [f.argumentList addArgumentsObject:argument];
     f.returnType = @(KSMValueDouble);
     // f.transformsArguments = [NSMutableSet set];
     

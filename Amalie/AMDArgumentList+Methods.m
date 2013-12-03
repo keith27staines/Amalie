@@ -19,11 +19,12 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
 @implementation AMDArgumentList (Methods)
 
 
-+(AMDArgumentList*)makeArgumentListUsing:(NSManagedObjectContext*)moc
++(AMDArgumentList*)makeArgumentList
 {
     AMDArgumentList * list = [NSEntityDescription insertNewObjectForEntityForName:kAMENTITYNAME
-                                                           inManagedObjectContext:moc];
+                                                           inManagedObjectContext:self.moc];
     return list;
+    
 }
 
 -(AMDArgument *)argumentAtIndex:(NSUInteger)index
