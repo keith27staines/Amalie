@@ -50,6 +50,11 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     argument = [AMDArgument makeArgumentOfType:KSMValueDouble];
     [self addArgumentsObject:argument];
     
+    for (AMDArgument * a in self.arguments) {
+        NSLog(@"Argument with index %@ and name %@ and attr. name %@ ",a.index,a.name.string,a.name.attributedString);
+        NSLog(@"ArgName is %@",a.name);
+    }
+    
     // give the argument the right index
     argument.index = @(index);
     
@@ -60,6 +65,11 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     // Update the indexes of any arguments that have been downshifted by the insertion
     for (AMDArgument * argument in argumentsToReIndex) {
         argument.index =  @(argument.index.integerValue + 1);
+    }
+    
+    for (AMDArgument * a in self.arguments) {
+        NSLog(@"Argument with index %@ and name %@ and attr. name %@ ",a.index,a.name.string,a.name.attributedString);
+        NSLog(@"ArgName is %@",a.name);
     }
     
     [[self undoManager] endUndoGrouping];

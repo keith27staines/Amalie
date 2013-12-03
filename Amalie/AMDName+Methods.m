@@ -57,14 +57,14 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
             break;
     }
     
-    if (!mustBeUnique) {
-        aName = [self fetchDummyVariableWithName:defaultName];
-    }
-    
     if (!aName) {
         aName = [NSEntityDescription insertNewObjectForEntityForName:kAMDENTITYNAME
                                               inManagedObjectContext:self.moc];
-        aName.string = [self suggestMustBeUniqueNameBasedOn:defaultName];
+        if (mustBeUnique) {
+            aName.string = [self suggestMustBeUniqueNameBasedOn:defaultName];
+        } else {
+            aName.string = defaultName;
+        }
         aName.attributedString = [[NSAttributedString alloc] initWithString:aName.string attributes:nil];
     }
     

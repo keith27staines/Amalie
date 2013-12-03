@@ -375,7 +375,7 @@ static NSUInteger const kAMIndexRHS;
 }
 
 - (IBAction)acceptEditPopover:(id)sender {
-        [self.editPopover close];
+    [self.editPopover close];
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     [self layoutInsertedViewAndCloseTransaction:YES];
 }

@@ -184,7 +184,7 @@
 - (IBAction)addArgument:(NSButton *)sender {
     NSInteger selectedRow = self.argumentTable.selectedRow;
     
-    // Update datastore. If a row is selected (ie >= 0), we insert beneath that, otherwise at the end.
+    // Update datastore. If a row is selected (ie >= 0), we insert beneath that, otherwise we add to the end.
     if (selectedRow >=0) selectedRow++;
     AMDArgument * argument = [self.argumentList addArgumentAtIndex:selectedRow];
     if ( argument ) {
