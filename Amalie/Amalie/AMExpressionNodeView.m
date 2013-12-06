@@ -14,6 +14,7 @@
 #import "AMQuotientBaselining.h"
 #import "AMOperatorView.h"
 #import "AMConstants.h"
+#import "AMPreferences.h"
 
 CGFloat const kAM_MINWIDTH  = 20.0f;
 CGFloat const kAM_MINHEIGHT = 20.0f;

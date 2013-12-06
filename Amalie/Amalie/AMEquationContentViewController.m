@@ -120,13 +120,9 @@ static NSUInteger const kAMIndexRHS;
         self.nameView.attributedStringValue = self.amdInsertedObject.name.attributedString;
         KSMExpression * expr = [self expressionForIndex:0];
         self.expressionStringView.stringValue = expr.string;
-        
-        NSDictionary * fonts = [AMPreferences fonts];
-        NSFont * standardFont = fonts[kAMFontNameKey];
-        NSFont * fixedWidthFont = fonts[kAMFixedWidthFontNameKey];
-        
-        [self.expressionStringView setFont:fixedWidthFont];
-        [self.nameView setFont:standardFont];
+                
+        [self.expressionStringView setFont:[AMPreferences fixedWidthFont]];
+        [self.nameView setFont:[AMPreferences standardFont]];
         
         self.expressionView.expression = expr;
         [self layoutInsertedView];

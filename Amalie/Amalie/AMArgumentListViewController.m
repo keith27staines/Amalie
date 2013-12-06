@@ -10,6 +10,7 @@
 #import "AMDArgumentList+Methods.h"
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
+#import "AMPreferences.h"
 
 
 @interface AMArgumentListViewController ()
@@ -42,6 +43,7 @@
 {
     self.argumentListView.leftBrace.stringValue = @"(";
     self.argumentListView.rightBrace.stringValue = @")";
+    [self applyUserPreferences];
 }
 
 -(void)setArgumentList:(AMDArgumentList *)argumentList
@@ -67,13 +69,9 @@
     return [self.argumentList argumentAtIndex:index].name.attributedString;
 }
 
--(NSFont *)font
+-(void)applyUserPreferences
 {
-    return self.argumentListView.textField.font;
-}
-
--(void)setFont:(NSFont *)font
-{
+    NSFont * font = [AMPreferences standardFont];
     self.argumentListView.textField.font = font;
     self.argumentListView.leftBrace.font = font;
     self.argumentListView.rightBrace.font = font;

@@ -17,7 +17,6 @@
 #import "KSMMathValue.h"
 #import "AMContentView.h"
 #import "AMNameRules.h"
-#import "AMDInsertedObject+Methods.h"
 #import "AMGroupedView.h"
 #import "KSMExpression.h"
 #import "AMDataStore.h"
@@ -25,6 +24,11 @@
 #import "AMToolboxView.h"
 #import "AMKeyboardsViewController.h"
 #import "AMKeyboardContainerView.h"
+#import "AMPreferences.h"
+#import "AMDataStore.h"
+#import "AMDInsertedObject+Methods.h"
+#import "AMDName+Methods.h"
+#import "AMDFunctionDef+Methods.h"
 
 @interface AMWorksheetController()
 {
@@ -451,6 +455,49 @@
     _selectedView.viewState = AMInsertViewStateNormal;
     _selectedView = view;
     _selectedView.viewState = AMInsertViewStateSelected;
+}
+
+#pragma mark - AMNamedObjectInfoProvider -
+-(NSFont *)baseFontForObjectWithName:(NSString *)name
+{
+    return [AMPreferences standardFont];
+}
+
+-(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
+{
+    return nil;
+}
+
+-(KSMValueType)mathTypeForForObjectWithName:(NSString *)name
+{
+    AMDInsertedObject * insertedObject = [[AMDataStore sharedDataStore] insertedObjectWithName:name];
+    
+    if (!insertedObject) {
+        // everything not specifically defined is assumed to be of type double
+        return KSMValueDouble;
+    }
+    
+    switch ((AMInsertableType)insertedObject.insertType) {
+        case AMInsertableTypeConstant:
+        case AMInsertableTypeVariable:
+        case AMInsertableTypeFunction:
+        {
+            AMDFunctionDef * fnDef = (AMDFunctionDef*)insertedObject;
+            return (KSMValueType)fnDef.returnType.integerValue;
+            break;
+        }
+        case AMInsertableTypeVector:
+            return KSMValueVector;
+        case AMInsertableTypeMatrix:
+            return KSMValueMatrix;
+        default:
+            return KSMValueDouble;
+    }
+}
+
+-(BOOL)isKnownObjectName:(NSString *)name
+{
+    return FALSE;
 }
 
 #pragma mark - Misc -

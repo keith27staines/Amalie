@@ -29,4 +29,6 @@
                       withSortDescriptors:(NSArray*)sortDescriptors
                                 predicate:(NSPredicate*)predicate;
 
+-(AMDInsertedObject*)insertedObjectWithName:(NSString*)name;
+
 @end

@@ -37,6 +37,9 @@
 @property (weak,readonly) KSMWorksheet           * mathSheet;
 @property (weak)          NSManagedObjectContext * moc;
 
+@property (readonly) NSFont* fixedWidthFont;
+@property (readonly) NSFont* standardFont;
+
 /*!
  Designated initializer
  @Param nibNameOrNil This parameter is ignored. The receiver knows the nib to use.
@@ -67,6 +70,9 @@
 
 
 -(void)deleteContent;
+
+/*! */
+-(void)applyUserPreferences;
 
 /*!
  Changes the attributed name of the receiver if the proposed name satisfies the naming rules, including uniqueness.
@@ -139,10 +145,6 @@
  preferences
  */
 @property (readonly) AMPreferences * preferenceController;
-
-
-@property (readonly) NSFont * standardFont;
-@property (readonly) NSFont * fixedWidthFont;
 
 -(void)layoutInsertedViewAndCloseTransaction:(BOOL)closeTransaction;
 

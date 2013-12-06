@@ -15,6 +15,6 @@
 
 @property (weak) AMDArgumentList * argumentList;
 
-@property NSFont * font;
+-(void)applyUserPreferences;
 
 @end

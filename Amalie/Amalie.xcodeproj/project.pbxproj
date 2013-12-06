@@ -187,6 +187,7 @@
 		784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardsAreaView.m; sourceTree = "<group>"; };
 		7847ECCE17B777CB00333A84 /* AMExpressionDisplayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionDisplayOptions.h; sourceTree = "<group>"; };
 		7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionDisplayOptions.m; sourceTree = "<group>"; };
+		7848E5C51850C7B500719EF3 /* AMNamedObjectInfoProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMNamedObjectInfoProvider.h; sourceTree = "<group>"; };
 		784BFBDC17E7408800152756 /* KSMMathValueHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMMathValueHolder.h; sourceTree = "<group>"; };
 		784BFBDD17E7408800152756 /* KSMMathValueHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMMathValueHolder.m; sourceTree = "<group>"; };
 		784D6EF81789CC11002BE03A /* AMAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMAppController.h; sourceTree = "<group>"; };
@@ -788,6 +789,7 @@
 				78CDC76017AFFE6000BDC8D7 /* AMContentViewDataSource.h */,
 				788F637717BF586B00EC68CC /* AMQuotientBaselining.h */,
 				78B205C317D47B470059773A /* KSMReferenceCountedObject.h */,
+				7848E5C51850C7B500719EF3 /* AMNamedObjectInfoProvider.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";

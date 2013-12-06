@@ -28,6 +28,9 @@
 
 +(id)objectForKey:(NSString*)key;
 
++(NSFont*)standardFont;
++(NSFont*)fixedWidthFont;
+
 +(NSUserDefaults*)defaults;
 
 @end

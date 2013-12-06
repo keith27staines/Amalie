@@ -7,11 +7,10 @@
 //
 
 #import "AMExpressionDisplayOptions.h"
+#import "AMPreferences.h"
 
-CGFloat     const kAMFontDefaultPointSize = 17;
 NSUInteger  const kAMFontDefaultWeight = 0;
 NSUInteger  const kAMFontDefaultTraits = 0;
-NSString  * const kAMFontDefaultFamilyName = @"Times New Roman";
 
 
 
@@ -78,11 +77,11 @@ NSString  * const kAMFontDefaultFamilyName = @"Times New Roman";
         NSFixedPitchFontMask = 0x00000400,
         NSUnitalicFontMask = 0x01000000
         */
-    NSString * fontFamilyName   = kAMFontDefaultFamilyName;
+    NSString * fontFamilyName   = [[AMPreferences standardFont] familyName];
+    CGFloat pointSize           = [[AMPreferences standardFont] pointSize];
     NSFontTraitMask mask        = kAMFontDefaultTraits;
     NSUInteger weight           = kAMFontDefaultWeight;
-    CGFloat pointSize           = 21.0f; // kAMFontDefaultPointSize;
-    
+
     switch (type) {
         case AMFontTypeAlgebra:
         {
@@ -99,19 +98,16 @@ NSString  * const kAMFontDefaultFamilyName = @"Times New Roman";
         }
         case AMFontTypeVector:
         {
-            fontFamilyName = @"Helvetica Neue";
             mask = NSBoldFontMask;
             break;
         }
         case AMFontTypeMatrix:
         {
-            fontFamilyName = @"Helvetica Neue";
             mask = NSBoldFontMask;
             break;
         }
         case AMFontTypeSymbol:
         {
-            fontFamilyName = @"Helvetica Neue";
             mask = NSBoldFontMask;
             break;
         }

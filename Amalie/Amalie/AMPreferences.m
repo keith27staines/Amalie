@@ -98,6 +98,16 @@ static NSMutableDictionary * AMFonts;
     return @{kAMFixedWidthFontNameKey: fixedWidthFont, kAMFontNameKey:standardFont};
 }
 
++(NSFont*)standardFont
+{
+    return self.fonts[kAMFontNameKey];
+}
+
++(NSFont*)fixedWidthFont
+{
+    return self.fonts[kAMFixedWidthFontNameKey];
+}
+
 +(void)registerDefaultPreferences
 {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];

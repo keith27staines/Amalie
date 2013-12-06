@@ -56,6 +56,22 @@
 
 @implementation AMContentViewController
 
+
+-(void)applyUserPreferences
+{
+    // Base implementation does nothing but is designed to be overridden
+}
+
+-(NSFont *)standardFont
+{
+    return [AMPreferences standardFont];
+}
+
+-(NSFont *)fixedWidthFont
+{
+    return [AMPreferences fixedWidthFont];
+}
+
 -(AMDInsertedObject *)amdInsertedObject
 {
     return _amdInsertedObject;
@@ -162,6 +178,7 @@
             amdExpr.symbol = symbol;
         }
         self.amdInsertedObject = amdInsertedObject;
+        [self applyUserPreferences];
     }
     return self;
 }
@@ -333,19 +350,6 @@
     NSString * key = [tray keyForType:type];
     AMTrayItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];
-}
-
-
--(NSFont*)standardFont
-{
-    NSDictionary * fonts = [AMPreferences fonts];
-    return fonts[kAMFontNameKey];
-}
-
--(NSFont *)fixedWidthFont
-{
-    NSDictionary * fonts = [AMPreferences fonts];
-    return fonts[kAMFixedWidthFontNameKey];
 }
 
 -(void)deleteContent

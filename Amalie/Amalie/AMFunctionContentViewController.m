@@ -68,6 +68,16 @@ static NSUInteger const kAMIndexRHS;
     [self setupExpressionStringView];
 }
 
+-(void)applyUserPreferences
+{
+    [super applyUserPreferences];
+    [self.nameView setFont:[AMPreferences standardFont]];
+    [self.equalsSignView setFont:self.standardFont];
+    [self.expressionStringView setFont:self.fixedWidthFont];
+    //[self.expressionView setFont:self.fixedWidthFont];
+    [self.nameView sizeToFit];
+    [self.equalsSignView sizeToFit];
+}
 
 -(BOOL)isConstant
 {
@@ -87,7 +97,6 @@ static NSUInteger const kAMIndexRHS;
 -(void)setupNameView
 {
     [self.nameView setDelegate:self];
-    [self.nameView setFont:self.standardFont];
     SEL callback;
     callback = NSSelectorFromString(@"nameStringDidBeginEditing:");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidBeginEditingNotification object:self.nameView];
@@ -97,14 +106,11 @@ static NSUInteger const kAMIndexRHS;
     
     callback = NSSelectorFromString(@"nameStringDidEndEditing:");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidEndEditingNotification object:self.nameView];
-    [self.nameView sizeToFit];
 }
 
 -(void)setupEqualsView
 {
-    [self.equalsSignView setFont:self.standardFont];
     self.equalsSignView.stringValue = self.equalsSignView.stringValue;
-    [self.equalsSignView sizeToFit];
 }
 
 -(NSDictionary*)viewDictionary
@@ -124,7 +130,6 @@ static NSUInteger const kAMIndexRHS;
 {
     // Before we can do anything with the view we have to load it
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
-    [self.argumentListViewController setFont:self.standardFont];
     [self.argumentListView setAutoFitContent:YES];
     
     [self.contentView addSubview:self.argumentListView];
@@ -144,8 +149,6 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)setupExpressionStringView
 {
-    [self.expressionStringView setFont:self.fixedWidthFont];
-    
     SEL callback;
     
     callback = NSSelectorFromString(@"expressionStringDidBeginEditing:");

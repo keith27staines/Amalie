@@ -37,6 +37,12 @@
     return self;
 }
 
+-(void)applyUserPreferences
+{
+    [super applyUserPreferences];
+    [self.expressionStringView setFont:self.fixedWidthFont];
+}
+
 -(void)setupExpressionStringView
 {
     [self.expressionStringView setFont:self.fixedWidthFont];

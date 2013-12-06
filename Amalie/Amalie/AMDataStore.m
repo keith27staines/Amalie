@@ -8,6 +8,7 @@
 
 #import <CoreData/CoreData.h>
 #import "AMDataStore.h"
+#import "AMDName+Methods.h"
 
 static AMDataStore * _sharedDatastore;
 
@@ -50,6 +51,16 @@ static AMDataStore * _sharedDatastore;
     return results;
 }
 
-
+-(AMDInsertedObject*)insertedObjectWithName:(NSString*)name
+{
+    // Get object with the specified name (ignoring dummy variable names)
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"mustBeUnique = 1"];
+    NSArray * names = [self fetchObjectsFromEntityWithName:@"AMDNames"
+                                            withSortDescriptors:nil
+                                                      predicate:predicate];
+    NSAssert(names.count < 2, @"More than one occurence of a name (%@) that should be unique.",name);
+    AMDName * amdName = names[0];
+    return amdName.insertedObject;
+}
 
 @end
