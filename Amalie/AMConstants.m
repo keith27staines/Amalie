@@ -15,6 +15,7 @@ NSUInteger const kAMDefaultFontDelta                  =  2;
 NSUInteger const kAMDefaultMinFontSize                = 10;
 NSString * const kAMDefaultFontName                   = @"Times New Roman";
 NSString * const kAMDefaultFixedWidthFontName         = @"Monaco";
+CGFloat    const kAMDefaultSuperscriptingFraction     = 0.7;
 
 #pragma mark - key affixes -
 NSString * const kAMKeyPrefix                         = @"kAM";
@@ -34,6 +35,7 @@ NSString * const kAMFontSizeDeltaKey                  = @"kAMFontSizeDeltaKey";
 NSString * const kAMMinFontSizeKey                    = @"kAMMinFontSizeKey";
 NSString * const kAMFixedWidthFontNameKey             = @"kAMFixedWidthFontNameKey";
 NSString * const kAMFixedWidthFontSizeKey             = @"kAMFixedWidthFontSizeKey";
+NSString * const kAMSuperscriptingFraction            = @"kAMSuperscriptingFraction";
 
 #pragma mark - Icon and title -
 NSString * const kAMIconKey                           = @"kAMIconKey";

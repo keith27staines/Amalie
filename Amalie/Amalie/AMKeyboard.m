@@ -67,5 +67,13 @@
     return [_keysArray copy];
 }
 
-
+-(BOOL)containsCharacter:(NSString*)ch
+{
+    for (AMKeyboardKeyModel * key in self.allKeys) {
+        if ( [key.name isEqualToString:ch] ) {
+            return YES;
+        }
+    }
+    return NO;
+}
 @end

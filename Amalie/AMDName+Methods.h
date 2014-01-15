@@ -8,10 +8,13 @@
 
 #import "AMDName.h"
 #import "AMConstants.h"
+#import "KSMMathValue.h"
 
 @interface AMDName (Methods)
 
 +(AMDName*)makeAMDNameForType:(AMInsertableType)type;
 +(NSArray*)fetchNames;
-
++(AMDName*)fetchUniqueNameWithString:(NSString*)name;
++(NSAttributedString*)defaultAttributedNameFromString:(NSString*)name andType:(KSMValueType)type;
+-(void)setNameAndAttributedNameFrom:(NSString*)string andKSMType:(KSMValueType)type;
 @end

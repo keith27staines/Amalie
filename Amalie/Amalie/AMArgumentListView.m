@@ -43,6 +43,12 @@
 
 -(void)reloadData
 {
+    NSFont * bracesFont = [self.delegate bracesFont];
+    self.leftBrace.stringValue = @"(";
+    self.rightBrace.stringValue = @")";
+    [self.leftBrace setFont:bracesFont];
+    [self.rightBrace setFont:bracesFont];
+    [self.textField setFont:bracesFont];
     NSMutableAttributedString * displayString;
     NSAttributedString * comma = [[NSAttributedString alloc] initWithString:@" , " attributes:nil];
     NSUInteger stringCount = self.delegate.displayStringCount;

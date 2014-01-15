@@ -31,7 +31,7 @@
 #import "KSMExpression.h"
 
 // datamodel
-//#import <CoreData/CoreData.h>
+#import "AMNameProvider.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMDIndexedExpression.h"
@@ -293,6 +293,11 @@
 
 #pragma mark - AMContentViewDataSource -
 
+-(id<AMNameProvider>)viewRequiresNameProvider:(AMContentView *)view
+{
+    return [self.parentWorksheetController insertedObjectNameProvider];
+}
+
 -(void)populateView:(AMContentView *)view
 {
     NSLog(@"Warning... populateContent has not been overridden.");
@@ -372,6 +377,8 @@
     [CATransaction commit];
     [[self parentWorksheetController] contentViewController:self isResizingContentTo:self.view.frame.size  usingAnimationTransaction:NO];
 }
+
+#pragma mark - Misc -
 
 - (void)dealloc
 {

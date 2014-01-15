@@ -41,8 +41,7 @@
 
 -(void)awakeFromNib
 {
-    self.argumentListView.leftBrace.stringValue = @"(";
-    self.argumentListView.rightBrace.stringValue = @")";
+    [self.argumentListView reloadData];
     [self applyUserPreferences];
 }
 
@@ -59,6 +58,11 @@
 
 #pragma mark - AMArgumentListViewDelegate -
 
+-(NSFont*)bracesFont
+{
+    return [AMPreferences standardFont];
+}
+
 -(NSUInteger)displayStringCount
 {
     return self.argumentList.arguments.count;
@@ -71,10 +75,7 @@
 
 -(void)applyUserPreferences
 {
-    NSFont * font = [AMPreferences standardFont];
-    self.argumentListView.textField.font = font;
-    self.argumentListView.leftBrace.font = font;
-    self.argumentListView.rightBrace.font = font;
+
 }
 
 @end

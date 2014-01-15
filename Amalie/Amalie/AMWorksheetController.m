@@ -29,6 +29,7 @@
 #import "AMDInsertedObject+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
+#import "AMInsertedObjectNameProvider.h"
 
 @interface AMWorksheetController()
 {
@@ -60,6 +61,8 @@
 
 @property BOOL showKeyboardArea;
 @property BOOL showObjectsPanel;
+
+@property (readonly) AMInsertedObjectNameProvider * nameProvider;
 @end
 
 @implementation AMWorksheetController
@@ -276,6 +279,16 @@
 
 
 #pragma mark - AMInsertableViewDelegate -
+
+-(id<AMNameProvider>)insertedObjectNameProvider
+{
+    static id<AMNameProvider> _insertedObjectNameProvider;
+    if (!_insertedObjectNameProvider) {
+        _insertedObjectNameProvider = [[AMInsertedObjectNameProvider alloc] init];
+    }
+    return _insertedObjectNameProvider;
+}
+
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
     AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view];
@@ -457,48 +470,6 @@
     _selectedView.viewState = AMInsertViewStateSelected;
 }
 
-#pragma mark - AMNamedObjectInfoProvider -
--(NSFont *)baseFontForObjectWithName:(NSString *)name
-{
-    return [AMPreferences standardFont];
-}
-
--(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
-{
-    return nil;
-}
-
--(KSMValueType)mathTypeForForObjectWithName:(NSString *)name
-{
-    AMDInsertedObject * insertedObject = [[AMDataStore sharedDataStore] insertedObjectWithName:name];
-    
-    if (!insertedObject) {
-        // everything not specifically defined is assumed to be of type double
-        return KSMValueDouble;
-    }
-    
-    switch ((AMInsertableType)insertedObject.insertType) {
-        case AMInsertableTypeConstant:
-        case AMInsertableTypeVariable:
-        case AMInsertableTypeFunction:
-        {
-            AMDFunctionDef * fnDef = (AMDFunctionDef*)insertedObject;
-            return (KSMValueType)fnDef.returnType.integerValue;
-            break;
-        }
-        case AMInsertableTypeVector:
-            return KSMValueVector;
-        case AMInsertableTypeMatrix:
-            return KSMValueMatrix;
-        default:
-            return KSMValueDouble;
-    }
-}
-
--(BOOL)isKnownObjectName:(NSString *)name
-{
-    return FALSE;
-}
 
 #pragma mark - Misc -
 

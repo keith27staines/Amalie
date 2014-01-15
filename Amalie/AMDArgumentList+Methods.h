@@ -17,5 +17,5 @@
 -(AMDArgument*)argumentAtIndex:(NSUInteger)index;
 -(AMDArgument*)addArgumentAtIndex:(NSInteger)index;
 -(BOOL)removeArgumentAtIndex:(NSUInteger)index;
-
+-(AMDArgument*)argumentWithName:(NSString*)name;
 @end

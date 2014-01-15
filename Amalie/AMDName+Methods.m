@@ -10,6 +10,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 
 #import "AMDName+Methods.h"
 #import "NSManagedObject+SharedDataStore.h"
+#import "AMInsertedObjectNameProvider.h"
 
 @implementation AMDName (Methods)
 
@@ -65,11 +66,24 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
         } else {
             aName.string = defaultName;
         }
-        aName.attributedString = [[NSAttributedString alloc] initWithString:aName.string attributes:nil];
+        id<AMNameProvider> nameProvider = [[AMInsertedObjectNameProvider alloc] init];
+        aName.attributedString = [nameProvider defaultAttributedNameForObjectWithName:aName.string withType:KSMValueDouble];
     }
     
     aName.mustBeUnique = @(mustBeUnique);
     return aName;
+}
+
++(NSAttributedString*)defaultAttributedNameFromString:(NSString*)name andType:(KSMValueType)type
+{
+    id<AMNameProvider> nameProvider = [[AMInsertedObjectNameProvider alloc] init];
+    return  [nameProvider defaultAttributedNameForObjectWithName:name withType:type];
+}
+
+-(void)setNameAndAttributedNameFrom:(NSString*)string andKSMType:(KSMValueType)type
+{
+    self.string = string;
+    self.attributedString = [AMDName defaultAttributedNameFromString:string andType:type];
 }
 
 +(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string
@@ -96,7 +110,20 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 {
     NSArray * allNames = [self fetchNames];
     NSPredicate * predicate;
-    predicate = [NSPredicate predicateWithFormat:@"(string like %@) AND (mustBeUnique == %@)", name, @(NO)];
+    predicate = [NSPredicate predicateWithFormat:@"(string == %@) AND (mustBeUnique == %@)", name, @(NO)];
+    NSArray * filtered = [allNames filteredArrayUsingPredicate:predicate];
+    if (filtered.count == 0) {
+        return nil;
+    } else {
+        return filtered[0];
+    }
+}
+
++(AMDName*)fetchUniqueNameWithString:(NSString*)name
+{
+    NSArray * allNames = [self fetchNames];
+    NSPredicate * predicate;
+    predicate = [NSPredicate predicateWithFormat:@"(string == %@) AND (mustBeUnique == %@)", name, @(YES)];
     NSArray * filtered = [allNames filteredArrayUsingPredicate:predicate];
     if (filtered.count == 0) {
         return nil;

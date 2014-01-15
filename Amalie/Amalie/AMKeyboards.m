@@ -101,6 +101,17 @@ static AMKeyboards * _sharedKeyboards;
     return [NSSet setWithArray:lettersArray];
 }
 
+-(AMKeyboard*)keyboardContainingCharacter:(NSString*)ch
+{
+    for (AMKeyboard * keyboard in [AMKeyboards sharedKeyboards].keyboards) {
+        
+        if ( [keyboard containsCharacter:ch] ) {
+            return keyboard;
+        }
+    }
+    return nil;
+}
+
 +(NSArray*)standardKeys
 {
     static NSArray * _standardKeys;

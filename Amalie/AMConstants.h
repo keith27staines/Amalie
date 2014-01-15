@@ -15,6 +15,7 @@ extern NSUInteger const kAMDefaultFontDelta;
 extern NSUInteger const kAMDefaultMinFontSize;
 extern NSString * const kAMDefaultFontName;
 extern NSString * const kAMDefaultFixedWidthFontName;
+extern CGFloat    const kAMDefaultSuperscriptingFraction;
 
 #pragma mark - key affixes -
 extern NSString * const kAMKeyPrefix;
@@ -34,6 +35,7 @@ extern NSString * const kAMFontSizeDeltaKey;
 extern NSString * const kAMMinFontSizeKey;
 extern NSString * const kAMFixedWidthFontNameKey;
 extern NSString * const kAMFixedWidthFontSizeKey;
+extern NSString * const kAMSuperscriptingFraction;
 
 #pragma mark - Icon and title -
 extern NSString * const kAMIconKey;

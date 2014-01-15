@@ -24,7 +24,7 @@
 #import "AMFunctionEditorViewController.h"
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
-
+#import "AMGeneralNameProvider.h"
 
 // core data generated objects
 #import "AMDInsertedObject.h"
@@ -74,7 +74,6 @@ static NSUInteger const kAMIndexRHS;
     [self.nameView setFont:[AMPreferences standardFont]];
     [self.equalsSignView setFont:self.standardFont];
     [self.expressionStringView setFont:self.fixedWidthFont];
-    //[self.expressionView setFont:self.fixedWidthFont];
     [self.nameView sizeToFit];
     [self.equalsSignView sizeToFit];
 }
@@ -382,6 +381,20 @@ static NSUInteger const kAMIndexRHS;
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     [self layoutInsertedViewAndCloseTransaction:YES];
 }
+
+#pragma mark - AMContentViewDataSource overrides -
+
+-(id<AMNameProvider>)viewRequiresNameProvider:(AMContentView *)view
+{
+    static AMGeneralNameProvider * _generalNameProvider;
+    if (!_generalNameProvider) {
+        _generalNameProvider = [[AMGeneralNameProvider alloc] init];
+    }
+    [_generalNameProvider setDummyVariables:self.amdFunctionDef.argumentList];
+    return _generalNameProvider;
+}
+
+#pragma mark - Misc -
 
 
 @end

@@ -24,4 +24,6 @@
 
 -(NSArray*)allKeys;
 
+-(BOOL)containsCharacter:(NSString*)ch;
+
 @end

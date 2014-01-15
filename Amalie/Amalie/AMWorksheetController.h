@@ -18,12 +18,11 @@
 #import "AMTrayDatasource.h"
 #import "AMInsertableViewDelegate.h"
 #import "AMInsertableViewDataSource.h"
-#import "AMNamedObjectInfoProvider.h"
+#import "AMInsertedObjectNameProvider.h"
 
 @interface AMWorksheetController : NSPersistentDocument
 <AMWorksheetViewDelegate,
- AMInsertableViewDelegate,
- AMNamedObjectInfoProvider>
+ AMInsertableViewDelegate>
 
 
 @property (weak) AMInsertableView * selectedView;

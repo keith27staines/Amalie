@@ -9,11 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "AMGroupedView.h"
 #import "AMContentViewDataSource.h"
+#import "AMNameProvider.h"
 
 @interface AMContentView : AMGroupedView
 
 @property (weak) IBOutlet id<AMContentViewDataSource>datasource;
-
 
 @end
 

@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
+#import "AMNameProvider.h"
 
 @protocol AMContentViewDataSource <NSObject>
 
@@ -25,5 +26,6 @@
 
 -(void)populateView:(AMContentView*)view;
 
+-(id<AMNameProvider>)viewRequiresNameProvider:(AMContentView*)view;
 
 @end

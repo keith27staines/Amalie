@@ -12,6 +12,12 @@
 
 extern NSString * const kAMKeyboardSmallGreek;
 extern NSString * const kAMKeyboardCapitalGreek;
+extern NSString * const kAMKeyboardSmallEnglish;
+extern NSString * const kAMKeyboardCapitalEnglish;
+extern NSString * const kAMKeyboardNumeric;
+extern NSString * const kAMKeyboardMathOperators;
+extern NSString * const kAMKeyboardMathSymbols;
+
 
 @interface AMKeyboards : NSObject
 
@@ -21,6 +27,7 @@ extern NSString * const kAMKeyboardCapitalGreek;
 
 -(AMKeyboard*)keyboardWithName:(NSString*)name;
 -(AMKeyboard*)keyboardWithIndex:(NSUInteger)index;
+-(AMKeyboard*)keyboardContainingCharacter:(NSString*)ch;
 
 +(NSSet*)allLetterKeys;
 +(NSSet*)allOperatorKeys;

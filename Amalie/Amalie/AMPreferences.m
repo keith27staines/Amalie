@@ -33,7 +33,7 @@ static NSMutableDictionary * AMFonts;
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFixedWidthFontSizeKey];
 }
 
--(NSUInteger)worksheetFixedWidthFontSize
++(NSUInteger)worksheetFixedWidthFontSize
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFixedWidthFontSizeKey];
 }
@@ -46,6 +46,16 @@ static NSMutableDictionary * AMFonts;
 +(NSUInteger)worksheetFontSize
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFontSizeKey];
+}
+
++(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:superscriptingFraction forKey:kAMSuperscriptingFraction];
+}
+
++(CGFloat)superscriptingFraction
+{
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSuperscriptingFraction];
 }
 
 +(void)setWorksheetFontDelta:(NSUInteger)delta
@@ -90,10 +100,11 @@ static NSMutableDictionary * AMFonts;
 
 +(NSDictionary*)fonts
 {
-    NSFont * fixedWidthFont = [NSFont fontWithName:[AMPreferences worksheetFixedWidthFontName] size:[AMPreferences worksheetFontSize]];
+    NSFont * fixedWidthFont = [NSFont fontWithName:[AMPreferences worksheetFixedWidthFontName]
+                                              size:[AMPreferences worksheetFixedWidthFontSize]];
 
     NSFont * standardFont = [NSFont fontWithName:[AMPreferences worksheetFontName]
-                                            size:27];
+                                            size:[AMPreferences worksheetFontSize]];
     
     return @{kAMFixedWidthFontNameKey: fixedWidthFont, kAMFontNameKey:standardFont};
 }
@@ -124,6 +135,7 @@ static NSMutableDictionary * AMFonts;
     [defaults setObject:@(kAMDefaultFixedWidthFontSize) forKey:kAMFixedWidthFontSizeKey];
     [defaults setObject:@(kAMDefaultFontDelta)   forKey:kAMFontSizeDeltaKey];
     [defaults setObject:@(kAMDefaultMinFontSize) forKey:kAMMinFontSizeKey];
+    [defaults setObject:@(kAMDefaultSuperscriptingFraction) forKey:kAMSuperscriptingFraction];
     
     // Add the dictionaries for the tray objects
     NSMutableDictionary * trayDictionary = [self trayFactorySettingsDictionary];

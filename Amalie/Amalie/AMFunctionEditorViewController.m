@@ -10,9 +10,9 @@
 #import "AMDataStore.h"
 #import "AMDArgumentList+Methods.h"
 #import "AMDArgumentList.h"
-#import "AMDArgument.h"
+#import "AMDArgument+Methods.h"
 #import "AMDFunctionDef.h"
-#import "AMDName.h"
+#import "AMDName+Methods.h"
 #import "KSMMathValue.h"
 #import "AMFunctionContentViewController.h"
 #import "NSString+KSMMath.h"
@@ -130,8 +130,10 @@
 {
     NSInteger selectedRow = self.argumentTable.selectedRow;
     AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
-    argument.name.string = ((NSTextField*)obj.object).stringValue;
-    argument.name.attributedString = [[NSAttributedString alloc] initWithString:argument.name.string attributes:nil];
+
+    NSString * newName = ((NSTextField*)obj.object).stringValue;
+    KSMValueType mathValue = ((NSNumber*)argument.mathValue).integerValue;
+    [argument.name setNameAndAttributedNameFrom:newName andKSMType:mathValue];
     self.argumentListViewController.argumentList = self.argumentList;
     NSLog(@"Text changed");
 }
@@ -269,6 +271,7 @@
         NSInteger row = [self.argumentTable rowForView:sender];
         AMDArgument * argument = [self.argumentList argumentAtIndex:row];
         argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
+        [argument.name setNameAndAttributedNameFrom:argument.name.string andKSMType:sender.selectedTag];
     }
 }
 

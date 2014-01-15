@@ -15,6 +15,7 @@
 #import "AMOperatorView.h"
 #import "AMConstants.h"
 #import "AMPreferences.h"
+#import "AMContentViewDataSource.h"
 
 CGFloat const kAM_MINWIDTH  = 20.0f;
 CGFloat const kAM_MINHEIGHT = 20.0f;
@@ -446,7 +447,9 @@ typedef enum AMOrientation : NSUInteger {
     [NSBezierPath fillRect:dirtyRect];
     
     if (_stringToDisplay) {
-        [_stringToDisplay drawAtPoint:NSMakePoint(0, 0) withAttributes:_attributes];
+        id<AMNameProvider> nameProvider = [self.datasource viewRequiresNameProvider:self];
+        NSAttributedString * displayString = [nameProvider attributedNameForObjectWithName:_stringToDisplay];
+        [displayString drawAtPoint:NSZeroPoint];
     } else {
         if (self.isBracketed) {
             [[NSColor blackColor] set];

@@ -14,6 +14,7 @@
 #import "AMContentView.h"
 #import "AMContentViewDataSource.h"
 #import "AMQuotientBaselining.h"
+#import "AMNameProvider.h"
 
 @interface AMExpressionNodeView : AMContentView <AMQuotientBaselining>
 

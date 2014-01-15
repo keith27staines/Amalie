@@ -6,14 +6,13 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMDArgumentList;
-
 #import <Cocoa/Cocoa.h>
 
 @protocol AMArgumentListViewDelegate <NSTextFieldDelegate>
 
 -(NSAttributedString*)displayStringForIndex:(NSUInteger)index;
 -(NSUInteger)displayStringCount;
+-(NSFont*)bracesFont;
 
 @end
 

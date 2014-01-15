@@ -50,26 +50,16 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     argument = [AMDArgument makeArgumentOfType:KSMValueDouble];
     [self addArgumentsObject:argument];
     
-    for (AMDArgument * a in self.arguments) {
-        NSLog(@"Argument with index %@ and name %@ and attr. name %@ ",a.index,a.name.string,a.name.attributedString);
-        NSLog(@"ArgName is %@",a.name);
-    }
-    
     // give the argument the right index
     argument.index = @(index);
     
     // give it a default name to match the index (+1)
-    argument.name.string = [[argument.name.string KSMfirstCharacter] stringByAppendingString:[@(index+1) stringValue]];
-    argument.name.attributedString = [[NSAttributedString alloc] initWithString:argument.name.string];
+    NSString * indexedName = [[argument.name.string KSMfirstCharacter] stringByAppendingString:[@(index+1) stringValue]];
+    [argument.name setNameAndAttributedNameFrom:indexedName andKSMType:KSMValueDouble];
     
     // Update the indexes of any arguments that have been downshifted by the insertion
     for (AMDArgument * argument in argumentsToReIndex) {
         argument.index =  @(argument.index.integerValue + 1);
-    }
-    
-    for (AMDArgument * a in self.arguments) {
-        NSLog(@"Argument with index %@ and name %@ and attr. name %@ ",a.index,a.name.string,a.name.attributedString);
-        NSLog(@"ArgName is %@",a.name);
     }
     
     [[self undoManager] endUndoGrouping];
@@ -103,6 +93,16 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     [[self undoManager] endUndoGrouping];
     
     return YES;
+}
+
+-(AMDArgument *)argumentWithName:(NSString *)name
+{
+    for (AMDArgument * argument in self.arguments) {
+        if ( [argument.name.string isEqualToString:name] ) {
+            return argument;
+        }
+    }
+    return nil;
 }
 
 -(NSUndoManager*)undoManager

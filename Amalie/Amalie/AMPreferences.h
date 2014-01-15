@@ -17,7 +17,9 @@
 +(NSUInteger)worksheetSmallestFontSize;
 +(NSString*)worksheetFontName;
 +(NSString*)worksheetFixedWidthFontName;
++(NSUInteger)worksheetFixedWidthFontSize;
 +(NSDictionary*)fonts;
++(CGFloat)superscriptingFraction;
 
 +(void)setWorksheetFixedWidthFontSize:(NSUInteger)size;
 +(void)setWorksheetFontSize:(NSUInteger)size;
@@ -25,6 +27,7 @@
 +(void)setWorksheetSmallestFontSize:(NSUInteger)size;
 +(void)setWorksheetFontName:(NSString*)fontName;
 +(void)setWorksheetFixedWidthFontName:(NSString*)fontName;
++(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction;
 
 +(id)objectForKey:(NSString*)key;
 
