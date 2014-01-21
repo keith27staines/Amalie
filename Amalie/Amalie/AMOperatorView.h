@@ -9,14 +9,15 @@
 @class AMExpressionNodeView;
 
 #import <Cocoa/Cocoa.h>
-#import "AMQuotientBaselining.h"
+#import "AMTextView.h"
+#import "KSMConstants.h"
 
-@interface AMOperatorView : NSView <AMQuotientBaselining>
+@interface AMOperatorView : AMTextView
 
-@property (copy) NSString             * operatorString;
-@property NSDictionary                * attributes;
 @property (weak) AMExpressionNodeView * parentExpressionNode;
+@property (readonly) KSMOperatorType operatorType;
 
--(NSPoint)midPointInCoordinatesOfView:(NSView*)view;
+-(void)setOperator:(NSString*)operatorString withFont:(NSFont*)font;
+-(void)setOperator:(NSString*)operatorString withFontSize:(CGFloat)fontSize;
 
 @end

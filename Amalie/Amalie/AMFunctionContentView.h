@@ -7,14 +7,15 @@
 //
 
 @class AMExpressionNodeView;
-@class AMNameView;
+@class AMTextView;
+@class AMArgumentListView;
 
 #import "AMContentView.h"
 
 @interface AMFunctionContentView : AMContentView
-@property (weak) IBOutlet AMNameView *nameView;
+@property (weak) IBOutlet AMTextView *nameView;
 @property (weak) IBOutlet AMExpressionNodeView *expressionView;
 @property (weak) IBOutlet NSTextField *expressionStringView;
-
+@property (weak) AMArgumentListView * argumentListView;
 
 @end

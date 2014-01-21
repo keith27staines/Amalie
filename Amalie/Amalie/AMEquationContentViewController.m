@@ -15,6 +15,7 @@
 #import "AMPreferences.h"
 #import "AMWorksheetController.h"
 #import "AMNameView.h"
+#import "AMNameProvider.h"
 
 #import "AMDName.h"
 
@@ -43,8 +44,10 @@ static NSUInteger const kAMIndexRHS;
 
 - (IBAction)nameAction:(AMNameView *)sender {
     NSString * proposedName = [sender.attributedStringValue string];
-    if ( ! [self validatedProposedName:proposedName error:nil] )
+    AMNameProvider * namer = [AMNameProvider nameProvider];
+    if ( ! [namer validateProposedName:proposedName forType:AMInsertableTypeEquation error:nil] ) {
         sender.attributedStringValue = self.attributedName;
+    }
 }
 
 - (IBAction)expressionStringWasEdited:(NSTextField *)sender

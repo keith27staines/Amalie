@@ -18,7 +18,7 @@
 #import "AMTrayDatasource.h"
 #import "AMInsertableViewDelegate.h"
 #import "AMInsertableViewDataSource.h"
-#import "AMInsertedObjectNameProvider.h"
+#import "AMNameProviderBase.h"
 
 @interface AMWorksheetController : NSPersistentDocument
 <AMWorksheetViewDelegate,

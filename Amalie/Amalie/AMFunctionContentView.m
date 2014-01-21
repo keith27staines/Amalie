@@ -8,7 +8,15 @@
 
 #import "AMFunctionContentView.h"
 #import "AMExpressionNodeView.h"
-#import "AMNameView.h"
+#import "AMArgumentListView.h"
+
+@interface AMFunctionContentView()
+{
+    
+}
+
+@end
+
 
 @implementation AMFunctionContentView
 
@@ -21,35 +29,41 @@
     return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+-(void)updateConstraints
 {
-	[super drawRect:dirtyRect];
-	
-    // Drawing code here.
-}
-
--(BOOL)autoresizesSubviews
-{
-    return YES;
-}
-
--(void)viewDidMoveToWindow
-{
-    [super viewDidMoveToWindow];
+    [super updateConstraints];
+    
+    NSArray * constraints;
+    AMTextView * nameView = self.nameView;
+    AMExpressionNodeView * expressionView = self.expressionView;
+    AMArgumentListView * argumentsView = self.argumentListView;
+    NSDictionary * views;
+    NSDictionary * metrics;
+    CGFloat nameWidth = fmaxf(nameView.intrinsicContentSize.width,12);
+    CGFloat argsWidth = fmaxf(argumentsView.intrinsicContentSize.width,12);
+    
+    if (self.argumentListView) {
+        views = NSDictionaryOfVariableBindings(nameView, argumentsView, expressionView);
+        metrics = @{@"argsWidth": @(argsWidth),
+                    @"nameWidth": @(nameWidth)};
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(nameWidth)][argumentsView(argsWidth)][expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
+    } else {
+        views = NSDictionaryOfVariableBindings(nameView, expressionView);
+        metrics = @{@"nameWidth": @(nameWidth)};
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(>=nameWidth)]-[expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
+    }
+    [self addConstraints:constraints];
 }
 
 -(void)setDatasource:(id<AMContentViewDataSource>)datasource
 {
     [super setDatasource:datasource];
-    self.expressionView.datasource = self.datasource;
-    self.nameView.dataSource = self.datasource;
 }
 
 -(void)setGroupID:(NSString *)groupID
 {
     [super setGroupID:groupID];
     self.expressionView.groupID = groupID;
-    self.nameView.groupID = groupID;
 }
 
 

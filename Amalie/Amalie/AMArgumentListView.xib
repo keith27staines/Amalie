@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13B40" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5037" systemVersion="13C39" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5037"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMArgumentListViewController">
@@ -15,57 +15,8 @@
         <customView id="1" customClass="AMArgumentListView">
             <rect key="frame" x="0.0" y="0.0" width="266" height="43"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <textField verticalHuggingPriority="750" placeholderIntrinsicWidth="22" placeholderIntrinsicHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="l3x-u6-iNl">
-                    <rect key="frame" x="91" y="11" width="66" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="66" placeholder="YES" id="UY2-he-lqG"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="center" title="x,y,z" placeholderString="x,y,z" drawsBackground="YES" usesSingleLineMode="YES" id="E5R-Sa-7aH">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iZs-7t-uje">
-                    <rect key="frame" x="155" y="13" width="76" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Right brace" id="M3b-k1-jRE">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gQU-Ht-y0d">
-                    <rect key="frame" x="26" y="13" width="67" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Left brace" id="Q6F-VX-ZKn">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <constraints>
-                <constraint firstAttribute="centerX" secondItem="l3x-u6-iNl" secondAttribute="centerX" constant="9" id="0bo-VP-7Wi"/>
-                <constraint firstAttribute="centerX" secondItem="l3x-u6-iNl" secondAttribute="centerX" constant="9" id="Gge-I3-qRu"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iZs-7t-uje" secondAttribute="trailing" id="Myo-b8-oNU"/>
-                <constraint firstItem="gQU-Ht-y0d" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1" secondAttribute="top" id="P8E-v7-Vnh"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gQU-Ht-y0d" secondAttribute="bottom" id="Vv8-tE-1SJ"/>
-                <constraint firstAttribute="centerY" secondItem="l3x-u6-iNl" secondAttribute="centerY" id="eSC-bC-PSZ"/>
-                <constraint firstItem="l3x-u6-iNl" firstAttribute="leading" secondItem="gQU-Ht-y0d" secondAttribute="trailing" id="egh-9F-7Q9"/>
-                <constraint firstItem="l3x-u6-iNl" firstAttribute="centerY" secondItem="gQU-Ht-y0d" secondAttribute="centerY" id="fPa-Iq-PrA"/>
-                <constraint firstItem="iZs-7t-uje" firstAttribute="leading" secondItem="l3x-u6-iNl" secondAttribute="trailing" id="vH3-oj-gnc"/>
-                <constraint firstItem="gQU-Ht-y0d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1" secondAttribute="leading" id="wv3-Z4-kaK"/>
-                <constraint firstItem="l3x-u6-iNl" firstAttribute="centerY" secondItem="iZs-7t-uje" secondAttribute="centerY" constant="-0.5" id="xcp-Sq-SEP"/>
-            </constraints>
             <connections>
-                <outlet property="csvWidthConstraint" destination="UY2-he-lqG" id="8gL-D3-mkT"/>
                 <outlet property="delegate" destination="-2" id="4Ir-xU-xuP"/>
-                <outlet property="leftBrace" destination="gQU-Ht-y0d" id="FTp-rI-poL"/>
-                <outlet property="rightBrace" destination="iZs-7t-uje" id="22g-aM-Lgw"/>
-                <outlet property="textField" destination="l3x-u6-iNl" id="8OX-1a-o01"/>
             </connections>
         </customView>
     </objects>

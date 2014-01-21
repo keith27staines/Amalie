@@ -62,9 +62,17 @@ NSString * const kScalarMultiply        = @"∘";
 
 -(BOOL)terminal
 {
+    if (self.isUnary || self.expressionType == KSMExpressionTypeBinary)
+    {
+        return YES;
+    }
+    return NO;
+}
+
+-(BOOL)isUnary
+{
     if (self.expressionType == KSMExpressionTypeVariable ||
-        self.expressionType == KSMExpressionTypeLiteral ||
-        self.expressionType == KSMExpressionTypeBinary)
+        self.expressionType == KSMExpressionTypeLiteral)
     {
         return YES;
     }

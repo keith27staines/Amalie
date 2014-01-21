@@ -37,7 +37,6 @@
 #import "AMDIndexedExpression.h"
 #import "AMDExpression+Methods.h"
 #import "AMDName+Methods.h"
-#import "AMNameRules.h"
 #import "AMDataStore.h"
 
 
@@ -293,7 +292,7 @@
 
 #pragma mark - AMContentViewDataSource -
 
--(id<AMNameProvider>)viewRequiresNameProvider:(AMContentView *)view
+-(id<AMNameProviding>)viewRequiresNameProvider:(AMContentView *)view
 {
     return [self.parentWorksheetController insertedObjectNameProvider];
 }
@@ -332,17 +331,18 @@
 
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 {
-    if ( ! [self validatedProposedName:proposedName.string error:error] ) return NO;
+    AMNameProvider * namer = [AMNameProvider nameProvider];
+    if ( [namer validateProposedName:proposedName.string forType:AMInsertableTypeDummyVariable error:error] ) return NO;
     
     self.amdInsertedObject.name.string = proposedName.string;
     self.amdInsertedObject.name.attributedString = proposedName;
     return YES;
 }
 
--(BOOL)validatedProposedName:(NSString*)proposedName error:(NSError**)error
-{
-    return [[AMNameRules sharedNameRules] validateProposedName:proposedName forType:AMInsertableTypeFunction error:error];
-}
+//-(BOOL)validatedProposedName:(NSString*)proposedName error:(NSError**)error
+//{
+//    return [[AMNameRules sharedNameRules] validateProposedName:proposedName forType:AMInsertableTypeFunction error:error];
+//}
 
 -(AMPreferences*)preferenceController
 {
@@ -362,20 +362,6 @@
     for (KSMExpression * expr in self.expressions) {
         [self.mathSheet decrementReferenceCountForObject:expr];
     }
-}
-
--(void)layoutInsertedViewAndCloseTransaction:(BOOL)closeTransaction
-{
-    [CATransaction begin];
-    if (closeTransaction) {
-        [CATransaction commit];
-    }
-}
-
--(void)closeLayoutTransaction
-{
-    [CATransaction commit];
-    [[self parentWorksheetController] contentViewController:self isResizingContentTo:self.view.frame.size  usingAnimationTransaction:NO];
 }
 
 #pragma mark - Misc -

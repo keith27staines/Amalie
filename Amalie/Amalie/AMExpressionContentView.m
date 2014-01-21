@@ -21,11 +21,6 @@
     return self;
 }
 
--(BOOL)translatesAutoresizingMaskIntoConstraints
-{
-    return NO;
-}
-
 -(void)viewDidMoveToWindow
 {
     [super viewDidMoveToWindow];
@@ -34,12 +29,6 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
-}
-
--(void)setDatasource:(id<AMContentViewDataSource>)datasource
-{
-    [super setDatasource:datasource];
-    self.expressionView.datasource = self.datasource;
 }
 
 -(void)setGroupID:(NSString *)groupID

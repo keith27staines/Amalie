@@ -41,7 +41,6 @@
 -(void)setDatasource:(id<AMContentViewDataSource>)datasource
 {
     [super setDatasource:datasource];
-    self.expressionView.datasource = self.datasource;
     self.nameView.dataSource = self.datasource;
 }
 

@@ -16,7 +16,6 @@
 #import "KSMWorksheet.h"
 #import "KSMMathValue.h"
 #import "AMContentView.h"
-#import "AMNameRules.h"
 #import "AMGroupedView.h"
 #import "KSMExpression.h"
 #import "AMDataStore.h"
@@ -29,7 +28,7 @@
 #import "AMDInsertedObject+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
-#import "AMInsertedObjectNameProvider.h"
+#import "AMNameProviderBase.h"
 
 @interface AMWorksheetController()
 {
@@ -57,12 +56,11 @@
 @property (readonly) NSMutableDictionary * insertableViewDictionary;
 
 @property (readonly) AMDataStore * sharedDataStore;
-@property (readonly) AMNameRules * sharedNameRules;
 
 @property BOOL showKeyboardArea;
 @property BOOL showObjectsPanel;
 
-@property (readonly) AMInsertedObjectNameProvider * nameProvider;
+@property (readonly) AMNameProviderBase * nameProvider;
 @end
 
 @implementation AMWorksheetController
@@ -72,11 +70,6 @@
 -(AMDataStore *)sharedDataStore
 {
     return [AMDataStore sharedDataStore];
-}
-
--(AMNameRules *)sharedNameRules
-{
-    return [AMNameRules sharedNameRules];
 }
 
 - (id)init
@@ -112,7 +105,6 @@
     [keypadContainerView setNeedsDisplay:YES];
     
     self.sharedDataStore.moc = self.managedObjectContext;
-    self.sharedNameRules.moc = self.managedObjectContext;
 }
 
 - (NSString *)windowNibName
@@ -213,6 +205,7 @@
     if (!insertableView) return;
     
     [insertableView setFrameOrigin:origin];
+    [insertableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addInsertableView:insertableView];
     
 }
@@ -280,11 +273,11 @@
 
 #pragma mark - AMInsertableViewDelegate -
 
--(id<AMNameProvider>)insertedObjectNameProvider
+-(id<AMNameProviding>)insertedObjectNameProvider
 {
-    static id<AMNameProvider> _insertedObjectNameProvider;
+    static id<AMNameProviding> _insertedObjectNameProvider;
     if (!_insertedObjectNameProvider) {
-        _insertedObjectNameProvider = [[AMInsertedObjectNameProvider alloc] init];
+        _insertedObjectNameProvider = [[AMNameProviderBase alloc] init];
     }
     return _insertedObjectNameProvider;
 }

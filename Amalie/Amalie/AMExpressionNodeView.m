@@ -7,57 +7,46 @@
 //
 
 #import "AMExpressionNodeView.h"
-
 #import "KSMExpression.h"
-#import <CoreText/CoreText.h>
-#import "AMExpressionDisplayOptions.h"
-#import "AMQuotientBaselining.h"
 #import "AMOperatorView.h"
-#import "AMConstants.h"
+#import "AMGraphics.h"
+#import "AMExpressionLayout.h"
+#import "AMNameProviding.h"
+
 #import "AMPreferences.h"
 #import "AMContentViewDataSource.h"
-
-CGFloat const kAM_MINWIDTH  = 20.0f;
-CGFloat const kAM_MINHEIGHT = 20.0f;
-
-static NSMutableDictionary * bracketBeziers;
-
-typedef enum AMOrientation : NSUInteger {
-    AMOrientationHorizontal = 0,
-    AMOrientationVertical   = 1,
-} AMOrientation;
+#import "AMExpressionDisplayOptions.h"
+#import "AMConstants.h"
 
 @interface AMExpressionNodeView()
 {
-    __weak AMExpressionNodeView * _parentNode;
-    __weak AMExpressionNodeView * _rootNode;
-    __weak KSMExpression        * _expression;
-    NSMutableArray              * _childNodes;
-    AMExpressionDisplayOptions  * _displayOptions;
-    NSSize                        _intrinsicContentSize;
-    __weak AMOperatorView       * _operatorView;
-    NSString                    * _stringToDisplay;
-    NSDictionary                * _attributes;
-    NSColor                     * _backColor;
-    CGFloat                       _baselineOffsetFromBottom;
-    CGFloat                       _baselineOffsetFromBottomUsingQuotientRules;
-    __weak AMExpressionNodeView * _leftOperandNode;
-    __weak AMExpressionNodeView * _rightOperandNode;
-    BOOL                          _useQuotientBaselining;
-    NSInteger                     _superscriptLevel;
-    CGFloat                       _scaleFactor;
+    __weak AMExpressionNodeView       * _leftNodeView;
+    __weak AMExpressionNodeView       * _rightNodeView;
+    __weak AMOperatorView             * _operatorView;
+    KSMExpression                     * _expression;
+    AMExpressionLayout                * _expressionLayout;
+    NSUInteger                          _scriptingLevel;
+    CGFloat                             _standardSpace;
+    
+    AMExpressionDisplayOptions        * _displayOptions;
+    NSDictionary                      * _attributes;
+    NSColor                           * _backColor;
+    CGFloat                             _scaleFactor;
+    NSString                          * _groupID;
+    __weak id<AMContentViewDataSource>  _dataSource;
 }
 
-@property (readonly) NSMutableArray * childNodes;
+@property (weak, readonly) AMExpressionNodeView     * leftNodeView;
+@property (weak, readonly) AMExpressionNodeView     * rightNodeView;
+@property (weak, readonly) AMOperatorView           * operatorView;
+@property (readwrite)      AMExpressionLayout       * expressionLayout;
+@property (readonly)       AMBracketPlacementInfo     bracketPlacementInfo;
+@property (readonly)       id<AMNameProviding>        nameProvider;
+@property (readwrite)      NSColor                  * backColor;
 
 @end
 
 @implementation AMExpressionNodeView
-
--(BOOL)translatesAutoresizingMaskIntoConstraints
-{
-    return YES;
-}
 
 -(BOOL)autoresizesSubviews
 {
@@ -68,50 +57,56 @@ typedef enum AMOrientation : NSUInteger {
 {
     return [self initWithFrame:frame
                        groupID:groupID
-                      rootNode:nil
-                    parentNode:nil
                     expression:nil
-                    datasource:nil
+                scriptingLevel:0
+                      delegate:nil
                 displayOptions:nil
-                   scaleFactor:1.0];
+                   scaleFactor:1];
+}
+
+-(NSSize)intrinsicContentSize
+{
+    NSSize s = NSMakeSize(self.expressionLayout.boundingAMRect.width,
+                          self.expressionLayout.boundingAMRect.height);
+    return s;
 }
 
 - (id)initWithFrame:(NSRect)frame
             groupID:(NSString *)groupID
-           rootNode:(AMExpressionNodeView *)rootNode
-         parentNode:(AMExpressionNodeView *)parentNode
         expression:(KSMExpression *)expression
-         datasource:(id<AMContentViewDataSource>)datasource
+     scriptingLevel:(NSUInteger)scriptingLevel
+           delegate:(id<AMExpressionNodeViewDelegate>)delegate
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
         scaleFactor:(CGFloat)scaleFactor
 {
-    if (rootNode && !parentNode)
-        [NSException raise:@"Inconsistent root and parent node." format:nil];
-    
-    self = [super initWithFrame:frame groupID:groupID];
+    self = [super initWithFrame:frame];
     if (self) {
-        self.scaleFactor = scaleFactor;
-        self.datasource = datasource;
-        _displayOptions = displayOptions;
-        _parentNode = parentNode;
-        if (rootNode) {
-            _rootNode = rootNode;
-        } else {
-            if (parentNode) {
-                _rootNode = parentNode.rootNode;
-            } else
-            {
-                _rootNode   = self;
-                _parentNode = nil;
-            }
-        }
-        _childNodes = [NSMutableArray array];
-        if (expression)
-        {
-            self.expression = expression;
-        }
+        [self resetWithgroupID:groupID
+                    expression:expression
+                scriptingLevel:scriptingLevel
+                      delegate:delegate
+                displayOptions:displayOptions
+                   scaleFactor:scaleFactor];
     }
     return self;
+}
+
+-(void)resetWithgroupID:(NSString *)groupID
+             expression:(KSMExpression *)expression
+         scriptingLevel:(NSUInteger)scriptingLevel
+               delegate:(id<AMExpressionNodeViewDelegate>)delegate
+         displayOptions:(AMExpressionDisplayOptions *)displayOptions
+            scaleFactor:(CGFloat)scaleFactor
+{
+    _groupID = groupID;
+    _scaleFactor = scaleFactor;
+    _displayOptions = displayOptions;
+    _delegate = delegate;
+    _scriptingLevel = scriptingLevel;
+    if (expression)
+    {
+        self.expression = expression;
+    }
 }
 
 -(KSMExpression*)expression
@@ -121,18 +116,17 @@ typedef enum AMOrientation : NSUInteger {
 
 -(void)prepareForExpressionSet
 {
-    _backColor = [NSColor colorWithCalibratedRed:0.99 green:0.8 blue:0.8 alpha:1.0];
-    _intrinsicContentSize = NSMakeSize(kAM_MINWIDTH, kAM_MINHEIGHT);
+    [self removeAllSubviews];
+    self.backColor = [NSColor whiteColor];
+    self.attributedString = nil;
+}
 
-    NSArray * viewsToRemove = [[self subviews] copy];
-    for (NSView * v in viewsToRemove) {
-        [v removeFromSuperview];
+-(void)removeAllSubviews
+{
+    while (self.subviews.count > 0) {
+        NSView * subView = self.subviews[0];
+        [subView removeFromSuperview];
     }
-    
-    [self.childNodes removeAllObjects];
-    _leftOperandNode = nil;
-    _rightOperandNode = nil;
-    self.stringToDisplay = nil;
 }
 
 -(void)assignAttributesForFontType:(AMFontType)type
@@ -148,552 +142,304 @@ typedef enum AMOrientation : NSUInteger {
 -(void)setExpression:(KSMExpression *)expression
 {
     if (expression == _expression) return;
-    
     [self prepareForExpressionSet];
-    
+    _expression = expression;
     if (expression)
     {
-        _expression = expression;
-        switch (expression.expressionType) {
-            case KSMExpressionTypeUnrecognized:
-            {
-                [self assignAttributesForFontType:AMFontTypeLiteral];
-                self.stringToDisplay = @"?";
-                break;
-            }
-            case KSMExpressionTypeLiteral:
-            {
-                [self assignAttributesForFontType:AMFontTypeLiteral];
-                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeConstant];
-
-                self.stringToDisplay = expression.bareString;
-                break;
-            }
-            case KSMExpressionTypeVariable:
-            {
-                [self assignAttributesForFontType:AMFontTypeAlgebra];
-                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeVariable];
-                self.stringToDisplay = expression.bareString;
-                
-                break;
-            }
-            case KSMExpressionTypeBinary:
-            {
-                [self assignAttributesForFontType:AMFontTypeLiteral];
-                [self addBinaryChildNodeViews];
-                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeExpression];
-                break;
-            }
-            case KSMExpressionTypeCompound:
-            {
-                _backColor = [self.datasource backgroundColorForType:AMInsertableTypeExpression];
-                break;
-            }
+        [self constructAttributedString];
+        if (!self.expression.isUnary) {
+            [self addBinaryChildNodeViews];
         }
-        [self am_layout];
-        [self setNeedsDisplay:YES];
+        [self setNeedsUpdateConstraints:YES];
+        [self invalidateIntrinsicContentSize];
     }
 }
 
--(void)setScaleFactor:(CGFloat)scaleFactor
+-(void)constructAttributedString
 {
-    _scaleFactor = scaleFactor;
-}
-
--(CGFloat)scaleFactor
-{
-    return _scaleFactor;
-}
-
--(void)setStringToDisplay:(NSString*)string
-{
-    _stringToDisplay = string;
-    if (_stringToDisplay) {
-        _intrinsicContentSize = [_stringToDisplay sizeWithAttributes:_attributes];
-    } else {
-        _intrinsicContentSize = NSMakeSize(0, 0);
-    }
-    _baselineOffsetFromBottom = 0.0f;
-    _baselineOffsetFromBottomUsingQuotientRules = _intrinsicContentSize.height / 2.0f;
-    [self setFrameSize:_intrinsicContentSize];
-}
-
--(void)am_layout
-{
-    CGFloat padding = 3.0f;
-    NSSize size;
-    
-    if (self.expression.expressionType == KSMExpressionTypeBinary) {
-        
-        [self alignViews:self.subviews withPadding:padding orientation:[self subViewStackingOrientation]];
-        size = self.intrinsicContentSize;
-        if (self.isBracketed) {
-            // add room for bracket graphics
-            NSBezierPath * leftBracket = [AMExpressionNodeView leftBracketWithHeight:size.height];
-            NSSize bracketSize = [leftBracket bounds].size;
-            _intrinsicContentSize = NSMakeSize(size.width + bracketSize.width * 2.0f + 2.0f, size.height);
-            for (NSView * subView in self.subviews) {
-                // shift all subviews over by width of one bracket
-                [subView setFrameOrigin:NSMakePoint(subView.frame.origin.x +bracketSize.width + 1, subView.frame.origin.y)];
-            }
+    KSMExpression * expression = self.expression;
+    NSAttributedString * aString = nil;
+    switch (expression.expressionType) {
+        case KSMExpressionTypeUnrecognized:
+        {
+            aString = [self attributedStringFor:@"?"];
+            break;
+        }
+        case KSMExpressionTypeLiteral:
+        {
+            aString = [self attributedStringFor:expression.bareString];
+            break;
+        }
+        case KSMExpressionTypeVariable:
+        {
+            aString = [self attributedStringFor:expression.bareString];
+            break;
+        }
+        case KSMExpressionTypeBinary:
+        {
+            aString = [self dummyTextForMetrics];
+            break;
+        }
+        case KSMExpressionTypeCompound:
+        {
+            aString = [self attributedStringFor:@"?"];
+            break;
         }
     }
-
-    size = self.intrinsicContentSize;
-    NSPoint origin = self.frame.origin;
-    [self setFrame:NSMakeRect(origin.x, origin.y, size.width, size.height)];
+    self.attributedString = [self.nameProvider attributedStringByModifying:aString toSuperscriptLevel:self.scriptingLevel];
 }
 
--(BOOL)isBracketed
-{
-    return self.expression.isBracketed;
-}
-
-+(NSBezierPath*)leftBracketWithHeight:(NSUInteger)heightInPoints
-{
-    return [[self bracketBeziersWithHeight:heightInPoints][0] copy];
-}
-
-+(NSBezierPath*)rightBracketWithHeight:(NSUInteger)heightInPoints
-{
-    return [[self bracketBeziersWithHeight:heightInPoints][1] copy];
-}
-
-
-+(NSArray*)bracketBeziersWithHeight:(NSUInteger)heightInPoints
-{
-    NSString * key = [NSString stringWithFormat:@"%lu",(unsigned long)heightInPoints];
-    NSMutableDictionary * bracketBeziersDictionary;
-    bracketBeziersDictionary = [self bracketBeziersDictionary];
-    NSArray * leftAndRightPair = bracketBeziersDictionary[key];
-    if (!leftAndRightPair) {
-        leftAndRightPair = [self generateBeziersForBracketsWithHeight:heightInPoints];
-        bracketBeziersDictionary[key] = leftAndRightPair;
-    }
-    return leftAndRightPair;
-}
-
-+(NSArray*)generateBeziersForBracketsWithHeight:(NSUInteger)heightInPoints
-{
-    [[NSColor blackColor] set];
-    heightInPoints = 0.9 * heightInPoints;
-
-    NSBezierPath * left = [[NSBezierPath alloc] init];
-    NSBezierPath * right = [[NSBezierPath alloc] init];
-
-    [left setFlatness:0.1];
-    [left setLineWidth:1];
-    [right setFlatness:0.1];
-    [right setLineWidth:1];
-    
-    NSPoint p = NSMakePoint(0, 0);
-    NSPoint q = NSMakePoint(0, heightInPoints);
-    NSPoint c1, c2;
-    
-    c1 = NSMakePoint(p.x + 0.3 * (q.y - p.y),
-                     p.y + 0.3 *(q.y - p.y));
-    
-    c2 = NSMakePoint(p.x + 0.3 * (q.y - p.y),
-                     p.y + 0.7 *(q.y - p.y));
-    
-    
-    [right moveToPoint:p];
-    [right curveToPoint:q controlPoint1:c1 controlPoint2:c2];
-    
-    p.x = p.x + (q.y-p.y)/200.0f * 10.0f;
-    q.x = q.x + (q.y-p.y)/200.0f * 10.0f;
-    
-    [right lineToPoint:q];
-    
-    
-    CGFloat delta = (q.y-p.y)/200.0f * 0.02f;
-    
-    c2 = NSMakePoint(p.x + (0.3 + delta) * (q.y - p.y),
-                     p.y + 0.3 * (q.y - p.y));
-    
-    c1 = NSMakePoint(p.x + (0.3 + delta) * (q.y - p.y),
-                     p.y + 0.7 * (q.y - p.y));
-    [right curveToPoint:p controlPoint1:c1 controlPoint2:c2];
-    [right closePath];
-
-    CGFloat dx = [right bounds].size.width;
-    
-    p = NSMakePoint(dx, 0);
-    q = NSMakePoint(dx, heightInPoints);
-    
-    c1 = NSMakePoint(p.x - 0.3 * (q.y - p.y),
-                     p.y + 0.3 *(q.y - p.y));
-    
-    c2 = NSMakePoint(p.x - 0.3 * (q.y - p.y),
-                     p.y + 0.7 *(q.y - p.y));
-    
-    
-    [left moveToPoint:p];
-    [left curveToPoint:q controlPoint1:c1 controlPoint2:c2];
-    
-    p.x = p.x - (q.y-p.y)/200.0f * 10.0f;
-    q.x = q.x - (q.y-p.y)/200.0f * 10.0f;
-    
-    [left lineToPoint:q];
-    
-    
-    delta = (q.y-p.y)/200.0f * 0.02f;
-    
-    c2 = NSMakePoint(p.x - (0.3 + delta) * (q.y - p.y),
-                     p.y + 0.3 * (q.y - p.y));
-    
-    c1 = NSMakePoint(p.x - (0.3 + delta) * (q.y - p.y),
-                     p.y + 0.7 * (q.y - p.y));
-    [left curveToPoint:p controlPoint1:c1 controlPoint2:c2];
-    [left closePath];
-    
-    return @[left,right];
-}
-
-+(NSMutableDictionary*)bracketBeziersDictionary
-{
-    if (!bracketBeziers) {
-        bracketBeziers = [NSMutableDictionary dictionary];
-    }
-    return bracketBeziers;
-}
-
-
--(AMOrientation)subViewStackingOrientation
-{
-    if ( [self.expression.operator isEqualToString:@"/"] ) {
-        
-        // The divide operator is the only one that requires vertical stacking
-        return AMOrientationVertical;
-        
-    }
-
-    // The operators +,-,*,^ all require horizontal stacking of subviews
-    return AMOrientationHorizontal;
-}
-
--(NSMutableArray*)childNodes
-{
-    if ( !_childNodes) {
-        _childNodes = [NSMutableArray array];
-    }
-    return _childNodes;
-}
-
--(void)setDisplayOptions:(AMExpressionDisplayOptions *)displayOptions
-{
-    _displayOptions = displayOptions;
-}
-
--(AMExpressionDisplayOptions*)displayOptions
-{
-    if (!_displayOptions) {
-        _displayOptions = self.parentNode.displayOptions;
-        if (!_displayOptions) {
-            _displayOptions = [[AMExpressionDisplayOptions alloc] initWithFonts:nil];
-        }
-    }
-    return _displayOptions;
-}
 
 -(void)addBinaryChildNodeViews
 {
-    if (self.expression.expressionType != KSMExpressionTypeBinary) return;
+    AMExpressionNodeView * leftNodeView;
+    AMExpressionNodeView * rightNodeView;
+    AMOperatorView       * operatorView;
+    KSMExpression        * leftExpression = [self leftSubExpression];
+    KSMExpression        * rightExpression = [self rightSubExpression];
     
-    CGFloat scaleFactor = self.scaleFactor;
+    leftNodeView = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
+                                                       groupID:_groupID
+                                                    expression:leftExpression
+                                                scriptingLevel:_scriptingLevel
+                                                      delegate:_delegate
+                                                displayOptions:_displayOptions
+                                                   scaleFactor:_scaleFactor];
     
-    AMExpressionNodeView * left;
-    AMExpressionNodeView * right;
-    NSRect initialRect = NSMakeRect(0, 0, 10, 10);
-    left = [[AMExpressionNodeView alloc] initWithFrame:initialRect
-                                               groupID:self.groupID
-                                              rootNode:self.rootNode
-                                            parentNode:self
-                                            expression:[self leftSubExpression]
-                                            datasource:self.datasource
-                                        displayOptions:nil
-                                           scaleFactor:scaleFactor];
-    
-    if ( [self.expression.operator isEqualToString:@"^"] )
-        scaleFactor = 0.7 * self.scaleFactor;
-    
-    right = [[AMExpressionNodeView alloc] initWithFrame:initialRect
-                                                groupID:self.groupID
-                                               rootNode:self.rootNode
-                                             parentNode:self
-                                             expression:[self rightSubExpression]
-                                             datasource:self.datasource
-                                         displayOptions:nil
-                                            scaleFactor:scaleFactor];
-    
-    [self.childNodes addObject:left];
-    [self.childNodes addObject:right];
-    [self addSubview:left];
-    [self addOperatorViewWithAttributes:_attributes];
-    [self addSubview:right];
-    _leftOperandNode = left;
-    _rightOperandNode = right;
+    NSUInteger rightNodeScriptingLevel = _scriptingLevel;
+    if ( [self operatorType] == KSMOperatorTypePower ) {
+        rightNodeScriptingLevel++;
+    } else {
+        operatorView = [[AMOperatorView alloc] init];
+        [operatorView setOperator:_expression.operator withFont:[self symbolFont]];
+    }
+    rightNodeView = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
+                                                        groupID:_groupID
+                                                     expression:rightExpression
+                                                 scriptingLevel:rightNodeScriptingLevel
+                                                       delegate:_delegate
+                                                 displayOptions:_displayOptions
+                                                    scaleFactor:_scaleFactor];
+    [self addSubview:leftNodeView];
+    [self addSubview:operatorView];
+    [self addSubview:rightNodeView];
+    [leftNodeView setNeedsUpdateConstraints:YES];
+    [rightNodeView setNeedsUpdateConstraints:YES];
+    [operatorView setNeedsUpdateConstraints:YES];
+    _leftNodeView  = leftNodeView;
+    _operatorView  = operatorView;
+    _rightNodeView = rightNodeView;
 }
 
+-(NSAttributedString*)dummyTextForMetrics
+{
+    NSFont * font = [self.nameProvider fontForSymbolsAtScriptinglevel:self.scriptingLevel];
+    return [[NSAttributedString alloc]initWithString:@"a" attributes:@{NSFontAttributeName: font, NSBaselineOffsetAttributeName: @0}];
+}
 
+-(id<AMNameProviding>)nameProvider
+{
+    return [self.delegate nameProvider];
+}
+
+-(NSAttributedString*)attributedStringFor:(NSString*)string
+{
+    NSAttributedString * aString = [self.nameProvider attributedStringForObjectWithName:string];
+    if (!aString || aString.length == 0) {
+        aString = [[NSAttributedString alloc] initWithString:@"?" attributes:nil];
+    }
+    aString = [self.nameProvider attributedStringByModifying:aString
+                                  toSuperscriptLevel:self.scriptingLevel];
+    return aString;
+}
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    [[[self window] graphicsContext] saveGraphicsState];
-    [[[self window] graphicsContext] setShouldAntialias:YES];
-    
-    // As we are opaque, we are obliged to fill dirtyRect with an opaque color
-    [_backColor set];
-    [NSBezierPath fillRect:dirtyRect];
-    
-    if (_stringToDisplay) {
-        id<AMNameProvider> nameProvider = [self.datasource viewRequiresNameProvider:self];
-        NSAttributedString * displayString = [nameProvider attributedNameForObjectWithName:_stringToDisplay];
-        [displayString drawAtPoint:NSZeroPoint];
+    NSGraphicsContext * context = [NSGraphicsContext currentContext];
+    [context saveGraphicsState];
+    context.shouldAntialias = YES;
+    if (self.expression.isUnary) {
+        [[NSColor colorWithCalibratedRed:0 green:1 blue:0 alpha:1] set];
+        NSRectFill(dirtyRect);
+        [super drawRect:dirtyRect];
     } else {
-        if (self.isBracketed) {
-            [[NSColor blackColor] set];
-            NSBezierPath * left = [AMExpressionNodeView leftBracketWithHeight:self.intrinsicContentSize.height];
-            [left fill];
-            NSBezierPath * right = [AMExpressionNodeView rightBracketWithHeight:self.intrinsicContentSize.height];
-            NSAffineTransform * transform = [[NSAffineTransform alloc] init];
-            CGFloat dx = self.intrinsicContentSize.width - [right bounds].size.width;
-            [transform translateXBy: dx yBy: 0.0];
-            [right transformUsingAffineTransform: transform];
-            [right fill];
-        }
+        [[NSColor blueColor] set];
+        NSRectFill(dirtyRect);
     }
-
-    [[[self window] graphicsContext] restoreGraphicsState];
-
+    if (self.isBracketed) {
+        NSAffineTransform * transform = [NSAffineTransform transform];
+        AMBracketPlacementInfo info = [self bracketPlacementInfo];
+        AMGraphics * graphics = [AMGraphics sharedGraphics];
+        NSBezierPath * leftBracket = [graphics leftBracketWithHeight:info.height];
+        NSBezierPath * rightBracket = [graphics rightBracketWithHeight:info.height];
+        [rightBracket moveToPoint:NSMakePoint(self.tightBoundingBox.origin.x + self.tightBoundingBox.size.width, 0)];
+        [[NSColor blackColor] set];
+        [leftBracket fill];
+        [transform translateXBy:self.tightBoundingBox.size.width - info.width yBy:0];
+        [transform concat];
+        [rightBracket fill];
+    }
+    [context restoreGraphicsState];
 }
 
--(NSSize)fittingSize
+-(NSRect)tightBoundingBox
 {
-    return [super fittingSize];
+    NSRect boundingBox = [self textBoundingBox];
+    if (self.isBracketed) {
+        AMBracketPlacementInfo info = [self bracketPlacementInfo];
+        boundingBox.size.width += 2 * info.width; // takes into account left & right
+        boundingBox.origin.x -= info.width;
+        boundingBox.size.height = info.minimumEnclosingHeight;
+        boundingBox.origin.y = -info.ascender;
+    }
+    return boundingBox;
 }
-
--(void)alignViews:(NSArray*)views withPadding:(CGFloat)padding orientation:(AMOrientation)orientation
+-(NSRect)textBoundingBox
 {
-    for (NSView * view in views) {
-        [view setFrameSize:[view intrinsicContentSize]];
+    NSRect box = NSZeroRect;
+    [self calculateLayout];
+    if (self.expression.isUnary) {
+        box = [super tightBoundingBox];
+    } else {
+        box = [self.expressionLayout innerBounds];
     }
-    switch (orientation) {
-        case AMOrientationHorizontal:
-        {
-            [self alignViews:views horizontallyWithPadding:padding];
-            break;
-        }
-        case AMOrientationVertical:
-        {
-            [self alignViews:views verticallyWithPadding:0];
-            break;
-        }
-    }
+    return box;
 }
-
--(void)alignViews:(NSArray*)views horizontallyWithPadding:(CGFloat)padding
+-(NSPoint)exponentOffsetFromBottomLeftForCharacterWithIndex:(NSUInteger)charIndex
 {
-
-    if ( [self requiresQuotientBaselining] ) {
-        self.leftOperandNode.useQuotientBaselining   = YES;
-        self.rightOperandNode.useQuotientBaselining  = YES;
-        self.operatorView.useQuotientBaselining      = YES;
+    NSPoint p = [super exponentOffsetFromBottomLeftForCharacterWithIndex:charIndex];
+    if (self.isBracketed) {
+        p.x = self.tightBoundingBox.size.width;
     }
-    CGFloat width                    = 0.0f;
-    CGFloat height                   = 0.0f;
-    CGFloat maxExtentAboveBaseline   = [self greatestExtentAboveBaseLine:views];
-    CGFloat baseline                 = [self greatestExtentBeneathBaseline:views];
-    
-    height = maxExtentAboveBaseline + baseline;
-    NSString * operatorString = self.expression.operator;
-    BOOL isPower = [operatorString isEqualToString:@"^"];
-    for (NSView * aView in views) {
-        CGFloat yOffset = baseline - aView.baselineOffsetFromBottom;
-        if ( !(aView == self.rightOperandNode) || !isPower) {
-            [aView setFrameOrigin:NSMakePoint(width, yOffset)];
-            width += aView.frame.size.width;
-            if (!isPower) {
-                width += padding;
-            }
-        } else {
-            [aView setFrameOrigin:NSMakePoint(width, yOffset+aView.intrinsicContentSize.height/3.0)];
-            width += aView.frame.size.width;
-        }
-    }
-    
-    if (!isPower) width -= padding;
-    
-    _intrinsicContentSize = NSMakeSize(width, height);
-    _baselineOffsetFromBottom = baseline;
-    _baselineOffsetFromBottomUsingQuotientRules = baseline;
-    
+    return p;
 }
-
--(void)alignViews:(NSArray*)views verticallyWithPadding:(CGFloat)padding
+-(NSPoint)exponentPositionForView:(AMExpressionNodeView*)view
 {
-    CGFloat width               = 0.0f;
-    CGFloat height              = 0.0f;
-    width = [self widestViewInViews:views].frame.size.width;
-    CGFloat totalHeight = 0.0f;
-    for (NSView * view in views) {
-
-        totalHeight += view.frame.size.height + padding;
+    NSPoint exponentPos = NSZeroPoint;
+    if (view.isBracketed || !view.expression.terminal) {
+        exponentPos = NSMakePoint(view.tightBoundingBox.size.width, view.tightBoundingBox.size.height - view.xHeight/2.0);
+    } else {
+        // Not bracketed and terminal view...
+        // right node is offset to the right and up from the origin...
+        NSUInteger charToOwnExponent = [self.nameProvider indexOfCharacterPrecedingExponentPositionForString:view.attributedString];
+        exponentPos = [self.leftNodeView exponentOffsetFromBottomLeftForCharacterWithIndex:charToOwnExponent];
     }
-    totalHeight -= padding;
-    height = totalHeight;
-    
-    for (NSView * view in views) {
-        CGFloat xOffset = (width - view.frame.size.width) / 2.0f;
-        height = height - view.frame.size.height;
-        if (view == _operatorView) {
-            [view setFrameOrigin:NSMakePoint(0, height)];
-            [view setFrameSize:NSMakeSize(width, view.intrinsicContentSize.height)];
-            [view setNeedsDisplay:YES];
-        } else {
-            [view setFrameOrigin:NSMakePoint(xOffset, height)];
-        }
-        
-        height -= padding;
-    }
-    _intrinsicContentSize = NSMakeSize(width, totalHeight);
-    AMOperatorView * baselineView = [self baselineDefiningDivideView];
-    NSAssert(baselineView, @"baseline view was determined to be nil but is not nil.");
-    
-    _baselineOffsetFromBottom = [baselineView midPointInCoordinatesOfView:self].y;
-    _baselineOffsetFromBottomUsingQuotientRules = _baselineOffsetFromBottom;
+    return exponentPos;
 }
-
+-(void)calculateLayout
+{
+    if (self.expression.isUnary) {
+        _expressionLayout = [self calculateUnaryLayout];
+    } else {
+        _expressionLayout = [self calculatedBinaryLayout];
+    }
+}
+-(AMExpressionLayout*)calculateUnaryLayout
+{
+    return [AMExpressionLayout expressionLayoutWithLeftRect:[super tightBoundingBox]
+                                             exponentOffset:NSZeroPoint
+                                               operatorRect:NSZeroRect
+                                               operatorType:self.operatorType
+                                                  rightRect:NSZeroRect
+                                                isBracketed:self.expression.isBracketed
+                                                      space:self.standardSpace
+                                                  ruleWidth:self.ruleWidth
+                                                    xHeight:self.xHeight
+                                                  capHeight:self.capHeight
+                                            minusSignHeight:self.minusSignHeightAboveBaseline];
+}
+-(AMExpressionLayout*)calculatedBinaryLayout
+{
+    return [AMExpressionLayout expressionLayoutWithLeftRect:self.leftNodeView.tightBoundingBox
+                                             exponentOffset:[self exponentPositionForView:_leftNodeView]
+                                               operatorRect:self.operatorView.tightBoundingBox
+                                               operatorType:self.operatorType
+                                                  rightRect:self.rightNodeView.tightBoundingBox
+                                                isBracketed:self.expression.isBracketed
+                                                      space:self.standardSpace
+                                                  ruleWidth:self.ruleWidth
+                                                    xHeight:self.xHeight
+                                                  capHeight:self.capHeight
+                                            minusSignHeight:self.minusSignHeightAboveBaseline];
+}
 -(CGFloat)baselineOffsetFromBottom
 {
-    if (!self.requiresQuotientBaselining) {
-        return 0.0f;
-    }
-    
-    AMOperatorView * baselineView = [self baselineDefiningDivideView];
-    if (!baselineView) {
-        return self.fittingSize.height / 2.0;
-    }
-    
-    return [baselineView midPointInCoordinatesOfView:self].y;
+    return [self.expressionLayout baselineOffsetFromBottom];
+}
+-(NSPoint)pixelIntegralPoint:(NSPoint)point
+{
+    point = [self convertPointToBase:point];
+    point.x = floor(point.x);
+    point.y = floor(point.y);
+    return [self convertPointFromBase:point];
 }
 
--(CGFloat)greatestExtentBeneathBaseline:(NSArray*)views
+-(void)updateConstraints
 {
-    CGFloat max     = 0.0f;
-    CGFloat current = 0.0f;
-    for (NSView * view in views) {
-        current = [view baselineOffsetFromBottom];
-        if (current > max) {
-            max = current;
+    [super updateConstraints];
+    
+    if (self.expression.expressionType != KSMExpressionTypeBinary) return;
+    
+    [self calculateLayout];
+    [self removeConstraints:self.constraints];
+    switch (self.operatorType) {
+        case KSMOperatorTypeAdd:
+        {
+            [self addConstraintsForHorizontalLayout];
+            break;
+        }
+        case KSMOperatorTypeSubtract:
+        {
+            [self addConstraintsForHorizontalLayout];
+            break;
+        }
+        case KSMOperatorTypeMultiply:
+        {
+            [self addConstraintsForHorizontalLayout];
+            break;
+        }
+        case KSMOperatorTypePower:
+        {
+            [self addConstraintsForExponentialLayout];
+            break;
+        }
+        case KSMOperatorTypeDivide:
+        {
+            [self addConstraintsForVerticalLayout];
+            break;
+        }
+        case KSMOperatorTypeScalarMultiply:
+        case KSMOperatorTypeVectorMultiply:
+        case KSMOperatorTypeUnrecognized:
+        {
+            break;
         }
     }
-    return max;
+    [super updateConstraints];
 }
 
--(CGFloat)greatestExtentAboveBaseLine:(NSArray*)views
+-(void)addHeightConstraint
 {
-    CGFloat max     = 0.0f;
-    CGFloat current = 0.0f;
-    for (id<AMQuotientBaselining> quotientBaseliner in views) {
-        if (quotientBaseliner == self.operatorView) {
-            current = [quotientBaseliner extentAboveOwnBaseline];
-        } else {
-            if (quotientBaseliner == self.leftOperandNode || ![self.expression.operator isEqualToString:@"^"]) {
-                current = [quotientBaseliner extentAboveOwnBaseline];
-            } else {
-                NSView * v = (NSView*)quotientBaseliner;
-                current = [quotientBaseliner extentAboveOwnBaseline] + v.intrinsicContentSize.height / 3.0;
-            }
-        }
-        if (current > max) {
-            max = current;
-        }
+    if (self.expression.isUnary) {
+        [super addHeightConstraint];
     }
-    return max;
 }
 
--(NSView*)tallestViewInViews:(NSArray*)views
+-(void)addWidthConstraint
 {
-    CGFloat greatestHeight = 0;
-    NSView * tall;
-    for (NSView * v in views) {
-        if (v.frame.size.height > greatestHeight) {
-            greatestHeight = v.frame.size.height;
-            tall = v;
-        }
+    if (self.expression.isUnary) {
+        [super addWidthConstraint];
     }
-    return tall;
-}
-
--(NSView*)widestViewInViews:(NSArray*)views
-{
-    CGFloat greatestWidth = 0;
-    NSView * wide;
-    for (NSView * v in views) {
-        if (v.frame.size.width > greatestWidth) {
-            greatestWidth = v.frame.size.width;
-            wide = v;
-        }
-    }
-    return wide;
-}
-
-
--(AMOperatorView*)addOperatorViewWithAttributes:(NSDictionary*)fontAttributes
-{
-    NSString * opStr = [self.expression operator];
-    
-    AMOperatorView * view;
-    
-    if ( [opStr isEqualToString:@"^"] ) return nil;
-
-    view = [[AMOperatorView alloc] initWithFrame:NSMakeRect(0, 0, 1, 1)];
-    
-    if (view) {
-        view.operatorString = self.expression.operator;
-        view.attributes = fontAttributes;
-        [self addSubview:view];
-        _operatorView = view;
-        view.parentExpressionNode = self;
-    }
-    return _operatorView;
-}
-
--(void)measureString:(NSString*)string
-      withAttributes:(NSDictionary*)attributes
-                draw:(BOOL)doDrawing
-{
-    _intrinsicContentSize = [string sizeWithAttributes:attributes];
-    if (doDrawing)
-        [string drawAtPoint:NSMakePoint(0, 0) withAttributes:attributes];
-
 }
 
 -(KSMExpression*)expressionForSubSymbol:(NSString*)symbol
 {
     KSMExpression * expr;
-    expr = [[self datasource] view:self requiresExpressionForSymbol:symbol];
+    expr = [_dataSource view:self requiresExpressionForSymbol:symbol];
     
     NSAssert(expr, @"No expression known for symbol %@.",symbol);
     
     return expr;
-}
-
-
--(NSSize)intrinsicContentSize
-{
-    return _intrinsicContentSize;
-}
-
--(AMExpressionNodeView*)leftOperandNode
-{
-    return _leftOperandNode;
-}
-
--(AMExpressionNodeView*)rightOperandNode
-{
-    return _rightOperandNode;
 }
 
 -(KSMExpression*)leftSubExpression
@@ -718,131 +464,265 @@ typedef enum AMOrientation : NSUInteger {
     return expr;
 }
 
-#pragma mark - AMQuotientBaselining -
-
--(BOOL)requiresQuotientBaselining
+-(NSFont*)baseFont
 {
-    if (self.useQuotientBaselining == YES) return YES;
-    
-    switch (self.expression.expressionType) {
-        case KSMExpressionTypeLiteral:
-            return NO;
-        case KSMExpressionTypeVariable:
-            return NO;
-        case KSMExpressionTypeBinary:
-        {
-            BOOL yn = NO;
-            // Quick out if we are a division expression ourselves
-            if ( [self.expression.operator isEqualToString:@"/"] )
-                yn = YES;
-            else {
-                // otherwise need to check our operands
-                AMExpressionNodeView * left  = [self leftOperandNode];
-                AMExpressionNodeView * right = [self rightOperandNode];
-                yn = ( [left requiresQuotientBaselining] || [right requiresQuotientBaselining] );
-            }
-            
-            if (yn) {
-                self.useQuotientBaselining = YES;
-            }
-            
-            return yn;
-        }
-        case KSMExpressionTypeCompound:
-        {
-            return NO;
-        }
-        case KSMExpressionTypeUnrecognized:
-        {
-            return NO;
-        }
-    }
+    return [self.nameProvider fontForSymbolsAtScriptinglevel:_scriptingLevel];
+}
+-(NSFont*)symbolFont
+{
+    return [self.nameProvider fontForSymbolsAtScriptinglevel:_scriptingLevel];
 }
 
--(AMOperatorView*)baselineDefiningDivideView
+-(AMBracketPlacementInfo)bracketPlacementInfo
 {
-    if (self.expression.expressionType != KSMExpressionTypeBinary) {
-        return nil;
-    }
-    
-    NSMutableArray * operatorViews = [NSMutableArray array];
-    if ( [self.expression.operator isEqualToString:@"/"] ) {
-        [operatorViews addObject:self.operatorView];
-    }
-    
-    AMOperatorView * operatorView;
-    operatorView = [self.leftOperandNode baselineDefiningDivideView];
-    if (operatorView) {
-        [operatorViews addObject:operatorView];
-    }
-    operatorView = [self.rightOperandNode baselineDefiningDivideView];
-    if (operatorView) {
-        [operatorViews addObject:operatorView];
-    }
-    
-    if ([operatorViews count] == 0) {
-        return nil;
-    }
-    
-    // Find the widest divider, or an array of wide dividers, each of the same width
-    CGFloat width = 0;
-    NSMutableArray * wideViews = [NSMutableArray array];
-    
-    for (AMOperatorView * operatorView in operatorViews) {
-        if (operatorView.frame.size.width > width) {
-            width = operatorView.frame.size.width;
-            [wideViews removeAllObjects];
-            [wideViews addObject:operatorView];
-        } else if (operatorView.intrinsicContentSize.width == width) {
-            [wideViews addObject:operatorView];
-        }
-    }
-    
-    // If there is a single widest divider, we will use that for the baseline
-    if ([wideViews count] == 1) {
-        return wideViews[0];
-    }
-    
-    // Of the widest views, we choose the one closest to the vertical middle of the this view
-    CGFloat minDistanceFromMidPoint = MAXFLOAT;
-    CGFloat midPointOfMe = self.intrinsicContentSize.height / 2.0;
-    NSMutableArray * closeToMiddleViews = [NSMutableArray array];
-    
-    for (AMOperatorView * wideView in wideViews) {
-        // Find the mid point of this wide view (in the vertical direction)
-        NSPoint midPointOfWideView = [wideView midPointInCoordinatesOfView:self];
-        
-        CGFloat distanceFromMidPoint = fabs(midPointOfMe - midPointOfWideView.y);
-        if (distanceFromMidPoint < minDistanceFromMidPoint) {
-            [closeToMiddleViews removeAllObjects];
-            [closeToMiddleViews addObject:wideView];
-            minDistanceFromMidPoint = distanceFromMidPoint;
-        } else if (distanceFromMidPoint == minDistanceFromMidPoint) {
-            [closeToMiddleViews addObject:wideView];
-        }
-    }
-    // The array might hold more than one "best" view. If so, we arbitrarily choose the first, since this covers the case where there is only one best view.
-    return closeToMiddleViews[0];
+    return self.expressionLayout.bracketInfo;
 }
 
--(BOOL)useQuotientBaselining
+-(KSMOperatorType)operatorType
 {
-    return _useQuotientBaselining;
+    NSString * operatorString = self.expression.operator;
+    
+    if (!operatorString) {
+        // Just a placeholder
+        return KSMOperatorTypeAdd;
+    }
+    
+    if ([operatorString isEqualToString:@"+"]) {
+        return KSMOperatorTypeAdd;
+    }
+    
+    if ([operatorString isEqualToString:@"-"]) {
+        return KSMOperatorTypeSubtract;
+    }
+    
+    if ([operatorString isEqualToString:@"*"]) {
+        return KSMOperatorTypeMultiply;
+    }
+    
+    if ([operatorString isEqualToString:@"/"]) {
+        return KSMOperatorTypeDivide;
+    }
+    
+    if ([operatorString isEqualToString:@"^"]) {
+        return KSMOperatorTypePower;
+    }
+    
+    NSAssert(NO, @"Unexpected operator type.");
+    return KSMOperatorTypeAdd;
 }
-
--(void)setUseQuotientBaselining:(BOOL)useQuotientBaselining
+-(void)addConstraintsForHorizontalLayout
 {
-    _useQuotientBaselining = useQuotientBaselining;
+    AMExpressionLayout * map = self.expressionLayout;
+    
+    // Container width
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0.0
+                                                      constant:map.boundingAMRect.width]];
+    
+    // Container height
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0.0
+                                                      constant:map.boundingAMRect.height]];
+    
+    // Align left node's left edge...
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.leftNodeView
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:1.0
+                                                      constant:map.hGapToLeftNode]];
+    
+    // Align left node's top
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.leftNodeView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1.0
+                                                      constant:map.vGapToLeftNode]];
+    
+    // Operator view left (mapped from expressionLayout)...
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.operatorView
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:1.0
+                                                      constant:map.hGapToOperator]];
+    
+    // Operator view top (mapped from expressionLayout)...
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.operatorView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1.0
+                                                      constant:map.vGapToOperator]];
+    
+    // Right node view left (mapped from expressionLayout)...
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rightNodeView
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:1.0
+                                                      constant:map.hGapToRightNode]];
+    
+    // Right node view top (mapped from expressionLayout)...
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rightNodeView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1.0
+                                                      constant:map.vGapToRightNode]];
 }
-
--(CGFloat)verticalMidPoint
+-(void)addConstraintsForVerticalLayout
 {
-    return self.frame.origin.y + self.frame.size.height / 2.0f;
+    AMExpressionLayout * map = self.expressionLayout;
+    
+    // Container width
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0.0
+                                                      constant:map.boundingAMRect.width]];
+    
+    // Container height
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0.0
+                                                      constant:map.boundingAMRect.height]];
+    
+    // Numerator, denominator and div sign are all centered horizontally in the container
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.leftNodeView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.operatorView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rightNodeView
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0]];
+    
+    // Numerator's vertical position relative to the container is obtained from the map
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.leftNodeView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:0
+                                                      constant:map.vGapToLeftNode]];
+    
+    // Denominator's vertical position relative to the container is obtained from the map
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rightNodeView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:0
+                                                      constant:map.vGapToRightNode]];
+    
+    // Operator's vertical position relative to the container is obtained from the map
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.operatorView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:0
+                                                      constant:map.vGapToOperator]];
+    
+    // Operator's width is obtained directly from the map
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.operatorView
+                                                     attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0
+                                                      constant:map.operatorAMRect.width]];
 }
-
--(CGFloat)extentAboveOwnBaseline
+-(void)addConstraintsForExponentialLayout
 {
-    return self.intrinsicContentSize.height - self.baselineOffsetFromBottom;
+    AMExpressionLayout * map = self.expressionLayout;
+    
+    // Container width
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0.0
+                                                      constant:map.boundingAMRect.width]];
+    
+    // Container height
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self
+                                                     attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:0.0
+                                                      constant:map.boundingAMRect.height]];
+    
+    // Left node left
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.leftNodeView
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:0
+                                                      constant:map.hGapToLeftNode]];
+    
+    // Left node top
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.leftNodeView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1
+                                                      constant:map.vGapToLeftNode]];
+    // Right node left
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rightNodeView
+                                                     attribute:NSLayoutAttributeLeft
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeLeft
+                                                    multiplier:0
+                                                      constant:map.hGapToRightNode]];
+    
+    // Right node top
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rightNodeView
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1
+                                                      constant:map.vGapToRightNode]];
 }
 
 @end

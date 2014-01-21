@@ -7,152 +7,129 @@
 //
 
 #import "AMOperatorView.h"
-#import "AMQuotientBaselining.h"
+
+static NSString * const kAMOperatorMultiply = @"×"; // from Special characters, not from keyboard
+static NSString * const kAMOperatorDivide   = @"−";
+static NSString * const kAMOperatorAdd      = @"+";
+static NSString * const kAMOperatorSubtract = @"−"; // from Special characters, not from keyboard
+static NSString * const kAMOperatorPower    = @"^";
 
 @interface AMOperatorView()
 {
-    NSString            * _operatorString;
-    NSString            * _translatedString;
-    NSDictionary        * _attributes;
     BOOL                  _isGraphic;
-    BOOL                  _useQuotientBaselining;
+    NSString *            _translatedString;
+    NSString *            _operatorString;
+    NSFont   *            _font;
 }
 
-@property (readonly) NSString * translatedString;
+@property (copy) NSString * translatedString;
+@property (copy) NSString * operatorString;
+@property BOOL isGraphic;
+@property NSFont * font;
+@property (readwrite) KSMOperatorType operatorType;
 
 @end
 
 @implementation AMOperatorView
 
--(BOOL)translatesAutoresizingMaskIntoConstraints
-{
-    return YES;
-}
-
--(BOOL)autoresizesSubviews
-{
-    return NO;
-}
-
 -(id)initWithFrame:(NSRect)frameRect
 {
     self = [super initWithFrame:frameRect];
     if (self) {
-        self.operatorString = @"+";
-        _attributes = [NSMutableDictionary dictionary];
+        [self setOperator:@"+" withFont:[NSFont systemFontOfSize:24.0]];
     }
     return self;
 }
 
--(NSString*)translatedString
+-(BOOL)isVariableWidth
 {
-    return _translatedString;
-}
-
--(void)setAttributes:(NSDictionary *)attributes
-{
-    if (!attributes) return;
-    _attributes = attributes;
-    [self am_layout];
-}
-
--(NSDictionary *)attributes
-{
-    return _attributes;
-}
-
--(void)setOperatorString:(NSString *)operatorString
-{
-    _isGraphic = NO;
-    _operatorString = operatorString;
-    
-    if ([operatorString isEqualToString:@"*"])
-        _translatedString = @"×";
-    
-    if ([operatorString isEqualToString:@"+"])
-        _translatedString = @"+"; //  @"＋";  // full width plus sign
-    
-    if ([operatorString isEqualToString:@"-"])
-        _translatedString = @"–";// @"－"; // full width minus sign
-    
-    if ([operatorString isEqualToString:@"^"])
-        _translatedString = @"^";
-    
-    if ([operatorString isEqualToString:@"/"])
-    {
-        _isGraphic = YES;
-        _translatedString =  @"/";
+    if (self.operatorType == KSMOperatorTypeDivide) {
+        return YES;
+    } else {
+        return NO;
     }
-    [self am_layout];
 }
 
--(NSString*)operatorString
+-(void)setOperator:(NSString*)operatorString withFontSize:(CGFloat)fontSize
 {
-    return _operatorString;
+    [self setOperator:operatorString withFont:[NSFont systemFontOfSize:fontSize]];
 }
 
--(NSSize)intrinsicContentSize
+-(void)setOperator:(NSString*)operatorString withFont:(NSFont*)font
 {
-    if (!_isGraphic) {
-        return [self.translatedString sizeWithAttributes:self.attributes];
+    _font = [[NSFontManager sharedFontManager] convertFont:font toNotHaveTrait:NSFontItalicTrait];
+    [self translateOperatorString:operatorString];
+    NSAttributedString * aString = [[NSMutableAttributedString alloc] initWithString:self.translatedString attributes:@{NSFontAttributeName: _font}];
+    [self setAttributedString:aString];
+}
+
+-(void)translateOperatorString:(NSString*)operatorString
+{
+    self.operatorString = operatorString;
+    self.isGraphic = NO;
+    
+    if ([operatorString isEqualToString:@"+"]) {
+        self.translatedString = kAMOperatorAdd;
+        self.operatorType = KSMOperatorTypeAdd;
+        return;
     }
     
-    // Operator is divide, line width = 3
-    return NSMakeSize(10.0f, 3.0f);
+    if ([operatorString isEqualToString:@"-"]) {
+        self.translatedString = kAMOperatorSubtract;
+        self.operatorType = KSMOperatorTypeSubtract;
+        return;
+    }
+    
+    if ([operatorString isEqualToString:@"*"]) {
+        self.translatedString = kAMOperatorMultiply;
+        self.operatorType = KSMOperatorTypeMultiply;
+        return;
+    }
+    
+    if ([operatorString isEqualToString:@"/"]) {
+        self.isGraphic = YES;
+        self.translatedString =  kAMOperatorDivide;
+        self.operatorType = KSMOperatorTypeDivide;
+        return;
+    }
+    
+    if ([operatorString isEqualToString:@"^"]) {
+        self.translatedString = kAMOperatorPower;
+        self.operatorType = KSMOperatorTypePower;
+        return;
+    }
 }
 
--(NSSize)fittingSize
+-(void)setAttributedString:(NSAttributedString *)attributedString
 {
-    return self.intrinsicContentSize;
-}
-
--(void)am_layout
-{
-    [self setFrameSize:self.fittingSize];
+    [super setAttributedString:attributedString];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    NSGraphicsContext * context = [NSGraphicsContext currentContext];
-    [context saveGraphicsState];
     
-    if (!_isGraphic) {
-        [self.translatedString drawAtPoint:NSMakePoint(0, 0) withAttributes:self.attributes];
+    if (!self.isGraphic) {
+        [super drawRect:dirtyRect];
     } else {
-        
-        NSBezierPath * path = [[NSBezierPath alloc] init];
-        
-        if ( [self.operatorString isEqualToString:@"/"] ) {
-            [path moveToPoint:NSMakePoint(0, 1)];
-            [path setLineWidth:1.0];
-            [[NSColor blackColor] set];
-            [path lineToPoint:NSMakePoint(self.bounds.size.width, 1)];
-            [path stroke];
-        }
+        NSGraphicsContext * context = [NSGraphicsContext currentContext];
+        [context saveGraphicsState];
+        NSSize size = self.tightBoundingBox.size;
+        NSRect rect = NSMakeRect(0, 0 , self.bounds.size.width, size.height);
+        [[NSColor blackColor] set];
+        NSRectFill(rect);
+        [context restoreGraphicsState];
     }
-    
-    [context restoreGraphicsState];
-
 }
 
 -(CGFloat)baselineOffsetFromBottom
 {
-    if (self.requiresQuotientBaselining) {
-        return self.fittingSize.height / 2.0f;
+    CGFloat offset;
+    if (self.isGraphic) {
+        offset = self.tightBoundingBox.size.height / 2.0;
     } else {
-        return 0.0f;
+        offset = [super baselineOffsetFromBottom];
     }
-}
-
-
--(NSPoint)midPoint
-{
-    return NSMakePoint(self.frame.size.width/2.0f, self.frame.size.height/2);
-}
-
--(NSPoint)midPointInCoordinatesOfView:(NSView*)view
-{
-    return [self convertPoint:[self midPoint] toView:view];
+    return offset;
 }
 
 #pragma mark - AMQuotientBaselining protocol -
@@ -160,16 +137,6 @@
 -(CGFloat)verticalMidPoint
 {
     return self.frame.origin.y + self.frame.size.height / 2.0f;
-}
-
--(BOOL)useQuotientBaselining
-{
-    return _useQuotientBaselining;
-}
-
--(void)setUseQuotientBaselining:(BOOL)useQuotientBaselining
-{
-    _useQuotientBaselining = useQuotientBaselining;
 }
 
 -(BOOL)requiresQuotientBaselining

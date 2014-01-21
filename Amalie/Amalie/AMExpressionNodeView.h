@@ -10,37 +10,35 @@
 @class AMExpressionDisplayOptions;
 @class AMOperatorView;
 
-
-#import "AMContentView.h"
+#import "AMTextView.h"
 #import "AMContentViewDataSource.h"
-#import "AMQuotientBaselining.h"
-#import "AMNameProvider.h"
+#import "AMExpressionNodeViewDelegate.h"
+#import "AMNameProviding.h"
 
-@interface AMExpressionNodeView : AMContentView <AMQuotientBaselining>
+@interface AMExpressionNodeView : AMTextView
 
-@property (weak, readonly)   AMExpressionNodeView * parentNode;
-@property (weak, readonly)   AMExpressionNodeView * rootNode;
-@property (weak, readwrite)  KSMExpression        * expression;
-@property (weak, readonly)   AMExpressionNodeView * leftOperandNode;
-@property (weak, readonly)   AMExpressionNodeView * rightOperandNode;
-@property (weak, readonly)   AMOperatorView       * operatorView;
-@property (readwrite)        CGFloat                scaleFactor;
+@property (weak, readwrite) KSMExpression * expression;
+@property (readonly)        BOOL            isBracketed;
+@property (readwrite)       NSUInteger      scriptingLevel;
+@property (readwrite)       CGFloat         scaleFactor;
+@property (weak, readwrite) id<AMExpressionNodeViewDelegate> delegate;
+@property (copy, readwrite) NSString * groupID;
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
-@property (readonly) BOOL isBracketed;
+-(id)initWithFrame:(NSRect)frame
+           groupID:(NSString *)groupID
+        expression:(KSMExpression*)expression
+    scriptingLevel:(NSUInteger)scriptingLevel
+          delegate:(id<AMExpressionNodeViewDelegate>)delegate
+    displayOptions:(AMExpressionDisplayOptions*)displayOptions
+       scaleFactor:(CGFloat)scaleFactor;
 
-- (id)initWithFrame:(NSRect)frame
-            groupID:(NSString *)groupID
-           rootNode:(AMExpressionNodeView*)root
-         parentNode:(AMExpressionNodeView*)parent
-         expression:(KSMExpression*)expression
-         datasource:(id<AMContentViewDataSource>)datasource
-     displayOptions:(AMExpressionDisplayOptions*)displayOptions
-        scaleFactor:(CGFloat)scaleFactor;
-
-
--(AMOperatorView*)baselineDefiningDivideView;
--(void)am_layout;
+-(void)resetWithgroupID:(NSString *)groupID
+             expression:(KSMExpression *)expression
+         scriptingLevel:(NSUInteger)scriptingLevel
+               delegate:(id<AMExpressionNodeViewDelegate>)delegate
+         displayOptions:(AMExpressionDisplayOptions *)displayOptions
+            scaleFactor:(CGFloat)scaleFactor;
 
 @end

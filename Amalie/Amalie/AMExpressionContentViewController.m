@@ -91,55 +91,7 @@
     KSMExpression * expr;
     expr = [self expressionFromString:self.expressionStringView.stringValue atIndex:0];
     expressionView.expression = expr;
-    [self layoutInsertedView];
     [expressionView setNeedsDisplay:YES];
-}
-
--(void)layoutInsertedView
-{
-    [CATransaction begin];
-    
-    CGFloat const AM_VIEW_MARGIN      = 19.0f;
-    CGFloat const AM_MIN_STRING_WIDTH = 300.0f;
-    
-    AMExpressionNodeView * expressionView = self.expressionView;
-    NSTextField * expressionString = self.expressionStringView;
-    AMExpressionContentView * contentView = self.contentView;
-    NSView * container = [contentView superview];
-    
-    // The sizes of the important nested and sibling views
-    NSSize expressionViewSize   = expressionView.intrinsicContentSize;
-    NSSize stringSize =  NSMakeSize( [[expressionString stringValue] sizeWithAttributes:@{NSFontAttributeName: expressionString.font}].width + 10, expressionString.frame.size.height);
-    
-    if (stringSize.width < AM_MIN_STRING_WIDTH) stringSize.width = AM_MIN_STRING_WIDTH;
-    stringSize.width = fmaxf(expressionViewSize.width, stringSize.width);
-    
-    NSSize contentViewSize = NSMakeSize(AM_VIEW_MARGIN + AM_VIEW_MARGIN + stringSize.width + AM_VIEW_MARGIN,
-                                         AM_VIEW_MARGIN + expressionViewSize.height + AM_VIEW_MARGIN + stringSize.height + AM_VIEW_MARGIN);
-    
-    // do the resizing
-    [[contentView animator] setFrameSize:contentViewSize];
-    [[expressionView animator]   setFrameSize:expressionViewSize];
-    [[expressionString animator] setFrameSize:stringSize];
-    
-    // and repositioning
-    
-    
-    CGFloat expressionY = contentViewSize.height - AM_VIEW_MARGIN - expressionViewSize.height;
-    NSPoint baseline = NSMakePoint(0,[expressionView baselineOffsetFromBottom]);
-    baseline = [contentView convertPoint:baseline fromView:expressionView];
-    
-    NSPoint expressionOrigin = NSMakePoint(AM_VIEW_MARGIN, - AM_VIEW_MARGIN - expressionViewSize.height);
-    NSPoint stringOrigin = NSMakePoint(expressionOrigin.x, expressionOrigin.y - AM_VIEW_MARGIN - stringSize.height);
-    [expressionView setFrameOrigin:expressionOrigin];
-    [[expressionString animator] setFrameOrigin:stringOrigin];
-    
-    // Make the box fit the function view
-    [container setFrameSize:NSMakeSize(contentViewSize.width+2*AM_VIEW_MARGIN, contentViewSize.height + 2*AM_VIEW_MARGIN)];
-    [contentView setFrameOrigin:NSMakePoint(1*AM_VIEW_MARGIN, 1*AM_VIEW_MARGIN)];
-    
-    [CATransaction commit];
-    [[self parentWorksheetController] contentViewController:self isResizingContentTo:expressionView.frame.size  usingAnimationTransaction:NO];
 }
 
 -(void)populateView:(AMContentView *)view
@@ -154,7 +106,6 @@
         KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
         self.expressionStringView.stringValue = expr.originalString;
         self.expressionView.expression = expr;
-        [self layoutInsertedView];
     } else {
         // Other views that are sub to self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }

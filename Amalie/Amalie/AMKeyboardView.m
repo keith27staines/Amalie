@@ -132,8 +132,4 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
     return YES;
 }
 
--(BOOL)translatesAutoresizingMaskIntoConstraints
-{
-    return NO;
-}
 @end

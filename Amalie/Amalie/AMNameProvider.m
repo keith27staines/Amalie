@@ -1,17 +1,48 @@
 //
-//  AMGeneralNameProvider.m
+//  AMNameProvider.m
 //  Amalie
 //
 //  Created by Keith Staines on 10/12/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMGeneralNameProvider.h"
+#import "AMNameProvider.h"
 #import "AMDArgumentList+Methods.h"
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
 
-@implementation AMGeneralNameProvider
+@interface AMNameProvider()
+{
+    AMDArgumentList * _dummyVariables;
+}
+
+@end
+
+@implementation AMNameProvider
+
+
++(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables
+{
+    return [[self alloc] initWithDummyVariables:dummyVariables];
+}
+
+-(id)init
+{
+    return [self initWithDummyVariables:nil];
+}
+
+- (id)initWithDummyVariables:(AMDArgumentList*)dummyVariables
+{
+    self = [super init];
+    if (self) {
+        if (dummyVariables) {
+            _dummyVariables = dummyVariables;
+        } else {
+            _dummyVariables = [[AMDArgumentList alloc] init];
+        }
+    }
+    return self;
+}
 
 -(KSMValueType)mathTypeForForObjectWithName:(NSString*)name
 {
@@ -30,7 +61,7 @@
     return [super isKnownObjectName:name];
 }
 
--(NSAttributedString*)attributedNameForObjectWithName:(NSString*)name
+-(NSAttributedString*)attributedStringForObjectWithName:(NSString*)name
 {
     NSAttributedString * returnString = nil;
     if ( [self isNameOfDummyVariable:name] ) {
@@ -39,19 +70,13 @@
         returnString = argument.name.attributedString;
     } else {
         // fall back to looking for concrete variable or object names, these being the names of inserted objects
-        returnString = [super attributedNameForObjectWithName:name];
+        returnString = [super attributedStringForObjectWithName:name];
         if (!returnString) {
             // Last fallback is to generate an attributed name dynamically
-            returnString = [self defaultAttributedNameForObjectWithName:name withType:KSMValueDouble];
+            returnString = [self generateAttributedStringFromName:name withType:KSMValueDouble];
         }
     }
     return returnString;
-}
-
--(NSMutableAttributedString*)defaultAttributedNameForObjectWithName:(NSString*)name
-                                                           withType:(KSMValueType)mathType
-{
-    return [super defaultAttributedNameForObjectWithName:name withType:mathType];
 }
 
 -(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)currentAttributedName

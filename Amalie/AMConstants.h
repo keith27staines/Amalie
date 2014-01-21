@@ -36,6 +36,7 @@ extern NSString * const kAMMinFontSizeKey;
 extern NSString * const kAMFixedWidthFontNameKey;
 extern NSString * const kAMFixedWidthFontSizeKey;
 extern NSString * const kAMSuperscriptingFraction;
+extern NSString * const kAMScriptingLevelKey;
 
 #pragma mark - Icon and title -
 extern NSString * const kAMIconKey;

@@ -6,17 +6,20 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "KSMMathValue.h"
+@class AMDArgumentList, AMDArgument;
 
-@protocol AMNameProvider <NSObject>
+#import "AMNameProviderBase.h"
 
--(KSMValueType)mathTypeForForObjectWithName:(NSString*)name;
--(BOOL)isKnownObjectName:(NSString*)name;
--(NSAttributedString*)attributedNameForObjectWithName:(NSString*)name;
--(NSMutableAttributedString*)defaultAttributedNameForObjectWithName:(NSString*)name
-                                                           withType:(KSMValueType)mathType;
+/*!
+ This class extends the AMExclusiveNameProvider by also parsing through dummy variable names in addition to the inserted object names parsed by super.
+ */
+@interface AMNameProvider : AMNameProviderBase
 
--(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)currentAttributedName;
++(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables;
+
+@property (readonly) AMDArgumentList * dummyVariables;
+
+-(BOOL)isNameOfDummyVariable:(NSString*)name;
+-(AMDArgument*)argumentWithName:(NSString*)name;
 
 @end

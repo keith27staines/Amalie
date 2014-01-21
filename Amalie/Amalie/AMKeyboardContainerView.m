@@ -82,11 +82,6 @@
     return YES;
 }
 
--(BOOL)translatesAutoresizingMaskIntoConstraints
-{
-    return NO;
-}
-
 -(void)reloadKeys
 {
     [self.keyboardView updateKeyLabels];

@@ -20,5 +20,6 @@ typedef enum AMErrorCode : NSUInteger {
 +(id)errorWithCode:(AMErrorCode)code
           userInfo:(NSDictionary *)dict;
 
++(id)errorForNonUniqueName:(NSString*)string;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMTextView.h"
 
 @protocol AMArgumentListViewDelegate <NSTextFieldDelegate>
 
@@ -16,16 +17,10 @@
 
 @end
 
-@interface AMArgumentListView : NSView
-
-@property (weak) IBOutlet NSTextField *textField;
-@property (weak) IBOutlet NSTextField  *rightBrace;
-@property (weak) IBOutlet NSTextField  *leftBrace;
-@property (weak) IBOutlet NSLayoutConstraint *csvWidthConstraint;
+@interface AMArgumentListView : AMTextView
 
 @property (weak) id<AMArgumentListViewDelegate>delegate;
 @property BOOL readOnly;
-@property BOOL autoFitContent;
 
 -(void)reloadData;
 

@@ -12,7 +12,7 @@
 #import "AMContentViewController.h"
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
-#import "AMNameProvider.h"
+#import "AMNameProviding.h"
 
 @protocol AMInsertableViewDelegate <NSObject>
 
@@ -23,7 +23,7 @@
 
 -(void)insertableViewReceivedClick:(AMInsertableView*)view;
 
--(id<AMNameProvider>)insertedObjectNameProvider;
+-(id<AMNameProviding>)insertedObjectNameProvider;
 
 
 @end

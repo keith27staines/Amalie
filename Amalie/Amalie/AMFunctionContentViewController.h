@@ -9,17 +9,19 @@
 @class AMDFunctionDef;
 @class AMExpressionNodeView;
 @class AMFunctionContentView;
-@class AMNameView;
+@class AMTextView;
 
 #import "AMContentViewController.h"
+#import "AMExpressionNodeViewDelegate.h"
 
-@interface AMFunctionContentViewController : AMContentViewController <NSTextFieldDelegate>
+@interface AMFunctionContentViewController : AMContentViewController
+<NSTextFieldDelegate, AMExpressionNodeViewDelegate>
 
 
 @property (weak) IBOutlet NSButton *popupButton;
 @property (weak) IBOutlet NSTextField *equalsSignView;
 
-@property (weak) IBOutlet AMNameView *nameView;
+@property (weak) IBOutlet AMTextView *nameView;
 
 @property (weak) IBOutlet NSTextField *expressionStringView;
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;

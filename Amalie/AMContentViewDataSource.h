@@ -10,15 +10,15 @@
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
-#import "AMNameProvider.h"
+#import "AMNameProviding.h"
 
 @protocol AMContentViewDataSource <NSObject>
 
--(KSMExpression*)view:(AMContentView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index;
+-(KSMExpression*)view:(NSView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index;
 
--(KSMExpression*)view:(AMContentView*)view wantsExpressionAtIndex:(NSUInteger)index;
+-(KSMExpression*)view:(NSView*)view wantsExpressionAtIndex:(NSUInteger)index;
 
--(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol;
+-(KSMExpression*)view:(NSView *)view requiresExpressionForSymbol:(NSString *)symbol;
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView*)view;
 
@@ -26,6 +26,6 @@
 
 -(void)populateView:(AMContentView*)view;
 
--(id<AMNameProvider>)viewRequiresNameProvider:(AMContentView*)view;
+-(id<AMNameProviding>)viewRequiresNameProvider:(AMContentView*)view;
 
 @end

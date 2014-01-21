@@ -15,6 +15,12 @@ static NSString * const AMErrorCodeNameIsNotUniqueKey = @"AMErrorCodeNameIsNotUn
 
 @implementation AMError
 
++(id)errorForNonUniqueName:(NSString*)string
+{
+    return [self errorWithCode:AMErrorCodeNameIsNotUnique
+                      userInfo:@{@"n": string}];
+}
+
 +(id)errorWithCode:(AMErrorCode)code userInfo:(NSDictionary *)dict
 {
     return [[AMError alloc] initWithDomain:AMDomain code:code userInfo:dict];
@@ -43,7 +49,7 @@ static NSString * const AMErrorCodeNameIsNotUniqueKey = @"AMErrorCodeNameIsNotUn
         }
         case AMErrorCodeNameIsNotUnique:
         {
-            mdict[NSLocalizedDescriptionKey] = NSLocalizedString(AMErrorCodeNameIsNotUniqueKey, @"The name is already used by another object.");
+            mdict[NSLocalizedDescriptionKey] = NSLocalizedString(AMErrorCodeNameIsNotUniqueKey, @"The name is '%@' is already in use.");
             mdict[NSLocalizedFailureReasonErrorKey] = @"NSLocalizedFailureReasonErrorKey";
             mdict[NSLocalizedRecoverySuggestionErrorKey] = @"NSLocalizedRecoverySuggestionErrorKey";
             mdict[NSHelpAnchorErrorKey] = @"NSHelpAnchorErrorKey";

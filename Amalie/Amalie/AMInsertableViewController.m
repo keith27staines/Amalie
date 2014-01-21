@@ -12,6 +12,7 @@ NSString * const kAMBNibName = @"AMInsertableView";
 
 @interface AMInsertableViewController ()
 
+
 @end
 
 @implementation AMInsertableViewController

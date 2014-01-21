@@ -36,6 +36,7 @@ NSString * const kAMMinFontSizeKey                    = @"kAMMinFontSizeKey";
 NSString * const kAMFixedWidthFontNameKey             = @"kAMFixedWidthFontNameKey";
 NSString * const kAMFixedWidthFontSizeKey             = @"kAMFixedWidthFontSizeKey";
 NSString * const kAMSuperscriptingFraction            = @"kAMSuperscriptingFraction";
+NSString * const kAMScriptingLevelKey                 = @"kAMScriptingLevel";
 
 #pragma mark - Icon and title -
 NSString * const kAMIconKey                           = @"kAMIconKey";

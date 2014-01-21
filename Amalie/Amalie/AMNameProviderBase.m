@@ -1,12 +1,12 @@
 //
-//  AMInsertedObjectNameProvider.m
+//  AMNameProviderBase.m
 //  Amalie
 //
 //  Created by Keith Staines on 10/12/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMInsertedObjectNameProvider.h"
+#import "AMNameProviderBase.h"
 #import "AMPreferences.h"
 #import "AMDInsertedObject+Methods.h"
 #import "AMDataStore.h"
@@ -16,6 +16,7 @@
 #import "AMKeyboard.h"
 #import "AMKeyboardKeyModel.h"
 #import "AMDName+Methods.h"
+#import "AMError.h"
 
 typedef enum AMCharacterType : NSUInteger {
     amCharacterTypeLatin,
@@ -23,7 +24,7 @@ typedef enum AMCharacterType : NSUInteger {
     amCharacterTypeSymbol,
 } AMCharacterType;
 
-@interface AMInsertedObjectNameProvider()
+@interface AMNameProviderBase()
 {
     __weak AMDArgumentList * _dummyArguments;
 }
@@ -36,7 +37,60 @@ typedef enum AMCharacterType : NSUInteger {
 @end
 
 
-@implementation AMInsertedObjectNameProvider
+@implementation AMNameProviderBase
+
++(id)nameProvider
+{
+    return [[self alloc] init];
+}
+
+-(NSUInteger)indexOfCharacterPrecedingExponentPositionForString:(NSAttributedString*)attributedString
+{
+    NSUInteger requiredIndex = 0;
+    for (NSUInteger index = 0; index < attributedString.length; index++) {
+        NSNumber * baselineOffsetNumber = [attributedString attribute:NSBaselineOffsetAttributeName atIndex:index effectiveRange:NULL];
+        CGFloat baselineOffset = baselineOffsetNumber.floatValue;
+        if (baselineOffset == 0.0f) {
+            requiredIndex = index;
+        }
+    }
+    return requiredIndex;
+}
+
+-(NSAttributedString*)attributedStringByModifying:(NSAttributedString*)string toSuperscriptLevel:(NSUInteger)superscriptLevel
+{
+    NSMutableAttributedString * aString = [string mutableCopy];
+    NSFontManager * fontManager = [NSFontManager sharedFontManager];
+    NSUInteger effectiveSuperscriptLevel = superscriptLevel;
+    
+    for (int i = 0; i < aString.length; i++) {
+        // range of next character in aString
+        NSRange range = NSMakeRange(i, 1);
+        
+        // identify the scripting level and font attributes
+        NSMutableDictionary * attributes = [[aString attributesAtIndex:i effectiveRange:NULL] mutableCopy];
+        NSFont * f = attributes[NSFontAttributeName];
+        NSNumber * scriptingLevelNumber = attributes[kAMScriptingLevelKey];
+        NSNumber * baselineOffsetNumber = attributes[NSBaselineOffsetAttributeName];
+        
+        // The fontsize of this character is controlled by the superscripting level of the entire string (aka superscriptLevel) + the superscript level of this particular character relative to the string
+        effectiveSuperscriptLevel = superscriptLevel + scriptingLevelNumber.integerValue;
+        
+        // resize the character according to the superscript level
+        CGFloat fontSize = [self fontSizeForSuperscriptLevel:effectiveSuperscriptLevel];
+        f = [fontManager convertFont:f toSize:fontSize];
+        [aString setAttributes:@{NSFontAttributeName: f, NSBaselineOffsetAttributeName: baselineOffsetNumber} range:range];
+    }
+    return aString;
+}
+
+-(NSFont *)fontForSymbolsAtScriptinglevel:(NSUInteger)scriptingLevel
+{
+    CGFloat fontSize = [self fontSizeForSuperscriptLevel:scriptingLevel];
+    NSString * family = [self fontFamilyNameForSymbols];
+    NSFontManager * fontManager = [NSFontManager sharedFontManager];
+    return [fontManager fontWithFamily:family traits:0 weight:0 size:fontSize];
+}
 
 -(NSUInteger)baseFontSize
 {
@@ -45,7 +99,7 @@ typedef enum AMCharacterType : NSUInteger {
 
 -(NSUInteger)minimumFontSize
 {
-    return [AMPreferences worksheetSmallestFontSize];
+    return fminf([AMPreferences worksheetSmallestFontSize], [self baseFontSize]);
 }
 
 -(NSString *)fontFamilyNameForLatin
@@ -146,9 +200,14 @@ typedef enum AMCharacterType : NSUInteger {
     
 }
 
--(NSMutableAttributedString*)defaultAttributedNameForObjectWithName:(NSString*)name withType:(KSMValueType)mathType;
+-(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name withType:(KSMValueType)mathType
 {
-    NSMutableAttributedString * returnString = [[NSMutableAttributedString alloc] initWithString:name attributes:nil];
+    if (!name) {
+        return nil;
+    }
+    
+    NSMutableAttributedString * returnString = [[NSMutableAttributedString alloc]
+                                                initWithString:name attributes:nil];
     
     for (int i = 0; i < returnString.length; i++) {
         NSRange r = NSMakeRange(i, 1);
@@ -157,11 +216,15 @@ typedef enum AMCharacterType : NSUInteger {
         if (i > 0) {
             superscriptLevel = -1;
         }
+        
+        // Now we modify the standard fontsize and baseline offset attributes, plus our custom scripting level attribute, all of which are derived from the default font for the character type and the superscriptLevel just calculated
         NSFont * font = [self defaultFontForCharacter:c
                                                ofType:mathType
                                      superscriptLevel:superscriptLevel];
+        [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];
         [returnString addAttribute:NSFontAttributeName value:font range:r];
-        [returnString addAttribute:NSSuperscriptAttributeName value:@(superscriptLevel) range:r];
+        CGFloat xHeight = [font xHeight];
+        [returnString addAttribute:NSBaselineOffsetAttributeName value:@(superscriptLevel*xHeight/2.0) range:r];
     }
     return returnString;
 }
@@ -240,7 +303,7 @@ typedef enum AMCharacterType : NSUInteger {
     return amCharacterTypeLatin;
 }
 
--(NSAttributedString *)attributedNameForObjectWithName:(NSString *)name
+-(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
 {
     AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
     return amdName.attributedString;
@@ -272,11 +335,44 @@ typedef enum AMCharacterType : NSUInteger {
             return KSMValueDouble;
     }
 }
-
 -(BOOL)isKnownObjectName:(NSString *)name
 {
     AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
     return (amdName) ? YES : NO;
 }
+
+#pragma mark - Name validation -
+-(BOOL)validateProposedName:(NSString*)proposedName
+                    forType:(AMInsertableType)type
+                      error:(NSError**)error
+{
+    if (![self nameSyntaxValid:proposedName error:error]) {
+        return NO;
+    }
+    
+    if ( ![self isKnownObjectName:proposedName] ) {
+        if (error) {
+            *error = [AMError errorForNonUniqueName:proposedName];
+        }
+        return NO;
+    }
+    return YES;
+}
+
+-(BOOL)nameSyntaxValid:(NSString*)name error:(NSError**)error
+{
+    if (!name) {
+        if (error) * error = [AMError errorWithCode:AMErrorCodeNameIsNull userInfo:nil];
+        return NO;
+    }
+    
+    if ( [name isEqualToString:@""] ) {
+        if (error!=NULL) * error = [AMError errorWithCode:AMErrorCodeNameIsEmpty userInfo:nil];
+        return NO;
+    }
+    // TODO: other validation, invalidate names beginning with digits etc
+    return YES;
+}
+
 
 @end

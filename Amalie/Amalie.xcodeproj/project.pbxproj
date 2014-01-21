@@ -19,13 +19,19 @@
 		781D180E17F31DE70008758D /* AMDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D180C17F31DE70008758D /* AMDataStore.m */; };
 		7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7825D651180E89C40039EB67 /* AMKeyboard.m */; };
 		7825D655180E91E60039EB67 /* AMKeyboards.m in Sources */ = {isa = PBXBuildFile; fileRef = 7825D654180E91E60039EB67 /* AMKeyboards.m */; };
+		782859F51886D57000523121 /* AMGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859F41886D57000523121 /* AMGraphics.m */; };
+		782859F81886D5A200523121 /* AMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859F61886D5A200523121 /* AMTextView.m */; };
+		782859FB1886D6B900523121 /* AMTextMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859FA1886D6B900523121 /* AMTextMetric.m */; };
+		782859FE1886D70100523121 /* AMNameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859FD1886D70100523121 /* AMNameManager.m */; };
+		78285A011886D74400523121 /* AMExpressionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A001886D74400523121 /* AMExpressionLayout.m */; };
+		78285A041886D9EE00523121 /* KSMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A031886D9EE00523121 /* KSMConstants.m */; };
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		784001EC18015E6E006B00C1 /* AMCenteringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EB18015E6E006B00C1 /* AMCenteringView.m */; };
 		784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */; };
 		7847ECD017B777CB00333A84 /* AMExpressionDisplayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */; };
-		7848E5CE185769F400719EF3 /* AMInsertedObjectNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5CD185769F400719EF3 /* AMInsertedObjectNameProvider.m */; };
-		7848E5D1185770A300719EF3 /* AMGeneralNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5D0185770A300719EF3 /* AMGeneralNameProvider.m */; };
+		7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5CD185769F400719EF3 /* AMNameProviderBase.m */; };
+		7848E5D1185770A300719EF3 /* AMNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5D0185770A300719EF3 /* AMNameProvider.m */; };
 		784BFBDE17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
 		784BFBDF17E7408800152756 /* KSMMathValueHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 784BFBDD17E7408800152756 /* KSMMathValueHolder.m */; };
 		784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EF91789CC11002BE03A /* AMAppController.m */; };
@@ -42,6 +48,9 @@
 		785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A2D179D9BED004D39B5 /* AMContentViewController.m */; };
 		785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A2F179DE475004D39B5 /* AMInsertableView.xib */; };
 		785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A32179DFFAF004D39B5 /* AMContentView.m */; };
+		786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 786E32F2188BC2C10095443D /* AMExpandingTextFieldView.m */; };
+		786E32F7188D12F10095443D /* AMFunctionPropertiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 786E32F5188D12F10095443D /* AMFunctionPropertiesViewController.m */; };
+		786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 786E32F6188D12F10095443D /* AMFunctionPropertiesViewController.xib */; };
 		78702B9417C3510E006A4331 /* AMNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78702B9317C3510E006A4331 /* AMNameView.m */; };
 		78734E231806B10F00A2EEF3 /* AMKeyboardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */; };
 		78734E241806B10F00A2EEF3 /* AMKeyboardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */; };
@@ -111,8 +120,6 @@
 		789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		78A0472117BBEEF900B5703E /* AMOperatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A0472017BBEEF900B5703E /* AMOperatorView.m */; };
-		78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
-		78AEEB5C179EF38900BFF474 /* AMNameRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AEEB5A179EF38900BFF474 /* AMNameRules.m */; };
 		78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */; };
 		78AF0A6917E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */; };
 		78B205C617D5D6F80059773A /* AMFunctionContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */; };
@@ -180,6 +187,19 @@
 		7825D651180E89C40039EB67 /* AMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboard.m; path = Amalie/AMKeyboard.m; sourceTree = "<group>"; };
 		7825D653180E91E60039EB67 /* AMKeyboards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboards.h; path = Amalie/AMKeyboards.h; sourceTree = "<group>"; };
 		7825D654180E91E60039EB67 /* AMKeyboards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboards.m; path = Amalie/AMKeyboards.m; sourceTree = "<group>"; };
+		782859F31886D57000523121 /* AMGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGraphics.h; sourceTree = "<group>"; };
+		782859F41886D57000523121 /* AMGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGraphics.m; sourceTree = "<group>"; };
+		782859F61886D5A200523121 /* AMTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTextView.m; sourceTree = "<group>"; };
+		782859F71886D5A200523121 /* AMTextMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTextMetric.h; sourceTree = "<group>"; };
+		782859F91886D69B00523121 /* AMTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMTextView.h; sourceTree = "<group>"; };
+		782859FA1886D6B900523121 /* AMTextMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTextMetric.m; sourceTree = "<group>"; };
+		782859FC1886D70100523121 /* AMNameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameManager.h; sourceTree = "<group>"; };
+		782859FD1886D70100523121 /* AMNameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameManager.m; sourceTree = "<group>"; };
+		782859FF1886D74400523121 /* AMExpressionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionLayout.h; sourceTree = "<group>"; };
+		78285A001886D74400523121 /* AMExpressionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionLayout.m; sourceTree = "<group>"; };
+		78285A021886D9EE00523121 /* KSMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMConstants.h; sourceTree = "<group>"; };
+		78285A031886D9EE00523121 /* KSMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMConstants.m; sourceTree = "<group>"; };
+		78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDelegate.h; sourceTree = "<group>"; };
 		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
 		7832744A178F1D810051290B /* AMTrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayItem.h; sourceTree = "<group>"; };
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
@@ -189,11 +209,11 @@
 		784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardsAreaView.m; sourceTree = "<group>"; };
 		7847ECCE17B777CB00333A84 /* AMExpressionDisplayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionDisplayOptions.h; sourceTree = "<group>"; };
 		7847ECCF17B777CB00333A84 /* AMExpressionDisplayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionDisplayOptions.m; sourceTree = "<group>"; };
-		7848E5C91857467800719EF3 /* AMNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMNameProvider.h; path = Amalie/AMNameProvider.h; sourceTree = "<group>"; };
-		7848E5CC185769F400719EF3 /* AMInsertedObjectNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertedObjectNameProvider.h; sourceTree = "<group>"; };
-		7848E5CD185769F400719EF3 /* AMInsertedObjectNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertedObjectNameProvider.m; sourceTree = "<group>"; };
-		7848E5CF185770A300719EF3 /* AMGeneralNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGeneralNameProvider.h; sourceTree = "<group>"; };
-		7848E5D0185770A300719EF3 /* AMGeneralNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGeneralNameProvider.m; sourceTree = "<group>"; };
+		7848E5C91857467800719EF3 /* AMNameProviding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameProviding.h; sourceTree = "<group>"; };
+		7848E5CC185769F400719EF3 /* AMNameProviderBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameProviderBase.h; sourceTree = "<group>"; };
+		7848E5CD185769F400719EF3 /* AMNameProviderBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameProviderBase.m; sourceTree = "<group>"; };
+		7848E5CF185770A300719EF3 /* AMNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameProvider.h; sourceTree = "<group>"; };
+		7848E5D0185770A300719EF3 /* AMNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameProvider.m; sourceTree = "<group>"; };
 		784BFBDC17E7408800152756 /* KSMMathValueHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMMathValueHolder.h; sourceTree = "<group>"; };
 		784BFBDD17E7408800152756 /* KSMMathValueHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMMathValueHolder.m; sourceTree = "<group>"; };
 		784D6EF81789CC11002BE03A /* AMAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMAppController.h; sourceTree = "<group>"; };
@@ -222,6 +242,11 @@
 		785D9A2F179DE475004D39B5 /* AMInsertableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AMInsertableView.xib; path = ../AMInsertableView.xib; sourceTree = "<group>"; };
 		785D9A31179DFFAF004D39B5 /* AMContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContentView.h; sourceTree = "<group>"; };
 		785D9A32179DFFAF004D39B5 /* AMContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContentView.m; sourceTree = "<group>"; };
+		786E32F1188BC2C10095443D /* AMExpandingTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpandingTextFieldView.h; sourceTree = "<group>"; };
+		786E32F2188BC2C10095443D /* AMExpandingTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpandingTextFieldView.m; sourceTree = "<group>"; };
+		786E32F4188D12F10095443D /* AMFunctionPropertiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionPropertiesViewController.h; sourceTree = "<group>"; };
+		786E32F5188D12F10095443D /* AMFunctionPropertiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionPropertiesViewController.m; sourceTree = "<group>"; };
+		786E32F6188D12F10095443D /* AMFunctionPropertiesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFunctionPropertiesViewController.xib; sourceTree = "<group>"; };
 		78702B9217C3510E006A4331 /* AMNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameView.h; sourceTree = "<group>"; };
 		78702B9317C3510E006A4331 /* AMNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameView.m; sourceTree = "<group>"; };
 		78734E201806B10F00A2EEF3 /* AMKeyboardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardsViewController.h; path = Amalie/AMKeyboardsViewController.h; sourceTree = "<group>"; };
@@ -332,8 +357,6 @@
 		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
 		78A0471F17BBEEF900B5703E /* AMOperatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOperatorView.h; sourceTree = "<group>"; };
 		78A0472017BBEEF900B5703E /* AMOperatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOperatorView.m; sourceTree = "<group>"; };
-		78AEEB59179EF38900BFF474 /* AMNameRules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameRules.h; sourceTree = "<group>"; };
-		78AEEB5A179EF38900BFF474 /* AMNameRules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameRules.m; sourceTree = "<group>"; };
 		78AF0A6617E8FB4B00C018DB /* KSMSymbolProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMSymbolProvider.h; sourceTree = "<group>"; };
 		78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMSymbolProvider.m; sourceTree = "<group>"; };
 		78B205C317D47B470059773A /* KSMReferenceCountedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMReferenceCountedObject.h; sourceTree = "<group>"; };
@@ -515,6 +538,20 @@
 			name = App;
 			sourceTree = "<group>";
 		};
+		78285A061888148000523121 /* AMNameProvider */ = {
+			isa = PBXGroup;
+			children = (
+				7848E5C91857467800719EF3 /* AMNameProviding.h */,
+				782859FC1886D70100523121 /* AMNameManager.h */,
+				782859FD1886D70100523121 /* AMNameManager.m */,
+				7848E5CF185770A300719EF3 /* AMNameProvider.h */,
+				7848E5D0185770A300719EF3 /* AMNameProvider.m */,
+				7848E5CC185769F400719EF3 /* AMNameProviderBase.h */,
+				7848E5CD185769F400719EF3 /* AMNameProviderBase.m */,
+			);
+			name = AMNameProvider;
+			sourceTree = "<group>";
+		};
 		784BFBE017E7603700152756 /* KSMMathValue */ = {
 			isa = PBXGroup;
 			children = (
@@ -529,16 +566,19 @@
 		785247BD1784067900F6A7AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				782859F31886D57000523121 /* AMGraphics.h */,
+				782859F41886D57000523121 /* AMGraphics.m */,
+				782859F71886D5A200523121 /* AMTextMetric.h */,
+				782859FA1886D6B900523121 /* AMTextMetric.m */,
+				782859F91886D69B00523121 /* AMTextView.h */,
+				782859F61886D5A200523121 /* AMTextView.m */,
+				782859FF1886D74400523121 /* AMExpressionLayout.h */,
+				78285A001886D74400523121 /* AMExpressionLayout.m */,
 				788709C3178DAEAB008E093A /* AMPreferences.h */,
 				788709C4178DAEAB008E093A /* AMPreferences.m */,
 				7832744A178F1D810051290B /* AMTrayItem.h */,
 				7832744B178F1D810051290B /* AMTrayItem.m */,
-				78AEEB59179EF38900BFF474 /* AMNameRules.h */,
-				78AEEB5A179EF38900BFF474 /* AMNameRules.m */,
-				7848E5CC185769F400719EF3 /* AMInsertedObjectNameProvider.h */,
-				7848E5CD185769F400719EF3 /* AMInsertedObjectNameProvider.m */,
-				7848E5CF185770A300719EF3 /* AMGeneralNameProvider.h */,
-				7848E5D0185770A300719EF3 /* AMGeneralNameProvider.m */,
+				78285A061888148000523121 /* AMNameProvider */,
 				7811D2C817A255150024839B /* AM ReferenceCounted Tree */,
 				78DE823C178365DC00C7EE10 /* KSMPrime */,
 				787B307D1783638D001851C0 /* KSMMath */,
@@ -602,6 +642,27 @@
 			name = "Content Views for document inserts";
 			sourceTree = "<group>";
 		};
+		786E32F0188BC29C0095443D /* AM General purpose views */ = {
+			isa = PBXGroup;
+			children = (
+				786E32F1188BC2C10095443D /* AMExpandingTextFieldView.h */,
+				786E32F2188BC2C10095443D /* AMExpandingTextFieldView.m */,
+			);
+			name = "AM General purpose views";
+			sourceTree = "<group>";
+		};
+		786E32F9188D13070095443D /* AMFunctionPropertiesView */ = {
+			isa = PBXGroup;
+			children = (
+				78E477001827A52200DEB5FB /* AMFunctionEditorViewController.h */,
+				78E477011827A52200DEB5FB /* AMFunctionEditorViewController.m */,
+				786E32F4188D12F10095443D /* AMFunctionPropertiesViewController.h */,
+				786E32F5188D12F10095443D /* AMFunctionPropertiesViewController.m */,
+				786E32F6188D12F10095443D /* AMFunctionPropertiesViewController.xib */,
+			);
+			name = AMFunctionPropertiesView;
+			sourceTree = "<group>";
+		};
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
@@ -654,6 +715,7 @@
 		787B3048178361BC001851C0 /* Amalie */ = {
 			isa = PBXGroup;
 			children = (
+				786E32F0188BC29C0095443D /* AM General purpose views */,
 				7825D657180FE0440039EB67 /* App */,
 				78F57D8D18350DC800683FFC /* Document */,
 				785D9A1D179BDD19004D39B5 /* Document Insertable views */,
@@ -725,6 +787,8 @@
 				78EF56AF17CF3B2200402847 /* KSMMatrix.m */,
 				78AF0A6617E8FB4B00C018DB /* KSMSymbolProvider.h */,
 				78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */,
+				78285A021886D9EE00523121 /* KSMConstants.h */,
+				78285A031886D9EE00523121 /* KSMConstants.m */,
 			);
 			name = KSMMath;
 			sourceTree = "<group>";
@@ -792,7 +856,7 @@
 		78CDC75F17AFA66000BDC8D7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				7848E5C91857467800719EF3 /* AMNameProvider.h */,
+				78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */,
 				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
 				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
 				78327449178F14920051290B /* AMTrayDatasource.h */,
@@ -841,14 +905,8 @@
 		78E477031827AAB900DEB5FB /* Function Definition Content */ = {
 			isa = PBXGroup;
 			children = (
-				78B205C717D5DBC50059773A /* AMFunctionContentView.xib */,
-				78B205C917D5DC1D0059773A /* AMFunctionContentView.h */,
-				78B205CA17D5DC1D0059773A /* AMFunctionContentView.m */,
-				78B205C417D5D6F80059773A /* AMFunctionContentViewController.h */,
-				78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */,
-				78E477001827A52200DEB5FB /* AMFunctionEditorViewController.h */,
-				78E477011827A52200DEB5FB /* AMFunctionEditorViewController.m */,
 				78962FEF182CEFE50066BEE9 /* ArgumentList */,
+				786E32F9188D13070095443D /* AMFunctionPropertiesView */,
 			);
 			name = "Function Definition Content";
 			sourceTree = "<group>";
@@ -886,6 +944,11 @@
 		78F57D8C18350C7800683FFC /* Definitions Content */ = {
 			isa = PBXGroup;
 			children = (
+				78B205C717D5DBC50059773A /* AMFunctionContentView.xib */,
+				78B205C917D5DC1D0059773A /* AMFunctionContentView.h */,
+				78B205CA17D5DC1D0059773A /* AMFunctionContentView.m */,
+				78B205C417D5D6F80059773A /* AMFunctionContentViewController.h */,
+				78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */,
 				78E477031827AAB900DEB5FB /* Function Definition Content */,
 				78F57D8918350BD900683FFC /* Constant Definition Content */,
 				78F57D8A18350BEC00683FFC /* Variable Definition Content */,
@@ -992,6 +1055,7 @@
 			files = (
 				787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
+				786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */,
 				7899B2E317AD0E16008BDB75 /* AMEquationContentView.xib in Resources */,
 				78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */,
 				78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */,
@@ -1024,6 +1088,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				782859FB1886D6B900523121 /* AMTextMetric.m in Sources */,
 				788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */,
 				781D180D17F31DE70008758D /* AMDataStore.m in Sources */,
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
@@ -1051,12 +1116,14 @@
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
-				7848E5D1185770A300719EF3 /* AMGeneralNameProvider.m in Sources */,
+				7848E5D1185770A300719EF3 /* AMNameProvider.m in Sources */,
+				786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
 				78702B9417C3510E006A4331 /* AMNameView.m in Sources */,
 				78EF56A417CCA2E400402847 /* KSMFunctionArgument.m in Sources */,
 				78F57D931835236300683FFC /* AMDInsertedExpression+Methods.m in Sources */,
+				782859F81886D5A200523121 /* AMTextView.m in Sources */,
 				78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
 				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
@@ -1081,9 +1148,11 @@
 				7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */,
 				7899B30117AD3AA2008BDB75 /* AMEquationContentView.m in Sources */,
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
+				78285A011886D74400523121 /* AMExpressionLayout.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
 				7832744C178F1D810051290B /* AMTrayItem.m in Sources */,
 				7899B30A17AD3B0B008BDB75 /* AMMathematicalSetContentView.m in Sources */,
+				78285A041886D9EE00523121 /* KSMConstants.m in Sources */,
 				78962FE3182C0A990066BEE9 /* AMDIndexedExpression+Methods.m in Sources */,
 				78962FE6182C0BB00066BEE9 /* AMDInsertedObject+Methods.m in Sources */,
 				785D9A26179D716D004D39B5 /* AMInsertableViewController.m in Sources */,
@@ -1100,18 +1169,20 @@
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,
 				7899B2E217AD0E16008BDB75 /* AMEquationContentViewController.m in Sources */,
 				7899B30D17AD3B2F008BDB75 /* AMGraph2DContentView.m in Sources */,
-				78AEEB5B179EF38900BFF474 /* AMNameRules.m in Sources */,
 				785D9A21179C5930004D39B5 /* AMExpressionContentViewController.m in Sources */,
 				7811D2C617A2550E0024839B /* AMRefTree.m in Sources */,
 				78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */,
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
 				78E477021827A52200DEB5FB /* AMFunctionEditorViewController.m in Sources */,
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,
-				7848E5CE185769F400719EF3 /* AMInsertedObjectNameProvider.m in Sources */,
+				786E32F7188D12F10095443D /* AMFunctionPropertiesViewController.m in Sources */,
+				782859FE1886D70100523121 /* AMNameManager.m in Sources */,
+				7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */,
 				78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				78E477061827F28D00DEB5FB /* AMDArgumentList+Methods.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
+				782859F51886D57000523121 /* AMGraphics.m in Sources */,
 				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,
 				78962FE0182C05C50066BEE9 /* AMDExpression+Methods.m in Sources */,
 				788709C5178DAEAB008E093A /* AMPreferences.m in Sources */,
@@ -1137,7 +1208,6 @@
 				78DE598017CB6EE5003F0181 /* KSMFunction.m in Sources */,
 				78BBB2FE17D10490006B8F07 /* KSMUserFunction.m in Sources */,
 				787B308717836485001851C0 /* KSMPrimeDecompositionTests.m in Sources */,
-				78AEEB5C179EF38900BFF474 /* AMNameRules.m in Sources */,
 				7811D2D017A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				7811D2CC17A255380024839B /* AMRefTreeNode.m in Sources */,
 				78EF56A517CCA2E400402847 /* KSMFunctionArgument.m in Sources */,

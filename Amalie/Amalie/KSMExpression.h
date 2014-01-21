@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KSMReferenceCountedObject.h"
+#import "KSMConstants.h"
 
 extern NSString * const kOperatorsString;
 extern NSString * const kBinaryOperatorsString;
@@ -25,17 +26,6 @@ extern NSString * const kSubtract;
 extern NSString * const kVectorMultiply;
 extern NSString * const kScalarMultiply;
 extern NSArray * operatorsArray;
-
-typedef enum KSMOperatorType : NSInteger {
-    KSMOperatorTypeUnrecognized = -1,
-    KSMOperatorTypePower = 0,
-    KSMOperatorTypeMultiply = 1,
-    KSMOperatorTypeDivide = 2,
-    KSMOperatorTypeAdd = 3,
-    KSMOperatorTypeSubtract = 4,
-    KSMOperatorTypeVectorMultiply = 5,
-    KSMOperatorTypeScalarMultiply = 6,
-} KSMOperatorType;
 
 typedef enum KSMExpressionType : NSInteger {
     KSMExpressionTypeUnrecognized = -1,
@@ -115,8 +105,11 @@ typedef enum KSMExpressionValidity : NSInteger {
  */
 @property (readonly) KSMExpressionValidity validityType;
 
+/*! An expression is unary if it is valid and cannot be decomposed into subexpressions, hence including literals and variables but excluding binary expressions and any form of invalid expression */
+@property (readonly) BOOL isUnary;
+
 /*!
- * Gets the terminal status of the expression.
+ * Gets the terminal status of the expression. An expression is terminal if and only if it is unary or binary, where each of the binary nodes cannot themselves be decomposed into two or more subexpressions.
  */
 @property (readonly) BOOL terminal;
 

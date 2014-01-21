@@ -10,7 +10,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 
 #import "AMDName+Methods.h"
 #import "NSManagedObject+SharedDataStore.h"
-#import "AMInsertedObjectNameProvider.h"
+#import "AMNameProviderBase.h"
 
 @implementation AMDName (Methods)
 
@@ -47,7 +47,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
         }
         case AMInsertableTypeExpression:
         {
-            defaultName = @"anonymous";
+            defaultName = @"?";
             mustBeUnique = NO;
             break;
         }
@@ -66,24 +66,24 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
         } else {
             aName.string = defaultName;
         }
-        id<AMNameProvider> nameProvider = [[AMInsertedObjectNameProvider alloc] init];
-        aName.attributedString = [nameProvider defaultAttributedNameForObjectWithName:aName.string withType:KSMValueDouble];
+        id<AMNameProviding> nameProvider = [[AMNameProviderBase alloc] init];
+        aName.attributedString = [nameProvider generateAttributedStringFromName:aName.string withType:KSMValueDouble];
     }
     
     aName.mustBeUnique = @(mustBeUnique);
     return aName;
 }
 
-+(NSAttributedString*)defaultAttributedNameFromString:(NSString*)name andType:(KSMValueType)type
++(NSAttributedString*)generateAttributedStringFromName:(NSString*)name andType:(KSMValueType)type
 {
-    id<AMNameProvider> nameProvider = [[AMInsertedObjectNameProvider alloc] init];
-    return  [nameProvider defaultAttributedNameForObjectWithName:name withType:type];
+    id<AMNameProviding> nameProvider = [[AMNameProviderBase alloc] init];
+    return  [nameProvider generateAttributedStringFromName:name withType:type];
 }
 
 -(void)setNameAndAttributedNameFrom:(NSString*)string andKSMType:(KSMValueType)type
 {
     self.string = string;
-    self.attributedString = [AMDName defaultAttributedNameFromString:string andType:type];
+    self.attributedString = [AMDName generateAttributedStringFromName:string andType:type];
 }
 
 +(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string

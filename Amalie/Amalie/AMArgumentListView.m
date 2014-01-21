@@ -26,39 +26,20 @@
     return self;
 }
 
--(BOOL)translatesAutoresizingMaskIntoConstraints
-{
-    return NO;
-}
-
--(BOOL)readOnly
-{
-    return !self.textField.isEditable;
-}
-
--(void)setReadOnly:(BOOL)readOnly
-{
-    [self.textField setEditable:!readOnly];
-}
-
 -(void)reloadData
 {
     NSFont * bracesFont = [self.delegate bracesFont];
-    self.leftBrace.stringValue = @"(";
-    self.rightBrace.stringValue = @")";
-    [self.leftBrace setFont:bracesFont];
-    [self.rightBrace setFont:bracesFont];
-    [self.textField setFont:bracesFont];
-    NSMutableAttributedString * displayString;
-    NSAttributedString * comma = [[NSAttributedString alloc] initWithString:@" , " attributes:nil];
+    NSDictionary * attributes = @{NSFontAttributeName: bracesFont};
+    NSAttributedString * comma = [[NSAttributedString alloc] initWithString:@", " attributes:attributes];
     NSUInteger stringCount = self.delegate.displayStringCount;
+
+    // We will construct the argument list into displayString
+    NSMutableAttributedString * displayString;
+
+    // initialise with left bracket
+    displayString = [[NSMutableAttributedString alloc] initWithString:@"(" attributes:attributes];
     
-    if (stringCount == 0) {
-        displayString = [[NSMutableAttributedString alloc] initWithString:@" " attributes:nil];
-    } else {
-        displayString = [[NSMutableAttributedString alloc] init];
-    }
-    
+    // append comma seperated list x,y,z...
     for (NSUInteger i = 0; i < stringCount; i++) {
         [displayString appendAttributedString:[self.delegate displayStringForIndex:i]];
         
@@ -66,27 +47,18 @@
             [displayString appendAttributedString:comma];
         }
     }
-    self.textField.attributedStringValue = displayString;
     
-    if (self.autoFitContent) {
-        [self.textField setFrameSize:self.textField.fittingSize];
-    }
-
+    // append right bracket
+    [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@")" attributes:attributes]];
+    self.attributedString = displayString;
+    [self invalidateIntrinsicContentSize];
 }
 
 -(void)awakeFromNib
 {
     self.readOnly = YES;
-    self.autoFitContent = YES;
-    self.textField.delegate = self.delegate;
     [self reloadData];
 }
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	[super drawRect:dirtyRect];
-}
-
 
 
 @end

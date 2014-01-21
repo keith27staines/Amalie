@@ -30,6 +30,9 @@ static CABasicAnimation * animateOrigin;
 @property (readwrite) NSPoint mouseDownOffsetFromOrigin;
 @property (readwrite) BOOL isDragging;
 @property (readwrite) NSImage * dragImage;
+
+@property (strong) IBOutlet NSLayoutConstraint *closeButtonTopConstraint;
+@property (strong) IBOutlet NSLayoutConstraint *closeButtonLeftConstraint;
 @end
 
 @implementation AMInsertableView
@@ -67,16 +70,47 @@ static CABasicAnimation * animateOrigin;
 
 -(void)viewDidMoveToWindow
 {
-    _contentView = [self.delegate insertableView:self
-                       requiresContentViewOfType:self.insertableType];
+    // Load the content view. We need to hold onto the reference for a short time
+    AMContentView * contentView = [self.delegate insertableView:self
+                        requiresContentViewOfType:self.insertableType];
+    _contentView  = contentView; // _contentView is a weak reference
+    [contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // Add a tracking area so that inserted views know when the mouse is over them
     NSUInteger taOptions = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
-    [self addSubview:_contentView];
+    
+    [self addSubview:contentView];
     NSTrackingArea * ta = [[NSTrackingArea alloc] initWithRect:NSZeroRect
                                                        options:taOptions
                                                          owner:self userInfo:nil];
     [self addTrackingArea:ta];
+}
+
+-(void)updateConstraints
+{
+    [super updateConstraints];
+    NSView * content = self.contentView;
+    NSView * container = self;
+    NSDictionary * metrics = @{@"pad": @(14.0)};
+    if (self.contentView) {
+        NSLayoutConstraint * closeButtonTop  = self.closeButtonTopConstraint;
+        NSLayoutConstraint * closeButtonLeft = self.closeButtonLeftConstraint;
+        [self removeConstraints:self.constraints];
+        [self addConstraints:@[closeButtonTop, closeButtonLeft]];
+        NSArray * newConstraints;
+        newConstraints = [NSLayoutConstraint
+                          constraintsWithVisualFormat:@"H:|-pad-[content]-pad-|"
+                          options:0
+                          metrics:metrics
+                          views:NSDictionaryOfVariableBindings(container, content)];
+        [self addConstraints:newConstraints];
+        newConstraints = [NSLayoutConstraint
+                          constraintsWithVisualFormat:@"V:|-pad-[content]-pad-|"
+                          options:0
+                          metrics:metrics
+                          views:NSDictionaryOfVariableBindings(container, content)];
+        [self addConstraints:newConstraints];
+    }
 }
 
 #pragma mark - State -
