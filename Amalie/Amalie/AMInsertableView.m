@@ -93,25 +93,24 @@ static CABasicAnimation * animateOrigin;
     NSView * container = self;
     NSView * closeButton = self.closeButton;
     NSSize closeButtonSize = [closeButton alignmentRectForFrame:closeButton.frame].size;
-    CGFloat pad = fmaxf(closeButtonSize.width,closeButtonSize.height);
-    NSDictionary * metrics = @{@"pad": @(pad)};
+    CGFloat padH = closeButtonSize.width;
+    CGFloat padV = closeButtonSize.height;
+    NSDictionary * metrics = @{@"padH": @(padH), @"padV": @(padV)};
+    NSDictionary * views = NSDictionaryOfVariableBindings(closeButton,container, content);
     if (self.contentView) {
-        NSLayoutConstraint * closeButtonTop  = self.closeButtonTopConstraint;
-        NSLayoutConstraint * closeButtonLeft = self.closeButtonLeftConstraint;
         [self removeConstraints:self.constraints];
-        [self addConstraints:@[closeButtonTop, closeButtonLeft]];
         NSArray * newConstraints;
         newConstraints = [NSLayoutConstraint
-                          constraintsWithVisualFormat:@"H:|-pad-[content]-pad-|"
+                          constraintsWithVisualFormat:@"H:|[closeButton][content]-padH-|"
                           options:0
                           metrics:metrics
-                          views:NSDictionaryOfVariableBindings(container, content)];
+                          views:views];
         [self addConstraints:newConstraints];
         newConstraints = [NSLayoutConstraint
-                          constraintsWithVisualFormat:@"V:|-pad-[content]-pad-|"
+                          constraintsWithVisualFormat:@"V:|[closeButton][content]-padV-|"
                           options:0
                           metrics:metrics
-                          views:NSDictionaryOfVariableBindings(container, content)];
+                          views:views];
         [self addConstraints:newConstraints];
     }
 }

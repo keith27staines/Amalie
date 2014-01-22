@@ -12,7 +12,7 @@
 
 @interface AMFunctionContentView()
 {
-    
+    __weak AMArgumentListView * _argumentListView;
 }
 
 @end
@@ -66,6 +66,15 @@
 {
     [super setGroupID:groupID];
     self.expressionView.groupID = groupID;
+}
+-(void)setArgumentListView:(AMArgumentListView *)argumentListView
+{
+    _argumentListView = argumentListView;
+    [self setNeedsDisplay:YES];
+}
+-(AMArgumentListView *)argumentListView
+{
+    return _argumentListView;
 }
 
 
