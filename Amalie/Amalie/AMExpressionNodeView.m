@@ -259,12 +259,7 @@
     [context saveGraphicsState];
     context.shouldAntialias = YES;
     if (self.expression.isUnary) {
-        [[NSColor colorWithCalibratedRed:0 green:1 blue:0 alpha:1] set];
-        NSRectFill(dirtyRect);
         [super drawRect:dirtyRect];
-    } else {
-        [[NSColor blueColor] set];
-        NSRectFill(dirtyRect);
     }
     if (self.isBracketed) {
         NSAffineTransform * transform = [NSAffineTransform transform];

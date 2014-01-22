@@ -22,6 +22,8 @@
 @property (weak) id<AMArgumentListViewDelegate>delegate;
 @property BOOL readOnly;
 
+@property BOOL showEqualsSign;
+
 -(void)reloadData;
 
 @end

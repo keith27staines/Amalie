@@ -117,6 +117,7 @@ static NSUInteger const kAMIndexRHS;
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     AMArgumentListView * argumentsView = self.argumentListView;
     [argumentsView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    argumentsView.showEqualsSign = YES;
     [self.contentView addSubview:argumentsView];
     AMFunctionContentView * fv = (AMFunctionContentView *)self.contentView;
     fv.argumentListView = argumentsView;

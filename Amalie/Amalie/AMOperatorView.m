@@ -138,16 +138,6 @@ static NSString * const kAMOperatorPower    = @"^";
 {
     return self.frame.origin.y + self.frame.size.height / 2.0f;
 }
-
--(BOOL)requiresQuotientBaselining
-{
-    if ( self.useQuotientBaselining || [self.operatorString isEqualToString:@"/"] ) {
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
 -(AMOperatorView*)baselineDefiningDivideView
 {
     if ( [self.operatorString isEqualToString:@"/"] ) {

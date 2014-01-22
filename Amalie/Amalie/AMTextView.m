@@ -12,7 +12,7 @@
 
 @interface AMTextView()
 {
-    NSColor                * _textBackgroundColor;
+    NSColor                * _backgroundColor;
     BOOL                     _showBackground;
     BOOL                     _showTextBaseline;
     BOOL                     _showBoundingBoxes;
@@ -37,19 +37,34 @@
 
 @implementation AMTextView
 
+#pragma mark - NSView overrides -
+
 - (id)initWithFrame:(NSRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        _showBackground          = YES;
+        _showBackground          = NO;
         _showBoundingBoxes       = NO;
         _showSelectionBoxes      = NO;
-        _showTextBaseline        = YES;
-        _showTextBaselineOrigin  = YES;
+        _showTextBaseline        = NO;
+        _showTextBaselineOrigin  = NO;
         _showTightBoundingBox    = NO;
     }
     return self;
+}
+
+-(NSSize)intrinsicContentSize
+{
+    return self.tightBoundingBox.size;
+}
+
+-(CGFloat)baselineOffsetFromBottom
+{
+    CGFloat offset = 0;
+    offset = self.tightBoundingBox.size.height + self.tightBoundingBox.origin.y;
+    offset = [self pixelIntegralPoint:NSMakePoint(0, offset)].y;
+    return offset;
 }
 -(BOOL)isFlipped
 {
@@ -63,6 +78,17 @@
 {
     NSLog(@"%@",self.attributedString.string);
 }
+-(void)updateConstraints
+{
+    [super updateConstraints];
+    if (self.attributedString.length > 0) {
+        [self removeConstraints:self.constraints];
+        [self addWidthConstraint];
+        [self addHeightConstraint];
+    }
+}
+#pragma mark - Mensuration -
+
 -(AMTextMetric *)textMetric
 {
     if (!_textMetric) {
@@ -106,19 +132,11 @@
 {
     return self.textMetric.maximumDescender;
 }
--(NSColor *)textBackgroundColor
+-(NSRect)tightBoundingBox
 {
-    if (!_textBackgroundColor) {
-        _textBackgroundColor = [NSColor colorWithCalibratedRed:0.5 green:8 blue:0.7 alpha:1];
-    }
-    return _textBackgroundColor;
+    return _tightBoundingBox;
 }
-
--(void)setTextBackgroundColor:(NSColor *)color
-{
-    _textBackgroundColor = color;
-}
-
+#pragma mark - String setting -
 -(NSAttributedString *)attributedString
 {
     return self.textMetric.attributedString;
@@ -132,16 +150,7 @@
     }
 }
 
--(void)updateConstraints
-{
-    [super updateConstraints];
-    if (self.attributedString.length > 0) {
-        [self removeConstraints:self.constraints];
-        [self addWidthConstraint];
-        [self addHeightConstraint];
-    }
-}
-
+#pragma mark - Drawing -
 - (void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
@@ -192,11 +201,14 @@
 -(void)drawBackground
 {
     if (!self.showBackground) return;
-    
-    NSGraphicsContext * context = [NSGraphicsContext currentContext];
-    [context saveGraphicsState];
-	[self.textBackgroundColor set];
-    [context restoreGraphicsState];
+	[self.backgroundColor set];
+}
+
+
+-(void)drawBaselineOrigin
+{
+    [[NSColor blueColor] set];
+    NSRectFill(NSMakeRect(self.bounds.origin.x + self.baselineOrigin.x - 2, self.bounds.origin.y + self.baselineOrigin.y - 2, 4, 4));
 }
 
 -(void)drawText
@@ -209,9 +221,12 @@
     NSGraphicsContext * context = [NSGraphicsContext currentContext];
     [context saveGraphicsState];
     
+    if (self.showBackground) {
+        [self drawBackground];
+    }
+    
     if (self.showTextBaselineOrigin) {
-        [[NSColor blueColor] set];
-        NSRectFill(NSMakeRect(self.bounds.origin.x + self.baselineOrigin.x - 2, self.bounds.origin.y + self.baselineOrigin.y - 2, 4, 4));
+        [self drawBaselineOrigin];
     }
 
     // Actually draw the text
@@ -236,6 +251,7 @@
     [context restoreGraphicsState];
 }
 
+#pragma mark - Analyse text -
 -(void)analyseText
 {
     _baselineOrigin      = NSZeroPoint;
@@ -293,6 +309,7 @@
     return [self transformRect:rangeBounds fromContainerToViewpoint:self.baselineOrigin];
 }
 
+#pragma mark - Constraints determining size -
 -(void)addWidthConstraint
 {
     [self addConstraint:[NSLayoutConstraint
@@ -304,10 +321,7 @@
                          multiplier:1
                          constant:self.tightBoundingBox.size.width]];
 }
--(NSSize)intrinsicContentSize
-{
-    return self.tightBoundingBox.size;
-}
+
 
 -(void)addHeightConstraint
 {
@@ -321,23 +335,7 @@
                          constant:self.tightBoundingBox.size.height]];
 }
 
--(BOOL)isOpaque
-{
-    return NO;
-}
-
--(CGFloat)baselineOffsetFromBottom
-{
-    CGFloat offset = 0;
-    if (self.useQuotientBaselining || self.requiresQuotientBaselining) {
-        offset = 0;
-    } else {
-        offset = self.tightBoundingBox.size.height + self.tightBoundingBox.origin.y;
-        offset = [self pixelIntegralPoint:NSMakePoint(0, offset)].y;
-    }
-    return offset;
-}
-
+#pragma mark - Convenience methods -
 -(NSPoint)pixelIntegralPoint:(NSPoint)point
 {
     point = [self convertPointToBase:point];
@@ -345,26 +343,12 @@
     point.y = floor(point.y);
     return [self convertPointFromBase:point];
 }
-
--(NSRect)tightBoundingBox
-{
-    return _tightBoundingBox;
-}
-
 -(NSRect)transformRect:(NSRect)rect fromContainerToViewpoint:(NSPoint)viewPoint
 {
     rect.origin.x = viewPoint.x + rect.origin.x;
     rect.origin.y = viewPoint.y - rect.origin.y - rect.size.height;
     return rect;
 }
-
--(AMGlyphMetrics)translateBoundingBoxOriginInGlyphMetrics:(AMGlyphMetrics)metrics
-                                          toViewPoint:(NSPoint)viewPoint
-{
-    metrics.boundingBox = [self transformRect:metrics.boundingBox fromContainerToViewpoint:viewPoint];
-    return metrics;
-}
-
 -(AMGlyphMetrics)translateSelectionBoxOriginInGlyphMetrics:(AMGlyphMetrics)metrics
                                                toViewPoint:(NSPoint)viewPoint
                                         withBaselineOrigin:(NSPoint)baselineOrigin
@@ -373,11 +357,10 @@
     metrics.selectionBox = [self transformRect:metrics.selectionBox fromContainerToViewpoint:viewPoint];
     return metrics;
 }
-
--(BOOL)requiresQuotientBaselining
+-(AMGlyphMetrics)translateBoundingBoxOriginInGlyphMetrics:(AMGlyphMetrics)metrics
+                                              toViewPoint:(NSPoint)viewPoint
 {
-    return NO;
+    metrics.boundingBox = [self transformRect:metrics.boundingBox fromContainerToViewpoint:viewPoint];
+    return metrics;
 }
-
-
 @end

@@ -91,7 +91,10 @@ static CABasicAnimation * animateOrigin;
     [super updateConstraints];
     NSView * content = self.contentView;
     NSView * container = self;
-    NSDictionary * metrics = @{@"pad": @(14.0)};
+    NSView * closeButton = self.closeButton;
+    NSSize closeButtonSize = [closeButton alignmentRectForFrame:closeButton.frame].size;
+    CGFloat pad = fmaxf(closeButtonSize.width,closeButtonSize.height);
+    NSDictionary * metrics = @{@"pad": @(pad)};
     if (self.contentView) {
         NSLayoutConstraint * closeButtonTop  = self.closeButtonTopConstraint;
         NSLayoutConstraint * closeButtonLeft = self.closeButtonLeftConstraint;

@@ -10,7 +10,7 @@
 
 @interface AMArgumentListView()
 {
-
+    BOOL _showEqualsSign;
 }
 
 @end
@@ -24,6 +24,16 @@
         // Initialization code here.
     }
     return self;
+}
+
+-(void)setShowEqualsSign:(BOOL)showEqualsSign
+{
+    _showEqualsSign = YES;
+    [self reloadData];
+}
+-(BOOL)showEqualsSign
+{
+    return _showEqualsSign;
 }
 
 -(void)reloadData
@@ -48,8 +58,12 @@
         }
     }
     
-    // append right bracket
-    [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@")" attributes:attributes]];
+    // append right bracket or right bracket and equals sign
+    if (!self.showEqualsSign) {
+        [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@")" attributes:attributes]];
+    } else {
+        [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@") =" attributes:attributes]];
+    }
     self.attributedString = displayString;
     [self invalidateIntrinsicContentSize];
 }

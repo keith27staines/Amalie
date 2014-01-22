@@ -20,9 +20,6 @@
 /*! Returns the rectangle that should be used to select all text, in the coordinate system of the receiver. (The rectangle will probably contain or possibly be coincident with the tightBoundingBox */
 @property (readonly) NSRect fullSelectionBox;
 
-/*! Tells the receiver to offset the baseline above the text's inherent baseline in order to accomodate alighment with expressions involving quotients */
-@property (readwrite) BOOL useQuotientBaselining;
-
 @property (readonly)       CGFloat narrowSpace;
 @property (readonly)       CGFloat standardSpace;
 @property (readonly)       CGFloat wideSpace;
@@ -51,7 +48,7 @@
 /*! */
 @property BOOL showTightBoundingBox;
 /*! */
-@property NSColor * textBackgroundColor;
+@property NSColor * backgroundColor;
 
 /*! */
 -(NSRect)tightBoundingBoxForCharactersInRange:(NSRange)charRange;

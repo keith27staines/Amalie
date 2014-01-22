@@ -25,6 +25,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystemBold"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="closeButtonClicked:" target="1" id="taf-mb-5dU"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>
@@ -32,6 +35,7 @@
                 <constraint firstItem="spo-Gn-61b" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="lA3-vW-PF7"/>
             </constraints>
             <connections>
+                <outlet property="closeButton" destination="spo-Gn-61b" id="2OS-cL-dpO"/>
                 <outlet property="closeButtonLeftConstraint" destination="lA3-vW-PF7" id="5XY-gs-M9s"/>
                 <outlet property="closeButtonTopConstraint" destination="BfJ-la-94r" id="pHq-qa-0zv"/>
             </connections>
