@@ -63,7 +63,7 @@
 {
     CGFloat offset = 0;
     offset = self.tightBoundingBox.size.height + self.tightBoundingBox.origin.y;
-    offset = [self pixelIntegralPoint:NSMakePoint(0, offset)].y;
+    offset = [self pixelIntegralYCeil:offset];
     return offset;
 }
 -(BOOL)isFlipped
@@ -132,9 +132,13 @@
 {
     return self.textMetric.maximumDescender;
 }
+
+/*! smallest pixel-integral rect that surrounds the ink */
 -(NSRect)tightBoundingBox
 {
-    return _tightBoundingBox;
+    NSRect r = _tightBoundingBox;
+    r = [self pixelIntegralRect:r];
+    return r;
 }
 #pragma mark - String setting -
 -(NSAttributedString *)attributedString
@@ -230,7 +234,9 @@
     }
 
     // Actually draw the text
-    [self.textMetric drawGlyphsForGlyphRange:glyphRange atPoint:_textContainerOffsetFromBaselineOrigin];
+    NSPoint target = _textContainerOffsetFromBaselineOrigin;
+    target = [self pixelIntegralPointCeil:target];
+    [self.textMetric drawGlyphsForGlyphRange:glyphRange atPoint:target];
     
     // Draw bounding and selection boxes around each glyph
     for (NSUInteger glyphIndex = glyphRange.location; glyphIndex < NSMaxRange(glyphRange); glyphIndex++) {
@@ -336,13 +342,6 @@
 }
 
 #pragma mark - Convenience methods -
--(NSPoint)pixelIntegralPoint:(NSPoint)point
-{
-    point = [self convertPointToBase:point];
-    point.x = floor(point.x);
-    point.y = floor(point.y);
-    return [self convertPointFromBase:point];
-}
 -(NSRect)transformRect:(NSRect)rect fromContainerToViewpoint:(NSPoint)viewPoint
 {
     rect.origin.x = viewPoint.x + rect.origin.x;
@@ -362,5 +361,54 @@
 {
     metrics.boundingBox = [self transformRect:metrics.boundingBox fromContainerToViewpoint:viewPoint];
     return metrics;
+}
+-(CGFloat)pixelIntegralXCeil:(CGFloat)x
+{
+    NSPoint p = NSMakePoint(x, 0);
+    return [self pixelIntegralPointCeil:p].x;
+}
+-(CGFloat)pixelIntegralYCeil:(CGFloat)y
+{
+    NSPoint p = NSMakePoint(0, y);
+    CGFloat pixelIntegralY = [self pixelIntegralPointCeil:p].y;
+    return pixelIntegralY;
+}
+-(NSPoint)pixelIntegralPointCeil:(NSPoint)point
+{
+    point = [self convertPointToBase:point];
+    point.x = ceil(point.x);
+    point.y = ceil(point.y);
+    return [self convertPointFromBase:point];
+}
+-(CGFloat)pixelIntegralXFloor:(CGFloat)x
+{
+    NSPoint p = NSMakePoint(x, 0);
+    return [self pixelIntegralPointFloor:p].x;
+}
+-(CGFloat)pixelIntegralYFloor:(CGFloat)y
+{
+    NSPoint p = NSMakePoint(0, y);
+    CGFloat pixelIntegralY = [self pixelIntegralPointFloor:p].y;
+    return pixelIntegralY;
+}
+-(NSPoint)pixelIntegralPointFloor:(NSPoint)point
+{
+    point = [self convertPointToBase:point];
+    point.x = floor(point.x);
+    point.y = floor(point.y);
+    return [self convertPointFromBase:point];
+}
+-(NSRect)pixelIntegralRect:(NSRect)rect
+{
+    CGFloat left = rect.origin.x;
+    CGFloat top = rect.origin.y;
+    CGFloat right = left + rect.size.width;
+    CGFloat bottom = top + rect.size.height;
+    left = [self pixelIntegralXFloor:left];
+    right = [self pixelIntegralXCeil:right];
+    top = [self pixelIntegralYFloor:top];
+    bottom = [self pixelIntegralYCeil:bottom];
+    NSRect pixelIntegral = NSMakeRect(left, top, right - left, bottom - top);
+    return pixelIntegral;
 }
 @end

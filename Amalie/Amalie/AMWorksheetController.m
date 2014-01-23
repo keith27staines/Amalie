@@ -194,6 +194,7 @@
     view.trayDataSource = self.trayDataSource;
     
     [view setFrameOrigin:origin];
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.worksheetView addSubview:view];
 }
 
@@ -205,7 +206,6 @@
     if (!insertableView) return;
     
     [insertableView setFrameOrigin:origin];
-    [insertableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addInsertableView:insertableView];
     
 }

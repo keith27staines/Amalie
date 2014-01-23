@@ -60,6 +60,7 @@
                     expression:nil
                 scriptingLevel:0
                       delegate:nil
+                    dataSource:nil
                 displayOptions:nil
                    scaleFactor:1];
 }
@@ -68,7 +69,18 @@
 {
     NSSize s = NSMakeSize(self.expressionLayout.boundingAMRect.width,
                           self.expressionLayout.boundingAMRect.height);
-    return s;
+    if (self.expression.isUnary) {
+        s = [self roundSizeUp:s];
+        return s;
+    } else {
+        s = [self roundSizeUp:s];
+        return s;
+    }
+}
+
+-(NSSize)roundSizeUp:(NSSize)size
+{
+    return NSMakeSize(ceil(size.width), ceil(size.height));
 }
 
 - (id)initWithFrame:(NSRect)frame
@@ -76,6 +88,7 @@
         expression:(KSMExpression *)expression
      scriptingLevel:(NSUInteger)scriptingLevel
            delegate:(id<AMExpressionNodeViewDelegate>)delegate
+        dataSource:(id<AMContentViewDataSource>)dataSource
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
         scaleFactor:(CGFloat)scaleFactor
 {
@@ -85,6 +98,7 @@
                     expression:expression
                 scriptingLevel:scriptingLevel
                       delegate:delegate
+                 dataSource:dataSource
                 displayOptions:displayOptions
                    scaleFactor:scaleFactor];
     }
@@ -95,6 +109,7 @@
              expression:(KSMExpression *)expression
          scriptingLevel:(NSUInteger)scriptingLevel
                delegate:(id<AMExpressionNodeViewDelegate>)delegate
+             dataSource:(id<AMContentViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor
 {
@@ -102,6 +117,7 @@
     _scaleFactor = scaleFactor;
     _displayOptions = displayOptions;
     _delegate = delegate;
+    _dataSource = dataSource;
     _scriptingLevel = scriptingLevel;
     if (expression)
     {
@@ -117,6 +133,7 @@
 -(void)prepareForExpressionSet
 {
     [self removeAllSubviews];
+    [self removeConstraints:self.constraints];
     self.backColor = [NSColor whiteColor];
     self.attributedString = nil;
 }
@@ -142,6 +159,7 @@
 -(void)setExpression:(KSMExpression *)expression
 {
     if (expression == _expression) return;
+    
     [self prepareForExpressionSet];
     _expression = expression;
     if (expression)
@@ -152,6 +170,7 @@
         }
         [self setNeedsUpdateConstraints:YES];
         [self invalidateIntrinsicContentSize];
+        [self setNeedsDisplay:YES];
     }
 }
 
@@ -203,6 +222,7 @@
                                                     expression:leftExpression
                                                 scriptingLevel:_scriptingLevel
                                                       delegate:_delegate
+                                                    dataSource:_dataSource
                                                 displayOptions:_displayOptions
                                                    scaleFactor:_scaleFactor];
     
@@ -218,8 +238,12 @@
                                                      expression:rightExpression
                                                  scriptingLevel:rightNodeScriptingLevel
                                                        delegate:_delegate
+                                                     dataSource:_dataSource
                                                  displayOptions:_displayOptions
                                                     scaleFactor:_scaleFactor];
+    [leftNodeView  setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [rightNodeView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [operatorView  setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:leftNodeView];
     [self addSubview:operatorView];
     [self addSubview:rightNodeView];
@@ -296,7 +320,7 @@
     if (self.expression.isUnary) {
         box = [super tightBoundingBox];
     } else {
-        box = [self.expressionLayout innerBounds];
+        box = [self pixelIntegralRect:[self.expressionLayout innerBounds]];
     }
     return box;
 }
@@ -359,14 +383,8 @@
 }
 -(CGFloat)baselineOffsetFromBottom
 {
-    return [self.expressionLayout baselineOffsetFromBottom];
-}
--(NSPoint)pixelIntegralPoint:(NSPoint)point
-{
-    point = [self convertPointToBase:point];
-    point.x = floor(point.x);
-    point.y = floor(point.y);
-    return [self convertPointFromBase:point];
+    CGFloat baselineOffset = [self.expressionLayout baselineOffsetFromBottom];
+    return [self pixelIntegralYFloor:baselineOffset];
 }
 
 -(void)updateConstraints
@@ -410,7 +428,6 @@
             break;
         }
     }
-    [super updateConstraints];
 }
 
 -(void)addHeightConstraint

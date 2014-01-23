@@ -84,6 +84,8 @@ static CABasicAnimation * animateOrigin;
                                                        options:taOptions
                                                          owner:self userInfo:nil];
     [self addTrackingArea:ta];
+    [self setNeedsUpdateConstraints:YES];
+    [self setNeedsDisplay:YES];
 }
 
 -(void)updateConstraints

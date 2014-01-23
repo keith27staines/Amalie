@@ -13,8 +13,9 @@
 @interface AMFunctionContentView()
 {
     __weak AMArgumentListView * _argumentListView;
+    NSMutableArray * _dynamicConstraints;
 }
-
+@property (readonly) NSMutableArray * dynamicConstraints;
 @end
 
 
@@ -29,11 +30,25 @@
     return self;
 }
 
+-(NSMutableArray *)dynamicConstraints
+{
+    if (!_dynamicConstraints) {
+        _dynamicConstraints = [NSMutableArray array];
+    }
+    return _dynamicConstraints;
+}
+
+-(void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+}
+
 -(void)updateConstraints
 {
     [super updateConstraints];
+    [self removeConstraints:self.dynamicConstraints];
+    [self.dynamicConstraints removeAllObjects];
     
-    NSArray * constraints;
     AMTextView * nameView = self.nameView;
     AMExpressionNodeView * expressionView = self.expressionView;
     AMArgumentListView * argumentsView = self.argumentListView;
@@ -43,6 +58,7 @@
     CGFloat argsWidth = fmaxf(argumentsView.intrinsicContentSize.width,12);
     CGFloat space     = expressionView.standardSpace;
     
+    NSArray * constraints;
     if (self.argumentListView) {
         views = NSDictionaryOfVariableBindings(nameView, argumentsView, expressionView);
         metrics = @{ @"argsWidth": @(argsWidth),
@@ -54,6 +70,7 @@
         metrics = @{ @"nameWidth": @(nameWidth), @"space": @(space) };
         constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(>=nameWidth)]-space-[expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
     }
+    [self.dynamicConstraints addObjectsFromArray:constraints];
     [self addConstraints:constraints];
 }
 
@@ -70,6 +87,7 @@
 -(void)setArgumentListView:(AMArgumentListView *)argumentListView
 {
     _argumentListView = argumentListView;
+    [self setNeedsUpdateConstraints:YES];
     [self setNeedsDisplay:YES];
 }
 -(AMArgumentListView *)argumentListView

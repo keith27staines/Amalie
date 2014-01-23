@@ -11,9 +11,10 @@
 
 @protocol AMArgumentListViewDelegate <NSTextFieldDelegate>
 
--(NSAttributedString*)displayStringForIndex:(NSUInteger)index;
+-(NSAttributedString*)displayStringForIndex:(NSUInteger)index
+                           atScriptingLevel:(NSUInteger)scriptingLevel;
 -(NSUInteger)displayStringCount;
--(NSFont*)bracesFont;
+-(NSFont*)bracesFontAtScriptingLevel:(NSUInteger)scriptingLevel;
 
 @end
 
@@ -21,7 +22,7 @@
 
 @property (weak) id<AMArgumentListViewDelegate>delegate;
 @property BOOL readOnly;
-
+@property NSUInteger scriptingLevel;
 @property BOOL showEqualsSign;
 
 -(void)reloadData;

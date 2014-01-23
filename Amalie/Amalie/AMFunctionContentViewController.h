@@ -19,7 +19,6 @@
 
 
 @property (weak) IBOutlet NSButton *popupButton;
-@property (weak) IBOutlet NSTextField *equalsSignView;
 
 @property (weak) IBOutlet AMTextView *nameView;
 

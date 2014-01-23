@@ -38,7 +38,7 @@
 
 -(void)reloadData
 {
-    NSFont * bracesFont = [self.delegate bracesFont];
+    NSFont * bracesFont = [self.delegate bracesFontAtScriptingLevel:self.scriptingLevel];
     NSDictionary * attributes = @{NSFontAttributeName: bracesFont};
     NSAttributedString * comma = [[NSAttributedString alloc] initWithString:@", " attributes:attributes];
     NSUInteger stringCount = self.delegate.displayStringCount;
@@ -51,7 +51,7 @@
     
     // append comma seperated list x,y,z...
     for (NSUInteger i = 0; i < stringCount; i++) {
-        [displayString appendAttributedString:[self.delegate displayStringForIndex:i]];
+        [displayString appendAttributedString:[self.delegate displayStringForIndex:i atScriptingLevel:self.scriptingLevel]];
         
         if (i < stringCount - 1) {
             [displayString appendAttributedString:comma];

@@ -15,6 +15,4 @@
 
 @property (weak) AMDArgumentList * argumentList;
 
--(void)applyUserPreferences;
-
 @end

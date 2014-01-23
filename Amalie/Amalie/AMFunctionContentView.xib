@@ -10,7 +10,6 @@
                 <outlet property="argumentListViewController" destination="hdE-0X-eOA" id="Hma-Fb-eKw"/>
                 <outlet property="contentView" destination="1" id="166-iN-yH6"/>
                 <outlet property="editPopover" destination="7OI-z7-ogY" id="yGL-Az-LMp"/>
-                <outlet property="equalsSignView" destination="WUp-d3-yd6" id="KJT-TX-r5M"/>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="hjY-x2-kxt"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
                 <outlet property="nameView" destination="YNe-VI-N9B" id="vXH-hL-3KI"/>
@@ -73,15 +72,6 @@
                         <action selector="showPopover:" target="-2" id="RC1-Oy-HlG"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WUp-d3-yd6">
-                    <rect key="frame" x="413" y="0.0" width="23" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title=" = " id="lKj-mZ-OM0">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="YNe-VI-N9B" firstAttribute="centerY" secondItem="O6I-Qg-1kO" secondAttribute="centerY" placeholder="YES" id="5aP-Hp-FrT"/>

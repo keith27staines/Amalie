@@ -97,7 +97,7 @@ typedef enum AMCharacterType : NSUInteger {
                   superscriptFraction:(CGFloat)fraction
 {
     CGFloat size = powf(fraction,fabs(level)) * baseFontSize;
-    return size;
+    return round(size);
 }
 
 -(NSFont *)defaultFontForCharacter:(NSString *)ch

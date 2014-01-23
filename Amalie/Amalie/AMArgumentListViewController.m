@@ -11,6 +11,7 @@
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMPreferences.h"
+#import "AMNameManager.h"
 
 
 @interface AMArgumentListViewController ()
@@ -20,7 +21,7 @@
 }
 
 @property (weak, readonly) AMArgumentListView * argumentListView;
-
+@property (weak) AMNameManager * namer;
 @end
 
 
@@ -42,7 +43,6 @@
 -(void)awakeFromNib
 {
     [self.argumentListView reloadData];
-    [self applyUserPreferences];
 }
 
 -(void)setArgumentList:(AMDArgumentList *)argumentList
@@ -58,24 +58,49 @@
 
 #pragma mark - AMArgumentListViewDelegate -
 
--(NSFont*)bracesFont
+-(NSFont*)bracesFontAtScriptingLevel:(NSUInteger)scriptingLevel
 {
-    return [AMPreferences standardFont];
+    AMNameManager * nameManager = [AMNameManager sharedNameManager];
+    return [nameManager fontForSymbolsAtScriptinglevel:scriptingLevel];
 }
 
 -(NSUInteger)displayStringCount
 {
+
     return self.argumentList.arguments.count;
 }
 
 -(NSAttributedString *)displayStringForIndex:(NSUInteger)index
+                            atScriptingLevel:(NSUInteger)scriptingLevel
 {
-    return [self.argumentList argumentAtIndex:index].name.attributedString;
+    NSAttributedString * aString = [self.argumentList argumentAtIndex:index].name.attributedString;
+    AMNameManager * nameManager = [AMNameManager sharedNameManager];
+    return [nameManager stringByModifyingString:aString toSuperscriptLevel:scriptingLevel];
 }
 
--(void)applyUserPreferences
-{
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

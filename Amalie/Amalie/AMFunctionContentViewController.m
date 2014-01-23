@@ -63,16 +63,13 @@ static NSUInteger const kAMIndexRHS;
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    [self setupNameView];
-    [self setupEqualsView];
-    [self setupExpressionStringView];
+    [self setupNotifications];
 }
 
 -(void)applyUserPreferences
 {
     [super applyUserPreferences];
     [self.expressionStringView setFont:self.fixedWidthFont];
-    [self.equalsSignView sizeToFit];
 }
 
 -(BOOL)isConstant
@@ -93,9 +90,11 @@ static NSUInteger const kAMIndexRHS;
     return argumentListView;
 }
 
--(void)setupNameView
+-(void)setupNotifications
 {
     SEL callback;
+    
+    // Notifications from nameView
     callback = NSSelectorFromString(@"nameStringDidBeginEditing:");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidBeginEditingNotification object:self.nameView];
     
@@ -104,11 +103,16 @@ static NSUInteger const kAMIndexRHS;
     
     callback = NSSelectorFromString(@"nameStringDidEndEditing:");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidEndEditingNotification object:self.nameView];
-}
-
--(void)setupEqualsView
-{
-    self.equalsSignView.stringValue = self.equalsSignView.stringValue;
+    
+    // Notifications from expressionStringView
+    callback = NSSelectorFromString(@"expressionStringDidBeginEditing:");
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidBeginEditingNotification object:self.expressionStringView];
+    
+    callback = NSSelectorFromString(@"expressionStringDidChange:");
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidChangeNotification object:self.expressionStringView];
+    
+    callback = NSSelectorFromString(@"expressionStringDidEndEditing:");
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidEndEditingNotification object:self.expressionStringView];
 }
 
 -(void)setupArgumentListView
@@ -118,23 +122,10 @@ static NSUInteger const kAMIndexRHS;
     AMArgumentListView * argumentsView = self.argumentListView;
     [argumentsView setTranslatesAutoresizingMaskIntoConstraints:NO];
     argumentsView.showEqualsSign = YES;
+    argumentsView.scriptingLevel = 0;
     [self.contentView addSubview:argumentsView];
     AMFunctionContentView * fv = (AMFunctionContentView *)self.contentView;
     fv.argumentListView = argumentsView;
-}
-
--(void)setupExpressionStringView
-{
-    SEL callback;
-    
-    callback = NSSelectorFromString(@"expressionStringDidBeginEditing:");
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidBeginEditingNotification object:self.expressionStringView];
-    
-    callback = NSSelectorFromString(@"expressionStringDidChange:");
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidChangeNotification object:self.expressionStringView];
-    
-    callback = NSSelectorFromString(@"expressionStringDidEndEditing:");
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidEndEditingNotification object:self.expressionStringView];
 }
 
 -(void)nameStringDidBeginEditing:(NSNotification*)notification
@@ -214,7 +205,8 @@ static NSUInteger const kAMIndexRHS;
     KSMExpression * expr;
     expr = [self expressionFromString:self.expressionStringView.stringValue atIndex:kAMIndexRHS];
     expressionView.expression = expr;
-    [expressionView setNeedsDisplay:YES];
+    [self.contentView setNeedsUpdateConstraints:YES];
+    [self.contentView setNeedsDisplay:YES];
 }
 
 -(void)setFocusOnView:(NSView*)view
@@ -248,6 +240,7 @@ static NSUInteger const kAMIndexRHS;
                                    expression:expr
                                scriptingLevel:0
                                      delegate:self
+                                   dataSource:self
                                displayOptions:nil
                                   scaleFactor:1];
         
@@ -257,6 +250,7 @@ static NSUInteger const kAMIndexRHS;
     } else {
         // Other views that are sub to self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }
+    [self.contentView setNeedsDisplay:YES];
 }
 
 -(AMDFunctionDef*)amdFunctionDef
@@ -295,7 +289,7 @@ static NSUInteger const kAMIndexRHS;
 {
     return [self nameProvider];
 }
-#pragma mark - Misc -
+#pragma mark - Name provider -
 -(id<AMNameProviding>)nameProvider
 {
     static AMNameProvider * _nameProvider;

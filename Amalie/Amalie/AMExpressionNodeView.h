@@ -14,7 +14,7 @@
 #import "AMContentViewDataSource.h"
 #import "AMExpressionNodeViewDelegate.h"
 #import "AMNameProviding.h"
-
+#import "AMContentViewDataSource.h"
 @interface AMExpressionNodeView : AMTextView
 
 @property (weak, readwrite) KSMExpression * expression;
@@ -31,6 +31,7 @@
         expression:(KSMExpression*)expression
     scriptingLevel:(NSUInteger)scriptingLevel
           delegate:(id<AMExpressionNodeViewDelegate>)delegate
+        dataSource:(id<AMContentViewDataSource>)dataSource
     displayOptions:(AMExpressionDisplayOptions*)displayOptions
        scaleFactor:(CGFloat)scaleFactor;
 
@@ -38,6 +39,7 @@
              expression:(KSMExpression *)expression
          scriptingLevel:(NSUInteger)scriptingLevel
                delegate:(id<AMExpressionNodeViewDelegate>)delegate
+             dataSource:(id<AMContentViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor;
 

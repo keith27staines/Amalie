@@ -71,15 +71,21 @@ typedef enum AMCharacterType : NSUInteger {
         NSMutableDictionary * attributes = [[aString attributesAtIndex:i effectiveRange:NULL] mutableCopy];
         NSFont * f = attributes[NSFontAttributeName];
         NSNumber * scriptingLevelNumber = attributes[kAMScriptingLevelKey];
+        if (!scriptingLevelNumber) {
+            scriptingLevelNumber = @0;
+        }
         NSNumber * baselineOffsetNumber = attributes[NSBaselineOffsetAttributeName];
-        
+        if (!baselineOffsetNumber) {
+            baselineOffsetNumber = @0;
+        }
         // The fontsize of this character is controlled by the superscripting level of the entire string (aka superscriptLevel) + the superscript level of this particular character relative to the string
         effectiveSuperscriptLevel = superscriptLevel + scriptingLevelNumber.integerValue;
         
         // resize the character according to the superscript level
         CGFloat fontSize = [self fontSizeForSuperscriptLevel:effectiveSuperscriptLevel];
         f = [fontManager convertFont:f toSize:fontSize];
-        [aString setAttributes:@{NSFontAttributeName: f, NSBaselineOffsetAttributeName: baselineOffsetNumber} range:range];
+        [aString addAttributes:@{NSFontAttributeName: f, NSBaselineOffsetAttributeName: baselineOffsetNumber} range:range];
+        
     }
     return aString;
 }
