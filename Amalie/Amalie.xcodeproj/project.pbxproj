@@ -22,7 +22,6 @@
 		782859F51886D57000523121 /* AMGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859F41886D57000523121 /* AMGraphics.m */; };
 		782859F81886D5A200523121 /* AMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859F61886D5A200523121 /* AMTextView.m */; };
 		782859FB1886D6B900523121 /* AMTextMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859FA1886D6B900523121 /* AMTextMetric.m */; };
-		782859FE1886D70100523121 /* AMNameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859FD1886D70100523121 /* AMNameManager.m */; };
 		78285A011886D74400523121 /* AMExpressionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A001886D74400523121 /* AMExpressionLayout.m */; };
 		78285A041886D9EE00523121 /* KSMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A031886D9EE00523121 /* KSMConstants.m */; };
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
@@ -193,8 +192,6 @@
 		782859F71886D5A200523121 /* AMTextMetric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTextMetric.h; sourceTree = "<group>"; };
 		782859F91886D69B00523121 /* AMTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMTextView.h; sourceTree = "<group>"; };
 		782859FA1886D6B900523121 /* AMTextMetric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTextMetric.m; sourceTree = "<group>"; };
-		782859FC1886D70100523121 /* AMNameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameManager.h; sourceTree = "<group>"; };
-		782859FD1886D70100523121 /* AMNameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameManager.m; sourceTree = "<group>"; };
 		782859FF1886D74400523121 /* AMExpressionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionLayout.h; sourceTree = "<group>"; };
 		78285A001886D74400523121 /* AMExpressionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionLayout.m; sourceTree = "<group>"; };
 		78285A021886D9EE00523121 /* KSMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMConstants.h; sourceTree = "<group>"; };
@@ -542,8 +539,6 @@
 			isa = PBXGroup;
 			children = (
 				7848E5C91857467800719EF3 /* AMNameProviding.h */,
-				782859FC1886D70100523121 /* AMNameManager.h */,
-				782859FD1886D70100523121 /* AMNameManager.m */,
 				7848E5CF185770A300719EF3 /* AMNameProvider.h */,
 				7848E5D0185770A300719EF3 /* AMNameProvider.m */,
 				7848E5CC185769F400719EF3 /* AMNameProviderBase.h */,
@@ -1176,7 +1171,6 @@
 				78E477021827A52200DEB5FB /* AMFunctionEditorViewController.m in Sources */,
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,
 				786E32F7188D12F10095443D /* AMFunctionPropertiesViewController.m in Sources */,
-				782859FE1886D70100523121 /* AMNameManager.m in Sources */,
 				7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */,
 				78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,

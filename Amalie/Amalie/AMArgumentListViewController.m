@@ -11,7 +11,7 @@
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMPreferences.h"
-#import "AMNameManager.h"
+#import "AMNameProvider.h"
 
 
 @interface AMArgumentListViewController ()
@@ -21,7 +21,7 @@
 }
 
 @property (weak, readonly) AMArgumentListView * argumentListView;
-@property (weak) AMNameManager * namer;
+@property (weak) AMNameProvider * namer;
 @end
 
 
@@ -60,8 +60,8 @@
 
 -(NSFont*)bracesFontAtScriptingLevel:(NSUInteger)scriptingLevel
 {
-    AMNameManager * nameManager = [AMNameManager sharedNameManager];
-    return [nameManager fontForSymbolsAtScriptinglevel:scriptingLevel];
+    AMNameProviderBase * namer = [[AMNameProviderBase alloc] init];
+    return [namer fontForSymbolsAtScriptinglevel:scriptingLevel];
 }
 
 -(NSUInteger)displayStringCount
@@ -74,8 +74,8 @@
                             atScriptingLevel:(NSUInteger)scriptingLevel
 {
     NSAttributedString * aString = [self.argumentList argumentAtIndex:index].name.attributedString;
-    AMNameManager * nameManager = [AMNameManager sharedNameManager];
-    return [nameManager stringByModifyingString:aString toSuperscriptLevel:scriptingLevel];
+    AMNameProviderBase * namer = [[AMNameProviderBase alloc] init];
+    return [namer attributedStringByModifying:aString toSuperscriptLevel:scriptingLevel];
 }
 
 

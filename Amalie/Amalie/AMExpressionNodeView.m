@@ -365,6 +365,7 @@
                                                   ruleWidth:self.ruleWidth
                                                     xHeight:self.xHeight
                                                   capHeight:self.capHeight
+                                                  descender:self.maximumDescender
                                             minusSignHeight:self.minusSignHeightAboveBaseline];
 }
 -(AMExpressionLayout*)calculatedBinaryLayout
@@ -379,6 +380,7 @@
                                                   ruleWidth:self.ruleWidth
                                                     xHeight:self.xHeight
                                                   capHeight:self.capHeight
+                                                  descender:self.maximumDescender
                                             minusSignHeight:self.minusSignHeightAboveBaseline];
 }
 -(CGFloat)baselineOffsetFromBottom

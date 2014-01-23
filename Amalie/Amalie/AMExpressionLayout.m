@@ -27,6 +27,7 @@
 @property (readwrite) CGFloat ruleWidth;
 @property (readwrite) CGFloat xHeight;
 @property (readwrite) CGFloat capHeight;
+@property (readwrite) CGFloat descender;
 @property (readwrite) NSPoint exponentOffsetFromBottomLeft;
 @property (readwrite) CGFloat minusSignHeight;
 @property (readwrite) BOOL    isBracketed;
@@ -45,6 +46,7 @@
                         ruleWidth:(CGFloat)ruleWidth
                           xHeight:(CGFloat)xHeight
                         capHeight:(CGFloat)capHeight
+                        descender:(CGFloat)descender
                   minusSignHeight:(CGFloat)minusSignHeight
 {
     AMExpressionLayout * layout = [[self alloc] initWithLayoutWithLeftRect:leftRect
@@ -57,6 +59,7 @@
                                                                  ruleWidth:ruleWidth
                                                                    xHeight:xHeight
                                                                  capHeight:capHeight
+                                                                 descender:descender
                                                            minusSignHeight:minusSignHeight];
     
     return layout;
@@ -72,6 +75,7 @@
                        ruleWidth:(CGFloat)ruleWidth
                          xHeight:(CGFloat)xHeight
                        capHeight:(CGFloat)capHeight
+                       descender:(CGFloat)descender
                  minusSignHeight:(CGFloat)minusSignHeight
 {
     self = [super init];
@@ -79,14 +83,16 @@
         self.leftAMRect      = AMRectFromNSRect(leftRect);
         self.exponentOffsetFromBottomLeft = exponentOffset;
         self.operatorAMRect  = AMRectFromNSRect(operatorRect);
+        self.operatorType    = operatorType;
         self.rightAMRect     = AMRectFromNSRect(rightRect);
         self.isBracketed     = isBracketed;
         self.space           = space;
         self.ruleWidth       = ruleWidth;
+        self.xHeight         = xHeight;
         self.capHeight       = capHeight;
+        self.descender       = descender;
         self.minusSignHeight = minusSignHeight;
         self.needsLayout     = YES;
-        self.operatorType    = operatorType;
         [self layoutRectangles];
     }
     return self;
@@ -292,8 +298,8 @@
 -(void)positionNumeratorAboveDivideSign
 {
     AMRect divSign = _operatorAMRect;
-    CGFloat bestGapNumeratorBaselineToDiv = self.xHeight;
     CGFloat minimumGap = 2*self.ruleWidth;
+    CGFloat bestGapNumeratorBaselineToDiv = minimumGap + fabsf(self.descender);
     CGFloat baseline = AMbaselineOffsetFromBottomForAMRect(_leftAMRect);
     if (bestGapNumeratorBaselineToDiv - baseline > minimumGap) {
         _leftAMRect.bottom = divSign.top - bestGapNumeratorBaselineToDiv

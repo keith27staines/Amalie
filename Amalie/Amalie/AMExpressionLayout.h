@@ -44,6 +44,7 @@ NSRect AMNSRectFromAMRect(AMRect amRect);
                         ruleWidth:(CGFloat)ruleWidth
                           xHeight:(CGFloat)xHeight
                         capHeight:(CGFloat)capHeight
+                        descender:(CGFloat)descender
                   minusSignHeight:(CGFloat)minusSignHeight;
 
 
@@ -63,6 +64,7 @@ NSRect AMNSRectFromAMRect(AMRect amRect);
 @property (readonly) CGFloat ruleWidth;
 @property (readonly) CGFloat xHeight;
 @property (readonly) CGFloat capHeight;
+@property (readonly) CGFloat descender;
 @property (readonly) CGFloat minusSignHeight;
 @property (readonly) CGFloat baselineOffsetFromBottom;
 @property (readonly) CGFloat baselineOffsetFromTop;

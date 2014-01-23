@@ -24,6 +24,8 @@ typedef enum AMCharacterType : NSUInteger {
     amCharacterTypeSymbol,
 } AMCharacterType;
 
+CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
+
 @interface AMNameProviderBase()
 {
     __weak AMDArgumentList * _dummyArguments;
@@ -214,12 +216,12 @@ typedef enum AMCharacterType : NSUInteger {
     
     NSMutableAttributedString * returnString = [[NSMutableAttributedString alloc]
                                                 initWithString:name attributes:nil];
-    
+    BOOL isNumber = [self isFirstCharacterNumeric:name];
     for (int i = 0; i < returnString.length; i++) {
         NSRange r = NSMakeRange(i, 1);
         NSString * c = [returnString.string substringWithRange:r];
         NSInteger superscriptLevel = 0;
-        if (i > 0) {
+        if (i > 0 && !isNumber) {
             superscriptLevel = -1;
         }
         
@@ -230,9 +232,19 @@ typedef enum AMCharacterType : NSUInteger {
         [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];
         [returnString addAttribute:NSFontAttributeName value:font range:r];
         CGFloat xHeight = [font xHeight];
-        [returnString addAttribute:NSBaselineOffsetAttributeName value:@(superscriptLevel*xHeight/2.0) range:r];
+        [returnString addAttribute:NSBaselineOffsetAttributeName
+                             value:@(superscriptLevel*xHeight*kAMsuperscriptOffsetAsFractionOfXHeight) range:r];
     }
     return returnString;
+}
+
+-(BOOL)isFirstCharacterNumeric:(NSString*)string
+{
+    NSString * firstChar = [string substringToIndex:1];
+    NSCharacterSet * set = [NSCharacterSet characterSetWithCharactersInString:@"01234456789"];
+    NSRange r = [firstChar rangeOfCharacterFromSet:set options:0];
+    BOOL found = !(r.location == NSNotFound);
+    return found;
 }
 
 -(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)aString
