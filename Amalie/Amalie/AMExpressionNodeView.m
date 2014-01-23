@@ -225,6 +225,9 @@
                                                     dataSource:_dataSource
                                                 displayOptions:_displayOptions
                                                    scaleFactor:_scaleFactor];
+    if (self.expression.hasAddedLogicalLeadingZero) {
+        leftNodeView.isLogicalViewOnly = YES;
+    }
     
     NSUInteger rightNodeScriptingLevel = _scriptingLevel;
     if ( [self operatorType] == KSMOperatorTypePower ) {
@@ -279,6 +282,9 @@
 
 -(void)drawRect:(NSRect)dirtyRect
 {
+    if (self.isLogicalViewOnly) {
+        return;
+    }
     NSGraphicsContext * context = [NSGraphicsContext currentContext];
     [context saveGraphicsState];
     context.shouldAntialias = YES;
@@ -286,15 +292,18 @@
         [super drawRect:dirtyRect];
     }
     if (self.isBracketed) {
-        NSAffineTransform * transform = [NSAffineTransform transform];
-        AMBracketPlacementInfo info = [self bracketPlacementInfo];
+        [[NSColor blackColor] set];
+        AMBracketPlacementInfo info = [self pixelIntegralBracketPlacementInfo];
         AMGraphics * graphics = [AMGraphics sharedGraphics];
-        NSBezierPath * leftBracket = [graphics leftBracketWithHeight:info.height];
-        NSBezierPath * rightBracket = [graphics rightBracketWithHeight:info.height];
-        [rightBracket moveToPoint:NSMakePoint(self.tightBoundingBox.origin.x + self.tightBoundingBox.size.width, 0)];
+        CGFloat bracketHeight = [self pixelIntegralYFloor:info.height-2];
+        NSBezierPath * leftBracket = [graphics leftBracketWithHeight:bracketHeight];
+        NSBezierPath * rightBracket = [graphics rightBracketWithHeight:bracketHeight];
         [[NSColor blackColor] set];
         [leftBracket fill];
-        [transform translateXBy:self.tightBoundingBox.size.width - info.width yBy:0];
+        NSAffineTransform * transform = [NSAffineTransform transform];
+        CGFloat rightBracketInset = rightBracket.bounds.size.width;
+        rightBracketInset = [self pixelIntegralXCeil:rightBracketInset];
+        [transform translateXBy:self.tightBoundingBox.size.width - rightBracketInset yBy:0];
         [transform concat];
         [rightBracket fill];
     }
@@ -305,11 +314,12 @@
 {
     NSRect boundingBox = [self textBoundingBox];
     if (self.isBracketed) {
-        AMBracketPlacementInfo info = [self bracketPlacementInfo];
-        boundingBox.size.width += 2 * info.width; // takes into account left & right
-        boundingBox.origin.x -= info.width;
-        boundingBox.size.height = info.minimumEnclosingHeight;
-        boundingBox.origin.y = -info.ascender;
+//        AMBracketPlacementInfo info = [self bracketPlacementInfo];
+//        boundingBox.size.width += 2 * info.width; // takes into account left & right
+//        boundingBox.origin.x -= info.width;
+//        boundingBox.size.height = info.minimumEnclosingHeight;
+//        boundingBox.origin.y = -info.ascender;
+        boundingBox = [self pixelIntegralRect:self.expressionLayout.bounds];
     }
     return boundingBox;
 }
@@ -343,7 +353,7 @@
         NSUInteger charToOwnExponent = [self.nameProvider indexOfCharacterPrecedingExponentPositionForString:view.attributedString];
         exponentPos = [self.leftNodeView exponentOffsetFromBottomLeftForCharacterWithIndex:charToOwnExponent];
     }
-    return exponentPos;
+    return [self pixelIntegralPointCeil:exponentPos];
 }
 -(void)calculateLayout
 {
@@ -360,7 +370,7 @@
                                                operatorRect:NSZeroRect
                                                operatorType:self.operatorType
                                                   rightRect:NSZeroRect
-                                                isBracketed:self.expression.isBracketed
+                                                isBracketed:self.isBracketed
                                                       space:self.standardSpace
                                                   ruleWidth:self.ruleWidth
                                                     xHeight:self.xHeight
@@ -370,12 +380,16 @@
 }
 -(AMExpressionLayout*)calculatedBinaryLayout
 {
-    return [AMExpressionLayout expressionLayoutWithLeftRect:self.leftNodeView.tightBoundingBox
+    NSRect leftNodeRect = self.leftNodeView.tightBoundingBox;
+    if (self.expression.hasAddedLogicalLeadingZero) {
+        leftNodeRect.size.width = 0;
+    }
+    return [AMExpressionLayout expressionLayoutWithLeftRect:leftNodeRect
                                              exponentOffset:[self exponentPositionForView:_leftNodeView]
                                                operatorRect:self.operatorView.tightBoundingBox
                                                operatorType:self.operatorType
                                                   rightRect:self.rightNodeView.tightBoundingBox
-                                                isBracketed:self.expression.isBracketed
+                                                isBracketed:self.isBracketed
                                                       space:self.standardSpace
                                                   ruleWidth:self.ruleWidth
                                                     xHeight:self.xHeight
@@ -477,7 +491,10 @@
     }
     return expr;
 }
-
+-(BOOL)isBracketed
+{
+    return self.expression.isBracketed;
+}
 -(NSFont*)baseFont
 {
     return [self.nameProvider fontForSymbolsAtScriptinglevel:_scriptingLevel];
@@ -486,12 +503,10 @@
 {
     return [self.nameProvider fontForSymbolsAtScriptinglevel:_scriptingLevel];
 }
-
 -(AMBracketPlacementInfo)bracketPlacementInfo
 {
     return self.expressionLayout.bracketInfo;
 }
-
 -(KSMOperatorType)operatorType
 {
     NSString * operatorString = self.expression.operator;
@@ -737,6 +752,17 @@
                                                      attribute:NSLayoutAttributeTop
                                                     multiplier:1
                                                       constant:map.vGapToRightNode]];
+}
+/*! Returns a slightly modified bracketInfo with all measurements pixel-integral */
+-(AMBracketPlacementInfo)pixelIntegralBracketPlacementInfo
+{
+    AMBracketPlacementInfo info = self.bracketPlacementInfo;
+    info.width = [self pixelIntegralXCeil:info.width];
+    info.height = [self pixelIntegralYFloor:info.height];
+    info.ascender = [self pixelIntegralYFloor:info.ascender];
+    info.descender = [self pixelIntegralYFloor:info.descender];
+    info.minimumEnclosingHeight = [self pixelIntegralYFloor:info.minimumEnclosingHeight];
+    return info;
 }
 
 @end

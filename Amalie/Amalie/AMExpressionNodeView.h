@@ -22,7 +22,8 @@
 @property (readwrite)       NSUInteger      scriptingLevel;
 @property (readwrite)       CGFloat         scaleFactor;
 @property (weak, readwrite) id<AMExpressionNodeViewDelegate> delegate;
-@property (copy, readwrite) NSString * groupID;
+@property (copy, readwrite) NSString      * groupID;
+@property (readwrite)       BOOL            isLogicalViewOnly;
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 

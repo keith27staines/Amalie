@@ -285,7 +285,7 @@
 {
     _rightAMRect.left = _leftAMRect.left + self.exponentOffsetFromBottomLeft.x;
     _rightAMRect.right = _rightAMRect.left + _rightAMRect.width;
-    _rightAMRect.top = -self.exponentOffsetFromBottomLeft.y + _rightAMRect.top;
+    _rightAMRect.top = _leftAMRect.bottom - self.exponentOffsetFromBottomLeft.y + _rightAMRect.top;
     _rightAMRect.bottom = _rightAMRect.top + _rightAMRect.height;
 }
 
@@ -343,6 +343,10 @@ static NSRect unionRect(AMRect a, AMRect b)
 
 -(void)space:(AMRect*)movableRight toRightOf:(AMRect)fixedLeft
 {
+    CGFloat space = self.space;
+    if (fixedLeft.width == 0) {
+        space = 0;
+    }
     movableRight->left = fixedLeft.right + self.space;
     movableRight->right = movableRight->left + movableRight->width;
 }

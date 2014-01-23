@@ -51,8 +51,6 @@
 
 +(NSArray*)generateBeziersForBracketsWithHeight:(NSUInteger)heightInPoints
 {
-    [[NSColor blackColor] set];
-    
     NSBezierPath * left = [[NSBezierPath alloc] init];
     NSBezierPath * right = [[NSBezierPath alloc] init];
     

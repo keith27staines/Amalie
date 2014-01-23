@@ -305,7 +305,9 @@
 
 -(NSPoint)exponentOffsetFromBottomLeftForCharacterWithIndex:(NSUInteger)charIndex
 {
-    return [self.textMetric exponentOffsetFromBottomLeftForCharacterWithIndex:charIndex];
+    NSPoint p = [self.textMetric exponentOffsetFromBottomLeftForCharacterWithIndex:charIndex];
+    p.y += self.tightBoundingBox.origin.y + self.tightBoundingBox.size.height;
+    return p;
 }
 
 -(NSRect)tightBoundingBoxForCharactersInRange:(NSRange)charRange
