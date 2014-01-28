@@ -158,9 +158,6 @@
     }
     
     // From here on, we are dealing with various levels of binary sub-expressions
-    if ([self.operatorString isEqualTo:@"+"]) {
-        NSLog(@"Follow this");
-    }
     if ( [self isMyOperatorLowerPrecedenceThanNeighbours] ) {
         _requiresBrackets = YES;
         return YES; // Precedence of neighbouring operators makes my brackets essential
@@ -176,14 +173,14 @@
 -(NSInteger)precedenceForOperatorType:(KSMOperatorType)opType
 {
     switch (opType) {
-        case KSMOperatorTypeAdd:return 0;
-        case KSMOperatorTypeSubtract:return 0;
-        case KSMOperatorTypeMultiply:return 1;
-        case KSMOperatorTypeDivide:return 1;
-        case KSMOperatorTypePower:return 0;
+        case KSMOperatorTypeAdd:return 1;
+        case KSMOperatorTypeSubtract:return 1;
+        case KSMOperatorTypeMultiply:return 2;
+        case KSMOperatorTypeDivide:return 2;
+        case KSMOperatorTypePower:return 10;
         case KSMOperatorTypeScalarMultiply:return 2;
-        case KSMOperatorTypeVectorMultiply:return 3;
-        case KSMOperatorTypeUnrecognized:return NSIntegerMax;
+        case KSMOperatorTypeVectorMultiply:return 4;
+        case KSMOperatorTypeUnrecognized:return 0; // NSIntegerMax;
     }
 }
 
@@ -230,10 +227,18 @@
 /*! Assumes the current node is binary */
 -(BOOL)isMyOperatorLowerPrecedenceThanNeighbours
 {
+    BOOL returnValue;
+    AMExpressionContextNode * leftEnclosing = [self leftEnclosing];
+    AMExpressionContextNode * rightEnclosing = [self rightEnclosing];
     NSInteger myPrecedence = [self operatorPrecedenceForNode:self];
-    NSInteger leftPrecedence = [self operatorPrecedenceForNode:[self leftEnclosing]];
-    NSInteger rightPrecedence = [self operatorPrecedenceForNode:[self rightEnclosing]];
-    return (myPrecedence < leftPrecedence || myPrecedence < rightPrecedence);
+    NSInteger leftPrecedence = [self operatorPrecedenceForNode:leftEnclosing];
+    NSInteger rightPrecedence = [self operatorPrecedenceForNode:rightEnclosing];
+    returnValue = (myPrecedence < leftPrecedence || myPrecedence < rightPrecedence);
+    // Single exception to the above rule is expressions of the form x^y, where y is any expression. Since y is shifted up by virtue of being an exponent, then bracketing of y is required only if necessitated by its right closing - e.g x^((a+b)*c)
+    if (leftEnclosing && [leftEnclosing.operatorString isEqualToString:@"^"] ) {
+            returnValue = myPrecedence < rightPrecedence;
+    }
+    return returnValue;
 }
 
 -(NSInteger)operatorPrecedenceForNode:(AMExpressionContextNode*)node

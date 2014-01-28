@@ -38,6 +38,7 @@ NSString * const kScalarMultiply        = @"∘";
     NSUInteger _targetBracketCount;
     KSMExpressionType _expressionType;
     KSMReferenceCounter * _referenceCounter;
+    BOOL _addedLeadingZero;
 }
 
 @property (readwrite) KSMExpressionType expressionType;
@@ -48,7 +49,12 @@ NSString * const kScalarMultiply        = @"∘";
 @property (readwrite) NSString * rightOperand;
 @property (readwrite) NSString * operator;
 @property (readwrite) BOOL       isBracketed;
+
+/*! Indicates that the expression has a leadin zero that must be suppressed when displayed */
 @property (readwrite) BOOL       hasAddedLogicalLeadingZero;
+
+/*! Indicates that a leading zero was added to the expression string to regularize a leading minus, but this does not necessarily indicate that this expression requires special handling when being displayed because the zero in question may become part of a subexpression. Special display requirements are indicated by  hasAddedLogicalLeadingZero */
+@property (readwrite) BOOL       addedLeadingZero;
 
 @end
 
@@ -320,12 +326,22 @@ NSString * const kScalarMultiply        = @"∘";
     }
     
     // We are at least a binary expression and possibly more complex than that. So we iteratively reduce the complexity of the expression, operator by operator, until we are a binary expression.
-    while ( ! [KSMExpression isStringBinaryExpression:self.string
-                                         operators:self.arrayOfOperators] ) {
-        // reduce complexity by substituting highest precedence (taking left-most first to tie-break) operator
-        [self replaceHighestPrecedenceOperatorWithSubExpression];
+    if ([KSMExpression isStringBinaryExpression:self.string
+                                      operators:self.arrayOfOperators] ) {
+        if (self.addedLeadingZero) {
+            self.hasAddedLogicalLeadingZero = YES;
+        }
+    } else {
+        while ( ! [KSMExpression isStringBinaryExpression:self.string
+                                                operators:self.arrayOfOperators] ) {
+            // reduce complexity by substituting highest precedence (taking left-most first to tie-break) operator. We may also pass on responsibility for suppressing the leading logical zero if one has been added.
+            [self replaceHighestPrecedenceOperatorWithSubExpression];
+        }
     }
-    
+    if (self.addedLeadingZero) {
+        // Okay, we didn't pass on responsibility for dealing with the regularizing 0, so we must accept it ourselves
+        self.hasAddedLogicalLeadingZero = YES;
+    }
     // We are now reduced to a binary expression
     self.expressionType = KSMExpressionTypeBinary;
     
@@ -384,6 +400,13 @@ NSString * const kScalarMultiply        = @"∘";
     NSString * binaryString = [self.string substringWithRange:binaryRange];
     NSString * symbol;
     symbol = [self createSymbolAndExpressionEquivalentToSubstring:binaryString];
+    
+    if (leftTokenRange.location == 0 && self.addedLeadingZero) {
+        // The new expression has a leading zero inserted to regularize the leading minus sign
+        KSMExpression * sub = (KSMExpression*)_subExpressions[symbol];
+        sub.hasAddedLogicalLeadingZero = YES; // new expression takes responsibility for leading 0
+        self.addedLeadingZero = NO; // this instance forgets all about the leading zero
+    }
     
     self.string = [self.string stringByReplacingOccurrencesOfString:binaryString
                                                          withString:symbol];
@@ -445,7 +468,7 @@ NSString * const kScalarMultiply        = @"∘";
 -(NSString*)regularizeLeadingMinus
 {
     if ( ![KSMExpression isLeadingMinusRegularizedInString:self.string] ) {
-        self.hasAddedLogicalLeadingZero = YES;
+        self.addedLeadingZero = YES;
         return [KSMExpression regularizeLeadingMinusInString:self.string];
     }
     return self.string;

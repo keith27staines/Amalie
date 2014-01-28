@@ -347,7 +347,7 @@ static NSRect unionRect(AMRect a, AMRect b)
     if (fixedLeft.width == 0) {
         space = 0;
     }
-    movableRight->left = fixedLeft.right + self.space;
+    movableRight->left = fixedLeft.right + space;
     movableRight->right = movableRight->left + movableRight->width;
 }
 
