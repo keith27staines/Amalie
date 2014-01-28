@@ -19,6 +19,7 @@
     BOOL _isLeftNode;
     BOOL _isRightNode;
     BOOL _requiresBrackets;
+    NSString * _reconstructedString;
 }
 @property (readonly) id<AMExpressionDataSource>dataSource;
 @property BOOL bracketStatusDetermined;
@@ -52,6 +53,7 @@
             _leftChild = [[AMExpressionContextNode alloc] initWithExpression:[self expressionForSymbol:expression.leftOperand] parent:self asLeftNode:YES asRightNode:NO dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
             _rightChild = [[AMExpressionContextNode alloc] initWithExpression:[self expressionForSymbol:expression.rightOperand] parent:self asLeftNode:NO asRightNode:YES dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
         }
+        [self reconstructedString];
     }
     return self;
 }
@@ -96,6 +98,30 @@
     return expr;
 }
 
+-(NSString*)reconstructedString
+{
+    if (_reconstructedString) {
+        return _reconstructedString;
+    }
+    NSString * r;
+    if (self.expression.isUnary) {
+        r = self.expression.bareString;
+    } else {
+        NSString * left = [self.leftChild reconstructedString];
+        NSString * right = [self.rightChild reconstructedString];
+        if ([self.expression hasAddedLogicalLeadingZero]) {
+            r = [NSString stringWithFormat:@"%@%@",self.operatorString,right];
+        } else {
+            r = [NSString stringWithFormat:@"%@%@%@",left,self.operatorString,right];
+        }
+    }
+    if (self.expression.isBracketed) {
+        r = [NSString stringWithFormat:@"(%@)",r];
+    }
+    _reconstructedString = r;
+    return _reconstructedString;
+}
+
 -(BOOL)requiresBrackets
 {
     if (self.bracketStatusDetermined) {
@@ -132,7 +158,9 @@
     }
     
     // From here on, we are dealing with various levels of binary sub-expressions
-    
+    if ([self.operatorString isEqualTo:@"+"]) {
+        NSLog(@"Follow this");
+    }
     if ( [self isMyOperatorLowerPrecedenceThanNeighbours] ) {
         _requiresBrackets = YES;
         return YES; // Precedence of neighbouring operators makes my brackets essential
@@ -205,7 +233,7 @@
     NSInteger myPrecedence = [self operatorPrecedenceForNode:self];
     NSInteger leftPrecedence = [self operatorPrecedenceForNode:[self leftEnclosing]];
     NSInteger rightPrecedence = [self operatorPrecedenceForNode:[self rightEnclosing]];
-    return (myPrecedence < leftPrecedence && myPrecedence < rightPrecedence);
+    return (myPrecedence < leftPrecedence || myPrecedence < rightPrecedence);
 }
 
 -(NSInteger)operatorPrecedenceForNode:(AMExpressionContextNode*)node

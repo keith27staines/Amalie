@@ -236,6 +236,7 @@ static NSUInteger const kAMIndexRHS;
                         hideRedundantBrackets:YES
                         cascadeBracketHiding:YES];
     
+    NSLog(@"Reconstructed string is: %@",[self.contextNode reconstructedString]);
     [self.expressionView resetWithgroupID:self.groupID
                                expression:expr
                            scriptingLevel:0
