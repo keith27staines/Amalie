@@ -19,15 +19,11 @@
     __weak NSTextField *_expressionStringView;
 }
 
-@property (weak) IBOutlet AMNameView *nameView;
-
 @property (weak) IBOutlet NSTextField *expressionStringView;
 
 @property (weak) IBOutlet AMExpressionNodeView * expressionView;
 
 @property (strong) IBOutlet AMEquationContentView *equationView;
-
-- (IBAction)nameAction:(AMNameView *)sender;
 
 - (IBAction)expressionStringWasEdited:(NSTextField *)sender;
 

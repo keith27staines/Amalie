@@ -8,6 +8,7 @@
 
 #import "AMExpressionNodeView.h"
 #import "KSMExpression.h"
+#import "AMExpressionContextNode.h"
 #import "AMOperatorView.h"
 #import "AMGraphics.h"
 #import "AMExpressionLayout.h"
@@ -34,6 +35,7 @@
     CGFloat                             _scaleFactor;
     NSString                          * _groupID;
     __weak id<AMContentViewDataSource>  _dataSource;
+
 }
 
 @property (weak, readonly) AMExpressionNodeView     * leftNodeView;
@@ -62,7 +64,8 @@
                       delegate:nil
                     dataSource:nil
                 displayOptions:nil
-                   scaleFactor:1];
+                   scaleFactor:1
+                   contextNode:nil];
 }
 
 -(NSSize)intrinsicContentSize
@@ -88,9 +91,10 @@
         expression:(KSMExpression *)expression
      scriptingLevel:(NSUInteger)scriptingLevel
            delegate:(id<AMExpressionNodeViewDelegate>)delegate
-        dataSource:(id<AMContentViewDataSource>)dataSource
+         dataSource:(id<AMContentViewDataSource>)dataSource
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
         scaleFactor:(CGFloat)scaleFactor
+            contextNode:(AMExpressionContextNode*)contextNode
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -100,7 +104,8 @@
                       delegate:delegate
                  dataSource:dataSource
                 displayOptions:displayOptions
-                   scaleFactor:scaleFactor];
+                   scaleFactor:scaleFactor
+                contextNode:contextNode];
     }
     return self;
 }
@@ -112,6 +117,7 @@
              dataSource:(id<AMContentViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor
+            contextNode:(AMExpressionContextNode*)contextNode
 {
     _groupID = groupID;
     _scaleFactor = scaleFactor;
@@ -119,6 +125,7 @@
     _delegate = delegate;
     _dataSource = dataSource;
     _scriptingLevel = scriptingLevel;
+    _contextNode = contextNode;
     if (expression)
     {
         self.expression = expression;
@@ -224,7 +231,8 @@
                                                       delegate:_delegate
                                                     dataSource:_dataSource
                                                 displayOptions:_displayOptions
-                                                   scaleFactor:_scaleFactor];
+                                                   scaleFactor:_scaleFactor
+                                                contextNode:self.contextNode.leftChild];
     if (self.expression.hasAddedLogicalLeadingZero) {
         leftNodeView.isLogicalViewOnly = YES;
     }
@@ -243,7 +251,8 @@
                                                        delegate:_delegate
                                                      dataSource:_dataSource
                                                  displayOptions:_displayOptions
-                                                    scaleFactor:_scaleFactor];
+                                                    scaleFactor:_scaleFactor
+                                                    contextNode:self.contextNode.rightChild];
     [leftNodeView  setTranslatesAutoresizingMaskIntoConstraints:NO];
     [rightNodeView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [operatorView  setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -314,11 +323,6 @@
 {
     NSRect boundingBox = [self textBoundingBox];
     if (self.isBracketed) {
-//        AMBracketPlacementInfo info = [self bracketPlacementInfo];
-//        boundingBox.size.width += 2 * info.width; // takes into account left & right
-//        boundingBox.origin.x -= info.width;
-//        boundingBox.size.height = info.minimumEnclosingHeight;
-//        boundingBox.origin.y = -info.ascender;
         boundingBox = [self pixelIntegralRect:self.expressionLayout.bounds];
     }
     return boundingBox;
@@ -493,8 +497,12 @@
 }
 -(BOOL)isBracketed
 {
+    if (self.contextNode) {
+        return self.contextNode.requiresBrackets;
+    }
     return self.expression.isBracketed;
 }
+
 -(NSFont*)baseFont
 {
     return [self.nameProvider fontForSymbolsAtScriptinglevel:_scriptingLevel];

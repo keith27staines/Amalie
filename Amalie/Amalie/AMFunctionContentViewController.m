@@ -8,13 +8,13 @@
 
 @class AMExpressionNodeView;
 @class AMEquationContentView;
-@class AMNameView;
 
 #import "AMFunctionContentViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import "KSMWorksheet.h"
 #import "KSMExpression.h"
+#import "AMExpressionContextNode.h"
 #import "AMEquationContentViewController.h"
 #import "AMFunctionContentView.h"
 #import "AMExpressionNodeView.h"
@@ -43,8 +43,10 @@ static NSUInteger const kAMIndexRHS;
     __weak NSTextField                  * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
     NSMutableDictionary                 * _viewDictionary;
+    AMExpressionContextNode             * _contextNode;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
+@property (strong) AMExpressionContextNode * contextNode;
 
 @property (readonly) AMArgumentListView * argumentListView;
 @end
@@ -201,10 +203,9 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)expressionStringWasEdited
 {
-    AMExpressionNodeView * expressionView = self.expressionView;
     KSMExpression * expr;
     expr = [self expressionFromString:self.expressionStringView.stringValue atIndex:kAMIndexRHS];
-    expressionView.expression = expr;
+    [self resetExpressionViewWithExpression:expr];
     [self.contentView setNeedsUpdateConstraints:YES];
     [self.contentView setNeedsDisplay:YES];
 }
@@ -224,8 +225,30 @@ static NSUInteger const kAMIndexRHS;
     [textEditor setSelectedRange:range];
 }
 
+-(void)resetExpressionViewWithExpression:(KSMExpression*)expr
+{
+    self.contextNode = [[AMExpressionContextNode alloc]
+                        initWithExpression:expr
+                        parent:nil
+                        asLeftNode:NO
+                        asRightNode:NO
+                        dataSource:self
+                        hideRedundantBrackets:YES
+                        cascadeBracketHiding:YES];
+    
+    [self.expressionView resetWithgroupID:self.groupID
+                               expression:expr
+                           scriptingLevel:0
+                                 delegate:self
+                               dataSource:self
+                           displayOptions:nil
+                              scaleFactor:1
+                              contextNode:self.contextNode];
+    [self.expressionView setNeedsDisplay:YES];
+}
+
 -(void)populateView:(AMContentView *)view
-{    
+{
     // populate from the top view down
     if (view == self.contentView) {
         // Okay, we have the topmost view
@@ -236,17 +259,9 @@ static NSUInteger const kAMIndexRHS;
         NSString * originalString = amdExpr.originalString;
         KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
         self.expressionStringView.stringValue = expr.originalString;
-        [self.expressionView resetWithgroupID:self.groupID
-                                   expression:expr
-                               scriptingLevel:0
-                                     delegate:self
-                                   dataSource:self
-                               displayOptions:nil
-                                  scaleFactor:1];
-        
+        [self resetExpressionViewWithExpression:expr];
         self.nameView.attributedString = funcDef.name.attributedString;
         [self setupArgumentListView];
-        [self.expressionView setNeedsDisplay:YES];
     } else {
         // Other views that are sub to self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }

@@ -127,12 +127,12 @@ NSString * const kScalarMultiply        = @"∘";
 +(KSMOperatorType)operatorTypeFromString:(NSString *)operator
 {
     if ([operator isEqualToString:kPower])          return KSMOperatorTypePower;
-    if ([operator isEqualToString:kAdd])            return KSMOperatorTypePower;
-    if ([operator isEqualToString:kSubtract])       return KSMOperatorTypePower;
-    if ([operator isEqualToString:kMultiply])       return KSMOperatorTypePower;
-    if ([operator isEqualToString:kDivide])         return KSMOperatorTypePower;
-    if ([operator isEqualToString:kScalarMultiply]) return KSMOperatorTypePower;
-    if ([operator isEqualToString:kVectorMultiply]) return KSMOperatorTypePower;
+    if ([operator isEqualToString:kAdd])            return KSMOperatorTypeAdd;
+    if ([operator isEqualToString:kSubtract])       return KSMOperatorTypeSubtract;
+    if ([operator isEqualToString:kMultiply])       return KSMOperatorTypeMultiply;
+    if ([operator isEqualToString:kDivide])         return KSMOperatorTypeDivide;
+    if ([operator isEqualToString:kScalarMultiply]) return KSMOperatorTypeScalarMultiply;
+    if ([operator isEqualToString:kVectorMultiply]) return KSMOperatorTypeVectorMultiply;
     
     NSLog(@"Operator %@ is not recognised.",operator);
     return KSMOperatorTypeUnrecognized;

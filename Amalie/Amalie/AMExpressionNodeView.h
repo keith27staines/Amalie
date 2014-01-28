@@ -9,6 +9,7 @@
 @class KSMExpression;
 @class AMExpressionDisplayOptions;
 @class AMOperatorView;
+@class AMExpressionContextNode;
 
 #import "AMTextView.h"
 #import "AMContentViewDataSource.h"
@@ -24,6 +25,7 @@
 @property (weak, readwrite) id<AMExpressionNodeViewDelegate> delegate;
 @property (copy, readwrite) NSString      * groupID;
 @property (readwrite)       BOOL            isLogicalViewOnly;
+@property (weak,readonly)   AMExpressionContextNode * contextNode;
 
 @property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
@@ -34,7 +36,8 @@
           delegate:(id<AMExpressionNodeViewDelegate>)delegate
         dataSource:(id<AMContentViewDataSource>)dataSource
     displayOptions:(AMExpressionDisplayOptions*)displayOptions
-       scaleFactor:(CGFloat)scaleFactor;
+       scaleFactor:(CGFloat)scaleFactor
+       contextNode:(AMExpressionContextNode*)contextNode;
 
 -(void)resetWithgroupID:(NSString *)groupID
              expression:(KSMExpression *)expression
@@ -42,6 +45,7 @@
                delegate:(id<AMExpressionNodeViewDelegate>)delegate
              dataSource:(id<AMContentViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
-            scaleFactor:(CGFloat)scaleFactor;
+            scaleFactor:(CGFloat)scaleFactor
+            contextNode:(AMExpressionContextNode*)contextNode;
 
 @end

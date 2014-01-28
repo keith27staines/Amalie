@@ -57,17 +57,17 @@
     CGFloat nameWidth = fmaxf(nameView.intrinsicContentSize.width,12);
     CGFloat argsWidth = fmaxf(argumentsView.intrinsicContentSize.width,12);
     CGFloat space     = expressionView.standardSpace;
-    
+    CGFloat narrowSpace = expressionView.narrowSpace;
+    views = NSDictionaryOfVariableBindings(nameView, argumentsView, expressionView);
+    metrics = @{ @"argsWidth": @(argsWidth),
+                 @"nameWidth": @(nameWidth),
+                 @"space"    : @(space) ,
+                 @"narrow"   : @(narrowSpace)};
     NSArray * constraints;
     if (self.argumentListView) {
-        views = NSDictionaryOfVariableBindings(nameView, argumentsView, expressionView);
-        metrics = @{ @"argsWidth": @(argsWidth),
-                     @"nameWidth": @(nameWidth),
-                     @"space"    : @(space) };
-        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(nameWidth)][argumentsView(argsWidth)]-space-[expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
+
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(nameWidth)]-narrow-[argumentsView(argsWidth)]-space-[expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
     } else {
-        views = NSDictionaryOfVariableBindings(nameView, expressionView);
-        metrics = @{ @"nameWidth": @(nameWidth), @"space": @(space) };
         constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(>=nameWidth)]-space-[expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
     }
     [self.dynamicConstraints addObjectsFromArray:constraints];

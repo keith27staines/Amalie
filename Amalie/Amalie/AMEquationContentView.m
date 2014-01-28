@@ -8,7 +8,6 @@
 
 #import "AMEquationContentView.h"
 #import "AMExpressionNodeView.h"
-#import "AMNameView.h"
 
 @implementation AMEquationContentView
 
@@ -41,14 +40,12 @@
 -(void)setDatasource:(id<AMContentViewDataSource>)datasource
 {
     [super setDatasource:datasource];
-    self.nameView.dataSource = self.datasource;
 }
 
 -(void)setGroupID:(NSString *)groupID
 {
     [super setGroupID:groupID];
     self.expressionView.groupID = groupID;
-    self.nameView.groupID = groupID;
 }
 
 

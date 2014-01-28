@@ -13,10 +13,10 @@
 
 #import "AMContentViewController.h"
 #import "AMExpressionNodeViewDelegate.h"
+#import "AMExpressionDataSource.h"
 
 @interface AMFunctionContentViewController : AMContentViewController
-<NSTextFieldDelegate, AMExpressionNodeViewDelegate>
-
+<NSTextFieldDelegate, AMExpressionNodeViewDelegate, AMExpressionDataSource>
 
 @property (weak) IBOutlet NSButton *popupButton;
 

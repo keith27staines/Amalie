@@ -14,7 +14,6 @@
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
 #import "AMWorksheetController.h"
-#import "AMNameView.h"
 #import "AMNameProvider.h"
 
 #import "AMDName.h"
@@ -42,14 +41,6 @@ static NSUInteger const kAMIndexRHS;
 
 }
 
-- (IBAction)nameAction:(AMNameView *)sender {
-    NSString * proposedName = [sender.attributedStringValue string];
-    AMNameProvider * namer = [AMNameProvider nameProvider];
-    if ( ! [namer validateProposedName:proposedName forType:AMInsertableTypeEquation error:nil] ) {
-        sender.attributedStringValue = self.attributedName;
-    }
-}
-
 - (IBAction)expressionStringWasEdited:(NSTextField *)sender
 {
     AMExpressionNodeView * expressionView = self.expressionView;
@@ -61,16 +52,7 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)populateView:(AMContentView *)view
 {
-    if (view == self.equationView) {
-        self.nameView.attributedStringValue = self.amdInsertedObject.name.attributedString;
-        KSMExpression * expr = [self expressionForIndex:0];
-        self.expressionStringView.stringValue = expr.string;
-                
-        [self.expressionStringView setFont:[AMPreferences fixedWidthFont]];
-        [self.nameView setFont:[AMPreferences standardFont]];
-        
-        self.expressionView.expression = expr;
-    }
+
 }
 
 @end
