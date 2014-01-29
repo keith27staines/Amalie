@@ -16,6 +16,7 @@
 
 @property (weak) AMExpressionNodeView * parentExpressionNode;
 @property (readonly) KSMOperatorType operatorType;
+@property BOOL isLogicalViewOnly;
 
 -(void)setOperator:(NSString*)operatorString withFont:(NSFont*)font;
 -(void)setOperator:(NSString*)operatorString withFontSize:(CGFloat)fontSize;

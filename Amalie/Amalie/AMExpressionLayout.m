@@ -344,8 +344,8 @@ static NSRect unionRect(AMRect a, AMRect b)
 -(void)space:(AMRect*)movableRight toRightOf:(AMRect)fixedLeft
 {
     CGFloat space = self.space;
-    if (fixedLeft.width == 0) {
-        space = 0;
+    if (fixedLeft.width == 0 || movableRight->width == 0) {
+        space = self.ruleWidth / 2.0;
     }
     movableRight->left = fixedLeft.right + space;
     movableRight->right = movableRight->left + movableRight->width;

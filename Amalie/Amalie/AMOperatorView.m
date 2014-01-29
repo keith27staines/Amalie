@@ -107,7 +107,9 @@ static NSString * const kAMOperatorPower    = @"^";
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    
+    if (self.isLogicalViewOnly) {
+        return;
+    }
     if (!self.isGraphic) {
         [super drawRect:dirtyRect];
     } else {

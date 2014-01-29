@@ -243,6 +243,9 @@
     } else {
         operatorView = [[AMOperatorView alloc] init];
         [operatorView setOperator:_expression.operator withFont:[self symbolFont]];
+        if (!self.contextNode.requiresOperator) {
+            operatorView.isLogicalViewOnly = YES;
+        }
     }
     rightNodeView = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
                                                         groupID:_groupID
@@ -388,9 +391,13 @@
     if (self.expression.hasAddedLogicalLeadingZero) {
         leftNodeRect.size.width = 0;
     }
+    NSRect operatorRect = self.operatorView.tightBoundingBox;
+    if (!self.contextNode.requiresOperator) {
+        operatorRect.size.width = 0;
+    }
     return [AMExpressionLayout expressionLayoutWithLeftRect:leftNodeRect
                                              exponentOffset:[self exponentPositionForView:_leftNodeView]
-                                               operatorRect:self.operatorView.tightBoundingBox
+                                               operatorRect:operatorRect
                                                operatorType:self.operatorType
                                                   rightRect:self.rightNodeView.tightBoundingBox
                                                 isBracketed:self.isBracketed
