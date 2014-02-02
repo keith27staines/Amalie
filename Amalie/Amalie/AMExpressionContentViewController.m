@@ -10,7 +10,7 @@
 #import "AMExpressionContentViewController.h"
 #import "AMExpressionNodeView.h"
 #import "KSMExpression.h"
-#import "AMWorksheetController.h"
+#import "AMAmalieDocument.h"
 #import "AMDExpression+Methods.h"
 #import "AMDInsertedObject+Methods.h"
 #import "AMDIndexedExpression+Methods.h"

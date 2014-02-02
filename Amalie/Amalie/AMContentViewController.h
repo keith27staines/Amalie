@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMWorksheetController;
+@class AMAmalieDocument;
 @class AMDInsertedObject;
 @class NSManagedObjectContext;
 @class AMInsertableView;
@@ -29,7 +29,7 @@
 
 @property (weak) AMAppController * appController;
 
-@property (weak, readonly) AMWorksheetController * parentWorksheetController;
+@property (weak, readonly) AMAmalieDocument * parentWorksheetController;
 
 @property (copy)          NSString               * groupID;
 @property (strong)        AMDInsertedObject      * amdInsertedObject;
@@ -55,14 +55,14 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
-  worksheetController:(AMWorksheetController*)worksheetController
+  worksheetController:(AMAmalieDocument*)worksheetController
           contentType:(enum AMInsertableType)type
       groupParentView:(AMInsertableView*)view
                   moc:(NSManagedObjectContext*)moc
     amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
-                        worksheetController:(AMWorksheetController*)worksheetController
+                        worksheetController:(AMAmalieDocument*)worksheetController
                                     content:(enum AMInsertableType)type
                             groupParentView:(AMInsertableView*)groupParentview
                                         moc:(NSManagedObjectContext*)moc

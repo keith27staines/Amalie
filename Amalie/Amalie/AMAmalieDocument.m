@@ -1,5 +1,5 @@
 //
-//  AMWorksheetController.m
+//  AMAmalieDocument.m
 //  Amalie
 //
 //  Created by Keith Staines on 02/07/2013.
@@ -7,12 +7,11 @@
 //
 
 #import "QuartzCore/QuartzCore.h"
-#import "AMWorksheetController.h"
+#import "AMAmalieDocument.h"
 #import "AMConstants.h"
 #import "AMWorksheetView.h"
 #import "AMInsertableView.h"
 #import "AMKeyboardsAreaView.h"
-#import "AMInsertableViewController.h"
 #import "KSMWorksheet.h"
 #import "KSMMathValue.h"
 #import "AMContentView.h"
@@ -21,7 +20,6 @@
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMToolboxView.h"
-#import "AMKeyboardsViewController.h"
 #import "AMKeyboardContainerView.h"
 #import "AMPreferences.h"
 #import "AMDataStore.h"
@@ -29,19 +27,34 @@
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 #import "AMNameProviderBase.h"
+#import "AMCenteringView.h"
 
-@interface AMWorksheetController()
+// View controllers for dynamically loaded views
+#import "AMInsertableViewController.h"
+#import "AMKeyboardsViewController.h"
+#import "AMLibraryViewController.h"
+
+static CGFloat const kAMMinMiddleWidth = 100;
+static CGFloat const kAMMinLeftWidth   = 200;
+static CGFloat const kAMMinRightWidth  = 200;
+
+@interface AMAmalieDocument()
 {
-    BOOL                  _showKeyboardArea;
-    BOOL                  _showObjectsPanel;
-    BOOL                  _layoutIsScheduled;
-    NSMutableArray      * _insertableViewArray;
-    NSMutableDictionary * _insertableViewDictionary;
-    NSMutableDictionary * _insertedRecords;
-    NSMutableDictionary * _contentControllers;
-    KSMWorksheet        * _mathSheet;
-    NSEntityDescription * _amdInsertedObjectsEntity;
-    AMInsertableView    * _selectedView;
+    __weak NSSplitView          * _enclosingSplitView;
+    __weak NSSplitView          * _leftSplitView;
+    __weak NSSplitView          * _middleSplitView;
+    __weak NSSplitView          * _rightSplitView;
+    __weak NSScrollView         * _worksheetScrollView;
+    __weak AMCenteringView      * _documentBackgroundView;
+    __weak AMWorksheetView      * _worksheetView;
+    __weak AMInsertableView     * _selectedView;
+    
+    NSMutableArray              * _insertableViewArray;
+    NSMutableDictionary         * _insertableViewDictionary;
+    NSMutableDictionary         * _insertedRecords;
+    NSMutableDictionary         * _contentControllers;
+    KSMWorksheet                * _mathSheet;
+    NSEntityDescription         * _amdInsertedObjectsEntity;
 }
 
 /*!
@@ -57,13 +70,10 @@
 
 @property (readonly) AMDataStore * sharedDataStore;
 
-@property BOOL showKeyboardArea;
-@property BOOL showObjectsPanel;
-
 @property (readonly) AMNameProviderBase * nameProvider;
 @end
 
-@implementation AMWorksheetController
+@implementation AMAmalieDocument
 
 #pragma mark - Initializers and setup -
 
@@ -84,7 +94,6 @@
 
 -(void)awakeFromNib
 {
-    [self.worksheetView.window setContentMinSize:NSMakeSize(1024,768)];
     [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
     
     SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
@@ -98,13 +107,35 @@
     [slider setMaxValue:4];
     [slider setFloatValue:1];
     [slider setContinuous:YES];
-    self.showKeyboardArea = YES;
-    self.showObjectsPanel = YES;
-    AMKeyboardContainerView * keypadContainerView = (AMKeyboardContainerView *)[self.keyboardsViewController view];
-    [self.keyboardsAreaView addSubview:keypadContainerView];
-    [keypadContainerView setNeedsDisplay:YES];
-    
     self.sharedDataStore.moc = self.managedObjectContext;
+    
+    // load major subiews into their containers
+    
+    [self addLibraryView];
+}
+
+-(void)addLibraryView
+{
+    // Load the library into its container
+    NSView * container = self.libraryContainerView;
+    NSView * library = self.library.view;
+    library.translatesAutoresizingMaskIntoConstraints = NO;
+    [container addSubview:library];
+    
+    // Apply constraints to position the library in its container
+    NSDictionary * views = NSDictionaryOfVariableBindings(container, library);
+    NSArray * constraints;
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library]"
+                                                          options:0
+                                                          metrics:nil
+                                                            views:views];
+    [container addConstraints:constraints];
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[library]|"
+                                                          options:0
+                                                          metrics:nil
+                                                            views:views];
+    [container addConstraints:constraints];
+
 }
 
 - (NSString *)windowNibName
@@ -157,7 +188,6 @@
     }
     
     [self.undoManager disableUndoRegistration];
-    _layoutIsScheduled = YES; // prevent layout while we are setting up...
     for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
         NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
                                   insertedObject.yPosition.floatValue,
@@ -172,13 +202,9 @@
         
         [self insertView:insertableView withOrigin:insertableView.frame.origin];
     }
-    _layoutIsScheduled = NO; // re-enable layout
-    [self scheduleLayout];
+    [self.worksheetView setNeedsUpdateConstraints:YES];
     [self.worksheetView setNeedsDisplay:YES];
-    [self.keyboardsAreaView setNeedsDisplay:YES];
-    [self.toolboxView setNeedsDisplay:YES];
     [self.managedObjectContext processPendingChanges];
-    [self arrangeSubviews];
     [self.undoManager removeAllActions];
 }
 
@@ -225,9 +251,7 @@
     
     // This will be the selected view now
     [self insertableViewReceivedClick:insertableView];
-    
-    // we will need to layout the worksheet again, but doing so directly somehow blocks the animations so we schedule the layout to occur a short time later.
-    [self scheduleLayout];
+    [self.worksheetView setNeedsUpdateConstraints:YES];
 }
 
 /*!
@@ -246,7 +270,7 @@
     [self.insertableViewDictionary removeObjectForKey:groupID];
     insertableView.delegate = nil;
     [insertableView removeFromSuperview];
-    [self scheduleLayout];
+    [self.worksheetView setNeedsUpdateConstraints:YES];
 }
 
 /*!
@@ -267,9 +291,8 @@
     
     // Move it
     [actualView setFrameTopLeft:topLeft animate:NO];
-    [self scheduleLayout];
+    [self.worksheetView setNeedsUpdateConstraints:YES];
 }
-
 
 #pragma mark - AMInsertableViewDelegate -
 
@@ -360,69 +383,9 @@
     self.selectedView = view;
 }
 
-#pragma mark - Layout -
-
-/*!
- Use this method to layout. Performing the layout synchronously somehow blocks the animations, but this method works fine because the layout is scheduled to occur only after a timer fires (very short delay).
- */
--(void)scheduleLayout
-{
-    if (_layoutIsScheduled) return;
-    _layoutIsScheduled = YES;
-    // single-shot timer, will self-invalidate (and remove itself from runloop) after first fire.
-    [NSTimer scheduledTimerWithTimeInterval:0.001
-                                     target:self
-                                   selector:NSSelectorFromString(@"layoutInsertsNow")
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
 -(AMInsertableView*)insertableViewForKey:(NSString*)key
 {
     return self.insertableViewDictionary[key];
-}
-
-/*!
- Lay out the inserts now
- */
--(void)layoutInsertsNow
-{
-    // Just pass through to the worksheet view's implementation to do the actual move
-    [self.worksheetView layoutInsertsNow];
-    
-    // Need to update the positions in core data too, but care is needed - any assignment to the position and size properties of the inserted object will result in the document being marked as dirty, so to prevent this happening unneccessarily, first test whether the values have in fact changed.
-    for (AMInsertableView * view in self.worksheetView.subviews) {
-        
-        NSString * groupID = view.groupID;
-        AMDInsertedObject * amdObject = [AMDInsertedObject fetchInsertedObjectWithGroupID:groupID];
-        
-        // Assign new values only if values have genuinely changed
-        if (![amdObject.xPosition  isEqual: @(view.frame.origin.x)]) {
-            amdObject.xPosition = @(view.frame.origin.x);
-        }
-        
-        if (![amdObject.yPosition  isEqual: @(view.frame.origin.y)]) {
-            amdObject.yPosition = @(view.frame.origin.y);
-        }
-        
-        if (![amdObject.width  isEqual: @(view.frame.size.width)]) {
-            amdObject.width     = @(view.frame.size.width);
-        }
-        
-        if (![amdObject.height  isEqual: @(view.frame.size.height)]) {
-            amdObject.height    = @(view.frame.size.height);
-        }
-    }
-    _layoutIsScheduled = NO;
-}
-
--(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction
-{
-    [self layoutInsertsNow];
-}
-
-- (IBAction)checkEditStatus:(id)sender {
-    NSLog(@"Is edited? %d", self.hasUnautosavedChanges);
 }
 
 #pragma - KSM maths library -
@@ -448,7 +411,7 @@
     [self.worksheetScrollView setMagnification:requiredMagnification];
 }
 
-#pragma mark - State management -
+#pragma mark - Selection management -
 
 -(AMInsertableView *)selectedView
 {
@@ -463,7 +426,57 @@
     _selectedView.viewState = AMInsertViewStateSelected;
 }
 
+#pragma mark - NSSplitViewDelegate -
 
+-(BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
+{
+    if (splitView == self.enclosingSplitView) {
+        return subview == self.middleSplitView ? NO : YES;
+    }
+    return NO;
+}
+
+-(CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+    CGFloat maxPos = proposedMaximumPosition;
+
+    if (splitView == self.enclosingSplitView) {
+        switch (dividerIndex) {
+            case 0:
+                maxPos -= kAMMinMiddleWidth;
+                break;
+            case 1:
+                // No need to constrain the width of the central split
+                maxPos -= kAMMinRightWidth;
+                break;
+            case 2:
+                break;
+            default:
+                NSAssert(NO,@"Unexpected divider index %li for splitview %@",(long)dividerIndex,splitView);
+        }
+        return maxPos;
+    }
+
+    return maxPos;
+}
+-(CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
+{
+    CGFloat minPos = proposedMinimumPosition;
+    if (splitView == self.enclosingSplitView) {
+        switch (dividerIndex) {
+            case 0:
+                minPos += kAMMinLeftWidth;
+                break;
+            case 1:
+                minPos += kAMMinMiddleWidth;
+                break;
+            default:
+                NSAssert(NO,@"Unexpected divider index %li for splitview %@",(long)dividerIndex,splitView);
+        }
+        return minPos;
+    }
+    return minPos;
+}
 #pragma mark - Misc -
 
 -(NSString *)defaultDraftName
@@ -474,174 +487,6 @@
 -(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
 {
     return [self insertableViewForKey:shadow.groupID];
-}
-
--(void)toggleSymbolsPanel:(NSToolbarItem*)sender
-{
-    self.showKeyboardArea = !self.showKeyboardArea;
-    if (_showKeyboardArea) {
-        sender.label = @"Hide";
-    } else {
-        sender.label = @"Show";
-    }
-}
-
--(void)toggleObjectsPanel:(NSToolbarItem*)sender
-{
-    self.showObjectsPanel = !self.showObjectsPanel;
-    if (_showObjectsPanel) {
-        sender.label = @"Hide";
-    } else {
-        sender.label = @"Show";
-    }
-}
-
--(BOOL)showKeyboardArea
-{
-    return _showKeyboardArea;
-}
-
--(void)setShowKeyboardArea:(BOOL)showSymbolsPanel
-{
-    if (showSymbolsPanel == _showKeyboardArea) return;
-    _showKeyboardArea = showSymbolsPanel;
-    if (_showKeyboardArea) {
-        // Was invisible, now visible.
-        [CATransaction begin];
-        [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.keyboardsAreaView animator] setFrameOrigin:NSMakePoint(0, 0)];
-        [CATransaction commit];
-    } else {
-        // was visible, now to be invisible
-        [CATransaction begin];
-        [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.keyboardsAreaView animator] setFrameOrigin:[self offWindowOriginForKeyboardAreaView]];
-        [CATransaction commit];
-    }
-}
-
--(BOOL)showObjectsPanel
-{
-    return _showObjectsPanel;
-}
-
--(void)setShowObjectsPanel:(BOOL)showObjectsPanel
-{
-    if (showObjectsPanel == _showObjectsPanel) return;
-    _showObjectsPanel = showObjectsPanel;
-    
-    NSRect worksheetScrollViewRect = [self frameForWorksheetScrollView];
-    NSRect toolboxRect = self.toolboxView.frame;
-    NSRect symbolsRect = self.keyboardsAreaView.frame;
-    
-    if (_showObjectsPanel) {
-        // Was invisible, now visible.
-        [CATransaction begin];
-        
-        [[self.worksheetScrollView animator] setFrame:worksheetScrollViewRect];
-        
-        toolboxRect.origin.x = [self offWindowOriginForToolboxView].x - toolboxRect.size.width;
-        toolboxRect.size.height = self.toolboxView.superview.frame.size.height;
-        [[self.toolboxView animator] setFrame:toolboxRect];
-        
-        if (self.showObjectsPanel) {
-            symbolsRect.size.width = self.keyboardsAreaView.superview.frame.size.width - toolboxRect.size.width;
-        } else {
-            symbolsRect.size.width = self.keyboardsAreaView.superview.frame.size.width;
-        }
-        [[self.keyboardsAreaView animator] setFrame:symbolsRect];
-        
-        [CATransaction commit];
-
-    } else {
-        // was visible, now to be invisible
-        [CATransaction begin];
-        [[self.worksheetScrollView animator] setFrame:[self frameForWorksheetScrollView]];
-        [[self.toolboxView animator] setFrameOrigin:[self offWindowOriginForToolboxView]];
-        symbolsRect.size.width = worksheetScrollViewRect.size.width;
-        [[self.keyboardsAreaView animator] setFrame:symbolsRect];
-        [CATransaction commit];
-    }
-}
-
--(void)windowDidResize:(NSNotification*)notification
-{
-    [self arrangeSubviews];
-}
-
--(void)arrangeSubviews
-{
-    // First, calculate and set the frame for the worksheet scrollview, taking into account the visibility of both the toolbox and the symbols views...
-    NSRect worksheetScrollRect = [self frameForWorksheetScrollView];
-    [self.worksheetScrollView setFrame:worksheetScrollRect];
-    
-    // Position and size the symbols view. First, the size. The height is fixed, but the width must be adjusted to match the width of the worksheet scroll view...
-    NSRect keyboardAreaRect = self.keyboardsAreaView.frame;
-    keyboardAreaRect.size.width = self.worksheetScrollView.frame.size.width;
-    
-    // Now the position of the symbols view...
-    if (self.showKeyboardArea) {
-        // The symbols view is visible, and its origin is bottom left
-        keyboardAreaRect.origin.y = 0.0;
-    } else {
-        // The symbols view is invisible, so we position it just offscreen, ready to slide back into place
-        keyboardAreaRect.origin = [self offWindowOriginForKeyboardAreaView];
-    }
-    
-    // size and position the toolbox. First the size. The width is fixed, but the height must be adjusted to match the height of the superview
-    NSRect toolboxRect = self.toolboxView.frame;
-    toolboxRect.size.height = self.toolboxView.superview.frame.size.height;
-    
-    // Now the position of the toolbox...
-    if (self.showObjectsPanel) {
-        // Toolbox is visible, its top right is coincident with the top right of its superview
-        toolboxRect.origin.x = [self offWindowOriginForToolboxView].x - toolboxRect.size.width;
-    } else {
-        // Toolbox is invisible, so we place it just offscreen ready to slide back into place if made visible again.
-        toolboxRect.origin.x = [self offWindowOriginForToolboxView].x;
-    }
-    [self.keyboardsAreaView setFrame:keyboardAreaRect];
-    
-    [self.toolboxView setFrame:toolboxRect];
-    [self.keyboardsAreaView setNeedsDisplay:YES];
-    [self.toolboxView setNeedsDisplay:YES];
-}
-
--(NSPoint)offWindowOriginForToolboxView
-{
-    NSRect rect = self.toolboxView.superview.bounds;
-    return NSMakePoint(rect.origin.x+rect.size.width, 0);
-}
-
--(NSRect)frameForWorksheetScrollView
-{
-    NSSize size = self.worksheetScrollView.frame.size;
-    NSPoint origin = self.worksheetScrollView.frame.origin;
-    NSSize superSize = self.worksheetScrollView.superview.bounds.size;
-    NSSize keyboardArea = self.keyboardsAreaView.frame.size;
-    NSSize toolboxSize = self.toolboxView.frame.size;
-    if (self.showKeyboardArea) {
-        size.height = superSize.height - keyboardArea.height;
-        origin.y = keyboardArea.height;
-    } else {
-        size.height = superSize.height;
-        origin.y = 0.0;
-    }
-    if (self.showObjectsPanel) {
-        size.width = superSize.width - toolboxSize.width;
-    } else {
-        size.width = superSize.width;
-        
-    }
-    return NSMakeRect(origin.x, origin.y, size.width, size.height);
-}
-
--(NSPoint)offWindowOriginForKeyboardAreaView
-{
-    NSRect superviewBounds = self.worksheetScrollView.superview.bounds;
-    NSPoint origin = superviewBounds.origin;
-    origin.y = origin.y - self.keyboardsAreaView.frame.size.height;
-    return origin;
 }
 
 @end

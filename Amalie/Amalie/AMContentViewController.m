@@ -21,7 +21,7 @@
 #import "KSMExpression.h"
 #import "AMContentView.h"
 #import "AMInsertableView.h"
-#import "AMWorksheetController.h"
+#import "AMAmalieDocument.h"
 #import "AMAppController.h"
 #import "AMPreferences.h"
 #import "AMTrayDatasource.h"
@@ -92,7 +92,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
-               worksheetController:(AMWorksheetController*)worksheetController
+               worksheetController:(AMAmalieDocument*)worksheetController
               contentType:(AMInsertableType)insertableType
       groupParentView:(AMInsertableView*)groupParentView
                   moc:(NSManagedObjectContext*)moc
@@ -183,7 +183,7 @@
 }
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
-                        worksheetController:(AMWorksheetController*)worksheetController
+                        worksheetController:(AMAmalieDocument*)worksheetController
                              content:(AMInsertableType)insertableType
                             groupParentView:(AMInsertableView*)groupParentView
                                         moc:(NSManagedObjectContext*)moc

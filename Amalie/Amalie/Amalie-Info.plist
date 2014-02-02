@@ -26,7 +26,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>AMWorksheetController</string>
+			<string>AMAmalieDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
 			<string>Binary</string>
 		</dict>
@@ -50,7 +50,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>AMWorksheetController</string>
+			<string>AMAmalieDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
 			<string>SQLite</string>
 		</dict>
@@ -80,7 +80,7 @@
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
-			<string>AMWorksheetController</string>
+			<string>AMAmalieDocument</string>
 			<key>NSPersistentStoreTypeKey</key>
 			<string>XML</string>
 		</dict>

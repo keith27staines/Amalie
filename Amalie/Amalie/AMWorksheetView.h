@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMWorksheetController;
+@class AMAmalieDocument;
 @class AMAppController;
 
 #import <Cocoa/Cocoa.h>
@@ -27,11 +27,5 @@
  * tray table.
  */
 @property (weak) IBOutlet AMAppController * trayDataSource;
-
-/*!
- Layout all the top level inserts on the worksheet. The inserts are moved inside a CATransaction so that everything appears to smoothly flow into place
- */
--(void)layoutInsertsNow;
-
 
 @end

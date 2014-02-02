@@ -9,15 +9,15 @@
 #import "AMWorksheetView.h"
 #import "AMConstants.h"
 #import "AMInsertableView.h"
-#import "AMWorksheetController.h"
+#import "AMAmalieDocument.h"
 
 static BOOL LOG_DRAG_OPS = NO;
 static NSUInteger const kAMDefaultLineSpace   = 20;
 static NSUInteger const kAMDefaultLeftMargin  = 36;
 static NSUInteger const kAMDefaultTopMargin   = 36;
 
-static CGFloat const MINWIDTH  = 600.0;
-static CGFloat const MINHEIGHT = 600.0;
+static CGFloat const A4WIDTH  = 595.0;
+static CGFloat const A4HEIGHT = 842.0;
 
 @implementation AMWorksheetView
 
@@ -31,11 +31,6 @@ static CGFloat const MINHEIGHT = 600.0;
     }
     
     return self;
-}
-
--(void)viewDidMoveToSuperview
-{
-    [self fitToSize];
 }
 
 -(void)awakeFromNib
@@ -62,7 +57,6 @@ static CGFloat const MINHEIGHT = 600.0;
     [shadow setShadowColor:[NSColor blackColor]];
     [shadow setShadowOffset:NSMakeSize(5, -5)];
     [self setShadow:shadow];
-    
 }
 
 # pragma mark - Dragging -
@@ -137,7 +131,6 @@ static CGFloat const MINHEIGHT = 600.0;
     NSArray * objects = [pb readObjectsForClasses:classes options:nil];
     AMInsertableView * view = objects[0];
     
-    
     if (view) {
         
         NSPoint draggingLocation = [sender draggingLocation];
@@ -181,20 +174,75 @@ static CGFloat const MINHEIGHT = 600.0;
 
 # pragma mark - Layout -
 
--(void)layoutInsertsNow
+-(void)updateConstraints
 {
-    [CATransaction begin];
-    NSSize size = [self fitToSize];
-    
-    NSArray * insertsArray = [self sortInserts];
-    float firstTop = size.height - kAMDefaultTopMargin;
-    NSPoint newTopLeft = NSMakePoint(kAMDefaultLeftMargin, firstTop);
-    for (AMInsertableView * view in insertsArray) {
-        [view setFrameTopLeft:newTopLeft animate:YES];
-        newTopLeft = NSMakePoint(newTopLeft.x, newTopLeft.y - view.frameHeight - kAMDefaultLineSpace);
-    }
-    [CATransaction commit];
+    [super updateConstraints];
+    [self removeConstraints:self.constraints];
+    [self addPageSizeConstraints];
+    [self addConstraintsForInsertedItemSubViews];
 }
+-(void)addConstraintsForInsertedItemSubViews
+{
+    NSArray * insertedViews = [self sortInserts];
+    if (!insertedViews || insertedViews.count == 0) {
+        return;
+    }
+    NSView * firstView = insertedViews[0];
+    NSDictionary * viewsDictionary = NSDictionaryOfVariableBindings(firstView);
+    NSDictionary * metrics = @{@"leftMargin": @(kAMDefaultLeftMargin),
+                               @"rightMargin": @(kAMDefaultLeftMargin),
+                               @"topMargin": @(kAMDefaultTopMargin),
+                               @"bottomMargin": @(kAMDefaultTopMargin),
+                               @"vSpacing": @(kAMDefaultLineSpace) };
+    [self addConstraints:[NSLayoutConstraint
+                          constraintsWithVisualFormat:@"H:|-leftMargin-[firstView]-(>=rightMargin)-|"
+                          options:0
+                          metrics:metrics
+                          views:viewsDictionary]];
+    [self addConstraints:[NSLayoutConstraint
+                          constraintsWithVisualFormat:@"V:|-topMargin-[firstView]"
+                          options:0
+                          metrics:metrics
+                          views:viewsDictionary]];
+    
+    NSView * previousView = firstView;
+    for (NSView * currentView in insertedViews) {
+        if (currentView == previousView) {
+            // First view has already been positioned
+            continue;
+        }
+        [self addConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"H:|-leftMargin-[currentView]-(>=rightMargin)-|"
+                              options:0
+                              metrics:metrics
+                              views:viewsDictionary]];
+        
+        [self addConstraints:[NSLayoutConstraint
+                              constraintsWithVisualFormat:@"V:[previousView]-vSpacing-[currentView]"
+                              options:0
+                              metrics:metrics
+                              views:viewsDictionary]];
+        previousView = currentView;
+    }
+    
+    // Finally, make the container vertically big enough
+    [self addConstraints:[NSLayoutConstraint
+                          constraintsWithVisualFormat:@"V:[previousView]-bottomMargin-|"
+                          options:0
+                          metrics:metrics
+                          views:viewsDictionary]];
+}
+-(void)addPageSizeConstraints
+{
+    CGFloat width = A4WIDTH;
+    CGFloat height = A4HEIGHT;
+    // Add minimum width and height constraints to make sure that the sheet is at least A4 sized
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth
+                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:width]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:height]];
+}
+
 
 -(NSArray*)sortInserts
 {
@@ -205,13 +253,13 @@ static CGFloat const MINHEIGHT = 600.0;
         AMInsertableView * ami2 = obj2;
         
         // Deal with both objects at same horizontal level
-        if (ami1.frameTop == ami2.frameTop) {
+        if (ami1.frame.origin.y == ami2.frame.origin.y) {
             
-            if (ami1.frameLeft == ami2.frameLeft) {
+            if (ami1.frame.origin.x == ami2.frame.origin.x) {
                 // obj1 has same left position as obj2
                 return (NSComparisonResult)NSOrderedSame;
             }
-            if (ami1.frameLeft < ami2.frameLeft) {
+            if (ami1.frame.origin.x < ami2.frame.origin.x) {
                 // obj 1 is to the left of obj2
                 return (NSComparisonResult)NSOrderedAscending;
             } else {
@@ -221,7 +269,7 @@ static CGFloat const MINHEIGHT = 600.0;
         }
         
         // Not at same level, so just need to worry about their y-ordering
-        if (ami1.frameTop > ami2.frameTop) {
+        if (ami1.frame.origin.y < ami2.frame.origin.y) {
             // obj 1 is above obj 2
             return (NSComparisonResult)NSOrderedAscending;
         }
@@ -232,38 +280,11 @@ static CGFloat const MINHEIGHT = 600.0;
     return insertsArray;
 }
 
--(NSSize)fitToSize
-{
-    NSSize oldSize = self.frame.size;
-    NSSize requiredSize = [self intrinsicContentSize];
-
-    if (oldSize.width != requiredSize.width || oldSize.height != requiredSize.height) {
-        [self setFrameSize:requiredSize];
-    }
-    return requiredSize;
-}
-
--(NSSize)intrinsicContentSize
-{
-    CGFloat height = 0.0;
-    CGFloat width  = 0.0;
-    for (NSView * view in self.subviews) {
-        height += (view.frame.size.height + kAMDefaultLineSpace);
-        width = fmaxf(view.frame.size.width,width);
-    }
-    width += (2 * kAMDefaultLeftMargin);
-    width  = fmaxf(width, MINWIDTH);
-    if (height >= kAMDefaultLineSpace) height -= kAMDefaultLineSpace;
-    height += (2 * kAMDefaultTopMargin);
-    height = fmaxf(height,MINHEIGHT);
-    return NSMakeSize(width, height);
-}
-
 # pragma mark - Overrides -
 
 -(BOOL)isFlipped
 {
-    return NO;
+    return YES;
 }
 
 

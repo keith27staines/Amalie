@@ -19,7 +19,7 @@
 #import "AMFunctionContentView.h"
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
-#import "AMWorksheetController.h"
+#import "AMAmalieDocument.h"
 #import "AMTextView.h"
 #import "AMFunctionEditorViewController.h"
 #import "AMArgumentListViewController.h"

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
 		7811D2C617A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
 		7811D2C717A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
 		7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2CA17A255380024839B /* AMRefTreeNode.m */; };
@@ -25,6 +26,9 @@
 		78285A011886D74400523121 /* AMExpressionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A001886D74400523121 /* AMExpressionLayout.m */; };
 		78285A041886D9EE00523121 /* KSMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A031886D9EE00523121 /* KSMConstants.m */; };
 		782DA2111896AA0900F66E23 /* AMExpressionContextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA2101896AA0900F66E23 /* AMExpressionContextNode.m */; };
+		782DA259189B99E400F66E23 /* AMLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA257189B99E400F66E23 /* AMLibraryViewController.m */; };
+		782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 782DA258189B99E400F66E23 /* AMLibraryViewController.xib */; };
+		782DA25E189BABB200F66E23 /* AMLibraryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA25D189BABB200F66E23 /* AMLibraryView.m */; };
 		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
 		784001EC18015E6E006B00C1 /* AMCenteringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EB18015E6E006B00C1 /* AMCenteringView.m */; };
@@ -37,7 +41,6 @@
 		784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EF91789CC11002BE03A /* AMAppController.m */; };
 		784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */; };
 		784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */; };
-		785247C317848A4A00F6A7AD /* AMToolboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C217848A4A00F6A7AD /* AMToolboxViewController.m */; };
 		785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C8178552A700F6A7AD /* AMWorksheetView.m */; };
 		785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CB1785532F00F6A7AD /* AMToolboxView.m */; };
 		785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CE1785722700F6A7AD /* AMInsertableView.m */; };
@@ -61,7 +64,7 @@
 		787B304D178361BC001851C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 787B304B178361BC001851C0 /* InfoPlist.strings */; };
 		787B304F178361BC001851C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B304E178361BC001851C0 /* main.m */; };
 		787B3053178361BC001851C0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 787B3051178361BC001851C0 /* Credits.rtf */; };
-		787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3055178361BC001851C0 /* AMWorksheetController.m */; };
+		787B3056178361BC001851C0 /* AMAmalieDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3055178361BC001851C0 /* AMAmalieDocument.m */; };
 		787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMWorksheet.xib */; };
 		787B305C178361BC001851C0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B305A178361BC001851C0 /* MainMenu.xib */; };
 		787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */; };
@@ -173,6 +176,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		78007E02189CEA0B007CFF77 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
+		78007E03189CEA0B007CFF77 /* AMContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContainerView.m; sourceTree = "<group>"; };
 		7811D2C417A2550E0024839B /* AMRefTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRefTree.h; sourceTree = "<group>"; };
 		7811D2C517A2550E0024839B /* AMRefTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMRefTree.m; sourceTree = "<group>"; };
 		7811D2C917A255380024839B /* AMRefTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRefTreeNode.h; sourceTree = "<group>"; };
@@ -200,6 +205,11 @@
 		782DA20F1896AA0900F66E23 /* AMExpressionContextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContextNode.h; sourceTree = "<group>"; };
 		782DA2101896AA0900F66E23 /* AMExpressionContextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContextNode.m; sourceTree = "<group>"; };
 		782DA2121897919600F66E23 /* AMExpressionDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMExpressionDataSource.h; sourceTree = "<group>"; };
+		782DA256189B99E400F66E23 /* AMLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryViewController.h; sourceTree = "<group>"; };
+		782DA257189B99E400F66E23 /* AMLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryViewController.m; sourceTree = "<group>"; };
+		782DA258189B99E400F66E23 /* AMLibraryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMLibraryViewController.xib; sourceTree = "<group>"; };
+		782DA25C189BABB200F66E23 /* AMLibraryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryView.h; sourceTree = "<group>"; };
+		782DA25D189BABB200F66E23 /* AMLibraryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryView.m; sourceTree = "<group>"; };
 		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
 		7832744A178F1D810051290B /* AMTrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayItem.h; sourceTree = "<group>"; };
 		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
@@ -221,8 +231,6 @@
 		784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesWindowController.h; sourceTree = "<group>"; };
 		784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesWindowController.m; sourceTree = "<group>"; };
 		784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMPreferencesWindow.xib; sourceTree = "<group>"; };
-		785247C117848A4A00F6A7AD /* AMToolboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMToolboxViewController.h; sourceTree = "<group>"; };
-		785247C217848A4A00F6A7AD /* AMToolboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMToolboxViewController.m; sourceTree = "<group>"; };
 		785247C7178552A700F6A7AD /* AMWorksheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetView.h; sourceTree = "<group>"; };
 		785247C8178552A700F6A7AD /* AMWorksheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetView.m; sourceTree = "<group>"; };
 		785247CA1785532F00F6A7AD /* AMToolboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMToolboxView.h; sourceTree = "<group>"; };
@@ -268,8 +276,8 @@
 		787B304E178361BC001851C0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		787B3050178361BC001851C0 /* Amalie-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Amalie-Prefix.pch"; sourceTree = "<group>"; };
 		787B3052178361BC001851C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		787B3054178361BC001851C0 /* AMWorksheetController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMWorksheetController.h; sourceTree = "<group>"; };
-		787B3055178361BC001851C0 /* AMWorksheetController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetController.m; sourceTree = "<group>"; };
+		787B3054178361BC001851C0 /* AMAmalieDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAmalieDocument.h; sourceTree = "<group>"; };
+		787B3055178361BC001851C0 /* AMAmalieDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMAmalieDocument.m; sourceTree = "<group>"; };
 		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMWorksheet.xib; sourceTree = "<group>"; };
 		787B305B178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		787B305E178361BC001851C0 /* AMDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDocument.xcdatamodel; sourceTree = "<group>"; };
@@ -546,6 +554,20 @@
 				7848E5CD185769F400719EF3 /* AMNameProviderBase.m */,
 			);
 			name = AMNameProvider;
+			sourceTree = "<group>";
+		};
+		782DA25B189BA0BB00F66E23 /* Library and toolbox */ = {
+			isa = PBXGroup;
+			children = (
+				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
+				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
+				782DA256189B99E400F66E23 /* AMLibraryViewController.h */,
+				782DA257189B99E400F66E23 /* AMLibraryViewController.m */,
+				782DA258189B99E400F66E23 /* AMLibraryViewController.xib */,
+				782DA25C189BABB200F66E23 /* AMLibraryView.h */,
+				782DA25D189BABB200F66E23 /* AMLibraryView.m */,
+			);
+			name = "Library and toolbox";
 			sourceTree = "<group>";
 		};
 		784BFBE017E7603700152756 /* KSMMathValue */ = {
@@ -957,16 +979,15 @@
 			isa = PBXGroup;
 			children = (
 				787B3057178361BC001851C0 /* AMWorksheet.xib */,
+				78007E02189CEA0B007CFF77 /* AMContainerView.h */,
+				78007E03189CEA0B007CFF77 /* AMContainerView.m */,
 				784001EA18015E6E006B00C1 /* AMCenteringView.h */,
 				784001EB18015E6E006B00C1 /* AMCenteringView.m */,
 				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
 				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
-				787B3054178361BC001851C0 /* AMWorksheetController.h */,
-				787B3055178361BC001851C0 /* AMWorksheetController.m */,
-				785247CA1785532F00F6A7AD /* AMToolboxView.h */,
-				785247CB1785532F00F6A7AD /* AMToolboxView.m */,
-				785247C117848A4A00F6A7AD /* AMToolboxViewController.h */,
-				785247C217848A4A00F6A7AD /* AMToolboxViewController.m */,
+				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
+				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
+				782DA25B189BA0BB00F66E23 /* Library and toolbox */,
 				784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */,
 				784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */,
 			);
@@ -1052,6 +1073,7 @@
 			files = (
 				787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
+				782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */,
 				786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */,
 				7899B2E317AD0E16008BDB75 /* AMEquationContentView.xib in Resources */,
 				78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */,
@@ -1087,6 +1109,7 @@
 			files = (
 				782859FB1886D6B900523121 /* AMTextMetric.m in Sources */,
 				788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */,
+				78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */,
 				781D180D17F31DE70008758D /* AMDataStore.m in Sources */,
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
@@ -1112,7 +1135,7 @@
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
-				787B3056178361BC001851C0 /* AMWorksheetController.m in Sources */,
+				787B3056178361BC001851C0 /* AMAmalieDocument.m in Sources */,
 				7848E5D1185770A300719EF3 /* AMNameProvider.m in Sources */,
 				786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,
@@ -1129,6 +1152,7 @@
 				78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */,
 				78F52C6917FABA5D0092B604 /* AMDName.m in Sources */,
 				78F52C6C17FABA5D0092B604 /* AMDIntervalDef.m in Sources */,
+				782DA25E189BABB200F66E23 /* AMLibraryView.m in Sources */,
 				7899B2EC17AD0E42008BDB75 /* AMMatrixContentViewController.m in Sources */,
 				78B205C617D5D6F80059773A /* AMFunctionContentViewController.m in Sources */,
 				78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */,
@@ -1163,6 +1187,7 @@
 				78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */,
 				7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */,
+				782DA259189B99E400F66E23 /* AMLibraryViewController.m in Sources */,
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,
 				7899B2E217AD0E16008BDB75 /* AMEquationContentViewController.m in Sources */,
 				7899B30D17AD3B2F008BDB75 /* AMGraph2DContentView.m in Sources */,
@@ -1182,7 +1207,6 @@
 				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,
 				78962FE0182C05C50066BEE9 /* AMDExpression+Methods.m in Sources */,
 				788709C5178DAEAB008E093A /* AMPreferences.m in Sources */,
-				785247C317848A4A00F6A7AD /* AMToolboxViewController.m in Sources */,
 				78EF56A817CF39F400402847 /* KSMMathValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,34 +1,45 @@
 //
-//  AMToolboxViewController.m
+//  AMLibraryViewController.m
 //  Amalie
 //
-//  Created by Keith Staines on 03/07/2013.
-//  Copyright (c) 2013 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 31/01/2014.
+//  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMToolboxViewController.h"
+#import "AMLibraryViewController.h"
 #import "AMInsertableView.h"
 #import "AMAppController.h"
 #import "AMConstants.h"
 #import "AMTrayItem.h"
 #import "AMInsertableViewController.h"
 
-@interface AMToolboxViewController()
+@interface AMLibraryViewController ()
+{
+    
+}
 @property (copy) NSString* dragString;
 
 @end
 
-@implementation AMToolboxViewController
+@implementation AMLibraryViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Initialization code here.
+    }
+    return self;
+}
+
+-(NSString *)nibName
+{
+    return @"AMLibraryViewController";
+}
 
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-    
-    // setup the table to be a drag source
-    [[self tableView] setDraggingSourceOperationMask:NSDragOperationCopy forLocal:YES];
-    [[self tableView] setDraggingSourceOperationMask:NSDragOperationNone forLocal:NO];
-    [[self tableView] setVerticalMotionCanBeginDrag:YES];
-    [[self tableView] reloadData];
 }
 
 -(BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation
@@ -48,7 +59,7 @@
 
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    return [self.trayDatasource trayItemCount];
+    return [self.appController trayItemCount];
 }
 
 -(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
@@ -57,7 +68,7 @@
     if ([[tableView identifier] isEqualToString:kAMTrayDictionaryKey]) {
         
         // The table is the tray (of insertable items).
-        AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
+        AMTrayItem * trayItem = [self.appController trayItemAtIndex:row];
         
         // Which column?
         if ( [tableColumn.identifier isEqualToString:kAMIconKey] ) {
@@ -76,12 +87,17 @@
     return nil;
 }
 
+-(CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+    return 50;
+}
+
 -(id<NSPasteboardWriting>)tableView:(NSTableView *)tableView
              pasteboardWriterForRow:(NSInteger)row
 {
     
     // The table is the tray (of insertable items).
-    AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
+    AMTrayItem * trayItem = [self.appController trayItemAtIndex:row];
     AMInsertableViewController * viewController = [[AMInsertableViewController alloc] init];
     AMInsertableView * insertableView = (AMInsertableView*)[viewController view];
     insertableView.insertableType = trayItem.insertableType;

@@ -13,7 +13,7 @@
 #import "AMDInsertedObject.h"
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"
-#import "AMWorksheetController.h"
+#import "AMAmalieDocument.h"
 #import "AMNameProvider.h"
 
 #import "AMDName.h"

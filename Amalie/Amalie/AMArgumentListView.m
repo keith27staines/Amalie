@@ -26,6 +26,12 @@
     return self;
 }
 
+-(void)awakeFromNib
+{
+    self.readOnly = YES;
+    [self reloadData];
+}
+
 -(void)setShowEqualsSign:(BOOL)showEqualsSign
 {
     _showEqualsSign = YES;
@@ -66,12 +72,6 @@
     }
     self.attributedString = displayString;
     [self invalidateIntrinsicContentSize];
-}
-
--(void)awakeFromNib
-{
-    self.readOnly = YES;
-    [self reloadData];
 }
 
 

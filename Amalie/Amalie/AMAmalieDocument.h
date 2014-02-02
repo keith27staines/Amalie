@@ -1,5 +1,5 @@
 //
-//  AMWorksheetController.h
+//  AMAmalieDocument.h
 //  Amalie
 //
 //  Created by Keith Staines on 02/07/2013.
@@ -10,8 +10,10 @@
 @class AMAppController;
 @class KSMWorksheet;
 @class AMKeyboardsAreaView;
-@class AMToolboxView;
+
 @class AMKeyboardsViewController;
+@class AMCenteringView;
+@class AMLibraryViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
@@ -20,32 +22,33 @@
 #import "AMInsertableViewDataSource.h"
 #import "AMNameProviderBase.h"
 
-@interface AMWorksheetController : NSPersistentDocument
+@interface AMAmalieDocument : NSPersistentDocument
 <AMWorksheetViewDelegate,
- AMInsertableViewDelegate>
+ AMInsertableViewDelegate, NSSplitViewDelegate>
 
+@property (weak) IBOutlet NSSplitView *enclosingSplitView;
+
+@property (weak) IBOutlet NSSplitView *leftSplitView;
+
+@property (weak) IBOutlet NSSplitView *middleSplitView;
+
+@property (weak) IBOutlet NSSplitView *rightSplitView;
+
+@property (weak) IBOutlet NSScrollView *worksheetScrollView;
+
+@property (weak) IBOutlet NSView * libraryContainerView;
+
+@property (weak) IBOutlet AMCenteringView *documentBackgroundView;
+
+@property (weak) IBOutlet AMWorksheetView * worksheetView;
+
+@property (weak) IBOutlet AMLibraryViewController * library;
 
 @property (weak) AMInsertableView * selectedView;
 
 @property (weak) IBOutlet NSToolbarItem * scaleSliderItem;
 
 - (IBAction)scaleSliderMoved:(NSSlider *)scaleSlider;
-
-- (IBAction)toggleSymbolsPanel:(NSToolbarItem*)sender;
-
-- (IBAction)toggleObjectsPanel:(NSToolbarItem*)sender;
-@property (weak) IBOutlet NSToolbar *symbolsToggle;
-@property (weak) IBOutlet NSToolbar *objectsToggle;
-
-@property (weak) IBOutlet NSScrollView *worksheetScrollView;
-
-/*!
- Our worksheet view IS the document view we are controlling.
- */
-@property (weak) IBOutlet AMWorksheetView * worksheetView;
-
-@property (weak) IBOutlet AMKeyboardsAreaView *keyboardsAreaView;
-
 
 @property (strong) IBOutlet AMKeyboardsViewController *keyboardsViewController;
 
@@ -59,15 +62,9 @@
  */
 @property (weak) IBOutlet id<AMTrayDataSource> trayDataSource;
 
-
-@property (weak) IBOutlet AMToolboxView *toolboxView;
-
 /*!
  appController is required by various members of the receiver
  */
 @property (weak) IBOutlet AMAppController * appController;
-
--(void)contentViewController:(AMContentViewController*)cvController isResizingContentTo:(NSSize)targetSize usingAnimationTransaction:(BOOL)usingTransaction;
-- (IBAction)checkEditStatus:(id)sender;
 
 @end
