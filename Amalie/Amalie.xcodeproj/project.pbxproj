@@ -979,14 +979,14 @@
 			isa = PBXGroup;
 			children = (
 				787B3057178361BC001851C0 /* AMWorksheet.xib */,
+				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
+				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
 				78007E02189CEA0B007CFF77 /* AMContainerView.h */,
 				78007E03189CEA0B007CFF77 /* AMContainerView.m */,
 				784001EA18015E6E006B00C1 /* AMCenteringView.h */,
 				784001EB18015E6E006B00C1 /* AMCenteringView.m */,
 				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
 				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
-				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
-				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
 				782DA25B189BA0BB00F66E23 /* Library and toolbox */,
 				784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */,
 				784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */,

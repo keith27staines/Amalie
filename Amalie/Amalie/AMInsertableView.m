@@ -75,11 +75,11 @@ static CABasicAnimation * animateOrigin;
                         requiresContentViewOfType:self.insertableType];
     _contentView  = contentView; // _contentView is a weak reference
     [contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addSubview:contentView];
 
     // Add a tracking area so that inserted views know when the mouse is over them
     NSUInteger taOptions = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways;
     
-    [self addSubview:contentView];
     NSTrackingArea * ta = [[NSTrackingArea alloc] initWithRect:NSZeroRect
                                                        options:taOptions
                                                          owner:self userInfo:nil];

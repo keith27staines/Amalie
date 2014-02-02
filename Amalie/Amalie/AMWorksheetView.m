@@ -207,6 +207,7 @@ static CGFloat const A4HEIGHT = 842.0;
     
     NSView * previousView = firstView;
     for (NSView * currentView in insertedViews) {
+        viewsDictionary = NSDictionaryOfVariableBindings(previousView, currentView);
         if (currentView == previousView) {
             // First view has already been positioned
             continue;
@@ -226,12 +227,16 @@ static CGFloat const A4HEIGHT = 842.0;
     }
     
     // Finally, make the container vertically big enough
+    viewsDictionary = NSDictionaryOfVariableBindings(previousView);
     [self addConstraints:[NSLayoutConstraint
-                          constraintsWithVisualFormat:@"V:[previousView]-bottomMargin-|"
+                          constraintsWithVisualFormat:@"V:[previousView]-(>=bottomMargin)-|"
                           options:0
                           metrics:metrics
                           views:viewsDictionary]];
+
 }
+
+
 -(void)addPageSizeConstraints
 {
     CGFloat width = A4WIDTH;

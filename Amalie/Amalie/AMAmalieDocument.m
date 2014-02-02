@@ -125,7 +125,7 @@ static CGFloat const kAMMinRightWidth  = 200;
     // Apply constraints to position the library in its container
     NSDictionary * views = NSDictionaryOfVariableBindings(container, library);
     NSArray * constraints;
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library]"
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library]|"
                                                           options:0
                                                           metrics:nil
                                                             views:views];
@@ -222,6 +222,7 @@ static CGFloat const kAMMinRightWidth  = 200;
     [view setFrameOrigin:origin];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.worksheetView addSubview:view];
+    
 }
 
 #pragma mark - AMWorksheetViewDelegate -
@@ -436,47 +437,6 @@ static CGFloat const kAMMinRightWidth  = 200;
     return NO;
 }
 
--(CGFloat)splitView:(NSSplitView *)splitView constrainMaxCoordinate:(CGFloat)proposedMaximumPosition ofSubviewAt:(NSInteger)dividerIndex
-{
-    CGFloat maxPos = proposedMaximumPosition;
-
-    if (splitView == self.enclosingSplitView) {
-        switch (dividerIndex) {
-            case 0:
-                maxPos -= kAMMinMiddleWidth;
-                break;
-            case 1:
-                // No need to constrain the width of the central split
-                maxPos -= kAMMinRightWidth;
-                break;
-            case 2:
-                break;
-            default:
-                NSAssert(NO,@"Unexpected divider index %li for splitview %@",(long)dividerIndex,splitView);
-        }
-        return maxPos;
-    }
-
-    return maxPos;
-}
--(CGFloat)splitView:(NSSplitView *)splitView constrainMinCoordinate:(CGFloat)proposedMinimumPosition ofSubviewAt:(NSInteger)dividerIndex
-{
-    CGFloat minPos = proposedMinimumPosition;
-    if (splitView == self.enclosingSplitView) {
-        switch (dividerIndex) {
-            case 0:
-                minPos += kAMMinLeftWidth;
-                break;
-            case 1:
-                minPos += kAMMinMiddleWidth;
-                break;
-            default:
-                NSAssert(NO,@"Unexpected divider index %li for splitview %@",(long)dividerIndex,splitView);
-        }
-        return minPos;
-    }
-    return minPos;
-}
 #pragma mark - Misc -
 
 -(NSString *)defaultDraftName
