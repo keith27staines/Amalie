@@ -56,19 +56,12 @@
 {
     NSString * hyphenAndInfo = [@" - " stringByAppendingString:self.information];
     NSString * fullDescription = [self.title stringByAppendingString:hyphenAndInfo];
-    
-    NSFont * fnt = [NSFont fontWithName:@"Calibri Bold" size:0];
-    
-    
+    NSFont * fnt = [NSFont systemFontOfSize:[NSFont systemFontSizeForControlSize:0]];
     NSRange titleRange = NSMakeRange(0, [self.title length]);
-    //NSRange infoRange = [fullDescription rangeOfString:hyphenAndInfo];
     NSRange fullRange = NSMakeRange(0, [fullDescription length]);
     NSMutableAttributedString * attrString = [[NSMutableAttributedString alloc] initWithString:fullDescription];
     [attrString addAttribute:NSFontNameAttribute value:fnt range:fullRange];
-    
     [attrString applyFontTraits:NSFontBoldTrait | NSFontExpandedTrait range:titleRange];
-
-    
     return attrString;
 }
 
