@@ -16,6 +16,8 @@
 #import "AMExpressionNodeViewDelegate.h"
 #import "AMNameProviding.h"
 #import "AMContentViewDataSource.h"
+
+
 @interface AMExpressionNodeView : AMTextView
 
 @property (weak, readwrite) KSMExpression * expression;

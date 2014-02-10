@@ -137,8 +137,7 @@
 -(NSRect)tightBoundingBox
 {
     NSRect r = _tightBoundingBox;
-    r = [self pixelIntegralRect:r];
-    return r;
+    return [self backingAlignedRect:r options:NSAlignAllEdgesOutward];
 }
 #pragma mark - String setting -
 -(NSAttributedString *)attributedString
@@ -399,18 +398,5 @@
     point.x = floor(point.x);
     point.y = floor(point.y);
     return [self convertPointFromBase:point];
-}
--(NSRect)pixelIntegralRect:(NSRect)rect
-{
-    CGFloat left = rect.origin.x;
-    CGFloat top = rect.origin.y;
-    CGFloat right = left + rect.size.width;
-    CGFloat bottom = top + rect.size.height;
-    left = [self pixelIntegralXFloor:left];
-    right = [self pixelIntegralXCeil:right];
-    top = [self pixelIntegralYFloor:top];
-    bottom = [self pixelIntegralYCeil:bottom];
-    NSRect pixelIntegral = NSMakeRect(left, top, right - left, bottom - top);
-    return pixelIntegral;
 }
 @end

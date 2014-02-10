@@ -326,7 +326,7 @@
 {
     NSRect boundingBox = [self textBoundingBox];
     if (self.isBracketed) {
-        boundingBox = [self pixelIntegralRect:self.expressionLayout.bounds];
+        boundingBox = [self backingAlignedRect:self.expressionLayout.bounds options:NSAlignAllEdgesOutward];
     }
     return boundingBox;
 }
@@ -337,7 +337,7 @@
     if (self.expression.isUnary) {
         box = [super tightBoundingBox];
     } else {
-        box = [self pixelIntegralRect:[self.expressionLayout innerBounds]];
+        box = [self backingAlignedRect:[self.expressionLayout innerBounds] options:NSAlignAllEdgesOutward];
     }
     return box;
 }
@@ -705,7 +705,7 @@
     // Operator's width is obtained directly from the map
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.operatorView
                                                      attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual
+                                                     relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                         toItem:nil
                                                      attribute:NSLayoutAttributeNotAnAttribute
                                                     multiplier:0

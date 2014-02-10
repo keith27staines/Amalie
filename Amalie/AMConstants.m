@@ -13,7 +13,7 @@ NSUInteger const kAMDefaultFontSize                   = 17;
 NSUInteger const kAMDefaultFixedWidthFontSize         = 17;
 NSUInteger const kAMDefaultFontDelta                  =  2;
 NSUInteger const kAMDefaultMinFontSize                = 10;
-NSString * const kAMDefaultFontName                   = @"Times New Roman";
+NSString * const kAMDefaultFontName                   = @"Times";
 NSString * const kAMDefaultFixedWidthFontName         = @"Monaco";
 CGFloat    const kAMDefaultSuperscriptingFraction     = 0.7;
 

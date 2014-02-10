@@ -44,4 +44,10 @@
     [self.datasource populateView:self];
 }
 
+-(void)updateConstraints
+{
+    [super updateConstraints];
+    [self.superview setNeedsUpdateConstraints:YES];
+}
+
 @end

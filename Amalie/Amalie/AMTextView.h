@@ -66,5 +66,4 @@
 -(NSPoint)pixelIntegralPointFloor:(NSPoint)point;
 -(CGFloat)pixelIntegralXFloor:(CGFloat)x;
 -(CGFloat)pixelIntegralYFloor:(CGFloat)y;
--(NSRect)pixelIntegralRect:(NSRect)rect;
 @end
