@@ -41,7 +41,11 @@
 
 -(void)viewDidMoveToWindow
 {
-    [self.datasource populateView:self];
+    // This is getting called unexpectedly on closing an app without saving.
+    // Need to guard against trying to repopulate a no longer fully valid object
+    if (self.window && self.superview) {
+        [self.datasource populateView:self];
+    }
 }
 
 -(void)updateConstraints
