@@ -24,4 +24,6 @@
       wantsViewMoved:(AMInsertableView*)view
           newTopLeft:(NSPoint)topLeft;
 
+-(NSSize)pageSize;
+
 @end

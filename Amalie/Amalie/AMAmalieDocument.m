@@ -34,10 +34,6 @@
 #import "AMKeyboardsViewController.h"
 #import "AMLibraryViewController.h"
 
-static CGFloat const kAMMinMiddleWidth = 100;
-static CGFloat const kAMMinLeftWidth   = 200;
-static CGFloat const kAMMinRightWidth  = 200;
-
 @interface AMAmalieDocument()
 {
     __weak NSSplitView          * _enclosingSplitView;
@@ -142,7 +138,7 @@ static CGFloat const kAMMinRightWidth  = 200;
 {
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"AMWorksheet";
+    return @"AMAmalieDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
@@ -226,6 +222,11 @@ static CGFloat const kAMMinRightWidth  = 200;
 }
 
 #pragma mark - AMWorksheetViewDelegate -
+
+-(NSSize)pageSize
+{
+    return NSMakeSize(, <#CGFloat h#>)
+}
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
 {

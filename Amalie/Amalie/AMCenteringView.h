@@ -12,9 +12,5 @@
 
 @interface AMCenteringView : NSView
 
-
-@property IBOutlet AMWorksheetView * worksheetView;
-
-
 @end
 

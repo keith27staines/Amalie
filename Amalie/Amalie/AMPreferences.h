@@ -12,6 +12,7 @@
 
 +(void)registerDefaultPreferences;
 
++(NSSize)worksheetPageSize;
 +(NSUInteger)worksheetFontSize;
 +(NSUInteger)worksheetFontDelta;
 +(NSUInteger)worksheetSmallestFontSize;

@@ -16,9 +16,6 @@ static NSUInteger const kAMDefaultLineSpace   = 20;
 static NSUInteger const kAMDefaultLeftMargin  = 36;
 static NSUInteger const kAMDefaultTopMargin   = 36;
 
-static CGFloat const A4WIDTH  = 595.0;
-static CGFloat const A4HEIGHT = 842.0;
-
 @implementation AMWorksheetView
 
 
@@ -239,13 +236,12 @@ static CGFloat const A4HEIGHT = 842.0;
 
 -(void)addPageSizeConstraints
 {
-    CGFloat width = A4WIDTH;
-    CGFloat height = A4HEIGHT;
-    // Add minimum width and height constraints to make sure that the sheet is at least A4 sized
+    NSSize pageSize = [self.delegate pageSize];
+    // Add minimum width and height constraints to make sure that the sheet is at least the size of the page
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:width]];
+                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:pageSize.width]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight
-                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:height]];
+                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:pageSize.height]];
 }
 
 

@@ -27,7 +27,10 @@ static NSMutableDictionary * AMFonts;
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
-
++(NSSize)worksheetPageSize
+{
+    return NSMakeSize(kAMP, <#CGFloat h#>)
+}
 +(void)setWorksheetFixedWidthFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFixedWidthFontSizeKey];

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5037" systemVersion="13C48" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5037.3" systemVersion="13C48" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5037.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMAmalieDocument">
@@ -68,18 +68,18 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <scrollView identifier="documentScrollView" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AjP-sc-Zll" userLabel="Document Scroll View">
-                                                <rect key="frame" x="0.0" y="0.0" width="2" height="2"/>
+                                                <rect key="frame" x="105" y="-175" width="602" height="802"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <clipView key="contentView" ambiguous="YES" misplaced="YES" id="duW-qE-Pap">
-                                                    <rect key="frame" x="1" y="1" width="0.0" height="0.0"/>
+                                                <clipView key="contentView" ambiguous="YES" id="duW-qE-Pap">
+                                                    <rect key="frame" x="1" y="1" width="600" height="800"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <view identifier="documentBackground" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2Y-BP-4hb" userLabel="Document Background" customClass="AMCenteringView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="2"/>
+                                                        <view identifier="documentBackground" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2Y-BP-4hb" userLabel="Document Background" customClass="AMCenteringView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tVe-Ik-5tb" customClass="AMWorksheetView">
-                                                                    <rect key="frame" x="126" y="-798" width="600" height="800"/>
+                                                                <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tVe-Ik-5tb" customClass="AMWorksheetView">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="800" id="EUB-Jp-70K"/>
@@ -107,11 +107,11 @@
                                                     </constraints>
                                                 </clipView>
                                                 <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="E9z-f5-p9I">
-                                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
+                                                    <rect key="frame" x="1" y="785" width="600" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="jCX-Vg-QvA">
-                                                    <rect key="frame" x="-14" y="1" width="15" height="0.0"/>
+                                                    <rect key="frame" x="585" y="1" width="16" height="800"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -183,7 +183,7 @@
                             <action selector="toolbarLeftSidePanelButtonClicked:" target="-2" id="UB8-ng-g4T"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="FA72F6D8-191E-44FC-9E18-9163FF8015A1" label="rightSidePanel" paletteLabel="rightSidePanel" tag="-1" id="gAG-TM-nkd">
+                    <toolbarItem implicitItemIdentifier="FA72F6D8-191E-44FC-9E18-9163FF8015A1" label="rightSidePanel" paletteLabel="rightSidePanel" tag="-1" image="Library Equation Def" id="gAG-TM-nkd">
                         <connections>
                             <action selector="toolbarRightSidePanelButtonClicked:" target="-2" id="VwP-uw-jVb"/>
                         </connections>
@@ -233,6 +233,7 @@
     </objects>
     <resources>
         <image name="Library Constant Def" width="256" height="256"/>
+        <image name="Library Equation Def" width="256" height="256"/>
         <image name="Toolbar Keyboard Btn" width="128" height="128"/>
     </resources>
 </document>
