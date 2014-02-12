@@ -18,6 +18,9 @@
                 <outlet property="middleSplitView" destination="5BN-Z6-wHO" id="C5E-so-XKW"/>
                 <outlet property="rightSplitView" destination="Pt1-IB-gk6" id="S65-9r-6UO"/>
                 <outlet property="scaleSliderItem" destination="mk5-T9-xbF" id="nZF-Gq-wQd"/>
+                <outlet property="toolbarKeyboardButton" destination="IZA-fa-0WN" id="VId-h3-M5G"/>
+                <outlet property="toolbarLeftSidePanelButton" destination="P7K-sk-Hxn" id="aJ5-JT-ph2"/>
+                <outlet property="toolbarRightSidePanelButton" destination="gAG-TM-nkd" id="BhX-jO-Aln"/>
                 <outlet property="trayDataSource" destination="GkH-jk-e4m" id="Yaj-Gy-wWI"/>
                 <outlet property="window" destination="5" id="18"/>
                 <outlet property="worksheetScrollView" destination="AjP-sc-Zll" id="Oac-2Y-5Nc"/>
@@ -60,61 +63,62 @@
                                 <rect key="frame" x="269" y="0.0" width="854" height="913"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <scrollView identifier="documentScrollView" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="AjP-sc-Zll" userLabel="Document Scroll View">
-                                        <rect key="frame" x="0.0" y="0.0" width="854" height="800"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <clipView key="contentView" id="duW-qE-Pap">
-                                            <rect key="frame" x="1" y="1" width="852" height="798"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <view identifier="documentBackground" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="c2Y-BP-4hb" userLabel="Document Background" customClass="AMCenteringView">
-                                                    <rect key="frame" x="0.0" y="-2" width="852" height="800"/>
+                                    <customView fixedFrame="YES" id="FQz-cC-86b" customClass="AMContainerView">
+                                        <rect key="frame" x="0.0" y="0.0" width="854" height="913"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <scrollView identifier="documentScrollView" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AjP-sc-Zll" userLabel="Document Scroll View">
+                                                <rect key="frame" x="0.0" y="0.0" width="2" height="2"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <clipView key="contentView" ambiguous="YES" misplaced="YES" id="duW-qE-Pap">
+                                                    <rect key="frame" x="1" y="1" width="0.0" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="tVe-Ik-5tb" customClass="AMWorksheetView">
-                                                            <rect key="frame" x="126" y="0.0" width="600" height="800"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <view identifier="documentBackground" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2Y-BP-4hb" userLabel="Document Background" customClass="AMCenteringView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="2"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tVe-Ik-5tb" customClass="AMWorksheetView">
+                                                                    <rect key="frame" x="126" y="-798" width="600" height="800"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="800" id="EUB-Jp-70K"/>
+                                                                        <constraint firstAttribute="width" constant="600" id="LSX-NG-l6P"/>
+                                                                    </constraints>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="-2" id="JA2-wb-NVi"/>
+                                                                    </connections>
+                                                                </customView>
+                                                            </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="800" id="EUB-Jp-70K"/>
-                                                                <constraint firstAttribute="width" constant="600" id="LSX-NG-l6P"/>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" secondItem="tVe-Ik-5tb" secondAttribute="height" id="8X7-tr-Oc2"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="tVe-Ik-5tb" secondAttribute="width" id="L6b-nb-FvN"/>
+                                                                <constraint firstItem="tVe-Ik-5tb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c2Y-BP-4hb" secondAttribute="leading" id="U1h-Vh-LCG"/>
+                                                                <constraint firstAttribute="centerX" secondItem="tVe-Ik-5tb" secondAttribute="centerX" priority="250" id="lJk-Jg-j1S"/>
+                                                                <constraint firstAttribute="centerY" secondItem="tVe-Ik-5tb" secondAttribute="centerY" id="yzW-bB-Nxv"/>
                                                             </constraints>
-                                                            <connections>
-                                                                <outlet property="delegate" destination="-2" id="JA2-wb-NVi"/>
-                                                            </connections>
-                                                        </customView>
+                                                        </view>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" secondItem="tVe-Ik-5tb" secondAttribute="height" id="8X7-tr-Oc2"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="tVe-Ik-5tb" secondAttribute="width" id="L6b-nb-FvN"/>
-                                                        <constraint firstItem="tVe-Ik-5tb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c2Y-BP-4hb" secondAttribute="leading" id="U1h-Vh-LCG"/>
-                                                        <constraint firstAttribute="centerX" secondItem="tVe-Ik-5tb" secondAttribute="centerX" priority="250" id="lJk-Jg-j1S"/>
-                                                        <constraint firstAttribute="centerY" secondItem="tVe-Ik-5tb" secondAttribute="centerY" id="yzW-bB-Nxv"/>
+                                                        <constraint firstAttribute="trailing" secondItem="c2Y-BP-4hb" secondAttribute="trailing" priority="250" id="2aO-yx-X1Z"/>
+                                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c2Y-BP-4hb" secondAttribute="bottom" priority="250" id="H3u-EL-CuT"/>
+                                                        <constraint firstItem="c2Y-BP-4hb" firstAttribute="top" secondItem="duW-qE-Pap" secondAttribute="top" id="cqX-D4-Fhw"/>
+                                                        <constraint firstItem="c2Y-BP-4hb" firstAttribute="leading" secondItem="duW-qE-Pap" secondAttribute="leading" id="oQf-Ys-gkx"/>
                                                     </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="c2Y-BP-4hb" secondAttribute="trailing" priority="250" id="2aO-yx-X1Z"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="c2Y-BP-4hb" secondAttribute="bottom" priority="250" id="H3u-EL-CuT"/>
-                                                <constraint firstItem="c2Y-BP-4hb" firstAttribute="top" secondItem="duW-qE-Pap" secondAttribute="top" id="cqX-D4-Fhw"/>
-                                                <constraint firstItem="c2Y-BP-4hb" firstAttribute="leading" secondItem="duW-qE-Pap" secondAttribute="leading" id="oQf-Ys-gkx"/>
-                                            </constraints>
-                                        </clipView>
-                                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="E9z-f5-p9I">
-                                            <rect key="frame" x="1" y="783" width="852" height="16"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="jCX-Vg-QvA">
-                                            <rect key="frame" x="837" y="1" width="16" height="798"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </scroller>
-                                    </scrollView>
-                                    <customView fixedFrame="YES" id="FQz-cC-86b" customClass="AMContainerView">
-                                        <rect key="frame" x="0.0" y="801" width="854" height="112"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                                </clipView>
+                                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="E9z-f5-p9I">
+                                                    <rect key="frame" x="1" y="-15" width="0.0" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="jCX-Vg-QvA">
+                                                    <rect key="frame" x="-14" y="1" width="15" height="0.0"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </scroller>
+                                            </scrollView>
+                                        </subviews>
                                     </customView>
                                 </subviews>
                                 <holdingPriorities>
-                                    <real value="250"/>
                                     <real value="250"/>
                                 </holdingPriorities>
                             </splitView>
@@ -174,14 +178,28 @@
                             <action selector="scaleSliderMoved:" target="-2" id="egB-Za-MQE"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="6DFD5D14-B953-456A-9733-E1C0E1BC0473" label="Symbols" paletteLabel="Symbols" tag="-1" id="P7K-sk-Hxn"/>
-                    <toolbarItem implicitItemIdentifier="FA72F6D8-191E-44FC-9E18-9163FF8015A1" label="Objects" paletteLabel="Objects" tag="-1" id="gAG-TM-nkd"/>
+                    <toolbarItem implicitItemIdentifier="6DFD5D14-B953-456A-9733-E1C0E1BC0473" label="leftSidePanel" paletteLabel="leftSidePanel" tag="-1" image="Library Constant Def" id="P7K-sk-Hxn">
+                        <connections>
+                            <action selector="toolbarLeftSidePanelButtonClicked:" target="-2" id="UB8-ng-g4T"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="FA72F6D8-191E-44FC-9E18-9163FF8015A1" label="rightSidePanel" paletteLabel="rightSidePanel" tag="-1" id="gAG-TM-nkd">
+                        <connections>
+                            <action selector="toolbarRightSidePanelButtonClicked:" target="-2" id="VwP-uw-jVb"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="9CC9F048-5A0C-4452-B659-0DC76D3C33CC" label="keyboard" paletteLabel="keyboard" tag="-1" image="Toolbar Keyboard Btn" id="IZA-fa-0WN">
+                        <connections>
+                            <action selector="toolbarKeyboardButtonClicked:" target="-2" id="T4t-UO-jYa"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="mk5-T9-xbF"/>
                     <toolbarItem reference="nQs-oD-aGT"/>
                     <toolbarItem reference="o2A-yv-wHX"/>
                     <toolbarItem reference="Vcq-N9-Z9s"/>
+                    <toolbarItem reference="IZA-fa-0WN"/>
                     <toolbarItem reference="gN8-S6-Xxy"/>
                     <toolbarItem reference="P7K-sk-Hxn"/>
                     <toolbarItem reference="gAG-TM-nkd"/>
@@ -213,4 +231,8 @@
         </menu>
         <viewController id="jGG-r6-pKc" customClass="AMKeyboardsViewController"/>
     </objects>
+    <resources>
+        <image name="Library Constant Def" width="256" height="256"/>
+        <image name="Toolbar Keyboard Btn" width="128" height="128"/>
+    </resources>
 </document>

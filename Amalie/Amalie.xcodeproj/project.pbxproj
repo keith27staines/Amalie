@@ -65,7 +65,7 @@
 		787B304F178361BC001851C0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B304E178361BC001851C0 /* main.m */; };
 		787B3053178361BC001851C0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 787B3051178361BC001851C0 /* Credits.rtf */; };
 		787B3056178361BC001851C0 /* AMAmalieDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3055178361BC001851C0 /* AMAmalieDocument.m */; };
-		787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMWorksheet.xib */; };
+		787B3059178361BC001851C0 /* AMAmalieDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B3057178361BC001851C0 /* AMAmalieDocument.xib */; };
 		787B305C178361BC001851C0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 787B305A178361BC001851C0 /* MainMenu.xib */; };
 		787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */; };
 		787B3061178361BC001851C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787B3060178361BC001851C0 /* Images.xcassets */; };
@@ -278,7 +278,7 @@
 		787B3052178361BC001851C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		787B3054178361BC001851C0 /* AMAmalieDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAmalieDocument.h; sourceTree = "<group>"; };
 		787B3055178361BC001851C0 /* AMAmalieDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMAmalieDocument.m; sourceTree = "<group>"; };
-		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMWorksheet.xib; sourceTree = "<group>"; };
+		787B3058178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AMAmalieDocument.xib; sourceTree = "<group>"; };
 		787B305B178361BC001851C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		787B305E178361BC001851C0 /* AMDocument.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMDocument.xcdatamodel; sourceTree = "<group>"; };
 		787B3060178361BC001851C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Amalie/Images.xcassets; sourceTree = "<group>"; };
@@ -978,7 +978,7 @@
 		78F57D8D18350DC800683FFC /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				787B3057178361BC001851C0 /* AMWorksheet.xib */,
+				787B3057178361BC001851C0 /* AMAmalieDocument.xib */,
 				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
 				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
 				78007E02189CEA0B007CFF77 /* AMContainerView.h */,
@@ -1071,7 +1071,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				787B3059178361BC001851C0 /* AMWorksheet.xib in Resources */,
+				787B3059178361BC001851C0 /* AMAmalieDocument.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
 				782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */,
 				786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */,
@@ -1276,12 +1276,12 @@
 			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
-		787B3057178361BC001851C0 /* AMWorksheet.xib */ = {
+		787B3057178361BC001851C0 /* AMAmalieDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				787B3058178361BC001851C0 /* Base */,
 			);
-			name = AMWorksheet.xib;
+			name = AMAmalieDocument.xib;
 			sourceTree = "<group>";
 		};
 		787B305A178361BC001851C0 /* MainMenu.xib */ = {

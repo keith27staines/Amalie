@@ -449,6 +449,16 @@ static CGFloat const kAMMinRightWidth  = 200;
     return [self insertableViewForKey:shadow.groupID];
 }
 
+- (IBAction)toolbarKeyboardButton:(id)sender {
+}
+- (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
+}
+
+- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
+}
+
+- (IBAction)toolbarKeyboardButtonClicked:(id)sender {
+}
 @end
 
 
