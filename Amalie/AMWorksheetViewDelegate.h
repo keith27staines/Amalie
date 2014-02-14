@@ -10,6 +10,7 @@
 @class AMInsertableView;
 
 #import <Foundation/Foundation.h>
+#import "AMConstants.h"
 
 @protocol AMWorksheetViewDelegate <NSObject>
 
@@ -25,5 +26,9 @@
           newTopLeft:(NSPoint)topLeft;
 
 -(NSSize)pageSize;
+
+-(AMMargins)pageMargins;
+
+-(CGFloat)verticalSpacing;
 
 @end

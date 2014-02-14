@@ -12,9 +12,6 @@
 #import "AMAmalieDocument.h"
 
 static BOOL LOG_DRAG_OPS = NO;
-static NSUInteger const kAMDefaultLineSpace   = 20;
-static NSUInteger const kAMDefaultLeftMargin  = 36;
-static NSUInteger const kAMDefaultTopMargin   = 36;
 
 @implementation AMWorksheetView
 
@@ -25,6 +22,7 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        [self setupAcceptsDragsAndInserts];
     }
     
     return self;
@@ -47,17 +45,24 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
     [self registerForDraggedTypes:allTypes];
     
     [self setPostsFrameChangedNotifications:YES];
-    
-    // setup the page shadow
-    NSShadow * shadow = [[NSShadow alloc] init];
-    [shadow setShadowBlurRadius:5];
-    [shadow setShadowColor:[NSColor blackColor]];
-    [shadow setShadowOffset:NSMakeSize(5, -5)];
-    [self setShadow:shadow];
 }
 
 # pragma mark - Dragging -
-
+-(void)setupAcceptsDragsAndInserts
+{
+    // Determine the class name for draggable types
+    NSMutableArray * allTypes = [NSMutableArray array];
+    NSArray * typesArray;
+    
+    // Add pasteboard types for each type of insertable object
+    
+    // Insertable object
+    typesArray = [AMInsertableView writableTypesForPasteboard:[NSPasteboard generalPasteboard]];
+    [allTypes addObjectsFromArray:typesArray];
+    
+    // register them all in one hit...
+    [self registerForDraggedTypes:allTypes];
+}
 -(NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender
 {
     if (LOG_DRAG_OPS) NSLog(@"%@ - draggingEntered" , self);
@@ -185,12 +190,15 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
         return;
     }
     NSView * firstView = insertedViews[0];
+    AMMargins margins = [self.delegate pageMargins];
+    CGFloat verticalSpacing = [self.delegate verticalSpacing];
+    
     NSDictionary * viewsDictionary = NSDictionaryOfVariableBindings(firstView);
-    NSDictionary * metrics = @{@"leftMargin": @(kAMDefaultLeftMargin),
-                               @"rightMargin": @(kAMDefaultLeftMargin),
-                               @"topMargin": @(kAMDefaultTopMargin),
-                               @"bottomMargin": @(kAMDefaultTopMargin),
-                               @"vSpacing": @(kAMDefaultLineSpace) };
+    NSDictionary * metrics = @{@"leftMargin": @(margins.left),
+                               @"rightMargin": @(margins.right),
+                               @"topMargin": @(margins.top),
+                               @"bottomMargin": @(margins.bottom),
+                               @"vSpacing": @(verticalSpacing) };
     [self addConstraints:[NSLayoutConstraint
                           constraintsWithVisualFormat:@"H:|-leftMargin-[firstView]-(>=rightMargin)-|"
                           options:0
@@ -236,14 +244,17 @@ static NSUInteger const kAMDefaultTopMargin   = 36;
 
 -(void)addPageSizeConstraints
 {
-    NSSize pageSize = [self.delegate pageSize];
     // Add minimum width and height constraints to make sure that the sheet is at least the size of the page
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:pageSize.width]];
+                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.pageSize.width]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight
-                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:pageSize.height]];
+                                                     relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.pageSize.height]];
 }
 
+-(NSSize)pageSize
+{
+    return [self.delegate pageSize];
+}
 
 -(NSArray*)sortInserts
 {

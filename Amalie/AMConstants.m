@@ -25,8 +25,85 @@ NSString * const kAMTypeKey                           = @"kAMTypeKey";
 
 #pragma mark - Page Layout -
 NSString * const kAMPaperSizeKey                      = @"kAMPaperSizeKey";
+NSString * const kAMPaperSizeA6Portrait               = @"A6Portrait";
+NSString * const kAMPaperSizeA6Landscape              = @"A6Landscape";
+NSString * const kAMPaperSizeA5Portrait               = @"A5Portrait";
+NSString * const kAMPaperSizeA5Landscape              = @"A5Landscape";
 NSString * const kAMPaperSizeA4Portrait               = @"A4Portrait";
 NSString * const kAMPaperSizeA4Landscape              = @"A4Landscape";
+NSString * const kAMPaperSizeA3Portrait               = @"A3Portrait";
+NSString * const kAMPaperSizeA3Landscape              = @"A3Landscape";
+NSString * const kAMPaperSizeA2Portrait               = @"A2Portrait";
+NSString * const kAMPaperSizeA2Landscape              = @"A2Landscape";
+NSString * const kAMPaperSizeA1Portrait               = @"A1Portrait";
+NSString * const kAMPaperSizeA1Landscape              = @"A1Landscape";
+NSString * const kAMPaperSizeA0Portrait               = @"A0Portrait";
+NSString * const kAMPaperSizeA0Landscape              = @"A0Landscape";
+NSString * const kAMPaperSizeB5Portrait               = @"B5Portrait";
+NSString * const kAMPaperSizeB5Landscape              = @"B5Landscape";
+NSString * const kAMPaperSizeB4Portrait               = @"B4Portrait";
+NSString * const kAMPaperSizeB4Landscape              = @"B4Landscape";
+NSString * const kAMPaperSizeUSLetterPortrait         = @"B4Portrait";
+NSString * const kAMPaperSizeUSLetterLandscape        = @"B4Landscape";
+NSString * const kAMPaperSizeUSLegalPortrait          = @"B4Portrait";
+NSString * const kAMPaperSizeUSLegalLandscape         = @"B4Landscape";
+
+#pragma mark - Page Sizes -
+
+NSUInteger const kAMPageWidthA6Portrait               = 298;
+NSUInteger const kAMPageHeightA6Portrait              = 420;
+NSUInteger const kAMPageWidthA6Landscape              = 420;
+NSUInteger const kAMPageHeightA6Landscape             = 298;
+
+NSUInteger const kAMPageWidthA5Portrait               = 420;
+NSUInteger const kAMPageHeightA5Portrait              = 595;
+NSUInteger const kAMPageWidthA5Landscape              = 595;
+NSUInteger const kAMPageHeightA5Landscape             = 420;
+
+NSUInteger const kAMPageWidthA4Portrait               = 595;
+NSUInteger const kAMPageHeightA4Portrait              = 842;
+NSUInteger const kAMPageWidthA4Landscape              = 842;
+NSUInteger const kAMPageHeightA4Landscape             = 595;
+
+NSUInteger const kAMPageWidthA3Portrait               = 842;
+NSUInteger const kAMPageHeightA3Portrait              = 1190;
+NSUInteger const kAMPageWidthA3Landscape              = 1190;
+NSUInteger const kAMPageHeightA3Landscape             = 842;
+
+NSUInteger const kAMPageWidthA2Portrait               = 1190;
+NSUInteger const kAMPageHeightA2Portrait              = 1684;
+NSUInteger const kAMPageWidthA2Landscape              = 1684;
+NSUInteger const kAMPageHeightA2Landscape             = 1190;
+
+NSUInteger const kAMPageWidthA1Portrait               = 1684;
+NSUInteger const kAMPageHeightA1Portrait              = 2384;
+NSUInteger const kAMPageWidthA1Landscape              = 2384;
+NSUInteger const kAMPageHeightA1Landscape             = 1684;
+
+NSUInteger const kAMPageWidthA0Portrait               = 2384;
+NSUInteger const kAMPageHeightA0Portrait              = 3371;
+NSUInteger const kAMPageWidthA0Landscape              = 3371;
+NSUInteger const kAMPageHeightA0Landscape             = 2384;
+
+NSUInteger const kAMPageWidthB5Portrait               = 516;
+NSUInteger const kAMPageHeightB5Portrait              = 729;
+NSUInteger const kAMPageWidthB5Landscape              = 729;
+NSUInteger const kAMPageHeightB5Landscape             = 516;
+
+NSUInteger const kAMPageWidthB4Portrait               = 729;
+NSUInteger const kAMPageHeightB4Portrait              = 1032;
+NSUInteger const kAMPageWidthB4Landscape              = 1032;
+NSUInteger const kAMPageHeightB4Landscape             = 729;
+
+NSUInteger const kAMPageWidthUSLetterPortrait         = 612;
+NSUInteger const kAMPageHeightUSLetterPortrait        = 792;
+NSUInteger const kAMPageWidthUSLetterLandscape        = 792;
+NSUInteger const kAMPageHeightUSLetterLandscape       = 612;
+
+NSUInteger const kAMPageWidthUSLegalPortrait          = 612;
+NSUInteger const kAMPageHeightUSLegalPortrait         = 1008;
+NSUInteger const kAMPageWidthUSLegalLandscape         = 1008;
+NSUInteger const kAMPageHeightUSLegalLandscape        = 612;
 
 #pragma mark - Font -
 NSString * const kAMFontNameKey                       = @"kAMFontNameKey";

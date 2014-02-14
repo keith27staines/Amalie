@@ -29,8 +29,81 @@ static NSMutableDictionary * AMFonts;
 }
 +(NSSize)worksheetPageSize
 {
-    return NSMakeSize(kAMP, <#CGFloat h#>)
+    // Portrait orientation
+    NSString * pageSizeString = [[NSUserDefaults standardUserDefaults] objectForKey:kAMPaperSizeKey];
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA6Portrait] ) {
+        return NSMakeSize(kAMPageWidthA6Portrait, kAMPageHeightA6Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA5Portrait] ) {
+        return NSMakeSize(kAMPageWidthA5Portrait, kAMPageHeightA5Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA4Portrait] ) {
+        return NSMakeSize(kAMPageWidthA4Portrait, kAMPageHeightA4Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA3Portrait] ) {
+        return NSMakeSize(kAMPageWidthA3Portrait, kAMPageHeightA3Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA2Portrait] ) {
+        return NSMakeSize(kAMPageWidthA2Portrait, kAMPageHeightA2Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA1Portrait] ) {
+        return NSMakeSize(kAMPageWidthA1Portrait, kAMPageHeightA1Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA0Portrait] ) {
+        return NSMakeSize(kAMPageWidthA0Portrait, kAMPageHeightA0Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeB5Portrait] ) {
+        return NSMakeSize(kAMPageWidthB5Portrait, kAMPageHeightB5Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeB4Portrait] ) {
+        return NSMakeSize(kAMPageWidthB4Portrait, kAMPageHeightB4Portrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLetterPortrait] ) {
+        return NSMakeSize(kAMPageWidthUSLetterPortrait, kAMPageHeightUSLetterPortrait);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLegalPortrait] ) {
+        return NSMakeSize(kAMPageWidthUSLegalPortrait, kAMPageHeightUSLegalPortrait);
+    }
+
+    // Landscape orientation
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA6Landscape] ) {
+        return NSMakeSize(kAMPageWidthA6Landscape, kAMPageHeightA6Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA5Landscape] ) {
+        return NSMakeSize(kAMPageWidthA5Landscape, kAMPageHeightA5Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA4Landscape] ) {
+        return NSMakeSize(kAMPageWidthA4Landscape, kAMPageHeightA4Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA3Landscape] ) {
+        return NSMakeSize(kAMPageWidthA3Landscape, kAMPageHeightA3Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA2Landscape] ) {
+        return NSMakeSize(kAMPageWidthA2Landscape, kAMPageHeightA2Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA1Landscape] ) {
+        return NSMakeSize(kAMPageWidthA1Landscape, kAMPageHeightA1Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeA0Landscape] ) {
+        return NSMakeSize(kAMPageWidthA0Landscape, kAMPageHeightA0Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeB5Landscape] ) {
+        return NSMakeSize(kAMPageWidthB5Landscape, kAMPageHeightB5Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeB4Landscape] ) {
+        return NSMakeSize(kAMPageWidthB4Landscape, kAMPageHeightB4Landscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLetterLandscape] ) {
+        return NSMakeSize(kAMPageWidthUSLetterLandscape, kAMPageHeightUSLetterLandscape);
+    }
+    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLegalLandscape] ) {
+        return NSMakeSize(kAMPageWidthUSLegalLandscape, kAMPageHeightUSLegalLandscape);
+    }
+
+    return NSMakeSize(-1, -1);
 }
+
+
 +(void)setWorksheetFixedWidthFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFixedWidthFontSizeKey];

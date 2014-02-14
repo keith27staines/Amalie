@@ -28,4 +28,6 @@
  */
 @property (weak) IBOutlet AMAppController * trayDataSource;
 
+@property (readonly) NSSize pageSize;
+
 @end

@@ -27,7 +27,7 @@
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 #import "AMNameProviderBase.h"
-#import "AMCenteringView.h"
+#import "AMDocumentView.h"
 
 // View controllers for dynamically loaded views
 #import "AMInsertableViewController.h"
@@ -41,7 +41,7 @@
     __weak NSSplitView          * _middleSplitView;
     __weak NSSplitView          * _rightSplitView;
     __weak NSScrollView         * _worksheetScrollView;
-    __weak AMCenteringView      * _documentBackgroundView;
+    __weak AMDocumentView      * _documentBackgroundView;
     __weak AMWorksheetView      * _worksheetView;
     __weak AMInsertableView     * _selectedView;
     
@@ -223,13 +223,30 @@
 
 #pragma mark - AMWorksheetViewDelegate -
 
+-(AMMargins)pageMargins
+{
+    AMMargins margins;
+    margins.top    = 20;
+    margins.left   = 20;
+    margins.right  = 20;
+    margins.bottom = 20;
+    return margins;
+}
+-(CGFloat)verticalSpacing
+{
+    
+    NSFont * font = [AMPreferences standardFont];
+    CGFloat lineSpacing = font.ascender - font.descender + font.leading;
+    return lineSpacing;
+}
 -(NSSize)pageSize
 {
-    return NSMakeSize(, <#CGFloat h#>)
+    return [AMPreferences worksheetPageSize];
 }
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
 {
+    self.worksheetView= worksheet;
     NSAssert(insertableView, @"Cannot insert a nill view.");
     if (!insertableView) return;
     
@@ -240,6 +257,7 @@
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)insertableView
 {
+    self.worksheetView = worksheet;
     [self deleteInsertableView:insertableView];
 }
 
@@ -288,6 +306,8 @@
 
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
 {
+    self.worksheetView = worksheet;
+    
     // view will be a "shadow" object, an incomplete copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
     AMInsertableView * actualView = [self actualViewFromPossibleTemporaryCopy:view];
     

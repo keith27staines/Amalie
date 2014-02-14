@@ -12,7 +12,7 @@
 @class AMKeyboardsAreaView;
 
 @class AMKeyboardsViewController;
-@class AMCenteringView;
+@class AMDocumentView;
 @class AMLibraryViewController;
 
 #import <Cocoa/Cocoa.h>
@@ -48,7 +48,7 @@
 
 @property (weak) IBOutlet NSView * libraryContainerView;
 
-@property (weak) IBOutlet AMCenteringView *documentBackgroundView;
+@property (weak) IBOutlet AMDocumentView *documentBackgroundView;
 
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 
