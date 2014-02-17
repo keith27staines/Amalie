@@ -23,30 +23,38 @@ NSString * const kAMKeySuffix                         = @"Key";
 NSString * const kAMClassNameKey                      = @"kAMClassNameKey";
 NSString * const kAMTypeKey                           = @"kAMTypeKey";
 
+#pragma mark - Main Window configuration -
+NSString * const kAMSidepanelVisibilityKey            = @"kAMSidepanelVisibilityKey";
+
 #pragma mark - Page Layout -
 NSString * const kAMPaperSizeKey                      = @"kAMPaperSizeKey";
-NSString * const kAMPaperSizeA6Portrait               = @"A6Portrait";
-NSString * const kAMPaperSizeA6Landscape              = @"A6Landscape";
-NSString * const kAMPaperSizeA5Portrait               = @"A5Portrait";
-NSString * const kAMPaperSizeA5Landscape              = @"A5Landscape";
-NSString * const kAMPaperSizeA4Portrait               = @"A4Portrait";
-NSString * const kAMPaperSizeA4Landscape              = @"A4Landscape";
-NSString * const kAMPaperSizeA3Portrait               = @"A3Portrait";
-NSString * const kAMPaperSizeA3Landscape              = @"A3Landscape";
-NSString * const kAMPaperSizeA2Portrait               = @"A2Portrait";
-NSString * const kAMPaperSizeA2Landscape              = @"A2Landscape";
-NSString * const kAMPaperSizeA1Portrait               = @"A1Portrait";
-NSString * const kAMPaperSizeA1Landscape              = @"A1Landscape";
-NSString * const kAMPaperSizeA0Portrait               = @"A0Portrait";
-NSString * const kAMPaperSizeA0Landscape              = @"A0Landscape";
-NSString * const kAMPaperSizeB5Portrait               = @"B5Portrait";
-NSString * const kAMPaperSizeB5Landscape              = @"B5Landscape";
-NSString * const kAMPaperSizeB4Portrait               = @"B4Portrait";
-NSString * const kAMPaperSizeB4Landscape              = @"B4Landscape";
-NSString * const kAMPaperSizeUSLetterPortrait         = @"B4Portrait";
-NSString * const kAMPaperSizeUSLetterLandscape        = @"B4Landscape";
-NSString * const kAMPaperSizeUSLegalPortrait          = @"B4Portrait";
-NSString * const kAMPaperSizeUSLegalLandscape         = @"B4Landscape";
+NSString * const kAMPageWidthCustomKey                = @"kAMPageWidthCustomKey";
+NSString * const kAMPageHeightCustomKey               = @"kAMPageHeightCustomKey";
+NSString * const kAMPageMarginsKey                    = @"kAMPageMarginsKey";
+
+NSString * const kAMPaperSizeA6Portrait               = @"A6 Portrait";
+NSString * const kAMPaperSizeA6Landscape              = @"A6 Landscape";
+NSString * const kAMPaperSizeA5Portrait               = @"A5 Portrait";
+NSString * const kAMPaperSizeA5Landscape              = @"A5 Landscape";
+NSString * const kAMPaperSizeA4Portrait               = @"A4 Portrait";
+NSString * const kAMPaperSizeA4Landscape              = @"A4 Landscape";
+NSString * const kAMPaperSizeA3Portrait               = @"A3 Portrait";
+NSString * const kAMPaperSizeA3Landscape              = @"A3 Landscape";
+NSString * const kAMPaperSizeA2Portrait               = @"A2 Portrait";
+NSString * const kAMPaperSizeA2Landscape              = @"A2 Landscape";
+NSString * const kAMPaperSizeA1Portrait               = @"A1 Portrait";
+NSString * const kAMPaperSizeA1Landscape              = @"A1 Landscape";
+NSString * const kAMPaperSizeA0Portrait               = @"A0 Portrait";
+NSString * const kAMPaperSizeA0Landscape              = @"A0 Landscape";
+NSString * const kAMPaperSizeB5Portrait               = @"B5 Portrait";
+NSString * const kAMPaperSizeB5Landscape              = @"B5 Landscape";
+NSString * const kAMPaperSizeB4Portrait               = @"B4 Portrait";
+NSString * const kAMPaperSizeB4Landscape              = @"B4 Landscape";
+NSString * const kAMPaperSizeUSLetterPortrait         = @"US Letter Portrait";
+NSString * const kAMPaperSizeUSLetterLandscape        = @"US Letter Landscape";
+NSString * const kAMPaperSizeUSLegalPortrait          = @"US Legal Portrait";
+NSString * const kAMPaperSizeUSLegalLandscape         = @"US Legal Landscape";
+NSString * const kAMPaperSizeCustom                   = @"Custom";
 
 #pragma mark - Page Sizes -
 
@@ -137,6 +145,16 @@ NSString * const kAMGraph2DKey                        = @"kAMGraph2DKey";
 NSString * const kAMMathematicalSetKey                = @"kAMMathematicalSetKey";
 NSString * const kAMVectorKey                         = @"kAMVectorKey";
 NSString * const kAMMatrixKey                         = @"kAMMatrixKey";
+
+
+#pragma mark - Keyed Resources -
+NSString * const kAMImageToolbarLeftSidePanelOpenKey    = @"LeftSidebarOpenBtn";
+NSString * const kAMImageToolbarLeftSidePanelClosedKey  = @"LeftSidebarClosedBtn";
+NSString * const kAMImageToolbarRightSidePanelOpenKey   = @"RightSidebarOpenBtn";
+NSString * const kAMImageToolbarRightSidePanelClosedKey = @"RightSidebarClosedBtn";
+
+#pragma mark - Other -
+
 
 
 #pragma mark - Helper C functions -

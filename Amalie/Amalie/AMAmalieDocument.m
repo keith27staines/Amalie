@@ -67,6 +67,9 @@
 @property (readonly) AMDataStore * sharedDataStore;
 
 @property (readonly) AMNameProviderBase * nameProvider;
+
+@property AMSidepanelVisibility sidepanelVisibility;
+
 @end
 
 @implementation AMAmalieDocument
@@ -83,6 +86,7 @@
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
+        [self setupToolbar];
         [self setupDataStructures];
     }
     return self;
@@ -109,7 +113,30 @@
     
     [self addLibraryView];
 }
-
+-(void)setupToolbar
+{
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    NSToolbarItem * leftPaneButton = self.toolbarLeftSidePanelButton;
+    NSToolbarItem * rightPaneButton = self.toolbarRightSidePanelButton;
+    if (sidePanelVisibility & AMSidepanelsLeftVisible) {
+        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelClosedKey];
+    } else {
+        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelOpenKey];
+    }
+    if (sidePanelVisibility & AMSidepanelsRightVisible) {
+        rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelClosedKey];
+    } else {
+        rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelOpenKey];
+    }
+}
+-(AMSidepanelVisibility)sidepanelVisibility
+{
+    return [AMPreferences sidepanelVisibility];
+}
+-(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility
+{
+    [AMPreferences setSidepanelVisibility:sidepanelVisibility];
+}
 -(void)addLibraryView
 {
     // Load the library into its container
@@ -225,12 +252,7 @@
 
 -(AMMargins)pageMargins
 {
-    AMMargins margins;
-    margins.top    = 20;
-    margins.left   = 20;
-    margins.right  = 20;
-    margins.bottom = 20;
-    return margins;
+    return [AMPreferences pageMargins];
 }
 -(CGFloat)verticalSpacing
 {
@@ -473,6 +495,10 @@
 - (IBAction)toolbarKeyboardButton:(id)sender {
 }
 - (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
+    AMSidepanelVisibility visibility = [AMPreferences sidepanelVisibility];
+    if (visibility & AMSidepanelsLeftVisible) {
+        self.toolbarLeftSidePanelButton.image = [[NSBundle mainBundle] imageForResource:@""];
+    }
 }
 
 - (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
@@ -480,6 +506,7 @@
 
 - (IBAction)toolbarKeyboardButtonClicked:(id)sender {
 }
+
 @end
 
 

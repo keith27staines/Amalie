@@ -26,9 +26,9 @@
 <AMWorksheetViewDelegate,
  AMInsertableViewDelegate, NSSplitViewDelegate>
 
-@property (weak) IBOutlet id toolbarLeftSidePanelButton;
-@property (weak) IBOutlet id toolbarRightSidePanelButton;
-@property (weak) IBOutlet id toolbarKeyboardButton;
+@property (weak) IBOutlet NSToolbarItem * toolbarLeftSidePanelButton;
+@property (weak) IBOutlet NSToolbarItem * toolbarRightSidePanelButton;
+@property (weak) IBOutlet NSToolbarItem * toolbarKeyboardButton;
 
 - (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender;
 - (IBAction)toolbarRightSidePanelButtonClicked:(id)sender;

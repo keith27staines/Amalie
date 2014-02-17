@@ -7,33 +7,58 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMConstants.h"
 
 @interface AMPreferences : NSObject
 
 +(void)registerDefaultPreferences;
 
-+(NSSize)worksheetPageSize;
-+(NSUInteger)worksheetFontSize;
-+(NSUInteger)worksheetFontDelta;
-+(NSUInteger)worksheetSmallestFontSize;
-+(NSString*)worksheetFontName;
-+(NSString*)worksheetFixedWidthFontName;
-+(NSUInteger)worksheetFixedWidthFontSize;
-+(NSDictionary*)fonts;
-+(CGFloat)superscriptingFraction;
++(AMPreferences*)sharedPreferences;
 
-+(void)setWorksheetFixedWidthFontSize:(NSUInteger)size;
-+(void)setWorksheetFontSize:(NSUInteger)size;
-+(void)setWorksheetFontDelta:(NSUInteger)delta;
-+(void)setWorksheetSmallestFontSize:(NSUInteger)size;
+#pragma mark - Main window configuration -
++(AMSidepanelVisibility)sidepanelVisibility;
++(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility;
+
+#pragma mark - Worksheet page size and margins -
+@property NSSize worksheetPageSize;
++(NSSize)worksheetPageSize;
++(void)setWorksheetPageSize:(NSSize)size;
+@property AMMargins pageMargins;
++(AMMargins)pageMargins;
++(void)setPageMargins:(AMMargins)margins;
+
+@property AMPaperType worksheetPaperType;
++(AMPaperType)worksheetPaperType;
++(void)setWorksheetPaperType:(AMPaperType)paperType;
+
+#pragma mark - Fonts -
++(NSDictionary*)fonts;
++(NSFont*)standardFont;
++(NSFont*)fixedWidthFont;
++(NSString*)worksheetFontName;
 +(void)setWorksheetFontName:(NSString*)fontName;
++(NSString*)worksheetFixedWidthFontName;
 +(void)setWorksheetFixedWidthFontName:(NSString*)fontName;
+
+#pragma mark - Worksheet standard font size -
+@property NSUInteger worksheetFontSize;
++(NSUInteger)worksheetFontSize;
++(void)setWorksheetFontSize:(NSUInteger)size;
++(NSUInteger)worksheetSmallestFontSize;
++(void)setWorksheetSmallestFontSize:(NSUInteger)size;
+
+#pragma mark - Worksheet fixed width font size -
++(NSUInteger)worksheetFixedWidthFontSize;
++(void)setWorksheetFixedWidthFontSize:(NSUInteger)size;
+
+#pragma mark - Scripting fraction -
++(CGFloat)superscriptingFraction;
++(NSUInteger)worksheetFontDelta;
++(void)setWorksheetFontDelta:(NSUInteger)delta;
+
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction;
 
 +(id)objectForKey:(NSString*)key;
-
-+(NSFont*)standardFont;
-+(NSFont*)fixedWidthFont;
 
 +(NSUserDefaults*)defaults;
 

@@ -7,7 +7,6 @@
 //
 
 #import "AMPreferences.h"
-#import "AMConstants.h"
 #import "AMAppController.h"
 
 static NSMutableDictionary * AMFonts;
@@ -18,6 +17,15 @@ static NSMutableDictionary * AMFonts;
 
 @implementation AMPreferences
 
++(AMPreferences*)sharedPreferences
+{
+    static AMPreferences * _sharedPreferences;
+    if (!_sharedPreferences) {
+        _sharedPreferences = [[AMPreferences alloc] init];
+    }
+    return _sharedPreferences;
+}
+
 +(NSUserDefaults*)defaults
 {
     return [NSUserDefaults standardUserDefaults];
@@ -27,108 +35,178 @@ static NSMutableDictionary * AMFonts;
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
+
+#pragma mark - Worksheet page size -
+-(NSSize)worksheetPageSize
+{
+    return [AMPreferences worksheetPageSize];
+}
+-(void)setWorksheetPageSize:(NSSize)worksheetPageSize
+{
+    [AMPreferences setWorksheetPageSize:worksheetPageSize];
+}
++(AMPaperType)worksheetPaperType
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperSizeKey];
+}
++(void)setWorksheetPaperType:(AMPaperType)paperType
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:paperType forKey:kAMPaperSizeKey];
+}
+-(AMPaperType)worksheetPaperType
+{
+    return [AMPreferences worksheetPaperType];
+}
+-(void)setWorksheetPaperType:(AMPaperType)worksheetPaperType
+{
+    [AMPreferences setWorksheetPaperType:worksheetPaperType];
+}
 +(NSSize)worksheetPageSize
 {
     // Portrait orientation
-    NSString * pageSizeString = [[NSUserDefaults standardUserDefaults] objectForKey:kAMPaperSizeKey];
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA6Portrait] ) {
-        return NSMakeSize(kAMPageWidthA6Portrait, kAMPageHeightA6Portrait);
+    AMPaperType paperType = [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperSizeKey];
+    
+    switch (paperType) {
+        case AMPaperTypeA6Portrait:
+            return NSMakeSize(kAMPageWidthA6Portrait, kAMPageHeightA6Portrait);
+        case AMPaperTypeA5Portrait:
+            return NSMakeSize(kAMPageWidthA5Portrait, kAMPageHeightA5Portrait);
+        case AMPaperTypeA4Portrait:
+            return NSMakeSize(kAMPageWidthA4Portrait, kAMPageHeightA4Portrait);
+        case AMPaperTypeA3Portrait:
+            return NSMakeSize(kAMPageWidthA3Portrait, kAMPageHeightA3Portrait);
+        case AMPaperTypeA2Portrait:
+            return NSMakeSize(kAMPageWidthA2Portrait, kAMPageHeightA2Portrait);
+        case AMPaperTypeA1Portrait:
+            return NSMakeSize(kAMPageWidthA1Portrait, kAMPageHeightA1Portrait);
+        case AMPaperTypeA0Portrait:
+            return NSMakeSize(kAMPageWidthA0Portrait, kAMPageHeightA0Portrait);
+        case AMPaperTypeB5Portrait:
+            return NSMakeSize(kAMPageWidthB5Portrait, kAMPageHeightB5Portrait);
+        case AMPaperTypeB4Portrait:
+            return NSMakeSize(kAMPageWidthB4Portrait, kAMPageHeightB4Portrait);
+        case AMPaperTypeUSLetterPortrait:
+            return NSMakeSize(kAMPageWidthUSLetterPortrait, kAMPageHeightUSLetterPortrait);
+        case AMPaperTypeUSLegalPortrait:
+            return NSMakeSize(kAMPageWidthUSLegalPortrait, kAMPageHeightUSLegalPortrait);
+        case AMPaperTypeA6Landscape:
+            return NSMakeSize(kAMPageWidthA6Landscape, kAMPageHeightA6Landscape);
+        case AMPaperTypeA5Landscape:
+            return NSMakeSize(kAMPageWidthA5Landscape, kAMPageHeightA5Landscape);
+        case AMPaperTypeA4Landscape:
+            return NSMakeSize(kAMPageWidthA4Landscape, kAMPageHeightA4Landscape);
+        case AMPaperTypeA3Landscape:
+            return NSMakeSize(kAMPageWidthA3Landscape, kAMPageHeightA3Landscape);
+        case AMPaperTypeA2Landscape:
+            return NSMakeSize(kAMPageWidthA2Landscape, kAMPageHeightA2Landscape);
+        case AMPaperTypeA1Landscape:
+            return NSMakeSize(kAMPageWidthA1Landscape, kAMPageHeightA1Landscape);
+        case AMPaperTypeA0Landscape:
+            return NSMakeSize(kAMPageWidthA0Landscape, kAMPageHeightA0Landscape);
+        case AMPaperTypeB5Landscape:
+            return NSMakeSize(kAMPageWidthB5Landscape, kAMPageHeightB5Landscape);
+        case AMPaperTypeB4Landscape:
+            return NSMakeSize(kAMPageWidthB4Landscape, kAMPageHeightB4Landscape);
+        case AMPaperTypeUSLetterLandscape:
+            return NSMakeSize(kAMPageWidthUSLetterLandscape, kAMPageHeightUSLetterLandscape);
+        case AMPaperTypeUSLegalLandscape:
+            return NSMakeSize(kAMPageWidthUSLegalLandscape, kAMPageHeightUSLegalLandscape);
+        case AMPaperTypeCustom:
+        {
+            NSSize customSize;
+            customSize.width = [[NSUserDefaults standardUserDefaults] integerForKey:@"kAMCustomPaperSizeWidthKey"];
+            customSize.height = [[NSUserDefaults standardUserDefaults] integerForKey:@"kAMCustomPaperSizeHeightKey"];
+            return customSize;
+        }
     }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA5Portrait] ) {
-        return NSMakeSize(kAMPageWidthA5Portrait, kAMPageHeightA5Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA4Portrait] ) {
-        return NSMakeSize(kAMPageWidthA4Portrait, kAMPageHeightA4Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA3Portrait] ) {
-        return NSMakeSize(kAMPageWidthA3Portrait, kAMPageHeightA3Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA2Portrait] ) {
-        return NSMakeSize(kAMPageWidthA2Portrait, kAMPageHeightA2Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA1Portrait] ) {
-        return NSMakeSize(kAMPageWidthA1Portrait, kAMPageHeightA1Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA0Portrait] ) {
-        return NSMakeSize(kAMPageWidthA0Portrait, kAMPageHeightA0Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeB5Portrait] ) {
-        return NSMakeSize(kAMPageWidthB5Portrait, kAMPageHeightB5Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeB4Portrait] ) {
-        return NSMakeSize(kAMPageWidthB4Portrait, kAMPageHeightB4Portrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLetterPortrait] ) {
-        return NSMakeSize(kAMPageWidthUSLetterPortrait, kAMPageHeightUSLetterPortrait);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLegalPortrait] ) {
-        return NSMakeSize(kAMPageWidthUSLegalPortrait, kAMPageHeightUSLegalPortrait);
-    }
-
-    // Landscape orientation
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA6Landscape] ) {
-        return NSMakeSize(kAMPageWidthA6Landscape, kAMPageHeightA6Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA5Landscape] ) {
-        return NSMakeSize(kAMPageWidthA5Landscape, kAMPageHeightA5Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA4Landscape] ) {
-        return NSMakeSize(kAMPageWidthA4Landscape, kAMPageHeightA4Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA3Landscape] ) {
-        return NSMakeSize(kAMPageWidthA3Landscape, kAMPageHeightA3Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA2Landscape] ) {
-        return NSMakeSize(kAMPageWidthA2Landscape, kAMPageHeightA2Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA1Landscape] ) {
-        return NSMakeSize(kAMPageWidthA1Landscape, kAMPageHeightA1Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeA0Landscape] ) {
-        return NSMakeSize(kAMPageWidthA0Landscape, kAMPageHeightA0Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeB5Landscape] ) {
-        return NSMakeSize(kAMPageWidthB5Landscape, kAMPageHeightB5Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeB4Landscape] ) {
-        return NSMakeSize(kAMPageWidthB4Landscape, kAMPageHeightB4Landscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLetterLandscape] ) {
-        return NSMakeSize(kAMPageWidthUSLetterLandscape, kAMPageHeightUSLetterLandscape);
-    }
-    if ( [pageSizeString isEqualToString:kAMPaperSizeUSLegalLandscape] ) {
-        return NSMakeSize(kAMPageWidthUSLegalLandscape, kAMPageHeightUSLegalLandscape);
-    }
-
-    return NSMakeSize(-1, -1);
+}
++(void)setWorksheetPageSize:(NSSize)size
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:AMPaperTypeCustom forKey:kAMPaperSizeKey];
+    [[NSUserDefaults standardUserDefaults] setInteger:size.width forKey:kAMPageWidthCustomKey];
+    [[NSUserDefaults standardUserDefaults] setInteger:size.height forKey:kAMPageHeightCustomKey];
+}
+-(AMMargins)pageMargins
+{
+    return [AMPreferences pageMargins];
+}
+-(void)setPageMargins:(AMMargins)pageMargins
+{
+    [AMPreferences setPageMargins:pageMargins];
+}
++(AMMargins)pageMargins
+{
+    NSString * marginsString = [[NSUserDefaults standardUserDefaults] objectForKey:kAMPageMarginsKey];
+    return [self AMMarginsFromNSString:marginsString];
+}
++(void)setPageMargins:(AMMargins)margins
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
 }
 
+AMMargins AMMarginsFromNSRect(NSRect rect)
+{
+    return AMMarginsMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+}
 
+AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom)
+{
+    AMMargins margins;
+    margins.left = left;
+    margins.right = right;
+    margins.top = top;
+    margins.bottom = bottom;
+    return margins;
+}
+
++(AMMargins)AMMarginsFromNSString:(NSString*)string
+{
+    NSArray * components = [string componentsSeparatedByString:@" "];
+    NSString * left = components[0];
+    NSString * right = components[1];
+    NSString * top = components[2];
+    NSString * bottom = components[3];
+    return AMMarginsMake(left.doubleValue, right.doubleValue, top.doubleValue, bottom.doubleValue);
+}
+
++(NSString*)NSStringFromAMMargins:(AMMargins)margins
+{
+    return [NSString stringWithFormat:@"%f %f %f %f", margins.left, margins.right, margins.top, margins.bottom];
+}
+
+#pragma mark - Worksheet fixed width font size -
 +(void)setWorksheetFixedWidthFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFixedWidthFontSizeKey];
 }
-
 +(NSUInteger)worksheetFixedWidthFontSize
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFixedWidthFontSizeKey];
 }
 
+#pragma mark - Worksheet standard font size -
+-(NSUInteger)worksheetFontSize
+{
+    return [AMPreferences worksheetFontSize];
+}
+-(void)setWorksheetFontSize:(NSUInteger)size
+{
+    [AMPreferences setWorksheetFontSize:size];
+}
 +(void)setWorksheetFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFontSizeKey];
 }
-
 +(NSUInteger)worksheetFontSize
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFontSizeKey];
 }
 
+#pragma mark - Scripting fraction -
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction
 {
     [[NSUserDefaults standardUserDefaults] setFloat:superscriptingFraction forKey:kAMSuperscriptingFraction];
 }
-
 +(CGFloat)superscriptingFraction
 {
     return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSuperscriptingFraction];
@@ -195,12 +273,31 @@ static NSMutableDictionary * AMFonts;
     return self.fonts[kAMFixedWidthFontNameKey];
 }
 
++(AMSidepanelVisibility)sidepanelVisibility
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMSidepanelVisibilityKey];
+}
++(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:sidepanelVisibility forKey:kAMSidepanelVisibilityKey];
+}
++(void)sidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility;
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:sidepanelVisibility forKey:kAMSidepanelVisibilityKey];
+}
 +(void)registerDefaultPreferences
 {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
     
-    // Paper size
+    // Main window configuration
+    [defaults setObject:@(AMSidepanelNoneVisible) forKey:kAMSidepanelVisibilityKey];
+    
+    // Paper size and margins
     [defaults setObject:kAMPaperSizeA4Portrait forKey:kAMPaperSizeKey];
+    [defaults setObject:@(kAMPageWidthA4Portrait) forKey:kAMPageWidthCustomKey];
+    [defaults setObject:@(kAMPageHeightA4Portrait) forKey:kAMPageHeightCustomKey];
+    AMMargins margins = AMMarginsMake(72, 72, 72, 72);
+    [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
     
     // Font names
     [defaults setObject:kAMDefaultFontName forKey:kAMFontNameKey];

@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AMEquationContentViewController.h"
 #import "KSMExpression.h"
-#import "AMEquationContentView.h"
+//#import "AMEquationContentView.h"
 #import "AMDInsertedObject.h"
 #import "AMExpressionNodeView.h"
 #import "AMPreferences.h"

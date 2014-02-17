@@ -23,8 +23,15 @@ extern NSString * const kAMKeySuffix;
 extern NSString * const kAMClassNameKey;
 extern NSString * const kAMTypeKey;
 
+#pragma mark - Main window configuration
+extern NSString * const kAMSidepanelVisibilityKey;
+
 #pragma mark - Page Layout -
 extern NSString * const kAMPaperSizeKey;
+extern NSString * const kAMPageWidthCustomKey;
+extern NSString * const kAMPageHeightCustomKey;
+extern NSString * const kAMPageMarginsKey;
+
 extern NSString * const kAMPaperSizeA6Portrait;
 extern NSString * const kAMPaperSizeA6Landscape;
 extern NSString * const kAMPaperSizeA5Portrait;
@@ -47,6 +54,7 @@ extern NSString * const kAMPaperSizeUSLetterPortrait;
 extern NSString * const kAMPaperSizeUSLetterLandscape;
 extern NSString * const kAMPaperSizeUSLegalPortrait;
 extern NSString * const kAMPaperSizeUSLegalLandscape;
+extern NSString * const kAMPaperSizeCustom;
 
 #pragma mark - Page Sizes -
 extern NSUInteger const kAMPageWidthA6Portrait;
@@ -137,10 +145,37 @@ extern NSString * const kAMMathematicalSetKey;
 extern NSString * const kAMVectorKey;
 extern NSString * const kAMMatrixKey;
 
-typedef NS_ENUM(NSInteger, AMPageSize) {
-    AMPageSizeA4Portrait,
-    AMPageSizeA4Landscape,
-    AMPageSizeCustom,
+#pragma mark - Keyed Resources -
+extern NSString * const kAMImageToolbarLeftSidePanelOpenKey;
+extern NSString * const kAMImageToolbarLeftSidePanelClosedKey;
+extern NSString * const kAMImageToolbarRightSidePanelOpenKey;
+extern NSString * const kAMImageToolbarRightSidePanelClosedKey;
+
+#pragma mark - Other -
+typedef NS_ENUM(NSInteger, AMPaperType) {
+    AMPaperTypeA6Portrait,
+    AMPaperTypeA6Landscape,
+    AMPaperTypeA5Portrait,
+    AMPaperTypeA5Landscape,
+    AMPaperTypeA4Portrait,
+    AMPaperTypeA4Landscape,
+    AMPaperTypeA3Portrait,
+    AMPaperTypeA3Landscape,
+    AMPaperTypeA2Portrait,
+    AMPaperTypeA2Landscape,
+    AMPaperTypeA1Portrait,
+    AMPaperTypeA1Landscape,
+    AMPaperTypeA0Portrait,
+    AMPaperTypeA0Landscape,
+    AMPaperTypeB5Portrait,
+    AMPaperTypeB5Landscape,
+    AMPaperTypeB4Portrait,
+    AMPaperTypeB4Landscape,
+    AMPaperTypeUSLegalPortrait,
+    AMPaperTypeUSLegalLandscape,
+    AMPaperTypeUSLetterPortrait,
+    AMPaperTypeUSLetterLandscape,
+    AMPaperTypeCustom,
 };
 
 typedef struct AMMargins {
@@ -175,6 +210,12 @@ typedef enum AMColor : NSUInteger {
     AMColorWhite            = 1000,
     AMColorBlack            = 1001,
 } AMColor;
+
+typedef NS_OPTIONS(NSUInteger, AMSidepanelVisibility) {
+    AMSidepanelNoneVisible                 = 0,
+    AMSidepanelsLeftVisible                = 1 << 0,
+    AMSidepanelsRightVisible               = 1 << 1,
+};
 
 NSData * dataFromColor(NSColor* color);
 NSColor * colorFromData(NSData* data);
