@@ -86,7 +86,6 @@
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
-        [self setupToolbar];
         [self setupDataStructures];
     }
     return self;
@@ -112,23 +111,56 @@
     // load major subiews into their containers
     
     [self addLibraryView];
+    [self configureToolbar];
 }
--(void)setupToolbar
+-(void)configureToolbar
+{
+    [self configureLeftPaneButton];
+    [self configureRightPaneButton];
+}
+-(void)configureLeftPaneButton
 {
     AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
     NSToolbarItem * leftPaneButton = self.toolbarLeftSidePanelButton;
-    NSToolbarItem * rightPaneButton = self.toolbarRightSidePanelButton;
     if (sidePanelVisibility & AMSidepanelsLeftVisible) {
-        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelClosedKey];
-    } else {
         leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelOpenKey];
-    }
-    if (sidePanelVisibility & AMSidepanelsRightVisible) {
-        rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelClosedKey];
+        leftPaneButton.toolTip = NSLocalizedString(@"Hide the left sidebar", @"Hide the left sidebar");
+        [self.enclosingSplitView setPosition:400 ofDividerAtIndex:0];
     } else {
-        rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelOpenKey];
+        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelClosedKey];
+                leftPaneButton.toolTip = NSLocalizedString(@"Show the left sidebar", @"Show the left sidebar");
+        [self.enclosingSplitView setPosition:0 ofDividerAtIndex:0];
     }
 }
+-(void)configureRightPaneButton
+{
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    NSToolbarItem * rightPaneButton = self.toolbarRightSidePanelButton;
+    if (sidePanelVisibility & AMSidepanelsRightVisible) {
+        rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelOpenKey];
+        rightPaneButton.toolTip = NSLocalizedString(@"Hide the right sidebar", @"Hide the right sidebar");
+        CGFloat p = self.enclosingSplitView.frame.size.width - 400;
+        [self.enclosingSplitView setPosition:p ofDividerAtIndex:1];
+    } else {
+        rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelClosedKey];
+        rightPaneButton.toolTip = NSLocalizedString(@"Show the right sidebar", @"Show the right sidebar");
+        CGFloat p = self.enclosingSplitView.frame.size.width;
+        [self.enclosingSplitView setPosition:p ofDividerAtIndex:1];
+    }
+}
+- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    sidePanelVisibility ^= 1 << 1;
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
+    [self configureRightPaneButton];
+}
+- (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    sidePanelVisibility ^= 1 << 0;
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
+    [self configureLeftPaneButton];
+}
+
 -(AMSidepanelVisibility)sidepanelVisibility
 {
     return [AMPreferences sidepanelVisibility];
@@ -493,15 +525,6 @@
 }
 
 - (IBAction)toolbarKeyboardButton:(id)sender {
-}
-- (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
-    AMSidepanelVisibility visibility = [AMPreferences sidepanelVisibility];
-    if (visibility & AMSidepanelsLeftVisible) {
-        self.toolbarLeftSidePanelButton.image = [[NSBundle mainBundle] imageForResource:@""];
-    }
-}
-
-- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
 }
 
 - (IBAction)toolbarKeyboardButtonClicked:(id)sender {

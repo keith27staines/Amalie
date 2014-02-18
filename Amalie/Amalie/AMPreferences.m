@@ -293,7 +293,7 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:@(AMSidepanelNoneVisible) forKey:kAMSidepanelVisibilityKey];
     
     // Paper size and margins
-    [defaults setObject:kAMPaperSizeA4Portrait forKey:kAMPaperSizeKey];
+    [defaults setObject:@(AMPaperTypeA4Portrait) forKey:kAMPaperSizeKey];
     [defaults setObject:@(kAMPageWidthA4Portrait) forKey:kAMPageWidthCustomKey];
     [defaults setObject:@(kAMPageHeightA4Portrait) forKey:kAMPageHeightCustomKey];
     AMMargins margins = AMMarginsMake(72, 72, 72, 72);

@@ -139,20 +139,18 @@
                             <action selector="toolbarRightSidePanelButtonClicked:" target="-2" id="VwP-uw-jVb"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="9CC9F048-5A0C-4452-B659-0DC76D3C33CC" label="keyboard" paletteLabel="keyboard" tag="-1" image="Toolbar Keyboard Btn" id="IZA-fa-0WN">
+                    <toolbarItem implicitItemIdentifier="9CC9F048-5A0C-4452-B659-0DC76D3C33CC" label="" paletteLabel="PageSetup" tag="-1" image="PageSetupBtn" id="IZA-fa-0WN">
                         <connections>
                             <action selector="toolbarKeyboardButtonClicked:" target="-2" id="T4t-UO-jYa"/>
                         </connections>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="P7K-sk-Hxn"/>
                     <toolbarItem reference="mk5-T9-xbF"/>
-                    <toolbarItem reference="nQs-oD-aGT"/>
-                    <toolbarItem reference="o2A-yv-wHX"/>
-                    <toolbarItem reference="Vcq-N9-Z9s"/>
+                    <toolbarItem reference="gN8-S6-Xxy"/>
                     <toolbarItem reference="IZA-fa-0WN"/>
                     <toolbarItem reference="gN8-S6-Xxy"/>
-                    <toolbarItem reference="P7K-sk-Hxn"/>
                     <toolbarItem reference="gAG-TM-nkd"/>
                 </defaultToolbarItems>
             </toolbar>
@@ -184,7 +182,7 @@
     </objects>
     <resources>
         <image name="LeftSidebarOpenBtn" width="510" height="510"/>
+        <image name="PageSetupBtn" width="510" height="510"/>
         <image name="RightSidePaneOpenBtn" width="510" height="510"/>
-        <image name="Toolbar Keyboard Btn" width="128" height="128"/>
     </resources>
 </document>
