@@ -9,6 +9,7 @@
 #import "AMDocumentContainerView.h"
 #import "AMDocumentView.h"
 #import "AMWorksheetView.h"
+#import "AMConstants.h"
 
 @interface AMDocumentContainerView()
 {
@@ -78,8 +79,9 @@
     NSScrollView * scrollView = self.scrollView;
     NSClipView * clipView = scrollView.contentView;
     AMDocumentView * documentView = self.documentView;
+    NSView * documentContainer = self;
     
-    NSDictionary * views = NSDictionaryOfVariableBindings(scrollView,clipView,documentView);
+    NSDictionary * views = NSDictionaryOfVariableBindings(documentContainer,scrollView,clipView,documentView);
     NSArray * constraints;
     
     // We are the document container, which contains the scroll view, which contains a clip view, which contains the document background view, which contains the worksheets).
@@ -95,6 +97,10 @@
     [clipView addConstraints:constraints];
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[documentView(>=clipView)]" options:0 metrics:nil views:views];
     [clipView addConstraints:constraints];
+    
+    NSDictionary * metrics = @{@"minDocWidth": @(kAMMinWidthDocumentContainerView)};
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[documentContainer(>=minDocWidth)]" options:0 metrics:metrics views:views];
+    [self addConstraints:constraints];
     
     [clipView setContentCompressionResistancePriority:NSLayoutPriorityDefaultLow forOrientation:NSLayoutConstraintOrientationHorizontal];
     [clipView setContentCompressionResistancePriority:NSLayoutPriorityDefaultLow forOrientation:NSLayoutConstraintOrientationVertical];

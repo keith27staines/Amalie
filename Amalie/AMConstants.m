@@ -8,6 +8,10 @@
 
 #import "AMConstants.h"
 
+#pragma mark - Custom notifications -
+NSString * const kAMNotificationViewDidHide = @"kAMNotificationViewDidHide";
+NSString * const kAMNotificationViewDidUnhide = @"kAMNotificationViewDidUnhide";
+
 #pragma mark - Default values -
 NSUInteger const kAMDefaultFontSize                   = 17;
 NSUInteger const kAMDefaultFixedWidthFontSize         = 17;
@@ -25,6 +29,14 @@ NSString * const kAMTypeKey                           = @"kAMTypeKey";
 
 #pragma mark - Main Window configuration -
 NSString * const kAMSidepanelVisibilityKey            = @"kAMSidepanelVisibilityKey";
+CGFloat const kAMMinWidthDocumentContainerView        = 200;
+CGFloat const kAMMinWidthLeftSidepanelView            = 100;
+CGFloat const kAMMinWidthRightSidepanelView           = 100;
+CGFloat const kAMNominalWidthLeftSidepanelView        = 300;
+CGFloat const kAMNominalWidthRightSidepanelView       = 300;
+CGFloat const kAMMaxWidthLeftSidepanelView            = 300;
+CGFloat const kAMMaxWidthRightSidepanelView           = 300;
+CGFloat const kAMLibraryWidth                         = 300;
 
 #pragma mark - Page Layout -
 NSString * const kAMPaperSizeKey                      = @"kAMPaperSizeKey";
@@ -154,8 +166,6 @@ NSString * const kAMImageToolbarRightSidePanelOpenKey   = @"RightSidebarOpenBtn"
 NSString * const kAMImageToolbarRightSidePanelClosedKey = @"RightSidebarClosedBtn";
 
 #pragma mark - Other -
-
-
 
 #pragma mark - Helper C functions -
 

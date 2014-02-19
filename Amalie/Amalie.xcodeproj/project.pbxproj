@@ -90,6 +90,8 @@
 		788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */; };
 		788709C5178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
+		788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */; };
+		788EAE0818B5310200D3EBD3 /* AMSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788EAE0718B5310100D3EBD3 /* AMSplitView.m */; };
 		78962FD7182BD5540066BEE9 /* AMDArgument+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FD6182BD5540066BEE9 /* AMDArgument+Methods.m */; };
 		78962FDA182BD7E00066BEE9 /* AMDName+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FD9182BD7E00066BEE9 /* AMDName+Methods.m */; };
 		78962FDD182BEF060066BEE9 /* NSManagedObject+SharedDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 78962FDC182BEF060066BEE9 /* NSManagedObject+SharedDataStore.m */; };
@@ -298,6 +300,10 @@
 		788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesTrayTableColorwellCellView.m; sourceTree = "<group>"; };
 		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
 		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
+		788EAE0318B517A600D3EBD3 /* BitmaskHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmaskHelpers.h; sourceTree = "<group>"; };
+		788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BitmaskHelpers.c; sourceTree = "<group>"; };
+		788EAE0618B5310100D3EBD3 /* AMSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSplitView.h; sourceTree = "<group>"; };
+		788EAE0718B5310100D3EBD3 /* AMSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSplitView.m; sourceTree = "<group>"; };
 		788F637717BF586B00EC68CC /* AMQuotientBaselining.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMQuotientBaselining.h; path = Amalie/AMQuotientBaselining.h; sourceTree = "<group>"; };
 		78962FD5182BD5540066BEE9 /* AMDArgument+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMDArgument+Methods.h"; sourceTree = "<group>"; };
 		78962FD6182BD5540066BEE9 /* AMDArgument+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMDArgument+Methods.m"; sourceTree = "<group>"; };
@@ -671,6 +677,8 @@
 			children = (
 				786E32F1188BC2C10095443D /* AMExpandingTextFieldView.h */,
 				786E32F2188BC2C10095443D /* AMExpandingTextFieldView.m */,
+				788EAE0618B5310100D3EBD3 /* AMSplitView.h */,
+				788EAE0718B5310100D3EBD3 /* AMSplitView.m */,
 			);
 			name = "AM General purpose views";
 			sourceTree = "<group>";
@@ -690,8 +698,10 @@
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
+				788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */,
 				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
+				788EAE0318B517A600D3EBD3 /* BitmaskHelpers.h */,
 				78CDC75C17AFA30700BDC8D7 /* AMViewHelper.h */,
 				78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */,
 				78BFE6321817C2E300D4ADB1 /* AMError.h */,
@@ -1086,6 +1096,7 @@
 				7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */,
 				78EF56B017CF3B2200402847 /* KSMMatrix.m in Sources */,
 				78A0472117BBEEF900B5703E /* AMOperatorView.m in Sources */,
+				788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */,
 				785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */,
 				78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
@@ -1095,6 +1106,7 @@
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMAmalieDocument.m in Sources */,
+				788EAE0818B5310200D3EBD3 /* AMSplitView.m in Sources */,
 				7848E5D1185770A300719EF3 /* AMNameProvider.m in Sources */,
 				786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,

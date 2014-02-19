@@ -38,7 +38,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1287" height="913"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <splitView identifier="leftSplitView" fixedFrame="YES" dividerStyle="thin" id="QRA-5r-iih" userLabel="Left Split View">
+                            <splitView identifier="leftSplitView" fixedFrame="YES" dividerStyle="thin" id="QRA-5r-iih" userLabel="Left Split View" customClass="AMSplitView">
                                 <rect key="frame" x="0.0" y="0.0" width="268" height="913"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -55,8 +55,11 @@
                                     <real value="250"/>
                                     <real value="250"/>
                                 </holdingPriorities>
+                                <connections>
+                                    <outlet property="delegate" destination="-2" id="W90-35-gz0"/>
+                                </connections>
                             </splitView>
-                            <splitView identifier="middleSplitView" fixedFrame="YES" dividerStyle="thin" id="5BN-Z6-wHO" userLabel="Middle Split View">
+                            <splitView identifier="middleSplitView" fixedFrame="YES" dividerStyle="thin" id="5BN-Z6-wHO" userLabel="Middle Split View" customClass="AMSplitView">
                                 <rect key="frame" x="269" y="0.0" width="854" height="913"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -72,8 +75,11 @@
                                 <holdingPriorities>
                                     <real value="250"/>
                                 </holdingPriorities>
+                                <connections>
+                                    <outlet property="delegate" destination="-2" id="MLu-dQ-bQT"/>
+                                </connections>
                             </splitView>
-                            <splitView identifier="rightSplitView" fixedFrame="YES" dividerStyle="thin" id="Pt1-IB-gk6" userLabel="Right Split View">
+                            <splitView identifier="rightSplitView" fixedFrame="YES" dividerStyle="thin" id="Pt1-IB-gk6" userLabel="Right Split View" customClass="AMSplitView">
                                 <rect key="frame" x="1124" y="0.0" width="163" height="913"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -90,6 +96,9 @@
                                     <real value="250"/>
                                     <real value="250"/>
                                 </holdingPriorities>
+                                <connections>
+                                    <outlet property="delegate" destination="-2" id="IXp-5y-DSP"/>
+                                </connections>
                             </splitView>
                         </subviews>
                         <holdingPriorities>

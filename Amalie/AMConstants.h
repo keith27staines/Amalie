@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Custom notifications -
+extern NSString * const kAMNotificationViewDidHide;
+extern NSString * const kAMNotificationViewDidUnhide;
+
 #pragma mark - Default values -
 extern NSUInteger const kAMDefaultFontSize;
 extern NSUInteger const kAMDefaultFixedWidthFontSize;
@@ -25,6 +29,14 @@ extern NSString * const kAMTypeKey;
 
 #pragma mark - Main window configuration
 extern NSString * const kAMSidepanelVisibilityKey;
+extern CGFloat const kAMMinWidthDocumentContainerView;
+extern CGFloat const kAMMinWidthLeftSidepanelView;
+extern CGFloat const kAMMinWidthRightSidepanelView;
+extern CGFloat const kAMNominalWidthLeftSidepanelView;
+extern CGFloat const kAMNominalWidthRightSidepanelView;
+extern CGFloat const kAMMaxWidthLeftSidepanelView;
+extern CGFloat const kAMMaxWidthRightSidepanelView;
+extern CGFloat const kAMLibraryWidth;
 
 #pragma mark - Page Layout -
 extern NSString * const kAMPaperSizeKey;

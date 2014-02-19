@@ -33,6 +33,7 @@
 #import "AMInsertableViewController.h"
 #import "AMKeyboardsViewController.h"
 #import "AMLibraryViewController.h"
+#import "BitmaskHelpers.h"
 
 @interface AMAmalieDocument()
 {
@@ -41,7 +42,7 @@
     __weak NSSplitView          * _middleSplitView;
     __weak NSSplitView          * _rightSplitView;
     __weak NSScrollView         * _worksheetScrollView;
-    __weak AMDocumentView      * _documentBackgroundView;
+    __weak AMDocumentView       * _documentBackgroundView;
     __weak AMWorksheetView      * _worksheetView;
     __weak AMInsertableView     * _selectedView;
     
@@ -50,7 +51,7 @@
     NSMutableDictionary         * _insertedRecords;
     NSMutableDictionary         * _contentControllers;
     KSMWorksheet                * _mathSheet;
-    NSEntityDescription         * _amdInsertedObjectsEntity;
+    NSEntityDescription         * _amdInsertedObjectsEntity;;
 }
 
 /*!
@@ -93,13 +94,7 @@
 
 -(void)awakeFromNib
 {
-    [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
-    
-    SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
-    NSNotificationCenter * notifier = [NSNotificationCenter defaultCenter];
-    [notifier addObserver:self selector:selector
-                     name:NSScrollViewDidEndLiveMagnifyNotification
-                   object:self.worksheetScrollView];
+    [self notificationCenterRegistrations];
 
     NSSlider * slider = (NSSlider*)(self.scaleSliderItem.view);
     [slider setMinValue:0.25];
@@ -113,66 +108,153 @@
     [self addLibraryView];
     [self configureToolbar];
 }
+
+-(void)notificationCenterRegistrations
+{
+    [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
+    
+    SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
+    NSNotificationCenter * notifier = [NSNotificationCenter defaultCenter];
+    [notifier addObserver:self selector:selector
+                     name:NSScrollViewDidEndLiveMagnifyNotification
+                   object:self.worksheetScrollView];
+    
+    [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidHide object:self.leftSplitView];
+    [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidHide object:self.rightSplitView];
+    [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidUnhide object:self.leftSplitView];
+    [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidUnhide object:self.rightSplitView];
+}
+
+-(void)panelDidChangeHiddenState:(NSNotification*)notification
+{
+    NSSplitView * view = notification.object;
+    if (view == self.leftSplitView) {
+        [self setLeftSidePanelVisibilityState:!view.isHidden];
+        [self setLeftSidepanelToolbarButtonOn:!view.isHidden];
+    } else if (view == self.rightSplitView) {
+        [self setRightSidePanelVisibilityState:!view.isHidden];
+        [self setRightSidepanelToolbarButtonOn:!view.isHidden];
+    }
+}
+
 -(void)configureToolbar
 {
-    [self configureLeftPaneButton];
-    [self configureRightPaneButton];
+    [self configureLeftPane:YES];
+    [self configureRightPane];
 }
--(void)configureLeftPaneButton
+-(void)configureLeftPane:(BOOL)resizeWindowToFit
 {
     NSWindow * window = self.enclosingSplitView.window;
     NSRect windowFrame = self.enclosingSplitView.window.frame;
     NSView * leftPane = self.enclosingSplitView.subviews[0];
     NSRect leftFrame = leftPane.frame;
-    CGFloat nominalWidth = self.libraryContainerView.frame.size.width;
-    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
-    NSToolbarItem * leftPaneButton = self.toolbarLeftSidePanelButton;
-    if (sidePanelVisibility & AMSidepanelsLeftVisible) {
-        // Show left pane visible
-        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelOpenKey];
-        leftPaneButton.toolTip = NSLocalizedString(@"Hide the left sidebar", @"Hide the left sidebar");
-        windowFrame.size.width += nominalWidth;
-        windowFrame.origin.x -= nominalWidth;
-        [self.enclosingSplitView setPosition:nominalWidth ofDividerAtIndex:0];
+    CGFloat nominalWidth = [self nominalLeftPaneWidth];
+    if ( [self isLeftSidepanelVisible] ) {
+        // Make left pane visible
+        [self setLeftSidepanelToolbarButtonOn:YES];
+        if (resizeWindowToFit) {
+            windowFrame.size.width += leftFrame.size.width;
+            windowFrame.origin.x -= leftFrame.size.width;
+            [self.enclosingSplitView setPosition:nominalWidth ofDividerAtIndex:0];
+        }
+        [leftPane setHidden:NO];
+        [self.enclosingSplitView adjustSubviews];
         [window setFrame:windowFrame display:YES];
-    
     } else {
         // Hide left pane
-        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelClosedKey];
-                leftPaneButton.toolTip = NSLocalizedString(@"Show the left sidebar", @"Show the left sidebar");
-        windowFrame.origin.x += leftFrame.size.width;
-        windowFrame.size.width -= leftFrame.size.width;
-        [self.enclosingSplitView setPosition:0 ofDividerAtIndex:0];
+        [self setLeftSidepanelToolbarButtonOn:NO];
+        if (resizeWindowToFit) {
+            windowFrame.origin.x += leftFrame.size.width;
+            windowFrame.size.width -= leftFrame.size.width;
+            [self.enclosingSplitView setPosition:0 ofDividerAtIndex:0];
+        }
+        [leftPane setHidden:YES];
+        [self.enclosingSplitView adjustSubviews];
         [window setFrame:windowFrame display:YES];
     }
 }
--(void)configureRightPaneButton
+-(void)configureRightPane
 {
-    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    NSWindow * window = self.enclosingSplitView.window;
+    NSRect windowFrame = self.enclosingSplitView.window.frame;
+    NSView * rightPane = self.enclosingSplitView.subviews[2];
+    NSRect rightFrame = rightPane.frame;
+    CGFloat nominalWidth = [self nominalRightPaneWidth];
+    if ( [self isRightSidepanelVisible] ) {
+        // Make right pane visible
+        [self setRightSidepanelToolbarButtonOn:YES];
+        windowFrame.size.width += nominalWidth;
+        [self.enclosingSplitView setPosition:windowFrame.size.width - nominalWidth ofDividerAtIndex:0];
+        [rightPane setHidden:NO];
+        [self.enclosingSplitView adjustSubviews];
+        [window setFrame:windowFrame display:YES];
+    } else {
+        // Hide right pane
+        [self setRightSidepanelToolbarButtonOn:NO];
+        windowFrame.size.width -= rightFrame.size.width;
+        [self.enclosingSplitView setPosition:0 ofDividerAtIndex:0];
+        [rightPane setHidden:YES];
+        [self.enclosingSplitView adjustSubviews];
+        [window setFrame:windowFrame display:YES];
+    }
+}
+-(void)setLeftSidepanelToolbarButtonOn:(BOOL)onState
+{
+    NSToolbarItem * leftPaneButton = self.toolbarLeftSidePanelButton;
+    if (onState) {
+        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelOpenKey];
+        leftPaneButton.toolTip = NSLocalizedString(@"Hide the left sidebar", @"Hide the left sidebar");
+    } else {
+        leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelClosedKey];
+        leftPaneButton.toolTip = NSLocalizedString(@"Show the left sidebar", @"Show the left sidebar");
+    }
+}
+-(void)setRightSidepanelToolbarButtonOn:(BOOL)onState
+{
     NSToolbarItem * rightPaneButton = self.toolbarRightSidePanelButton;
-    if (sidePanelVisibility & AMSidepanelsRightVisible) {
+    if (onState) {
         rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelOpenKey];
         rightPaneButton.toolTip = NSLocalizedString(@"Hide the right sidebar", @"Hide the right sidebar");
-        CGFloat p = self.enclosingSplitView.frame.size.width - 400;
-        [self.enclosingSplitView setPosition:p ofDividerAtIndex:1];
     } else {
         rightPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarRightSidePanelClosedKey];
         rightPaneButton.toolTip = NSLocalizedString(@"Show the right sidebar", @"Show the right sidebar");
-        CGFloat p = self.enclosingSplitView.frame.size.width;
-        [self.enclosingSplitView setPosition:p ofDividerAtIndex:1];
     }
 }
+
+/*! Returns the minimum width of the left sidepane in its uncollapsed state */
+-(CGFloat)minimumLeftPaneWidth
+{
+    return kAMMinWidthLeftSidepanelView;
+}
+-(CGFloat)nominalLeftPaneWidth
+{
+    return kAMNominalWidthLeftSidepanelView;
+}
+/*! Returns the minimum width of the right sidepane in its uncollapsed state */
+-(CGFloat)minimumRightPaneWidth
+{
+    return kAMMinWidthRightSidepanelView;
+}
+-(CGFloat)nominalRightPaneWidth
+{
+    return kAMNominalWidthRightSidepanelView;
+}
+-(CGFloat)minimumWindowFrameWidth
+{
+    CGFloat minWidth = kAMMinWidthDocumentContainerView;
+    if ( [self isLeftSidepanelVisible] ) {
+        minWidth += 1 + [self minimumLeftPaneWidth];
+    }
+    if ( [self isRightSidepanelVisible] ) {
+        minWidth += 1 + [self minimumRightPaneWidth];
+    }
+    return minWidth;
+}
 - (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
-    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
-    sidePanelVisibility ^= 1 << AMPanelBitsLeftPaneBit; // Toggles the left pane bit
-    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
-    [self configureLeftPaneButton];
+    [self toggleLeftSidepanelVisibility];
 }
 - (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
-    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
-    sidePanelVisibility ^= 1 << AMPanelBitsRightPaneBit;  // Toggles the right pane bit
-    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
-    [self configureRightPaneButton];
+    [self toggleRightSidepanelVisibility];
 }
 
 -(AMSidepanelVisibility)sidepanelVisibility
@@ -182,6 +264,60 @@
 -(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility
 {
     [AMPreferences setSidepanelVisibility:sidepanelVisibility];
+}
+-(BOOL)isLeftSidepanelVisible
+{
+    return [AMPreferences sidepanelVisibility] & AMSidepanelsLeftVisible;
+}
+-(BOOL)isRightSidepanelVisible
+{
+    return [AMPreferences sidepanelVisibility] & AMSidepanelsRightVisible;
+}
+-(void)setLeftSidePanelVisibilityState:(BOOL)onState
+{
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    if (onState) {
+        // set the appropriate bit
+        sidePanelVisibility = AMBitmaskSetBit(sidePanelVisibility, AMPanelBitsLeftPaneBit);
+    } else {
+        // clear the appropriate bit
+        sidePanelVisibility = AMBitmaskClearBit(sidePanelVisibility, AMPanelBitsLeftPaneBit);
+    }
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
+}
+-(void)setRightSidePanelVisibilityState:(BOOL)onState
+{
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    if (onState) {
+        // set the appropriate bit
+        sidePanelVisibility = AMBitmaskSetBit(sidePanelVisibility, AMPanelBitsRightPaneBit);
+    } else {
+        // clear the appropriate bit
+        sidePanelVisibility = AMBitmaskClearBit(sidePanelVisibility, AMPanelBitsRightPaneBit);
+    }
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
+}
+-(void)toggleLeftSidepanelVisibility
+{
+    [self toggleLeftSidepanelVisibilityState];
+    [self configureLeftPane:YES];
+}
+-(void)toggleLeftSidepanelVisibilityState
+{
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    sidePanelVisibility = AMBitmaskToggleBit(sidePanelVisibility, AMPanelBitsLeftPaneBit);
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
+}
+-(void)toggleRightSidepanelVisibility
+{
+    [self toggleRightSidepanelVisibilityState];
+    [self configureRightPane];
+}
+-(void)toggleRightSidepanelVisibilityState
+{
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    sidePanelVisibility = AMBitmaskToggleBit(sidePanelVisibility, AMPanelBitsRightPaneBit);
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
 }
 -(void)addLibraryView
 {
@@ -194,14 +330,15 @@
     // Apply constraints to position the library in its container
     NSDictionary * views = NSDictionaryOfVariableBindings(container, library);
     NSArray * constraints;
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library]|"
+    NSDictionary * metrics = @{@"libraryWidth": @(kAMNominalWidthLeftSidepanelView)};
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library(libraryWidth)]|"
                                                           options:0
-                                                          metrics:nil
+                                                          metrics:metrics
                                                             views:views];
     [container addConstraints:constraints];
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[library]|"
                                                           options:0
-                                                          metrics:nil
+                                                          metrics:metrics
                                                             views:views];
     [container addConstraints:constraints];
 
@@ -521,7 +658,22 @@
 -(BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
     if (splitView == self.enclosingSplitView) {
-        return subview == self.middleSplitView ? NO : YES;
+        if (subview == self.leftSplitView) {
+            return YES;
+        }
+        if (subview == self.middleSplitView) {
+            return NO;
+        }
+        if (subview == self.rightSplitView) {
+            return YES;
+        }
+    }
+    return NO;
+}
+-(BOOL)splitView:(NSSplitView *)splitView shouldCollapseSubview:(NSView *)subview forDoubleClickOnDividerAtIndex:(NSInteger)dividerIndex
+{
+    if (splitView == self.enclosingSplitView) {
+        return YES;
     }
     return NO;
 }

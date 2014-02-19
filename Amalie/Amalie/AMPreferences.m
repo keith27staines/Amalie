@@ -272,16 +272,11 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 {
     return self.fonts[kAMFixedWidthFontNameKey];
 }
-
 +(AMSidepanelVisibility)sidepanelVisibility
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMSidepanelVisibilityKey];
 }
 +(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:sidepanelVisibility forKey:kAMSidepanelVisibilityKey];
-}
-+(void)sidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility;
 {
     [[NSUserDefaults standardUserDefaults] setInteger:sidepanelVisibility forKey:kAMSidepanelVisibilityKey];
 }
