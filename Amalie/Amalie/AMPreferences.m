@@ -272,20 +272,12 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 {
     return self.fonts[kAMFixedWidthFontNameKey];
 }
-+(AMSidepanelVisibility)sidepanelVisibility
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMSidepanelVisibilityKey];
-}
-+(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:sidepanelVisibility forKey:kAMSidepanelVisibilityKey];
-}
 +(void)registerDefaultPreferences
 {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
     
     // Main window configuration
-    [defaults setObject:@(AMSidepanelNoneVisible) forKey:kAMSidepanelVisibilityKey];
+
     
     // Paper size and margins
     [defaults setObject:@(AMPaperTypeA4Portrait) forKey:kAMPaperSizeKey];

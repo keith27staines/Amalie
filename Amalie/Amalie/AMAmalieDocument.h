@@ -48,6 +48,8 @@
 
 @property (weak) IBOutlet NSView * libraryContainerView;
 
+@property (weak) IBOutlet NSView * inspectorContainerView;
+
 @property (weak) IBOutlet AMDocumentView *documentBackgroundView;
 
 @property (weak) IBOutlet AMWorksheetView * worksheetView;

@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="appController" destination="GkH-jk-e4m" id="LCZ-WR-GNO"/>
                 <outlet property="enclosingSplitView" destination="ghK-zD-XlV" id="RUK-H6-H0B"/>
+                <outlet property="inspectorContainerView" destination="wwf-5u-UwN" id="PZr-uV-xrZ"/>
                 <outlet property="keyboardsViewController" destination="jGG-r6-pKc" id="FI1-P9-L7W"/>
                 <outlet property="leftSplitView" destination="QRA-5r-iih" id="oSV-XV-QGc"/>
                 <outlet property="library" destination="INn-ob-cZC" id="z1D-5X-62u"/>
@@ -34,7 +35,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="1287" height="913"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView identifier="enclosingSplitView" toolTip="Enclosing Split View" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ghK-zD-XlV" userLabel="Enclosing Split View">
+                    <splitView identifier="enclosingSplitView" toolTip="Enclosing Split View" autosaveName="outerSplitView" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ghK-zD-XlV" userLabel="Enclosing Split View">
                         <rect key="frame" x="0.0" y="0.0" width="1287" height="913"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>

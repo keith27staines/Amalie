@@ -16,8 +16,7 @@
 +(AMPreferences*)sharedPreferences;
 
 #pragma mark - Main window configuration -
-+(AMSidepanelVisibility)sidepanelVisibility;
-+(void)setSidepanelVisibility:(AMSidepanelVisibility)sidepanelVisibility;
+
 
 #pragma mark - Worksheet page size and margins -
 @property NSSize worksheetPageSize;
