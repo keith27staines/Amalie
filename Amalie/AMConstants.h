@@ -217,6 +217,11 @@ typedef NS_OPTIONS(NSUInteger, AMSidepanelVisibility) {
     AMSidepanelsRightVisible               = 1 << 1,
 };
 
+typedef NS_ENUM(NSUInteger, AMPanelBits) {
+    AMPanelBitsLeftPaneBit = 0,
+    AMPanelBitsRightPaneBit = 1,
+};
+
 NSData * dataFromColor(NSColor* color);
 NSColor * colorFromData(NSData* data);
 

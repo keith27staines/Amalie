@@ -120,16 +120,30 @@
 }
 -(void)configureLeftPaneButton
 {
+    NSWindow * window = self.enclosingSplitView.window;
+    NSRect windowFrame = self.enclosingSplitView.window.frame;
+    NSView * leftPane = self.enclosingSplitView.subviews[0];
+    NSRect leftFrame = leftPane.frame;
+    CGFloat nominalWidth = self.libraryContainerView.frame.size.width;
     AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
     NSToolbarItem * leftPaneButton = self.toolbarLeftSidePanelButton;
     if (sidePanelVisibility & AMSidepanelsLeftVisible) {
+        // Show left pane visible
         leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelOpenKey];
         leftPaneButton.toolTip = NSLocalizedString(@"Hide the left sidebar", @"Hide the left sidebar");
-        [self.enclosingSplitView setPosition:400 ofDividerAtIndex:0];
+        windowFrame.size.width += nominalWidth;
+        windowFrame.origin.x -= nominalWidth;
+        [self.enclosingSplitView setPosition:nominalWidth ofDividerAtIndex:0];
+        [window setFrame:windowFrame display:YES];
+    
     } else {
+        // Hide left pane
         leftPaneButton.image = [[NSBundle mainBundle] imageForResource:kAMImageToolbarLeftSidePanelClosedKey];
                 leftPaneButton.toolTip = NSLocalizedString(@"Show the left sidebar", @"Show the left sidebar");
+        windowFrame.origin.x += leftFrame.size.width;
+        windowFrame.size.width -= leftFrame.size.width;
         [self.enclosingSplitView setPosition:0 ofDividerAtIndex:0];
+        [window setFrame:windowFrame display:YES];
     }
 }
 -(void)configureRightPaneButton
@@ -148,17 +162,17 @@
         [self.enclosingSplitView setPosition:p ofDividerAtIndex:1];
     }
 }
-- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
-    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
-    sidePanelVisibility ^= 1 << 1;
-    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
-    [self configureRightPaneButton];
-}
 - (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
     AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
-    sidePanelVisibility ^= 1 << 0;
+    sidePanelVisibility ^= 1 << AMPanelBitsLeftPaneBit; // Toggles the left pane bit
     [AMPreferences setSidepanelVisibility:sidePanelVisibility];
     [self configureLeftPaneButton];
+}
+- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
+    AMSidepanelVisibility sidePanelVisibility = [AMPreferences sidepanelVisibility];
+    sidePanelVisibility ^= 1 << AMPanelBitsRightPaneBit;  // Toggles the right pane bit
+    [AMPreferences setSidepanelVisibility:sidePanelVisibility];
+    [self configureRightPaneButton];
 }
 
 -(AMSidepanelVisibility)sidepanelVisibility
