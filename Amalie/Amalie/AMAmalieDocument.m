@@ -178,7 +178,11 @@
     [self setRightSidepanelToolbarButtonOn:flag];
     if ( flag ) {
         // Resize to accomodate the right pane
-        windowFrame.size.width += nominalWidth;
+        if ( NSMaxX(windowFrame) + nominalWidth < [NSScreen mainScreen].frame.size.width) {
+            windowFrame.size.width += nominalWidth;
+        } else {
+            windowFrame.size.width = [NSScreen mainScreen].frame.size.width - windowFrame.origin.x;
+        }
         [self.enclosingSplitView setPosition:self.enclosingSplitView.frame.size.width - nominalWidth ofDividerAtIndex:1];
     } else {
         // Resize to accomodate absent right pane
