@@ -142,9 +142,21 @@
     CGFloat nominalWidth = [self nominalLeftPaneWidth];
     [self setLeftSidepanelToolbarButtonOn:flag];
     if ( flag ) {
-        // Resize window and shift origin to accomodate the left pane
-        windowFrame.size.width += nominalWidth;
-        windowFrame.origin.x -= nominalWidth;
+        // Resize window and shift origin to accomodate the left pane, taking care not to extend the window to the left or right of the screen boundary
+        if (windowFrame.origin.x - nominalWidth > 0) {
+            // Room to the left so shift origin left full amount thus leaving the document in its original position
+            windowFrame.origin.x -= nominalWidth;
+        } else {
+            // insufficient room to the left, so we can't make enough room for the sidebar and so the document will move
+            windowFrame.origin.x = 0;
+        }
+        if (windowFrame.size.width + nominalWidth < [NSScreen mainScreen].frame.size.width) {
+            // Enough room to the right to maintain the document view's width
+            windowFrame.size.width += nominalWidth;
+        } else {
+            // insufficent room, so prevent the width going larger than the screen, thus forcing the document view to compress a little
+            windowFrame.size.width = [NSScreen mainScreen].frame.size.width;
+        }
         [self.enclosingSplitView setPosition:nominalWidth ofDividerAtIndex:0];
     } else {
         // Resize window and shift origin to accomodate absent left pane

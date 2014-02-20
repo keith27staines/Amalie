@@ -26,7 +26,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="DocumentWindow" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="133" y="235" width="1287" height="913"/>
@@ -119,7 +119,7 @@
                     <constraint firstAttribute="bottom" secondItem="ghK-zD-XlV" secondAttribute="bottom" id="mkt-Xf-clm"/>
                 </constraints>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="C8BA68E8-99D6-451A-B6A6-90CFBEE9E110" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="hjL-PG-0sP">
+            <toolbar key="toolbar" implicitIdentifier="C8BA68E8-99D6-451A-B6A6-90CFBEE9E110" displayMode="iconAndLabel" sizeMode="regular" id="hjL-PG-0sP">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="nQs-oD-aGT"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="o2A-yv-wHX"/>
