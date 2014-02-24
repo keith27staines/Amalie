@@ -67,50 +67,28 @@ static NSMutableDictionary * AMFonts;
     AMPaperType paperType = [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperSizeKey];
     
     switch (paperType) {
-        case AMPaperTypeA6Portrait:
-            return NSMakeSize(kAMPageWidthA6Portrait, kAMPageHeightA6Portrait);
-        case AMPaperTypeA5Portrait:
-            return NSMakeSize(kAMPageWidthA5Portrait, kAMPageHeightA5Portrait);
-        case AMPaperTypeA4Portrait:
-            return NSMakeSize(kAMPageWidthA4Portrait, kAMPageHeightA4Portrait);
-        case AMPaperTypeA3Portrait:
-            return NSMakeSize(kAMPageWidthA3Portrait, kAMPageHeightA3Portrait);
-        case AMPaperTypeA2Portrait:
-            return NSMakeSize(kAMPageWidthA2Portrait, kAMPageHeightA2Portrait);
-        case AMPaperTypeA1Portrait:
-            return NSMakeSize(kAMPageWidthA1Portrait, kAMPageHeightA1Portrait);
-        case AMPaperTypeA0Portrait:
-            return NSMakeSize(kAMPageWidthA0Portrait, kAMPageHeightA0Portrait);
-        case AMPaperTypeB5Portrait:
-            return NSMakeSize(kAMPageWidthB5Portrait, kAMPageHeightB5Portrait);
-        case AMPaperTypeB4Portrait:
-            return NSMakeSize(kAMPageWidthB4Portrait, kAMPageHeightB4Portrait);
-        case AMPaperTypeUSLetterPortrait:
-            return NSMakeSize(kAMPageWidthUSLetterPortrait, kAMPageHeightUSLetterPortrait);
-        case AMPaperTypeUSLegalPortrait:
-            return NSMakeSize(kAMPageWidthUSLegalPortrait, kAMPageHeightUSLegalPortrait);
-        case AMPaperTypeA6Landscape:
-            return NSMakeSize(kAMPageWidthA6Landscape, kAMPageHeightA6Landscape);
-        case AMPaperTypeA5Landscape:
-            return NSMakeSize(kAMPageWidthA5Landscape, kAMPageHeightA5Landscape);
-        case AMPaperTypeA4Landscape:
-            return NSMakeSize(kAMPageWidthA4Landscape, kAMPageHeightA4Landscape);
-        case AMPaperTypeA3Landscape:
-            return NSMakeSize(kAMPageWidthA3Landscape, kAMPageHeightA3Landscape);
-        case AMPaperTypeA2Landscape:
-            return NSMakeSize(kAMPageWidthA2Landscape, kAMPageHeightA2Landscape);
-        case AMPaperTypeA1Landscape:
-            return NSMakeSize(kAMPageWidthA1Landscape, kAMPageHeightA1Landscape);
-        case AMPaperTypeA0Landscape:
-            return NSMakeSize(kAMPageWidthA0Landscape, kAMPageHeightA0Landscape);
-        case AMPaperTypeB5Landscape:
-            return NSMakeSize(kAMPageWidthB5Landscape, kAMPageHeightB5Landscape);
-        case AMPaperTypeB4Landscape:
-            return NSMakeSize(kAMPageWidthB4Landscape, kAMPageHeightB4Landscape);
-        case AMPaperTypeUSLetterLandscape:
-            return NSMakeSize(kAMPageWidthUSLetterLandscape, kAMPageHeightUSLetterLandscape);
-        case AMPaperTypeUSLegalLandscape:
-            return NSMakeSize(kAMPageWidthUSLegalLandscape, kAMPageHeightUSLegalLandscape);
+        case AMPaperTypeA6:
+            return NSMakeSize(kAMPageWidthA6, kAMPageHeightA6);
+        case AMPaperTypeA5:
+            return NSMakeSize(kAMPageWidthA5, kAMPageHeightA5);
+        case AMPaperTypeA4:
+            return NSMakeSize(kAMPageWidthA4, kAMPageHeightA4);
+        case AMPaperTypeA3:
+            return NSMakeSize(kAMPageWidthA3, kAMPageHeightA3);
+        case AMPaperTypeA2:
+            return NSMakeSize(kAMPageWidthA2, kAMPageHeightA2);
+        case AMPaperTypeA1:
+            return NSMakeSize(kAMPageWidthA1, kAMPageHeightA1);
+        case AMPaperTypeA0:
+            return NSMakeSize(kAMPageWidthA0, kAMPageHeightA0);
+        case AMPaperTypeB5:
+            return NSMakeSize(kAMPageWidthB5, kAMPageHeightB5);
+        case AMPaperTypeB4:
+            return NSMakeSize(kAMPageWidthB4, kAMPageHeightB4);
+        case AMPaperTypeUSLetter:
+            return NSMakeSize(kAMPageWidthUSLetter, kAMPageHeightUSLetter);
+        case AMPaperTypeUSLegal:
+            return NSMakeSize(kAMPageWidthUSLegal, kAMPageHeightUSLegal);
         case AMPaperTypeCustom:
         {
             NSSize customSize;
@@ -280,9 +258,9 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 
     
     // Paper size and margins
-    [defaults setObject:@(AMPaperTypeA4Portrait) forKey:kAMPaperSizeKey];
-    [defaults setObject:@(kAMPageWidthA4Portrait) forKey:kAMPageWidthCustomKey];
-    [defaults setObject:@(kAMPageHeightA4Portrait) forKey:kAMPageHeightCustomKey];
+    [defaults setObject:@(AMPaperTypeA4) forKey:kAMPaperSizeKey];
+    [defaults setObject:@(kAMPageWidthA4) forKey:kAMPageWidthCustomKey];
+    [defaults setObject:@(kAMPageHeightA4) forKey:kAMPageHeightCustomKey];
     AMMargins margins = AMMarginsMake(72, 72, 72, 72);
     [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
     

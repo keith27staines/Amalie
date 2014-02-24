@@ -16,9 +16,9 @@
                 <outlet property="library" destination="INn-ob-cZC" id="z1D-5X-62u"/>
                 <outlet property="libraryContainerView" destination="FbB-mP-o5T" id="sdZ-zB-v0Q"/>
                 <outlet property="middleSplitView" destination="5BN-Z6-wHO" id="C5E-so-XKW"/>
+                <outlet property="pageSetupPopover" destination="XWM-t0-OLB" id="zS4-ka-Jdb"/>
                 <outlet property="rightSplitView" destination="Pt1-IB-gk6" id="S65-9r-6UO"/>
                 <outlet property="scaleSliderItem" destination="mk5-T9-xbF" id="nZF-Gq-wQd"/>
-                <outlet property="toolbarKeyboardButton" destination="IZA-fa-0WN" id="VId-h3-M5G"/>
                 <outlet property="toolbarLeftSidePanelButton" destination="P7K-sk-Hxn" id="aJ5-JT-ph2"/>
                 <outlet property="toolbarRightSidePanelButton" destination="gAG-TM-nkd" id="BhX-jO-Aln"/>
                 <outlet property="trayDataSource" destination="GkH-jk-e4m" id="Yaj-Gy-wWI"/>
@@ -149,9 +149,20 @@
                             <action selector="toolbarRightSidePanelButtonClicked:" target="-2" id="VwP-uw-jVb"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="9CC9F048-5A0C-4452-B659-0DC76D3C33CC" label="" paletteLabel="PageSetup" tag="-1" image="PageSetupBtn" id="IZA-fa-0WN">
+                    <toolbarItem implicitItemIdentifier="1BFE5CB5-7FFB-478F-B70C-9B7987F60E50" label="Custom View" paletteLabel="Custom View" image="PageSetupBtn" id="Lu1-Am-6ik">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="48" height="48"/>
+                        <size key="maxSize" width="48" height="48"/>
+                        <button key="view" id="HNC-Or-fYP">
+                            <rect key="frame" x="15" y="14" width="48" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PageSetupBtn" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="krB-3q-Sah">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
                         <connections>
-                            <action selector="toolbarKeyboardButtonClicked:" target="-2" id="T4t-UO-jYa"/>
+                            <action selector="toolbarPageSetupButtonClicked:" target="-2" id="6gC-zt-1ud"/>
                         </connections>
                     </toolbarItem>
                 </allowedToolbarItems>
@@ -159,7 +170,7 @@
                     <toolbarItem reference="P7K-sk-Hxn"/>
                     <toolbarItem reference="mk5-T9-xbF"/>
                     <toolbarItem reference="gN8-S6-Xxy"/>
-                    <toolbarItem reference="IZA-fa-0WN"/>
+                    <toolbarItem reference="Lu1-Am-6ik"/>
                     <toolbarItem reference="gN8-S6-Xxy"/>
                     <toolbarItem reference="gAG-TM-nkd"/>
                 </defaultToolbarItems>
@@ -189,6 +200,12 @@
             </items>
         </menu>
         <viewController id="jGG-r6-pKc" customClass="AMKeyboardsViewController"/>
+        <viewController id="GYe-sB-1sv" userLabel="Page setup view controller" customClass="AMPageSetupViewController"/>
+        <popover id="XWM-t0-OLB" userLabel="Page setup poopover">
+            <connections>
+                <outlet property="contentViewController" destination="GYe-sB-1sv" id="Gdg-EK-SSm"/>
+            </connections>
+        </popover>
     </objects>
     <resources>
         <image name="LeftSidebarOpenBtn" width="510" height="510"/>

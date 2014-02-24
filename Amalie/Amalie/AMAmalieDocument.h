@@ -26,15 +26,18 @@
 <AMWorksheetViewDelegate,
  AMInsertableViewDelegate, NSSplitViewDelegate>
 
+
+#pragma mark -Toolbar outlets and actions-
 @property (weak) IBOutlet NSToolbarItem * toolbarLeftSidePanelButton;
 @property (weak) IBOutlet NSToolbarItem * toolbarRightSidePanelButton;
 @property (weak) IBOutlet NSToolbarItem * toolbarKeyboardButton;
 
-- (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender;
-- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender;
-- (IBAction)toolbarKeyboardButtonClicked:(id)sender;
+- (IBAction)toolbarLeftSidePanelButtonClicked:(NSToolbarItem*)sender;
+- (IBAction)toolbarRightSidePanelButtonClicked:(NSToolbarItem*)sender;
+- (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender;
+- (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender;
 
-
+#pragma mark - Outlets for main subviews of document window -
 
 @property (weak) IBOutlet NSSplitView *enclosingSplitView;
 
@@ -62,8 +65,12 @@
 
 - (IBAction)scaleSliderMoved:(NSSlider *)scaleSlider;
 
+# pragma mark - View Controllers for subviews -
 @property (strong) IBOutlet AMKeyboardsViewController *keyboardsViewController;
 
+@property (strong) IBOutlet NSPopover *pageSetupPopover;
+
+# pragma mark - Uncatagorized -
 /*!
  mathSheet performs math operations for this worksheet controller
  */

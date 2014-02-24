@@ -77,11 +77,6 @@
 
 #pragma mark - Initializers and setup -
 
--(AMDataStore *)sharedDataStore
-{
-    return [AMDataStore sharedDataStore];
-}
-
 - (id)init
 {
     self = [super init];
@@ -91,7 +86,6 @@
     }
     return self;
 }
-
 -(void)awakeFromNib
 {
     [self notificationCenterRegistrations];
@@ -108,7 +102,10 @@
     [self addInspectorView];
     [self configureToolbar];
 }
-
+-(AMDataStore *)sharedDataStore
+{
+    return [AMDataStore sharedDataStore];
+}
 -(void)notificationCenterRegistrations
 {
     [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
@@ -123,6 +120,138 @@
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidHide object:self.rightSplitView];
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidUnhide object:self.leftSplitView];
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidUnhide object:self.rightSplitView];
+}
+
+/*! Returns the minimum width of the left sidepane in its uncollapsed state */
+-(CGFloat)minimumLeftPaneWidth
+{
+    return kAMMinWidthLeftSidepanelView;
+}
+-(CGFloat)nominalLeftPaneWidth
+{
+    return kAMNominalWidthLeftSidepanelView;
+}
+/*! Returns the minimum width of the right sidepane in its uncollapsed state */
+-(CGFloat)minimumRightPaneWidth
+{
+    return kAMMinWidthRightSidepanelView;
+}
+-(CGFloat)nominalRightPaneWidth
+{
+    return kAMNominalWidthRightSidepanelView;
+}
+-(CGFloat)minimumWindowFrameWidth
+{
+    CGFloat minWidth = kAMMinWidthDocumentContainerView;
+    if ( !self.leftSplitView.isHidden ) {
+        minWidth += 1 + [self minimumLeftPaneWidth];
+    }
+    if ( !self.rightSplitView.isHidden ) {
+        minWidth += 1 + [self minimumRightPaneWidth];
+    }
+    return minWidth;
+}
+- (NSString *)windowNibName
+{
+    // Override returning the nib file name of the document
+    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
+    return @"AMAmalieDocument";
+}
+- (void)windowControllerDidLoadNib:(NSWindowController *)aController
+{
+    [super windowControllerDidLoadNib:aController];
+    [self loadDocumentIntoView];
+}
+-(BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError *__autoreleasing *)error
+{
+    if ( ![super readFromURL:absoluteURL ofType:typeName error:error] ) return NO;
+    
+    // Load the document's object model from the datastore
+    [self setupDataStructures];
+    
+    return YES;
+}
+-(void)revertDocumentToSaved:(id)sender
+{
+    [super revertDocumentToSaved:sender];
+    [self setupDataStructures];
+}
++ (BOOL)autosavesInPlace
+{
+    return YES;
+}
+-(void)setupDataStructures
+{
+    _insertableViewArray        = [NSMutableArray array];
+    _insertableViewDictionary   = [NSMutableDictionary dictionary];
+    _contentControllers         = [NSMutableDictionary dictionary];
+    _mathSheet                  = [[KSMWorksheet alloc] init];
+}
+-(void)loadDocumentIntoView
+{
+    while (self.worksheetView.subviews.count > 0) {
+        NSView * view = self.worksheetView.subviews[0];
+        [view removeFromSuperviewWithoutNeedingDisplay];
+    }
+    
+    [self.undoManager disableUndoRegistration];
+    for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
+        NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
+                                  insertedObject.yPosition.floatValue,
+                                  insertedObject.width.floatValue,
+                                  insertedObject.height.floatValue);
+        AMInsertableViewController * vc = [[AMInsertableViewController alloc] init];
+        AMInsertableView * insertableView;
+        insertableView = (AMInsertableView*)[vc view];
+        insertableView.frame = frame;
+        insertableView.groupID = insertedObject.groupID;
+        insertableView.insertableType = insertedObject.insertType.integerValue;
+        
+        [self insertView:insertableView withOrigin:insertableView.frame.origin];
+    }
+    [self.worksheetView setNeedsUpdateConstraints:YES];
+    [self.worksheetView setNeedsDisplay:YES];
+    [self.managedObjectContext processPendingChanges];
+    [self.undoManager removeAllActions];
+}
+
+#pragma mark - Side panel configuration -
+-(void)addLibraryView
+{
+    // Load the library into its container
+    NSView * container = self.libraryContainerView;
+    NSView * library = self.library.view;
+    library.translatesAutoresizingMaskIntoConstraints = NO;
+    [container addSubview:library];
+    
+    // Apply constraints to position the library in its container
+    NSDictionary * views = NSDictionaryOfVariableBindings(container, library);
+    NSArray * constraints;
+    NSDictionary * metrics = @{@"libraryWidth": @(kAMNominalWidthLeftSidepanelView)};
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library(libraryWidth)]|"
+                                                          options:0
+                                                          metrics:metrics
+                                                            views:views];
+    [container addConstraints:constraints];
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[library]|"
+                                                          options:0
+                                                          metrics:metrics
+                                                            views:views];
+    [container addConstraints:constraints];
+    
+}
+-(void)addInspectorView
+{
+    NSView * container = self.inspectorContainerView;
+    NSDictionary * views = NSDictionaryOfVariableBindings(container);
+    NSArray * constraints;
+    NSDictionary * metrics = @{@"inspectorWidth": @(kAMNominalWidthRightSidepanelView)};
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[container(inspectorWidth)]|"
+                                                          options:0
+                                                          metrics:metrics
+                                                            views:views];
+    // TODO: change this constraint to act on the container's contents and add the constraint to the container. The code here so far is just a placeholder that enforces the right width
+    [container.superview addConstraints:constraints];
 }
 -(void)panelDidChangeHiddenState:(NSNotification*)notification
 {
@@ -215,165 +344,11 @@
         rightPaneButton.toolTip = NSLocalizedString(@"Show the right sidebar", @"Show the right sidebar");
     }
 }
-
-/*! Returns the minimum width of the left sidepane in its uncollapsed state */
--(CGFloat)minimumLeftPaneWidth
-{
-    return kAMMinWidthLeftSidepanelView;
-}
--(CGFloat)nominalLeftPaneWidth
-{
-    return kAMNominalWidthLeftSidepanelView;
-}
-/*! Returns the minimum width of the right sidepane in its uncollapsed state */
--(CGFloat)minimumRightPaneWidth
-{
-    return kAMMinWidthRightSidepanelView;
-}
--(CGFloat)nominalRightPaneWidth
-{
-    return kAMNominalWidthRightSidepanelView;
-}
--(CGFloat)minimumWindowFrameWidth
-{
-    CGFloat minWidth = kAMMinWidthDocumentContainerView;
-    if ( !self.leftSplitView.isHidden ) {
-        minWidth += 1 + [self minimumLeftPaneWidth];
-    }
-    if ( !self.rightSplitView.isHidden ) {
-        minWidth += 1 + [self minimumRightPaneWidth];
-    }
-    return minWidth;
-}
-- (IBAction)toolbarLeftSidePanelButtonClicked:(id)sender {
+- (IBAction)toolbarLeftSidePanelButtonClicked:(NSToolbarItem*)sender {
     [self showLeftSidePanel:self.leftSplitView.isHidden];
 }
-- (IBAction)toolbarRightSidePanelButtonClicked:(id)sender {
+- (IBAction)toolbarRightSidePanelButtonClicked:(NSToolbarItem*)sender {
     [self showRightSidePanel:self.rightSplitView.isHidden];
-}
--(void)addLibraryView
-{
-    // Load the library into its container
-    NSView * container = self.libraryContainerView;
-    NSView * library = self.library.view;
-    library.translatesAutoresizingMaskIntoConstraints = NO;
-    [container addSubview:library];
-    
-    // Apply constraints to position the library in its container
-    NSDictionary * views = NSDictionaryOfVariableBindings(container, library);
-    NSArray * constraints;
-    NSDictionary * metrics = @{@"libraryWidth": @(kAMNominalWidthLeftSidepanelView)};
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[library(libraryWidth)]|"
-                                                          options:0
-                                                          metrics:metrics
-                                                            views:views];
-    [container addConstraints:constraints];
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[library]|"
-                                                          options:0
-                                                          metrics:metrics
-                                                            views:views];
-    [container addConstraints:constraints];
-
-}
--(void)addInspectorView
-{
-    NSView * container = self.inspectorContainerView;
-    NSDictionary * views = NSDictionaryOfVariableBindings(container);
-    NSArray * constraints;
-    NSDictionary * metrics = @{@"inspectorWidth": @(kAMNominalWidthRightSidepanelView)};
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[container(inspectorWidth)]|"
-                                                          options:0
-                                                          metrics:metrics
-                                                          views:views];
-    // TODO: change this constraint to act on the container's contents and add the constraint to the container. The code here so far is just a placeholder that enforces the right width
-    [container.superview addConstraints:constraints];
-}
-
-- (NSString *)windowNibName
-{
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"AMAmalieDocument";
-}
-
-- (void)windowControllerDidLoadNib:(NSWindowController *)aController
-{
-    [super windowControllerDidLoadNib:aController];
-    [self setupGUI];
-}
-
--(BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError *__autoreleasing *)error
-{
-    if ( ![super readFromURL:absoluteURL ofType:typeName error:error] ) return NO;
-    
-    // Load the document's object model from the datastore
-    [self setupDataStructures];
-    
-    return YES;
-}
-
--(void)revertDocumentToSaved:(id)sender
-{
-    [super revertDocumentToSaved:sender];
-    [self setupDataStructures];
-}
-
-+ (BOOL)autosavesInPlace
-{
-    return YES;
-}
-
--(void)setupDataStructures
-{
-    _insertableViewArray        = [NSMutableArray array];
-    _insertableViewDictionary   = [NSMutableDictionary dictionary];
-    _contentControllers         = [NSMutableDictionary dictionary];
-    _mathSheet                  = [[KSMWorksheet alloc] init];
-}
-
--(void)setupGUI
-{
-    while (self.worksheetView.subviews.count > 0) {
-        NSView * view = self.worksheetView.subviews[0];
-        [view removeFromSuperviewWithoutNeedingDisplay];
-    }
-    
-    [self.undoManager disableUndoRegistration];
-    for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
-        NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
-                                  insertedObject.yPosition.floatValue,
-                                  insertedObject.width.floatValue,
-                                  insertedObject.height.floatValue);
-        AMInsertableViewController * vc = [[AMInsertableViewController alloc] init];
-        AMInsertableView * insertableView;
-        insertableView = (AMInsertableView*)[vc view];
-        insertableView.frame = frame;
-        insertableView.groupID = insertedObject.groupID;
-        insertableView.insertableType = insertedObject.insertType.integerValue;
-        
-        [self insertView:insertableView withOrigin:insertableView.frame.origin];
-    }
-    [self.worksheetView setNeedsUpdateConstraints:YES];
-    [self.worksheetView setNeedsDisplay:YES];
-    [self.managedObjectContext processPendingChanges];
-    [self.undoManager removeAllActions];
-}
-
--(void)insertView:(AMInsertableView*)view withOrigin:(NSPoint)origin
-{
-    NSAssert(view, @"Cannot insert a nill view.");
-    if (!view) return;
-    
-    // Add the object to our list of inserted objects
-    [self.insertableViewArray addObject:view];
-    [self.insertableViewDictionary setObject:view forKey:view.groupID];
-    view.delegate = self;
-    view.trayDataSource = self.trayDataSource;
-    
-    [view setFrameOrigin:origin];
-    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.worksheetView addSubview:view];
-    
 }
 
 #pragma mark - AMWorksheetViewDelegate -
@@ -393,7 +368,6 @@
 {
     return [AMPreferences worksheetPageSize];
 }
-
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
 {
     self.worksheetView= worksheet;
@@ -404,7 +378,6 @@
     [self addInsertableView:insertableView];
     
 }
-
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)insertableView
 {
     self.worksheetView = worksheet;
@@ -423,7 +396,6 @@
     [self insertableViewReceivedClick:insertableView];
     [self.worksheetView setNeedsUpdateConstraints:YES];
 }
-
 /*!
  deleteInsertableView: first delete the data content (by calling deleteContentForGroupID) and then removes the frame view (which is just the gui container for the content) from the worksheet's subview collection.
  */
@@ -453,7 +425,6 @@
     [vc deleteContent];
     [self.contentControllers removeObjectForKey:groupID];
 }
-
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
 {
     self.worksheetView = worksheet;
@@ -476,7 +447,6 @@
     }
     return _insertedObjectNameProvider;
 }
-
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
     AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view];
@@ -490,13 +460,11 @@
     [self.contentControllers setObject:vc forKey:vc.groupID];
     return (AMContentView*)vc.view;
 }
-
 -(void)removeInsertableView:(AMInsertableView*)view
 {
     AMWorksheetView * worksheetView = (AMWorksheetView *)view.superview;
     [self workheetView:worksheetView wantsViewRemoved:view];
 }
-
 -(void)insertableViewWantsRemoval:(AMInsertableView*)view
 {
     NSAlert * alert = nil;
@@ -537,7 +505,21 @@
                      didEndSelector:@selector(removeAlertEnded:code:context:)
                         contextInfo:(__bridge void *)(view)];
 }
-
+-(void)insertView:(AMInsertableView*)view withOrigin:(NSPoint)origin
+{
+    NSAssert(view, @"Cannot insert a nill view.");
+    if (!view) return;
+    
+    // Add the object to our list of inserted objects
+    [self.insertableViewArray addObject:view];
+    [self.insertableViewDictionary setObject:view forKey:view.groupID];
+    view.delegate = self;
+    view.trayDataSource = self.trayDataSource;
+    
+    [view setFrameOrigin:origin];
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.worksheetView addSubview:view];
+}
 -(void)removeAlertEnded:(NSAlert * ) alert code:(NSInteger)choice context:(void*)v
 {
     if (choice == NSAlertDefaultReturn) {
@@ -598,6 +580,14 @@
     _selectedView.viewState = AMInsertViewStateSelected;
 }
 
+#pragma mark - Popovers -
+- (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender
+{
+    NSPopover * popover = self.pageSetupPopover;
+    popover.behavior = NSPopoverBehaviorTransient;
+    [self.pageSetupPopover showRelativeToRect:sender.frame ofView:sender preferredEdge:NSMaxYEdge];
+}
+
 #pragma mark - NSSplitViewDelegate -
 
 -(BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
@@ -635,10 +625,7 @@
     return [self insertableViewForKey:shadow.groupID];
 }
 
-- (IBAction)toolbarKeyboardButton:(id)sender {
-}
-
-- (IBAction)toolbarKeyboardButtonClicked:(id)sender {
+- (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender {
 }
 
 @end

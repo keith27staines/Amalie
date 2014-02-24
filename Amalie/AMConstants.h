@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - Unit conversions -
+extern double const kAMUnitConversionPoints_Points;
+extern double const kAMUnitConversionMM_Points;
+extern double const kAMUnitConversionCM_Points;
+extern double const kAMUnitConversionIn_Points;
+extern double const kAMUnitConversionPoints_MM;
+extern double const kAMUnitConversionPoints_CM;
+extern double const kAMUnitConversionPoints_In;
+
 #pragma mark - Custom notifications -
 extern NSString * const kAMNotificationViewDidHide;
 extern NSString * const kAMNotificationViewDidUnhide;
@@ -44,85 +53,39 @@ extern NSString * const kAMPageWidthCustomKey;
 extern NSString * const kAMPageHeightCustomKey;
 extern NSString * const kAMPageMarginsKey;
 
-extern NSString * const kAMPaperSizeA6Portrait;
-extern NSString * const kAMPaperSizeA6Landscape;
-extern NSString * const kAMPaperSizeA5Portrait;
-extern NSString * const kAMPaperSizeA5Landscape;
-extern NSString * const kAMPaperSizeA4Portrait;
-extern NSString * const kAMPaperSizeA4Landscape;
-extern NSString * const kAMPaperSizeA3Portrait;
-extern NSString * const kAMPaperSizeA3Landscape;
-extern NSString * const kAMPaperSizeA2Portrait;
-extern NSString * const kAMPaperSizeA2Landscape;
-extern NSString * const kAMPaperSizeA1Portrait;
-extern NSString * const kAMPaperSizeA1Landscape;
-extern NSString * const kAMPaperSizeA0Portrait;
-extern NSString * const kAMPaperSizeA0Landscape;
-extern NSString * const kAMPaperSizeB5Portrait;
-extern NSString * const kAMPaperSizeB5Landscape;
-extern NSString * const kAMPaperSizeB4Portrait;
-extern NSString * const kAMPaperSizeB4Landscape;
-extern NSString * const kAMPaperSizeUSLetterPortrait;
-extern NSString * const kAMPaperSizeUSLetterLandscape;
-extern NSString * const kAMPaperSizeUSLegalPortrait;
-extern NSString * const kAMPaperSizeUSLegalLandscape;
-extern NSString * const kAMPaperSizeCustom;
+#pragma mark - Page Sizes in portrait orientation -
+extern NSUInteger const kAMPageWidthA6;
+extern NSUInteger const kAMPageHeightA6;
 
-#pragma mark - Page Sizes -
-extern NSUInteger const kAMPageWidthA6Portrait;
-extern NSUInteger const kAMPageHeightA6Portrait;
-extern NSUInteger const kAMPageWidthA6Landscape;
-extern NSUInteger const kAMPageHeightA6Landscape;
+extern NSUInteger const kAMPageWidthA5;
+extern NSUInteger const kAMPageHeightA5;
 
-extern NSUInteger const kAMPageWidthA5Portrait;
-extern NSUInteger const kAMPageHeightA5Portrait;
-extern NSUInteger const kAMPageWidthA5Landscape;
-extern NSUInteger const kAMPageHeightA5Landscape;
+extern NSUInteger const kAMPageWidthA4;
+extern NSUInteger const kAMPageHeightA4;
 
-extern NSUInteger const kAMPageWidthA4Portrait;
-extern NSUInteger const kAMPageHeightA4Portrait;
-extern NSUInteger const kAMPageWidthA4Landscape;
-extern NSUInteger const kAMPageHeightA4Landscape;
+extern NSUInteger const kAMPageWidthA3;
+extern NSUInteger const kAMPageHeightA3;
 
-extern NSUInteger const kAMPageWidthA3Portrait;
-extern NSUInteger const kAMPageHeightA3Portrait;
-extern NSUInteger const kAMPageWidthA3Landscape;
-extern NSUInteger const kAMPageHeightA3Landscape;
+extern NSUInteger const kAMPageWidthA2;
+extern NSUInteger const kAMPageHeightA2;
 
-extern NSUInteger const kAMPageWidthA2Portrait;
-extern NSUInteger const kAMPageHeightA2Portrait;
-extern NSUInteger const kAMPageWidthA2Landscape;
-extern NSUInteger const kAMPageHeightA2Landscape;
+extern NSUInteger const kAMPageWidthA1;
+extern NSUInteger const kAMPageHeightA1;
 
-extern NSUInteger const kAMPageWidthA1Portrait;
-extern NSUInteger const kAMPageHeightA1Portrait;
-extern NSUInteger const kAMPageWidthA1Landscape;
-extern NSUInteger const kAMPageHeightA1Landscape;
+extern NSUInteger const kAMPageWidthA0;
+extern NSUInteger const kAMPageHeightA0;
 
-extern NSUInteger const kAMPageWidthA0Portrait;
-extern NSUInteger const kAMPageHeightA0Portrait;
-extern NSUInteger const kAMPageWidthA0Landscape;
-extern NSUInteger const kAMPageHeightA0Landscape;
+extern NSUInteger const kAMPageWidthB5;
+extern NSUInteger const kAMPageHeightB5;
 
-extern NSUInteger const kAMPageWidthB5Portrait;
-extern NSUInteger const kAMPageHeightB5Portrait;
-extern NSUInteger const kAMPageWidthB5Landscape;
-extern NSUInteger const kAMPageHeightB5Landscape;
+extern NSUInteger const kAMPageWidthB4;
+extern NSUInteger const kAMPageHeightB4;
 
-extern NSUInteger const kAMPageWidthB4Portrait;
-extern NSUInteger const kAMPageHeightB4Portrait;
-extern NSUInteger const kAMPageWidthB4Landscape;
-extern NSUInteger const kAMPageHeightB4Landscape;
+extern NSUInteger const kAMPageWidthUSLetter;
+extern NSUInteger const kAMPageHeightUSLetter;
 
-extern NSUInteger const kAMPageWidthUSLetterPortrait;
-extern NSUInteger const kAMPageHeightUSLetterPortrait;
-extern NSUInteger const kAMPageWidthUSLetterLandscape;
-extern NSUInteger const kAMPageHeightUSLetterLandscape;
-
-extern NSUInteger const kAMPageWidthUSLegalPortrait;
-extern NSUInteger const kAMPageHeightUSLegalPortrait;
-extern NSUInteger const kAMPageWidthUSLegalLandscape;
-extern NSUInteger const kAMPageHeightUSLegalLandscape;
+extern NSUInteger const kAMPageWidthUSLegal;
+extern NSUInteger const kAMPageHeightUSLegal;
 
 #pragma mark - Font -
 extern NSString * const kAMFontNameKey;
@@ -164,29 +127,31 @@ extern NSString * const kAMImageToolbarRightSidePanelOpenKey;
 extern NSString * const kAMImageToolbarRightSidePanelClosedKey;
 
 #pragma mark - Other -
+
+typedef NS_ENUM(NSUInteger, AMMeasurementUnits) {
+    AMMeasurementUnitsPoints      = 0,
+    AMMeasurementUnitsMillimeters = 1,
+    AMMeasurementUnitsCentimeters = 2,
+    AMMeasurementUnitsInches      = 3,
+};
+
+typedef NS_ENUM(NSUInteger, AMPaperOrientation) {
+    AMPaperOrientationPortrait,
+    AMPaperOrientationLandscape,
+};
+
 typedef NS_ENUM(NSInteger, AMPaperType) {
-    AMPaperTypeA6Portrait,
-    AMPaperTypeA6Landscape,
-    AMPaperTypeA5Portrait,
-    AMPaperTypeA5Landscape,
-    AMPaperTypeA4Portrait,
-    AMPaperTypeA4Landscape,
-    AMPaperTypeA3Portrait,
-    AMPaperTypeA3Landscape,
-    AMPaperTypeA2Portrait,
-    AMPaperTypeA2Landscape,
-    AMPaperTypeA1Portrait,
-    AMPaperTypeA1Landscape,
-    AMPaperTypeA0Portrait,
-    AMPaperTypeA0Landscape,
-    AMPaperTypeB5Portrait,
-    AMPaperTypeB5Landscape,
-    AMPaperTypeB4Portrait,
-    AMPaperTypeB4Landscape,
-    AMPaperTypeUSLegalPortrait,
-    AMPaperTypeUSLegalLandscape,
-    AMPaperTypeUSLetterPortrait,
-    AMPaperTypeUSLetterLandscape,
+    AMPaperTypeA0,
+    AMPaperTypeA1,
+    AMPaperTypeA2,
+    AMPaperTypeA3,
+    AMPaperTypeA4,
+    AMPaperTypeA5,
+    AMPaperTypeA6,
+    AMPaperTypeB4,
+    AMPaperTypeB5,
+    AMPaperTypeUSLegal,
+    AMPaperTypeUSLetter,
     AMPaperTypeCustom,
 };
 
