@@ -16,6 +16,8 @@
     AMMargins _margins;
     AMPaperOrientation _orientation;
     AMMeasurementUnits _measurementUnits;
+
+    NSRect _paperRect;
 }
 @property (copy) NSString * paperName;
 @property NSSize paperSize;
@@ -48,6 +50,8 @@
     CGFloat size = [NSFont systemFontSize];
     NSFont * font = [NSFont systemFontOfSize:size];
     [_title drawAtPoint:NSZeroPoint withAttributes:@{NSFontAttributeName: font}];
+    [[NSColor whiteColor] set];
+    NSRectFill(_paperRect);
 }
 -(void)viewDidMoveToSuperview
 {
@@ -58,6 +62,31 @@
     _title = [self.datasource paperDescription];
     _paperName = [self.datasource paperName];
     _orientation = [self.datasource paperOrientation];
+    _paperSize = [self.datasource paperSize];
+    if (_orientation == AMPaperOrientationLandscape) {
+        CGFloat swap = _paperSize.height;
+        _paperSize.height = _paperSize.width;
+        _paperSize.width = swap;
+    }
+
+    CGFloat bw = self.bounds.size.width;
+    CGFloat bh = self.bounds.size.height;
+    CGFloat bar = bw / bh;
+
+    CGFloat pw = _paperSize.width; // / pm * 0.7 * bw;
+    CGFloat ph = _paperSize.height; // / pm * 0.7 * bw;
+    CGFloat par = pw / ph;
+    if (par > bar) {
+        // size of paper visual is limited by width of container
+        pw = 0.7 * bw;
+        ph = pw / par;
+    } else {
+        // size of paper visual is limited by height
+        ph = 0.7 * bh;
+        pw = ph * par;
+    }
+
+    _paperRect = NSMakeRect((bw-pw)/2.0, (bh-ph)/2.0, pw, ph);
     [self setNeedsDisplay:YES];
 }
 

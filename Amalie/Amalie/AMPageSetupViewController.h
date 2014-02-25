@@ -33,30 +33,28 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
 
 @interface AMPageSetupViewController : NSViewController <AMPageSetupDatasource>
 
-@property (weak) IBOutlet NSPopUpButton *unitsPopupButton;
-
-@property (weak) IBOutlet NSPopUpButton *paperTypePopupButton;
-
-@property (weak) IBOutlet NSTextField *topMarginPopupButton;
-
-@property (weak) IBOutlet NSTextField *bottomMarginPopupButton;
-
-@property (weak) IBOutlet NSTextField *leftMarginPopupButton;
-
-@property (weak) IBOutlet NSTextField *rightMarginPopupButton;
-
+#pragma mark - Page orientation view
 @property (weak) IBOutlet AMPageOrientationView *orientationView;
 
+#pragma mark - Paper type and units outlets and actions
 - (IBAction)unitsChanged:(NSPopUpButton*)sender;
-
 - (IBAction)paperTypeChanged:(NSPopUpButton*)sender;
+@property (weak) IBOutlet NSPopUpButton *unitsPopupButton;
+@property (weak) IBOutlet NSPopUpButton *paperTypePopupButton;
 
+#pragma mark - Document margins outlets and actions
 - (IBAction)marginChanged:(id)sender;
+@property (weak) IBOutlet NSTextField *topMarginPopupButton;
+@property (weak) IBOutlet NSTextField *bottomMarginPopupButton;
+@property (weak) IBOutlet NSTextField *leftMarginPopupButton;
+@property (weak) IBOutlet NSTextField *rightMarginPopupButton;
 
+#pragma mark - Custom width and height outlets and actions
 - (IBAction)customWidthChanged:(id)sender;
-
-
-
+@property (weak) IBOutlet NSTextField *customWidthTextField;
+@property (weak) IBOutlet NSTextField *customHeightTextField;
+@property (weak) IBOutlet NSStepper *customWidthStepperButton;
+@property (weak) IBOutlet NSStepper *customHeightStepperButton;
 
 
 

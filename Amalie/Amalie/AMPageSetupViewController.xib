@@ -8,6 +8,10 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMPageSetupViewController">
             <connections>
                 <outlet property="bottomMarginPopupButton" destination="gOX-sn-Gso" id="kFh-pY-7aQ"/>
+                <outlet property="customHeightStepperButton" destination="fa9-MN-Lpq" id="JQ2-A0-vdC"/>
+                <outlet property="customHeightTextField" destination="1Qx-XX-2ML" id="pHI-gz-K8G"/>
+                <outlet property="customWidthStepperButton" destination="D1T-VU-rJg" id="rpo-04-YNh"/>
+                <outlet property="customWidthTextField" destination="BdQ-HF-Ptt" id="6mt-mi-XPt"/>
                 <outlet property="leftMarginPopupButton" destination="vff-Vh-qWn" id="oAQ-6R-5Du"/>
                 <outlet property="orientationView" destination="nGf-DX-pa8" id="hNG-DA-q0f"/>
                 <outlet property="paperTypePopupButton" destination="Khb-fO-ogY" id="Cyj-TF-CPq"/>
@@ -60,7 +64,7 @@
                     </connections>
                 </popUpButton>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nGf-DX-pa8" customClass="AMPageOrientationView">
-                    <rect key="frame" x="12" y="88" width="207" height="169"/>
+                    <rect key="frame" x="12" y="88" width="199" height="169"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <connections>
                         <outlet property="datasource" destination="-2" id="lpn-c7-y8a"/>

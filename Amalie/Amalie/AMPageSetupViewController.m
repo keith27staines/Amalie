@@ -135,9 +135,11 @@
 {
     self.paper.paperMeasurementUnits = sender.selectedTag;
     [self populatePaperTypeButton];
+    [self updateDisplay];
 }
 - (IBAction)paperTypeChanged:(NSPopUpButton*)sender
 {
     self.paper.paperType = sender.selectedTag;
+    [self updateDisplay];
 }
 @end
