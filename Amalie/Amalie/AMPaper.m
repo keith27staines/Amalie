@@ -14,9 +14,10 @@
     AMPaperType        _paperType;
     AMPaperOrientation _orientation;
     AMMeasurementUnits _measurementUnits;
-    CGFloat            _customWidth;
-    CGFloat            _customHeight;
+    NSSize             _customSize;
+    AMMargins          _margins;
 }
+@property NSSize customSize;
 @end
 
 @implementation AMPaper
@@ -35,6 +36,9 @@
     if (self) {
         _paperType = paperType;
         _orientation = orientation;
+        if (_paperType != AMPaperTypeCustom) {
+            self.customSize = self.paperSize;
+        }
     }
     return self;
 }
@@ -47,20 +51,45 @@
 {
     return [AMPaper paperOrientationNameForOrientationType:self.paperOrientation];
 }
--(void)makeCustomWidth:(CGFloat)width height:(CGFloat)height
+/*! sets the custom height and width in portrait mode */
+-(void)makeCustomPortraitWidth:(CGFloat)width portraitHeight:(CGFloat)height
 {
     self.paperType = AMPaperTypeCustom;
-    _customWidth = width;
-    _customHeight = height;
+    _customSize = NSMakeSize(width, height);
 }
-
+-(NSSize)customSize
+{
+    return _customSize;
+}
+-(void)setCustomSize:(NSSize)size
+{
+    _customSize = size;
+}
 -(NSSize)paperSize
 {
     return [self sizeInUnits:self.paperMeasurementUnits];
 }
+-(AMMargins)marginsInUnits:(AMMeasurementUnits)units
+{
+    return _margins;
+}
+-(void)setMargins:(AMMargins)margins inUnits:(AMMeasurementUnits)units
+{
+    
+}
 -(NSSize)sizeInUnits:(AMMeasurementUnits)units
 {
-    return [AMPaper paperSizeForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:units];
+    if (self.paperType != AMPaperTypeCustom) {
+        return [AMPaper paperSizeForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:units];
+    } else {
+        NSSize size;
+        if (self.paperOrientation == AMPaperOrientationPortrait) {
+            size = self.customSize;
+        } else {
+            size = NSMakeSize(self.customSize.height, self.customSize.width);
+        }
+        return [AMMeasurement convertSize:size fromUnits:AMMeasurementUnitsPoints toUnits:units];
+    }
 }
 -(NSString*)paperDescription
 {
@@ -75,12 +104,55 @@
     NSSize size = [self paperSizeForPaperType:paperType withOrientation:orientation inUnits:units];
     int width = round(size.width);
     int height = round(size.height);
+    return [self paperSizeFormattedStringWithUnits:units width:width height:height];
+}
++(NSString*)paperSizeDescriptionForPaperWithPortraitSize:(NSSize)size inOrientation:(AMPaperOrientation)orientation inUnits:(AMMeasurementUnits)units
+{
+    int width;
+    int height;
+    if (orientation == AMPaperOrientationLandscape) {
+        width = round(size.width);
+        height = round(size.height);
+    } else {
+        width = round(size.height);
+        height = round(size.width);
+    }
+    return [self paperSizeFormattedStringWithUnits:units width:width height:height];
+}
++(NSString*)paperSizeFormattedStringWithUnits:(AMMeasurementUnits)units width:(int)width height:(int)height
+{
     NSString * unit = [AMMeasurement abbreviatedMameForUnitType:units];
     return [NSString stringWithFormat:@"(%i%@ x %i%@)",width,unit,height,unit];
 }
 -(NSString*)paperSizeDescription
 {
-    return [AMPaper paperSizeDescriptionForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
+    if (self.paperType == AMPaperTypeCustom) {
+        return [AMPaper paperSizeDescriptionForPaperWithPortraitSize:self.customSize inOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
+    } else {
+        return [AMPaper paperSizeDescriptionForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
+    }
+}
+-(NSString*)paperWidthDescription
+{
+    return [AMPaper paperWidthDescriptionForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
+}
+-(NSString*)paperHeightDescription
+{
+    return [AMPaper paperHeightDescriptionForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
+}
++(NSString*)paperWidthDescriptionForPaperType:(AMPaperType)paperType withOrientation:(AMPaperOrientation)orientation inUnits:(AMMeasurementUnits)units
+{
+    NSSize size = [self paperSizeForPaperType:paperType withOrientation:orientation inUnits:units];
+    int width = round(size.width);
+    NSString * unit = [AMMeasurement abbreviatedMameForUnitType:units];
+    return [NSString stringWithFormat:@"%i %@",width,unit];
+}
++(NSString*)paperHeightDescriptionForPaperType:(AMPaperType)paperType withOrientation:(AMPaperOrientation)orientation inUnits:(AMMeasurementUnits)units
+{
+    NSSize size = [self paperSizeForPaperType:paperType withOrientation:orientation inUnits:units];
+    int height = round(size.height);
+    NSString * unit = [AMMeasurement abbreviatedMameForUnitType:units];
+    return [NSString stringWithFormat:@"%i %@",height,unit];
 }
 -(NSString*)description
 {
@@ -109,12 +181,12 @@
 
 +(NSString*)paperOrientationNameForOrientationType:(AMPaperOrientation)orientation
 {
-    switch (orientation) {
-        case AMPaperOrientationPortrait:
-            return NSLocalizedString(@"portrait", @"Paper orientation 'portrait'");
-        case AMPaperOrientationLandscape:
-            return NSLocalizedString(@"landscape", @"Paper orientation 'landscape'");
-    }
+    return [self paperOrientationNames][orientation];
+}
++(NSArray*)paperOrientationNames
+{
+    return @[NSLocalizedString(@"portrait", @"Paper orientation 'portrait'"),
+             NSLocalizedString(@"landscape", @"Paper orientation 'landscape'")];
 }
 +(NSSize)paperSizeForPaperType:(AMPaperType)paperType withOrientation:(AMPaperOrientation)orientation inUnits:(AMMeasurementUnits)units
 {

@@ -14,10 +14,13 @@
 -(AMPaperType)paperType;
 -(NSString*)paperName;
 -(NSString*)paperDescription;
+-(NSString*)paperSizeDescription;
+-(NSString*)paperWidthDescription;
+-(NSString*)paperHeightDescription;
 -(NSSize)paperSize;
 -(AMPaperOrientation)paperOrientation;
 -(NSString*)paperOrientationName;
--(AMMargins)paperMargins;
 -(AMMeasurementUnits)paperMeasurementUnits;
+-(AMMargins)paperMargins;
 
 @end

@@ -36,14 +36,70 @@
 }
 -(void)updateDisplay
 {
+    [self populateUnitsButton];
+    [self populatePaperTypeButton];
+    [self populatePaperOrientationButton];
+    [self populateMarginTextFields];
+    [self enableCustomSizeControls];
     [self.orientationView reloadData];
+    [self enableCustomSizeControls];
+    [self.customWidthTextField setFloatValue:self.paperSize.width];
+    [self.customHeightTextField setFloatValue:self.paperSize.height];
+    [self configureFormatters];
 }
 -(void)loadView
 {
     [super loadView];
-    [self populateUnitsButton];
-    [self populatePaperTypeButton];
     [self updateDisplay];
+}
+
+-(NSArray*)numberFormatters
+{
+    return @[self.customWidthFormatter,
+             self.customHeightFormatter,
+             self.topMarginFormatter,
+             self.bottomMarginFormatter,
+             self.leftMarginFormatter,
+             self.rightMarginFormatter];
+}
+-(void)configureFormatters
+{
+    for ( NSNumberFormatter * formatter in [self numberFormatters] ) {
+        [self configureFormatter:formatter];
+    }
+}
+-(void)configureFormatter:(NSNumberFormatter*)formatter
+{
+    switch (self.paperMeasurementUnits) {
+        case AMMeasurementUnitsPoints:
+        {
+            [formatter setPositiveSuffix:@" pt"];
+            [formatter setPositiveFormat:@"%i"];
+            [formatter setAllowsFloats:NO];
+            break;
+        }
+        case AMMeasurementUnitsMillimeters:
+        {
+            [formatter setPositiveSuffix:@" mm"];
+            [formatter setPositiveFormat:@"%i"];
+            [formatter setAllowsFloats:NO];
+            break;
+        }
+        case AMMeasurementUnitsCentimeters:
+        {
+            [formatter setPositiveSuffix:@" cm"];
+            [formatter setAllowsFloats:YES];
+            [formatter setMaximumFractionDigits:1];
+            break;
+        }
+        case AMMeasurementUnitsInches:
+        {
+            [formatter setPositiveSuffix:@" \""];
+            [formatter setAllowsFloats:YES];
+            [formatter setMaximumFractionDigits:2];
+            break;
+        }
+    }
 }
 -(void)populateUnitsButton
 {
@@ -64,31 +120,65 @@
     [btn removeAllItems];
     NSUInteger counter = 0;
     NSString * name;
+    NSString * customSizeDescription = [AMPaper paperSizeDescriptionForPaperWithPortraitSize:self.paperSize inOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
     for ( NSString * paperName in [AMPaper paperNames] ) {
         name = [paperName stringByAppendingString:@" "];
-        name = [name stringByAppendingString:[AMPaper paperSizeDescriptionForPaperType:counter withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits]];
+        if (counter == AMPaperTypeCustom) {
+            name = [name stringByAppendingString:customSizeDescription];
+        } else {
+            name = [name stringByAppendingString:[AMPaper paperSizeDescriptionForPaperType:counter withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits]];
+        }
         [btn addItemWithTitle:name];
         [btn itemAtIndex:counter].tag = counter;
         counter++;
     }
     [btn selectItemAtIndex:self.paperType];
 }
-
-- (IBAction)marginChanged:(id)sender {
-}
-
--(void)customWidthChanged:(id)sender
+-(void)populatePaperOrientationButton
 {
+    NSPopUpButton * btn = self.orientationPopupButton;
+    [btn removeAllItems];
+    NSUInteger counter = 0;
+    NSString * name;
+    for ( NSString * orientationName in [AMPaper paperOrientationNames] ) {
+        name = [orientationName capitalizedString];
+        [btn addItemWithTitle:name];
+        [btn itemAtIndex:counter].tag = counter;
+        counter++;
+    }
+    [btn selectItemAtIndex:self.paperOrientation];
 }
-
+-(void)populateMarginTextFields
+{
+    AMMargins margins = [self.paper marginsInUnits:self.paperMeasurementUnits];
+    self.leftMarginTextField.floatValue    = margins.left;
+    self.rightMarginTextField.floatValue   = margins.right;
+    self.topMarginTextField.floatValue     = margins.top;
+    self.bottomMarginTextField.floatValue  = margins.bottom;
+}
 #pragma mark - AMPageOrientationViewDatasource -
--(NSString *)paperName
+-(AMPaperType)paperType
+{
+    return self.paper.paperType;
+}-(NSString *)paperName
 {
     return self.paper.paperName;
 }
 -(NSString*)paperDescription
 {
     return self.paper.paperDescription;
+}
+-(NSString *)paperWidthDescription
+{
+    return self.paper.paperWidthDescription;
+}
+-(NSString*)paperHeightDescription
+{
+    return self.paper.paperHeightDescription;
+}
+-(NSString*)paperSizeDescription
+{
+    return self.paper.paperSizeDescription;
 }
 -(NSSize)paperSize
 {
@@ -98,13 +188,13 @@
 {
     return self.paper.paperOrientation;
 }
--(AMMeasurementUnits)paperMeasurementUnits
-{
-    return self.paper.paperMeasurementUnits;
-}
 -(NSString*)paperOrientationName
 {
     return self.paper.paperOrientationName;
+}
+-(AMMeasurementUnits)paperMeasurementUnits
+{
+    return self.paper.paperMeasurementUnits;
 }
 -(AMMargins)paperMargins
 {
@@ -114,10 +204,6 @@
     margins.left   = 2;
     margins.right  = 2;
     return margins;
-}
--(AMPaperType)paperType
-{
-    return self.paper.paperType;
 }
 -(AMPaper *)paper
 {
@@ -130,16 +216,62 @@
 {
     _paper = paper;
 }
-
-- (IBAction)unitsChanged:(NSPopUpButton*)sender
+-(void)enableCustomSizeControls
 {
-    self.paper.paperMeasurementUnits = sender.selectedTag;
-    [self populatePaperTypeButton];
+    BOOL enabled = (self.paperType == AMPaperTypeCustom);
+    [self.customHeightTextField setEnabled:enabled];
+    [self.customWidthTextField setEnabled:enabled];
+    [self.customWidthLabel setEnabled:enabled];
+    [self.customHeightLabel setEnabled:enabled];
+}
+-(NSSize)customSizeFromView
+{
+    NSSize customSize = NSMakeSize(self.customWidthTextField.floatValue, self.customHeightTextField.floatValue);
+    customSize = [AMMeasurement convertSize:customSize fromUnits:self.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
+    return customSize;
+}
+-(void)setPaperType:(AMPaperType)paperType
+{
+    if (paperType == self.paperType) {
+        return;
+    }
+    if (paperType == AMPaperTypeCustom) {
+        [self setCustomSize:[AMPaper paperSizeForPaperType:self.paperType withOrientation:AMPaperOrientationPortrait inUnits:AMMeasurementUnitsPoints]];
+    } else {
+        self.paper.paperType = paperType;
+    }
     [self updateDisplay];
+}
+-(void)setCustomSize:(NSSize)size
+{
+    [self.paper makeCustomPortraitWidth:size.width portraitHeight:size.height];
+}
+-(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
+{
+    self.paper.paperOrientation = paperOrientation;
+    [self updateDisplay];
+}
+-(void)setPaperMeasurementUnits:(AMMeasurementUnits)units
+{
+    self.paper.paperMeasurementUnits = units;
+    [self updateDisplay];
+}
+#pragma mark - Actions -
+- (IBAction)marginChanged:(id)sender {
+}
+-(void)customSizeChanged:(id)sender
+{
+    [self setCustomSize:[self customSizeFromView]];
+}
+- (IBAction)orientationChanged:(NSPopUpButton *)sender {
+    [self setPaperOrientation:sender.selectedTag];
 }
 - (IBAction)paperTypeChanged:(NSPopUpButton*)sender
 {
-    self.paper.paperType = sender.selectedTag;
-    [self updateDisplay];
+    [self setPaperType:sender.selectedTag];
+}
+- (IBAction)unitsChanged:(NSPopUpButton*)sender
+{
+    [self setPaperMeasurementUnits:sender.selectedTag];
 }
 @end

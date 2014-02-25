@@ -17,9 +17,9 @@
 +(NSArray *)namesForUnitTypes
 {
     return @[NSLocalizedString(@"point", nil),
-             NSLocalizedString(@"millimeter", @"but millimetres in UK English, etc"),
-             NSLocalizedString(@"centimeter", @"but centimetres in UK English, etc."),
-             NSLocalizedString(@"inch",nil)];
+             NSLocalizedString(@"Millimeters", @"but millimetres in UK English, etc"),
+             NSLocalizedString(@"Centimeters", @"but centimetres in UK English, etc."),
+             NSLocalizedString(@"Inches",nil)];
 }
 +(NSString *)abbreviatedMameForUnitType:(AMMeasurementUnits)unitType
 {
@@ -41,6 +41,28 @@
     return name;
 }
 +(NSSize)convertSize:(NSSize)size fromUnits:(AMMeasurementUnits)originalUnits toUnits:(AMMeasurementUnits)finalUnits
+{
+    double conversionFactor = [self conversionFactorFromUnits:originalUnits
+                                                      toUnits:finalUnits];
+    return NSMakeSize(size.width * conversionFactor, size.height * conversionFactor);
+}
++(CGFloat)convertLength:(CGFloat)length fromUnits:(AMMeasurementUnits)originalUnits toUnits:(AMMeasurementUnits)finalUnits
+{
+    double conversionFactor = [self conversionFactorFromUnits:originalUnits
+                                                      toUnits:finalUnits];
+    return length * conversionFactor;
+}
++(AMMargins)convertMargins:(AMMargins)margins fromUnits:(AMMeasurementUnits)originalUnits toUnits:(AMMeasurementUnits)finalUnits
+{
+    double conversionFactor = [self conversionFactorFromUnits:originalUnits
+                                                      toUnits:finalUnits];
+    margins.bottom *= conversionFactor;
+    margins.left   *= conversionFactor;
+    margins.right  *= conversionFactor;
+    margins.top    *= conversionFactor;
+    return margins;
+}
++(CGFloat)conversionFactorFromUnits:(AMMeasurementUnits)originalUnits toUnits:(AMMeasurementUnits)finalUnits
 {
     double conversionFactor;
     switch (originalUnits) {
@@ -71,7 +93,25 @@
             conversionFactor *= kAMUnitConversionPoints_In;
             break;
     }
-    return NSMakeSize(size.width * conversionFactor, size.height * conversionFactor);
+    return conversionFactor;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

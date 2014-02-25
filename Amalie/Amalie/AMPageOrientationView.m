@@ -16,7 +16,8 @@
     AMMargins _margins;
     AMPaperOrientation _orientation;
     AMMeasurementUnits _measurementUnits;
-
+    NSString * _widthDescription;
+    NSString * _heightDescription;
     NSRect _paperRect;
 }
 @property (copy) NSString * paperName;
@@ -57,6 +58,7 @@
 {
     [self reloadData];
 }
+
 -(void)reloadData
 {
     _title = [self.datasource paperDescription];
@@ -68,20 +70,21 @@
         _paperSize.height = _paperSize.width;
         _paperSize.width = swap;
     }
-
+    _widthDescription  = [self.datasource paperWidthDescription];
+    _heightDescription = [self.datasource paperHeightDescription];
     CGFloat bw = self.bounds.size.width;
     CGFloat bh = self.bounds.size.height;
     CGFloat bar = bw / bh;
 
-    CGFloat pw = _paperSize.width; // / pm * 0.7 * bw;
-    CGFloat ph = _paperSize.height; // / pm * 0.7 * bw;
+    CGFloat pw = _paperSize.width;
+    CGFloat ph = _paperSize.height;
     CGFloat par = pw / ph;
     if (par > bar) {
         // size of paper visual is limited by width of container
         pw = 0.7 * bw;
         ph = pw / par;
     } else {
-        // size of paper visual is limited by height
+        // size of paper visual is limited by height of container
         ph = 0.7 * bh;
         pw = ph * par;
     }

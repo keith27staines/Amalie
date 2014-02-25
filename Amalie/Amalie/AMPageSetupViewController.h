@@ -33,7 +33,11 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
 
 @interface AMPageSetupViewController : NSViewController <AMPageSetupDatasource>
 
-#pragma mark - Page orientation view
+#pragma mark - Page orientation
+- (IBAction)orientationChanged:(NSPopUpButton *)sender;
+@property (weak) IBOutlet NSPopUpButton *orientationPopupButton;
+
+#pragma mark - paper visualisation view
 @property (weak) IBOutlet AMPageOrientationView *orientationView;
 
 #pragma mark - Paper type and units outlets and actions
@@ -44,17 +48,56 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
 
 #pragma mark - Document margins outlets and actions
 - (IBAction)marginChanged:(id)sender;
-@property (weak) IBOutlet NSTextField *topMarginPopupButton;
-@property (weak) IBOutlet NSTextField *bottomMarginPopupButton;
-@property (weak) IBOutlet NSTextField *leftMarginPopupButton;
-@property (weak) IBOutlet NSTextField *rightMarginPopupButton;
+@property (weak) IBOutlet NSTextField *topMarginTextField;
+@property (weak) IBOutlet NSTextField *bottomMarginTextField;
+@property (weak) IBOutlet NSTextField *leftMarginTextField;
+@property (weak) IBOutlet NSTextField *rightMarginTextField;
 
 #pragma mark - Custom width and height outlets and actions
-- (IBAction)customWidthChanged:(id)sender;
+- (IBAction)customSizeChanged:(id)sender;
 @property (weak) IBOutlet NSTextField *customWidthTextField;
 @property (weak) IBOutlet NSTextField *customHeightTextField;
-@property (weak) IBOutlet NSStepper *customWidthStepperButton;
-@property (weak) IBOutlet NSStepper *customHeightStepperButton;
+@property (weak) IBOutlet NSTextField *customWidthLabel;
+@property (weak) IBOutlet NSTextField *customHeightLabel;
+
+@property (weak) IBOutlet NSNumberFormatter *customWidthFormatter;
+
+@property (weak) IBOutlet NSNumberFormatter *customHeightFormatter;
+
+@property (weak) IBOutlet NSNumberFormatter *topMarginFormatter;
+
+@property (weak) IBOutlet NSNumberFormatter *bottomMarginFormatter;
+
+@property (weak) IBOutlet NSNumberFormatter *leftMarginFormatter;
+
+@property (weak) IBOutlet NSNumberFormatter *rightMarginFormatter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
