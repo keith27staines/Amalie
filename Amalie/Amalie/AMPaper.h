@@ -9,11 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
-@interface AMPaper : NSObject
-
-+(AMPaper*)paperWithType:(AMPaperType)paperType orientation:(AMPaperOrientation)orientation;
--(id)initWithType:(AMPaperType)type orientation:(AMPaperOrientation)orientation;
-
+@interface AMPaper : NSObject <NSCopying, NSCoding>
 
 +(NSSize)paperSizeForPaperType:(AMPaperType)paperType withOrientation:(AMPaperOrientation)orientation inUnits:(AMMeasurementUnits)units;
 

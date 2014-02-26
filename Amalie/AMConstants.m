@@ -49,6 +49,7 @@ CGFloat const kAMLibraryWidth                         = 300;
 
 #pragma mark - Page Layout -
 NSString * const kAMPaperSizeKey                      = @"kAMPaperSizeKey";
+NSString * const kAMPageOrientationKey                = @"kAMPageOrientationKey";
 NSString * const kAMPageWidthCustomKey                = @"kAMPageWidthCustomKey";
 NSString * const kAMPageHeightCustomKey               = @"kAMPageHeightCustomKey";
 NSString * const kAMPageMarginsKey                    = @"kAMPageMarginsKey";

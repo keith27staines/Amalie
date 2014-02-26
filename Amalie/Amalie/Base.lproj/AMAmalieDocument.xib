@@ -149,12 +149,12 @@
                             <action selector="toolbarRightSidePanelButtonClicked:" target="-2" id="VwP-uw-jVb"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="1BFE5CB5-7FFB-478F-B70C-9B7987F60E50" label="Custom View" paletteLabel="Custom View" image="PageSetupBtn" id="Lu1-Am-6ik">
+                    <toolbarItem implicitItemIdentifier="1BFE5CB5-7FFB-478F-B70C-9B7987F60E50" label="" paletteLabel="" image="PageSetupBtn" id="Lu1-Am-6ik">
                         <nil key="toolTip"/>
                         <size key="minSize" width="48" height="48"/>
                         <size key="maxSize" width="48" height="48"/>
                         <button key="view" id="HNC-Or-fYP">
-                            <rect key="frame" x="15" y="14" width="48" height="48"/>
+                            <rect key="frame" x="0.0" y="14" width="48" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PageSetupBtn" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="krB-3q-Sah">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -201,7 +201,7 @@
         </menu>
         <viewController id="jGG-r6-pKc" customClass="AMKeyboardsViewController"/>
         <viewController id="GYe-sB-1sv" userLabel="Page setup view controller" customClass="AMPageSetupViewController"/>
-        <popover id="XWM-t0-OLB" userLabel="Page setup poopover">
+        <popover id="XWM-t0-OLB" userLabel="Page setup popover">
             <connections>
                 <outlet property="contentViewController" destination="GYe-sB-1sv" id="Gdg-EK-SSm"/>
             </connections>

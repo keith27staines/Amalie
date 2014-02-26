@@ -16,7 +16,6 @@
 {
     AMPaper * _paper;
 }
-@property AMPaper * paper;
 @end
 
 @implementation AMPageSetupViewController
@@ -46,6 +45,8 @@
     [self.customWidthTextField setFloatValue:self.paperSize.width];
     [self.customHeightTextField setFloatValue:self.paperSize.height];
     [self configureFormatters];
+    [self.view.window endEditingFor:nil];
+    [self.view.window makeFirstResponder:self.view.window];
 }
 -(void)loadView
 {
@@ -65,36 +66,42 @@
 -(void)configureFormatters
 {
     for ( NSNumberFormatter * formatter in [self numberFormatters] ) {
-        [self configureFormatter:formatter];
+        [self configureFormatterForUnits:formatter];
     }
+    [self.leftMarginFormatter setMaximum:@(self.paperSize.width/2.0)];
+    [self.rightMarginFormatter setMaximum:@(self.paperSize.width/2.0)];
+    [self.topMarginFormatter setMaximum:@(self.paperSize.height/2.0)];
+    [self.bottomMarginFormatter setMaximum:@(self.paperSize.height/2.0)];
 }
--(void)configureFormatter:(NSNumberFormatter*)formatter
+-(void)configureFormatterForUnits:(NSNumberFormatter*)formatter
 {
+    NSString * suffix = [@" " stringByAppendingString:[AMMeasurement abbreviatedMameForUnitType:self.paperMeasurementUnits]];
+    [formatter setMinimum:@(0)];
+    [formatter setPositiveSuffix:suffix];
+    [formatter setMinimum:@(0)];
+    [formatter setLenient:YES];
+
     switch (self.paperMeasurementUnits) {
         case AMMeasurementUnitsPoints:
         {
-            [formatter setPositiveSuffix:@" pt"];
             [formatter setPositiveFormat:@"%i"];
             [formatter setAllowsFloats:NO];
             break;
         }
         case AMMeasurementUnitsMillimeters:
         {
-            [formatter setPositiveSuffix:@" mm"];
             [formatter setPositiveFormat:@"%i"];
             [formatter setAllowsFloats:NO];
             break;
         }
         case AMMeasurementUnitsCentimeters:
         {
-            [formatter setPositiveSuffix:@" cm"];
             [formatter setAllowsFloats:YES];
             [formatter setMaximumFractionDigits:1];
             break;
         }
         case AMMeasurementUnitsInches:
         {
-            [formatter setPositiveSuffix:@" \""];
             [formatter setAllowsFloats:YES];
             [formatter setMaximumFractionDigits:2];
             break;
@@ -198,17 +205,12 @@
 }
 -(AMMargins)paperMargins
 {
-    AMMargins margins;
-    margins.top    = 2;
-    margins.bottom = 2;
-    margins.left   = 2;
-    margins.right  = 2;
-    return margins;
+    return [self.paper marginsInUnits:self.paperMeasurementUnits];
 }
 -(AMPaper *)paper
 {
     if (!_paper) {
-        _paper = [AMPaper paperWithType:AMPaperTypeA4 orientation:AMPaperOrientationPortrait];
+        _paper = [[AMPaper alloc] init];
     }
     return _paper;
 }
@@ -223,6 +225,7 @@
     [self.customWidthTextField setEnabled:enabled];
     [self.customWidthLabel setEnabled:enabled];
     [self.customHeightLabel setEnabled:enabled];
+    [self.exactSizeLabel setEnabled:enabled];
 }
 -(NSSize)customSizeFromView
 {
@@ -256,8 +259,24 @@
     self.paper.paperMeasurementUnits = units;
     [self updateDisplay];
 }
+-(void)setMargins
+{
+    AMMargins margins = [self marginsFromView];
+    [self.paper setMargins:margins inUnits:self.paperMeasurementUnits];
+    [self updateDisplay];
+}
+-(AMMargins)marginsFromView
+{
+    AMMargins margins;
+    margins.top = self.topMarginTextField.floatValue;
+    margins.bottom = self.bottomMarginTextField.floatValue;
+    margins.left = self.leftMarginTextField.floatValue;
+    margins.right = self.rightMarginTextField.floatValue;
+    return margins;
+}
 #pragma mark - Actions -
 - (IBAction)marginChanged:(id)sender {
+    [self setMargins];
 }
 -(void)customSizeChanged:(id)sender
 {
@@ -273,5 +292,11 @@
 - (IBAction)unitsChanged:(NSPopUpButton*)sender
 {
     [self setPaperMeasurementUnits:sender.selectedTag];
+}
+
+#pragma mark - Delegate -
+-(BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
+{
+    return NO;
 }
 @end

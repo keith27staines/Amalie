@@ -19,8 +19,6 @@
     return self;
 }
 
-
-
 - (void)drawRect:(NSRect)dirtyRect
 {
     

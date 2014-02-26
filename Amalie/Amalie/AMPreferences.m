@@ -61,6 +61,22 @@ static NSMutableDictionary * AMFonts;
 {
     [AMPreferences setWorksheetPaperType:worksheetPaperType];
 }
++(AMPaperOrientation)worksheetPaperOrientation
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPageOrientationKey];
+}
++(void)setWorksheetPaperOrientation:(AMPaperOrientation)paperOrientation
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:paperOrientation forKey:kAMPageOrientationKey];
+}
+-(AMPaperOrientation)worksheetPaperOrientation
+{
+    return [AMPreferences worksheetPaperOrientation];
+}
+-(void)setWorksheetPaperOrientation:(AMPaperOrientation)worksheetPaperOrientation
+{
+    [AMPreferences setWorksheetPaperOrientation:worksheetPaperOrientation];
+}
 +(NSSize)worksheetPageSize
 {
     // Portrait orientation
@@ -261,6 +277,8 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:@(AMPaperTypeA4) forKey:kAMPaperSizeKey];
     [defaults setObject:@(kAMPageWidthA4) forKey:kAMPageWidthCustomKey];
     [defaults setObject:@(kAMPageHeightA4) forKey:kAMPageHeightCustomKey];
+    [defaults setObject:@(AMPaperOrientationPortrait) forKey:kAMPageOrientationKey];
+    
     AMMargins margins = AMMarginsMake(72, 72, 72, 72);
     [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
     

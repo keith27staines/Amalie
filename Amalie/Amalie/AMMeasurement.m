@@ -16,7 +16,7 @@
 }
 +(NSArray *)namesForUnitTypes
 {
-    return @[NSLocalizedString(@"point", nil),
+    return @[NSLocalizedString(@"Points", @"A point being the unit of length = 1/72 inch"),
              NSLocalizedString(@"Millimeters", @"but millimetres in UK English, etc"),
              NSLocalizedString(@"Centimeters", @"but centimetres in UK English, etc."),
              NSLocalizedString(@"Inches",nil)];

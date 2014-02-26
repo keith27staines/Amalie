@@ -49,6 +49,8 @@ extern CGFloat const kAMLibraryWidth;
 
 #pragma mark - Page Layout -
 extern NSString * const kAMPaperSizeKey;
+extern NSString * const kAMPageOrientationKey;
+
 extern NSString * const kAMPageWidthCustomKey;
 extern NSString * const kAMPageHeightCustomKey;
 extern NSString * const kAMPageMarginsKey;

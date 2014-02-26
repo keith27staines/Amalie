@@ -24,10 +24,13 @@
 #import "AMPreferences.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject+Methods.h"
+#import "AMDDocumentSettings+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 #import "AMNameProviderBase.h"
 #import "AMDocumentView.h"
+#import "AMPaper.h"
+#import "AMPageSetupViewController.h"
 
 // View controllers for dynamically loaded views
 #import "AMInsertableViewController.h"
@@ -51,7 +54,9 @@
     NSMutableDictionary         * _insertedRecords;
     NSMutableDictionary         * _contentControllers;
     KSMWorksheet                * _mathSheet;
-    NSEntityDescription         * _amdInsertedObjectsEntity;;
+    NSEntityDescription         * _amdInsertedObjectsEntity;
+    AMDDocumentSettings         * _documentSettings;
+    AMPaper                     * _paper;
 }
 
 /*!
@@ -71,6 +76,10 @@
 
 @property AMSidepanelVisibility sidepanelVisibility;
 
+@property (readonly) AMDDocumentSettings * documentSettings;
+
+@property (readonly) AMPaper * paper;
+
 @end
 
 @implementation AMAmalieDocument
@@ -82,6 +91,7 @@
     self = [super init];
     if (self) {
         // Add your subclass-specific initialization here.
+        self.sharedDataStore.moc = self.managedObjectContext;
         [self setupDataStructures];
     }
     return self;
@@ -95,12 +105,36 @@
     [slider setMaxValue:4];
     [slider setFloatValue:1];
     [slider setContinuous:YES];
-    self.sharedDataStore.moc = self.managedObjectContext;
     
     // load major subiews into their containers
     [self addLibraryView];
     [self addInspectorView];
     [self configureToolbar];
+}
+- (NSString *)windowNibName
+{
+    // Override returning the nib file name of the document
+    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
+    return @"AMAmalieDocument";
+}
+- (void)windowControllerDidLoadNib:(NSWindowController *)aController
+{
+    [super windowControllerDidLoadNib:aController];
+    [self loadDocumentIntoView];
+}
+-(BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError *__autoreleasing *)error
+{
+    if ( ![super readFromURL:absoluteURL ofType:typeName error:error] ) return NO;
+    
+    // Load the document's object model from the datastore
+    [self setupDataStructures];
+    
+    return YES;
+}
+-(void)revertDocumentToSaved:(id)sender
+{
+    [super revertDocumentToSaved:sender];
+    [self setupDataStructures];
 }
 -(AMDataStore *)sharedDataStore
 {
@@ -121,7 +155,6 @@
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidUnhide object:self.leftSplitView];
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidUnhide object:self.rightSplitView];
 }
-
 /*! Returns the minimum width of the left sidepane in its uncollapsed state */
 -(CGFloat)minimumLeftPaneWidth
 {
@@ -151,31 +184,6 @@
     }
     return minWidth;
 }
-- (NSString *)windowNibName
-{
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"AMAmalieDocument";
-}
-- (void)windowControllerDidLoadNib:(NSWindowController *)aController
-{
-    [super windowControllerDidLoadNib:aController];
-    [self loadDocumentIntoView];
-}
--(BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError *__autoreleasing *)error
-{
-    if ( ![super readFromURL:absoluteURL ofType:typeName error:error] ) return NO;
-    
-    // Load the document's object model from the datastore
-    [self setupDataStructures];
-    
-    return YES;
-}
--(void)revertDocumentToSaved:(id)sender
-{
-    [super revertDocumentToSaved:sender];
-    [self setupDataStructures];
-}
 + (BOOL)autosavesInPlace
 {
     return YES;
@@ -193,7 +201,6 @@
         NSView * view = self.worksheetView.subviews[0];
         [view removeFromSuperviewWithoutNeedingDisplay];
     }
-    
     [self.undoManager disableUndoRegistration];
     for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
         NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
@@ -213,6 +220,27 @@
     [self.worksheetView setNeedsDisplay:YES];
     [self.managedObjectContext processPendingChanges];
     [self.undoManager removeAllActions];
+}
+-(AMDDocumentSettings*)documentSettings
+{
+    if (!_documentSettings) {
+        _documentSettings = [AMDDocumentSettings fetchOrMakeDocumentSettings];
+    }
+    return _documentSettings;
+}
+-(AMPaper*)paper
+{
+    if (!_paper) {
+        AMDDocumentSettings * documentSettings = self.documentSettings;
+        NSData * paperData = documentSettings.pageSetup;
+        if (paperData) {
+            _paper = [NSKeyedUnarchiver unarchiveObjectWithData:paperData];
+        } else {
+            _paper = [[AMPaper alloc] init];
+            documentSettings.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:_paper];
+        }
+    }
+    return _paper;
 }
 
 #pragma mark - Side panel configuration -
@@ -352,10 +380,13 @@
 }
 
 #pragma mark - AMWorksheetViewDelegate -
-
+-(NSSize)pageSize
+{
+    return self.paper.paperSize;
+}
 -(AMMargins)pageMargins
 {
-    return [AMPreferences pageMargins];
+    return [self.paper marginsInUnits:AMMeasurementUnitsPoints];
 }
 -(CGFloat)verticalSpacing
 {
@@ -363,10 +394,6 @@
     NSFont * font = [AMPreferences standardFont];
     CGFloat lineSpacing = font.ascender - font.descender + font.leading;
     return lineSpacing;
-}
--(NSSize)pageSize
-{
-    return [AMPreferences worksheetPageSize];
 }
 -(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
 {
@@ -470,7 +497,7 @@
     NSAlert * alert = nil;
     NSString * name = @"???";
     NSString * title = nil;
-    NSString * message = @"Do you really want to remove %@ from this document?";;
+    NSString * message = @"Do you really want to remove %@ from this document?";
     NSString * messageDetail;
     switch (view.insertableType) {
         case AMInsertableTypeConstant:
@@ -580,11 +607,13 @@
     _selectedView.viewState = AMInsertViewStateSelected;
 }
 
-#pragma mark - Popovers -
+#pragma mark - Popover instantiations -
 - (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender
 {
     NSPopover * popover = self.pageSetupPopover;
     popover.behavior = NSPopoverBehaviorTransient;
+    AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
+    vc.paper = self.paper;
     [self.pageSetupPopover showRelativeToRect:sender.frame ofView:sender preferredEdge:NSMaxYEdge];
 }
 
@@ -612,6 +641,9 @@
     }
     return NO;
 }
+
+#pragma mark - Popover Delegate -
+
 
 #pragma mark - Misc -
 

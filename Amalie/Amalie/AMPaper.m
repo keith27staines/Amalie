@@ -8,6 +8,7 @@
 
 #import "AMPaper.h"
 #import "AMMeasurement.h"
+#import "AMPreferences.h"
 
 @interface AMPaper()
 {
@@ -24,25 +25,18 @@
 
 - (instancetype)init
 {
-    return [self initWithType:AMPaperTypeA4 orientation:AMPaperOrientationPortrait];
-}
-+(AMPaper*)paperWithType:(AMPaperType)paperType orientation:(AMPaperOrientation)orientation
-{
-    return [[AMPaper alloc] initWithType:paperType orientation:orientation];
-}
--(id)initWithType:(AMPaperType)paperType orientation:(AMPaperOrientation)orientation
-{
     self = [super init];
     if (self) {
-        _paperType = paperType;
-        _orientation = orientation;
+        AMPreferences * preferences = [AMPreferences sharedPreferences];
+        _paperType = preferences.worksheetPaperType;
+        _orientation = preferences.worksheetPaperOrientation;
+        _margins = [AMPreferences pageMargins];
         if (_paperType != AMPaperTypeCustom) {
-            self.customSize = self.paperSize;
+            self.customSize = [preferences worksheetPageSize];
         }
     }
     return self;
 }
-
 -(NSString*)paperName
 {
     return [AMPaper paperNameForPaperType:self.paperType];
@@ -71,11 +65,11 @@
 }
 -(AMMargins)marginsInUnits:(AMMeasurementUnits)units
 {
-    return _margins;
+    return [AMMeasurement convertMargins:_margins fromUnits:AMMeasurementUnitsPoints toUnits:units];
 }
 -(void)setMargins:(AMMargins)margins inUnits:(AMMeasurementUnits)units
 {
-    
+    _margins = [AMMeasurement convertMargins:margins fromUnits:units toUnits:AMMeasurementUnitsPoints];
 }
 -(NSSize)sizeInUnits:(AMMeasurementUnits)units
 {
@@ -231,5 +225,81 @@
     }
     return [AMMeasurement convertSize:size fromUnits:AMMeasurementUnitsPoints toUnits:units];
 }
+
+
+#pragma mark - NSCoding protocol
+static NSString * const kAMPaperTypeKey = @"kAMPaperTypeKey";
+static NSString * const kAMPaperOrientationKey = @"kAMPaperOrientationKey";
+static NSString * const kAMPaperMeasurementUnitsKey = @"kAMPaperMeasurementUnitsKey";
+static NSString * const kAMPaperCustomSizeKey = @"kAMPaperCustomSizeKey";
+static NSString * const kAMPaperMarginTopKey = @"kAMPaperMarginTopKey";
+static NSString * const kAMPaperMarginBottomKey = @"kAMPaperMarginBottomKey";
+static NSString * const kAMPaperMarginLeftKey = @"kAMPaperMarginLeftKey";
+static NSString * const kAMPaperMarginRightKey = @"kAMPaperMarginRightKey";
+
+-(id)initWithCoder:(NSCoder *)decoder
+{
+    _paperType = [decoder decodeIntegerForKey:@"kAMPaperTypeKey"];
+    [decoder decodeIntegerForKey:@"kAMPaperOrientationKey"];
+    [decoder decodeIntegerForKey:@"kAMPaperMeasurementUnitsKey"];
+    [decoder decodeSizeForKey:@"kAMPaperCustomSizeKey"];
+    [decoder decodeFloatForKey:@"kAMPaperMarginTopKey"];
+    [decoder decodeFloatForKey:@"kAMPaperMarginBottomKey"];
+    [decoder decodeFloatForKey:@"kAMPaperMarginLeftKey"];
+    [decoder decodeFloatForKey:@"kAMPaperMarginRightKey"];
+    return self;
+}
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeInteger:_paperType forKey:@"kAMPaperTypeKey"];
+    [coder encodeInteger:_paperOrientation forKey:@"kAMPaperOrientationKey"];
+    [coder encodeInteger:_paperMeasurementUnits forKey:@"kAMPaperMeasurementUnitsKey"];
+    [coder encodeSize:_customSize forKey:@"kAMPaperCustomSizeKey"];
+    [coder encodeFloat:_margins.top forKey:@"kAMPaperMarginTopKey"];
+    [coder encodeFloat:_margins.bottom forKey:@"kAMPaperMarginBottomKey"];
+    [coder encodeFloat:_margins.left forKey:@"kAMPaperMarginLeftKey"];
+    [coder encodeFloat:_margins.right forKey:@"kAMPaperMarginRightKey"];
+}
+
+#pragma mark - NSCopying protocol
+-(id)copyWithZone:(NSZone *)zone
+{
+    AMPaper * copy = [[AMPaper alloc] init];
+    if (copy) {
+        copy.paperType = self.paperType;
+        copy.paperOrientation = self.paperOrientation;
+        copy.paperMeasurementUnits = self.paperMeasurementUnits;
+        copy.customSize = self.customSize;
+        [copy setMargins:[self marginsInUnits:AMMeasurementUnitsPoints] inUnits:AMMeasurementUnitsPoints];
+    }
+    return copy;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

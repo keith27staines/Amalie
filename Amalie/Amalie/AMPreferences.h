@@ -30,6 +30,10 @@
 +(AMPaperType)worksheetPaperType;
 +(void)setWorksheetPaperType:(AMPaperType)paperType;
 
+@property AMPaperOrientation worksheetPaperOrientation;
++(AMPaperOrientation)worksheetPaperOrientation;
++(void)setWorksheetPaperOrientation:(AMPaperOrientation)paperOrientation;
+
 #pragma mark - Fonts -
 +(NSDictionary*)fonts;
 +(NSFont*)standardFont;

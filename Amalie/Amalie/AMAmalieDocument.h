@@ -24,7 +24,7 @@
 
 @interface AMAmalieDocument : NSPersistentDocument
 <AMWorksheetViewDelegate,
- AMInsertableViewDelegate, NSSplitViewDelegate>
+ AMInsertableViewDelegate, NSSplitViewDelegate, NSPopoverDelegate>
 
 
 #pragma mark -Toolbar outlets and actions-

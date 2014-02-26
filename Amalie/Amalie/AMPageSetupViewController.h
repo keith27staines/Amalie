@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMPageOrientationView;
+@class AMPageOrientationView, AMPaper;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
@@ -31,7 +31,9 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
     AMUnitsMillimeters = 2,
 };
 
-@interface AMPageSetupViewController : NSViewController <AMPageSetupDatasource>
+@interface AMPageSetupViewController : NSViewController <AMPageSetupDatasource, NSControlTextEditingDelegate>
+
+@property AMPaper * paper;
 
 #pragma mark - Page orientation
 - (IBAction)orientationChanged:(NSPopUpButton *)sender;
@@ -59,6 +61,7 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
 @property (weak) IBOutlet NSTextField *customHeightTextField;
 @property (weak) IBOutlet NSTextField *customWidthLabel;
 @property (weak) IBOutlet NSTextField *customHeightLabel;
+@property (weak) IBOutlet NSTextField *exactSizeLabel;
 
 @property (weak) IBOutlet NSNumberFormatter *customWidthFormatter;
 
