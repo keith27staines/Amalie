@@ -26,7 +26,8 @@
 
 -(BOOL)isOpaque
 {
-    return YES;
+    // Warning! Bug whereby textfields retain focus ring after losing focus if isOpaque = YES;
+    return NO;
 }
 
 @end

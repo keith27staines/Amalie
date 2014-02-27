@@ -614,7 +614,9 @@
     popover.behavior = NSPopoverBehaviorTransient;
     AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
     vc.paper = self.paper;
-    [self.pageSetupPopover showRelativeToRect:sender.frame ofView:sender preferredEdge:NSMaxYEdge];
+    [self.pageSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
+    BOOL success = [[self.worksheetView window] makeFirstResponder:nil];
+    NSAssert(success, @"Failed to remove first responder when showing page setup popover");
 }
 #pragma mark - Popover Delegate -
 -(void)popoverDidClose:(NSNotification *)notification
