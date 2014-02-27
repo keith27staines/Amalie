@@ -31,6 +31,7 @@
 #import "AMDocumentView.h"
 #import "AMPaper.h"
 #import "AMPageSetupViewController.h"
+#import "AMMeasurement.h"
 
 // View controllers for dynamically loaded views
 #import "AMInsertableViewController.h"
@@ -110,17 +111,13 @@
     [self addLibraryView];
     [self addInspectorView];
     [self configureToolbar];
+    [self loadDocumentIntoView];
 }
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"AMAmalieDocument";
-}
-- (void)windowControllerDidLoadNib:(NSWindowController *)aController
-{
-    [super windowControllerDidLoadNib:aController];
-    [self loadDocumentIntoView];
 }
 -(BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError *__autoreleasing *)error
 {
@@ -197,10 +194,8 @@
 }
 -(void)loadDocumentIntoView
 {
-    while (self.worksheetView.subviews.count > 0) {
-        NSView * view = self.worksheetView.subviews[0];
-        [view removeFromSuperviewWithoutNeedingDisplay];
-    }
+    [self.worksheetView prepareForReload];
+    
     [self.undoManager disableUndoRegistration];
     for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
         NSRect frame = NSMakeRect(insertedObject.xPosition.floatValue,
@@ -216,10 +211,10 @@
         
         [self insertView:insertableView withOrigin:insertableView.frame.origin];
     }
+    [self.managedObjectContext processPendingChanges];
+    [self.undoManager enableUndoRegistration];
     [self.worksheetView setNeedsUpdateConstraints:YES];
     [self.worksheetView setNeedsDisplay:YES];
-    [self.managedObjectContext processPendingChanges];
-    [self.undoManager removeAllActions];
 }
 -(AMDDocumentSettings*)documentSettings
 {
@@ -380,9 +375,14 @@
 }
 
 #pragma mark - AMWorksheetViewDelegate -
--(NSSize)pageSize
+-(NSSize)pageSizeInPoints
 {
-    return self.paper.paperSize;
+    NSSize size = self.paper.paperSize;
+    if (self.paper.paperOrientation == AMPaperOrientationLandscape) {
+        size = NSMakeSize(size.height, size.width);
+    }
+    size = [AMMeasurement convertSize:size fromUnits:self.paper.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
+    return size;
 }
 -(AMMargins)pageMargins
 {
@@ -616,6 +616,18 @@
     vc.paper = self.paper;
     [self.pageSetupPopover showRelativeToRect:sender.frame ofView:sender preferredEdge:NSMaxYEdge];
 }
+#pragma mark - Popover Delegate -
+-(void)popoverDidClose:(NSNotification *)notification
+{
+    AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
+    _paper = vc.paper;
+    [self savePaper];
+    [self loadDocumentIntoView];
+}
+-(NSWindow *)detachableWindowForPopover:(NSPopover *)popover
+{
+    return nil;
+}
 
 #pragma mark - NSSplitViewDelegate -
 
@@ -642,11 +654,12 @@
     return NO;
 }
 
-#pragma mark - Popover Delegate -
-
-
 #pragma mark - Misc -
-
+-(void)savePaper
+{
+    AMDDocumentSettings * settings = self.documentSettings;
+    settings.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:_paper];
+}
 -(NSString *)defaultDraftName
 {
     return @"Mathsheet";

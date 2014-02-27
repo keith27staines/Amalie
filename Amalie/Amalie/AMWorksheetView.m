@@ -165,17 +165,15 @@ static BOOL LOG_DRAG_OPS = NO;
 {
     [[NSColor whiteColor] set];
     NSRectFill(dirtyRect);
-    
-    for (NSView * view in self.subviews) {
-        if (NSIntersectsRect(view.frame, dirtyRect)) {
-            NSRect intersect = NSIntersectionRect(view.frame, dirtyRect);
-            [view displayRect:intersect];
-        }
-    }
 }
 
 # pragma mark - Layout -
-
+-(void)prepareForReload
+{
+    while (self.subviews.count) {
+        [self.subviews[0] removeFromSuperviewWithoutNeedingDisplay];
+    }
+}
 -(void)updateConstraints
 {
     [super updateConstraints];
@@ -244,7 +242,7 @@ static BOOL LOG_DRAG_OPS = NO;
 
 -(void)addPageSizeConstraints
 {
-    // Add minimum width and height constraints to make sure that the sheet is at least the size of the page
+    // Add minimum width and height constraints to make sure that the sheet is the size of the page
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth
                                                      relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.pageSize.width]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight
@@ -253,7 +251,7 @@ static BOOL LOG_DRAG_OPS = NO;
 
 -(NSSize)pageSize
 {
-    return [self.delegate pageSize];
+    return [self.delegate pageSizeInPoints];
 }
 
 -(NSArray*)sortInserts

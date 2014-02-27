@@ -73,17 +73,13 @@
 }
 -(NSSize)sizeInUnits:(AMMeasurementUnits)units
 {
+    NSSize size;
     if (self.paperType != AMPaperTypeCustom) {
-        return [AMPaper paperSizeForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:units];
+        size = [AMPaper paperSizeForPaperType:self.paperType withOrientation:self.paperOrientation inUnits:AMMeasurementUnitsPoints];
     } else {
-        NSSize size;
-        if (self.paperOrientation == AMPaperOrientationPortrait) {
-            size = self.customSize;
-        } else {
-            size = NSMakeSize(self.customSize.height, self.customSize.width);
-        }
-        return [AMMeasurement convertSize:size fromUnits:AMMeasurementUnitsPoints toUnits:units];
+        size = self.customSize;
     }
+    return [AMMeasurement convertSize:size fromUnits:AMMeasurementUnitsPoints toUnits:units];
 }
 -(NSString*)paperDescription
 {
@@ -240,13 +236,13 @@ static NSString * const kAMPaperMarginRightKey = @"kAMPaperMarginRightKey";
 -(id)initWithCoder:(NSCoder *)decoder
 {
     _paperType = [decoder decodeIntegerForKey:@"kAMPaperTypeKey"];
-    [decoder decodeIntegerForKey:@"kAMPaperOrientationKey"];
-    [decoder decodeIntegerForKey:@"kAMPaperMeasurementUnitsKey"];
-    [decoder decodeSizeForKey:@"kAMPaperCustomSizeKey"];
-    [decoder decodeFloatForKey:@"kAMPaperMarginTopKey"];
-    [decoder decodeFloatForKey:@"kAMPaperMarginBottomKey"];
-    [decoder decodeFloatForKey:@"kAMPaperMarginLeftKey"];
-    [decoder decodeFloatForKey:@"kAMPaperMarginRightKey"];
+    _paperOrientation      = [decoder decodeIntegerForKey:@"kAMPaperOrientationKey"];
+    _paperMeasurementUnits = [decoder decodeIntegerForKey:@"kAMPaperMeasurementUnitsKey"];
+    _customSize            = [decoder decodeSizeForKey:@"kAMPaperCustomSizeKey"];
+    _margins.top           = [decoder decodeFloatForKey:@"kAMPaperMarginTopKey"];
+    _margins.bottom        = [decoder decodeFloatForKey:@"kAMPaperMarginBottomKey"];
+    _margins.left          = [decoder decodeFloatForKey:@"kAMPaperMarginLeftKey"];
+    _margins.right         = [decoder decodeFloatForKey:@"kAMPaperMarginRightKey"];
     return self;
 }
 -(void)encodeWithCoder:(NSCoder *)coder

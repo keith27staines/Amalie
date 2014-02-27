@@ -204,6 +204,7 @@
         <popover id="XWM-t0-OLB" userLabel="Page setup popover">
             <connections>
                 <outlet property="contentViewController" destination="GYe-sB-1sv" id="Gdg-EK-SSm"/>
+                <outlet property="delegate" destination="-2" id="aLO-1h-3DF"/>
             </connections>
         </popover>
     </objects>

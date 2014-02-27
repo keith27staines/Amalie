@@ -30,4 +30,6 @@
 
 @property (readonly) NSSize pageSize;
 
+-(void)prepareForReload;
+
 @end

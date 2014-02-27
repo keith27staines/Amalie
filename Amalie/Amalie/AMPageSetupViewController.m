@@ -167,7 +167,8 @@
 -(AMPaperType)paperType
 {
     return self.paper.paperType;
-}-(NSString *)paperName
+}
+-(NSString *)paperName
 {
     return self.paper.paperName;
 }
