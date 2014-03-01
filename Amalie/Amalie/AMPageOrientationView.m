@@ -46,17 +46,83 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor colorWithCalibratedRed:0.8 green:0.8 blue:0.8 alpha:1] set];
-    NSRectFill(self.bounds);
+    NSGraphicsContext * context = [NSGraphicsContext currentContext];
+    [context saveGraphicsState];
+    
+    [[NSColor blackColor] set];
+    [NSBezierPath strokeRect:self.bounds];
+    
     CGFloat size = [NSFont systemFontSize];
     NSFont * font = [NSFont systemFontOfSize:size];
-    [_title drawAtPoint:NSZeroPoint withAttributes:@{NSFontAttributeName: font}];
+    NSDictionary * attributes = @{NSFontAttributeName: font};
+    [_title drawAtPoint:NSZeroPoint withAttributes:attributes];
+    
+    // Draw paper in white with black border
     [[NSColor whiteColor] set];
     NSRectFill(_paperRect);
+    [[NSColor blackColor] set];
+    [NSBezierPath strokeRect:_paperRect];
+
+    // Draw margins in mid-blue
+    [[NSColor colorWithCalibratedRed:0 green:0.7 blue:1 alpha:1] set];
     NSRect marginsRect = NSMakeRect(_paperRect.origin.x+_margins.left, _paperRect.origin.y + _margins.top, _paperRect.size.width - _margins.left - _margins.right, _paperRect.size.height - _margins.top - _margins.bottom);
-    [[NSColor blueColor] set];
-    [NSBezierPath strokeRect:marginsRect];
+    
+    // Draw top margin
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(_paperRect.origin.x, marginsRect.origin.y) toPoint:NSMakePoint(NSMaxX(_paperRect), marginsRect.origin.y)];
+    
+    // Draw bottom margin
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(_paperRect.origin.x, NSMaxY(marginsRect)) toPoint:NSMakePoint(NSMaxX(_paperRect), NSMaxY(marginsRect))];
+    
+    // Draw left margin
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(marginsRect.origin.x, _paperRect.origin.y) toPoint:NSMakePoint(marginsRect.origin.x, NSMaxY(_paperRect))];
+
+    // Draw right margin
+    [NSBezierPath strokeLineFromPoint:NSMakePoint(NSMaxX(marginsRect), _paperRect.origin.y) toPoint:NSMakePoint(NSMaxX(marginsRect), NSMaxY(_paperRect))];
+    
+    // Draw page dimensions
+    
+    NSAttributedString * dimensionText;
+    NSSize textSize;
+    NSPoint textOrigin;
+    
+    dimensionText = [[NSAttributedString alloc] initWithString:_widthDescription attributes:attributes];
+    textSize = [dimensionText size];
+    textOrigin = NSMakePoint(_paperRect.origin.x+_paperRect.size.width/2.0, NSMaxY(_paperRect)+textSize.height/2.0);
+    
+    [self drawText:dimensionText withBasePoint:textOrigin andAngle:0];
+    
+    dimensionText = [[NSAttributedString alloc] initWithString:_heightDescription attributes:attributes];
+    textSize = [dimensionText size];
+    CGFloat leading = [font descender];
+    textOrigin = NSMakePoint(_paperRect.origin.x-(textSize.height )/2.0 + leading, _paperRect.origin.y +  _paperRect.size.height/2.0);
+    [self drawText:dimensionText withBasePoint:textOrigin andAngle:-90];
+    
+    [context restoreGraphicsState];
 }
+
+-(void)drawText:(NSAttributedString*)text
+    withBasePoint:(CGPoint)basePoint
+         andAngle:(CGFloat)angle
+{
+    
+    NSGraphicsContext * context = [NSGraphicsContext currentContext];
+    [context saveGraphicsState];
+    
+    NSSize  textSize    =   [text size];
+    
+    NSAffineTransform * t   =   [NSAffineTransform transform];
+    [t translateXBy:basePoint.x yBy:basePoint.y];
+    
+    NSAffineTransform * r = [NSAffineTransform transform];
+    [r rotateByDegrees:angle];
+    
+    [t concat];
+    [r concat];
+    
+    [text drawAtPoint:NSMakePoint(-1 * textSize.width / 2.0, -1 * textSize.height / 2.0)];
+    [context restoreGraphicsState];
+}
+
 -(void)viewDidMoveToSuperview
 {
     [self reloadData];
@@ -69,13 +135,16 @@
     _orientation = [self.datasource paperOrientation];
     _paperSize = [self.datasource paperSize];
     _margins = [self.datasource paperMargins];
-    if (_orientation == AMPaperOrientationLandscape) {
+    if (_orientation == AMPaperOrientationPortrait) {
+        _widthDescription  = [self.datasource paperWidthDescription];
+        _heightDescription = [self.datasource paperHeightDescription];
+    } else {
         CGFloat swap = _paperSize.height;
         _paperSize.height = _paperSize.width;
         _paperSize.width = swap;
+        _widthDescription  = [self.datasource paperHeightDescription];
+        _heightDescription = [self.datasource paperWidthDescription];
     }
-    _widthDescription  = [self.datasource paperWidthDescription];
-    _heightDescription = [self.datasource paperHeightDescription];
     CGFloat bw = self.bounds.size.width;
     CGFloat bh = self.bounds.size.height;
     CGFloat bar = bw / bh;

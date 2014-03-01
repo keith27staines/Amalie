@@ -21,7 +21,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    
+
 }
 
 -(BOOL)isOpaque
