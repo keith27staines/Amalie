@@ -8,6 +8,27 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMFontUserPreferencesViewController : NSViewController
+@interface AMFontUserPreferencesViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate>
+
+@property (weak) IBOutlet NSTableView *fontChoiceTable;
+
+@property (weak) IBOutlet NSTextField *fontSize;
+
+
+
+
+
+@property (weak) IBOutlet NSTextField *fontSizeTextFieldChanged;
+
+
+
+
+
+
+
+
+
+
+
 
 @end
