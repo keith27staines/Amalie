@@ -6,40 +6,37 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@class AMColorUserPreferencesViewController;
+@class AMFontUserPreferencesViewController;
+@class AMPageUserPreferencesViewController;
+@class AMMathUserPreferencesViewController;
+
 #import <Cocoa/Cocoa.h>
 #import "AMTrayDatasource.h"
 
-@interface AMPreferencesWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-{
-
-}
-
-@property (weak) IBOutlet NSTextField *textFontName;
-
--(IBAction)changedFontName:(NSTextField *)sender;
-
-@property (weak) IBOutlet NSTextField *textNormalFontSize;
-
--(IBAction)changedNormalFontSize:(NSTextField *)sender;
-
-@property (weak) IBOutlet NSTextField *textFontSizeDelta;
-
--(IBAction)changedFontSizeDelta:(NSTextField *)sender;
-
-@property (weak) IBOutlet NSTextField *textSmallestFontSize;
-
--(IBAction)changedSmallestFontSize:(NSTextField *)sender;
-
-
-@property (weak) IBOutlet NSTextField *textFixedWidthFontName;
-
--(IBAction)changedFixedWidthFontName:(NSTextField *)sender;
-
-@property (weak) IBOutlet NSTextField *textFixedWidthFontSize;
-
-- (IBAction)changedFixedWidthFontSize:(id)sender;
-
+@interface AMPreferencesWindowController : NSWindowController <NSToolbarDelegate>
 
 @property (weak) id<AMTrayDataSource>trayDatasource;
+
+- (IBAction)showColorsView:(id)sender;
+- (IBAction)showFontsView:(id)sender;
+- (IBAction)showPageView:(id)sender;
+- (IBAction)showMathView:(id)sender;
+
+
+@property (weak) IBOutlet NSToolbarItem *showPageButton;
+@property (weak) IBOutlet NSToolbarItem *showFontsButton;
+@property (weak) IBOutlet NSToolbarItem *showColorsButton;
+@property (weak) IBOutlet NSToolbarItem *showmathsButton;
+
+
+@property (strong) IBOutlet AMColorUserPreferencesViewController *colorPreferencesViewController;
+
+@property (strong) IBOutlet AMFontUserPreferencesViewController *fontPreferencesViewController;
+
+@property (strong) IBOutlet AMPageUserPreferencesViewController *pagePreferencesViewController;
+
+@property (strong) IBOutlet AMMathUserPreferencesViewController * mathPreferencesViewController;
+
 
 @end

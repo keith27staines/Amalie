@@ -50,6 +50,19 @@
 		785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CB1785532F00F6A7AD /* AMToolboxView.m */; };
 		785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CE1785722700F6A7AD /* AMInsertableView.m */; };
 		785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247D11786AC9300F6A7AD /* AMExpressionContentView.m */; };
+		785826A618C474C800612651 /* AMColorUserPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826A418C474C800612651 /* AMColorUserPreferencesViewController.m */; };
+		785826A718C474C800612651 /* AMColorUserPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826A518C474C800612651 /* AMColorUserPreferencesViewController.xib */; };
+		785826AA18C4750C00612651 /* AMColorUserPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826A918C4750C00612651 /* AMColorUserPreferencesView.m */; };
+		785826AE18C4753700612651 /* AMFontUserPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826AC18C4753700612651 /* AMFontUserPreferencesViewController.m */; };
+		785826AF18C4753700612651 /* AMFontUserPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826AD18C4753700612651 /* AMFontUserPreferencesViewController.xib */; };
+		785826B218C4755C00612651 /* AMFontUserPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826B118C4755C00612651 /* AMFontUserPreferencesView.m */; };
+		785826B618C4CCCB00612651 /* AMMathUserPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826B418C4CCCB00612651 /* AMMathUserPreferencesViewController.m */; };
+		785826B718C4CCCB00612651 /* AMMathUserPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826B518C4CCCB00612651 /* AMMathUserPreferencesViewController.xib */; };
+		785826BA18C4CCF200612651 /* AMMathUserPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826B918C4CCF200612651 /* AMMathUserPreferencesView.m */; };
+		785826BE18C4D20100612651 /* AMPageUserPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826BC18C4D20100612651 /* AMPageUserPreferencesViewController.m */; };
+		785826BF18C4D20100612651 /* AMPageUserPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826BD18C4D20100612651 /* AMPageUserPreferencesViewController.xib */; };
+		785826C218C4D22000612651 /* AMPageUserPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826C118C4D22000612651 /* AMPageUserPreferencesView.m */; };
+		785826C518C4D94300612651 /* AMUserPreferencesBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826C418C4D94300612651 /* AMUserPreferencesBaseView.m */; };
 		785D9A21179C5930004D39B5 /* AMExpressionContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */; };
 		785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */; };
 		785D9A26179D716D004D39B5 /* AMInsertableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A24179D716D004D39B5 /* AMInsertableViewController.m */; };
@@ -92,7 +105,6 @@
 		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
 		787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
-		788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */; };
 		788709C5178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */; };
@@ -251,6 +263,28 @@
 		785247CE1785722700F6A7AD /* AMInsertableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableView.m; sourceTree = "<group>"; };
 		785247D01786AC9300F6A7AD /* AMExpressionContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContentView.h; sourceTree = "<group>"; };
 		785247D11786AC9300F6A7AD /* AMExpressionContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContentView.m; sourceTree = "<group>"; };
+		785826A318C474C800612651 /* AMColorUserPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorUserPreferencesViewController.h; sourceTree = "<group>"; };
+		785826A418C474C800612651 /* AMColorUserPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorUserPreferencesViewController.m; sourceTree = "<group>"; };
+		785826A518C474C800612651 /* AMColorUserPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMColorUserPreferencesViewController.xib; sourceTree = "<group>"; };
+		785826A818C4750C00612651 /* AMColorUserPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorUserPreferencesView.h; sourceTree = "<group>"; };
+		785826A918C4750C00612651 /* AMColorUserPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorUserPreferencesView.m; sourceTree = "<group>"; };
+		785826AB18C4753700612651 /* AMFontUserPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontUserPreferencesViewController.h; sourceTree = "<group>"; };
+		785826AC18C4753700612651 /* AMFontUserPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontUserPreferencesViewController.m; sourceTree = "<group>"; };
+		785826AD18C4753700612651 /* AMFontUserPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFontUserPreferencesViewController.xib; sourceTree = "<group>"; };
+		785826B018C4755C00612651 /* AMFontUserPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontUserPreferencesView.h; sourceTree = "<group>"; };
+		785826B118C4755C00612651 /* AMFontUserPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontUserPreferencesView.m; sourceTree = "<group>"; };
+		785826B318C4CCCB00612651 /* AMMathUserPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathUserPreferencesViewController.h; sourceTree = "<group>"; };
+		785826B418C4CCCB00612651 /* AMMathUserPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathUserPreferencesViewController.m; sourceTree = "<group>"; };
+		785826B518C4CCCB00612651 /* AMMathUserPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMMathUserPreferencesViewController.xib; sourceTree = "<group>"; };
+		785826B818C4CCF200612651 /* AMMathUserPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathUserPreferencesView.h; sourceTree = "<group>"; };
+		785826B918C4CCF200612651 /* AMMathUserPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathUserPreferencesView.m; sourceTree = "<group>"; };
+		785826BB18C4D20100612651 /* AMPageUserPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPageUserPreferencesViewController.h; sourceTree = "<group>"; };
+		785826BC18C4D20100612651 /* AMPageUserPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPageUserPreferencesViewController.m; sourceTree = "<group>"; };
+		785826BD18C4D20100612651 /* AMPageUserPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMPageUserPreferencesViewController.xib; sourceTree = "<group>"; };
+		785826C018C4D22000612651 /* AMPageUserPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPageUserPreferencesView.h; sourceTree = "<group>"; };
+		785826C118C4D22000612651 /* AMPageUserPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPageUserPreferencesView.m; sourceTree = "<group>"; };
+		785826C318C4D94300612651 /* AMUserPreferencesBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesBaseView.h; sourceTree = "<group>"; };
+		785826C418C4D94300612651 /* AMUserPreferencesBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesBaseView.m; sourceTree = "<group>"; };
 		785D9A1E179C5930004D39B5 /* AMExpressionContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContentViewController.h; sourceTree = "<group>"; };
 		785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContentViewController.m; sourceTree = "<group>"; };
 		785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMExpressionContentView.xib; sourceTree = "<group>"; };
@@ -315,8 +349,6 @@
 		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
 		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
 		787B3096178364B8001851C0 /* KSMWorksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheet.m; sourceTree = "<group>"; };
-		788709BD178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesTrayTableColorwellCellView.h; sourceTree = "<group>"; };
-		788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesTrayTableColorwellCellView.m; sourceTree = "<group>"; };
 		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
 		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
 		788EAE0318B517A600D3EBD3 /* BitmaskHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmaskHelpers.h; sourceTree = "<group>"; };
@@ -553,8 +585,8 @@
 				787B305A178361BC001851C0 /* MainMenu.xib */,
 				784D6EF81789CC11002BE03A /* AMAppController.h */,
 				784D6EF91789CC11002BE03A /* AMAppController.m */,
+				785247BF178406B000F6A7AD /* Preferences */,
 				7825D656180FD3B10039EB67 /* AMKeyboard */,
-				788709C0178D35CD008E093A /* Preferences Pane views */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -674,8 +706,57 @@
 				784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */,
 				784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */,
 				784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */,
+				788709C0178D35CD008E093A /* Preferences Pane views */,
 			);
 			name = Preferences;
+			sourceTree = "<group>";
+		};
+		7858269F18C46B8900612651 /* Color Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				785826A318C474C800612651 /* AMColorUserPreferencesViewController.h */,
+				785826A418C474C800612651 /* AMColorUserPreferencesViewController.m */,
+				785826A518C474C800612651 /* AMColorUserPreferencesViewController.xib */,
+				785826A818C4750C00612651 /* AMColorUserPreferencesView.h */,
+				785826A918C4750C00612651 /* AMColorUserPreferencesView.m */,
+			);
+			name = "Color Preferences";
+			sourceTree = "<group>";
+		};
+		785826A018C46BA200612651 /* Font Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				785826AB18C4753700612651 /* AMFontUserPreferencesViewController.h */,
+				785826AC18C4753700612651 /* AMFontUserPreferencesViewController.m */,
+				785826AD18C4753700612651 /* AMFontUserPreferencesViewController.xib */,
+				785826B018C4755C00612651 /* AMFontUserPreferencesView.h */,
+				785826B118C4755C00612651 /* AMFontUserPreferencesView.m */,
+			);
+			name = "Font Preferences";
+			sourceTree = "<group>";
+		};
+		785826A118C46BAD00612651 /* Page setup Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				785826BB18C4D20100612651 /* AMPageUserPreferencesViewController.h */,
+				785826BC18C4D20100612651 /* AMPageUserPreferencesViewController.m */,
+				785826BD18C4D20100612651 /* AMPageUserPreferencesViewController.xib */,
+				785826C018C4D22000612651 /* AMPageUserPreferencesView.h */,
+				785826C118C4D22000612651 /* AMPageUserPreferencesView.m */,
+			);
+			name = "Page setup Preferences";
+			sourceTree = "<group>";
+		};
+		785826A218C46BF000612651 /* Math Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				785826B318C4CCCB00612651 /* AMMathUserPreferencesViewController.h */,
+				785826B418C4CCCB00612651 /* AMMathUserPreferencesViewController.m */,
+				785826B518C4CCCB00612651 /* AMMathUserPreferencesViewController.xib */,
+				785826B818C4CCF200612651 /* AMMathUserPreferencesView.h */,
+				785826B918C4CCF200612651 /* AMMathUserPreferencesView.m */,
+			);
+			name = "Math Preferences";
 			sourceTree = "<group>";
 		};
 		785D9A1D179BDD19004D39B5 /* Document Insertable views */ = {
@@ -798,7 +879,6 @@
 				786E32F0188BC29C0095443D /* AM General purpose views */,
 				7825D657180FE0440039EB67 /* App */,
 				78F57D8D18350DC800683FFC /* Document */,
-				785247BF178406B000F6A7AD /* Preferences */,
 				785247BD1784067900F6A7AD /* Models */,
 				787B3049178361BC001851C0 /* Supporting Files */,
 			);
@@ -873,8 +953,12 @@
 		788709C0178D35CD008E093A /* Preferences Pane views */ = {
 			isa = PBXGroup;
 			children = (
-				788709BD178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.h */,
-				788709BE178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m */,
+				785826C318C4D94300612651 /* AMUserPreferencesBaseView.h */,
+				785826C418C4D94300612651 /* AMUserPreferencesBaseView.m */,
+				785826A218C46BF000612651 /* Math Preferences */,
+				785826A118C46BAD00612651 /* Page setup Preferences */,
+				785826A018C46BA200612651 /* Font Preferences */,
+				7858269F18C46B8900612651 /* Color Preferences */,
 			);
 			name = "Preferences Pane views";
 			sourceTree = "<group>";
@@ -1116,9 +1200,13 @@
 				78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */,
 				787B304D178361BC001851C0 /* InfoPlist.strings in Resources */,
 				785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */,
+				785826B718C4CCCB00612651 /* AMMathUserPreferencesViewController.xib in Resources */,
 				78734E241806B10F00A2EEF3 /* AMKeyboardsView.xib in Resources */,
 				787B3053178361BC001851C0 /* Credits.rtf in Resources */,
 				784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */,
+				785826BF18C4D20100612651 /* AMPageUserPreferencesViewController.xib in Resources */,
+				785826A718C474C800612651 /* AMColorUserPreferencesViewController.xib in Resources */,
+				785826AF18C4753700612651 /* AMFontUserPreferencesViewController.xib in Resources */,
 				787B305C178361BC001851C0 /* MainMenu.xib in Resources */,
 				785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */,
 			);
@@ -1140,11 +1228,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				782859FB1886D6B900523121 /* AMTextMetric.m in Sources */,
-				788709BF178C3F3F008E093A /* AMPreferencesTrayTableColorwellCellView.m in Sources */,
 				78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */,
 				784ACC1D18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m in Sources */,
 				781D180D17F31DE70008758D /* AMDataStore.m in Sources */,
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
+				785826B218C4755C00612651 /* AMFontUserPreferencesView.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
@@ -1165,6 +1253,7 @@
 				78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
 				78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
+				785826A618C474C800612651 /* AMColorUserPreferencesViewController.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
@@ -1196,6 +1285,7 @@
 				78B205C617D5D6F80059773A /* AMFunctionContentViewController.m in Sources */,
 				78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */,
 				788EAE1418B6684700D3EBD3 /* AMPageOrientationView.m in Sources */,
+				785826B618C4CCCB00612651 /* AMMathUserPreferencesViewController.m in Sources */,
 				78EF56AC17CF3B0B00402847 /* KSMVector.m in Sources */,
 				785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */,
 				78E2A9F418ACAD8D0082F4E0 /* AMDocumentContainerView.m in Sources */,
@@ -1209,8 +1299,10 @@
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				78285A011886D74400523121 /* AMExpressionLayout.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
+				785826BE18C4D20100612651 /* AMPageUserPreferencesViewController.m in Sources */,
 				7832744C178F1D810051290B /* AMTrayItem.m in Sources */,
 				78285A041886D9EE00523121 /* KSMConstants.m in Sources */,
+				785826AE18C4753700612651 /* AMFontUserPreferencesViewController.m in Sources */,
 				78962FE3182C0A990066BEE9 /* AMDIndexedExpression+Methods.m in Sources */,
 				78962FE6182C0BB00066BEE9 /* AMDInsertedObject+Methods.m in Sources */,
 				785D9A26179D716D004D39B5 /* AMInsertableViewController.m in Sources */,
@@ -1223,6 +1315,7 @@
 				78962FDA182BD7E00066BEE9 /* AMDName+Methods.m in Sources */,
 				785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */,
 				78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */,
+				785826AA18C4750C00612651 /* AMColorUserPreferencesView.m in Sources */,
 				7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				784ACC1018BB7918009268B3 /* AMPaper.m in Sources */,
 				78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */,
@@ -1233,14 +1326,17 @@
 				7811D2C617A2550E0024839B /* AMRefTree.m in Sources */,
 				78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */,
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
+				785826C518C4D94300612651 /* AMUserPreferencesBaseView.m in Sources */,
 				78E477021827A52200DEB5FB /* AMFunctionEditorViewController.m in Sources */,
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,
 				786E32F7188D12F10095443D /* AMFunctionPropertiesViewController.m in Sources */,
 				7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */,
+				785826C218C4D22000612651 /* AMPageUserPreferencesView.m in Sources */,
 				78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				78E477061827F28D00DEB5FB /* AMDArgumentList+Methods.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
+				785826BA18C4CCF200612651 /* AMMathUserPreferencesView.m in Sources */,
 				782859F51886D57000523121 /* AMGraphics.m in Sources */,
 				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,
 				78962FE0182C05C50066BEE9 /* AMDExpression+Methods.m in Sources */,

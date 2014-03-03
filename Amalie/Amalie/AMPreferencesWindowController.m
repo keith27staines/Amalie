@@ -9,162 +9,90 @@
 #import "AMPreferencesWindowController.h"
 #import "AMConstants.h"
 #import "AMAppController.h"
-#import "AMPreferencesTrayTableColorwellCellView.h"
 #import "AMPreferences.h"
 #import "AMTrayItem.h"
 
-@interface AMPreferencesWindowController ()
+#import "AMColorUserPreferencesViewController.h"
+#import "AMFontUserPreferencesViewController.h"
+#import "AMMathUserPreferencesViewController.h"
+#import "AMPageUserPreferencesViewController.h"
 
+
+@interface AMPreferencesWindowController ()
+@property NSView * placeholderView;
 @property (strong, readonly) AMPreferences * preferences;
 
 @end
 
+typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
+    AMUserPreferencesViewFonts,
+    AMUserPreferencesViewColors,
+    AMUserPreferencesViewPage,
+    AMUserPreferencesViewMath,
+};
+
 @implementation AMPreferencesWindowController
 
-- (id)initWithWindow:(NSWindow *)window
+-(void)awakeFromNib
 {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
+    // First call setup goes here
+    [self displayViewController:self.pagePreferencesViewController];
+}
 
+-(void)showColorsView:(id)sender
+{
+    [self displayViewController:self.colorPreferencesViewController];
+}
+-(void)showFontsView:(id)sender
+{
+    [self displayViewController:self.fontPreferencesViewController];
+}
+-(void)showMathView:(id)sender
+{
+    [self displayViewController:self.mathPreferencesViewController];
+}
+-(void)showPageView:(id)sender
+{
+    [self displayViewController:self.pagePreferencesViewController];
+}
+
+-(void)displayViewController:(NSViewController*)vc
+{
+    if (!self.placeholderView) {
+        self.placeholderView = self.window.contentView;
     }
-    
-    return self;
+    NSWindow * window = self.window;
+    NSRect oldWindowFrame = window.frame;
+    NSView * newContentView = [vc view];
+    NSLog(@"View width:%f",newContentView.frame.size.width);
+    NSRect newWindowFrame = [window frameRectForContentRect:newContentView.frame];
+    newWindowFrame.origin.x = oldWindowFrame.origin.x;
+    newWindowFrame.origin.y = oldWindowFrame.origin.y + oldWindowFrame.size.height - newWindowFrame.size.height;
+    [window setContentView:self.placeholderView];
+    [self.window setFrame:newWindowFrame display:YES animate:YES];
+    [window setContentView:newContentView];
 }
 
-// Fixed-width font size
-- (IBAction)changedFixedWidthFontSize:(NSTextField *)sender
-{
-    NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferences setWorksheetFixedWidthFontSize:size];
-}
 
-// Normal font size
--(IBAction)changedNormalFontSize:(NSTextField *)sender
-{
-    NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferences setWorksheetFontSize:size];
-}
+#pragma mark - NSToolbar delegate
+// Nothing to do here yet
 
-// Font size delta
--(IBAction)changedFontSizeDelta:(NSTextField *)sender
-{
-    NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferences setWorksheetFontDelta:size];
-}
-// Smallest font
--(IBAction)changedSmallestFontSize:(NSTextField *)sender
-{
-    NSUInteger size = ceil([sender doubleValue]);
-    [AMPreferences setWorksheetSmallestFontSize:size];
-}
 
-// Fixed width font name
--(IBAction)changedFixedWidthFontName:(NSTextField *)sender
-{
-    NSString * str = [sender stringValue];
-    [AMPreferences setWorksheetFixedWidthFontName:str];
-}
 
-// Normal font name
--(IBAction)changedFontName:(NSTextField *)sender
-{
-    NSString * str = [sender stringValue];
-    [AMPreferences setWorksheetFontName:str];
-}
 
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    NSNumber * size;
-    NSString * strSize;
-    NSString * name;
-    
-    // smallest font
-    size = [AMPreferences objectForKey:kAMMinFontSizeKey];
-    strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
-    self.textSmallestFontSize.stringValue = strSize;
-    
-    // font delta
-    size = [AMPreferences objectForKey:kAMFontSizeDeltaKey];
-    strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
-    self.textFontSizeDelta.stringValue = strSize;
 
-    // Normal font size
-    size = [AMPreferences objectForKey:kAMFontSizeKey];
-    strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
-    self.textNormalFontSize.stringValue = strSize;
-    
-    // Fixed width font size
-    size = [AMPreferences objectForKey:kAMFixedWidthFontSizeKey];
-    strSize = [NSString stringWithFormat:@"%ld",(long)[size integerValue]];
-    self.textFixedWidthFontSize.stringValue = strSize;
-    
-    // Normal font name
-    name = [AMPreferences objectForKey:kAMFontNameKey];
-    self.textFontName.stringValue = name;
 
-    // Fixed width font name
-    name = [AMPreferences objectForKey:kAMFixedWidthFontNameKey];
-    self.textFixedWidthFontName.stringValue = name;
 
-}
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-    // which table are we dealing with?
-    if ( [aTableView.identifier isEqualToString:kAMTrayDictionaryKey] ) {
-        return [_trayDatasource trayItemCount];
-    }
-    return 0;
-}
 
--(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
 
-    NSTableCellView * view = nil;
-    AMPreferencesTrayTableColorWellCellView * colorWellView = nil;
-    
-    // which table are we dealing with?
-    if ( [tableView.identifier isEqualToString:kAMTrayDictionaryKey] ) {
 
-        // We are populating the tray objects table. We will use the table row
-        // to index into the _tray dictionary to obtain the row's content
-        AMTrayItem * trayItem = [self.trayDatasource trayItemAtIndex:row];
-        
-        // Ask the table to make us a nice view to hold the content
-        view = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
-        if ( [tableColumn.identifier isEqualToString:kAMIconKey] ) {
-            
-            // This column has an icon and a title in a single cell
-            [view.imageView setImage:trayItem.icon];
-            [view.textField setStringValue:trayItem.title];
-            return view;
-        
-        } else if ( [tableColumn.identifier isEqualToString:kAMBackColorKey] ) {
-            
-            // View just holds a color well and we need to set its color
-            colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
-            [colorWellView.colorWell setColor:trayItem.backgroundColor];
-            return colorWellView;
-        
-        } else if ( [tableColumn.identifier isEqualToString:kAMFontColorKey] ) {
-            
-            // View just holds a color well and we need to set its color
-            colorWellView = (AMPreferencesTrayTableColorWellCellView*)view;
-            [colorWellView.colorWell setColor:trayItem.fontColor];
-            return colorWellView;
-        }
-        
-        NSAssert(NO, @"Failed to find a view for the view-based table.");
-        return nil;
 
-    }
 
-    return nil;
-}
+
+
+
+
 
 @end

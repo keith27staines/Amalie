@@ -54,10 +54,8 @@ NSMutableDictionary * _trayDictionary;
     NSDictionary * trayPreferences = [[AMPreferences defaults] objectForKey:kAMTrayDictionaryKey];
     
     for (NSString * key in trayPreferences) {
-        
         NSDictionary * itemPreferences = trayPreferences[key];
         AMTrayItem * item = [self dictionaryOfAllTrayItems][key];
-
         item.backgroundColor = colorFromData( itemPreferences[kAMBackColorKey] );
         item.fontColor = colorFromData( itemPreferences[kAMFontColorKey] );
     }
