@@ -6,20 +6,35 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
+@class AMFontAttributes, AMFontChoiceView;
+
 #import <Cocoa/Cocoa.h>
+#import "AMConstants.h"
 
-@interface AMFontChoiceView : NSView
+typedef NS_ENUM(NSUInteger, AMFontChoiceSubviewTags) {
+    AMFontChoiceViewFontUsageLabel = 1000,
+    AMFontChoiceViewFontFamilyNameField = 1001,
+    AMFontChoiceViewFontPickerButton = 1002,
+    AMFontChoiceViewBoldButton = 1003,
+    AMFontChoiceViewItalicButton = 1004,
+    AMFontChoiceViewRestoreButton = 1005,
+};
 
-@property (readonly) NSTextField * fontUsage;
+@protocol AMFontChoiceViewDatasource <NSObject>
 
-@property (readonly) NSTextField * fontFamilyName;
+-(AMFontAttributes*)fontAttributesForFontChoiceView:(AMFontChoiceView*)view;
+-(void)attributesUpdatedForFontChoiceView:(AMFontChoiceView*)view;
+-(NSString*)localizedFontUsageDescriptionForFontChoiceView:(AMFontChoiceView*)view;
+@end
 
-@property (readonly) NSButton * fontPickerButton;
+@interface AMFontChoiceView : NSView <NSTextFieldDelegate>
 
-@property (readonly) NSButton * boldButton;
+@property id<AMFontChoiceViewDatasource>datasource;
 
-@property (readonly) NSButton * italicButton;
+@property AMFontType fontType;
 
-@property (readonly) NSButton * restoreButton;
+@property (readonly) AMFontAttributes * fontAttributes;
+
+-(void)reloadData;
 
 @end

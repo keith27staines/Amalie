@@ -16,7 +16,6 @@
 
 #import "AMPreferences.h"
 #import "AMContentViewDataSource.h"
-#import "AMExpressionDisplayOptions.h"
 #import "AMConstants.h"
 
 @interface AMExpressionNodeView()
@@ -153,15 +152,17 @@
     }
 }
 
--(void)assignAttributesForFontType:(AMFontType)type
-{
-    CGFloat scale = self.scaleFactor;
-    NSAssert(scale >0, @"Bad scale factor");
-    _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:type]};
-    NSFont * font = _attributes[NSFontAttributeName];
-    font = [NSFont fontWithName:font.fontName size:font.pointSize * self.scaleFactor];
-    _attributes = @{NSFontAttributeName: font};
-}
+
+// TODO: Remove these lines once sure they are not needed
+//-(void)assignAttributesForFontType:(AMFontType)type
+//{
+//    CGFloat scale = self.scaleFactor;
+//    NSAssert(scale >0, @"Bad scale factor");
+//    _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:type]};
+//    NSFont * font = _attributes[NSFontAttributeName];
+//    font = [NSFont fontWithName:font.fontName size:font.pointSize * self.scaleFactor];
+//    _attributes = @{NSFontAttributeName: font};
+//}
 
 -(void)setExpression:(KSMExpression *)expression
 {

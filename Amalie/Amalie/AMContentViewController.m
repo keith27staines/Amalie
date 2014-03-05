@@ -61,14 +61,14 @@
     // Base implementation does nothing but is designed to be overridden
 }
 
--(NSFont *)standardFont
-{
-    return [AMPreferences standardFont];
-}
+//-(NSFont *)standardFont
+//{
+//    return [AMPreferences standardFont];
+//}
 
 -(NSFont *)fixedWidthFont
 {
-    return [AMPreferences fixedWidthFont];
+    return [AMPreferences fontForFontType:AMFontTypeFixedWidth];
 }
 
 -(AMDInsertedObject *)amdInsertedObject

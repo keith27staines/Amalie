@@ -21,15 +21,6 @@ double const kAMUnitConversionPoints_In = 1.0 / kAMUnitConversionIn_Points;
 NSString * const kAMNotificationViewDidHide = @"kAMNotificationViewDidHide";
 NSString * const kAMNotificationViewDidUnhide = @"kAMNotificationViewDidUnhide";
 
-#pragma mark - Default values -
-NSUInteger const kAMDefaultFontSize                   = 17;
-NSUInteger const kAMDefaultFixedWidthFontSize         = 17;
-NSUInteger const kAMDefaultFontDelta                  =  2;
-NSUInteger const kAMDefaultMinFontSize                = 10;
-NSString * const kAMDefaultFontName                   = @"Times";
-NSString * const kAMDefaultFixedWidthFontName         = @"Monaco";
-CGFloat    const kAMDefaultSuperscriptingFraction     = 0.7;
-
 #pragma mark - key affixes -
 NSString * const kAMKeyPrefix                         = @"kAM";
 NSString * const kAMKeySuffix                         = @"Key";
@@ -90,14 +81,42 @@ NSUInteger const kAMPageWidthUSLegal          = 612;
 NSUInteger const kAMPageHeightUSLegal         = 1008;
 
 #pragma mark - Font -
+//Keys for particular fonts
+NSString * const kAMFontAttributesForLiteralsKey       = @"kAMFactorySettingFontNameForLiteralsKey";
+NSString * const kAMFontAttributesForAlgebraKey        = @"kAMFontAttributesForAlgebraKey";
+NSString * const kAMFontAttributesForVectorsKey        = @"kAMFontAttributesForVectorsKey";
+NSString * const kAMFontAttributesForMatricesKey       = @"kAMFontAttributesForMatricesKey";
+NSString * const kAMFontAttributesForSymbolsKey        = @"kAMFontAttributesForSymbolsKey";
+NSString * const kAMFontAttributesForFixedWidthTextKey = @"kAMFontAttributesForFixedWidthTextKey";
+NSString * const kAMFontAttributesForTextKey           = @"kAMFontAttributesForTextKey";
+
+// Keys for specific font attributes in a dictionary
 NSString * const kAMFontNameKey                       = @"kAMFontNameKey";
-NSString * const kAMFontSizeKey                       = @"kAMFontSizeKey";
-NSString * const kAMFontSizeDeltaKey                  = @"kAMFontSizeDeltaKey";
 NSString * const kAMMinFontSizeKey                    = @"kAMMinFontSizeKey";
-NSString * const kAMFixedWidthFontNameKey             = @"kAMFixedWidthFontNameKey";
+NSString * const kAMFontSizeKey                       = @"kAMFontSizeKey";
+NSString * const kAMFontBoldKey                       = @"kAMFontBoldKey";
+NSString * const kAMFontItalicKey                     = @"kAMFontItalicKey";
 NSString * const kAMFixedWidthFontSizeKey             = @"kAMFixedWidthFontSizeKey";
+NSString * const kAMAllowFontSynthesisKey             = @"kAMAllowFontSynthesisKey";
+
+// other keys
 NSString * const kAMSuperscriptingFraction            = @"kAMSuperscriptingFraction";
 NSString * const kAMScriptingLevelKey                 = @"kAMScriptingLevel";
+
+// Factory defaults
+NSString * const kAMFactorySettingFontNameForLiterals       = @"Times";
+NSString * const kAMFactorySettingFontNameForAlgebra        = @"Times";
+NSString * const kAMFactorySettingFontNameForVectors        = @"Times";
+NSString * const kAMFactorySettingFontNameForMatrices       = @"Times";
+NSString * const kAMFactorySettingFontNameForSymbols        = @"Times";
+NSString * const kAMFactorySettingFontNameForFixedWidthText = @"Monaco";
+NSString * const kAMFactorySettingFontNameForText           = @"Times";
+
+NSUInteger const kAMFactorySettingMinFontSize                = 6;
+NSUInteger const kAMFactorySettingFontSize                   = 17;
+NSUInteger const kAMFactorySettingFixedWidthFontSize         = 17;
+CGFloat    const kAMFactorySettingSuperscriptingFraction     = 0.7;
+BOOL       const kAMFactorySettingAllowFontSynthesis         = YES;
 
 #pragma mark - Icon and title -
 NSString * const kAMIconKey                           = @"kAMIconKey";

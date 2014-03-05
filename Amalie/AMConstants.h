@@ -21,15 +21,6 @@ extern double const kAMUnitConversionPoints_In;
 extern NSString * const kAMNotificationViewDidHide;
 extern NSString * const kAMNotificationViewDidUnhide;
 
-#pragma mark - Default values -
-extern NSUInteger const kAMDefaultFontSize;
-extern NSUInteger const kAMDefaultFixedWidthFontSize;
-extern NSUInteger const kAMDefaultFontDelta;
-extern NSUInteger const kAMDefaultMinFontSize;
-extern NSString * const kAMDefaultFontName;
-extern NSString * const kAMDefaultFixedWidthFontName;
-extern CGFloat    const kAMDefaultSuperscriptingFraction;
-
 #pragma mark - key affixes -
 extern NSString * const kAMKeyPrefix;
 extern NSString * const kAMKeySuffix;
@@ -90,14 +81,50 @@ extern NSUInteger const kAMPageWidthUSLegal;
 extern NSUInteger const kAMPageHeightUSLegal;
 
 #pragma mark - Font -
+typedef NS_ENUM(NSUInteger, AMFontType){
+    AMFontTypeLiteral    = 0,
+    AMFontTypeAlgebra    = 1,
+    AMFontTypeVector     = 2,
+    AMFontTypeMatrix     = 3,
+    AMFontTypeSymbol     = 4,
+    AMFontTypeFixedWidth = 5,
+    AMFontTypeText       = 6,
+    AMFontTypeMax        = 6,
+};
+// Keys
+extern NSString * const kAMFontAttributesForLiteralsKey;
+extern NSString * const kAMFontAttributesForAlgebraKey;
+extern NSString * const kAMFontAttributesForVectorsKey;
+extern NSString * const kAMFontAttributesForMatricesKey;
+extern NSString * const kAMFontAttributesForSymbolsKey;
+extern NSString * const kAMFontAttributesForFixedWidthTextKey;
+extern NSString * const kAMFontAttributesForTextKey;
+
 extern NSString * const kAMFontNameKey;
-extern NSString * const kAMFontSizeKey;
-extern NSString * const kAMFontSizeDeltaKey;
+extern NSString * const kAMFontBoldKey;
+extern NSString * const kAMFontItalicKey;
 extern NSString * const kAMMinFontSizeKey;
-extern NSString * const kAMFixedWidthFontNameKey;
+extern NSString * const kAMFontSizeKey;
 extern NSString * const kAMFixedWidthFontSizeKey;
+extern NSString * const kAMAllowFontSynthesisKey;
+
 extern NSString * const kAMSuperscriptingFraction;
 extern NSString * const kAMScriptingLevelKey;
+
+// Factory defaults
+extern NSString * const kAMFactorySettingFontNameForLiterals;
+extern NSString * const kAMFactorySettingFontNameForAlgebra;
+extern NSString * const kAMFactorySettingFontNameForVectors;
+extern NSString * const kAMFactorySettingFontNameForMatrices;
+extern NSString * const kAMFactorySettingFontNameForSymbols;
+extern NSString * const kAMFactorySettingFontNameForFixedWidthText;
+extern NSString * const kAMFactorySettingFontNameForText;
+
+extern NSUInteger const kAMFactorySettingMinFontSize;
+extern NSUInteger const kAMFactorySettingFontSize;
+extern NSUInteger const kAMFactorySettingFixedWidthFontSize;
+extern CGFloat    const kAMFactorySettingSuperscriptingFraction;
+extern BOOL       const kAMFactorySettingAllowFontSynthesis;
 
 #pragma mark - Icon and title -
 extern NSString * const kAMIconKey;

@@ -6,25 +6,27 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@class AMFontAttributes;
 
-@interface AMFontUserPreferencesViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate>
+#import <Cocoa/Cocoa.h>
+#import "AMConstants.h"
+#import "AMFontChoiceView.h"
+#import "AMUserPreferencesBaseViewController.h"
+
+@interface AMFontUserPreferencesViewController : AMUserPreferencesBaseViewController <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate, AMFontChoiceViewDatasource>
 
 @property (weak) IBOutlet NSTableView *fontChoiceTable;
 
-@property (weak) IBOutlet NSTextField *fontSize;
+
+@property (weak) IBOutlet NSPopUpButton *fontSizeSelector;
 
 
+- (IBAction)fontSizeChanged:(NSPopUpButton*)sender;
 
 
+- (IBAction)restoreToFactoryDefaults:(NSButton*)button;
 
-@property (weak) IBOutlet NSTextField *fontSizeTextFieldChanged;
-
-
-
-
-
-
+-(void)reloadData;
 
 
 

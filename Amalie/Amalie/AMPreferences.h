@@ -6,63 +6,55 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+@class AMFontAttributes;
+
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
 @interface AMPreferences : NSObject
 
+#pragma mark - Register factory default settings -
 +(void)registerDefaultPreferences;
 
-+(AMPreferences*)sharedPreferences;
+#pragma mark - Reset settings to factory defaults -
++(void)resetAll;
++(void)resetPaperType;
++(void)resetPaperOrientation;
++(void)resetPageMargins;
++(void)resetFontAttributesForFontType:(AMFontType)fontType;
++(void)resetFontSize;
++(void)resetSmallestFontSize;
++(void)resetFixedWidthFontSize;
++(void)resetSuperscriptingFraction;
++(void)resetAllowFontSynthesis;
 
-#pragma mark - Main window configuration -
-
-
-#pragma mark - Worksheet page size and margins -
-@property NSSize worksheetPageSize;
-+(NSSize)worksheetPageSize;
-+(void)setWorksheetPageSize:(NSSize)size;
-@property AMMargins pageMargins;
+#pragma mark - Getters and setters for user preferences -
+#pragma mark Page layout
++(AMPaperType)paperType;
++(void)setPaperType:(AMPaperType)paperType;
++(AMPaperOrientation)paperOrientation;
++(void)setPaperOrientation:(AMPaperOrientation)paperOrientation;
 +(AMMargins)pageMargins;
 +(void)setPageMargins:(AMMargins)margins;
 
-@property AMPaperType worksheetPaperType;
-+(AMPaperType)worksheetPaperType;
-+(void)setWorksheetPaperType:(AMPaperType)paperType;
-
-@property AMPaperOrientation worksheetPaperOrientation;
-+(AMPaperOrientation)worksheetPaperOrientation;
-+(void)setWorksheetPaperOrientation:(AMPaperOrientation)paperOrientation;
-
-#pragma mark - Fonts -
-+(NSDictionary*)fonts;
-+(NSFont*)standardFont;
-+(NSFont*)fixedWidthFont;
-+(NSString*)worksheetFontName;
-+(void)setWorksheetFontName:(NSString*)fontName;
-+(NSString*)worksheetFixedWidthFontName;
-+(void)setWorksheetFixedWidthFontName:(NSString*)fontName;
-
-#pragma mark - Worksheet standard font size -
-@property NSUInteger worksheetFontSize;
-+(NSUInteger)worksheetFontSize;
-+(void)setWorksheetFontSize:(NSUInteger)size;
-+(NSUInteger)worksheetSmallestFontSize;
-+(void)setWorksheetSmallestFontSize:(NSUInteger)size;
-
-#pragma mark - Worksheet fixed width font size -
-+(NSUInteger)worksheetFixedWidthFontSize;
-+(void)setWorksheetFixedWidthFontSize:(NSUInteger)size;
-
-#pragma mark - Scripting fraction -
+#pragma mark Fonts
++(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType;
++(void)setFontAttributes:(AMFontAttributes*)attributes forFontType:(AMFontType)fontType;
++(NSUInteger)fontSize;
++(void)setFontSize:(NSUInteger)size;
++(NSUInteger)smallestFontSize;
++(void)setSmallestFontSize:(NSUInteger)size;
++(NSUInteger)fixedWidthFontSize;
++(void)setFixedWidthFontSize:(NSUInteger)size;
 +(CGFloat)superscriptingFraction;
-+(NSUInteger)worksheetFontDelta;
-+(void)setWorksheetFontDelta:(NSUInteger)delta;
-
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction;
++(BOOL)allowFontSynthesis;
++(void)setAllowFontSynthesis:(BOOL)yn;
 
-+(id)objectForKey:(NSString*)key;
-
+#pragma mark - Misc  -
++(NSSize)pageSize;
++(void)setPageSize:(NSSize)size;
++(NSFont*)fontForFontType:(AMFontType)fontType;
 +(NSUserDefaults*)defaults;
 
 @end

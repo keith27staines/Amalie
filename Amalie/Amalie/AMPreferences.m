@@ -8,6 +8,7 @@
 
 #import "AMPreferences.h"
 #import "AMAppController.h"
+#import "AMFontAttributes.h"
 
 static NSMutableDictionary * AMFonts;
 
@@ -16,15 +17,6 @@ static NSMutableDictionary * AMFonts;
 @end
 
 @implementation AMPreferences
-
-+(AMPreferences*)sharedPreferences
-{
-    static AMPreferences * _sharedPreferences;
-    if (!_sharedPreferences) {
-        _sharedPreferences = [[AMPreferences alloc] init];
-    }
-    return _sharedPreferences;
-}
 
 +(NSUserDefaults*)defaults
 {
@@ -36,48 +28,48 @@ static NSMutableDictionary * AMFonts;
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
-#pragma mark - Worksheet page size -
--(NSSize)worksheetPageSize
+#pragma mark - Page setup -
+-(NSSize)pageSize
 {
-    return [AMPreferences worksheetPageSize];
+    return [AMPreferences pageSize];
 }
--(void)setWorksheetPageSize:(NSSize)worksheetPageSize
+-(void)setPageSize:(NSSize)pageSize
 {
-    [AMPreferences setWorksheetPageSize:worksheetPageSize];
+    [AMPreferences setPageSize:pageSize];
 }
-+(AMPaperType)worksheetPaperType
++(AMPaperType)paperType
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperSizeKey];
 }
-+(void)setWorksheetPaperType:(AMPaperType)paperType
++(void)setPaperType:(AMPaperType)paperType
 {
     [[NSUserDefaults standardUserDefaults] setInteger:paperType forKey:kAMPaperSizeKey];
 }
--(AMPaperType)worksheetPaperType
+-(AMPaperType)paperType
 {
-    return [AMPreferences worksheetPaperType];
+    return [AMPreferences paperType];
 }
--(void)setWorksheetPaperType:(AMPaperType)worksheetPaperType
+-(void)setPaperType:(AMPaperType)paperType
 {
-    [AMPreferences setWorksheetPaperType:worksheetPaperType];
+    [AMPreferences setPaperType:paperType];
 }
-+(AMPaperOrientation)worksheetPaperOrientation
++(AMPaperOrientation)paperOrientation
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPageOrientationKey];
 }
-+(void)setWorksheetPaperOrientation:(AMPaperOrientation)paperOrientation
++(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
 {
     [[NSUserDefaults standardUserDefaults] setInteger:paperOrientation forKey:kAMPageOrientationKey];
 }
--(AMPaperOrientation)worksheetPaperOrientation
+-(AMPaperOrientation)paperOrientation
 {
-    return [AMPreferences worksheetPaperOrientation];
+    return [AMPreferences paperOrientation];
 }
--(void)setWorksheetPaperOrientation:(AMPaperOrientation)worksheetPaperOrientation
+-(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
 {
-    [AMPreferences setWorksheetPaperOrientation:worksheetPaperOrientation];
+    [AMPreferences setPaperOrientation:paperOrientation];
 }
-+(NSSize)worksheetPageSize
++(NSSize)pageSize
 {
     // Portrait orientation
     AMPaperType paperType = [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperSizeKey];
@@ -114,7 +106,7 @@ static NSMutableDictionary * AMFonts;
         }
     }
 }
-+(void)setWorksheetPageSize:(NSSize)size
++(void)setPageSize:(NSSize)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:AMPaperTypeCustom forKey:kAMPaperSizeKey];
     [[NSUserDefaults standardUserDefaults] setInteger:size.width forKey:kAMPageWidthCustomKey];
@@ -168,35 +160,60 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     return [NSString stringWithFormat:@"%f %f %f %f", margins.left, margins.right, margins.top, margins.bottom];
 }
 
-#pragma mark - Worksheet fixed width font size -
-+(void)setWorksheetFixedWidthFontSize:(NSUInteger)size
+#pragma mark - Fixed width font size -
++(void)setFixedWidthFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFixedWidthFontSizeKey];
 }
-+(NSUInteger)worksheetFixedWidthFontSize
++(NSUInteger)fixedWidthFontSize
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFixedWidthFontSizeKey];
 }
 
-#pragma mark - Worksheet standard font size -
--(NSUInteger)worksheetFontSize
+
+//
+
++(NSFont *)fontForFontType:(AMFontType)fontType
 {
-    return [AMPreferences worksheetFontSize];
+    AMFontAttributes * atts = [self fontAttributesForFontType:fontType];
+    return [atts font];
 }
--(void)setWorksheetFontSize:(NSUInteger)size
+
+#pragma mark - Font size -
+-(NSUInteger)fontSize
 {
-    [AMPreferences setWorksheetFontSize:size];
+    return [AMPreferences fontSize];
 }
-+(void)setWorksheetFontSize:(NSUInteger)size
+-(void)setFontSize:(NSUInteger)size
+{
+    [AMPreferences setFontSize:size];
+}
++(void)setFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFontSizeKey];
 }
-+(NSUInteger)worksheetFontSize
++(NSUInteger)fontSize
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFontSizeKey];
 }
++(void)setSmallestFontSize:(NSUInteger)size
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:size forKey:kAMMinFontSizeKey];
+}
++(NSUInteger)smallestFontSize
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMMinFontSizeKey];
+}
++(BOOL)allowFontSynthesis
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMAllowFontSynthesisKey];
+}
++(void)setAllowFontSynthesis:(BOOL)yn
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:yn forKey:kAMAllowFontSynthesisKey];
+}
 
-#pragma mark - Scripting fraction -
+#pragma mark - Other font properties -
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction
 {
     [[NSUserDefaults standardUserDefaults] setFloat:superscriptingFraction forKey:kAMSuperscriptingFraction];
@@ -206,66 +223,126 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSuperscriptingFraction];
 }
 
-+(void)setWorksheetFontDelta:(NSUInteger)delta
+#pragma mark - Font management -
++(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:delta forKey:kAMFontSizeDeltaKey];
+    NSString * key = [self fontAttributesKeyForFontType:fontType];
+    NSData * data = [[NSUserDefaults standardUserDefaults] dataForKey:key];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
++(void)setFontAttributes:(NSDictionary *)attributes forFontType:(AMFontType)fontType
+{
+    NSString * key = [self fontAttributesKeyForFontType:fontType];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:attributes] forKey:key];
+}
++(NSString*)fontAttributesKeyForFontType:(AMFontType)fontType
+{
+    switch (fontType) {
+        case AMFontTypeLiteral:
+        {
+            return kAMFontAttributesForLiteralsKey;
+        }
+        case AMFontTypeAlgebra:
+        {
+            return kAMFontAttributesForAlgebraKey;
+        }
+        case AMFontTypeVector:
+        {
+            return kAMFontAttributesForVectorsKey;
+        }
+        case AMFontTypeMatrix:
+        {
+            return kAMFontAttributesForMatricesKey;
+        }
+        case AMFontTypeSymbol:
+        {
+            return kAMFontAttributesForSymbolsKey;
+        }
+        case AMFontTypeText:
+        {
+            return kAMFontAttributesForTextKey;
+        }
+        case AMFontTypeFixedWidth:
+        {
+            return kAMFontAttributesForFixedWidthTextKey;
+        }
+    }
 }
 
-+(NSUInteger)worksheetFontDelta
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMFontSizeDeltaKey];
-}
-
-+(void)setWorksheetSmallestFontSize:(NSUInteger)size
-{
-    [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMMinFontSizeKey];
-}
-
-+(NSUInteger)worksheetSmallestFontSize
-{
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMMinFontSizeKey];
-}
-
-+(void)setWorksheetFixedWidthFontName:(NSString *)fontName
-{
-    [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:kAMFixedWidthFontNameKey];
-}
-
-+(NSString*)worksheetFixedWidthFontName
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kAMFixedWidthFontNameKey];
-}
-
-+(void)setWorksheetFontName:(NSString *)fontName
-{
-    [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:kAMFontNameKey];
-}
-
-+(NSString*)worksheetFontName
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kAMFontNameKey];
-}
-
-+(NSDictionary*)fonts
-{
-    NSFont * fixedWidthFont = [NSFont fontWithName:[AMPreferences worksheetFixedWidthFontName]
-                                              size:[AMPreferences worksheetFixedWidthFontSize]];
-
-    NSFont * standardFont = [NSFont fontWithName:[AMPreferences worksheetFontName]
-                                            size:[AMPreferences worksheetFontSize]];
+#pragma mark - Reset settings to factory defaults -
++ (void)resetAll {
+    NSDictionary *defaultsDict = [[self defaults] dictionaryRepresentation];
     
-    return @{kAMFixedWidthFontNameKey: fixedWidthFont, kAMFontNameKey:standardFont};
+    for (NSString *key in [defaultsDict allKeys])
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    }
+}
++ (void)resetPageMargins {
+    [[self defaults] removeObjectForKey:kAMPageMarginsKey];
+}
++ (void)resetPaperType {
+    [[self defaults] removeObjectForKey:kAMPaperSizeKey];
+}
++ (void)resetPaperOrientation {
+    [[self defaults] removeObjectForKey:kAMPageOrientationKey];
+}
++ (void)resetFontAttributesForFontType:(AMFontType)fontType {
+    switch (fontType) {
+        case AMFontTypeLiteral:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForLiteralsKey];
+            break;
+        }
+        case AMFontTypeAlgebra:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForAlgebraKey];
+            break;
+        }
+        case AMFontTypeVector:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForVectorsKey];
+            break;
+        }
+        case AMFontTypeMatrix:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForMatricesKey];
+            break;
+        }
+        case AMFontTypeSymbol:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForSymbolsKey];
+            break;
+        }
+        case AMFontTypeText:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForTextKey];
+            break;
+        }
+        case AMFontTypeFixedWidth:
+        {
+            [[self defaults] removeObjectForKey:kAMFontAttributesForFixedWidthTextKey];
+            break;
+        }
+    }
+}
++ (void)resetFontSize {
+    [[self defaults] removeObjectForKey:kAMFontSizeKey];
+}
++ (void)resetSmallestFontSize {
+    [[self defaults] removeObjectForKey:kAMMinFontSizeKey];
+}
++ (void)resetFixedWidthFontSize {
+    [[self defaults] removeObjectForKey:kAMFixedWidthFontSizeKey];
+}
++ (void)resetSuperscriptingFraction {
+    [[self defaults] removeObjectForKey:kAMSuperscriptingFraction];
+}
++ (void)resetAllowFontSynthesis {
+    [[self defaults] removeObjectForKey:kAMAllowFontSynthesisKey];
 }
 
-+(NSFont*)standardFont
-{
-    return self.fonts[kAMFontNameKey];
-}
-
-+(NSFont*)fixedWidthFont
-{
-    return self.fonts[kAMFixedWidthFontNameKey];
-}
+#pragma mark - Register factory default settings -
 +(void)registerDefaultPreferences
 {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
@@ -283,15 +360,28 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
     
     // Font names
-    [defaults setObject:kAMDefaultFontName forKey:kAMFontNameKey];
-    [defaults setObject:kAMDefaultFixedWidthFontName forKey:kAMFixedWidthFontNameKey];
+    AMFontAttributes * literalsAtts   = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForLiterals       size:kAMFactorySettingFontSize bold:NO  italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    AMFontAttributes * algebraAtts    = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForAlgebra        size:kAMFactorySettingFontSize bold:NO  italic:YES allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    AMFontAttributes * vectorAtts     = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForVectors        size:kAMFactorySettingFontSize bold:YES italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    AMFontAttributes * matricesAtts   = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForMatrices       size:kAMFactorySettingFontSize bold:YES italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    AMFontAttributes * symbolsAtts    = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForSymbols        size:kAMFactorySettingFontSize bold:NO  italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    AMFontAttributes * textAtts       = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForText           size:kAMFactorySettingFontSize bold:NO  italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    AMFontAttributes * fixedWidthAtts = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForFixedWidthText size:kAMFactorySettingFixedWidthFontSize bold:NO italic:NO allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+    
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:literalsAtts]   forKey:kAMFontAttributesForLiteralsKey];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:algebraAtts]    forKey:kAMFontAttributesForAlgebraKey];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:vectorAtts]     forKey:kAMFontAttributesForVectorsKey];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:matricesAtts]   forKey:kAMFontAttributesForMatricesKey];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:symbolsAtts]    forKey:kAMFontAttributesForSymbolsKey];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:textAtts]       forKey:kAMFontAttributesForTextKey];
+    [defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:fixedWidthAtts] forKey:kAMFontAttributesForFixedWidthTextKey];
     
     // Font sizes
-    [defaults setObject:@(kAMDefaultFontSize)    forKey:kAMFontSizeKey];
-    [defaults setObject:@(kAMDefaultFixedWidthFontSize) forKey:kAMFixedWidthFontSizeKey];
-    [defaults setObject:@(kAMDefaultFontDelta)   forKey:kAMFontSizeDeltaKey];
-    [defaults setObject:@(kAMDefaultMinFontSize) forKey:kAMMinFontSizeKey];
-    [defaults setObject:@(kAMDefaultSuperscriptingFraction) forKey:kAMSuperscriptingFraction];
+    [defaults setObject:@(kAMFactorySettingFontSize)    forKey:kAMFontSizeKey];
+    [defaults setObject:@(kAMFactorySettingFixedWidthFontSize) forKey:kAMFixedWidthFontSizeKey];
+    [defaults setObject:@(kAMFactorySettingMinFontSize) forKey:kAMMinFontSizeKey];
+    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFraction];
+    [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
     
     // Add the dictionaries for the tray objects
     NSMutableDictionary * trayDictionary = [self trayFactorySettingsDictionary];
@@ -391,5 +481,9 @@ NSColor * colorFromName(AMColor color)
     }
 }
 
+-(NSUserDefaults *)standardDefaults
+{
+    return [NSUserDefaults standardUserDefaults];
+}
 
 @end

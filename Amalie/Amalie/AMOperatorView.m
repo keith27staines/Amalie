@@ -36,7 +36,7 @@ static NSString * const kAMOperatorPower    = @"^";
 {
     self = [super initWithFrame:frameRect];
     if (self) {
-        [self setOperator:@"+" withFont:[NSFont systemFontOfSize:24.0]];
+        [self setOperator:@"+" withFont:[NSFont systemFontOfSize:17.0]];
     }
     return self;
 }

@@ -29,7 +29,7 @@
 @property (readwrite)       BOOL            isLogicalViewOnly;
 @property (weak,readonly)   AMExpressionContextNode * contextNode;
 
-@property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
+//@property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 
 -(id)initWithFrame:(NSRect)frame
            groupID:(NSString *)groupID

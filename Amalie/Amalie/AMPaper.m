@@ -27,12 +27,11 @@
 {
     self = [super init];
     if (self) {
-        AMPreferences * preferences = [AMPreferences sharedPreferences];
-        _paperType = preferences.worksheetPaperType;
-        _orientation = preferences.worksheetPaperOrientation;
+        _paperType = [AMPreferences paperType];
+        _orientation = [AMPreferences paperOrientation];
         _margins = [AMPreferences pageMargins];
         if (_paperType != AMPaperTypeCustom) {
-            self.customSize = [preferences worksheetPageSize];
+            self.customSize = [AMPreferences pageSize];
         }
     }
     return self;

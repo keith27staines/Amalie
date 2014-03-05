@@ -7,7 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMUserPreferencesBaseViewController.h"
 
-@interface AMMathUserPreferencesViewController : NSViewController
+
+@interface AMMathUserPreferencesViewController : AMUserPreferencesBaseViewController
 
 @end

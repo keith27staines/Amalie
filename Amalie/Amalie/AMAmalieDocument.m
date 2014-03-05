@@ -390,8 +390,7 @@
 }
 -(CGFloat)verticalSpacing
 {
-    
-    NSFont * font = [AMPreferences standardFont];
+    NSFont * font = [AMPreferences fontForFontType:AMFontTypeAlgebra];
     CGFloat lineSpacing = font.ascender - font.descender + font.leading;
     return lineSpacing;
 }

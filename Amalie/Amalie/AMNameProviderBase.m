@@ -102,28 +102,28 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
 
 -(NSUInteger)baseFontSize
 {
-    return [AMPreferences worksheetFontSize];
+    return [AMPreferences fontSize];
 }
 
 -(NSUInteger)minimumFontSize
 {
-    return fminf([AMPreferences worksheetSmallestFontSize], [self baseFontSize]);
+    return fminf([AMPreferences smallestFontSize], [self baseFontSize]);
 }
 
--(NSString *)fontFamilyNameForLatin
-{
-    return [AMPreferences worksheetFontName];
-}
+//-(NSString *)fontFamilyNameForLatin
+//{
+//    return [AMPreferences fontAttributesForFontType:kAMFontNameKey];
+//}
 
--(NSString *)fontFamilyNameForGreek
-{
-    return [AMPreferences worksheetFontName];
-}
-
--(NSString *)fontFamilyNameForSymbols
-{
-    return [AMPreferences worksheetFontName];
-}
+//-(NSString *)fontFamilyNameForGreek
+//{
+//    return [AMPreferences worksheetFontName];
+//}
+//
+//-(NSString *)fontFamilyNameForSymbols
+//{
+//    return [AMPreferences worksheetFontName];
+//}
 
 -(CGFloat)superscriptingFraction
 {
