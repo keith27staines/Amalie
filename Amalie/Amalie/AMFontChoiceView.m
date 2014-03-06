@@ -17,6 +17,7 @@
     NSButton    * _boldButton;
     NSButton    * _italicButton;
     NSButton    * _restoreButton;
+    AMFontAttributes * _fontAttributes;
 }
 @property (readonly) NSTextField * fontUsageTextField;
 
@@ -50,30 +51,28 @@
     
     // Drawing code here.
 }
--(void)viewDidMoveToSuperview
-{
-    [self fontUsageTextField];
-    [self fontFamilyNameTextField];
-    [self fontPickerButton];
-    [self boldButton];
-    [self italicButton];
-}
 
 -(void)reloadData
 {
-    AMFontAttributes * attrs = [self.datasource fontAttributesForFontChoiceView:self];
-    self.fontFamilyNameTextField.stringValue = attrs.name;
-    if (attrs.isBold) {
+    _fontAttributes = [self.datasource fontAttributesForFontChoiceView:self];
+    self.fontFamilyNameTextField.stringValue = _fontAttributes.name;
+    if (_fontAttributes.isBold) {
         [self.boldButton setState:NSOnState];
     } else {
         [self.boldButton setState:NSOffState];
     }
-    if (attrs.isItalic) {
+    if (_fontAttributes.isItalic) {
         [self.italicButton setState:NSOnState];
     } else {
         [self.italicButton setState:NSOffState];
     }
     self.fontUsageTextField.stringValue = [self.datasource localizedFontUsageDescriptionForFontChoiceView:self];
+}
+
+-(void)viewDidMoveToSuperview
+{
+    [self fontPickerButton];
+    [self restoreButton];
 }
 
 #pragma mark - Actions
@@ -83,22 +82,36 @@
 }
 -(void)fontPickerButtonClicked:(NSButton*)button
 {
-    NSLog(@"Font Picker button clicked");
+    NSFontManager * fontManager = [NSFontManager sharedFontManager];
+    [fontManager setTarget:self];
+    [fontManager setSelectedFont:[self.fontAttributes font] isMultiple:NO];
+    [fontManager orderFrontFontPanel:self];
 }
 -(void)boldButtonClicked:(NSButton*)button
 {
-    
+    if (button.state == NSOnState) {
+        _fontAttributes.isBold = YES;
+    } else {
+        _fontAttributes.isBold = NO;
+    }
+    [self.datasource attributesUpdatedForFontChoiceView:self];
 }
 -(void)italicButtonClicked:(NSButton*)button
 {
-    
+    if (button.state == NSOnState) {
+        _fontAttributes.isItalic = YES;
+    } else {
+        _fontAttributes.isItalic = NO;
+    }
+    [self.datasource attributesUpdatedForFontChoiceView:self];
 }
 -(void)restoreButtonClicked:(NSButton*)button
 {
-    [NSUserDefaults standardUserDefaults];
+    [self.datasource restoreFactoryDefaultsForFontChoiceView:self];
+    [self reloadData];
 }
 
-#pragma mark - Properties returning controls ov view
+#pragma mark - Properties returning controls on view
 -(NSTextField *)fontUsageTextField
 {
     if (!_fontUsageTextField) {
@@ -115,7 +128,7 @@
         [_fontFamilyNameTextField setTarget:self];
         [_fontFamilyNameTextField setAction:@selector(fontFamilyChanged:)];
     }
-    return _fontUsageTextField;
+    return _fontFamilyNameTextField;
 }
 -(NSButton*)fontPickerButton
 {
@@ -132,16 +145,30 @@
     if (!_boldButton) {
         NSView * view = [self subViewForEnumeratedTag:AMFontChoiceViewBoldButton];
         _boldButton = (NSButton*)view;
+        [_boldButton setTarget:self];
+        [_boldButton setAction:@selector(boldButtonClicked:)];
     }
     return _boldButton;
 }
 -(NSButton *)italicButton
 {
-    return (NSButton*)[self subViewForEnumeratedTag:AMFontChoiceViewItalicButton];
+    if (!_italicButton) {
+        NSView * view = [self subViewForEnumeratedTag:AMFontChoiceViewItalicButton];
+        _italicButton = (NSButton*)view;
+        [_italicButton setTarget:self];
+        [_italicButton setAction:@selector(italicButtonClicked:)];
+    }
+    return _italicButton;
 }
 -(NSButton *)restoreButton
 {
-    return (NSButton*)[self subViewForEnumeratedTag:AMFontChoiceViewRestoreButton];
+    if (!_restoreButton) {
+        NSView * view = [self subViewForEnumeratedTag:AMFontChoiceViewRestoreButton];
+        _restoreButton = (NSButton*)view;
+        [_restoreButton setTarget:self];
+        [_restoreButton setAction:@selector(restoreButtonClicked:)];
+    }
+    return _restoreButton;
 }
 
 -(NSView*)subViewForEnumeratedTag:(AMFontChoiceSubviewTags)tag

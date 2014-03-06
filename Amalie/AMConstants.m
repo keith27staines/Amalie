@@ -104,13 +104,13 @@ NSString * const kAMSuperscriptingFraction            = @"kAMSuperscriptingFract
 NSString * const kAMScriptingLevelKey                 = @"kAMScriptingLevel";
 
 // Factory defaults
-NSString * const kAMFactorySettingFontNameForLiterals       = @"Times";
-NSString * const kAMFactorySettingFontNameForAlgebra        = @"Times";
-NSString * const kAMFactorySettingFontNameForVectors        = @"Times";
-NSString * const kAMFactorySettingFontNameForMatrices       = @"Times";
-NSString * const kAMFactorySettingFontNameForSymbols        = @"Times";
+NSString * const kAMFactorySettingFontNameForLiterals       = @"Times New Roman";
+NSString * const kAMFactorySettingFontNameForAlgebra        = @"Times New Roman";
+NSString * const kAMFactorySettingFontNameForVectors        = @"Times New Roman";
+NSString * const kAMFactorySettingFontNameForMatrices       = @"Times New Roman";
+NSString * const kAMFactorySettingFontNameForSymbols        = @"Times New Roman";
 NSString * const kAMFactorySettingFontNameForFixedWidthText = @"Monaco";
-NSString * const kAMFactorySettingFontNameForText           = @"Times";
+NSString * const kAMFactorySettingFontNameForText           = @"Times New Roman";
 
 NSUInteger const kAMFactorySettingMinFontSize                = 6;
 NSUInteger const kAMFactorySettingFontSize                   = 17;

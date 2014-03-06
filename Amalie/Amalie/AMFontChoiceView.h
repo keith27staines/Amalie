@@ -12,12 +12,12 @@
 #import "AMConstants.h"
 
 typedef NS_ENUM(NSUInteger, AMFontChoiceSubviewTags) {
-    AMFontChoiceViewFontUsageLabel = 1000,
+    AMFontChoiceViewFontUsageLabel      = 1000,
     AMFontChoiceViewFontFamilyNameField = 1001,
-    AMFontChoiceViewFontPickerButton = 1002,
-    AMFontChoiceViewBoldButton = 1003,
-    AMFontChoiceViewItalicButton = 1004,
-    AMFontChoiceViewRestoreButton = 1005,
+    AMFontChoiceViewFontPickerButton    = 1002,
+    AMFontChoiceViewBoldButton          = 1003,
+    AMFontChoiceViewItalicButton        = 1004,
+    AMFontChoiceViewRestoreButton       = 1005,
 };
 
 @protocol AMFontChoiceViewDatasource <NSObject>
@@ -25,11 +25,12 @@ typedef NS_ENUM(NSUInteger, AMFontChoiceSubviewTags) {
 -(AMFontAttributes*)fontAttributesForFontChoiceView:(AMFontChoiceView*)view;
 -(void)attributesUpdatedForFontChoiceView:(AMFontChoiceView*)view;
 -(NSString*)localizedFontUsageDescriptionForFontChoiceView:(AMFontChoiceView*)view;
+-(void)restoreFactoryDefaultsForFontChoiceView:(AMFontChoiceView*)self;
 @end
 
 @interface AMFontChoiceView : NSView <NSTextFieldDelegate>
 
-@property id<AMFontChoiceViewDatasource>datasource;
+@property (weak) id<AMFontChoiceViewDatasource>datasource;
 
 @property AMFontType fontType;
 

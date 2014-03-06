@@ -18,10 +18,10 @@ NSMutableDictionary * _trayDictionary;
 
 @interface AMAppController()
 {
-    AMPreferencesWindowController * _preferencesController;
+    AMPreferencesWindowController * _preferencesWindowController;
 }
 
-@property (strong,readonly) AMPreferencesWindowController * preferencesController;
+@property (strong,readonly) AMPreferencesWindowController * preferencesWindowController;
 
 @end
 
@@ -29,17 +29,33 @@ NSMutableDictionary * _trayDictionary;
 
 - (IBAction)showPreferencesPanel:(id)sender {
     
-    if (!_preferencesController) {
-        _preferencesController = [[AMPreferencesWindowController alloc] initWithWindowNibName:kAMPreferencesWindowNibName];
-        [_preferencesController setTrayDatasource:self];
+    if (!_preferencesWindowController) {
+        _preferencesWindowController = [[AMPreferencesWindowController alloc] initWithWindowNibName:kAMPreferencesWindowNibName];
+        [_preferencesWindowController setTrayDatasource:self];
     }
-    [_preferencesController showWindow:self];
+    [_preferencesWindowController showWindow:self];
+}
+
+-(void)awakeFromNib
+{
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(applicationWillTerminateNotification:)
+               name:NSApplicationWillTerminateNotification
+             object:nil];
 }
 
 // Called before any other method of this class
 +(void)initialize
 {
     [AMPreferences registerDefaultPreferences];
+}
+
+-(void)applicationWillTerminateNotification:(NSNotification*)notification
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self];
 }
 
 #pragma mark - Implementation of AMTrayDatasourceProtocol -
@@ -254,5 +270,6 @@ NSMutableDictionary * _trayDictionary;
     [NSException raise:@"Unknown key" format:@"There is no known type for key %@",key];
     return 0;
 }
+
 
 @end

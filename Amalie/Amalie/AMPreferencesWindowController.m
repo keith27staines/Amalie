@@ -83,9 +83,11 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 // Nothing to do here yet
 
 
-
-
-
+#pragma mark - NSWindow delegate
+-(void)windowWillClose:(NSNotification *)notification
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 
 

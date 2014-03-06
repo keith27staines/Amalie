@@ -87,8 +87,8 @@ typedef NS_ENUM(NSUInteger, AMFontType){
     AMFontTypeVector     = 2,
     AMFontTypeMatrix     = 3,
     AMFontTypeSymbol     = 4,
-    AMFontTypeFixedWidth = 5,
-    AMFontTypeText       = 6,
+    AMFontTypeText       = 5,
+    AMFontTypeFixedWidth = 6,
     AMFontTypeMax        = 6,
 };
 // Keys

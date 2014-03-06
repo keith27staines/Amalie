@@ -14,7 +14,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AMTrayDatasource.h"
 
-@interface AMPreferencesWindowController : NSWindowController <NSToolbarDelegate>
+@interface AMPreferencesWindowController : NSWindowController <NSToolbarDelegate,NSWindowDelegate>
 
 @property (weak) id<AMTrayDataSource>trayDatasource;
 
@@ -30,13 +30,13 @@
 @property (weak) IBOutlet NSToolbarItem *showmathsButton;
 
 
-@property (strong) IBOutlet AMColorUserPreferencesViewController *colorPreferencesViewController;
+@property (weak) IBOutlet AMColorUserPreferencesViewController *colorPreferencesViewController;
 
-@property (strong) IBOutlet AMFontUserPreferencesViewController *fontPreferencesViewController;
+@property (weak) IBOutlet AMFontUserPreferencesViewController *fontPreferencesViewController;
 
-@property (strong) IBOutlet AMPageUserPreferencesViewController *pagePreferencesViewController;
+@property (weak) IBOutlet AMPageUserPreferencesViewController *pagePreferencesViewController;
 
-@property (strong) IBOutlet AMMathUserPreferencesViewController * mathPreferencesViewController;
+@property (weak) IBOutlet AMMathUserPreferencesViewController * mathPreferencesViewController;
 
 
 @end

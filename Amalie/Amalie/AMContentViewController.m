@@ -346,7 +346,7 @@
 
 -(AMPreferences*)preferenceController
 {
-    return self.appController.preferenceContoller;
+    return self.appController.userPreferences;
 }
 
 -(NSColor *)backgroundColorForType:(AMInsertableType)type

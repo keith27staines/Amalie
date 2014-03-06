@@ -70,6 +70,7 @@
 -(IBAction)restoreToFactoryDefaults:(NSButton *)button
 {
     [AMPreferences resetAll];
+    [self reloadData];
 }
 
 #pragma mark - NSTableView datasource
@@ -97,6 +98,10 @@
 -(void)attributesUpdatedForFontChoiceView:(AMFontChoiceView*)view
 {
     [AMPreferences setFontAttributes:view.fontAttributes forFontType:view.fontType];
+}
+-(void)restoreFactoryDefaultsForFontChoiceView:(AMFontChoiceView*)view
+{
+    [AMPreferences resetFontAttributesForFontType:view.fontType];
 }
 -(NSString *)localizedFontUsageDescriptionForFontChoiceView:(AMFontChoiceView *)view
 {
@@ -132,6 +137,10 @@
     }
 }
 
+-(void)dealloc
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 
 @end
