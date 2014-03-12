@@ -14,17 +14,24 @@
 @class AMKeyboardsViewController;
 @class AMDocumentView;
 @class AMLibraryViewController;
+@class AMNameProviderBase;
+@class AMArgumentsNameProvider;
+@class AMDArgumentList;
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
 #import "AMTrayDatasource.h"
 #import "AMInsertableViewDelegate.h"
 #import "AMInsertableViewDataSource.h"
-#import "AMNameProviderBase.h"
+//#import "AMNameProviderBase.h"
+#import "AMNameProviderDelegate.h"
 
 @interface AMAmalieDocument : NSPersistentDocument
 <AMWorksheetViewDelegate,
- AMInsertableViewDelegate, NSSplitViewDelegate, NSPopoverDelegate>
+ AMInsertableViewDelegate,
+AMNameProviderDelegate,
+NSSplitViewDelegate,
+NSPopoverDelegate>
 
 
 #pragma mark -Toolbar outlets and actions-
@@ -85,5 +92,8 @@
  appController is required by various members of the receiver
  */
 @property (weak) IBOutlet AMAppController * appController;
+
+-(AMNameProviderBase*)baseNameProvider;
+-(AMArgumentsNameProvider*)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList;
 
 @end

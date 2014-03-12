@@ -126,55 +126,55 @@ NSMutableDictionary * _trayDictionary;
     
     if ( [key isEqualToString:kAMConstantKey] ) {
         *insertableType = AMInsertableTypeConstant;
-        *info = @"Define a constant and assigns it a value. Once a constant is defined, you may refer to it anywhere on the worksheet, but you cannot change its value.";
+        *info = NSLocalizedString(@"Define a constant and assigns it a value. Once a constant is defined, you may refer to it anywhere on the worksheet, but you cannot change its value.",nil);
         return;
     }
 
     if ( [key isEqualToString:kAMVariableKey] ) {
         *insertableType = AMInsertableTypeVariable;
-        *info = @"Define a variable and assigns it a value. Once a variable is defined, you may refer to it anywhere on the worksheet below the position where it is introduced. At any later position, you can change its value either by explicitly assiging it a new value or implicitly, by referencing it in a set or range of values.";
+        *info = NSLocalizedString(@"Define a variable and assigns it a value. Once a variable is defined, you may refer to it anywhere on the worksheet below the position where it is introduced. At any later position, you can change its value either by explicitly assiging it a new value or implicitly, by referencing it in a set or range of values.",nil);
         return;
     }
 
     if ( [key isEqualToString:kAMExpressionKey] ) {
         *insertableType = AMInsertableTypeExpression;
-        *info = @"Define an algebraic expression. The expression can reference other mathematic objects defined above it. If all the objects it references can be evaluated, the expression itself can be evaluated.";
+        *info = NSLocalizedString(@"Define an algebraic expression. The expression can reference other mathematic objects defined above it. If all the objects it references can be evaluated, the expression itself can be evaluated.",nil);
         return;
     }
     
     if ( [key isEqualToString:kAMFunctionKey]) {
         *insertableType = AMInsertableTypeFunction;
-        *info = @"Define a function, including its name, argument list and return type. The function can also reference other mathematical objects defined above it.";
+        *info = NSLocalizedString(@"Define a function, including its name, argument list and return type. The function can also reference other mathematical objects defined above it.",nil);
         return;
     }
     
     if ( [key isEqualToString:kAMEquationKey] ) {
         *insertableType = AMInsertableTypeEquation;
-        *info = @"Define an equation.";
+        *info = NSLocalizedString(@"Define an equation.",nil);
         return;
     }
 
     if ( [key isEqualToString:kAMVectorKey] ) {
         *insertableType = AMInsertableTypeVector;
-        *info = @"Define a vector.";
+        *info = NSLocalizedString(@"Define a vector.",nil);
         return;
     }
     
     if ( [key isEqualToString:kAMMatrixKey] ) {
         *insertableType = AMInsertableTypeMatrix;
-        *info = @"Define a matrix.";
+        *info = NSLocalizedString(@"Define a matrix.",nil);
         return;
     }
 
     if ( [key isEqualToString:kAMMathematicalSetKey] ) {
         *insertableType = AMInsertableTypeMathematicalSet;
-        *info = @"Define a set (technically a finite set).";
+        *info = NSLocalizedString(@"Define a set (technically a finite set).",nil);
         return;
     }
     
     if ( [key isEqualToString:kAMGraph2DKey] ) {
         *insertableType = AMInsertableTypeGraph2D;
-        *info = @"Defines a 2D graph.";
+        *info = NSLocalizedString(@"Defines a 2D graph.",nil);
         return;
     }
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5059" systemVersion="13C62" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13D12" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AMDArgumentLists" representedClassName="AMDArgumentList" syncable="YES">
         <relationship name="arguments" toMany="YES" deletionRule="Cascade" destinationEntity="AMDArguments" inverseName="argumentList" inverseEntity="AMDArguments" syncable="YES"/>
         <relationship name="functionDef" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDFunctionDefs" inverseName="argumentList" inverseEntity="AMDFunctionDefs" syncable="YES"/>
@@ -13,11 +13,32 @@
     </entity>
     <entity name="AMDDocumentSettings" representedClassName="AMDDocumentSettings" syncable="YES">
         <attribute name="pageSetup" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="fontForAlgebra" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingAlgebraFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
+        <relationship name="fontForFixedWidthText" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingFixedWidthFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
+        <relationship name="fontForLiterals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingLiteralFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
+        <relationship name="fontForMatrices" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingMatrixFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
+        <relationship name="fontForSymbols" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingSymbolFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
+        <relationship name="fontForText" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingTextFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
+        <relationship name="fontForVectors" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingVectorFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
     </entity>
     <entity name="AMDExpressions" representedClassName="AMDExpression" syncable="YES">
         <attribute name="originalString" attributeType="String" minValueString="1" defaultValueString="x" syncable="YES"/>
         <attribute name="symbol" attributeType="String" minValueString="1" defaultValueString="?" syncable="YES"/>
         <relationship name="expressionIndices" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDIndexedExpressions" inverseName="expression" inverseEntity="AMDIndexedExpressions" syncable="YES"/>
+    </entity>
+    <entity name="AMDFontAttributes" representedClassName="AMDFontAttributes" syncable="YES">
+        <attribute name="allowSynthesis" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="fontFamilyName" optional="YES" attributeType="String" defaultValueString="Times New Roman" syncable="YES"/>
+        <attribute name="isBold" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isItalic" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="Float" minValueString="0" defaultValueString="12" syncable="YES"/>
+        <relationship name="docSettingAlgebraFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForAlgebra" inverseEntity="AMDDocumentSettings" syncable="YES"/>
+        <relationship name="docSettingFixedWidthFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForFixedWidthText" inverseEntity="AMDDocumentSettings" syncable="YES"/>
+        <relationship name="docSettingLiteralFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForLiterals" inverseEntity="AMDDocumentSettings" syncable="YES"/>
+        <relationship name="docSettingMatrixFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForMatrices" inverseEntity="AMDDocumentSettings" syncable="YES"/>
+        <relationship name="docSettingSymbolFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForSymbols" inverseEntity="AMDDocumentSettings" syncable="YES"/>
+        <relationship name="docSettingTextFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForText" inverseEntity="AMDDocumentSettings" syncable="YES"/>
+        <relationship name="docSettingVectorFont" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDDocumentSettings" inverseName="fontForVectors" inverseEntity="AMDDocumentSettings" syncable="YES"/>
     </entity>
     <entity name="AMDFunctionDefs" representedClassName="AMDFunctionDef" parentEntity="AMDInsertedObjects" syncable="YES">
         <attribute name="isConstant" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -58,6 +79,7 @@
     <elements>
         <element name="AMDArgumentLists" positionX="169" positionY="-174" width="128" height="75"/>
         <element name="AMDArguments" positionX="-45" positionY="-210" width="128" height="118"/>
+        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="163"/>
         <element name="AMDExpressions" positionX="241" positionY="-27" width="128" height="90"/>
         <element name="AMDFunctionDefs" positionX="-45" positionY="9" width="128" height="90"/>
         <element name="AMDIndexedExpressions" positionX="232" positionY="378" width="128" height="90"/>
@@ -65,6 +87,6 @@
         <element name="AMDInsertedObjects" positionX="-171" positionY="132" width="128" height="165"/>
         <element name="AMDIntervalDefs" positionX="-65" positionY="477" width="128" height="105"/>
         <element name="AMDNames" positionX="-477" positionY="-0" width="128" height="118"/>
-        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="58"/>
+        <element name="AMDFontAttributes" positionX="-360" positionY="515" width="128" height="223"/>
     </elements>
 </model>

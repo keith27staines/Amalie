@@ -31,7 +31,7 @@
 #import "KSMExpression.h"
 
 // datamodel
-#import "AMNameProvider.h"
+#import "AMArgumentsNameProvider.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMDIndexedExpression.h"
@@ -165,7 +165,7 @@
         self.moc = moc;
         self.groupID = [groupParentView.groupID copy];
         _appController = appController;
-        _parentWorksheetController = worksheetController;
+        _parentDocument = worksheetController;
         _insertableType = insertableType;
 
         AMContentView * contentView = (AMContentView*)[self view];
@@ -203,7 +203,7 @@
 
 -(KSMWorksheet*)mathSheet
 {
-    return self.parentWorksheetController.mathSheet;
+    return self.parentDocument.mathSheet;
 }
 
 #pragma mark - Datastore access -
@@ -294,7 +294,7 @@
 
 -(id<AMNameProviding>)viewRequiresNameProvider:(AMContentView *)view
 {
-    return [self.parentWorksheetController insertedObjectNameProvider];
+    return [self.parentDocument insertedObjectNameProvider];
 }
 
 -(void)populateView:(AMContentView *)view
@@ -331,7 +331,7 @@
 
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 {
-    AMNameProvider * namer = [AMNameProvider nameProvider];
+    AMArgumentsNameProvider * namer = [self.parentDocument baseNameProvider];
     if ( [namer validateProposedName:proposedName.string forType:AMInsertableTypeDummyVariable error:error] ) return NO;
     
     self.amdInsertedObject.name.string = proposedName.string;
@@ -351,7 +351,7 @@
 
 -(NSColor *)backgroundColorForType:(AMInsertableType)type
 {
-    id<AMTrayDataSource> tray = self.parentWorksheetController.trayDataSource;
+    id<AMTrayDataSource> tray = self.parentDocument.trayDataSource;
     NSString * key = [tray keyForType:type];
     AMTrayItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];

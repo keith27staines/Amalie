@@ -24,10 +24,11 @@
 #import "AMPreferences.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject+Methods.h"
-#import "AMDDocumentSettings+Methods.h"
+#import "AMDocumentSettings.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 #import "AMNameProviderBase.h"
+#import "AMArgumentsNameProvider.h"
 #import "AMDocumentView.h"
 #import "AMPaper.h"
 #import "AMPageSetupViewController.h"
@@ -56,7 +57,7 @@
     NSMutableDictionary         * _contentControllers;
     KSMWorksheet                * _mathSheet;
     NSEntityDescription         * _amdInsertedObjectsEntity;
-    AMDDocumentSettings         * _documentSettings;
+    AMDocumentSettings          * _documentSettings;
     AMPaper                     * _paper;
 }
 
@@ -73,13 +74,11 @@
 
 @property (readonly) AMDataStore * sharedDataStore;
 
-@property (readonly) AMNameProviderBase * nameProvider;
-
 @property AMSidepanelVisibility sidepanelVisibility;
 
-@property (readonly) AMDDocumentSettings * documentSettings;
+@property (readonly) AMDocumentSettings * documentSettings;
 
-@property (readonly) AMPaper * paper;
+//@property (readonly) AMPaper * paper;
 
 @end
 
@@ -216,26 +215,12 @@
     [self.worksheetView setNeedsUpdateConstraints:YES];
     [self.worksheetView setNeedsDisplay:YES];
 }
--(AMDDocumentSettings*)documentSettings
+-(AMDocumentSettings*)documentSettings
 {
     if (!_documentSettings) {
-        _documentSettings = [AMDDocumentSettings fetchOrMakeDocumentSettings];
+        _documentSettings = [[AMDocumentSettings alloc] init];
     }
     return _documentSettings;
-}
--(AMPaper*)paper
-{
-    if (!_paper) {
-        AMDDocumentSettings * documentSettings = self.documentSettings;
-        NSData * paperData = documentSettings.pageSetup;
-        if (paperData) {
-            _paper = [NSKeyedUnarchiver unarchiveObjectWithData:paperData];
-        } else {
-            _paper = [[AMPaper alloc] init];
-            documentSettings.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:_paper];
-        }
-    }
-    return _paper;
 }
 
 #pragma mark - Side panel configuration -
@@ -377,16 +362,18 @@
 #pragma mark - AMWorksheetViewDelegate -
 -(NSSize)pageSizeInPoints
 {
-    NSSize size = self.paper.paperSize;
-    if (self.paper.paperOrientation == AMPaperOrientationLandscape) {
+    AMDocumentSettings * documentSettings = self.documentSettings;
+    AMPaper * paper = documentSettings.paper;
+    NSSize size = documentSettings.paper.paperSize;
+    if (paper.paperOrientation == AMPaperOrientationLandscape) {
         size = NSMakeSize(size.height, size.width);
     }
-    size = [AMMeasurement convertSize:size fromUnits:self.paper.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
+    size = [AMMeasurement convertSize:size fromUnits:paper.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
     return size;
 }
 -(AMMargins)pageMargins
 {
-    return [self.paper marginsInUnits:AMMeasurementUnitsPoints];
+    return [self.documentSettings.paper marginsInUnits:AMMeasurementUnitsPoints];
 }
 -(CGFloat)verticalSpacing
 {
@@ -612,7 +599,7 @@
     NSPopover * popover = self.pageSetupPopover;
     popover.behavior = NSPopoverBehaviorTransient;
     AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-    vc.paper = self.paper;
+    vc.paper = self.documentSettings.paper;
     [self.pageSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     BOOL success = [[self.worksheetView window] makeFirstResponder:nil];
     NSAssert(success, @"Failed to remove first responder when showing page setup popover");
@@ -621,8 +608,7 @@
 -(void)popoverDidClose:(NSNotification *)notification
 {
     AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-    _paper = vc.paper;
-    [self savePaper];
+    [self savePaperToPersistentStore:vc.paper];
     [self loadDocumentIntoView];
 }
 -(NSWindow *)detachableWindowForPopover:(NSPopover *)popover
@@ -656,10 +642,9 @@
 }
 
 #pragma mark - Misc -
--(void)savePaper
+-(void)savePaperToPersistentStore:(AMPaper*)paper
 {
-    AMDDocumentSettings * settings = self.documentSettings;
-    settings.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:_paper];
+    self.documentSettings.paper = paper;
 }
 -(NSString *)defaultDraftName
 {
@@ -674,6 +659,27 @@
 - (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender {
 }
 
+-(AMNameProviderBase *)baseNameProvider
+{
+    AMNameProviderBase * baseProvider = [[AMNameProviderBase alloc] initWithDelegate:self];
+    return baseProvider;
+}
+
+-(AMArgumentsNameProvider *)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList
+{
+    AMArgumentsNameProvider * provider = [AMArgumentsNameProvider nameProviderWithDummyVariables:argumentList delegate:self];
+    return provider;
+}
+
+# pragma mark - AMNameProviderDelegate
+-(AMFontAttributes *)fontAttributesForType:(AMFontType)fontType
+{
+    return [self.documentSettings fontAttributesForFontType:fontType];
+}
+-(CGFloat)baseFontSize
+{
+    return [self.documentSettings fontSize];
+}
 @end
 
 

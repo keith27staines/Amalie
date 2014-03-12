@@ -11,19 +11,11 @@
 #import "NSManagedObject+SharedDataStore.h"
 #import "AMConstants.h"
 #import "AMDataStore.h"
+#import "AMDFontAttributes.h"
 
 static NSString * const kAMDENTITYNAME = @"AMDDocumentSettings";
 
 @implementation AMDDocumentSettings (Methods)
-
-+(AMDDocumentSettings*)fetchOrMakeDocumentSettings
-{
-    AMDDocumentSettings * settings = [self fetchDocumentSettings];
-    if (!settings) {
-        settings = [self makeDocumentSettings];
-    }
-    return settings;
-}
 
 +(AMDDocumentSettings*)makeDocumentSettings
 {
@@ -35,10 +27,14 @@ static NSString * const kAMDENTITYNAME = @"AMDDocumentSettings";
     NSArray * results = [self.dataStore fetchObjectsFromEntityWithName:kAMDENTITYNAME withSortDescriptors:nil predicate:nil];
     NSAssert(results.count < 2, @"Unexpected number of results.");
     
-    if (results.count == 1) {
-        return results[0];
-    } else {
-        return nil;
+    switch (results.count) {
+        case 0:
+            return nil;
+        case 1:
+            return results[0];
+        default:
+            NSAssert(NO, @"There is more than one set of document settings associated with this document");
+            return results[0];
     }
 }
 -(NSUndoManager*)undoManager

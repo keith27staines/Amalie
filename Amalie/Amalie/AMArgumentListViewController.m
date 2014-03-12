@@ -11,7 +11,7 @@
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMPreferences.h"
-#import "AMNameProvider.h"
+#import "AMArgumentsNameProvider.h"
 
 
 @interface AMArgumentListViewController ()
@@ -21,7 +21,7 @@
 }
 
 @property (weak, readonly) AMArgumentListView * argumentListView;
-@property (weak) AMNameProvider * namer;
+@property (weak) AMArgumentsNameProvider * namer;
 @end
 
 

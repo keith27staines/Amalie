@@ -29,14 +29,6 @@ static NSMutableDictionary * AMFonts;
 }
 
 #pragma mark - Page setup -
--(NSSize)pageSize
-{
-    return [AMPreferences pageSize];
-}
--(void)setPageSize:(NSSize)pageSize
-{
-    [AMPreferences setPageSize:pageSize];
-}
 +(AMPaperType)paperType
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperSizeKey];
@@ -45,14 +37,6 @@ static NSMutableDictionary * AMFonts;
 {
     [[NSUserDefaults standardUserDefaults] setInteger:paperType forKey:kAMPaperSizeKey];
 }
--(AMPaperType)paperType
-{
-    return [AMPreferences paperType];
-}
--(void)setPaperType:(AMPaperType)paperType
-{
-    [AMPreferences setPaperType:paperType];
-}
 +(AMPaperOrientation)paperOrientation
 {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPageOrientationKey];
@@ -60,14 +44,6 @@ static NSMutableDictionary * AMFonts;
 +(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
 {
     [[NSUserDefaults standardUserDefaults] setInteger:paperOrientation forKey:kAMPageOrientationKey];
-}
--(AMPaperOrientation)paperOrientation
-{
-    return [AMPreferences paperOrientation];
-}
--(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
-{
-    [AMPreferences setPaperOrientation:paperOrientation];
 }
 +(NSSize)pageSize
 {
@@ -111,14 +87,6 @@ static NSMutableDictionary * AMFonts;
     [[NSUserDefaults standardUserDefaults] setInteger:AMPaperTypeCustom forKey:kAMPaperSizeKey];
     [[NSUserDefaults standardUserDefaults] setInteger:size.width forKey:kAMPageWidthCustomKey];
     [[NSUserDefaults standardUserDefaults] setInteger:size.height forKey:kAMPageHeightCustomKey];
-}
--(AMMargins)pageMargins
-{
-    return [AMPreferences pageMargins];
-}
--(void)setPageMargins:(AMMargins)pageMargins
-{
-    [AMPreferences setPageMargins:pageMargins];
 }
 +(AMMargins)pageMargins
 {
@@ -180,14 +148,6 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 }
 
 #pragma mark - Font size -
--(NSUInteger)fontSize
-{
-    return [AMPreferences fontSize];
-}
--(void)setFontSize:(NSUInteger)size
-{
-    [AMPreferences setFontSize:size];
-}
 +(void)setFontSize:(NSUInteger)size
 {
     [[NSUserDefaults standardUserDefaults] setInteger:size forKey:kAMFontSizeKey];

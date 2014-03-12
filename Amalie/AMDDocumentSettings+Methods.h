@@ -12,6 +12,6 @@
 
 @interface AMDDocumentSettings (Methods)
 
-+(AMDDocumentSettings*)fetchOrMakeDocumentSettings;
-
++(AMDDocumentSettings*)fetchDocumentSettings;
++(AMDDocumentSettings*)makeDocumentSettings;
 @end

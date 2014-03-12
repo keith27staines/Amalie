@@ -17,6 +17,7 @@
 #import "AMKeyboardKeyModel.h"
 #import "AMDName+Methods.h"
 #import "AMError.h"
+#import "AMFontAttributes.h"
 
 typedef enum AMCharacterType : NSUInteger {
     amCharacterTypeLatin,
@@ -33,17 +34,30 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
 @property (readonly) CGFloat    superscriptingFraction;
 @property (readonly) NSUInteger baseFontSize;
 @property (readonly) NSUInteger minimumFontSize;
-@property (readonly) NSString * fontFamilyNameForLatin;
-@property (readonly) NSString * fontFamilyNameForGreek;
-@property (readonly) NSString * fontFamilyNameForSymbols;
+@property (readonly) id<AMNameProviderDelegate>delegate;
 @end
 
 
 @implementation AMNameProviderBase
 
-+(id)nameProvider
+-(id)init
 {
-    return [[self alloc] init];
+    [NSException raise:@"Invalid initializer" format:@"Call the designated initializer"];
+    return nil;
+}
+
+-(id)initWithDelegate:(id<AMNameProviderDelegate>)delegate
+{
+    self = [super init];
+    if (self) {
+        _delegate = delegate;
+    }
+    return self;
+}
+
++(id)nameProviderWithDelegate:(id<AMNameProviderDelegate>)delegate
+{
+    return [[self alloc] initWithDelegate:delegate];
 }
 
 -(NSUInteger)indexOfCharacterPrecedingExponentPositionForString:(NSAttributedString*)attributedString
@@ -95,35 +109,21 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
 -(NSFont *)fontForSymbolsAtScriptinglevel:(NSUInteger)scriptingLevel
 {
     CGFloat fontSize = [self fontSizeForSuperscriptLevel:scriptingLevel];
-    NSString * family = [self fontFamilyNameForSymbols];
-    NSFontManager * fontManager = [NSFontManager sharedFontManager];
-    return [fontManager fontWithFamily:family traits:0 weight:0 size:fontSize];
+    AMFontAttributes * attrs = [self.delegate fontAttributesForType:AMFontTypeSymbol];
+    NSFont * font = attrs.font;
+    font = [[NSFontManager sharedFontManager] convertFont:font toSize:fontSize];
+    return font;
 }
 
 -(NSUInteger)baseFontSize
 {
-    return [AMPreferences fontSize];
+    return [self.delegate baseFontSize];
 }
 
 -(NSUInteger)minimumFontSize
 {
     return fminf([AMPreferences smallestFontSize], [self baseFontSize]);
 }
-
-//-(NSString *)fontFamilyNameForLatin
-//{
-//    return [AMPreferences fontAttributesForFontType:kAMFontNameKey];
-//}
-
-//-(NSString *)fontFamilyNameForGreek
-//{
-//    return [AMPreferences worksheetFontName];
-//}
-//
-//-(NSString *)fontFamilyNameForSymbols
-//{
-//    return [AMPreferences worksheetFontName];
-//}
 
 -(CGFloat)superscriptingFraction
 {
@@ -149,63 +149,25 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
     return size;
 }
 
--(NSFont *)defaultFontForCharacter:(NSString *)ch
-                            ofType:(KSMValueType)mathType
-                  superscriptLevel:(NSInteger)superscriptLevel
+-(AMFontAttributes*)defaultFontAttributesForCharacter:(NSString *)ch
+                                               ofType:(KSMValueType)mathType
+                                     superscriptLevel:(NSInteger)superscriptLevel
 {
     NSAssert(ch.length == 1, @"The string %@ should contain only one character",ch);
-    /*
-     NSItalicFontMask = 0x00000001,
-     NSBoldFontMask = 0x00000002,
-     NSUnboldFontMask = 0x00000004,
-     NSNonStandardCharacterSetFontMask = 0x00000008,
-     NSNarrowFontMask = 0x00000010,
-     NSExpandedFontMask = 0x00000020,
-     NSCondensedFontMask = 0x00000040,
-     NSSmallCapsFontMask = 0x00000080,
-     NSPosterFontMask = 0x00000100,
-     NSCompressedFontMask = 0x00000200,
-     NSFixedPitchFontMask = 0x00000400,
-     NSUnitalicFontMask = 0x01000000
-     */
     
-    NSUInteger traits = 0;
+    AMFontAttributes * fontAttrs;
     NSCharacterSet * numericSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
     
     NSRange r = [ch rangeOfCharacterFromSet:numericSet];
-    if (r.location == NSNotFound)
-    {
-        // Character is not 0,1,2,3,4,5,6,7,8, or 9...
-        switch (mathType) {
-            case KSMValueInteger:
-            case KSMValueDouble :
-            {
-                // Handle reals
-                traits = traits | NSItalicFontMask;
-                break;
-            }
-            case KSMValueVector:
-            {
-                if (superscriptLevel == 0) {
-                    traits = traits | NSBoldFontMask;
-                } else {
-                    traits = traits | NSItalicFontMask;
-                }
-                break;
-            }
-            case KSMValueMatrix:
-                traits = traits | NSBoldFontMask ;
-                
-                break;
-        }
+    if (r.location == NSNotFound) {
+        
+        
+    } else {
+        // Character is a digit, 0,1,2,3,4,5,6,7,8, or 9
+        fontAttrs = [self.delegate fontAttributesForType:AMFontTypeLiteral];
     }
-    
-    NSFontManager * fontManager = [NSFontManager sharedFontManager];
-    return [fontManager fontWithFamily:[self fontFamilyNameForCharacter:ch]
-                                traits:traits
-                                weight:0
-                                  size:[self fontSizeForSuperscriptLevel:superscriptLevel]];
-    
+    fontAttrs.size = [self fontSizeForSuperscriptLevel:superscriptLevel];
+    return fontAttrs;
 }
 
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name withType:(KSMValueType)mathType
@@ -216,19 +178,19 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
     
     NSMutableAttributedString * returnString = [[NSMutableAttributedString alloc]
                                                 initWithString:name attributes:nil];
+    NSFont * font = nil;
+    AMFontAttributes * fontAttrs = nil;
+    NSInteger superscriptLevel = 0;
     BOOL isNumber = [self isFirstCharacterNumeric:name];
     for (int i = 0; i < returnString.length; i++) {
         NSRange r = NSMakeRange(i, 1);
         NSString * c = [returnString.string substringWithRange:r];
-        NSInteger superscriptLevel = 0;
+        superscriptLevel = 0;
         if (i > 0 && !isNumber) {
             superscriptLevel = -1;
         }
-        
-        // Now we modify the standard fontsize and baseline offset attributes, plus our custom scripting level attribute, all of which are derived from the default font for the character type and the superscriptLevel just calculated
-        NSFont * font = [self defaultFontForCharacter:c
-                                               ofType:mathType
-                                     superscriptLevel:superscriptLevel];
+        fontAttrs = [self defaultFontAttributesForCharacter:c ofType:mathType superscriptLevel:superscriptLevel];
+        font = [fontAttrs font];
         [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];
         [returnString addAttribute:NSFontAttributeName value:font range:r];
         CGFloat xHeight = [font xHeight];
@@ -236,6 +198,20 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
                              value:@(superscriptLevel*xHeight*kAMsuperscriptOffsetAsFractionOfXHeight) range:r];
     }
     return returnString;
+}
+
+-(AMFontType)fontTypeForMathType:(KSMValueType)mathType
+{
+    switch (mathType) {
+        case KSMValueInteger:
+            return AMFontTypeAlgebra;
+        case KSMValueDouble:
+            return AMFontTypeAlgebra;
+        case KSMValueVector:
+            return AMFontTypeVector;
+        case KSMValueMatrix:
+            return AMFontTypeMatrix;
+    }
 }
 
 -(BOOL)isFirstCharacterNumeric:(NSString*)string
@@ -276,49 +252,6 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
         attributes[NSFontAttributeName] = convertedFont;
         [aString setAttributes:attributes range:range];
     }
-}
-
--(NSString*)fontFamilyNameForCharacter:(NSString*)ch
-{
-    AMCharacterType amCharType = [self characterTypeForCharacter:ch];
-    NSString * familyName = nil;
-    switch (amCharType) {
-        case amCharacterTypeLatin:
-            familyName = self.fontFamilyNameForLatin;
-            break;
-        case amCharacterTypeGreek:
-            familyName = self.fontFamilyNameForGreek;
-            break;
-        case amCharacterTypeSymbol:
-            familyName = self.fontFamilyNameForSymbols;
-            break;
-    }
-    return familyName;
-}
-
--(AMCharacterType)characterTypeForCharacter:(NSString*)ch
-{
-    // Identify the keyboard (and hence the character set) that contains the specified character
-    AMKeyboard * keyboard = [[AMKeyboards sharedKeyboards] keyboardContainingCharacter:ch];
-    NSString * keyboardName = keyboard.name;
-    
-    // Map the character to a font
-    if ([keyboardName isEqualToString:kAMKeyboardSmallGreek] || [keyboardName isEqualToString:kAMKeyboardCapitalGreek]) {
-        return amCharacterTypeGreek;
-    }
-    if ([keyboardName isEqualToString:kAMKeyboardSmallEnglish] || [keyboardName isEqualToString:kAMKeyboardCapitalEnglish]) {
-        return amCharacterTypeLatin;
-    }
-    if ([keyboardName isEqualToString:kAMKeyboardNumeric] ) {
-        return amCharacterTypeLatin;
-    }
-    if ([keyboardName isEqualToString:kAMKeyboardMathOperators] ) {
-        return amCharacterTypeLatin;
-    }
-    if ([keyboardName isEqualToString:kAMKeyboardMathSymbols] ) {
-        return amCharacterTypeLatin;
-    }
-    return amCharacterTypeLatin;
 }
 
 -(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name

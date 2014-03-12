@@ -29,7 +29,7 @@
 
 @property (weak) AMAppController * appController;
 
-@property (weak, readonly) AMAmalieDocument * parentWorksheetController;
+@property (weak, readonly) AMAmalieDocument * parentDocument;
 
 @property (copy)          NSString               * groupID;
 @property (strong)        AMDInsertedObject      * amdInsertedObject;

@@ -1,39 +1,39 @@
 //
-//  AMNameProvider.m
+//  AMArgumentsNameProvider.m
 //  Amalie
 //
 //  Created by Keith Staines on 10/12/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMNameProvider.h"
+#import "AMArgumentsNameProvider.h"
 #import "AMDArgumentList+Methods.h"
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
 
-@interface AMNameProvider()
+@interface AMArgumentsNameProvider()
 {
     AMDArgumentList * _dummyVariables;
 }
 
 @end
 
-@implementation AMNameProvider
+@implementation AMArgumentsNameProvider
 
 
-+(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables
++(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables delegate:(id<AMNameProviderDelegate>)delegate
 {
-    return [[self alloc] initWithDummyVariables:dummyVariables];
+    return [[self alloc] initWithDummyVariables:dummyVariables delegate:delegate];
 }
 
--(id)init
+-(id)initWithDelegate:(id<AMNameProviderDelegate>)delegate
 {
-    return [self initWithDummyVariables:nil];
+    return [self initWithDummyVariables:nil delegate:delegate];
 }
 
-- (id)initWithDummyVariables:(AMDArgumentList*)dummyVariables
+- (id)initWithDummyVariables:(AMDArgumentList*)dummyVariables delegate:(id<AMNameProviderDelegate>)delegate
 {
-    self = [super init];
+    self = [super initWithDelegate:delegate];
     if (self) {
         if (dummyVariables) {
             _dummyVariables = dummyVariables;

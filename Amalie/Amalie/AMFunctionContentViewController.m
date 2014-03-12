@@ -24,7 +24,7 @@
 #import "AMFunctionEditorViewController.h"
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
-#import "AMNameProvider.h"
+#import "AMArgumentsNameProvider.h"
 
 // core data generated objects
 #import "AMDInsertedObject.h"
@@ -308,9 +308,9 @@ static NSUInteger const kAMIndexRHS;
 #pragma mark - Name provider -
 -(id<AMNameProviding>)nameProvider
 {
-    static AMNameProvider * _nameProvider;
+    static AMArgumentsNameProvider * _nameProvider;
     if (!_nameProvider) {
-        _nameProvider = [AMNameProvider nameProviderWithDummyVariables:self.amdFunctionDef.argumentList];
+        _nameProvider = [self.parentDocument argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
     }
     return _nameProvider;
 }

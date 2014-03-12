@@ -1,5 +1,5 @@
 //
-//  AMNameProvider.h
+//  AMArgumentsNameProvider.h
 //  Amalie
 //
 //  Created by Keith Staines on 10/12/2013.
@@ -13,9 +13,12 @@
 /*!
  This class extends the AMExclusiveNameProvider by also parsing through dummy variable names in addition to the inserted object names parsed by super.
  */
-@interface AMNameProvider : AMNameProviderBase
+@interface AMArgumentsNameProvider : AMNameProviderBase
 
-+(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables;
++(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables delegate:(id<AMNameProviderDelegate>)delegate;
+
+// Designated initializer
+- (id)initWithDummyVariables:(AMDArgumentList*)dummyVariables delegate:(id<AMNameProviderDelegate>)delegate;
 
 @property (readonly) AMDArgumentList * dummyVariables;
 

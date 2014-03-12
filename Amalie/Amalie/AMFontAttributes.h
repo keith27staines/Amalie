@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
+@class AMDFontAttributes;
+
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
@@ -26,7 +28,10 @@
 @property BOOL isItalic;
 @property BOOL allowSynthesis;
 @property CGFloat size;
--(NSDictionary*)dictionaryRepresentation;
 -(NSFont*)font;
 
+
+// Support for underlying core data object
+-(void)copyFromCoreDataFontAttributes:(AMDFontAttributes*)attributes;
+-(void)copyToCoreDataFontAttributes:(AMDFontAttributes*)attributes;
 @end
