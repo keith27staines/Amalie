@@ -676,6 +676,22 @@
 {
     return [self.documentSettings fontAttributesForFontType:fontType];
 }
+-(CGFloat)superscriptingFraction
+{
+    return [self.documentSettings superscriptingFraction];
+}
+-(CGFloat)superscriptOffset
+{
+    return [self.documentSettings superscriptOffset];
+}
+-(CGFloat)subscriptOffset
+{
+    return [self.documentSettings subscriptOffset];
+}
+-(CGFloat)smallestFontSize
+{
+    return [self.documentSettings smallestFontSize];
+}
 -(CGFloat)baseFontSize
 {
     return [self.documentSettings fontSize];

@@ -116,9 +116,9 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 +(AMMargins)AMMarginsFromNSString:(NSString*)string
 {
     NSArray * components = [string componentsSeparatedByString:@" "];
-    NSString * left = components[0];
-    NSString * right = components[1];
-    NSString * top = components[2];
+    NSString * left   = components[0];
+    NSString * right  = components[1];
+    NSString * top    = components[2];
     NSString * bottom = components[3];
     return AMMarginsMake(left.doubleValue, right.doubleValue, top.doubleValue, bottom.doubleValue);
 }
@@ -176,11 +176,27 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 #pragma mark - Other font properties -
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction
 {
-    [[NSUserDefaults standardUserDefaults] setFloat:superscriptingFraction forKey:kAMSuperscriptingFraction];
+    [[NSUserDefaults standardUserDefaults] setFloat:superscriptingFraction forKey:kAMSuperscriptingFractionKey];
 }
 +(CGFloat)superscriptingFraction
 {
-    return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSuperscriptingFraction];
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSuperscriptingFractionKey];
+}
++(void)setSuperscriptOffset:(CGFloat)offset
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:offset forKey:kAMSuperscriptOffsetKey];
+}
++(CGFloat)superscriptOffset
+{
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSuperscriptOffsetKey];
+}
++(void)setSubscriptOffset:(CGFloat)offset
+{
+    [[NSUserDefaults standardUserDefaults] setFloat:offset forKey:kAMSubscriptOffsetKey];
+}
++(CGFloat)subscriptOffset
+{
+    return [[NSUserDefaults standardUserDefaults] floatForKey:kAMSubscriptOffsetKey];
 }
 
 #pragma mark - Font management -
@@ -297,7 +313,7 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [[self defaults] removeObjectForKey:kAMFixedWidthFontSizeKey];
 }
 + (void)resetSuperscriptingFraction {
-    [[self defaults] removeObjectForKey:kAMSuperscriptingFraction];
+    [[self defaults] removeObjectForKey:kAMSuperscriptingFractionKey];
 }
 + (void)resetAllowFontSynthesis {
     [[self defaults] removeObjectForKey:kAMAllowFontSynthesisKey];
@@ -341,7 +357,11 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:@(kAMFactorySettingFontSize)    forKey:kAMFontSizeKey];
     [defaults setObject:@(kAMFactorySettingFixedWidthFontSize) forKey:kAMFixedWidthFontSizeKey];
     [defaults setObject:@(kAMFactorySettingMinFontSize) forKey:kAMMinFontSizeKey];
-    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFraction];
+    
+    // Mathematical typography style
+    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFractionKey];
+    [defaults setObject:@(kAMFactorySettingSuperscriptOffset) forKey:kAMSuperscriptOffsetKey];
+    [defaults setObject:@(kAMFactorySettingSubscriptOffset) forKey:kAMSubscriptOffsetKey];
     [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
     
     // Add the dictionaries for the tray objects

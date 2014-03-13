@@ -108,7 +108,9 @@ extern NSString * const kAMFontSizeKey;
 extern NSString * const kAMFixedWidthFontSizeKey;
 extern NSString * const kAMAllowFontSynthesisKey;
 
-extern NSString * const kAMSuperscriptingFraction;
+extern NSString * const kAMSuperscriptingFractionKey;
+extern NSString * const kAMSuperscriptOffsetKey;
+extern NSString * const kAMSubscriptOffsetKey;
 extern NSString * const kAMScriptingLevelKey;
 
 // Factory defaults
@@ -124,6 +126,8 @@ extern NSUInteger const kAMFactorySettingMinFontSize;
 extern NSUInteger const kAMFactorySettingFontSize;
 extern NSUInteger const kAMFactorySettingFixedWidthFontSize;
 extern CGFloat    const kAMFactorySettingSuperscriptingFraction;
+extern CGFloat    const kAMFactorySettingSuperscriptOffset;
+extern CGFloat    const kAMFactorySettingSubscriptOffset;
 extern BOOL       const kAMFactorySettingAllowFontSynthesis;
 
 #pragma mark - Icon and title -

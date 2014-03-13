@@ -48,6 +48,11 @@
 +(void)setFixedWidthFontSize:(NSUInteger)size;
 +(CGFloat)superscriptingFraction;
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction;
++(CGFloat)superscriptOffset;
++(void)setSuperscriptOffset:(CGFloat)offset;
++(CGFloat)subscriptOffset;
++(void)setSubscriptOffset:(CGFloat)offset;
+
 +(BOOL)allowFontSynthesis;
 +(void)setAllowFontSynthesis:(BOOL)yn;
 

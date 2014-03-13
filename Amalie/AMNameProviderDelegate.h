@@ -14,6 +14,10 @@
 @protocol AMNameProviderDelegate <NSObject>
 
 -(AMFontAttributes*)fontAttributesForType:(AMFontType)fontType;
+-(CGFloat)superscriptingFraction;
+-(CGFloat)superscriptOffset;
+-(CGFloat)subscriptOffset;
+-(CGFloat)smallestFontSize;
 -(CGFloat)baseFontSize;
 
 @end

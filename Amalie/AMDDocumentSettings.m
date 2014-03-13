@@ -2,7 +2,7 @@
 //  AMDDocumentSettings.m
 //  Amalie
 //
-//  Created by Keith Staines on 12/03/2014.
+//  Created by Keith Staines on 13/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
@@ -13,12 +13,18 @@
 @implementation AMDDocumentSettings
 
 @dynamic pageSetup;
-@dynamic fontForLiterals;
+@dynamic superscriptingFraction;
+@dynamic superscriptOffset;
+@dynamic subscriptOffset;
+@dynamic smallestFontSize;
+@dynamic baseFontSize;
+@dynamic fixedWidthFontSize;
 @dynamic fontForAlgebra;
-@dynamic fontForVectors;
+@dynamic fontForFixedWidthText;
+@dynamic fontForLiterals;
 @dynamic fontForMatrices;
 @dynamic fontForSymbols;
 @dynamic fontForText;
-@dynamic fontForFixedWidthText;
+@dynamic fontForVectors;
 
 @end

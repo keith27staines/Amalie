@@ -100,7 +100,9 @@ NSString * const kAMFixedWidthFontSizeKey             = @"kAMFixedWidthFontSizeK
 NSString * const kAMAllowFontSynthesisKey             = @"kAMAllowFontSynthesisKey";
 
 // other keys
-NSString * const kAMSuperscriptingFraction            = @"kAMSuperscriptingFraction";
+NSString * const kAMSuperscriptingFractionKey         = @"kAMSuperscriptingFractionKey";
+NSString * const kAMSuperscriptOffsetKey              = @"kAMSuperscriptOffsetKey";
+NSString * const kAMSubscriptOffsetKey                = @"kAMSubscriptOffsetKey";
 NSString * const kAMScriptingLevelKey                 = @"kAMScriptingLevel";
 
 // Factory defaults
@@ -113,9 +115,11 @@ NSString * const kAMFactorySettingFontNameForFixedWidthText = @"Monaco";
 NSString * const kAMFactorySettingFontNameForText           = @"Times New Roman";
 
 NSUInteger const kAMFactorySettingMinFontSize                = 6;
-NSUInteger const kAMFactorySettingFontSize                   = 17;
-NSUInteger const kAMFactorySettingFixedWidthFontSize         = 17;
+NSUInteger const kAMFactorySettingFontSize                   = 12;
+NSUInteger const kAMFactorySettingFixedWidthFontSize         = 12;
 CGFloat    const kAMFactorySettingSuperscriptingFraction     = 0.7;
+CGFloat    const kAMFactorySettingSuperscriptOffset          = 0.8;
+CGFloat    const kAMFactorySettingSubscriptOffset            = 0.8;
 BOOL       const kAMFactorySettingAllowFontSynthesis         = YES;
 
 #pragma mark - Icon and title -

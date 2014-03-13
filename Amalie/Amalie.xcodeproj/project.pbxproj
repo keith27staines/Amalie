@@ -64,7 +64,6 @@
 		785826C518C4D94300612651 /* AMUserPreferencesBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826C418C4D94300612651 /* AMUserPreferencesBaseView.m */; };
 		785826C818C4EA2800612651 /* AMFontChoiceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826C718C4EA2800612651 /* AMFontChoiceView.m */; };
 		785D6EE618CEF18E00EAED75 /* AMDFontAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D6EE518CEF18E00EAED75 /* AMDFontAttributes.m */; };
-		785D6EE918CEF18F00EAED75 /* AMDDocumentSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D6EE818CEF18F00EAED75 /* AMDDocumentSettings.m */; };
 		785D6EEC18CF086300EAED75 /* AMDFontAttributes+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D6EEB18CF086300EAED75 /* AMDFontAttributes+Methods.m */; };
 		785D9A21179C5930004D39B5 /* AMExpressionContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */; };
 		785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */; };
@@ -138,6 +137,7 @@
 		789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		789CB124178B0BCC00B5AF58 /* AMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 789CB122178B0BCC00B5AF58 /* AMConstants.m */; };
 		78A0472117BBEEF900B5703E /* AMOperatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A0472017BBEEF900B5703E /* AMOperatorView.m */; };
+		78A7DC4818D1F80D00840734 /* AMDDocumentSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A7DC4718D1F80D00840734 /* AMDDocumentSettings.m */; };
 		78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */; };
 		78AF0A6917E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */; };
 		78B205C617D5D6F80059773A /* AMFunctionContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */; };
@@ -291,13 +291,10 @@
 		785826C718C4EA2800612651 /* AMFontChoiceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontChoiceView.m; sourceTree = "<group>"; };
 		785D6EE418CEF18E00EAED75 /* AMDFontAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDFontAttributes.h; sourceTree = "<group>"; };
 		785D6EE518CEF18E00EAED75 /* AMDFontAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDFontAttributes.m; sourceTree = "<group>"; };
-		785D6EE818CEF18F00EAED75 /* AMDDocumentSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDDocumentSettings.m; sourceTree = "<group>"; };
 		785D6EEA18CF086300EAED75 /* AMDFontAttributes+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMDFontAttributes+Methods.h"; sourceTree = "<group>"; };
 		785D6EEB18CF086300EAED75 /* AMDFontAttributes+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMDFontAttributes+Methods.m"; sourceTree = "<group>"; };
 		785D6EF018CF0A3F00EAED75 /* AMDDocumentSettings+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMDDocumentSettings+Methods.h"; sourceTree = "<group>"; };
 		785D6EF118CF5B6500EAED75 /* AMNameProviderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameProviderDelegate.h; sourceTree = "<group>"; };
-		785D6EF218D0D51B00EAED75 /* AMDDocumentSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDDocumentSettings.h; sourceTree = "<group>"; };
-		785D6EF318D0D51B00EAED75 /* AMDDocumentSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDDocumentSettings.m; sourceTree = "<group>"; };
 		785D9A1E179C5930004D39B5 /* AMExpressionContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContentViewController.h; sourceTree = "<group>"; };
 		785D9A1F179C5930004D39B5 /* AMExpressionContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContentViewController.m; sourceTree = "<group>"; };
 		785D9A20179C5930004D39B5 /* AMExpressionContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMExpressionContentView.xib; sourceTree = "<group>"; };
@@ -415,6 +412,8 @@
 		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
 		78A0471F17BBEEF900B5703E /* AMOperatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOperatorView.h; sourceTree = "<group>"; };
 		78A0472017BBEEF900B5703E /* AMOperatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOperatorView.m; sourceTree = "<group>"; };
+		78A7DC4618D1F80D00840734 /* AMDDocumentSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDDocumentSettings.h; sourceTree = "<group>"; };
+		78A7DC4718D1F80D00840734 /* AMDDocumentSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDDocumentSettings.m; sourceTree = "<group>"; };
 		78AF0A6617E8FB4B00C018DB /* KSMSymbolProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMSymbolProvider.h; sourceTree = "<group>"; };
 		78AF0A6717E8FB4B00C018DB /* KSMSymbolProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMSymbolProvider.m; sourceTree = "<group>"; };
 		78B205C317D47B470059773A /* KSMReferenceCountedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMReferenceCountedObject.h; sourceTree = "<group>"; };
@@ -526,8 +525,8 @@
 			isa = PBXGroup;
 			children = (
 				787B305D178361BC001851C0 /* AMDocument.xcdatamodeld */,
-				785D6EF218D0D51B00EAED75 /* AMDDocumentSettings.h */,
-				785D6EF318D0D51B00EAED75 /* AMDDocumentSettings.m */,
+				78A7DC4618D1F80D00840734 /* AMDDocumentSettings.h */,
+				78A7DC4718D1F80D00840734 /* AMDDocumentSettings.m */,
 				785D6EF018CF0A3F00EAED75 /* AMDDocumentSettings+Methods.h */,
 				784ACC1C18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m */,
 				785D6EE418CEF18E00EAED75 /* AMDFontAttributes.h */,
@@ -1271,7 +1270,6 @@
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
 				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
-				785D6EE918CEF18F00EAED75 /* AMDDocumentSettings.m in Sources */,
 				78BFE6341817C2E300D4ADB1 /* AMError.m in Sources */,
 				78F57D901835232A00683FFC /* AMDInsertedExpression.m in Sources */,
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
@@ -1303,6 +1301,7 @@
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
 				78EF56A417CCA2E400402847 /* KSMFunctionArgument.m in Sources */,
 				788EAE1118B61C5500D3EBD3 /* AMPageSetupView.m in Sources */,
+				78A7DC4818D1F80D00840734 /* AMDDocumentSettings.m in Sources */,
 				78F57D931835236300683FFC /* AMDInsertedExpression+Methods.m in Sources */,
 				782859F81886D5A200523121 /* AMTextView.m in Sources */,
 				78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */,

@@ -27,6 +27,8 @@
 
 #pragma mark - Math style
 @property CGFloat superscriptingFraction;
+@property CGFloat superscriptOffset;
+@property CGFloat subscriptOffset;
 @property CGFloat smallestFontSize;
 
 #pragma mark - reset

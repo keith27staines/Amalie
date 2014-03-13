@@ -25,8 +25,6 @@ typedef enum AMCharacterType : NSUInteger {
     amCharacterTypeSymbol,
 } AMCharacterType;
 
-CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
-
 @interface AMNameProviderBase()
 {
     __weak AMDArgumentList * _dummyArguments;
@@ -191,16 +189,18 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
         } else if (i > 0 && !isNumber) {
             superscriptLevel = -1;
             fontAttrs = [self.delegate fontAttributesForType:AMFontTypeAlgebra];
+            fontAttrs.size = [self fontSizeForSuperscriptLevel:superscriptLevel];
         }
         font = [fontAttrs font];
         [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];
         [returnString addAttribute:NSFontAttributeName value:font range:r];
         CGFloat xHeight = [font xHeight];
         [returnString addAttribute:NSBaselineOffsetAttributeName
-                             value:@(superscriptLevel*xHeight*kAMsuperscriptOffsetAsFractionOfXHeight) range:r];
+                             value:@(superscriptLevel*xHeight*[self.delegate subscriptOffset]) range:r];
     }
     return returnString;
 }
+
 
 -(AMFontType)fontTypeForMathType:(KSMValueType)mathType
 {

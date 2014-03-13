@@ -54,29 +54,75 @@
 
 -(AMPaper*)paper
 {
-    if (!_paper) {
-        NSData * paperData = _dataObject.pageSetup;
-        if (paperData) {
-            _paper = [NSKeyedUnarchiver unarchiveObjectWithData:paperData];
-        } else {
-            _paper = [[AMPaper alloc] init];
-        }
-    }
     return [_paper copy];
 }
 
 -(void)setPaper:(AMPaper *)paper
 {
+    _paper = paper;
     _dataObject.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:paper];
 }
 
 -(void)resetToUserDefaults
 {
+    // Paper
+    [self setPaper:[[AMPaper alloc] init]];
+    
+    // Fonts
     for ( NSNumber * fontTypeNumber in [self arrayOfFontTypes] ) {
         NSInteger fontType = fontTypeNumber.integerValue;
         AMFontAttributes * fa = [AMPreferences fontAttributesForFontType:fontType];
         [self setFontAttributes:fa forFontType:fontType];
     }
+    
+    // Math Typography
+    [self setSmallestFontSize:[AMPreferences smallestFontSize]];
+    [self setFontSize:[AMPreferences fontSize]];
+    [self setFixedWidthFontSize:[AMPreferences fixedWidthFontSize]];
+    [self setSuperscriptingFraction:[AMPreferences superscriptingFraction]];
+    [self setSuperscriptOffset:[AMPreferences superscriptOffset]];
+    [self setSubscriptOffset:[AMPreferences subscriptOffset]];
+}
+
+-(CGFloat)smallestFontSize
+{
+    return self.dataObject.smallestFontSize.floatValue;
+}
+-(void)setSmallestFontSize:(CGFloat)smallestFontSize
+{
+    self.dataObject.smallestFontSize = @(smallestFontSize);
+}
+-(CGFloat)fontSize
+{
+    return self.dataObject.baseFontSize.floatValue;
+}
+-(void)setFontSize:(CGFloat)fontSize
+{
+    self.dataObject.baseFontSize = @(fontSize);
+}
+-(CGFloat)superscriptingFraction
+{
+    return self.dataObject.superscriptingFraction.floatValue;
+}
+-(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction
+{
+    self.dataObject.superscriptingFraction = @(superscriptingFraction);
+}
+-(CGFloat)superscriptOffset
+{
+    return self.dataObject.superscriptOffset.floatValue;
+}
+-(void)setSuperscriptOffset:(CGFloat)superscriptOffset
+{
+    self.dataObject.superscriptOffset = @(superscriptOffset);
+}
+-(CGFloat)subscriptOffset
+{
+    return self.dataObject.subscriptOffset.floatValue;
+}
+-(void)setSubscriptOffset:(CGFloat)subscriptOffset
+{
+    self.dataObject.subscriptOffset = @(subscriptOffset);
 }
 
 -(NSArray *)arrayOfFontTypes

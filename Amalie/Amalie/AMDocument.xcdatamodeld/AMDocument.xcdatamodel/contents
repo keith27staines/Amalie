@@ -12,7 +12,13 @@
         <relationship name="transformedByFunction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFunctionDefs" inverseName="transformsArguments" inverseEntity="AMDFunctionDefs" syncable="YES"/>
     </entity>
     <entity name="AMDDocumentSettings" representedClassName="AMDDocumentSettings" syncable="YES">
+        <attribute name="baseFontSize" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fixedWidthFontSize" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pageSetup" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="smallestFontSize" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="subscriptOffset" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="superscriptingFraction" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="superscriptOffset" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="fontForAlgebra" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingAlgebraFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
         <relationship name="fontForFixedWidthText" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingFixedWidthFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
         <relationship name="fontForLiterals" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFontAttributes" inverseName="docSettingLiteralFont" inverseEntity="AMDFontAttributes" syncable="YES"/>
@@ -79,7 +85,7 @@
     <elements>
         <element name="AMDArgumentLists" positionX="169" positionY="-174" width="128" height="75"/>
         <element name="AMDArguments" positionX="-45" positionY="-210" width="128" height="118"/>
-        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="165"/>
+        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="255"/>
         <element name="AMDExpressions" positionX="241" positionY="-27" width="128" height="90"/>
         <element name="AMDFontAttributes" positionX="-360" positionY="515" width="128" height="223"/>
         <element name="AMDFunctionDefs" positionX="-45" positionY="9" width="128" height="90"/>
