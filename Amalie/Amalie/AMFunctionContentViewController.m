@@ -66,6 +66,7 @@ static NSUInteger const kAMIndexRHS;
 {
     [super awakeFromNib];
     [self setupNotifications];
+    self.argumentListViewController.document = self.document;
 }
 
 -(void)applyUserPreferences
@@ -82,6 +83,15 @@ static NSUInteger const kAMIndexRHS;
 -(BOOL)isVariable
 {
     return NO;
+}
+
+-(AMAmalieDocument *)document
+{
+    return super.document;
+}
+-(void)setDocument:(AMAmalieDocument *)document
+{
+    super.document = document;
 }
 
 -(AMArgumentListView *)argumentListView
@@ -120,6 +130,7 @@ static NSUInteger const kAMIndexRHS;
 -(void)setupArgumentListView
 {
     // Before we can do anything with the view we have to load it
+    self.argumentListViewController.document = self.document;
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     AMArgumentListView * argumentsView = self.argumentListView;
     [argumentsView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -310,7 +321,7 @@ static NSUInteger const kAMIndexRHS;
 {
     static AMArgumentsNameProvider * _nameProvider;
     if (!_nameProvider) {
-        _nameProvider = [self.parentDocument argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
+        _nameProvider = [self.document argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
     }
     return _nameProvider;
 }

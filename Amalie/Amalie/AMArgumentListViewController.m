@@ -12,6 +12,7 @@
 #import "AMDName+Methods.h"
 #import "AMPreferences.h"
 #import "AMArgumentsNameProvider.h"
+#import "AMAmalieDocument.h"
 
 
 @interface AMArgumentListViewController ()
@@ -42,7 +43,7 @@
 
 -(void)awakeFromNib
 {
-    [self.argumentListView reloadData];
+
 }
 
 -(void)setArgumentList:(AMDArgumentList *)argumentList
@@ -60,7 +61,7 @@
 
 -(NSFont*)bracesFontAtScriptingLevel:(NSUInteger)scriptingLevel
 {
-    AMNameProviderBase * namer = [[AMNameProviderBase alloc] init];
+    AMNameProviderBase * namer = [[AMNameProviderBase alloc] initWithDelegate:self.document];
     return [namer fontForSymbolsAtScriptinglevel:scriptingLevel];
 }
 
@@ -74,7 +75,7 @@
                             atScriptingLevel:(NSUInteger)scriptingLevel
 {
     NSAttributedString * aString = [self.argumentList argumentAtIndex:index].name.attributedString;
-    AMNameProviderBase * namer = [[AMNameProviderBase alloc] init];
+    AMNameProviderBase * namer = [[AMNameProviderBase alloc] initWithDelegate:self.document];
     return [namer attributedStringByModifying:aString toSuperscriptLevel:scriptingLevel];
 }
 

@@ -50,6 +50,7 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
 {
     self = [super init];
     if (self) {
+        NSAssert(delegate, @"Delegate must exist");
         _delegate = delegate;
     }
     return self;
@@ -149,19 +150,18 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
     return size;
 }
 
--(AMFontAttributes*)defaultFontAttributesForCharacter:(NSString *)ch
-                                               ofType:(KSMValueType)mathType
+-(AMFontAttributes*)defaultFontAttributesForMainCharacter:(NSString *)ch
+                                               ofMathType:(KSMValueType)mathType
                                      superscriptLevel:(NSInteger)superscriptLevel
 {
     NSAssert(ch.length == 1, @"The string %@ should contain only one character",ch);
     
     AMFontAttributes * fontAttrs;
     NSCharacterSet * numericSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    
     NSRange r = [ch rangeOfCharacterFromSet:numericSet];
     if (r.location == NSNotFound) {
-        
-        
+        AMFontType fontType = [self fontTypeForMathType:mathType];
+        fontAttrs = [self.delegate fontAttributesForType:fontType];
     } else {
         // Character is a digit, 0,1,2,3,4,5,6,7,8, or 9
         fontAttrs = [self.delegate fontAttributesForType:AMFontTypeLiteral];
@@ -185,11 +185,13 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
     for (int i = 0; i < returnString.length; i++) {
         NSRange r = NSMakeRange(i, 1);
         NSString * c = [returnString.string substringWithRange:r];
-        superscriptLevel = 0;
-        if (i > 0 && !isNumber) {
+        if (i==0) {
+            superscriptLevel = 0;
+            fontAttrs = [self defaultFontAttributesForMainCharacter:c ofMathType:mathType superscriptLevel:superscriptLevel];
+        } else if (i > 0 && !isNumber) {
             superscriptLevel = -1;
+            fontAttrs = [self.delegate fontAttributesForType:AMFontTypeAlgebra];
         }
-        fontAttrs = [self defaultFontAttributesForCharacter:c ofType:mathType superscriptLevel:superscriptLevel];
         font = [fontAttrs font];
         [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];
         [returnString addAttribute:NSFontAttributeName value:font range:r];
@@ -223,35 +225,29 @@ CGFloat kAMsuperscriptOffsetAsFractionOfXHeight = 0.8;
     return found;
 }
 
--(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)aString
+-(AMCharacterType)characterTypeForCharacter:(NSString*)ch
 {
-    NSFontManager * fontManager = [NSFontManager sharedFontManager];
-    for (int i = 0; i < aString.length; i++) {
-        // range of next character in aString
-        NSRange range = NSMakeRange(i, 1);
-        
-        // identify the character and its attributes
-        NSString * ch = [aString.string substringWithRange:range];
-        NSMutableDictionary * attributes = [[aString attributesAtIndex:i effectiveRange:NULL] mutableCopy];
-        
-        // We need the supercript level because that controls the point size of this character. We also need the font itself because that controls bold or italic, which we want to preserve
-        NSNumber * superscriptNumber = attributes[NSSuperscriptAttributeName];
-        NSUInteger superscriptLevel = superscriptNumber.integerValue;
-        NSFont * currentFont = [aString attribute:NSFontAttributeName atIndex:i effectiveRange:NULL];
-        
-        // Now determine the properties of the font we require...
-        NSString * requiredFontFamily = [self fontFamilyNameForCharacter:ch];
-        CGFloat requiredSize = [self fontSizeForSuperscriptLevel:superscriptLevel];
-        
-        // convert the current font into the required font
-        NSFont * convertedFont;
-        convertedFont = [fontManager convertFont:currentFont toFamily:requiredFontFamily];
-        convertedFont = [fontManager convertFont:convertedFont toSize:requiredSize];
-        
-        // update the font attribute in the dictionary and apply it to the attributed string
-        attributes[NSFontAttributeName] = convertedFont;
-        [aString setAttributes:attributes range:range];
+    // Identify the keyboard (and hence the character set) that contains the specified character
+    AMKeyboard * keyboard = [[AMKeyboards sharedKeyboards] keyboardContainingCharacter:ch];
+    NSString * keyboardName = keyboard.name;
+    
+    // Map the character to a font
+    if ([keyboardName isEqualToString:kAMKeyboardSmallGreek] || [keyboardName isEqualToString:kAMKeyboardCapitalGreek]) {
+        return amCharacterTypeGreek;
     }
+    if ([keyboardName isEqualToString:kAMKeyboardSmallEnglish] || [keyboardName isEqualToString:kAMKeyboardCapitalEnglish]) {
+        return amCharacterTypeLatin;
+    }
+    if ([keyboardName isEqualToString:kAMKeyboardNumeric] ) {
+        return amCharacterTypeLatin;
+    }
+    if ([keyboardName isEqualToString:kAMKeyboardMathOperators] ) {
+        return amCharacterTypeLatin;
+    }
+    if ([keyboardName isEqualToString:kAMKeyboardMathSymbols] ) {
+        return amCharacterTypeLatin;
+    }
+    return amCharacterTypeLatin;
 }
 
 -(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name

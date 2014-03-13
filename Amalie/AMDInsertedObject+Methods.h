@@ -10,10 +10,11 @@
 @class AMDExpression;
 
 #import "AMDInsertedObject.h"
+#import "AMNameProviding.h"
 
 @interface AMDInsertedObject (Methods)
 
-+(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view;
++(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view withNameProvider:(id<AMNameProviding>)nameProvider;
 +(AMDInsertedObject*)fetchInsertedObjectWithGroupID:(NSString * )groupID;
 +(NSArray*)fetchInsertedObjectsInDisplayOrder;
 

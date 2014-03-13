@@ -7,9 +7,10 @@
 //
 
 #import "AMDFunctionDef.h"
+#import "AMNameProviding.h"
 
 @interface AMDFunctionDef (Methods)
 
-+(AMDFunctionDef*)makeFunctionDef;
++(AMDFunctionDef*)makeFunctionDefinitionWithNameProvider:(id<AMNameProviding>)nameProvider;
 
 @end

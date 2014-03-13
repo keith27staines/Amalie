@@ -19,13 +19,13 @@ static NSString * const kAMDENTITYNAME = @"AMDFunctionDefs";
 
 @implementation AMDFunctionDef (Methods)
 
-+(AMDFunctionDef*)makeFunctionDef
++(AMDFunctionDef*)makeFunctionDefinitionWithNameProvider:(id<AMNameProviding>)nameProvider
 {
     AMDFunctionDef * f = nil;
     f = [NSEntityDescription insertNewObjectForEntityForName:kAMDENTITYNAME
                                       inManagedObjectContext:self.moc];
     f.argumentList = [AMDArgumentList makeArgumentList];
-    AMDArgument * argument = [AMDArgument makeArgumentOfType:KSMValueDouble];
+    AMDArgument * argument = [AMDArgument makeArgumentOfType:KSMValueDouble withNameProvider:nameProvider];
     [f.argumentList addArgumentsObject:argument];
     f.returnType = @(KSMValueDouble);
     // f.transformsArguments = [NSMutableSet set];

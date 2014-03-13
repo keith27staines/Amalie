@@ -12,9 +12,10 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 #import "NSManagedObject+SharedDataStore.h"
 #import "AMNameProviderBase.h"
 
+
 @implementation AMDName (Methods)
 
-+(AMDName*)makeAMDNameForType:(AMInsertableType)type;
++(AMDName*)makeAMDNameForType:(AMInsertableType)type withNameProvider:(id<AMNameProviding>)nameProvider;
 {
     NSString * defaultName = nil;
     AMDName * aName;
@@ -66,7 +67,6 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
         } else {
             aName.string = defaultName;
         }
-        id<AMNameProviding> nameProvider = [[AMNameProviderBase alloc] init];
         aName.attributedString = [nameProvider generateAttributedStringFromName:aName.string withType:KSMValueDouble];
     }
     

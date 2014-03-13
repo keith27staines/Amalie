@@ -23,13 +23,11 @@
 @property NSNumber * index;
 @end
 
-
-
 @interface AMContentViewController : NSViewController <AMContentViewDataSource>
 
 @property (weak) AMAppController * appController;
 
-@property (weak, readonly) AMAmalieDocument * parentDocument;
+@property (weak) IBOutlet AMAmalieDocument * document;
 
 @property (copy)          NSString               * groupID;
 @property (strong)        AMDInsertedObject      * amdInsertedObject;
@@ -55,14 +53,14 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
-  worksheetController:(AMAmalieDocument*)worksheetController
+             document:(AMAmalieDocument*)document
           contentType:(enum AMInsertableType)type
       groupParentView:(AMInsertableView*)view
                   moc:(NSManagedObjectContext*)moc
     amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
-                        worksheetController:(AMAmalieDocument*)worksheetController
+                                   document:(AMAmalieDocument*)document
                                     content:(enum AMInsertableType)type
                             groupParentView:(AMInsertableView*)groupParentview
                                         moc:(NSManagedObjectContext*)moc

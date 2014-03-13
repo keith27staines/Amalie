@@ -9,6 +9,7 @@
 @class AMFunctionContentViewController;
 @class AMArgumentListViewController;
 @class AMDFunctionDef;
+@class AMAmalieDocument;
 
 #import <Cocoa/Cocoa.h>
 
@@ -24,6 +25,7 @@
 @property (weak) IBOutlet NSView *functionEditorView;
 @property (weak) IBOutlet NSPopUpButton *returnTypePopup;
 @property (weak) IBOutlet NSPopUpButton *argumentTypePopup;
+@property (weak) IBOutlet AMAmalieDocument * document;
 
 @property BOOL popoverShowing;
 

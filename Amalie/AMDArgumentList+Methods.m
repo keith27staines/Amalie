@@ -33,7 +33,7 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     return [[self.arguments filteredSetUsingPredicate:predicate] anyObject];
 }
 
--(AMDArgument*)addArgumentAtIndex:(NSInteger)index
+-(AMDArgument*)addArgumentAtIndex:(NSInteger)index withNameProvider:(id<AMNameProviding>)nameProvider
 {
     [[self undoManager] beginUndoGrouping];
     
@@ -47,7 +47,7 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     }
     
     // Add a new argument to the datastore
-    argument = [AMDArgument makeArgumentOfType:KSMValueDouble];
+    argument = [AMDArgument makeArgumentOfType:KSMValueDouble withNameProvider:nameProvider];
     [self addArgumentsObject:argument];
     
     // give the argument the right index

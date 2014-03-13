@@ -188,6 +188,7 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 {
     NSString * key = [self fontAttributesKeyForFontType:fontType];
     NSData * data = [[NSUserDefaults standardUserDefaults] dataForKey:key];
+    NSAssert(data, @"No data from which to unarchive object");
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 +(void)setFontAttributes:(NSDictionary *)attributes forFontType:(AMFontType)fontType

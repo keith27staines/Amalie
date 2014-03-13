@@ -17,11 +17,11 @@ static NSString * const kAMDENTITYNAME = @"AMDArguments";
 
 @implementation AMDArgument (Methods)
 
-+(AMDArgument*)makeArgumentOfType:(KSMValueType)mathType
++(AMDArgument*)makeArgumentOfType:(KSMValueType)mathType withNameProvider:(id<AMNameProviding>)nameProvider
 {
     AMDArgument * a = [NSEntityDescription insertNewObjectForEntityForName:kAMDENTITYNAME
                                                     inManagedObjectContext:self.moc];
-    a.name = [AMDName makeAMDNameForType:AMInsertableTypeDummyVariable];
+    a.name = [AMDName makeAMDNameForType:AMInsertableTypeDummyVariable withNameProvider:nameProvider];
     switch (mathType) {
         case KSMValueInteger:
             a.mathValue = [KSMMathValue mathValueFromInteger:0];

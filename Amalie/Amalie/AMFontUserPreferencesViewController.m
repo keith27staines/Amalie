@@ -137,10 +137,5 @@
     }
 }
 
--(void)dealloc
-{
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 
 @end

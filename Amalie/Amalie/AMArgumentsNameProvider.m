@@ -79,11 +79,6 @@
     return returnString;
 }
 
--(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)currentAttributedName
-{
-    return [super attributedNameUpdatedWithUserPreferences:currentAttributedName];
-}
-
 -(AMDArgument *)argumentWithName:(NSString *)name
 {
     return [self.dummyVariables argumentWithName:name];

@@ -21,8 +21,6 @@
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name
                                                      withType:(KSMValueType)mathType;
 
--(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)currentAttributedName;
-
 -(BOOL)validateProposedName:(NSString*)proposedName forType:(AMInsertableType)type error:(NSError**)error;
 
 -(NSFont *)fontForSymbolsAtScriptinglevel:(NSUInteger)scriptingLevel;

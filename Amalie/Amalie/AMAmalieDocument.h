@@ -26,9 +26,9 @@
 //#import "AMNameProviderBase.h"
 #import "AMNameProviderDelegate.h"
 
-@interface AMAmalieDocument : NSPersistentDocument
-<AMWorksheetViewDelegate,
- AMInsertableViewDelegate,
+@interface AMAmalieDocument : NSPersistentDocument <
+AMWorksheetViewDelegate,
+AMInsertableViewDelegate,
 AMNameProviderDelegate,
 NSSplitViewDelegate,
 NSPopoverDelegate>

@@ -79,14 +79,14 @@
     <elements>
         <element name="AMDArgumentLists" positionX="169" positionY="-174" width="128" height="75"/>
         <element name="AMDArguments" positionX="-45" positionY="-210" width="128" height="118"/>
-        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="163"/>
+        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="165"/>
         <element name="AMDExpressions" positionX="241" positionY="-27" width="128" height="90"/>
+        <element name="AMDFontAttributes" positionX="-360" positionY="515" width="128" height="223"/>
         <element name="AMDFunctionDefs" positionX="-45" positionY="9" width="128" height="90"/>
         <element name="AMDIndexedExpressions" positionX="232" positionY="378" width="128" height="90"/>
-        <element name="AMDInsertedExpressions" positionX="-245" positionY="378" width="128" height="43"/>
+        <element name="AMDInsertedExpressions" positionX="-245" positionY="378" width="128" height="45"/>
         <element name="AMDInsertedObjects" positionX="-171" positionY="132" width="128" height="165"/>
         <element name="AMDIntervalDefs" positionX="-65" positionY="477" width="128" height="105"/>
         <element name="AMDNames" positionX="-477" positionY="-0" width="128" height="118"/>
-        <element name="AMDFontAttributes" positionX="-360" positionY="515" width="128" height="223"/>
     </elements>
 </model>

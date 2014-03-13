@@ -18,6 +18,8 @@
 @interface AMFunctionContentViewController : AMContentViewController
 <NSTextFieldDelegate, AMExpressionNodeViewDelegate, AMExpressionDataSource>
 
+@property (weak) IBOutlet AMAmalieDocument * document;
+
 @property (weak) IBOutlet NSButton *popupButton;
 
 @property (weak) IBOutlet AMTextView *nameView;

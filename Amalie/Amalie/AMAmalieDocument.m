@@ -456,20 +456,20 @@
 {
     static id<AMNameProviding> _insertedObjectNameProvider;
     if (!_insertedObjectNameProvider) {
-        _insertedObjectNameProvider = [[AMNameProviderBase alloc] init];
+        _insertedObjectNameProvider = [self baseNameProvider];
     }
     return _insertedObjectNameProvider;
 }
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view];
+    AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view withNameProvider:self.baseNameProvider];
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:self.appController
-                                                     worksheetController:self
+                                                                document:self
                                                                  content:type
                                                          groupParentView:view
-                                                                  moc:self.managedObjectContext
-                                                    amdInsertedObject:amdInsertedObject];
+                                                                     moc:self.managedObjectContext
+                                                       amdInsertedObject:amdInsertedObject];
     [self.contentControllers setObject:vc forKey:vc.groupID];
     return (AMContentView*)vc.view;
 }

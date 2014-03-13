@@ -61,11 +61,6 @@
     // Base implementation does nothing but is designed to be overridden
 }
 
-//-(NSFont *)standardFont
-//{
-//    return [AMPreferences standardFont];
-//}
-
 -(NSFont *)fixedWidthFont
 {
     return [AMPreferences fontForFontType:AMFontTypeFixedWidth];
@@ -92,7 +87,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
-               worksheetController:(AMAmalieDocument*)worksheetController
+               document:(AMAmalieDocument*)document
               contentType:(AMInsertableType)insertableType
       groupParentView:(AMInsertableView*)groupParentView
                   moc:(NSManagedObjectContext*)moc
@@ -165,7 +160,7 @@
         self.moc = moc;
         self.groupID = [groupParentView.groupID copy];
         _appController = appController;
-        _parentDocument = worksheetController;
+        _document = document;
         _insertableType = insertableType;
 
         AMContentView * contentView = (AMContentView*)[self view];
@@ -183,8 +178,8 @@
 }
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
-                        worksheetController:(AMAmalieDocument*)worksheetController
-                             content:(AMInsertableType)insertableType
+                                   document:(AMAmalieDocument*)document
+                                    content:(AMInsertableType)insertableType
                             groupParentView:(AMInsertableView*)groupParentView
                                         moc:(NSManagedObjectContext*)moc
                           amdInsertedObject:(AMDInsertedObject*)amdObject
@@ -193,7 +188,7 @@
     vc = [vc initWithNibName:nil
                       bundle:nil
                appController:appContoller
-         worksheetController:worksheetController
+                    document:document
                  contentType:insertableType
              groupParentView:groupParentView
                          moc:moc
@@ -203,7 +198,7 @@
 
 -(KSMWorksheet*)mathSheet
 {
-    return self.parentDocument.mathSheet;
+    return self.document.mathSheet;
 }
 
 #pragma mark - Datastore access -
@@ -294,7 +289,7 @@
 
 -(id<AMNameProviding>)viewRequiresNameProvider:(AMContentView *)view
 {
-    return [self.parentDocument insertedObjectNameProvider];
+    return [self.document insertedObjectNameProvider];
 }
 
 -(void)populateView:(AMContentView *)view
@@ -331,7 +326,7 @@
 
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 {
-    AMArgumentsNameProvider * namer = [self.parentDocument baseNameProvider];
+    AMNameProviderBase * namer = [self.document baseNameProvider];
     if ( [namer validateProposedName:proposedName.string forType:AMInsertableTypeDummyVariable error:error] ) return NO;
     
     self.amdInsertedObject.name.string = proposedName.string;
@@ -351,7 +346,7 @@
 
 -(NSColor *)backgroundColorForType:(AMInsertableType)type
 {
-    id<AMTrayDataSource> tray = self.parentDocument.trayDataSource;
+    id<AMTrayDataSource> tray = self.document.trayDataSource;
     NSString * key = [tray keyForType:type];
     AMTrayItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];
@@ -363,7 +358,6 @@
         [self.mathSheet decrementReferenceCountForObject:expr];
     }
 }
-
 #pragma mark - Misc -
 
 - (void)dealloc

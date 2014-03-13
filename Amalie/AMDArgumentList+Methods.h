@@ -9,13 +9,14 @@
 @class AMDArgument;
 
 #import "AMDArgumentList.h"
+#import "AMNameProviding.h"
 
 @interface AMDArgumentList (Methods)
 
 +(AMDArgumentList*)makeArgumentList;
 
 -(AMDArgument*)argumentAtIndex:(NSUInteger)index;
--(AMDArgument*)addArgumentAtIndex:(NSInteger)index;
+-(AMDArgument*)addArgumentAtIndex:(NSInteger)index  withNameProvider:(id<AMNameProviding>)nameProvider;
 -(BOOL)removeArgumentAtIndex:(NSUInteger)index;
 -(AMDArgument*)argumentWithName:(NSString*)name;
 @end

@@ -21,16 +21,16 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
 
 @implementation AMDInsertedObject (Methods)
 
-+(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view
++(AMDInsertedObject*)amdInsertedObjectForInsertedView:(AMInsertableView*)view withNameProvider:(id<AMNameProviding>)nameProvider
 {
     AMDInsertedObject * amdInsertedObject = [self fetchInsertedObjectWithGroupID:view.groupID];
     if (!amdInsertedObject) {
-        amdInsertedObject = [self makeAMDInsertedObjectForInsertedView:view];
+        amdInsertedObject = [self makeAMDInsertedObjectForInsertedView:view withNameProvider:nameProvider];
     }
     return amdInsertedObject;
 }
 
-+(AMDInsertedObject*)makeAMDInsertedObjectForInsertedView:(AMInsertableView*)view
++(AMDInsertedObject*)makeAMDInsertedObjectForInsertedView:(AMInsertableView*)view withNameProvider:(id<AMNameProviding>)nameProvider
 {
     AMDInsertedObject * amd = nil;
     AMDIndexedExpression * iexpr = [AMDIndexedExpression makeIndexedExpression];
@@ -38,19 +38,19 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
     switch (view.insertableType) {
         case AMInsertableTypeFunction:
         {
-            amd = [AMDFunctionDef makeFunctionDef];
+            amd = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
             iexpr.expression.originalString = @"x";
             break;
         }
         case AMInsertableTypeConstant:
         {
-            amd = [AMDFunctionDef makeFunctionDef];
+            amd = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
             iexpr.expression.originalString = @"0";
             break;
         }
         case AMInsertableTypeVariable:
         {
-            amd = [AMDFunctionDef makeFunctionDef];
+            amd = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
             iexpr.expression.originalString = @"0";
             break;
         }
@@ -70,7 +70,7 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
     
     [amd addIndexedExpressionsObject:iexpr];
     
-    amd.name       = [AMDName makeAMDNameForType:view.insertableType];
+    amd.name = [AMDName makeAMDNameForType:view.insertableType withNameProvider:nameProvider];
     amd.groupID    = view.groupID;
     amd.xPosition  = @(view.frame.origin.x);
     amd.yPosition  = @(view.frame.origin.y);

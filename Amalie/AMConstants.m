@@ -159,6 +159,7 @@ NSData * dataFromColor(NSColor* color)
 
 NSColor * colorFromData(NSData* data)
 {
+    assert(data);
     return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 

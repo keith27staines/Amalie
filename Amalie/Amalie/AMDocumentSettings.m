@@ -29,8 +29,7 @@
 {
     self = [super init];
     if (self) {
-
-
+        [self createDataObject];
     }
     return self;
 }
@@ -38,22 +37,30 @@
 -(AMDDocumentSettings *)dataObject
 {
     if (_dataObject) {
+        [self createDataObject];
         return _dataObject;
     }
-    
+    return _dataObject;
+}
+
+-(void)createDataObject
+{
     _dataObject = [AMDDocumentSettings fetchDocumentSettings];
     if (!_dataObject) {
         _dataObject = [AMDDocumentSettings makeDocumentSettings];
         [self resetToUserDefaults];
     }
-    return _dataObject;
 }
 
 -(AMPaper*)paper
 {
     if (!_paper) {
         NSData * paperData = _dataObject.pageSetup;
-        _paper = [NSKeyedUnarchiver unarchiveObjectWithData:paperData];
+        if (paperData) {
+            _paper = [NSKeyedUnarchiver unarchiveObjectWithData:paperData];
+        } else {
+            _paper = [[AMPaper alloc] init];
+        }
     }
     return [_paper copy];
 }
@@ -67,12 +74,8 @@
 {
     for ( NSNumber * fontTypeNumber in [self arrayOfFontTypes] ) {
         NSInteger fontType = fontTypeNumber.integerValue;
-        AMDFontAttributes * cdfa = [self dataObjectForFontType:fontType];
-        if (!cdfa) {
-            cdfa = [AMDFontAttributes makeFontAttributes];
-            AMFontAttributes * fa = [AMPreferences fontAttributesForFontType:fontType];
-            [fa copyToCoreDataFontAttributes:cdfa];
-        }
+        AMFontAttributes * fa = [AMPreferences fontAttributesForFontType:fontType];
+        [self setFontAttributes:fa forFontType:fontType];
     }
 }
 
@@ -80,18 +83,22 @@
 {
     return @[
     @(AMFontTypeLiteral),
-    @(AMFontTypeLiteral),
-    @(AMFontTypeLiteral),
-    @(AMFontTypeLiteral),
-    @(AMFontTypeLiteral),
-    @(AMFontTypeLiteral),
-    @(AMFontTypeLiteral),
+    @(AMFontTypeAlgebra),
+    @(AMFontTypeVector),
+    @(AMFontTypeMatrix),
+    @(AMFontTypeSymbol),
+    @(AMFontTypeText),
+    @(AMFontTypeFixedWidth),
     ];
 }
 
 -(void)setFontAttributes:(AMFontAttributes *)attributes forFontType:(AMFontType)fontType
 {
     AMDFontAttributes * cdfa = [self dataObjectForFontType:fontType];
+    if (!cdfa) {
+        cdfa = [AMDFontAttributes makeFontAttributes];
+        [self setDataObject:cdfa forFontType:fontType];
+    }
     [attributes copyToCoreDataFontAttributes:cdfa];
 }
 
@@ -122,6 +129,32 @@
             return self.dataObject.fontForText;
         case AMFontTypeFixedWidth:
             return self.dataObject.fontForFixedWidthText;
+    }
+}
+-(void)setDataObject:(AMDFontAttributes *)fontAttributes forFontType:(AMFontType)fontType
+{
+    switch (fontType) {
+        case AMFontTypeLiteral:
+            self.dataObject.fontForLiterals = fontAttributes;
+            break;
+        case AMFontTypeAlgebra:
+            self.dataObject.fontForAlgebra = fontAttributes;
+            break;
+        case AMFontTypeVector:
+            self.dataObject.fontForVectors = fontAttributes;
+            break;
+        case AMFontTypeMatrix:
+            self.dataObject.fontForMatrices = fontAttributes;
+            break;
+        case AMFontTypeSymbol:
+            self.dataObject.fontForSymbols = fontAttributes;
+            break;
+        case AMFontTypeText:
+            self.dataObject.fontForText = fontAttributes;
+            break;
+        case AMFontTypeFixedWidth:
+            self.dataObject.fontForFixedWidthText = fontAttributes;
+            break;
     }
 }
 

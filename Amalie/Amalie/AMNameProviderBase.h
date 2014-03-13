@@ -19,23 +19,4 @@
 // Designated initializer
 -(instancetype)initWithDelegate:(id<AMNameProviderDelegate>)delegate;
 
--(KSMValueType)mathTypeForForObjectWithName:(NSString*)name;
-
--(BOOL)isKnownObjectName:(NSString*)name;
-
--(NSAttributedString*)attributedStringForObjectWithName:(NSString*)name;
-
--(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name
-                                                           withType:(KSMValueType)mathType;
-
--(void)attributedNameUpdatedWithUserPreferences:(NSMutableAttributedString*)currentAttributedName;
-
--(BOOL)validateProposedName:(NSString*)proposedName forType:(AMInsertableType)type error:(NSError**)error;
-
--(NSFont *)fontForSymbolsAtScriptinglevel:(NSUInteger)scriptingLevel;
-
--(NSAttributedString*)attributedStringByModifying:(NSAttributedString*)string toSuperscriptLevel:(NSUInteger)superscriptLevel;
-
--(NSUInteger)indexOfCharacterPrecedingExponentPositionForString:(NSAttributedString*)aString;
-
 @end

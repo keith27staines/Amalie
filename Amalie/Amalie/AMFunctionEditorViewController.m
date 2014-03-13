@@ -18,6 +18,8 @@
 #import "NSString+KSMMath.h"
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
+#import "AMAmalieDocument.h"
+#import "AMNameProviderBase.h"
 
 @interface AMFunctionEditorViewController ()
 {
@@ -188,7 +190,7 @@
     
     // Update datastore. If a row is selected (ie >= 0), we insert beneath that, otherwise we add to the end.
     if (selectedRow >=0) selectedRow++;
-    AMDArgument * argument = [self.argumentList addArgumentAtIndex:selectedRow];
+    AMDArgument * argument = [self.argumentList addArgumentAtIndex:selectedRow withNameProvider:[self.document baseNameProvider]];
     if ( argument ) {
         
         selectedRow = [argument.index integerValue];
