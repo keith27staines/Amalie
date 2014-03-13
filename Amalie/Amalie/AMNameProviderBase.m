@@ -188,8 +188,7 @@ typedef enum AMCharacterType : NSUInteger {
             fontAttrs = [self defaultFontAttributesForMainCharacter:c ofMathType:mathType superscriptLevel:superscriptLevel];
         } else if (i > 0 && !isNumber) {
             superscriptLevel = -1;
-            fontAttrs = [self.delegate fontAttributesForType:AMFontTypeAlgebra];
-            fontAttrs.size = [self fontSizeForSuperscriptLevel:superscriptLevel];
+            fontAttrs = [self defaultFontAttributesForMainCharacter:c ofMathType:KSMValueDouble superscriptLevel:superscriptLevel];
         }
         font = [fontAttrs font];
         [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];

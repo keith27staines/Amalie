@@ -36,7 +36,7 @@
 
 -(AMDDocumentSettings *)dataObject
 {
-    if (_dataObject) {
+    if (!_dataObject) {
         [self createDataObject];
         return _dataObject;
     }
@@ -54,19 +54,18 @@
 
 -(AMPaper*)paper
 {
-    return [_paper copy];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:self.dataObject.pageSetup];
 }
 
 -(void)setPaper:(AMPaper *)paper
 {
-    _paper = paper;
     _dataObject.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:paper];
 }
 
 -(void)resetToUserDefaults
 {
     // Paper
-    [self setPaper:[[AMPaper alloc] init]];
+    [self setPaper:[[AMPaper alloc] init]];  // using init, paper is per NSUserDefaults
     
     // Fonts
     for ( NSNumber * fontTypeNumber in [self arrayOfFontTypes] ) {
