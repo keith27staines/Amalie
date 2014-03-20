@@ -36,6 +36,8 @@
 +(void)setPaperOrientation:(AMPaperOrientation)paperOrientation;
 +(AMMargins)pageMargins;
 +(void)setPageMargins:(AMMargins)margins;
++(AMMeasurementUnits)paperMeasurementUnits;
++(void)setPaperMeasurementUnits:(AMMeasurementUnits)units;
 
 #pragma mark Fonts
 +(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType;

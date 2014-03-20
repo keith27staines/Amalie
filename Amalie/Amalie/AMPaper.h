@@ -47,4 +47,7 @@
 /*! Format is e.g, 30 cm */
 -(NSString*)paperHeightDescription;
 
+/*! Write the paper's data to NSUserDefaults via AMPreferences */
+-(void)writeToAMPreferences;
+
 @end

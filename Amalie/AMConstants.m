@@ -44,6 +44,7 @@ NSString * const kAMPageOrientationKey                = @"kAMPageOrientationKey"
 NSString * const kAMPageWidthCustomKey                = @"kAMPageWidthCustomKey";
 NSString * const kAMPageHeightCustomKey               = @"kAMPageHeightCustomKey";
 NSString * const kAMPageMarginsKey                    = @"kAMPageMarginsKey";
+NSString * const kAMPaperMeasurementUnitsKey          = @"kAMPaperMeasurementUnitsKey";
 
 #pragma mark - Page Sizes in portrait orientation -
 

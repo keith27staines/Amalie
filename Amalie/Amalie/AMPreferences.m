@@ -97,7 +97,14 @@ static NSMutableDictionary * AMFonts;
 {
     [[NSUserDefaults standardUserDefaults] setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
 }
-
++(AMMeasurementUnits)paperMeasurementUnits
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kAMPaperMeasurementUnitsKey];
+}
++(void)setPaperMeasurementUnits:(AMMeasurementUnits)units
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:units forKey:kAMPaperMeasurementUnitsKey];
+}
 AMMargins AMMarginsFromNSRect(NSRect rect)
 {
     return AMMarginsMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
@@ -332,6 +339,7 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:@(kAMPageWidthA4) forKey:kAMPageWidthCustomKey];
     [defaults setObject:@(kAMPageHeightA4) forKey:kAMPageHeightCustomKey];
     [defaults setObject:@(AMPaperOrientationPortrait) forKey:kAMPageOrientationKey];
+    [defaults setObject:@(AMMeasurementUnitsPoints) forKey:kAMPaperMeasurementUnitsKey];
     
     AMMargins margins = AMMarginsMake(72, 72, 72, 72);
     [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];

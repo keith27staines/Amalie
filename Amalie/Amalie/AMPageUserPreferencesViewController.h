@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMUserPreferencesBaseViewController.h"
+#import "AMPageSetupViewController.h"
 
-
-@interface AMPageUserPreferencesViewController : AMUserPreferencesBaseViewController
+@interface AMPageUserPreferencesViewController : AMUserPreferencesBaseViewController <AMPageSetupViewControllerDelegate>
 
 @end

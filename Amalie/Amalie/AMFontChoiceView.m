@@ -8,6 +8,7 @@
 
 #import "AMFontChoiceView.h"
 #import "AMFontAttributes.h"
+#import "AMFontSelectionViewController.h"
 
 @interface AMFontChoiceView()
 {
@@ -32,7 +33,12 @@
 @property (readonly) NSButton * restoreButton;
 @end
 
+
+
 @implementation AMFontChoiceView
+
+static NSPopover   * _fontSelectionPopover;
+static AMFontSelectionViewController * _fontSelectionViewController;
 
 #pragma mark - NSView overrides
 - (id)initWithFrame:(NSRect)frame
@@ -82,10 +88,30 @@
 }
 -(void)fontPickerButtonClicked:(NSButton*)button
 {
-    NSFontManager * fontManager = [NSFontManager sharedFontManager];
-    [fontManager setTarget:self];
-    [fontManager setSelectedFont:[self.fontAttributes font] isMultiple:NO];
-    [fontManager orderFrontFontPanel:self];
+    NSPopover * popover = [self fontSelectionPopover];
+    AMFontSelectionViewController * vc = [self fontSelectionViewController];
+    vc.fontFamilyToSelect = _fontAttributes.name;
+    popover.delegate = self;
+    [popover showRelativeToRect:button.frame ofView:self preferredEdge:NSMaxXEdge];
+}
+
+-(NSPopover*)fontSelectionPopover
+{
+    if (!_fontSelectionPopover) {
+        _fontSelectionPopover = [[NSPopover alloc] init];
+        [_fontSelectionPopover setBehavior:NSPopoverBehaviorTransient];
+        [_fontSelectionPopover setAppearance:NSPopoverAppearanceMinimal];
+    }
+    return _fontSelectionPopover;
+}
+-(AMFontSelectionViewController*)fontSelectionViewController
+{
+    if (!_fontSelectionViewController) {
+        _fontSelectionViewController = [[AMFontSelectionViewController alloc] init];
+        _fontSelectionViewController.exampleText = @"Example text";
+        [self fontSelectionPopover].contentViewController = _fontSelectionViewController;
+    }
+    return _fontSelectionViewController;
 }
 -(void)boldButtonClicked:(NSButton*)button
 {
@@ -178,5 +204,21 @@
 
 #pragma mark - NSTextField delegate
 
+#pragma mark - NSPopover delegate
+
+-(void)popoverDidShow:(NSNotification *)notification
+{
+    AMFontSelectionViewController * vc = [self fontSelectionViewController];
+    vc = (AMFontSelectionViewController*)[self.fontSelectionPopover contentViewController];
+    vc.fontFamilyToSelect = _fontAttributes.name;
+}
+
+-(void)popoverWillClose:(NSNotification *)notification
+{
+    AMFontSelectionViewController * vc = [self fontSelectionViewController];
+    _fontAttributes.name = vc.selectedFontFamily;
+    [self.datasource attributesUpdatedForFontChoiceView:self];
+    [self reloadData];
+}
 
 @end

@@ -45,6 +45,7 @@ extern NSString * const kAMPageOrientationKey;
 extern NSString * const kAMPageWidthCustomKey;
 extern NSString * const kAMPageHeightCustomKey;
 extern NSString * const kAMPageMarginsKey;
+extern NSString * const kAMPaperMeasurementUnitsKey;
 
 #pragma mark - Page Sizes in portrait orientation -
 extern NSUInteger const kAMPageWidthA6;

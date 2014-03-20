@@ -13,8 +13,8 @@
 @interface AMPaper()
 {
     AMPaperType        _paperType;
-    AMPaperOrientation _orientation;
-    AMMeasurementUnits _measurementUnits;
+    AMPaperOrientation _paperOrientation;
+    AMMeasurementUnits _paperMeasurementUnits;
     NSSize             _customSize;
     AMMargins          _margins;
 }
@@ -28,13 +28,21 @@
     self = [super init];
     if (self) {
         _paperType = [AMPreferences paperType];
-        _orientation = [AMPreferences paperOrientation];
+        _paperOrientation = [AMPreferences paperOrientation];
         _margins = [AMPreferences pageMargins];
+        _paperMeasurementUnits = [AMPreferences paperMeasurementUnits];
         if (_paperType != AMPaperTypeCustom) {
             self.customSize = [AMPreferences pageSize];
         }
     }
     return self;
+}
+-(void)writeToAMPreferences
+{
+    [AMPreferences setPaperType:self.paperType];
+    [AMPreferences setPaperOrientation:self.paperOrientation];
+    [AMPreferences setPageMargins:[self marginsInUnits:AMMeasurementUnitsPoints]];
+    [AMPreferences setPaperMeasurementUnits:self.paperMeasurementUnits];
 }
 -(NSString*)paperName
 {
@@ -223,37 +231,37 @@
 
 
 #pragma mark - NSCoding protocol
-static NSString * const kAMPaperTypeKey = @"kAMPaperTypeKey";
-static NSString * const kAMPaperOrientationKey = @"kAMPaperOrientationKey";
-static NSString * const kAMPaperMeasurementUnitsKey = @"kAMPaperMeasurementUnitsKey";
-static NSString * const kAMPaperCustomSizeKey = @"kAMPaperCustomSizeKey";
-static NSString * const kAMPaperMarginTopKey = @"kAMPaperMarginTopKey";
-static NSString * const kAMPaperMarginBottomKey = @"kAMPaperMarginBottomKey";
-static NSString * const kAMPaperMarginLeftKey = @"kAMPaperMarginLeftKey";
-static NSString * const kAMPaperMarginRightKey = @"kAMPaperMarginRightKey";
+static NSString * const AMPaperTypeKey = @"AMPaperTypeKey";
+static NSString * const AMPaperOrientationKey = @"AMPaperOrientationKey";
+static NSString * const AMPaperMeasurementUnitsKey = @"AMPaperMeasurementUnitsKey";
+static NSString * const AMPaperCustomSizeKey = @"AMPaperCustomSizeKey";
+static NSString * const AMPaperMarginTopKey = @"AMPaperMarginTopKey";
+static NSString * const AMPaperMarginBottomKey = @"AMPaperMarginBottomKey";
+static NSString * const AMPaperMarginLeftKey = @"AMPaperMarginLeftKey";
+static NSString * const AMPaperMarginRightKey = @"AMPaperMarginRightKey";
 
 -(id)initWithCoder:(NSCoder *)decoder
 {
-    _paperType = [decoder decodeIntegerForKey:@"kAMPaperTypeKey"];
-    _paperOrientation      = [decoder decodeIntegerForKey:@"kAMPaperOrientationKey"];
-    _paperMeasurementUnits = [decoder decodeIntegerForKey:@"kAMPaperMeasurementUnitsKey"];
-    _customSize            = [decoder decodeSizeForKey:@"kAMPaperCustomSizeKey"];
-    _margins.top           = [decoder decodeFloatForKey:@"kAMPaperMarginTopKey"];
-    _margins.bottom        = [decoder decodeFloatForKey:@"kAMPaperMarginBottomKey"];
-    _margins.left          = [decoder decodeFloatForKey:@"kAMPaperMarginLeftKey"];
-    _margins.right         = [decoder decodeFloatForKey:@"kAMPaperMarginRightKey"];
+    _paperType = [decoder decodeIntegerForKey:@"AMPaperTypeKey"];
+    _paperOrientation      = [decoder decodeIntegerForKey:@"AMPaperOrientationKey"];
+    _paperMeasurementUnits = [decoder decodeIntegerForKey:@"AMPaperMeasurementUnitsKey"];
+    _customSize            = [decoder decodeSizeForKey:@"AMPaperCustomSizeKey"];
+    _margins.top           = [decoder decodeFloatForKey:@"AMPaperMarginTopKey"];
+    _margins.bottom        = [decoder decodeFloatForKey:@"AMPaperMarginBottomKey"];
+    _margins.left          = [decoder decodeFloatForKey:@"AMPaperMarginLeftKey"];
+    _margins.right         = [decoder decodeFloatForKey:@"AMPaperMarginRightKey"];
     return self;
 }
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-    [coder encodeInteger:_paperType forKey:@"kAMPaperTypeKey"];
-    [coder encodeInteger:_paperOrientation forKey:@"kAMPaperOrientationKey"];
-    [coder encodeInteger:_paperMeasurementUnits forKey:@"kAMPaperMeasurementUnitsKey"];
-    [coder encodeSize:_customSize forKey:@"kAMPaperCustomSizeKey"];
-    [coder encodeFloat:_margins.top forKey:@"kAMPaperMarginTopKey"];
-    [coder encodeFloat:_margins.bottom forKey:@"kAMPaperMarginBottomKey"];
-    [coder encodeFloat:_margins.left forKey:@"kAMPaperMarginLeftKey"];
-    [coder encodeFloat:_margins.right forKey:@"kAMPaperMarginRightKey"];
+    [coder encodeInteger:_paperType forKey:@"AMPaperTypeKey"];
+    [coder encodeInteger:_paperOrientation forKey:@"AMPaperOrientationKey"];
+    [coder encodeInteger:_paperMeasurementUnits forKey:@"AMPaperMeasurementUnitsKey"];
+    [coder encodeSize:_customSize forKey:@"AMPaperCustomSizeKey"];
+    [coder encodeFloat:_margins.top forKey:@"AMPaperMarginTopKey"];
+    [coder encodeFloat:_margins.bottom forKey:@"AMPaperMarginBottomKey"];
+    [coder encodeFloat:_margins.left forKey:@"AMPaperMarginLeftKey"];
+    [coder encodeFloat:_margins.right forKey:@"AMPaperMarginRightKey"];
 }
 
 #pragma mark - NSCopying protocol

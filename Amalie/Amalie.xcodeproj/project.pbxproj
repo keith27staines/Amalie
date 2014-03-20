@@ -107,6 +107,10 @@
 		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
 		787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
+		78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803BFB18D9E120008FBDE1 /* AMFontSelectionViewController.m */; };
+		78803C0218D9E120008FBDE1 /* AMFontSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78803BFC18D9E120008FBDE1 /* AMFontSelectionViewController.xib */; };
+		78803C0318D9E120008FBDE1 /* AMFontSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803BFE18D9E120008FBDE1 /* AMFontSelectorView.m */; };
+		78803C0418D9E120008FBDE1 /* AMFontText.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803C0018D9E120008FBDE1 /* AMFontText.m */; };
 		788709C5178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */; };
@@ -359,6 +363,14 @@
 		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
 		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
 		787B3096178364B8001851C0 /* KSMWorksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheet.m; sourceTree = "<group>"; };
+		78803BFA18D9E120008FBDE1 /* AMFontSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSelectionViewController.h; sourceTree = "<group>"; };
+		78803BFB18D9E120008FBDE1 /* AMFontSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSelectionViewController.m; sourceTree = "<group>"; };
+		78803BFC18D9E120008FBDE1 /* AMFontSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFontSelectionViewController.xib; sourceTree = "<group>"; };
+		78803BFD18D9E120008FBDE1 /* AMFontSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSelectorView.h; sourceTree = "<group>"; };
+		78803BFE18D9E120008FBDE1 /* AMFontSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSelectorView.m; sourceTree = "<group>"; };
+		78803BFF18D9E120008FBDE1 /* AMFontText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontText.h; sourceTree = "<group>"; };
+		78803C0018D9E120008FBDE1 /* AMFontText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontText.m; sourceTree = "<group>"; };
+		78803C0518DB7C1D008FBDE1 /* AMPageSetupViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPageSetupViewControllerDelegate.h; sourceTree = "<group>"; };
 		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
 		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
 		788EAE0318B517A600D3EBD3 /* BitmaskHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmaskHelpers.h; sourceTree = "<group>"; };
@@ -835,6 +847,7 @@
 		786E32F0188BC29C0095443D /* AM General purpose views */ = {
 			isa = PBXGroup;
 			children = (
+				78803BF918D9E0FC008FBDE1 /* Font Selection */,
 				786E32F1188BC2C10095443D /* AMExpandingTextFieldView.h */,
 				786E32F2188BC2C10095443D /* AMExpandingTextFieldView.m */,
 				788EAE0618B5310100D3EBD3 /* AMSplitView.h */,
@@ -984,6 +997,20 @@
 			name = KSMMath;
 			sourceTree = "<group>";
 		};
+		78803BF918D9E0FC008FBDE1 /* Font Selection */ = {
+			isa = PBXGroup;
+			children = (
+				78803BFA18D9E120008FBDE1 /* AMFontSelectionViewController.h */,
+				78803BFB18D9E120008FBDE1 /* AMFontSelectionViewController.m */,
+				78803BFC18D9E120008FBDE1 /* AMFontSelectionViewController.xib */,
+				78803BFD18D9E120008FBDE1 /* AMFontSelectorView.h */,
+				78803BFE18D9E120008FBDE1 /* AMFontSelectorView.m */,
+				78803BFF18D9E120008FBDE1 /* AMFontText.h */,
+				78803C0018D9E120008FBDE1 /* AMFontText.m */,
+			);
+			name = "Font Selection";
+			sourceTree = "<group>";
+		};
 		788709C0178D35CD008E093A /* Preferences Pane views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1054,6 +1081,7 @@
 				782DA2121897919600F66E23 /* AMExpressionDataSource.h */,
 				78C87D2618BB660F00702932 /* AMPageSetupDatasource.h */,
 				785D6EF118CF5B6500EAED75 /* AMNameProviderDelegate.h */,
+				78803C0518DB7C1D008FBDE1 /* AMPageSetupViewControllerDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -1224,6 +1252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78803C0218D9E120008FBDE1 /* AMFontSelectionViewController.xib in Resources */,
 				787B3059178361BC001851C0 /* AMAmalieDocument.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
 				782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */,
@@ -1274,8 +1303,10 @@
 				78F57D901835232A00683FFC /* AMDInsertedExpression.m in Sources */,
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
+				78803C0318D9E120008FBDE1 /* AMFontSelectorView.m in Sources */,
 				7825D655180E91E60039EB67 /* AMKeyboards.m in Sources */,
 				7899B2E717AD0E26008BDB75 /* AMVectorContentViewController.m in Sources */,
+				78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */,
 				7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */,
 				78D8C2FF18C76A9D001F5494 /* AMFontAttributes.m in Sources */,
 				78EF56B017CF3B2200402847 /* KSMMatrix.m in Sources */,
@@ -1310,6 +1341,7 @@
 				78734E2A180BD63B00A2EEF3 /* AMKeyboardKeyModel.m in Sources */,
 				78F52C6317FABA5C0092B604 /* AMDFunctionDef.m in Sources */,
 				78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */,
+				78803C0418D9E120008FBDE1 /* AMFontText.m in Sources */,
 				78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */,
 				784ACC1318BBAF89009268B3 /* AMMeasurement.m in Sources */,
 				78F52C6917FABA5D0092B604 /* AMDName.m in Sources */,

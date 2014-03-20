@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMUserPreferencesBaseViewController : NSViewController
+@protocol AMUserPreferencesViewControlling <NSObject>
 
 -(void)reloadData;
+
+@end
+
+@interface AMUserPreferencesBaseViewController : NSViewController <AMUserPreferencesViewControlling>
 
 @end

@@ -26,8 +26,6 @@
 
 - (IBAction)restoreToFactoryDefaults:(NSButton*)button;
 
--(void)reloadData;
-
 
 
 

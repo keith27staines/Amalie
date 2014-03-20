@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMPageOrientationView, AMPaper;
+@class AMPageOrientationView, AMPaper, AMPaper;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
 #import "AMPageSetupDatasource.h"
+#import "AMPageSetupViewControllerDelegate.h"
 
 typedef NS_ENUM(NSUInteger,AMMarginTags)
 {
@@ -32,7 +33,7 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
 };
 
 @interface AMPageSetupViewController : NSViewController <AMPageSetupDatasource, NSControlTextEditingDelegate>
-
+@property id<AMPageSetupViewControllerDelegate>delegate;
 @property AMPaper * paper;
 
 #pragma mark - Page orientation

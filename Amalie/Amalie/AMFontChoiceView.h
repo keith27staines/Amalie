@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, AMFontChoiceSubviewTags) {
 -(void)restoreFactoryDefaultsForFontChoiceView:(AMFontChoiceView*)self;
 @end
 
-@interface AMFontChoiceView : NSView <NSTextFieldDelegate>
+@interface AMFontChoiceView : NSView <NSTextFieldDelegate, NSPopoverDelegate>
 
 @property (weak) id<AMFontChoiceViewDatasource>datasource;
 

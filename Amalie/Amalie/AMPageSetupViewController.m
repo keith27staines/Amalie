@@ -244,26 +244,31 @@
     } else {
         self.paper.paperType = paperType;
     }
+    [self paperDidUpdate];
     [self updateDisplay];
 }
 -(void)setCustomSize:(NSSize)size
 {
+    [self paperDidUpdate];
     [self.paper makeCustomPortraitWidth:size.width portraitHeight:size.height];
 }
 -(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
 {
     self.paper.paperOrientation = paperOrientation;
+    [self paperDidUpdate];
     [self updateDisplay];
 }
 -(void)setPaperMeasurementUnits:(AMMeasurementUnits)units
 {
     self.paper.paperMeasurementUnits = units;
+    [self paperDidUpdate];
     [self updateDisplay];
 }
 -(void)setMargins
 {
     AMMargins margins = [self marginsFromView];
     [self.paper setMargins:margins inUnits:self.paperMeasurementUnits];
+    [self paperDidUpdate];
     [self updateDisplay];
 }
 -(AMMargins)marginsFromView
@@ -295,9 +300,15 @@
     [self setPaperMeasurementUnits:sender.selectedTag];
 }
 
-#pragma mark - Delegate -
+#pragma mark - NSControl Delegate -
 -(BOOL)control:(NSControl *)control didFailToFormatString:(NSString *)string errorDescription:(NSString *)error
 {
     return NO;
+}
+
+#pragma mark - Inform AMPaper Delegate that paper did update-
+-(void)paperDidUpdate
+{
+    [self.delegate pageSetupViewController:self didUpdatePaper:self.paper];
 }
 @end

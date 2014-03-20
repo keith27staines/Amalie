@@ -11,8 +11,12 @@
 #import "AMFontChoiceView.h"
 #import "AMConstants.h"
 #import "AMFontAttributes.h"
+#import "AMFontText.h"
+#import "AMFontSelectionViewController.h"
 
 @interface AMFontUserPreferencesViewController ()
+
+@property (strong) IBOutlet NSPopover *fontSelectionViewController;
 
 @end
 
