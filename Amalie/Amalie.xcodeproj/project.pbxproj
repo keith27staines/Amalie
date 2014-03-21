@@ -111,6 +111,12 @@
 		78803C0218D9E120008FBDE1 /* AMFontSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78803BFC18D9E120008FBDE1 /* AMFontSelectionViewController.xib */; };
 		78803C0318D9E120008FBDE1 /* AMFontSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803BFE18D9E120008FBDE1 /* AMFontSelectorView.m */; };
 		78803C0418D9E120008FBDE1 /* AMFontText.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803C0018D9E120008FBDE1 /* AMFontText.m */; };
+		78803C0918DC76D4008FBDE1 /* AMFontSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803C0718DC76D4008FBDE1 /* AMFontSetupViewController.m */; };
+		78803C0A18DC76D4008FBDE1 /* AMFontSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78803C0818DC76D4008FBDE1 /* AMFontSetupViewController.xib */; };
+		78803C0F18DC771C008FBDE1 /* AMColorSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803C0D18DC771C008FBDE1 /* AMColorSetupViewController.m */; };
+		78803C1018DC771C008FBDE1 /* AMColorSetupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78803C0E18DC771C008FBDE1 /* AMColorSetupViewController.xib */; };
+		78803C1518DC7747008FBDE1 /* AMMathStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803C1318DC7747008FBDE1 /* AMMathStyleViewController.m */; };
+		78803C1618DC7747008FBDE1 /* AMMathStyleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78803C1418DC7747008FBDE1 /* AMMathStyleViewController.xib */; };
 		788709C5178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788709C6178DAEAB008E093A /* AMPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 788709C4178DAEAB008E093A /* AMPreferences.m */; };
 		788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */; };
@@ -371,6 +377,15 @@
 		78803BFF18D9E120008FBDE1 /* AMFontText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontText.h; sourceTree = "<group>"; };
 		78803C0018D9E120008FBDE1 /* AMFontText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontText.m; sourceTree = "<group>"; };
 		78803C0518DB7C1D008FBDE1 /* AMPageSetupViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPageSetupViewControllerDelegate.h; sourceTree = "<group>"; };
+		78803C0618DC76D4008FBDE1 /* AMFontSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSetupViewController.h; sourceTree = "<group>"; };
+		78803C0718DC76D4008FBDE1 /* AMFontSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSetupViewController.m; sourceTree = "<group>"; };
+		78803C0818DC76D4008FBDE1 /* AMFontSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFontSetupViewController.xib; sourceTree = "<group>"; };
+		78803C0C18DC771C008FBDE1 /* AMColorSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorSetupViewController.h; sourceTree = "<group>"; };
+		78803C0D18DC771C008FBDE1 /* AMColorSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorSetupViewController.m; sourceTree = "<group>"; };
+		78803C0E18DC771C008FBDE1 /* AMColorSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMColorSetupViewController.xib; sourceTree = "<group>"; };
+		78803C1218DC7747008FBDE1 /* AMMathStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathStyleViewController.h; sourceTree = "<group>"; };
+		78803C1318DC7747008FBDE1 /* AMMathStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathStyleViewController.m; sourceTree = "<group>"; };
+		78803C1418DC7747008FBDE1 /* AMMathStyleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMMathStyleViewController.xib; sourceTree = "<group>"; };
 		788709C3178DAEAB008E093A /* AMPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferences.h; sourceTree = "<group>"; };
 		788709C4178DAEAB008E093A /* AMPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferences.m; sourceTree = "<group>"; };
 		788EAE0318B517A600D3EBD3 /* BitmaskHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmaskHelpers.h; sourceTree = "<group>"; };
@@ -687,6 +702,9 @@
 				784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */,
 				784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */,
 				788EAE0E18B61C1B00D3EBD3 /* Page setup view controller and view */,
+				78803C0B18DC76DD008FBDE1 /* Font setup view controller and view */,
+				78803C1118DC7723008FBDE1 /* Color setup view controller and view */,
+				78803C1718DC774C008FBDE1 /* Math style view controller and view */,
 			);
 			name = "Free-floating windows";
 			sourceTree = "<group>";
@@ -1011,6 +1029,36 @@
 			name = "Font Selection";
 			sourceTree = "<group>";
 		};
+		78803C0B18DC76DD008FBDE1 /* Font setup view controller and view */ = {
+			isa = PBXGroup;
+			children = (
+				78803C0618DC76D4008FBDE1 /* AMFontSetupViewController.h */,
+				78803C0718DC76D4008FBDE1 /* AMFontSetupViewController.m */,
+				78803C0818DC76D4008FBDE1 /* AMFontSetupViewController.xib */,
+			);
+			name = "Font setup view controller and view";
+			sourceTree = "<group>";
+		};
+		78803C1118DC7723008FBDE1 /* Color setup view controller and view */ = {
+			isa = PBXGroup;
+			children = (
+				78803C0C18DC771C008FBDE1 /* AMColorSetupViewController.h */,
+				78803C0D18DC771C008FBDE1 /* AMColorSetupViewController.m */,
+				78803C0E18DC771C008FBDE1 /* AMColorSetupViewController.xib */,
+			);
+			name = "Color setup view controller and view";
+			sourceTree = "<group>";
+		};
+		78803C1718DC774C008FBDE1 /* Math style view controller and view */ = {
+			isa = PBXGroup;
+			children = (
+				78803C1218DC7747008FBDE1 /* AMMathStyleViewController.h */,
+				78803C1318DC7747008FBDE1 /* AMMathStyleViewController.m */,
+				78803C1418DC7747008FBDE1 /* AMMathStyleViewController.xib */,
+			);
+			name = "Math style view controller and view";
+			sourceTree = "<group>";
+		};
 		788709C0178D35CD008E093A /* Preferences Pane views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1260,6 +1308,7 @@
 				786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */,
 				78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */,
 				78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */,
+				78803C1618DC7747008FBDE1 /* AMMathStyleViewController.xib in Resources */,
 				787B304D178361BC001851C0 /* InfoPlist.strings in Resources */,
 				785D9A22179C5930004D39B5 /* AMExpressionContentView.xib in Resources */,
 				785826B718C4CCCB00612651 /* AMMathUserPreferencesViewController.xib in Resources */,
@@ -1271,6 +1320,8 @@
 				785826AF18C4753700612651 /* AMFontUserPreferencesViewController.xib in Resources */,
 				787B305C178361BC001851C0 /* MainMenu.xib in Resources */,
 				785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */,
+				78803C0A18DC76D4008FBDE1 /* AMFontSetupViewController.xib in Resources */,
+				78803C1018DC771C008FBDE1 /* AMColorSetupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1296,6 +1347,7 @@
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
 				785826B218C4755C00612651 /* AMFontUserPreferencesView.m in Sources */,
 				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
+				78803C0918DC76D4008FBDE1 /* AMFontSetupViewController.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
 				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
@@ -1304,6 +1356,7 @@
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,
 				789CB123178B0BCC00B5AF58 /* AMConstants.m in Sources */,
 				78803C0318D9E120008FBDE1 /* AMFontSelectorView.m in Sources */,
+				78803C1518DC7747008FBDE1 /* AMMathStyleViewController.m in Sources */,
 				7825D655180E91E60039EB67 /* AMKeyboards.m in Sources */,
 				7899B2E717AD0E26008BDB75 /* AMVectorContentViewController.m in Sources */,
 				78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */,
@@ -1406,6 +1459,7 @@
 				787B304F178361BC001851C0 /* main.m in Sources */,
 				78E477061827F28D00DEB5FB /* AMDArgumentList+Methods.m in Sources */,
 				787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
+				78803C0F18DC771C008FBDE1 /* AMColorSetupViewController.m in Sources */,
 				785826BA18C4CCF200612651 /* AMMathUserPreferencesView.m in Sources */,
 				782859F51886D57000523121 /* AMGraphics.m in Sources */,
 				785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */,

@@ -32,6 +32,9 @@
 #import "AMDocumentView.h"
 #import "AMPaper.h"
 #import "AMPageSetupViewController.h"
+#import "AMFontSetupViewController.h"
+#import "AMColorSetupViewController.h"
+#import "AMMathStyleViewController.h"
 #import "AMMeasurement.h"
 
 // View controllers for dynamically loaded views
@@ -593,7 +596,7 @@
     _selectedView.viewState = AMInsertViewStateSelected;
 }
 
-#pragma mark - Popover instantiations -
+#pragma mark - Toolbar actions -
 - (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender
 {
     NSPopover * popover = self.pageSetupPopover;
@@ -601,15 +604,50 @@
     AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
     vc.paper = self.documentSettings.paper;
     [self.pageSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
-    BOOL success = [[self.worksheetView window] makeFirstResponder:nil];
-    //NSAssert(success, @"Failed to remove first responder when showing page setup popover");
+    [[self.worksheetView window] makeFirstResponder:nil];
+}
+- (IBAction)toolbarFontSetupButtonClicked:(NSButton *)sender {
+    NSPopover * popover = self.fontSetupPopover;
+    popover.behavior = NSPopoverBehaviorTransient;
+    AMFontSetupViewController * vc = (AMFontSetupViewController*)self.fontSetupPopover.contentViewController;
+    [self.fontSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
+    [[self.worksheetView window] makeFirstResponder:nil];
+}
+- (IBAction)toolbarColorSetupButtonClicked:(NSButton *)sender {
+    NSPopover * popover = self.colorSetupPopover;
+    popover.behavior = NSPopoverBehaviorTransient;
+    AMColorSetupViewController * vc = (AMColorSetupViewController*)self.colorSetupPopover.contentViewController;
+    [self.colorSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
+    [[self.worksheetView window] makeFirstResponder:nil];
+}
+- (IBAction)toolbarSetupMathematicalStyleButtonClicked:(NSButton *)sender {
+    NSPopover * popover = self.mathStylePopover;
+    popover.behavior = NSPopoverBehaviorTransient;
+    AMMathStyleViewController * vc = (AMMathStyleViewController*)self.mathStylePopover.contentViewController;
+    [self.mathStylePopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
+    [[self.worksheetView window] makeFirstResponder:nil];
 }
 #pragma mark - Popover Delegate -
 -(void)popoverDidClose:(NSNotification *)notification
 {
-    AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-    [self savePaperToPersistentStore:vc.paper];
-    [self loadDocumentIntoView];
+    if (notification.object == self.pageSetupPopover) {
+        AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
+        [self savePaperToPersistentStore:vc.paper];
+        [self loadDocumentIntoView];
+        return;
+    }
+    if (notification.object == self.fontSetupPopover) {
+        //
+        return;
+    }
+    if (notification.object == self.colorSetupPopover) {
+        //
+        return;
+    }
+    if (notification.object == self.mathStylePopover) {
+        //
+        return;
+    }
 }
 -(NSWindow *)detachableWindowForPopover:(NSPopover *)popover
 {

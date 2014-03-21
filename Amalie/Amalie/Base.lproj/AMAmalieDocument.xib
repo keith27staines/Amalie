@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5051" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13D17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMAmalieDocument">
             <connections>
                 <outlet property="appController" destination="GkH-jk-e4m" id="LCZ-WR-GNO"/>
+                <outlet property="colorSetupPopover" destination="cjS-Tg-JZK" id="pdz-7b-iSo"/>
                 <outlet property="enclosingSplitView" destination="ghK-zD-XlV" id="RUK-H6-H0B"/>
+                <outlet property="fontSetupPopover" destination="aWB-Gs-Wak" id="yeS-yL-or5"/>
                 <outlet property="inspectorContainerView" destination="wwf-5u-UwN" id="PZr-uV-xrZ"/>
                 <outlet property="keyboardsViewController" destination="jGG-r6-pKc" id="FI1-P9-L7W"/>
                 <outlet property="leftSplitView" destination="QRA-5r-iih" id="oSV-XV-QGc"/>
                 <outlet property="library" destination="INn-ob-cZC" id="z1D-5X-62u"/>
                 <outlet property="libraryContainerView" destination="FbB-mP-o5T" id="sdZ-zB-v0Q"/>
+                <outlet property="mathStylePopover" destination="eO5-AM-bsz" id="45F-7t-4hG"/>
                 <outlet property="middleSplitView" destination="5BN-Z6-wHO" id="C5E-so-XKW"/>
                 <outlet property="pageSetupPopover" destination="XWM-t0-OLB" id="zS4-ka-Jdb"/>
                 <outlet property="rightSplitView" destination="Pt1-IB-gk6" id="S65-9r-6UO"/>
@@ -121,8 +124,6 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="C8BA68E8-99D6-451A-B6A6-90CFBEE9E110" displayMode="iconAndLabel" sizeMode="regular" id="hjL-PG-0sP">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="nQs-oD-aGT"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="o2A-yv-wHX"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Vcq-N9-Z9s"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="xQG-fe-OCw"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="gN8-S6-Xxy"/>
@@ -139,22 +140,21 @@
                             <action selector="scaleSliderMoved:" target="-2" id="egB-Za-MQE"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="6DFD5D14-B953-456A-9733-E1C0E1BC0473" label="" paletteLabel="leftSidePanel" tag="-1" image="LeftSidebarOpenBtn" id="P7K-sk-Hxn">
+                    <toolbarItem implicitItemIdentifier="6DFD5D14-B953-456A-9733-E1C0E1BC0473" label="" paletteLabel="leftSidePanel" toolTip="Show or hide the object library" tag="-1" image="LeftSidebarOpenBtn" id="P7K-sk-Hxn">
                         <connections>
                             <action selector="toolbarLeftSidePanelButtonClicked:" target="-2" id="UB8-ng-g4T"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="FA72F6D8-191E-44FC-9E18-9163FF8015A1" label="" paletteLabel="rightSidePanel" tag="-1" image="RightSidebarOpenBtn" id="gAG-TM-nkd">
+                    <toolbarItem implicitItemIdentifier="FA72F6D8-191E-44FC-9E18-9163FF8015A1" label="" paletteLabel="rightSidePanel" toolTip="Show or hide the inspectors panel" tag="-1" image="RightSidebarOpenBtn" id="gAG-TM-nkd">
                         <connections>
                             <action selector="toolbarRightSidePanelButtonClicked:" target="-2" id="VwP-uw-jVb"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="1BFE5CB5-7FFB-478F-B70C-9B7987F60E50" label="" paletteLabel="" image="PageSetupBtn" id="Lu1-Am-6ik">
-                        <nil key="toolTip"/>
+                    <toolbarItem implicitItemIdentifier="1BFE5CB5-7FFB-478F-B70C-9B7987F60E50" label="Page setup" paletteLabel="Page setup" toolTip="View or edit the page setup for this document" image="PageSetupBtn" id="Lu1-Am-6ik">
                         <size key="minSize" width="48" height="48"/>
                         <size key="maxSize" width="48" height="48"/>
                         <button key="view" id="HNC-Or-fYP">
-                            <rect key="frame" x="0.0" y="14" width="48" height="48"/>
+                            <rect key="frame" x="9" y="14" width="48" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PageSetupBtn" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="krB-3q-Sah">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -165,12 +165,60 @@
                             <action selector="toolbarPageSetupButtonClicked:" target="-2" id="6gC-zt-1ud"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="395562D8-4744-4160-B1F8-528FE9964245" label="Fonts" paletteLabel="Fonts" toolTip="View or edit font options for this document" image="NSFontPanel" id="1fy-5G-3I3">
+                        <size key="minSize" width="48" height="48"/>
+                        <size key="maxSize" width="48" height="48"/>
+                        <button key="view" id="edD-SP-QGS">
+                            <rect key="frame" x="0.0" y="14" width="48" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSFontPanel" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="6kg-c8-a1M">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="toolbarFontSetupButtonClicked:" target="-2" id="PLo-I5-eNs"/>
+                            </connections>
+                        </button>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="3598A84E-F0CA-4205-B060-F2614FCFAEE3" label="Colors" paletteLabel="Colors" toolTip="View or edit color options for this document" image="NSColorPanel" id="ymP-TZ-6CQ">
+                        <size key="minSize" width="48" height="48"/>
+                        <size key="maxSize" width="48" height="48"/>
+                        <button key="view" id="b4N-tL-rqU">
+                            <rect key="frame" x="0.0" y="14" width="48" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSColorPanel" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="8bp-JQ-Bdn">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="toolbarColorSetupButtonClicked:" target="-2" id="9H1-Pl-3ec"/>
+                            </connections>
+                        </button>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="1D9DEEE7-6974-46C1-A3FA-70819A3D43F5" label="Mathematical style" paletteLabel="Mathematical style" toolTip="View or edit mathematical-style options for this document" id="iVe-EO-KJ4">
+                        <size key="minSize" width="48" height="48"/>
+                        <size key="maxSize" width="48" height="48"/>
+                        <button key="view" id="1u7-Lf-fqE">
+                            <rect key="frame" x="29" y="14" width="48" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ykL-dL-38e">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="toolbarSetupMathematicalStyleButtonClicked:" target="-2" id="cJQ-PE-J4O"/>
+                            </connections>
+                        </button>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="P7K-sk-Hxn"/>
                     <toolbarItem reference="mk5-T9-xbF"/>
                     <toolbarItem reference="gN8-S6-Xxy"/>
                     <toolbarItem reference="Lu1-Am-6ik"/>
+                    <toolbarItem reference="1fy-5G-3I3"/>
+                    <toolbarItem reference="ymP-TZ-6CQ"/>
+                    <toolbarItem reference="iVe-EO-KJ4"/>
                     <toolbarItem reference="gN8-S6-Xxy"/>
                     <toolbarItem reference="gAG-TM-nkd"/>
                 </defaultToolbarItems>
@@ -207,9 +255,29 @@
                 <outlet property="delegate" destination="-2" id="aLO-1h-3DF"/>
             </connections>
         </popover>
+        <viewController id="dNk-Jt-ZmK" userLabel="Font setup view Controller" customClass="AMFontSetupViewController"/>
+        <popover behavior="t" id="aWB-Gs-Wak" userLabel="Font setup popover">
+            <connections>
+                <outlet property="contentViewController" destination="dNk-Jt-ZmK" id="jUy-tU-FN6"/>
+            </connections>
+        </popover>
+        <viewController id="bLf-tv-Hbd" userLabel="Color setup view Controller" customClass="AMColorSetupViewController"/>
+        <popover id="cjS-Tg-JZK" userLabel="Color setup popover">
+            <connections>
+                <outlet property="contentViewController" destination="bLf-tv-Hbd" id="apY-qy-UaS"/>
+            </connections>
+        </popover>
+        <viewController id="s7M-0y-FDw" userLabel="Math style View Controller" customClass="AMMathStyleViewController"/>
+        <popover id="eO5-AM-bsz" userLabel="Math syle popover">
+            <connections>
+                <outlet property="contentViewController" destination="s7M-0y-FDw" id="JLx-lf-aBf"/>
+            </connections>
+        </popover>
     </objects>
     <resources>
         <image name="LeftSidebarOpenBtn" width="510" height="510"/>
+        <image name="NSColorPanel" width="32" height="32"/>
+        <image name="NSFontPanel" width="32" height="32"/>
         <image name="PageSetupBtn" width="510" height="510"/>
         <image name="RightSidebarOpenBtn" width="510" height="510"/>
     </resources>

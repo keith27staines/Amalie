@@ -43,6 +43,10 @@ NSPopoverDelegate>
 - (IBAction)toolbarRightSidePanelButtonClicked:(NSToolbarItem*)sender;
 - (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender;
 - (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender;
+- (IBAction)toolbarFontSetupButtonClicked:(NSButton *)sender;
+
+- (IBAction)toolbarColorSetupButtonClicked:(NSButton *)sender;
+- (IBAction)toolbarSetupMathematicalStyleButtonClicked:(NSButton *)sender;
 
 #pragma mark - Outlets for main subviews of document window -
 
@@ -75,7 +79,13 @@ NSPopoverDelegate>
 # pragma mark - View Controllers for subviews -
 @property (strong) IBOutlet AMKeyboardsViewController *keyboardsViewController;
 
-@property (strong) IBOutlet NSPopover *pageSetupPopover;
+@property (weak) IBOutlet NSPopover *pageSetupPopover;
+
+@property (weak) IBOutlet NSPopover *fontSetupPopover;
+
+@property (weak) IBOutlet NSPopover * colorSetupPopover;
+
+@property (weak) IBOutlet NSPopover * mathStylePopover;
 
 # pragma mark - Uncatagorized -
 /*!
