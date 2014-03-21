@@ -602,7 +602,7 @@
     vc.paper = self.documentSettings.paper;
     [self.pageSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     BOOL success = [[self.worksheetView window] makeFirstResponder:nil];
-    NSAssert(success, @"Failed to remove first responder when showing page setup popover");
+    //NSAssert(success, @"Failed to remove first responder when showing page setup popover");
 }
 #pragma mark - Popover Delegate -
 -(void)popoverDidClose:(NSNotification *)notification
