@@ -1,14 +1,14 @@
 //
-//  AMColorUserPreferencesView.m
+//  AMColorPreferencesView.m
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMColorUserPreferencesView.h"
+#import "AMColorPreferencesView.h"
 
-@implementation AMColorUserPreferencesView
+@implementation AMColorPreferencesView
 
 - (id)initWithFrame:(NSRect)frame
 {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
 		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
 		7811D2C617A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
 		7811D2C717A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
@@ -49,9 +50,9 @@
 		785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CB1785532F00F6A7AD /* AMToolboxView.m */; };
 		785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CE1785722700F6A7AD /* AMInsertableView.m */; };
 		785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247D11786AC9300F6A7AD /* AMExpressionContentView.m */; };
-		785826A618C474C800612651 /* AMColorUserPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826A418C474C800612651 /* AMColorUserPreferencesViewController.m */; };
-		785826A718C474C800612651 /* AMColorUserPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826A518C474C800612651 /* AMColorUserPreferencesViewController.xib */; };
-		785826AA18C4750C00612651 /* AMColorUserPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826A918C4750C00612651 /* AMColorUserPreferencesView.m */; };
+		785826A618C474C800612651 /* AMColorPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826A418C474C800612651 /* AMColorPreferencesViewController.m */; };
+		785826A718C474C800612651 /* AMColorPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826A518C474C800612651 /* AMColorPreferencesViewController.xib */; };
+		785826AA18C4750C00612651 /* AMColorPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826A918C4750C00612651 /* AMColorPreferencesView.m */; };
 		785826AE18C4753700612651 /* AMFontUserPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826AC18C4753700612651 /* AMFontUserPreferencesViewController.m */; };
 		785826AF18C4753700612651 /* AMFontUserPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 785826AD18C4753700612651 /* AMFontUserPreferencesViewController.xib */; };
 		785826B218C4755C00612651 /* AMFontUserPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785826B118C4755C00612651 /* AMFontUserPreferencesView.m */; };
@@ -206,6 +207,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
+		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
 		78007E02189CEA0B007CFF77 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
 		78007E03189CEA0B007CFF77 /* AMContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContainerView.m; sourceTree = "<group>"; };
 		7811D2C417A2550E0024839B /* AMRefTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRefTree.h; sourceTree = "<group>"; };
@@ -276,11 +279,11 @@
 		785247CE1785722700F6A7AD /* AMInsertableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInsertableView.m; sourceTree = "<group>"; };
 		785247D01786AC9300F6A7AD /* AMExpressionContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContentView.h; sourceTree = "<group>"; };
 		785247D11786AC9300F6A7AD /* AMExpressionContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContentView.m; sourceTree = "<group>"; };
-		785826A318C474C800612651 /* AMColorUserPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorUserPreferencesViewController.h; sourceTree = "<group>"; };
-		785826A418C474C800612651 /* AMColorUserPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorUserPreferencesViewController.m; sourceTree = "<group>"; };
-		785826A518C474C800612651 /* AMColorUserPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMColorUserPreferencesViewController.xib; sourceTree = "<group>"; };
-		785826A818C4750C00612651 /* AMColorUserPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorUserPreferencesView.h; sourceTree = "<group>"; };
-		785826A918C4750C00612651 /* AMColorUserPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorUserPreferencesView.m; sourceTree = "<group>"; };
+		785826A318C474C800612651 /* AMColorPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreferencesViewController.h; sourceTree = "<group>"; };
+		785826A418C474C800612651 /* AMColorPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferencesViewController.m; sourceTree = "<group>"; };
+		785826A518C474C800612651 /* AMColorPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMColorPreferencesViewController.xib; sourceTree = "<group>"; };
+		785826A818C4750C00612651 /* AMColorPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreferencesView.h; sourceTree = "<group>"; };
+		785826A918C4750C00612651 /* AMColorPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferencesView.m; sourceTree = "<group>"; };
 		785826AB18C4753700612651 /* AMFontUserPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontUserPreferencesViewController.h; sourceTree = "<group>"; };
 		785826AC18C4753700612651 /* AMFontUserPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontUserPreferencesViewController.m; sourceTree = "<group>"; };
 		785826AD18C4753700612651 /* AMFontUserPreferencesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFontUserPreferencesViewController.xib; sourceTree = "<group>"; };
@@ -781,11 +784,13 @@
 		7858269F18C46B8900612651 /* Color Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				785826A318C474C800612651 /* AMColorUserPreferencesViewController.h */,
-				785826A418C474C800612651 /* AMColorUserPreferencesViewController.m */,
-				785826A518C474C800612651 /* AMColorUserPreferencesViewController.xib */,
-				785826A818C4750C00612651 /* AMColorUserPreferencesView.h */,
-				785826A918C4750C00612651 /* AMColorUserPreferencesView.m */,
+				785826A318C474C800612651 /* AMColorPreferencesViewController.h */,
+				785826A418C474C800612651 /* AMColorPreferencesViewController.m */,
+				785826A518C474C800612651 /* AMColorPreferencesViewController.xib */,
+				785826A818C4750C00612651 /* AMColorPreferencesView.h */,
+				785826A918C4750C00612651 /* AMColorPreferencesView.m */,
+				5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */,
+				5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */,
 			);
 			name = "Color Preferences";
 			sourceTree = "<group>";
@@ -1321,7 +1326,7 @@
 				787B3053178361BC001851C0 /* Credits.rtf in Resources */,
 				784D6F01178A1217002BE03A /* AMPreferencesWindow.xib in Resources */,
 				785826BF18C4D20100612651 /* AMPageUserPreferencesViewController.xib in Resources */,
-				785826A718C474C800612651 /* AMColorUserPreferencesViewController.xib in Resources */,
+				785826A718C474C800612651 /* AMColorPreferencesViewController.xib in Resources */,
 				785826AF18C4753700612651 /* AMFontUserPreferencesViewController.xib in Resources */,
 				787B305C178361BC001851C0 /* MainMenu.xib in Resources */,
 				785D9A30179DE475004D39B5 /* AMInsertableView.xib in Resources */,
@@ -1375,7 +1380,7 @@
 				78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
 				78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
-				785826A618C474C800612651 /* AMColorUserPreferencesViewController.m in Sources */,
+				785826A618C474C800612651 /* AMColorPreferencesViewController.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
@@ -1403,6 +1408,7 @@
 				78803C0418D9E120008FBDE1 /* AMFontText.m in Sources */,
 				78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */,
 				784ACC1318BBAF89009268B3 /* AMMeasurement.m in Sources */,
+				5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */,
 				78F52C6917FABA5D0092B604 /* AMDName.m in Sources */,
 				784ACC1718BE313C009268B3 /* AMMeasuredLengthFormatter.m in Sources */,
 				78F52C6C17FABA5D0092B604 /* AMDIntervalDef.m in Sources */,
@@ -1442,7 +1448,7 @@
 				78962FDA182BD7E00066BEE9 /* AMDName+Methods.m in Sources */,
 				785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */,
 				78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */,
-				785826AA18C4750C00612651 /* AMColorUserPreferencesView.m in Sources */,
+				785826AA18C4750C00612651 /* AMColorPreferencesView.m in Sources */,
 				7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				784ACC1018BB7918009268B3 /* AMPaper.m in Sources */,
 				78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */,

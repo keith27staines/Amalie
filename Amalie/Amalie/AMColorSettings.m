@@ -124,13 +124,11 @@
     NSMutableDictionary * dictionary = [self colorDataDictionaryForInsertableType:objectType];
     dictionary[kAMBackColorKey] = colorData;
 }
-
 -(void)setBackColor:(NSColor *)color forInsertableObjectType:(AMInsertableType)objectType
 {
     NSData * colorData = dataFromColor(color);
     [self setBackColorData:colorData forInsertableObjectType:objectType];
 }
-
 -(void)setBackColorFor2DGraphs:(NSColor *)color {
     [self setBackColor:color forInsertableObjectType:AMInsertableTypeGraph2D];
 }
@@ -184,7 +182,6 @@
 -(NSColor*)backColorForConstants{
     return [self backColorForInsertableObjectType:AMInsertableTypeConstant];
 }
-
 -(NSColor*)backColorForEquations{
     return [self backColorForInsertableObjectType:AMInsertableTypeEquation];
 }
@@ -435,6 +432,16 @@
     return dataFromColor(color);
 }
 
+-(NSDictionary*)libraryColorData
+{
+    return [self.libraryColorDataDictionary copy];
+}
+
+-(NSDictionary*)otherColorData
+{
+    return [self.otherColorDataDictionary copy];
+}
+
 #pragma mark - NSCoding
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -460,5 +467,27 @@
     
     return aCopy;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

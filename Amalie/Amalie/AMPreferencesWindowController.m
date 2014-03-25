@@ -10,7 +10,7 @@
 #import "AMConstants.h"
 #import "AMPreferences.h"
 
-#import "AMColorUserPreferencesViewController.h"
+#import "AMColorPreferencesViewController.h"
 #import "AMFontUserPreferencesViewController.h"
 #import "AMMathUserPreferencesViewController.h"
 #import "AMPageUserPreferencesViewController.h"

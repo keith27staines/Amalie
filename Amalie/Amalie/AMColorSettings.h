@@ -46,4 +46,6 @@
 @property (copy) NSColor * fontColorForDocumentBackground;
 @property (copy) NSColor * fontColorForPaper;
 
+-(NSDictionary*)libraryColorData;
+-(NSDictionary*)otherColorData;
 @end

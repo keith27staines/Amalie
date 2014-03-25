@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMColorUserPreferencesViewController;
+@class AMColorPreferencesViewController;
 @class AMFontUserPreferencesViewController;
 @class AMPageUserPreferencesViewController;
 @class AMMathUserPreferencesViewController;
@@ -28,7 +28,7 @@
 @property (weak) IBOutlet NSToolbarItem *showmathsButton;
 
 
-@property (weak) IBOutlet AMColorUserPreferencesViewController *colorPreferencesViewController;
+@property (weak) IBOutlet AMColorPreferencesViewController *colorPreferencesViewController;
 
 @property (weak) IBOutlet AMFontUserPreferencesViewController *fontPreferencesViewController;
 
