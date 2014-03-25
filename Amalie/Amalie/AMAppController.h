@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AMTrayDatasource.h"
 
 @class AMPreferencesWindowController;
 @class AMPreferences;

@@ -12,7 +12,7 @@
 @class AMMathUserPreferencesViewController;
 
 #import <Cocoa/Cocoa.h>
-#import "AMTrayDatasource.h"
+#import "AMLibraryDatasource.h"
 
 @interface AMPreferencesWindowController : NSWindowController <NSToolbarDelegate,NSWindowDelegate>
 

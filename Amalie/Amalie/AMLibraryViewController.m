@@ -69,6 +69,9 @@
 
 -(AMColorSettings *)colorSettings
 {
+    if (!_colorSettings) {
+        _colorSettings = [AMColorSettings colorSettingsWithUserDefaults];
+    }
     return _colorSettings;
 }
 -(void)setColorSettings:(AMColorSettings *)colorSettings
@@ -101,8 +104,8 @@
     // Which table are we dealing with?
     if ([[tableView identifier] isEqualToString:kAMLibraryObjectsKey]) {
         
-        // The table is the tray (of insertable items).
-        AMLibraryItem * libraryItem = [self trayItemAtIndex:row];
+        // The table represents the library of insertable items.
+        AMLibraryItem * libraryItem = [self libraryItemAtIndex:row];
         
         // Which column?
         if ( [tableColumn.identifier isEqualToString:kAMIconKey] ) {
@@ -130,18 +133,18 @@
              pasteboardWriterForRow:(NSInteger)row
 {
     
-    // The table is the tray (of insertable items).
-    AMLibraryItem * trayItem = [self trayItemAtIndex:row];
+    // The table represents the library of insertable items.
+    AMLibraryItem * libraryItem = [self libraryItemAtIndex:row];
     AMInsertableViewController * viewController = [[AMInsertableViewController alloc] init];
     AMInsertableView * insertableView = (AMInsertableView*)[viewController view];
-    insertableView.insertableType = trayItem.insertableType;
+    insertableView.insertableType = libraryItem.insertableType;
     
     return insertableView;
 }
 
-#pragma mark - AMTrayDatasource -
+#pragma mark - AMLibraryDatasource -
 
--(NSUInteger)trayItemCount
+-(NSUInteger)libraryItemCount
 {
     return [[self dictionaryOfAllLibraryItems] count];
 }
@@ -165,7 +168,7 @@
             [self getInsertableClassName:&className
                            insertableTye:&insertableType
                                     info:&info
-                      forTrayItemWithKey:key];
+                      forLibraryItemWithKey:key];
             backgroundColor = [colorSettings backColorForInsertableObjectType:insertableType];
             fontColor = [colorSettings fontColorForInsertableObjectType:insertableType];
             item = [[AMLibraryItem alloc] initWithKey:key
@@ -186,7 +189,7 @@
 -(void)getInsertableClassName:(NSString**)className
                 insertableTye:(AMInsertableType*)insertableType
                          info:(NSString**)info
-           forTrayItemWithKey:(NSString*)key
+           forLibraryItemWithKey:(NSString*)key
 {
     
     *className = [AMInsertableView description];
@@ -246,20 +249,20 @@
     }
     
     // Coding error - we either forgot one of the insertable objects, or its key is not being passed in correctly.
-    [NSException raise:@"There is no class name associated with the tray item." format:@"The tray item %@ is not known.",key];
+    [NSException raise:@"There is no class name associated with the tray item." format:@"Unknown library item: %@.",key];
 }
 
--(AMLibraryItem*)trayItemWithKey:(NSString *)key
+-(AMLibraryItem*)libraryItemWithKey:(NSString *)key
 {
     return [[self dictionaryOfAllLibraryItems] objectForKey:key];
 }
 
--(AMLibraryItem*)trayItemAtIndex:(NSUInteger)index
+-(AMLibraryItem*)libraryItemAtIndex:(NSUInteger)index
 {
-    return [self arrayOfAllTrayItems][index];
+    return [self arrayOfLibraryItems][index];
 }
 
--(NSArray*)arrayOfAllTrayItems
+-(NSArray*)arrayOfLibraryItems
 {
     return [[self dictionaryOfAllLibraryItems] allValues];
 }

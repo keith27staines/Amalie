@@ -172,7 +172,7 @@ NSString * const kAMNonLibraryObjectsKey              = @"kAMNonLibraryObjectsKe
 NSString * const kAMDocumentBackgroundKey             = @"kAMDocumentBackgroundKey";
 NSString * const kAMPaperKey                          = @"kAMPaperKey";
 
-#pragma mark - Members of the kAMTrayDictionary -
+#pragma mark - Keys for objects in insertable objects library -
 NSString * const kAMConstantKey                       = @"kAMConstantKey";
 NSString * const kAMVariableKey                       = @"kAMVariableKey";
 NSString * const kAMExpressionKey                     = @"kAMExpressionKey";

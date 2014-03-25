@@ -36,6 +36,7 @@
 #import "AMColorSetupViewController.h"
 #import "AMMathStyleViewController.h"
 #import "AMMeasurement.h"
+#import "AMColorSettings.h"
 
 // View controllers for dynamically loaded views
 #import "AMInsertableViewController.h"
@@ -227,6 +228,7 @@
 {
     // Load the library into its container
     NSView * container = self.libraryContainerView;
+    self.library.colorSettings = self.documentSettings.colorSettings;
     NSView * library = self.library.view;
     library.translatesAutoresizingMaskIntoConstraints = NO;
     [container addSubview:library];
@@ -526,7 +528,7 @@
     [self.insertableViewArray addObject:view];
     [self.insertableViewDictionary setObject:view forKey:view.groupID];
     view.delegate = self;
-    view.trayDataSource = self.trayDataSource;
+    view.libraryDataSource = self.library;
     
     [view setFrameOrigin:origin];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];

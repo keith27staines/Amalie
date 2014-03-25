@@ -14,7 +14,6 @@
 #import "AMInsertableView.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
-NSMutableDictionary * _trayDictionary;
 
 @interface AMAppController()
 {

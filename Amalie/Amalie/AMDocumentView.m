@@ -57,7 +57,7 @@
     AMWorksheetView * worksheet = [[AMWorksheetView alloc] init];
     self.amalieDocument.worksheetView = worksheet;
     worksheet.delegate = self.amalieDocument;
-    worksheet.trayDataSource = self.appController;
+    worksheet.libraryDataSource = self.appController;
     [worksheet setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:worksheet];
     [self.worksheets addObject:worksheet];

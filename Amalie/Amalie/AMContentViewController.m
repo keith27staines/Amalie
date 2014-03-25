@@ -24,8 +24,8 @@
 #import "AMAmalieDocument.h"
 #import "AMAppController.h"
 #import "AMPreferences.h"
-#import "AMTrayDatasource.h"
 #import "AMLibraryItem.h"
+#import "AMLibraryViewController.h"
 
 #import "KSMWorksheet.h"
 #import "KSMExpression.h"
@@ -336,10 +336,10 @@
 
 -(NSColor *)backgroundColorForType:(AMInsertableType)type
 {
-    id<AMTrayDataSource> tray = self.document.trayDataSource;
-    NSString * key = [tray keyForType:type];
-    AMLibraryItem * trayItem =[tray trayItemWithKey:key];
-    return [trayItem backgroundColor];
+    id<AMLibraryDataSource> libraryDatasource = self.document.library;
+    NSString * key = [libraryDatasource keyForType:type];
+    AMLibraryItem * libraryItem =[libraryDatasource libraryItemWithKey:key];
+    return [libraryItem backgroundColor];
 }
 
 -(void)deleteContent

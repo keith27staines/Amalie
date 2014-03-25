@@ -82,7 +82,7 @@
     // Set dictionary
     NSDictionary * mSetDictionary       = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingSetsBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingSetsFontColor]};
-    [dictionary setObject:mSetDictionary forKey:kAMGraph2DKey];
+    [dictionary setObject:mSetDictionary forKey:kAMMathematicalSetKey];
     
     // Graph dictionary
     NSDictionary * graph2DDictionary    = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingGraph2DBackColor],

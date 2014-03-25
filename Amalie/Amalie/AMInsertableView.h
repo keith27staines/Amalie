@@ -14,7 +14,7 @@ enum AMInsertableType : NSInteger;
 
 // Importing delegate protocols
 #import "AMGroupedView.h"
-#import "AMTrayDatasource.h"
+#import "AMLibraryDatasource.h"
 #import "AMInsertableViewDelegate.h"
 
 typedef NS_ENUM(NSInteger, AMInsertViewState) {
@@ -51,7 +51,7 @@ NSDraggingSource
 @property float frameRight;
 @property float frameMidY;
 
-@property (weak) id <AMTrayDataSource> trayDataSource;
+@property (weak) id <AMLibraryDataSource> libraryDataSource;
 @property (weak) id <AMInsertableViewDelegate> delegate;
 
 - (IBAction)closeButtonClicked:(NSButton *)sender;
@@ -73,7 +73,7 @@ NSDraggingSource
 -(id)initWithInsertableType:(enum AMInsertableType)insertableType;
 
 
--(NSString*)trayItemKey;
+-(NSString*)libraryItemKey;
 
 /*!
  Sets the receiver's frame's top-left position with the option to animate

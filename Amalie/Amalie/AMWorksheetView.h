@@ -10,23 +10,21 @@
 @class AMAppController;
 
 #import <Cocoa/Cocoa.h>
-#import "AMTrayDatasource.h"
+#import "AMLibraryDatasource.h"
 #import "AMWorksheetViewDelegate.h"
 
 
 @interface AMWorksheetView : NSView <NSDraggingDestination>
 
 /*!
- * A delegate from which we get all document structure and behaviour of items
- * contained within the document.
+ A delegate from which we get all document structure and behaviour of items contained within the document.
  */
 @property (weak) IBOutlet id<AMWorksheetViewDelegate> delegate;
 
 /*!
- * The trayDataSource is a delegate that allows us to load tray items into the 
- * tray table.
+ The library data source is a delegate that allows us to load library items into a tabke
  */
-@property (weak) IBOutlet AMAppController * trayDataSource;
+@property (weak) IBOutlet AMAppController * libraryDataSource;
 
 @property (readonly) NSSize pageSize;
 

@@ -119,7 +119,7 @@ static CABasicAnimation * animateOrigin;
 
 #pragma mark - State -
 
--(NSString*)trayItemKey
+-(NSString*)libraryItemKey
 {
     switch (self.insertableType) {
         case AMInsertableTypeConstant           : return kAMConstantKey;
@@ -233,8 +233,8 @@ static CABasicAnimation * animateOrigin;
 
 -(NSColor*)backColor
 {
-    AMLibraryItem * trayItem = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
-    return [trayItem backgroundColor];
+    AMLibraryItem * libraryItem = [self.libraryDataSource libraryItemWithKey:[self libraryItemKey]];
+    return [libraryItem backgroundColor];
 }
 
 #pragma mark - Archiving support -

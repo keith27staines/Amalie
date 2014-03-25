@@ -1,5 +1,5 @@
 //
-//  AMTrayDataSource.h
+//  AMLibraryDataSource.h
 //  Amalie
 //
 //  Created by Keith Staines on 11/07/2013.
@@ -11,12 +11,12 @@
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
-@protocol AMTrayDataSource <NSObject>
--(NSUInteger)trayItemCount;
+@protocol AMLibraryDataSource <NSObject>
+-(NSUInteger)libraryItemCount;
 -(NSDictionary*)dictionaryOfAllLibraryItems;
--(NSArray*)arrayOfAllTrayItems;
--(AMLibraryItem*)trayItemAtIndex:(NSUInteger)index;
--(AMLibraryItem*)trayItemWithKey:(NSString*)key;
+-(NSArray*)arrayOfLibraryItems;
+-(AMLibraryItem*)libraryItemAtIndex:(NSUInteger)index;
+-(AMLibraryItem*)libraryItemWithKey:(NSString*)key;
 -(NSString*)keyForType:(AMInsertableType)type;
 -(AMInsertableType)typeForKey:(NSString*)key;
 @end

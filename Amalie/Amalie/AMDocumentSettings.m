@@ -83,7 +83,7 @@
 -(void)resetToUserDefaults
 {
     // Paper
-    [self setPaper:[[AMPaper alloc] init]];  // using init, paper is per NSUserDefaults
+    [self setPaper:[[AMPaper alloc] init]];  // using init, paper is constructed from NSUserDefaults
     
     // Fonts
     for ( NSNumber * fontTypeNumber in [self arrayOfFontTypes] ) {

@@ -242,7 +242,7 @@
 		782DA258189B99E400F66E23 /* AMLibraryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMLibraryViewController.xib; sourceTree = "<group>"; };
 		782DA25C189BABB200F66E23 /* AMLibraryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryView.h; sourceTree = "<group>"; };
 		782DA25D189BABB200F66E23 /* AMLibraryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryView.m; sourceTree = "<group>"; };
-		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
+		78327449178F14920051290B /* AMLibraryDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryDatasource.h; sourceTree = "<group>"; };
 		7832744A178F1D810051290B /* AMLibraryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryItem.h; sourceTree = "<group>"; };
 		7832744B178F1D810051290B /* AMLibraryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryItem.m; sourceTree = "<group>"; };
 		784001EA18015E6E006B00C1 /* AMDocumentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentView.h; sourceTree = "<group>"; };
@@ -1126,7 +1126,7 @@
 				78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */,
 				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
 				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
-				78327449178F14920051290B /* AMTrayDatasource.h */,
+				78327449178F14920051290B /* AMLibraryDatasource.h */,
 				78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */,
 				78CDC76017AFFE6000BDC8D7 /* AMContentViewDataSource.h */,
 				788F637717BF586B00EC68CC /* AMQuotientBaselining.h */,

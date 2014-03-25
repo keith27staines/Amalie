@@ -75,7 +75,7 @@ static BOOL LOG_DRAG_OPS = NO;
     {
         // dragging source is in this application
         if ( [[[sender draggingSource] identifier] isEqualToString:kAMLibraryObjectsKey] ) {
-            // Object being dropped in from the tray
+            // Object being dropped in from the table representing the insertable objects library
             operation = NSDragOperationCopy;
         } else {
             operation = NSDragOperationMove;
@@ -91,7 +91,7 @@ static BOOL LOG_DRAG_OPS = NO;
     id source = [sender draggingSource];
     
     if ( [[source identifier] isEqualToString:kAMLibraryObjectsKey] ) {
-        // Object being dropped in from the tray
+        // Object being dropped in from the table representing the insertable objects library
         operation = NSDragOperationCopy;
     } else {
         operation = NSDragOperationMove;

@@ -191,7 +191,7 @@ extern NSString * const kAMNonLibraryObjectsKey;
 extern NSString * const kAMDocumentBackgroundKey;
 extern NSString * const kAMPaperKey;
 
-#pragma mark - Members of the kAMTrayDictionary -
+#pragma mark - Keys for objects in the insertable objects library -
 extern NSString * const kAMConstantKey;
 extern NSString * const kAMVariableKey;
 extern NSString * const kAMExpressionKey;
