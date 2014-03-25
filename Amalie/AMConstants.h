@@ -114,7 +114,17 @@ extern NSString * const kAMSuperscriptOffsetKey;
 extern NSString * const kAMSubscriptOffsetKey;
 extern NSString * const kAMScriptingLevelKey;
 
-// Factory defaults
+// Keys for colors
+extern NSString * const kAMDocumentBackgroundColorKey;
+extern NSString * const kAMPaperColorKey;
+extern NSString * const kAMDocumentBackgroundFontColorKey;
+extern NSString * const kAMPaperFontColorKey;
+
+// Color keys for drilling down into compound structures
+extern NSString * const kAMFontColorKey;
+extern NSString * const kAMBackColorKey;
+
+// Factory defaults for fonts
 extern NSString * const kAMFactorySettingFontNameForLiterals;
 extern NSString * const kAMFactorySettingFontNameForAlgebra;
 extern NSString * const kAMFactorySettingFontNameForVectors;
@@ -131,17 +141,55 @@ extern CGFloat    const kAMFactorySettingSuperscriptOffset;
 extern CGFloat    const kAMFactorySettingSubscriptOffset;
 extern BOOL       const kAMFactorySettingAllowFontSynthesis;
 
+// Factory default colors
+typedef NS_ENUM(NSUInteger, AMNamedColor) {
+    AMNamedColorPaleRed          = 0,
+    AMNamedColorPaleGreen        = 1,
+    AMNamedColorPaleBlue         = 2,
+    AMNamedColorPaleYellow       = 3,
+    AMNamedColorPalePurple       = 4,
+    AMNamedColorPaleAzure        = 5,
+    AMNamedColorPaleOrange       = 6,
+    AMNamedColorBarleyWhite      = 7,
+    AMNamedColorWhite            = 1000,
+    AMNamedColorBlack            = 1001,
+};
+extern AMNamedColor kAMFactorySettingConstantsBackColor;
+extern AMNamedColor kAMFactorySettingVariablesBackColor;
+extern AMNamedColor kAMFactorySettingExpressionsBackColor;
+extern AMNamedColor kAMFactorySettingFunctionsBackColor;
+extern AMNamedColor kAMFactorySettingEquationsBackColor;
+extern AMNamedColor kAMFactorySettingVectorsBackColor;
+extern AMNamedColor kAMFactorySettingMatricesBackColor;
+extern AMNamedColor kAMFactorySettingSetsBackColor;
+extern AMNamedColor kAMFactorySettingGraph2DBackColor;
+
+extern AMNamedColor kAMFactorySettingConstantsFontColor;
+extern AMNamedColor kAMFactorySettingVariablesFontColor;
+extern AMNamedColor kAMFactorySettingExpressionsFontColor;
+extern AMNamedColor kAMFactorySettingFunctionsFontColor;
+extern AMNamedColor kAMFactorySettingEquationsFontColor;
+extern AMNamedColor kAMFactorySettingVectorsFontColor;
+extern AMNamedColor kAMFactorySettingMatricesFontColor;
+extern AMNamedColor kAMFactorySettingSetsFontColor;
+extern AMNamedColor kAMFactorySettingGraph2DFontColor;
+extern AMNamedColor kAMFactorySettingDocumentBackgroundColor;
+extern AMNamedColor kAMFactorySettingPaperColor;
+extern AMNamedColor kAMFactorySettingDocumentBackgroundFontColor;
+extern AMNamedColor kAMFactorySettingPaperFontColor;
+
 #pragma mark - Icon and title -
 extern NSString * const kAMIconKey;
 extern NSString * const kAMTitleKey;
 extern NSString * const kAMInfoKey;
 
-extern NSString * const kAMBackColorKey;
-extern NSString * const kAMForeColorKey;
-extern NSString * const kAMFontColorKey;
+#pragma mark - Keys for insertable object library -
+extern NSString * const kAMLibraryObjectsKey;
 
-#pragma mark - Keys for dictionaries controlled by AppController -
-extern NSString * const kAMTrayDictionaryKey;
+#pragma mark - Keys for other document areas -
+extern NSString * const kAMNonLibraryObjectsKey;
+extern NSString * const kAMDocumentBackgroundKey;
+extern NSString * const kAMPaperKey;
 
 #pragma mark - Members of the kAMTrayDictionary -
 extern NSString * const kAMConstantKey;
@@ -208,19 +256,6 @@ typedef NS_ENUM(NSInteger, AMInsertableType){
     AMInsertableTypeVector,
     AMInsertableTypeMatrix,
 };
-
-typedef enum AMColor : NSUInteger {
-    AMColorPaleRed          = 0,
-    AMColorPaleGreen        = 1,
-    AMColorPaleBlue         = 2,
-    AMColorPaleYellow       = 3,
-    AMColorPalePurple       = 4,
-    AMColorPaleAzure        = 5,
-    AMColorPaleOrange       = 6,
-    AMColorBarleyWhite      = 7,
-    AMColorWhite            = 1000,
-    AMColorBlack            = 1001,
-} AMColor;
 
 typedef NS_OPTIONS(NSUInteger, AMSidepanelVisibility) {
     AMSidepanelNoneVisible                 = 0,

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMFontAttributes;
+@class AMFontAttributes, AMColorSettings;
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
@@ -29,7 +29,7 @@
 +(void)resetAllowFontSynthesis;
 
 #pragma mark - Getters and setters for user preferences -
-#pragma mark Page layout
+#pragma mark - Page layout
 +(AMPaperType)paperType;
 +(void)setPaperType:(AMPaperType)paperType;
 +(AMPaperOrientation)paperOrientation;
@@ -39,7 +39,7 @@
 +(AMMeasurementUnits)paperMeasurementUnits;
 +(void)setPaperMeasurementUnits:(AMMeasurementUnits)units;
 
-#pragma mark Fonts
+#pragma mark - Fonts
 +(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType;
 +(void)setFontAttributes:(AMFontAttributes*)attributes forFontType:(AMFontType)fontType;
 +(NSUInteger)fontSize;
@@ -62,6 +62,10 @@
 +(NSSize)pageSize;
 +(void)setPageSize:(NSSize)size;
 +(NSFont*)fontForFontType:(AMFontType)fontType;
-+(NSUserDefaults*)defaults;
+
+#pragma mark - Colors
++(AMColorSettings*)colorSettings;
++(void)setColorSettings:(AMColorSettings*)colorSettings;
++(void)resetColorSettings;
 
 @end

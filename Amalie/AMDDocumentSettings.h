@@ -27,5 +27,6 @@
 @property (nonatomic, retain) AMDFontAttributes *fontForSymbols;
 @property (nonatomic, retain) AMDFontAttributes *fontForText;
 @property (nonatomic, retain) AMDFontAttributes *fontForVectors;
+@property (nonatomic, retain) NSData * colorSettings;
 
 @end

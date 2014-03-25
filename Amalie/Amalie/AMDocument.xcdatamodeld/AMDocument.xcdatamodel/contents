@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13D12" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13D21" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AMDArgumentLists" representedClassName="AMDArgumentList" syncable="YES">
         <relationship name="arguments" toMany="YES" deletionRule="Cascade" destinationEntity="AMDArguments" inverseName="argumentList" inverseEntity="AMDArguments" syncable="YES"/>
         <relationship name="functionDef" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDFunctionDefs" inverseName="argumentList" inverseEntity="AMDFunctionDefs" syncable="YES"/>
@@ -13,6 +13,7 @@
     </entity>
     <entity name="AMDDocumentSettings" representedClassName="AMDDocumentSettings" syncable="YES">
         <attribute name="baseFontSize" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="colorSettings" optional="YES" attributeType="Binary" valueTransformerName="" syncable="YES"/>
         <attribute name="fixedWidthFontSize" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pageSetup" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="smallestFontSize" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -83,16 +84,16 @@
         <relationship name="insertedObject" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="AMDInsertedObjects" inverseName="name" inverseEntity="AMDInsertedObjects" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AMDArgumentLists" positionX="169" positionY="-174" width="128" height="75"/>
-        <element name="AMDArguments" positionX="-45" positionY="-210" width="128" height="118"/>
-        <element name="AMDDocumentSettings" positionX="-513" positionY="389" width="128" height="255"/>
-        <element name="AMDExpressions" positionX="241" positionY="-27" width="128" height="90"/>
-        <element name="AMDFontAttributes" positionX="-360" positionY="515" width="128" height="223"/>
-        <element name="AMDFunctionDefs" positionX="-45" positionY="9" width="128" height="90"/>
-        <element name="AMDIndexedExpressions" positionX="232" positionY="378" width="128" height="90"/>
-        <element name="AMDInsertedExpressions" positionX="-245" positionY="378" width="128" height="45"/>
-        <element name="AMDInsertedObjects" positionX="-171" positionY="132" width="128" height="165"/>
-        <element name="AMDIntervalDefs" positionX="-65" positionY="477" width="128" height="105"/>
-        <element name="AMDNames" positionX="-477" positionY="-0" width="128" height="118"/>
+        <element name="AMDArgumentLists" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDArguments" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDDocumentSettings" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDExpressions" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDFontAttributes" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDFunctionDefs" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDIndexedExpressions" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDInsertedExpressions" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDInsertedObjects" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDIntervalDefs" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AMDNames" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

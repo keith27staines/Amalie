@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMAppController;
+@class AMAppController, AMColorSettings;
 
 #import <Cocoa/Cocoa.h>
+#import "AMTrayDatasource.h"
 
-@interface AMLibraryViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
+@interface AMLibraryViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, AMTrayDataSource>
 
 @property (copy) NSMutableArray* insertableDefinitions;
 
@@ -28,5 +29,6 @@
  */
 @property (weak) IBOutlet AMAppController *appController;
 
+@property AMColorSettings * colorSettings;
 
 @end

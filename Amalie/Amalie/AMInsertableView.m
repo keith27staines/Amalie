@@ -9,7 +9,7 @@
 #import "QuartzCore/QuartzCore.h"
 #import "AMConstants.h"
 #import "AMInsertableView.h"
-#import "AMTrayItem.h"
+#import "AMLibraryItem.h"
 #import "AMContentView.h"
 #import "AMInsertableViewController.h"
 
@@ -233,7 +233,7 @@ static CABasicAnimation * animateOrigin;
 
 -(NSColor*)backColor
 {
-    AMTrayItem * trayItem = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
+    AMLibraryItem * trayItem = [self.trayDataSource trayItemWithKey:[self trayItemKey]];
     return [trayItem backgroundColor];
 }
 

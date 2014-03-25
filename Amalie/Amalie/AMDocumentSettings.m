@@ -12,6 +12,7 @@
 #import "AMDFontAttributes+Methods.h"
 #import "AMFontAttributes.h"
 #import "AMPaper.h"
+#import "AMColorSettings.h"
 
 @interface AMDocumentSettings()
 {
@@ -60,6 +61,23 @@
 -(void)setPaper:(AMPaper *)paper
 {
     _dataObject.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:paper];
+}
+
+-(AMColorSettings *)colorSettings
+{
+    AMColorSettings * colorSettings;
+    NSData * colorsData = _dataObject.colorSettings;
+    if (colorsData) {
+        colorSettings = [NSKeyedUnarchiver unarchiveObjectWithData:colorsData];
+    } else {
+        colorSettings = [AMColorSettings colorSettingsWithUserDefaults];
+        [self setColorSettings:colorSettings];
+    }
+    return colorSettings;
+}
+-(void)setColorSettings:(AMColorSettings*)colorSettings
+{
+    _dataObject.colorSettings = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
 }
 
 -(void)resetToUserDefaults

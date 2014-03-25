@@ -25,7 +25,7 @@
 #import "AMAppController.h"
 #import "AMPreferences.h"
 #import "AMTrayDatasource.h"
-#import "AMTrayItem.h"
+#import "AMLibraryItem.h"
 
 #import "KSMWorksheet.h"
 #import "KSMExpression.h"
@@ -334,21 +334,11 @@
     return YES;
 }
 
-//-(BOOL)validatedProposedName:(NSString*)proposedName error:(NSError**)error
-//{
-//    return [[AMNameRules sharedNameRules] validateProposedName:proposedName forType:AMInsertableTypeFunction error:error];
-//}
-
--(AMPreferences*)preferenceController
-{
-    return self.appController.userPreferences;
-}
-
 -(NSColor *)backgroundColorForType:(AMInsertableType)type
 {
     id<AMTrayDataSource> tray = self.document.trayDataSource;
     NSString * key = [tray keyForType:type];
-    AMTrayItem * trayItem =[tray trayItemWithKey:key];
+    AMLibraryItem * trayItem =[tray trayItemWithKey:key];
     return [trayItem backgroundColor];
 }
 

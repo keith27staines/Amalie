@@ -8,9 +8,7 @@
 
 #import "AMPreferencesWindowController.h"
 #import "AMConstants.h"
-#import "AMAppController.h"
 #import "AMPreferences.h"
-#import "AMTrayItem.h"
 
 #import "AMColorUserPreferencesViewController.h"
 #import "AMFontUserPreferencesViewController.h"

@@ -100,13 +100,23 @@ NSString * const kAMFontItalicKey                     = @"kAMFontItalicKey";
 NSString * const kAMFixedWidthFontSizeKey             = @"kAMFixedWidthFontSizeKey";
 NSString * const kAMAllowFontSynthesisKey             = @"kAMAllowFontSynthesisKey";
 
+// Color keys
+NSString * const kAMDocumentBackgroundColorKey        = @"kAMDocumentBackgroundColorKey";
+NSString * const kAMPaperColorKey                     = @"kAMPaperColorKey";
+NSString * const kAMDocumentBackgroundFontColorKey    = @"kAMDocumentBackgroundFontColorKey";
+NSString * const kAMPaperFontColorKey                 = @"kAMPaperFontColorKey";
+
+// Color keys for drilling down into compound structures
+NSString * const kAMFontColorKey                      = @"kAMFontColorKey";
+NSString * const kAMBackColorKey                      = @"kAMBackColorKey";
+
 // other keys
 NSString * const kAMSuperscriptingFractionKey         = @"kAMSuperscriptingFractionKey";
 NSString * const kAMSuperscriptOffsetKey              = @"kAMSuperscriptOffsetKey";
 NSString * const kAMSubscriptOffsetKey                = @"kAMSubscriptOffsetKey";
 NSString * const kAMScriptingLevelKey                 = @"kAMScriptingLevel";
 
-// Factory defaults
+// Factory default fonts
 NSString * const kAMFactorySettingFontNameForLiterals       = @"Times New Roman";
 NSString * const kAMFactorySettingFontNameForAlgebra        = @"Times New Roman";
 NSString * const kAMFactorySettingFontNameForVectors        = @"Times New Roman";
@@ -123,17 +133,44 @@ CGFloat    const kAMFactorySettingSuperscriptOffset          = 0.8;
 CGFloat    const kAMFactorySettingSubscriptOffset            = 0.8;
 BOOL       const kAMFactorySettingAllowFontSynthesis         = YES;
 
+// Factory default colors
+AMNamedColor kAMFactorySettingConstantsBackColor      = AMNamedColorPaleRed;
+AMNamedColor kAMFactorySettingVariablesBackColor      = AMNamedColorPaleGreen;
+AMNamedColor kAMFactorySettingExpressionsBackColor    = AMNamedColorPaleBlue;
+AMNamedColor kAMFactorySettingFunctionsBackColor      = AMNamedColorPaleGreen;
+AMNamedColor kAMFactorySettingEquationsBackColor      = AMNamedColorPaleYellow;
+AMNamedColor kAMFactorySettingVectorsBackColor        = AMNamedColorPaleOrange;
+AMNamedColor kAMFactorySettingMatricesBackColor       = AMNamedColorBarleyWhite;
+AMNamedColor kAMFactorySettingSetsBackColor           = AMNamedColorPaleAzure;
+AMNamedColor kAMFactorySettingGraph2DBackColor        = AMNamedColorPalePurple;
+AMNamedColor kAMFactorySettingConstantsFontColor      = AMNamedColorPaleRed;
+AMNamedColor kAMFactorySettingVariablesFontColor      = AMNamedColorPaleGreen;
+AMNamedColor kAMFactorySettingExpressionsFontColor    = AMNamedColorPaleBlue;
+AMNamedColor kAMFactorySettingFunctionsFontColor      = AMNamedColorPaleGreen;
+AMNamedColor kAMFactorySettingEquationsFontColor      = AMNamedColorPaleYellow;
+AMNamedColor kAMFactorySettingVectorsFontColor        = AMNamedColorPaleOrange;
+AMNamedColor kAMFactorySettingMatricesFontColor       = AMNamedColorBarleyWhite;
+AMNamedColor kAMFactorySettingSetsFontColor           = AMNamedColorPaleAzure;
+AMNamedColor kAMFactorySettingGraph2DFontColor        = AMNamedColorPalePurple;
+
+AMNamedColor kAMFactorySettingDocumentBackgroundColor = AMNamedColorPaleRed;
+AMNamedColor kAMFactorySettingPaperColor              = AMNamedColorWhite;
+AMNamedColor kAMFactorySettingDocumentBackgroundFontColor = AMNamedColorPaleRed;
+AMNamedColor kAMFactorySettingPaperFontColor          = AMNamedColorBlack;
+AMNamedColor kAMFactorySettingFontColor               = AMNamedColorBlack;
+
 #pragma mark - Icon and title -
 NSString * const kAMIconKey                           = @"kAMIconKey";
 NSString * const kAMTitleKey                          = @"kAMTitleKey";
 NSString * const kAMInfoKey                           = @"kAMInfoKey";
 
-NSString * const kAMBackColorKey                      = @"kAMBackColorKey";
-NSString * const kAMForeColorKey                      = @"kAMForeColorKey";
-NSString * const kAMFontColorKey                      = @"kAMFontColorKey";
+#pragma mark - Key for library of insertable objects
+NSString * const kAMLibraryObjectsKey                 = @"kAMLibraryObjectsKey";
 
-#pragma mark - Keys for dictionaries controlled by AppController -
-NSString * const kAMTrayDictionaryKey                 = @"kAMTrayDictionaryKey";
+#pragma mark - Key for Non library objects areas
+NSString * const kAMNonLibraryObjectsKey              = @"kAMNonLibraryObjectsKey";
+NSString * const kAMDocumentBackgroundKey             = @"kAMDocumentBackgroundKey";
+NSString * const kAMPaperKey                          = @"kAMPaperKey";
 
 #pragma mark - Members of the kAMTrayDictionary -
 NSString * const kAMConstantKey                       = @"kAMConstantKey";
@@ -145,7 +182,6 @@ NSString * const kAMGraph2DKey                        = @"kAMGraph2DKey";
 NSString * const kAMMathematicalSetKey                = @"kAMMathematicalSetKey";
 NSString * const kAMVectorKey                         = @"kAMVectorKey";
 NSString * const kAMMatrixKey                         = @"kAMMatrixKey";
-
 
 #pragma mark - Keyed Resources -
 NSString * const kAMImageToolbarLeftSidePanelOpenKey    = @"LeftSidebarOpenBtn";

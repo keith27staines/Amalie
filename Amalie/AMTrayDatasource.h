@@ -6,17 +6,17 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMTrayItem;
+@class AMLibraryItem;
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
 @protocol AMTrayDataSource <NSObject>
 -(NSUInteger)trayItemCount;
--(NSDictionary*)dictionaryOfAllTrayItems;
+-(NSDictionary*)dictionaryOfAllLibraryItems;
 -(NSArray*)arrayOfAllTrayItems;
--(AMTrayItem*)trayItemAtIndex:(NSUInteger)index;
--(AMTrayItem*)trayItemWithKey:(NSString*)key;
+-(AMLibraryItem*)trayItemAtIndex:(NSUInteger)index;
+-(AMLibraryItem*)trayItemWithKey:(NSString*)key;
 -(NSString*)keyForType:(AMInsertableType)type;
 -(AMInsertableType)typeForKey:(NSString*)key;
 @end

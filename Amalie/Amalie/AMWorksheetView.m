@@ -74,7 +74,7 @@ static BOOL LOG_DRAG_OPS = NO;
     if (source)
     {
         // dragging source is in this application
-        if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
+        if ( [[[sender draggingSource] identifier] isEqualToString:kAMLibraryObjectsKey] ) {
             // Object being dropped in from the tray
             operation = NSDragOperationCopy;
         } else {
@@ -90,7 +90,7 @@ static BOOL LOG_DRAG_OPS = NO;
     NSDragOperation operation = NSDragOperationNone;
     id source = [sender draggingSource];
     
-    if ( [[source identifier] isEqualToString:kAMTrayDictionaryKey] ) {
+    if ( [[source identifier] isEqualToString:kAMLibraryObjectsKey] ) {
         // Object being dropped in from the tray
         operation = NSDragOperationCopy;
     } else {
@@ -139,7 +139,7 @@ static BOOL LOG_DRAG_OPS = NO;
         draggingLocation = [self convertPoint:draggingLocation fromView:nil];
         
         // Deal with items coming from the tray (library of insertable objects)
-        if ( [[[sender draggingSource] identifier] isEqualToString:kAMTrayDictionaryKey] ) {
+        if ( [[[sender draggingSource] identifier] isEqualToString:kAMLibraryObjectsKey] ) {
             [self.delegate workheetView:self wantsViewInserted:view withOrigin:draggingLocation];
             return YES;
         }

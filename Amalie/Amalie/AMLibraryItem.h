@@ -1,5 +1,5 @@
 //
-//  AMTrayItem.h
+//  AMLibraryItem.h
 //  Amalie
 //
 //  Created by Keith Staines on 11/07/2013.
@@ -11,7 +11,7 @@
 // forward declare enums used in interface
 enum AMInsertableType : NSInteger;
 
-@interface AMTrayItem : NSObject
+@interface AMLibraryItem : NSObject
 
 - (id)initWithKey:(NSString*)key
           iconKey:(NSString*)iconKey

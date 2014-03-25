@@ -79,10 +79,6 @@
 
 @property AMSidepanelVisibility sidepanelVisibility;
 
-@property (readonly) AMDocumentSettings * documentSettings;
-
-//@property (readonly) AMPaper * paper;
-
 @end
 
 @implementation AMAmalieDocument

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMPaper, AMFontAttributes;
+@class AMPaper, AMFontAttributes, AMColorSettings;
 
 
 #import <Foundation/Foundation.h>
@@ -30,6 +30,9 @@
 @property CGFloat superscriptOffset;
 @property CGFloat subscriptOffset;
 @property CGFloat smallestFontSize;
+
+#pragma mark - Colors
+@property (copy) AMColorSettings * colorSettings;
 
 #pragma mark - reset
 -(void)resetToUserDefaults;

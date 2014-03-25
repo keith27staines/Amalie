@@ -26,5 +26,6 @@
 @dynamic fontForSymbols;
 @dynamic fontForText;
 @dynamic fontForVectors;
+@dynamic colorSettings;
 
 @end

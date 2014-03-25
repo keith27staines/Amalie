@@ -1,15 +1,15 @@
 //
-//  AMTrayItem.m
+//  AMLibraryItem.m
 //  Amalie
 //
 //  Created by Keith Staines on 11/07/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMTrayItem.h"
+#import "AMLibraryItem.h"
 #import "AMConstants.h"
 
-@implementation AMTrayItem
+@implementation AMLibraryItem
 
 -(id)init
 {

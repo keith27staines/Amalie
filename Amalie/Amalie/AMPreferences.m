@@ -9,6 +9,7 @@
 #import "AMPreferences.h"
 #import "AMAppController.h"
 #import "AMFontAttributes.h"
+#import "AMColorSettings.h"
 
 static NSMutableDictionary * AMFonts;
 
@@ -325,6 +326,26 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 + (void)resetAllowFontSynthesis {
     [[self defaults] removeObjectForKey:kAMAllowFontSynthesisKey];
 }
++(void)resetColorData
+{
+    [[self defaults] removeObjectForKey:kAMLibraryObjectsKey];
+}
+
+#pragma mark - Color settings -
++(AMColorSettings*)colorSettings
+{
+    NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMLibraryObjectsKey];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
++(void)setColorSettings:(AMColorSettings *)colorSettings
+{
+    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMLibraryObjectsKey];
+}
++(void)resetColorSettings
+{
+    [[self defaults] removeObjectForKey:kAMLibraryObjectsKey];
+}
 
 #pragma mark - Register factory default settings -
 +(void)registerDefaultPreferences
@@ -372,103 +393,19 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:@(kAMFactorySettingSubscriptOffset) forKey:kAMSubscriptOffsetKey];
     [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
     
-    // Add the dictionaries for the tray objects
-    NSMutableDictionary * trayDictionary = [self trayFactorySettingsDictionary];
-    [defaults setObject:trayDictionary forKey:kAMTrayDictionaryKey];
+    // Add the dictionaries for the library objects
+    NSMutableDictionary * library = [AMColorSettings colorSettingsWithFactoryDefaults];
+    NSData * libraryData = [NSKeyedArchiver archivedDataWithRootObject:library];
+    [defaults setObject:libraryData forKey:kAMLibraryObjectsKey];
     
     // register everything
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     
 }
 
-+(NSMutableDictionary*)trayFactorySettingsDictionary
-{
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    
-    // Constant dictionary
-    NSDictionary * constantDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleRed),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:constantDictionary forKey:kAMConstantKey];
-    
-    // Variable dictionary
-    NSDictionary * variableDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleGreen),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:variableDictionary forKey:kAMVariableKey];
-    
-    // Expression dictionary
-    NSDictionary * expressionDictionary = @{kAMBackColorKey : colorDataFromName(AMColorPaleBlue),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:expressionDictionary forKey:kAMExpressionKey];
-    
-    // Function dictionary
-    NSDictionary * functionDictionary = @{kAMBackColorKey : colorDataFromName(AMColorPaleGreen),
-                                          kAMFontColorKey: colorDataFromName(AMColorBlack)};
-    [dictionary setObject:functionDictionary forKey:kAMFunctionKey];
-    
-    // Equation dictionary
-    NSDictionary * equationDictionary   = @{kAMBackColorKey : colorDataFromName(AMColorPaleYellow),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:equationDictionary forKey:kAMEquationKey];
-    
-    // Vector dictionary
-    NSDictionary * vectorDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorPaleOrange),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:vectorDictionary forKey:kAMVectorKey];
-    
-    // Matrix dictionary
-    NSDictionary * matrixDictionary     = @{kAMBackColorKey : colorDataFromName(AMColorBarleyWhite),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:matrixDictionary forKey:kAMMatrixKey];
-    
-    // Set dictionary
-    NSDictionary * mSetDictionary       = @{kAMBackColorKey : colorDataFromName(AMColorPaleAzure),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:mSetDictionary forKey:kAMGraph2DKey];
-    
-    // Graph dictionary
-    NSDictionary * graph2DDictionary    = @{kAMBackColorKey : colorDataFromName(AMColorPalePurple),
-                                            kAMFontColorKey : colorDataFromName(AMColorBlack)};
-    [dictionary setObject:graph2DDictionary forKey:kAMGraph2DKey];
-
-    
-    return dictionary;
-}
-
 #pragma mark - Helper functions -
 
-NSData * colorDataFromName(AMColor color)
-{
-    return dataFromColor(colorFromName(color));
-}
 
-NSColor * colorFromName(AMColor color)
-{
-    switch (color) {
-        case AMColorPaleRed:
-            return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:0.8 alpha:1.0];
-        case AMColorPaleGreen:
-            return [NSColor colorWithCalibratedRed:0.8 green:1.0 blue:0.8 alpha:1.0];
-        case AMColorPaleBlue:
-            return [NSColor colorWithCalibratedRed:0.8 green:0.8 blue:1.0 alpha:1.0];
-        case AMColorPaleYellow:
-            return [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:0.8 alpha:1.0];
-        case AMColorPalePurple:
-            return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:1.0 alpha:1.0];
-        case AMColorPaleAzure:
-            return [NSColor colorWithCalibratedRed:0.8 green:1.0 blue:1.0 alpha:1.0];
-        case AMColorPaleOrange:
-            return [NSColor colorWithCalibratedRed:1.0 green:0.8 blue:0.6 alpha:1.0];
-        case AMColorBarleyWhite:
-            return [NSColor colorWithCalibratedRed:1.0 green:0.9 blue:0.8 alpha:1.0];
-        case AMColorWhite:
-            return [NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-        case AMColorBlack:
-            return [NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:1.0];
-            
-        default:
-            break;
-    }
-}
 
 -(NSUserDefaults *)standardDefaults
 {

@@ -30,8 +30,8 @@
 		782DA259189B99E400F66E23 /* AMLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA257189B99E400F66E23 /* AMLibraryViewController.m */; };
 		782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 782DA258189B99E400F66E23 /* AMLibraryViewController.xib */; };
 		782DA25E189BABB200F66E23 /* AMLibraryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA25D189BABB200F66E23 /* AMLibraryView.m */; };
-		7832744C178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
-		7832744D178F1D810051290B /* AMTrayItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMTrayItem.m */; };
+		7832744C178F1D810051290B /* AMLibraryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMLibraryItem.m */; };
+		7832744D178F1D810051290B /* AMLibraryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMLibraryItem.m */; };
 		784001EC18015E6E006B00C1 /* AMDocumentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EB18015E6E006B00C1 /* AMDocumentView.m */; };
 		784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */; };
 		7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5CD185769F400719EF3 /* AMNameProviderBase.m */; };
@@ -161,6 +161,7 @@
 		78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC75717AF843A00BDC8D7 /* AMGroupedView.m */; };
 		78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC75D17AFA30700BDC8D7 /* AMViewHelper.m */; };
 		78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC76617B0F1F400BDC8D7 /* AMExpressionNodeView.m */; };
+		78D4C13618DF1393007AB5FF /* AMColorSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D4C13518DF1393007AB5FF /* AMColorSettings.m */; };
 		78D8C2FF18C76A9D001F5494 /* AMFontAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D8C2FE18C76A9D001F5494 /* AMFontAttributes.m */; };
 		78D8C30218C7A991001F5494 /* AMUserPreferencesBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D8C30118C7A991001F5494 /* AMUserPreferencesBaseViewController.m */; };
 		78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE597E17CB6EE5003F0181 /* KSMFunction.m */; };
@@ -242,8 +243,8 @@
 		782DA25C189BABB200F66E23 /* AMLibraryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryView.h; sourceTree = "<group>"; };
 		782DA25D189BABB200F66E23 /* AMLibraryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryView.m; sourceTree = "<group>"; };
 		78327449178F14920051290B /* AMTrayDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayDatasource.h; sourceTree = "<group>"; };
-		7832744A178F1D810051290B /* AMTrayItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMTrayItem.h; sourceTree = "<group>"; };
-		7832744B178F1D810051290B /* AMTrayItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMTrayItem.m; sourceTree = "<group>"; };
+		7832744A178F1D810051290B /* AMLibraryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryItem.h; sourceTree = "<group>"; };
+		7832744B178F1D810051290B /* AMLibraryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryItem.m; sourceTree = "<group>"; };
 		784001EA18015E6E006B00C1 /* AMDocumentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentView.h; sourceTree = "<group>"; };
 		784001EB18015E6E006B00C1 /* AMDocumentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentView.m; sourceTree = "<group>"; };
 		784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardsAreaView.h; sourceTree = "<group>"; };
@@ -464,6 +465,8 @@
 		78CDC76017AFFE6000BDC8D7 /* AMContentViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContentViewDataSource.h; sourceTree = "<group>"; };
 		78CDC76517B0F1F400BDC8D7 /* AMExpressionNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeView.h; sourceTree = "<group>"; };
 		78CDC76617B0F1F400BDC8D7 /* AMExpressionNodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionNodeView.m; sourceTree = "<group>"; };
+		78D4C13418DF1393007AB5FF /* AMColorSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorSettings.h; sourceTree = "<group>"; };
+		78D4C13518DF1393007AB5FF /* AMColorSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorSettings.m; sourceTree = "<group>"; };
 		78D8C2FD18C76A9D001F5494 /* AMFontAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontAttributes.h; sourceTree = "<group>"; };
 		78D8C2FE18C76A9D001F5494 /* AMFontAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontAttributes.m; sourceTree = "<group>"; };
 		78D8C30018C7A991001F5494 /* AMUserPreferencesBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesBaseViewController.h; sourceTree = "<group>"; };
@@ -639,6 +642,8 @@
 				787B305A178361BC001851C0 /* MainMenu.xib */,
 				784D6EF81789CC11002BE03A /* AMAppController.h */,
 				784D6EF91789CC11002BE03A /* AMAppController.m */,
+				78D4C13418DF1393007AB5FF /* AMColorSettings.h */,
+				78D4C13518DF1393007AB5FF /* AMColorSettings.m */,
 				7824F42D18CA0A5F004089B9 /* Document Preferences */,
 				785247BF178406B000F6A7AD /* User Preferences */,
 				7825D656180FD3B10039EB67 /* AMKeyboard */,
@@ -744,8 +749,8 @@
 				78285A001886D74400523121 /* AMExpressionLayout.m */,
 				782DA20F1896AA0900F66E23 /* AMExpressionContextNode.h */,
 				782DA2101896AA0900F66E23 /* AMExpressionContextNode.m */,
-				7832744A178F1D810051290B /* AMTrayItem.h */,
-				7832744B178F1D810051290B /* AMTrayItem.m */,
+				7832744A178F1D810051290B /* AMLibraryItem.h */,
+				7832744B178F1D810051290B /* AMLibraryItem.m */,
 				78285A061888148000523121 /* AMNameProvider */,
 				7811D2C817A255150024839B /* AM ReferenceCounted Tree */,
 				78DE823C178365DC00C7EE10 /* KSMPrime */,
@@ -1387,6 +1392,7 @@
 				788EAE1118B61C5500D3EBD3 /* AMPageSetupView.m in Sources */,
 				78A7DC4818D1F80D00840734 /* AMDDocumentSettings.m in Sources */,
 				78F57D931835236300683FFC /* AMDInsertedExpression+Methods.m in Sources */,
+				78D4C13618DF1393007AB5FF /* AMColorSettings.m in Sources */,
 				782859F81886D5A200523121 /* AMTextView.m in Sources */,
 				78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMPreferencesWindowController.m in Sources */,
@@ -1421,7 +1427,7 @@
 				78285A011886D74400523121 /* AMExpressionLayout.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
 				785826BE18C4D20100612651 /* AMPageUserPreferencesViewController.m in Sources */,
-				7832744C178F1D810051290B /* AMTrayItem.m in Sources */,
+				7832744C178F1D810051290B /* AMLibraryItem.m in Sources */,
 				78285A041886D9EE00523121 /* KSMConstants.m in Sources */,
 				785826AE18C4753700612651 /* AMFontUserPreferencesViewController.m in Sources */,
 				78962FE3182C0A990066BEE9 /* AMDIndexedExpression+Methods.m in Sources */,
@@ -1477,7 +1483,7 @@
 				787B3073178361BC001851C0 /* AmalieTests.m in Sources */,
 				7811D2C717A2550E0024839B /* AMRefTree.m in Sources */,
 				787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */,
-				7832744D178F1D810051290B /* AMTrayItem.m in Sources */,
+				7832744D178F1D810051290B /* AMLibraryItem.m in Sources */,
 				787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				78DE824C1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
 				784BFBDF17E7408800152756 /* KSMMathValueHolder.m in Sources */,

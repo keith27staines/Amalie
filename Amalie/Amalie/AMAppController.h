@@ -17,13 +17,10 @@
  * Also manages objects and data structures that are referenced by
  * more than one window, such as user preferences.
  */
-@interface AMAppController : NSObject <AMTrayDataSource>
+@interface AMAppController : NSObject
 
 - (IBAction)showPreferencesPanel:(id)sender;
 
-
-
-@property (readonly) AMPreferences * userPreferences;
 
 
 @end

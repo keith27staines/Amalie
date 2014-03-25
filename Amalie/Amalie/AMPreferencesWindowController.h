@@ -16,8 +16,6 @@
 
 @interface AMPreferencesWindowController : NSWindowController <NSToolbarDelegate,NSWindowDelegate>
 
-@property (weak) id<AMTrayDataSource>trayDatasource;
-
 - (IBAction)showColorsView:(id)sender;
 - (IBAction)showFontsView:(id)sender;
 - (IBAction)showPageView:(id)sender;
