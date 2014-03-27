@@ -41,6 +41,11 @@
 
 - (instancetype)initWithFactoryDefaults
 {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
     
     // Constant dictionary

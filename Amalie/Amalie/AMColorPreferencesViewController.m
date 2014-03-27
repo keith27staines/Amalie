@@ -28,6 +28,16 @@
 {
     return @"AMColorPreferencesViewController";
 }
+
+-(NSView *)view
+{
+    NSView * view = [super view];
+    if (!_colorSettings) {
+        [self colorSettings];
+    }
+    return view;
+}
+
 -(AMDocumentSettings *)documentSettings
 {
     return _documentSettings;
@@ -96,6 +106,7 @@
     [self appendGroupFromColorDataDictionary:self.colorSettings.libraryColorData toDictionary:_colorPrefsDictionary withGroupTitleKey:kAMLibraryObjectsKey];
     [self appendGroupFromColorDataDictionary:self.colorSettings.otherColorData toDictionary:_colorPrefsDictionary withGroupTitleKey:kAMNonLibraryObjectsKey];
     _colorPrefsArray = [_colorPrefsDictionary allValues];
+    [self.colorPreferencesTable reloadData];
 }
 -(void)appendGroupFromColorDataDictionary:(NSDictionary*)source toDictionary:(NSMutableDictionary*)target withGroupTitleKey:(NSString*)groupKey
 {
@@ -123,12 +134,15 @@
 -(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     AMColorPreference * colorPreference = _colorPrefsArray[row];
+    NSTableCellView * cellView;
     if (colorPreference.isGroupCell) {
-        
+        cellView = [tableView makeViewWithIdentifier:@"GroupHeaderView" owner:nil];
+        cellView.textField.stringValue = colorPreference.title;
     } else {
-        
+        cellView = [tableView makeViewWithIdentifier:@"ColorPreferenceView" owner:nil];
+        cellView.textField.stringValue = colorPreference.title;
     }
-    return nil;
+    return cellView;
 }
 
 #pragma mark - NSTableView delegate

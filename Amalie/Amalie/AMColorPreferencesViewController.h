@@ -19,8 +19,12 @@ typedef NS_ENUM(NSUInteger, AMColorPreferencesType) {
 
 @interface AMColorPreferencesViewController : AMUserPreferencesBaseViewController <NSTableViewDataSource, NSTableViewDelegate>
 
+@property (weak) IBOutlet NSTableView *colorPreferencesTable;
+
+
 @property AMColorPreferencesType colorPreferencesType;
 
 @property (readonly) AMColorSettings * colorSettings;
 @property AMDocumentSettings * documentSettings;
+
 @end
