@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 -(void)showColorsView:(id)sender
 {
     self.window.title = NSLocalizedString(@"Amalie colors", @"Window title for user preferences panel dedicated to the colors of various displayed objects");
+    self.colorPreferencesViewController.colorPreferencesType = AMColorPreferencesTypeUserDefaults;
     [self displayViewController:self.colorPreferencesViewController];
 }
 -(void)showFontsView:(id)sender

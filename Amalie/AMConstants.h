@@ -194,6 +194,7 @@ extern NSString * const kAMPaperKey;
 #pragma mark - Keys for objects in the insertable objects library -
 extern NSString * const kAMConstantKey;
 extern NSString * const kAMVariableKey;
+extern NSString * const kAMDummyVariableKey;
 extern NSString * const kAMExpressionKey;
 extern NSString * const kAMFunctionKey;
 extern NSString * const kAMEquationKey;

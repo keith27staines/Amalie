@@ -6,37 +6,32 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@class AMColorSettings;
 
-// forward declare enums used in interface
-enum AMInsertableType : NSInteger;
+#import <Foundation/Foundation.h>
+#import "AMConstants.h"
 
 @interface AMLibraryItem : NSObject
 
-- (id)initWithKey:(NSString*)key
-          iconKey:(NSString*)iconKey
-            title:(NSString*)title
-      info:(NSString*)description
-  backgroundColor:(NSColor*)backgroundColor
-        fontColor:(NSColor*)fontColor
-  insertableClass:(NSString*)className
-   insertableType:(enum AMInsertableType)insertableType;
++(AMLibraryItem*)libraryItemForLibraryItemKey:(NSString*)key withColorInfo:(AMColorSettings*)colorInfo;
++(AMLibraryItem*)libraryItemForInsertableType:(AMInsertableType)insertableType withColorInfo:(AMColorSettings*)colorInfo;
 
--(id)initWithPropertiesDictionary:(NSDictionary*)dictionary;
-
-@property (readonly) NSString * key;
-@property (readonly) NSString * iconKey;
+@property (readonly, copy) NSString * key;
 @property (readonly) NSImage * icon;
-@property (readonly) NSString * title;
-@property (readonly) NSString * information;
-@property (readonly) NSAttributedString * attributedDescription;
+@property (readonly, copy) NSString * name;
+@property (readonly, copy) NSString * pluralisedName;
+@property (readonly,copy) NSString * title;
+@property (readonly,copy) NSString * information;
+@property (readonly,copy) NSAttributedString * attributedDescription;
 @property (readwrite) NSData * backgroundColorData;
 @property (readwrite) NSData * fontColorData;
 @property (readonly) NSDictionary * properties;
-@property (readonly) NSString * insertableClassName;
+@property (readonly,copy) NSString * insertableClassName;
 @property (readonly) enum AMInsertableType insertableType;
 
 @property (weak, readwrite) NSColor * backgroundColor;
 @property (weak, readwrite) NSColor * fontColor;
 
++(NSString*)keyForType:(AMInsertableType)type;
++(AMInsertableType)typeForKey:(NSString*)key;
 @end
