@@ -43,6 +43,26 @@
     NSView * view = [super view];
     if (!_colorSettings) {
         [self colorSettings];
+        switch (self.colorPreferencesType) {
+            case AMColorPreferencesTypeFactorySettings:
+            {
+                [self.resetToFactoryDefaultsButton setHidden:YES];
+                [self.resetToDocumentDefaultsButton setHidden:YES];
+            }
+                break;
+            case AMColorPreferencesTypeUserDefaults:
+            {
+                [self.resetToFactoryDefaultsButton setHidden:NO];
+                [self.resetToDocumentDefaultsButton setHidden:YES];
+                break;
+            }
+            case AMColorPreferencesTypeDocumentSettings:
+            {
+                [self.resetToDocumentDefaultsButton setHidden:NO];
+                [self.resetToFactoryDefaultsButton setHidden:NO];
+                break;
+            }
+        }
     }
     return view;
 }
@@ -102,6 +122,7 @@
             _colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
             break;
         case AMColorPreferencesTypeDocumentSettings:
+            NSAssert(self.documentSettings, @"Document settings must exist");
             _colorSettings = self.documentSettings.colorSettings;
             break;
     }
@@ -160,33 +181,61 @@
     }
 }
 - (IBAction)backColorChanged:(NSColorWell*)sender {
-    [self setSelectedObjectBackColor:sender.color textColor:nil];
+    [self setSelectedObjectsBackColor:sender.color textColor:nil];
 }
 - (IBAction)textColorChanged:(NSColorWell *)sender {
-    [self setSelectedObjectBackColor:nil textColor:sender.color];
+    [self setSelectedObjectsBackColor:nil textColor:sender.color];
 }
 
 - (IBAction)resetToFactoryDefaults:(NSButton *)sender {
+    AMColorSettings * colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
+    [self resetSelectedRowsToColorSettings:colorSettings];
+    [self enableColorwellsBySelection];
 }
 - (IBAction)resetToDocumentDefaults:(NSButton *)sender {
+    AMColorSettings * colorSettings = [AMColorSettings colorSettingsWithUserDefaults];
+    [self resetSelectedRowsToColorSettings:colorSettings];
+    [self enableColorwellsBySelection];
 }
-
-
--(void)setSelectedObjectBackColor:(NSColor*)backColor textColor:(NSColor*)textColor
+-(void)resetSelectedRowsToColorSettings:(AMColorSettings*)colorSettings
 {
     NSTableView * tableView = self.colorPreferencesTable;
     NSIndexSet * selectedRows = tableView.selectedRowIndexes;
     
     // Index sets don't allow fast enumeration
-    [selectedRows enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        AMColorPreferenceTableCellView * view = [tableView viewAtColumn:0 row:idx makeIfNecessary:YES];
-        if (backColor) {
-            view.backColor = backColor;
-        }
-        if (textColor) {
-            view.textColor = textColor;
-        }
+    [selectedRows enumerateIndexesUsingBlock:^(NSUInteger row, BOOL *stop) {
+        NSString * key = [self keyForRow:row];
+        NSColor * backColor = [colorSettings backColorForKey:key];
+        NSColor * textColor = [colorSettings fontColorForKey:key];
+        [self updateColorPreferenceAtIndex:row withBackColor:backColor textColor:textColor];
     }];
+}
+-(void)setSelectedObjectsBackColor:(NSColor*)backColor textColor:(NSColor*)textColor
+{
+    NSTableView * tableView = self.colorPreferencesTable;
+    NSIndexSet * selectedRows = tableView.selectedRowIndexes;
+    [selectedRows enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [self updateColorPreferenceAtIndex:idx withBackColor:backColor textColor:textColor];
+    }];
+}
+-(void)updateColorPreferenceAtIndex:(NSUInteger)idx withBackColor:(NSColor*)backColor textColor:(NSColor*)textColor
+{
+    NSTableView * tableView = self.colorPreferencesTable;
+    AMColorPreferenceTableCellView * view = [tableView viewAtColumn:0 row:idx makeIfNecessary:YES];
+    NSString * key = view.key;
+    if (backColor) {
+        [self.colorSettings setBackColor:backColor forKey:key];
+        view.backColor = backColor;
+    }
+    if (textColor) {
+        [self.colorSettings setFontColor:backColor forKey:key];
+        view.textColor = textColor;
+    }
+}
+-(NSString*)keyForRow:(NSUInteger)row
+{
+    AMColorPreference * colorPreference = _colorPrefsArray[row];
+    return colorPreference.key;
 }
 
 #pragma mark - NSTableView datasource -
@@ -207,6 +256,7 @@
         view = [tableView makeViewWithIdentifier:@"ColorPreferenceView" owner:nil];
         AMColorPreferenceTableCellView * cellView = (AMColorPreferenceTableCellView*)view;
         cellView.colorPreference = colorPreference;
+        cellView.key = colorPreference.key;
     }
     return view;
 }

@@ -16,8 +16,8 @@
     NSMutableDictionary * _libraryColorDataDictionary;
     NSMutableDictionary * _otherColorDataDictionary;
 }
-@property (readwrite) NSDictionary * libraryColorDataDictionary;
-@property (readwrite) NSDictionary * otherColorDataDictionary;
+@property (readwrite) NSMutableDictionary * libraryColorDataDictionary;
+@property (readwrite) NSMutableDictionary * otherColorDataDictionary;
 
 @end
 
@@ -46,70 +46,71 @@
         return nil;
     }
     
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    NSMutableDictionary * dictionary;
+    dictionary = [NSMutableDictionary dictionary];
     
     // Constant dictionary
     
     NSDictionary * constantDictionary   = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingConstantsBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingConstantsFontColor]};
-    [dictionary setObject:constantDictionary forKey:kAMConstantKey];
+    [dictionary setObject:[constantDictionary mutableCopy]  forKey:kAMConstantKey];
     
     // Variable dictionary
     NSDictionary * variableDictionary   = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingVariablesBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingVariablesFontColor]};
-    [dictionary setObject:variableDictionary forKey:kAMVariableKey];
+    [dictionary setObject:[variableDictionary mutableCopy] forKey:kAMVariableKey];
     
     // Expression dictionary
     NSDictionary * expressionDictionary = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingExpressionsBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingExpressionsFontColor]};
-    [dictionary setObject:expressionDictionary forKey:kAMExpressionKey];
+    [dictionary setObject:[expressionDictionary mutableCopy] forKey:kAMExpressionKey];
     
     // Function dictionary
     NSDictionary * functionDictionary = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingFunctionsBackColor],
                                           kAMFontColorKey: [AMColorSettings colorDataFromName:kAMFactorySettingFunctionsFontColor]};
-    [dictionary setObject:functionDictionary forKey:kAMFunctionKey];
+    [dictionary setObject:[functionDictionary mutableCopy] forKey:kAMFunctionKey];
     
     // Equation dictionary
     NSDictionary * equationDictionary   = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingEquationsBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingEquationsFontColor]};
-    [dictionary setObject:equationDictionary forKey:kAMEquationKey];
+    [dictionary setObject:[equationDictionary mutableCopy] forKey:kAMEquationKey];
     
     // Vector dictionary
     NSDictionary * vectorDictionary     = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingVectorsBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingVectorsFontColor]};
-    [dictionary setObject:vectorDictionary forKey:kAMVectorKey];
+    [dictionary setObject:[vectorDictionary mutableCopy] forKey:kAMVectorKey];
     
     // Matrix dictionary
     NSDictionary * matrixDictionary     = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingMatricesBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingMatricesFontColor]};
-    [dictionary setObject:matrixDictionary forKey:kAMMatrixKey];
+    [dictionary setObject:[matrixDictionary mutableCopy] forKey:kAMMatrixKey];
     
     // Set dictionary
     NSDictionary * mSetDictionary       = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingSetsBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingSetsFontColor]};
-    [dictionary setObject:mSetDictionary forKey:kAMMathematicalSetKey];
+    [dictionary setObject:[mSetDictionary mutableCopy] forKey:kAMMathematicalSetKey];
     
     // Graph dictionary
     NSDictionary * graph2DDictionary    = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingGraph2DBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingGraph2DFontColor]};
-    [dictionary setObject:graph2DDictionary forKey:kAMGraph2DKey];
+    [dictionary setObject:[graph2DDictionary mutableCopy] forKey:kAMGraph2DKey];
 
-    _libraryColorDataDictionary = [dictionary copy];
+    _libraryColorDataDictionary = dictionary;
     
-    // Non-library objects
-    [dictionary removeAllObjects];
+    // Different dictionary for non-library objects
+    dictionary = [NSMutableDictionary dictionary];
     
     // Document background (area behind and surrounding paper)
     NSDictionary * docBackground        = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingDocumentBackgroundColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingDocumentBackgroundFontColor]};
-    [dictionary setObject:docBackground forKey:kAMDocumentBackgroundKey];
+    [dictionary setObject:[docBackground mutableCopy] forKey:kAMDocumentBackgroundKey];
     
     // Paper color
     NSDictionary * paperColor           = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingPaperColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingPaperFontColor]};
-    [dictionary setObject:paperColor forKey:kAMPaperKey];
+    [dictionary setObject:[paperColor mutableCopy] forKey:kAMPaperKey];
 
-    _otherColorDataDictionary = [dictionary copy];
+    _otherColorDataDictionary = dictionary;
     
     return self;
 }
@@ -120,6 +121,60 @@
         self = [AMPreferences colorSettings];
     }
     return self;
+}
+
+#pragma mark - Color accessors by key -
+
+-(NSColor*)backColorForKey:(NSString *)key
+{
+    NSDictionary * d;
+    d = _libraryColorDataDictionary[key];
+    if (d) {
+        return colorFromData(d[kAMBackColorKey]);
+    }
+    d = _otherColorDataDictionary[key];
+    if (d) {
+        return colorFromData(d[kAMBackColorKey]);
+    }
+    return nil;
+}
+-(NSColor*)fontColorForKey:(NSString *)key
+{
+    NSDictionary * d;
+    d = _libraryColorDataDictionary[key];
+    if (d) {
+        return colorFromData(d[kAMFontColorKey]);
+    }
+    d = _otherColorDataDictionary[key];
+    if (d) {
+        return colorFromData(d[kAMFontColorKey]);
+    }
+    return nil;
+}
+
+-(void)setBackColor:(NSColor*)color forKey:(NSString *)key
+{
+    NSMutableDictionary * d;
+    d = _libraryColorDataDictionary[key];
+    if (d) {
+        d[kAMBackColorKey] = dataFromColor(color);
+    }
+    d = _otherColorDataDictionary[key];
+    if (d) {
+        d[kAMBackColorKey] =  dataFromColor(color);
+    }
+}
+-(void)setFontColor:(NSColor*)color forKey:(NSString *)key
+{
+    NSMutableDictionary * d;
+    d = _libraryColorDataDictionary[key];
+    if (d) {
+        d[kAMFontColorKey] = dataFromColor(color);
+    }
+    d = _otherColorDataDictionary[key];
+    if (d) {
+        d[kAMFontColorKey] = dataFromColor(color);
+    }
 }
 
 #pragma mark - Library item background setters -
@@ -437,12 +492,12 @@
     return dataFromColor(color);
 }
 
--(NSDictionary*)libraryColorData
+-(NSMutableDictionary*)libraryColorData
 {
     return [self.libraryColorDataDictionary copy];
 }
 
--(NSDictionary*)otherColorData
+-(NSMutableDictionary*)otherColorData
 {
     return [self.otherColorDataDictionary copy];
 }

@@ -615,6 +615,7 @@
     NSPopover * popover = self.colorSetupPopover;
     popover.behavior = NSPopoverBehaviorTransient;
     AMColorSetupViewController * vc = (AMColorSetupViewController*)self.colorSetupPopover.contentViewController;
+    vc.document = self;
     [self.colorSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     [[self.worksheetView window] makeFirstResponder:nil];
 }

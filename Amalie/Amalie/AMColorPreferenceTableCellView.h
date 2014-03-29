@@ -15,5 +15,6 @@
 @property AMColorPreference * colorPreference;
 @property NSColor * backColor;
 @property NSColor * textColor;
+@property (copy) NSString * key;
 
 @end

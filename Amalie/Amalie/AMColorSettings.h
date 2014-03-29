@@ -22,6 +22,11 @@
 
 -(void)setFontColor:(NSColor*)color forInsertableObjectType:(AMInsertableType)objectType;
 
+-(NSColor*)backColorForKey:(NSString*)key;
+-(void)setBackColor:(NSColor*)color forKey:(NSString*)key;
+-(NSColor*)fontColorForKey:(NSString*)key;
+-(void)setFontColor:(NSColor*)color forKey:(NSString*)key;
+
 @property (copy) NSColor * backColorForConstants;
 @property (copy) NSColor * backColorForVariables;
 @property (copy) NSColor * backColorForEquations;
@@ -46,6 +51,6 @@
 @property (copy) NSColor * fontColorForDocumentBackground;
 @property (copy) NSColor * fontColorForPaper;
 
--(NSDictionary*)libraryColorData;
--(NSDictionary*)otherColorData;
+-(NSMutableDictionary*)libraryColorData;
+-(NSMutableDictionary*)otherColorData;
 @end
