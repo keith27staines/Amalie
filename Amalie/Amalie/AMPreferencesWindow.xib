@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13D28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
@@ -24,10 +24,10 @@
         <customObject id="-3" userLabel="Application"/>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" unifiedTitleAndToolbar="YES"/>
-            <rect key="contentRect" x="815" y="391" width="718" height="625"/>
+            <rect key="contentRect" x="815" y="391" width="916" height="625"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="718" height="625"/>
+            <view key="contentView" id="2" customClass="AMPreferencesWindowContentView">
+                <rect key="frame" x="0.0" y="0.0" width="916" height="625"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="23534587-2867-47E2-B0F0-04AE32497068" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="small" id="7ko-Kz-Lsr">
@@ -95,12 +95,15 @@
                             <action selector="showMathView:" target="-2" id="U5C-5M-ARo"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="laJ-OV-Hfb"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="laJ-OV-Hfb"/>
                     <toolbarItem reference="jxs-32-nV8"/>
                     <toolbarItem reference="f75-4b-ygt"/>
                     <toolbarItem reference="Wdt-pI-rLp"/>
                     <toolbarItem reference="u5J-wh-OI7"/>
+                    <toolbarItem reference="laJ-OV-Hfb"/>
                 </defaultToolbarItems>
                 <connections>
                     <outlet property="delegate" destination="-2" id="IBK-rP-9rT"/>

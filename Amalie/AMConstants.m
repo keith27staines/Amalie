@@ -164,6 +164,9 @@ NSString * const kAMIconKey                           = @"kAMIconKey";
 NSString * const kAMTitleKey                          = @"kAMTitleKey";
 NSString * const kAMInfoKey                           = @"kAMInfoKey";
 
+#pragma mark - Key for all color settings
+NSString * const kAMAllColorSettingsKey               = @"kAMAllColorSettingsKey";
+
 #pragma mark - Key for library of insertable objects
 NSString * const kAMLibraryObjectsKey                 = @"kAMLibraryObjectsKey";
 

@@ -334,8 +334,9 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 #pragma mark - Color settings -
 +(AMColorSettings*)colorSettings
 {
-    NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMLibraryObjectsKey];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllColorSettingsKey];
+    AMColorSettings * colors = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    return colors;
 }
 +(void)setColorSettings:(AMColorSettings *)colorSettings
 {
@@ -394,9 +395,9 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
     
     // Add the dictionaries for the library objects
-    NSMutableDictionary * library = [AMColorSettings colorSettingsWithFactoryDefaults];
-    NSData * libraryData = [NSKeyedArchiver archivedDataWithRootObject:library];
-    [defaults setObject:libraryData forKey:kAMLibraryObjectsKey];
+    NSMutableDictionary * colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
+    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
+    [defaults setObject:colorData forKey:kAMAllColorSettingsKey];
     
     // register everything
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];

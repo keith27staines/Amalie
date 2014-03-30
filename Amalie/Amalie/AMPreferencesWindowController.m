@@ -16,8 +16,9 @@
 #import "AMPageUserPreferencesViewController.h"
 #import "AMUserPreferencesBaseViewController.h"
 
+static CGFloat const kAMMINPREFERENCEPANEWIDTH = 900;  // minimum pane width in points
+
 @interface AMPreferencesWindowController ()
-@property NSView * placeholderView;
 @property (strong, readonly) AMPreferences * preferences;
 
 @end
@@ -61,20 +62,27 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 
 -(void)displayViewController:(AMUserPreferencesBaseViewController*)vc
 {
-    if (!self.placeholderView) {
-        self.placeholderView = self.window.contentView;
-    }
+    NSView * contentView = self.window.contentView;
     NSWindow * window = self.window;
     NSRect oldWindowFrame = window.frame;
-    NSView * newContentView = [vc view];
-    NSRect newWindowFrame = [window frameRectForContentRect:newContentView.frame];
+    NSView * newSubView = [vc view];
+    NSRect requiredFrame = [newSubView frame];
+    requiredFrame.size.height = requiredFrame.size.height + 40;
+    requiredFrame.size.width = kAMMINPREFERENCEPANEWIDTH + 40;
+    NSRect newWindowFrame = [window frameRectForContentRect:requiredFrame];
     newWindowFrame.origin.x = oldWindowFrame.origin.x;
     newWindowFrame.origin.y = oldWindowFrame.origin.y + oldWindowFrame.size.height - newWindowFrame.size.height;
-    [window setContentView:self.placeholderView];
-    [newContentView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    while (contentView.subviews.count > 0) {
+        [contentView.subviews[0] removeFromSuperview];
+    }
     [self.window setFrame:newWindowFrame display:YES animate:YES];
+
+    [contentView addSubview:newSubView];
+    [newSubView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [contentView addConstraint:[NSLayoutConstraint constraintWithItem:newSubView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [contentView addConstraint:[NSLayoutConstraint constraintWithItem:newSubView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+
     [vc reloadData];
-    [window setContentView:newContentView];
 }
 
 

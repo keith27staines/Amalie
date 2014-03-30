@@ -183,6 +183,9 @@ extern NSString * const kAMIconKey;
 extern NSString * const kAMTitleKey;
 extern NSString * const kAMInfoKey;
 
+#pragma mark - Key for all color settings
+extern NSString * const kAMAllColorSettingsKey;
+
 #pragma mark - Keys for insertable object library -
 extern NSString * const kAMLibraryObjectsKey;
 

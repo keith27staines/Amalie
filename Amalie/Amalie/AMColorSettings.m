@@ -33,12 +33,24 @@
 {
     return [[AMColorSettings alloc] initWithFactoryDefaults];
 }
++(id)colorSettingsWithDataDictionaries:(NSDictionary *)dataDictionaries
+{
+    return [[AMColorSettings alloc] initWithDataDictionaries:dataDictionaries];
+}
 
 -(id)init
 {
     return [self initWithFactoryDefaults];
 }
-
+-(instancetype)initWithDataDictionaries:(NSDictionary*)dataDictionaries
+{
+    self = [super init];
+    if (self) {
+        _libraryColorDataDictionary = dataDictionaries[kAMLibraryObjectsKey];
+        _otherColorDataDictionary = dataDictionaries[kAMNonLibraryObjectsKey];
+    }
+    return self;
+}
 - (instancetype)initWithFactoryDefaults
 {
     self = [super init];
@@ -505,14 +517,12 @@
 #pragma mark - NSCoding
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.libraryColorDataDictionary forKey:kAMLibraryObjectsKey];
-    [aCoder encodeObject:self.otherColorDataDictionary forKey:kAMNonLibraryObjectsKey];
+    [aCoder encodeObject:@{kAMNonLibraryObjectsKey: _otherColorDataDictionary, kAMLibraryObjectsKey: _libraryColorDataDictionary } forKey:kAMAllColorSettingsKey];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self.libraryColorDataDictionary = [aDecoder decodeObjectForKey:kAMLibraryObjectsKey];
-    self.otherColorDataDictionary   = [aDecoder decodeObjectForKey:kAMNonLibraryObjectsKey];
-    return self;
+    NSDictionary * allColorData = [aDecoder decodeObjectForKey:kAMAllColorSettingsKey];
+    return [self initWithDataDictionaries:allColorData];
 }
 
 #pragma mark - NSCopying

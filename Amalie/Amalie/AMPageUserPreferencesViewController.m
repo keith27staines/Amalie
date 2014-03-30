@@ -13,9 +13,11 @@
 #import "AMPaper.h"
 
 @interface AMPageUserPreferencesViewController ()
+{
 
+}
 @property (unsafe_unretained) IBOutlet AMPageSetupViewController *pageSetupViewController;
-
+@property AMPageSetupView * pageSetupView;
 @end
 
 @implementation AMPageUserPreferencesViewController
@@ -31,23 +33,33 @@
 
 }
 
+-(NSView *)view
+{
+    NSView * view = [super view];
+    if (!self.pageSetupView) {
+        AMPageSetupViewController * vc = self.pageSetupViewController;
+        AMPaper * paper = [[AMPaper alloc] init];
+        vc.paper = paper;
+        vc.delegate = self;
+        self.pageSetupView = (AMPageSetupView*)vc.view;
+        NSView * pageSetupView = self.pageSetupView;
+        NSView * containerView = view;
+        [pageSetupView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [containerView addSubview:pageSetupView];
+        NSDictionary * viewsDictionary = NSDictionaryOfVariableBindings(pageSetupView,containerView);
+        NSArray * constraints;
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[pageSetupView]-|" options:0 metrics:nil views:viewsDictionary];
+        [containerView addConstraints:constraints];
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[pageSetupView]-|" options:0 metrics:nil views:viewsDictionary];
+        [containerView addConstraints:constraints];
+        [view setNeedsDisplay:YES];
+    }
+    return view;
+}
+
 #pragma mark - AMUserPreferencesViewControlling -
 -(void)reloadData
 {
-    AMPageSetupViewController * vc = self.pageSetupViewController;
-    AMPaper * paper = [[AMPaper alloc] init];
-    vc.paper = paper;
-    vc.delegate = self;
-    AMPageSetupView * pageSetupView = (AMPageSetupView*)vc.view;
-    NSView * containerView = self.view;
-    [pageSetupView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [containerView addSubview:pageSetupView];
-    NSDictionary * viewsDictionary = NSDictionaryOfVariableBindings(pageSetupView,containerView);
-    NSArray * constraints;
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[pageSetupView]-|" options:0 metrics:nil views:viewsDictionary];
-    [containerView addConstraints:constraints];
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[pageSetupView]-|" options:0 metrics:nil views:viewsDictionary];
-    [containerView addConstraints:constraints];
 }
 
 #pragma mark - AMPaperDelegate -

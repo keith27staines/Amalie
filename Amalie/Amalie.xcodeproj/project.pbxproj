@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
+		53F5976918E83105002FB9E1 /* AMPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMPreferencesWindowContentView.m */; };
 		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
 		7811D2C617A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
 		7811D2C717A2550E0024839B /* AMRefTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811D2C517A2550E0024839B /* AMRefTree.m */; };
@@ -212,6 +213,8 @@
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
+		53F5976718E83105002FB9E1 /* AMPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesWindowContentView.h; sourceTree = "<group>"; };
+		53F5976818E83105002FB9E1 /* AMPreferencesWindowContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesWindowContentView.m; sourceTree = "<group>"; };
 		78007E02189CEA0B007CFF77 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
 		78007E03189CEA0B007CFF77 /* AMContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContainerView.m; sourceTree = "<group>"; };
 		7811D2C417A2550E0024839B /* AMRefTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMRefTree.h; sourceTree = "<group>"; };
@@ -777,6 +780,8 @@
 				784D6F00178A1217002BE03A /* AMPreferencesWindow.xib */,
 				784D6EFB1789CC97002BE03A /* AMPreferencesWindowController.h */,
 				784D6EFC1789CC97002BE03A /* AMPreferencesWindowController.m */,
+				53F5976718E83105002FB9E1 /* AMPreferencesWindowContentView.h */,
+				53F5976818E83105002FB9E1 /* AMPreferencesWindowContentView.m */,
 				78D8C30018C7A991001F5494 /* AMUserPreferencesBaseViewController.h */,
 				78D8C30118C7A991001F5494 /* AMUserPreferencesBaseViewController.m */,
 				788709C0178D35CD008E093A /* Preferences Pane views */,
@@ -1365,6 +1370,7 @@
 				78803C0918DC76D4008FBDE1 /* AMFontSetupViewController.m in Sources */,
 				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
+				53F5976918E83105002FB9E1 /* AMPreferencesWindowContentView.m in Sources */,
 				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
 				78BFE6341817C2E300D4ADB1 /* AMError.m in Sources */,
 				78F57D901835232A00683FFC /* AMDInsertedExpression.m in Sources */,

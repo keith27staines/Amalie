@@ -13,6 +13,7 @@
 
 +(id)colorSettingsWithUserDefaults;
 +(id)colorSettingsWithFactoryDefaults;
++(id)colorSettingsWithDataDictionaries:(NSDictionary*)dataDictionaries;
 
 -(NSColor*)backColorForInsertableObjectType:(AMInsertableType)objectType;
 
