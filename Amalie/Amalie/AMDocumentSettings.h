@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMPaper, AMFontAttributes, AMColorSettings, AMFontSettings, AMMathStyleSettings;
+@class AMPaper, AMFontAttributes, AMColorSettings, AMFontSettings, AMMathStyleSettings, AMPageSettings, AMSettingsSection;
 
 
 #import <Foundation/Foundation.h>
@@ -14,19 +14,16 @@
 
 @interface AMDocumentSettings : NSObject
 
-#pragma mark - Getters and setters for user preferences -
+#pragma mark - Getters and setters for user preference sections
+-(AMSettingsSection*)settingsForSection:(AMSettingsSectionType)section;
+-(void)setSettings:(AMSettingsSection*)settings;
 
 #pragma mark - Settings for paper, fonts and colors
 @property (copy) AMPaper * paper;
 @property (copy) AMFontSettings * fontSettings;
 @property (copy) AMColorSettings * colorSettings;
-@property (copy) AMMathStyleSettings * mathsStyleSettings;
-
-#pragma mark - Math style
-@property CGFloat superscriptingFraction;
-@property CGFloat superscriptOffset;
-@property CGFloat subscriptOffset;
-@property CGFloat smallestFontSize;
+@property (copy) AMPageSettings * pageSettings;
+@property (copy) AMMathStyleSettings * mathStyleSettings;
 
 #pragma mark - reset
 -(void)resetToUserDefaults;

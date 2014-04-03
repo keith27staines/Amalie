@@ -38,7 +38,7 @@
 #import "AMDExpression+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMDataStore.h"
-
+#import "AMFontAttributes.h"
 
 @interface AMContentViewController ()
 {
@@ -63,7 +63,9 @@
 
 -(NSFont *)fixedWidthFont
 {
-    return [AMUserPreferences fontForFontType:AMFontTypeFixedWidth];
+    AMFontAttributes * fontAttributes;
+    fontAttributes = [self.document fontAttributesForType:AMFontTypeFixedWidth];
+    return fontAttributes.font;
 }
 
 -(AMDInsertedObject *)amdInsertedObject

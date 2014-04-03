@@ -14,6 +14,7 @@
 #import "AMColorSettings.h"
 #import "AMFontSettings.h"
 #import "AMMathStyleSettings.h"
+#import "AMPageSettings.h"
 
 @interface AMDocumentSettings()
 {
@@ -48,6 +49,32 @@
     if (!_dataObject) {
         _dataObject = [AMDDocumentSettings makeDocumentSettings];
         [self resetToUserDefaults];
+    }
+}
+-(AMSettingsSection*)settingsForSection:(AMSettingsSectionType)section
+{
+    switch (section) {
+        case AMSettingsSectionFonts:
+            return self.fontSettings;
+        case AMSettingsSectionColors:
+            return self.colorSettings;
+        case AMSettingsSectionPaper:
+            return self.pageSettings;
+        case AMSettingsSectionMathsStyle:
+            return self.mathStyleSettings;
+    }
+}
+-(void)setSettings:(AMSettingsSection *)settings
+{
+    switch (settings.section) {
+        case AMSettingsSectionFonts:
+            self.fontSettings = (AMFontSettings*)settings;
+        case AMSettingsSectionColors:
+            self.colorSettings = (AMColorSettings*)settings;
+        case AMSettingsSectionPaper:
+            self.pageSettings = (AMPageSettings*)settings;
+        case AMSettingsSectionMathsStyle:
+            self.mathStyleSettings = (AMMathStyleSettings*)settings;
     }
 }
 -(AMPaper*)paper
@@ -91,7 +118,7 @@
 {
     _dataObject.fontSettings = [NSKeyedArchiver archivedDataWithRootObject:fontSettings];
 }
--(AMMathStyleSettings *)mathsStyleSettings
+-(AMMathStyleSettings *)mathStyleSettings
 {
     AMMathStyleSettings * mathStyleSettings;
     NSData * data = _dataObject.fontSettings;
@@ -111,42 +138,8 @@
 {
     self.fontSettings = [AMFontSettings settingsWithUserDefaults];
     self.colorSettings = [AMColorSettings settingsWithUserDefaults];
-    self.mathsStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];
+    self.mathStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];
 }
-
--(CGFloat)smallestFontSize
-{
-    return self.dataObject.smallestFontSize.floatValue;
-}
--(void)setSmallestFontSize:(CGFloat)smallestFontSize
-{
-    self.dataObject.smallestFontSize = @(smallestFontSize);
-}
--(CGFloat)superscriptingFraction
-{
-    return self.dataObject.superscriptingFraction.floatValue;
-}
--(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction
-{
-    self.dataObject.superscriptingFraction = @(superscriptingFraction);
-}
--(CGFloat)superscriptOffset
-{
-    return self.dataObject.superscriptOffset.floatValue;
-}
--(void)setSuperscriptOffset:(CGFloat)superscriptOffset
-{
-    self.dataObject.superscriptOffset = @(superscriptOffset);
-}
--(CGFloat)subscriptOffset
-{
-    return self.dataObject.subscriptOffset.floatValue;
-}
--(void)setSubscriptOffset:(CGFloat)subscriptOffset
-{
-    self.dataObject.subscriptOffset = @(subscriptOffset);
-}
-
 
 
 

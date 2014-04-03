@@ -48,7 +48,7 @@
 -(NSView*)colorPreferencesView
 {
     self.colorPreferenceViewController.documentSettings = self.document.documentSettings;
-    self.colorPreferenceViewController.settingsType = AMSettingsTypeCurrentDocument;
+    self.colorPreferenceViewController.settingsStorageLocationType = AMSettingsStorageLocationTypeCurrentDocument;
     NSView * view = self.colorPreferenceViewController.view;
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     return view;

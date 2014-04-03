@@ -41,20 +41,20 @@
     NSView * view = [super view];
     if (!_colorSettings) {
         [self colorSettings];
-        switch (self.settingsType) {
-            case AMSettingsTypeFactoryDefaults:
+        switch (self.settingsStorageLocationType) {
+            case AMSettingsStorageLocationTypeFactoryDefaults:
             {
                 [self.resetToFactoryDefaultsButton setHidden:YES];
                 [self.resetToDocumentDefaultsButton setHidden:YES];
             }
                 break;
-            case AMSettingsTypeUserDefaults:
+            case AMSettingsStorageLocationTypeUserDefaults:
             {
                 [self.resetToFactoryDefaultsButton setHidden:NO];
                 [self.resetToDocumentDefaultsButton setHidden:YES];
                 break;
             }
-            case AMSettingsTypeCurrentDocument:
+            case AMSettingsStorageLocationTypeCurrentDocument:
             {
                 [self.resetToDocumentDefaultsButton setHidden:NO];
                 [self.resetToFactoryDefaultsButton setHidden:NO];
@@ -70,17 +70,17 @@
         // Nothing to save
         return;
     }
-    if (self.settingsType == AMSettingsTypeFactoryDefaults) {
+    if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeFactoryDefaults) {
         // Can't save factory defaults so nothing to do here
-    } else if (self.settingsType == AMSettingsTypeUserDefaults) {
+    } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeUserDefaults) {
         // Save to NSUserDefaults via AMPreferences
-        [AMUserPreferences setColorSettings:_colorSettings];
-    } else if (self.settingsType == AMSettingsTypeCurrentDocument) {
+        [AMUserPreferences setData:self.colorSettings.data forSettingsSection:self.colorSettings.section];
+    } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeCurrentDocument) {
         if (self.documentSettings) {
             self.documentSettings.colorSettings = _colorSettings;
         }
     } else {
-        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsType);
+        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsStorageLocationType);
     }
 }
 -(AMColorSettings*)colorSettings
@@ -88,14 +88,14 @@
     if (_colorSettings) {
         return _colorSettings;
     }
-    switch (self.settingsType) {
-        case AMSettingsTypeFactoryDefaults:
+    switch (self.settingsStorageLocationType) {
+        case AMSettingsStorageLocationTypeFactoryDefaults:
             _colorSettings = [AMColorSettings settingsWithFactoryDefaults];
             break;
-        case AMSettingsTypeUserDefaults:
-            _colorSettings = [AMColorSettings settingsWithFactoryDefaults];
+        case AMSettingsStorageLocationTypeUserDefaults:
+            _colorSettings = [AMColorSettings settingsWithUserDefaults];
             break;
-        case AMSettingsTypeCurrentDocument:
+        case AMSettingsStorageLocationTypeCurrentDocument:
             NSAssert(self.documentSettings, @"Document settings must exist");
             _colorSettings = self.documentSettings.colorSettings;
             break;

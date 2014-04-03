@@ -48,7 +48,7 @@
 -(NSView*)fontPreferencesView
 {
     self.fontPreferenceViewController.documentSettings = self.document.documentSettings;
-    self.fontPreferenceViewController.settingsType = AMSettingsTypeCurrentDocument;
+    self.fontPreferenceViewController.settingsStorageLocationType = AMSettingsStorageLocationTypeCurrentDocument;
     NSView * view = self.fontPreferenceViewController.view;
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     return view;

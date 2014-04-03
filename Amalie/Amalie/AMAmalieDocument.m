@@ -30,6 +30,7 @@
 #import "AMNameProviderBase.h"
 #import "AMArgumentsNameProvider.h"
 #import "AMDocumentView.h"
+#import "AMFontAttributes.h"
 #import "AMPaper.h"
 #import "AMPageSetupViewController.h"
 #import "AMFontSetupViewController.h"
@@ -37,6 +38,9 @@
 #import "AMMathStyleViewController.h"
 #import "AMMeasurement.h"
 #import "AMColorSettings.h"
+#import "AMFontSettings.h"
+#import "AMPageSettings.h"
+#import "AMMathStyleSettings.h"
 
 // View controllers for dynamically loaded views
 #import "AMInsertableViewController.h"
@@ -378,7 +382,8 @@
 }
 -(CGFloat)verticalSpacing
 {
-    NSFont * font = [AMUserPreferences fontForFontType:AMFontTypeAlgebra];
+    AMFontAttributes * fontAttributes = [self fontAttributesForType:AMFontTypeAlgebra];
+    NSFont * font = fontAttributes.font;
     CGFloat lineSpacing = font.ascender - font.descender + font.leading;
     return lineSpacing;
 }
@@ -711,27 +716,27 @@
 # pragma mark - AMNameProviderDelegate
 -(AMFontAttributes *)fontAttributesForType:(AMFontType)fontType
 {
-    return [self.documentSettings fontAttributesForFontType:fontType];
+    return [self.documentSettings.fontSettings fontAttributesForFontType:fontType];
 }
 -(CGFloat)superscriptingFraction
 {
-    return [self.documentSettings superscriptingFraction];
+    return [self.documentSettings.mathStyleSettings superscriptingFraction];
 }
 -(CGFloat)superscriptOffset
 {
-    return [self.documentSettings superscriptOffset];
+    return [self.documentSettings.mathStyleSettings superscriptOffset];
 }
 -(CGFloat)subscriptOffset
 {
-    return [self.documentSettings subscriptOffset];
+    return [self.documentSettings.mathStyleSettings subscriptOffset];
 }
 -(CGFloat)smallestFontSize
 {
-    return [self.documentSettings smallestFontSize];
+    return [self.documentSettings.mathStyleSettings smallestFontSize];
 }
 -(CGFloat)baseFontSize
 {
-    return [self.documentSettings fontSize];
+    return [self.documentSettings.fontSettings fontSize];
 }
 @end
 

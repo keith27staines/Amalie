@@ -30,8 +30,4 @@
 @property CGFloat size;
 -(NSFont*)font;
 
-
-// Support for underlying core data object
--(void)copyFromCoreDataFontAttributes:(AMDFontAttributes*)attributes;
--(void)copyToCoreDataFontAttributes:(AMDFontAttributes*)attributes;
 @end

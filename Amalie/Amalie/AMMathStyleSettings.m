@@ -9,13 +9,19 @@
 #import "AMMathStyleSettings.h"
 
 @implementation AMMathStyleSettings
-/*! Subclasses must override */
+
+#pragma mark - AMSettingsSection essential overrides -
 -(instancetype)initWithFactoryDefaults
 {
+//    // Mathematical typography style
+//    [defaults setObject:@(kAMFactorySettingMinFontSize) forKey:kAMMinFontSizeKey];
+//    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFractionKey];
+//    [defaults setObject:@(kAMFactorySettingSuperscriptOffset) forKey:kAMSuperscriptOffsetKey];
+//    [defaults setObject:@(kAMFactorySettingSubscriptOffset) forKey:kAMSubscriptOffsetKey];
+//    [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
     [NSException raise:@"Missing implemetation" format:@"Derived classes must override this method"];
     return nil;
 }
-/*! Subclasses must override */
 -(AMSettingsSectionType)section
 {
     [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
@@ -34,6 +40,28 @@
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
     [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+}
+
+#pragma mark - Added behaviour -
+-(CGFloat)superscriptingFraction
+{
+    // TODO
+    return 0;
+}
+-(CGFloat)superscriptOffset
+{
+    // TODO
+    return 0;
+}
+-(CGFloat)subscriptOffset
+{
+    // TODO
+    return 0;
+}
+-(CGFloat)smallestFontSize
+{
+    // TODO
+    return 0;
 }
 
 @end

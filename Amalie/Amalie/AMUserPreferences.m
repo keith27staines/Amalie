@@ -8,8 +8,11 @@
 
 #import "AMUserPreferences.h"
 #import "AMAppController.h"
-#import "AMColorSettings.h"
+#import "AMSettingsSection.h"
 #import "AMFontSettings.h"
+#import "AMColorSettings.h"
+#import "AMPageSettings.h"
+#import "AMMathStyleSettings.h"
 
 static NSMutableDictionary * AMFonts;
 
@@ -190,136 +193,84 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
 }
 
 #pragma mark - Reset settings to factory defaults -
-+ (void)resetAll {
-    NSDictionary *defaultsDict = [[self defaults] dictionaryRepresentation];
-    
-    for (NSString *key in [defaultsDict allKeys])
-    {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-    }
-}
-+ (void)resetPageMargins {
-    [[self defaults] removeObjectForKey:kAMPageMarginsKey];
-}
-+ (void)resetPaperType {
-    [[self defaults] removeObjectForKey:kAMPaperSizeKey];
-}
-+ (void)resetPaperOrientation {
-    [[self defaults] removeObjectForKey:kAMPageOrientationKey];
-}
-+ (void)resetSmallestFontSize {
-    [[self defaults] removeObjectForKey:kAMMinFontSizeKey];
-}
-+ (void)resetFixedWidthFontSize {
-    [[self defaults] removeObjectForKey:kAMFixedWidthFontSizeKey];
-}
-+ (void)resetSuperscriptingFraction {
-    [[self defaults] removeObjectForKey:kAMSuperscriptingFractionKey];
-}
-+(void)resetColorData
-{
-    [[self defaults] removeObjectForKey:kAMLibraryObjectsKey];
-}
+
 
 #pragma mark - Getters and setters for settings section data -
 +(NSData*)dataForSettingsSection:(AMSettingsSectionType)section
 {
     NSData * data;
     switch (section) {
+        case AMSettingsSectionFonts:
+            data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllFontSettingsKey];
+            break;
         case AMSettingsSectionColors:
             data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllColorSettingsKey];
             break;
-        case AMSettingsSectionFonts:
-            data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMFontAttributesKey];
-            break;
         case AMSettingsSectionPaper:
-            data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllColorSettingsKey];
+            data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllPaperSettingsKey];
             break;
         case AMSettingsSectionMathsStyle:
-            data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllColorSettingsKey];
+            data = [[NSUserDefaults standardUserDefaults] objectForKey:KAMAllMathsStyleSettingsKey];
             break;
     }
     return data;
 }
-+(void)setDataForSettingsSection:(AMSettingsSectionType)section
++(void)setData:(NSData*)data forSettingsSection:(AMSettingsSectionType)section
 {
-    
+    switch (section) {
+        case AMSettingsSectionFonts:
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMAllFontSettingsKey];
+            break;
+        case AMSettingsSectionColors:
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMAllColorSettingsKey];
+            break;
+        case AMSettingsSectionPaper:
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMAllPaperSettingsKey];
+            break;
+        case AMSettingsSectionMathsStyle:
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:KAMAllMathsStyleSettingsKey];
+            break;
+    }
 }
 +(void)resetSettingsForSection:(AMSettingsSectionType)section
 {
-    
-}
-
-#pragma mark - Color settings -
-+(AMColorSettings*)colorSettings
-{
-    NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllColorSettingsKey];
-    AMColorSettings * colors = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    return colors;
-}
-+(void)setColorSettings:(AMColorSettings *)colorSettings
-{
-    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMAllColorSettingsKey];
-}
-+(void)resetColorSettings
-{
-    [[self defaults] removeObjectForKey:kAMLibraryObjectsKey];
-}
-
-#pragma mark - Font settings -
-+(AMFontSettings*)fontSettings
-{
-    NSData * data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMFontAttributesKey];
-    AMFontSettings * fontSettings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    return fontSettings;
-}
-+(void)setFontSettings:(AMFontSettings *)fontSettings
-{
-    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:fontSettings];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMFontAttributesKey];
-}
-+(void)resetFontSettings
-{
-    [[self defaults] removeObjectForKey:kAMFontAttributesKey];
+    switch (section) {
+        case AMSettingsSectionFonts:
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAMAllFontSettingsKey];
+            break;
+        case AMSettingsSectionColors:
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAMAllColorSettingsKey];
+            break;
+        case AMSettingsSectionPaper:
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAMAllPaperSettingsKey];
+            break;
+        case AMSettingsSectionMathsStyle:
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:KAMAllMathsStyleSettingsKey];
+            break;
+    }
 }
 
 #pragma mark - Register factory default settings -
 +(void)registerDefaultPreferences
 {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+    AMSettingsSection * settings = nil;
     
-    // Main window configuration
+    // Font settings
+    settings = [AMFontSettings settingsWithFactoryDefaults];
+    [defaults setObject:[settings data] forKey:kAMAllFontSettingsKey];
+    
+    // Color settings
+    settings = [AMColorSettings settingsWithFactoryDefaults];
+    [defaults setObject:[settings data] forKey:kAMAllColorSettingsKey];
 
+    // Font settings
+    settings = [AMFontSettings settingsWithFactoryDefaults];
+    [defaults setObject:[settings data] forKey:kAMAllFontSettingsKey];
     
-    // Paper size and margins
-    [defaults setObject:@(AMPaperTypeA4) forKey:kAMPaperSizeKey];
-    [defaults setObject:@(kAMPageWidthA4) forKey:kAMPageWidthCustomKey];
-    [defaults setObject:@(kAMPageHeightA4) forKey:kAMPageHeightCustomKey];
-    [defaults setObject:@(AMPaperOrientationPortrait) forKey:kAMPageOrientationKey];
-    [defaults setObject:@(AMMeasurementUnitsPoints) forKey:kAMPaperMeasurementUnitsKey];
-    
-    AMMargins margins = AMMarginsMake(72, 72, 72, 72);
-    [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
-    
-
-    [defaults setObject:@(kAMFactorySettingMinFontSize) forKey:kAMMinFontSizeKey];
-    
-    // Mathematical typography style
-    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFractionKey];
-    [defaults setObject:@(kAMFactorySettingSuperscriptOffset) forKey:kAMSuperscriptOffsetKey];
-    [defaults setObject:@(kAMFactorySettingSubscriptOffset) forKey:kAMSubscriptOffsetKey];
-    [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
-    
-    // Add the dictionary for color settings
-    NSMutableDictionary * colorSettings = [AMColorSettings settingsWithFactoryDefaults];
-    NSData * colorData = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
-    [defaults setObject:colorData forKey:kAMAllColorSettingsKey];
-
-    // Add the dictionary for font settings
-    NSMutableDictionary * fontSettings = [AMFontSettings settingsWithFactoryDefaults];
-    NSData * fontData = [NSKeyedArchiver archivedDataWithRootObject:fontSettings];
-    [defaults setObject:fontData forKey:kAMFontAttributesKey];
+    // Page settings
+    settings = [AMPageSettings settingsWithFactoryDefaults];
+    [defaults setObject:[settings data] forKey:kAMAllColorSettingsKey];
 
     // register everything
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];

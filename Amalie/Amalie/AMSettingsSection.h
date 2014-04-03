@@ -29,7 +29,10 @@
 #pragma mark - Default implementations that should not be overridden in subclasses
 +(id)settingsWithUserDefaults;
 +(id)settingsWithFactoryDefaults;
++(id)settingsWithFactoryDefaultsOfType:(AMSettingsSectionType)sectionType;
++(id)settingsWithUserDefaultsOfType:(AMSettingsSectionType)sectionType;
 
 - (instancetype)initWithUserDefaults;
+- (NSData*)data;
 
 @end

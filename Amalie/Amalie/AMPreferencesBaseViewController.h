@@ -7,24 +7,27 @@
 //
 
 
-@class AMDocumentSettings;
+@class AMDocumentSettings, AMSettingsSection;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
 
 @protocol AMUserPreferencesViewControlling <NSObject>
 
--(void)reloadData;
 
 @end
 
 @interface AMPreferencesBaseViewController : NSViewController <AMUserPreferencesViewControlling>
 
-@property AMSettingsType settingsType;
+/*! Subclasses must override (default implementation raises exception) */
+-(AMSettingsSectionType)sectionType;
 
+/*! Subclasses may override (default implementation does nothing) */
+-(void)reloadData;
+
+
+@property AMSettingsStorageLocationType settingsStorageLocationType;
 @property AMDocumentSettings * documentSettings;
-
-/*! saveSettings method must be overridden to save settings in appropriate format */
--(void)saveSettings;
-
+@property (readonly) AMSettingsSection * settingsSection;
+-(void)saveSettingsSection;
 @end

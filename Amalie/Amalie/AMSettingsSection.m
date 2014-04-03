@@ -8,6 +8,10 @@
 
 #import "AMSettingsSection.h"
 #import "AMUserPreferences.h"
+#import "AMFontSettings.h"
+#import "AMColorSettings.h"
+#import "AMPageSettings.h"
+#import "AMMathStyleSettings.h"
 
 @implementation AMSettingsSection
 
@@ -39,6 +43,32 @@
     [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
 }
 #pragma mark - Default implementations that should not be overridden in subclasses
++(id)settingsWithFactoryDefaultsOfType:(AMSettingsSectionType)sectionType
+{
+    switch (sectionType) {
+        case AMSettingsSectionFonts:
+            return [AMFontSettings settingsWithFactoryDefaults];
+        case AMSettingsSectionColors:
+            return [AMColorSettings settingsWithFactoryDefaults];
+        case AMSettingsSectionPaper:
+            return [AMPageSettings settingsWithFactoryDefaults];
+        case AMSettingsSectionMathsStyle:
+            return [AMMathStyleSettings settingsWithFactoryDefaults];
+    }
+}
++(id)settingsWithUserDefaultsOfType:(AMSettingsSectionType)sectionType
+{
+    switch (sectionType) {
+        case AMSettingsSectionFonts:
+            return [AMFontSettings settingsWithUserDefaults];
+        case AMSettingsSectionColors:
+            return [AMColorSettings settingsWithUserDefaults];
+        case AMSettingsSectionPaper:
+            return [AMPageSettings settingsWithUserDefaults];
+        case AMSettingsSectionMathsStyle:
+            return [AMMathStyleSettings settingsWithUserDefaults];
+    }
+}
 +(id)settingsWithUserDefaults
 {
     return [[self.class alloc] initWithUserDefaults];
@@ -61,5 +91,10 @@
     return self;
 }
 
+-(NSData*)data
+{
+    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    return data;
+}
 
 @end

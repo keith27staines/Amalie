@@ -8,15 +8,44 @@
 
 #import "AMPreferencesBaseViewController.h"
 #import "AMDocumentSettings.h"
+#import "AMSettingsSection.h"
+#import "AMUserPreferences.h"
 
 @interface AMPreferencesBaseViewController ()
 {
-    AMSettingsType _settingsType;
+    @private
+    AMSettingsStorageLocationType _settingsStorageLocationType;
     AMDocumentSettings * _documentSettings;
+    @protected
+    AMSettingsSection  * _settingsSection;
 }
+
+@property AMSettingsSection * settingsSection;
+
 @end
 
 @implementation AMPreferencesBaseViewController
+
+
+-(void)saveSettingsSection
+{
+    if (!_settingsSection) {
+        // Nothing to save
+        return;
+    }
+    if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeFactoryDefaults) {
+        // Can't save factory defaults so nothing to do here
+    } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeUserDefaults) {
+        // Save to NSUserDefaults via AMPreferences
+        [AMUserPreferences setData:self.settingsSection.data forSettingsSection:self.settingsSection.section];
+    } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeCurrentDocument) {
+        if (self.documentSettings) {
+            [self.documentSettings setSettings:self.settingsSection];
+        } else {
+            NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsStorageLocationType);
+        }
+    }
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,9 +56,39 @@
     return self;
 }
 
+-(AMSettingsSectionType)sectionType
+{
+    [NSException raise:@"Missing implementation" format:@"Subclasses must override this method"];
+    return AMSettingsSectionMathsStyle;
+}
 -(void)reloadData
 {
-    // Base implementation is do nothing
+    // Base implementation is to do nothing
+}
+
+-(void)setSettingsSection:(AMSettingsSection *)settingsSection
+{
+    _settingsSection = settingsSection;
+}
+-(AMSettingsSection*)settingsSection
+{
+    if (_settingsSection) {
+        return _settingsSection;
+    }
+
+    switch (self.settingsStorageLocationType) {
+        case AMSettingsStorageLocationTypeFactoryDefaults:
+            _settingsSection = [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
+            break;
+        case AMSettingsStorageLocationTypeUserDefaults:
+            _settingsSection = [AMSettingsSection settingsWithUserDefaultsOfType:self.sectionType];
+            break;
+        case AMSettingsStorageLocationTypeCurrentDocument:
+            NSAssert(self.documentSettings, @"Document settings must exist");
+            _settingsSection = [self.documentSettings settingsForSection:self.sectionType];
+            break;
+    }
+    return _settingsSection;
 }
 
 -(AMDocumentSettings *)documentSettings
@@ -43,23 +102,21 @@
         return;
     }
     if (_documentSettings) {
-        [self saveSettings];
+        [self saveSettingsSection];
     }
     _documentSettings = documentSettings;
 }
 
--(AMSettingsType)settingsType
+-(AMSettingsStorageLocationType)settingsStorageLocationType
 {
-    return _settingsType;
+    return _settingsStorageLocationType;
 }
--(void)setSettingsType:(AMSettingsType)settingsType
+-(void)setSettingsStorageLocationType:(AMSettingsStorageLocationType)settingsType
 {
-    [self saveSettings];
-    _settingsType = settingsType;
+    [self saveSettingsSection];
+    _settingsStorageLocationType = settingsType;
 }
+    
 
--(void)saveSettings
-{
-    [NSException raise:@"saveSettings method must be overridden" format:@"This method must be overriden to save settings in appropriate format"];
-}
 @end
+

@@ -84,22 +84,4 @@
     [aCoder encodeBool:self.allowSynthesis forKey:kAMAllowFontSynthesisKey];
 }
 
-#pragma mark - Support for underlying core data object -
--(void)copyFromCoreDataFontAttributes:(AMDFontAttributes *)attributes
-{
-    self.name = attributes.fontFamilyName;
-    self.size = attributes.size.floatValue;
-    self.isBold = attributes.isBold.boolValue;
-    self.isItalic = attributes.isItalic.boolValue;
-    self.allowSynthesis = attributes.allowSynthesis.boolValue;
-}
--(void)copyToCoreDataFontAttributes:(AMDFontAttributes *)attributes
-{
-    attributes.fontFamilyName = self.name;
-    attributes.size = @(self.size);
-    attributes.isBold = @(self.isBold);
-    attributes.isItalic = @(self.isItalic);
-    attributes.allowSynthesis = @(self.allowSynthesis);
-}
-
 @end

@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 
 -(void)displayViewController:(AMPreferencesBaseViewController*)vc
 {
-    vc.settingsType = AMSettingsTypeUserDefaults;
+    vc.settingsStorageLocationType = AMSettingsStorageLocationTypeUserDefaults;
     NSView * contentView = self.window.contentView;
     NSWindow * window = self.window;
     NSRect oldWindowFrame = window.frame;

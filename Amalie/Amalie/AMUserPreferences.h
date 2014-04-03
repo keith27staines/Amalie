@@ -17,16 +17,7 @@
 +(void)registerDefaultPreferences;
 
 #pragma mark - Reset settings to factory defaults -
-+(void)resetAll;
-+(void)resetPaperType;
-+(void)resetPaperOrientation;
-+(void)resetPageMargins;
-+(void)resetFontAttributesForFontType:(AMFontType)fontType;
-+(void)resetFontSize;
-+(void)resetSmallestFontSize;
-+(void)resetFixedWidthFontSize;
-+(void)resetSuperscriptingFraction;
-+(void)resetAllowFontSynthesis;
+
 
 #pragma mark - Getters and setters for user preferences -
 #pragma mark - Page layout
@@ -52,11 +43,10 @@
 #pragma mark - Misc  -
 +(NSSize)pageSize;
 +(void)setPageSize:(NSSize)size;
-+(NSFont*)fontForFontType:(AMFontType)fontType;
 
 #pragma mark - Getters and setters for entre settings section
 +(NSData*)dataForSettingsSection:(AMSettingsSectionType)section;
-+(void)setDataForSettingsSection:(AMSettingsSectionType)section;
++(void)setData:(NSData*)data forSettingsSection:(AMSettingsSectionType)section;
 +(void)resetSettingsForSection:(AMSettingsSectionType)section;
 
 @end

@@ -22,17 +22,11 @@
 
 @implementation AMPagePreferencesViewController
 
-#pragma mark - NSViewController -
+#pragma mark - NSViewController overrides -
 -(NSString *)nibName
 {
     return @"AMPagePreferencesViewController";
 }
-
--(void)awakeFromNib
-{
-
-}
-
 -(NSView *)view
 {
     NSView * view = [super view];
@@ -57,23 +51,16 @@
     return view;
 }
 
--(void)saveSettings
-{
-    if (self.settingsType == AMSettingsTypeFactoryDefaults) {
-        // Can't save factory defaults so nothing to do here
-    } else if (self.settingsType == AMSettingsTypeUserDefaults) {
-        // Save to NSUserDefaults via AMPreferences
-    } else if (self.settingsType == AMSettingsTypeCurrentDocument) {
-        if (self.documentSettings) {
-        }
-    } else {
-        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsType);
-    }
-}
+#pragma mark - AMPreferencesBaseViewController overrides -
 
-#pragma mark - AMUserPreferencesViewControlling -
 -(void)reloadData
 {
+    // do nothing
+}
+
+-(AMSettingsSectionType)sectionType
+{
+    return AMSettingsSectionPaper;
 }
 
 #pragma mark - AMPaperDelegate -

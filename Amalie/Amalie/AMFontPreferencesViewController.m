@@ -13,10 +13,13 @@
 #import "AMFontAttributes.h"
 #import "AMFontText.h"
 #import "AMFontSelectionViewController.h"
+#import "AMFontSettings.h"
 
 @interface AMFontPreferencesViewController ()
 
 @property (strong) IBOutlet NSPopover *fontSelectionViewController;
+
+@property (readonly) AMFontSettings * fontSettings;
 
 @end
 
@@ -31,6 +34,29 @@
 {
     [self populateFontSizePopup];
 }
+
+
+#pragma mark - AMPreferencesBaseViewController overrides -
+
+-(void)reloadData
+{
+    [self.fontChoiceTable reloadData];
+    [self synchronizeMasterFontSizeControl];
+}
+
+-(AMSettingsSectionType)sectionType
+{
+    return AMSettingsSectionFonts;
+}
+
+/* Just a helpful cast */
+-(AMFontSettings*)fontSettings
+{
+    return (AMFontSettings*)self.settingsSection;
+}
+
+#pragma mark - data loading helpers -
+
 -(void)populateFontSizePopup
 {
     NSPopUpButton * btn = self.fontSizeSelector;
@@ -54,42 +80,20 @@
     [menu addItem:item];
 }
 
--(void)reloadData
-{
-    [self.fontChoiceTable reloadData];
-    [self synchronizeMasterFontSizeControl];
-}
-
--(void)saveSettings
-{
-    if (self.settingsType == AMSettingsTypeFactoryDefaults) {
-        // Can't save factory defaults so nothing to do here
-    } else if (self.settingsType == AMSettingsTypeUserDefaults) {
-        // Save to NSUserDefaults via AMPreferences
-
-    } else if (self.settingsType == AMSettingsTypeCurrentDocument) {
-        if (self.documentSettings) {
-
-        }
-    } else {
-        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsType);
-    }
-}
-
 -(void)synchronizeMasterFontSizeControl
 {
     NSPopUpButton * btn = self.fontSizeSelector;
-    [btn selectItemWithTag:(int)[AMUserPreferences fontSize]];
+    [btn selectItemWithTag:(int)self.fontSettings.fontSize];
 }
 
 #pragma mark - Preferences updates
 - (IBAction)fontSizeChanged:(NSPopUpButton*)sender {
-    [AMUserPreferences setFontSize:sender.selectedTag];
+    [self.fontSettings setFontSize:sender.selectedTag];
 }
 
 -(IBAction)restoreToFactoryDefaults:(NSButton *)button
 {
-    [AMUserPreferences resetAll];
+    [AMUserPreferences resetSettingsForSection:AMSettingsSectionFonts];
     [self reloadData];
 }
 
@@ -113,11 +117,11 @@
 
 -(AMFontAttributes*)fontAttributesForFontChoiceView:(AMFontChoiceView*)view
 {
-    return [AMUserPreferences fontAttributesForFontType:view.fontType];
+    return [self.fontSettings fontAttributesForFontType:view.fontType];
 }
 -(void)attributesUpdatedForFontChoiceView:(AMFontChoiceView*)view
 {
-    [AMUserPreferences setFontAttributes:view.fontAttributes forFontType:view.fontType];
+    [self.fontSettings setFontAttributes:view.fontAttributes forFontType:view.fontType];
 }
 -(void)restoreFactoryDefaultsForFontChoiceView:(AMFontChoiceView*)view
 {
