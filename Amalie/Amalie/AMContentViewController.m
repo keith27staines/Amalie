@@ -23,7 +23,7 @@
 #import "AMInsertableView.h"
 #import "AMAmalieDocument.h"
 #import "AMAppController.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMLibraryItem.h"
 #import "AMLibraryViewController.h"
 
@@ -63,7 +63,7 @@
 
 -(NSFont *)fixedWidthFont
 {
-    return [AMPreferences fontForFontType:AMFontTypeFixedWidth];
+    return [AMUserPreferences fontForFontType:AMFontTypeFixedWidth];
 }
 
 -(AMDInsertedObject *)amdInsertedObject

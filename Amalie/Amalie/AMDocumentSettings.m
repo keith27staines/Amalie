@@ -8,7 +8,7 @@
 
 #import "AMDocumentSettings.h"
 #import "AMDDocumentSettings+Methods.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMDFontAttributes+Methods.h"
 #import "AMFontAttributes.h"
 #import "AMPaper.h"
@@ -88,17 +88,17 @@
     // Fonts
     for ( NSNumber * fontTypeNumber in [self arrayOfFontTypes] ) {
         NSInteger fontType = fontTypeNumber.integerValue;
-        AMFontAttributes * fa = [AMPreferences fontAttributesForFontType:fontType];
+        AMFontAttributes * fa = [AMUserPreferences fontAttributesForFontType:fontType];
         [self setFontAttributes:fa forFontType:fontType];
     }
     
     // Math Typography
-    [self setSmallestFontSize:[AMPreferences smallestFontSize]];
-    [self setFontSize:[AMPreferences fontSize]];
-    [self setFixedWidthFontSize:[AMPreferences fixedWidthFontSize]];
-    [self setSuperscriptingFraction:[AMPreferences superscriptingFraction]];
-    [self setSuperscriptOffset:[AMPreferences superscriptOffset]];
-    [self setSubscriptOffset:[AMPreferences subscriptOffset]];
+    [self setSmallestFontSize:[AMUserPreferences smallestFontSize]];
+    [self setFontSize:[AMUserPreferences fontSize]];
+    [self setFixedWidthFontSize:[AMUserPreferences fixedWidthFontSize]];
+    [self setSuperscriptingFraction:[AMUserPreferences superscriptingFraction]];
+    [self setSuperscriptOffset:[AMUserPreferences superscriptOffset]];
+    [self setSubscriptOffset:[AMUserPreferences subscriptOffset]];
 }
 
 -(CGFloat)smallestFontSize

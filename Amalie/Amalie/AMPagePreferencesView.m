@@ -1,14 +1,14 @@
 //
-//  AMMathUserPreferencesView.m
+//  AMPagePreferencesView.m
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMMathUserPreferencesView.h"
+#import "AMPagePreferencesView.h"
 
-@implementation AMMathUserPreferencesView
+@implementation AMPagePreferencesView
 
 - (id)initWithFrame:(NSRect)frame
 {

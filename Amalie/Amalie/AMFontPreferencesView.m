@@ -1,14 +1,14 @@
 //
-//  AMFontUserPreferencesView.m
+//  AMFontPreferencesView.m
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMFontUserPreferencesView.h"
+#import "AMFontPreferencesView.h"
 
-@implementation AMFontUserPreferencesView
+@implementation AMFontPreferencesView
 
 - (id)initWithFrame:(NSRect)frame
 {

@@ -8,7 +8,7 @@
 
 #import "AMPaper.h"
 #import "AMMeasurement.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 
 @interface AMPaper()
 {
@@ -27,22 +27,22 @@
 {
     self = [super init];
     if (self) {
-        _paperType = [AMPreferences paperType];
-        _paperOrientation = [AMPreferences paperOrientation];
-        _margins = [AMPreferences pageMargins];
-        _paperMeasurementUnits = [AMPreferences paperMeasurementUnits];
+        _paperType = [AMUserPreferences paperType];
+        _paperOrientation = [AMUserPreferences paperOrientation];
+        _margins = [AMUserPreferences pageMargins];
+        _paperMeasurementUnits = [AMUserPreferences paperMeasurementUnits];
         if (_paperType != AMPaperTypeCustom) {
-            self.customSize = [AMPreferences pageSize];
+            self.customSize = [AMUserPreferences pageSize];
         }
     }
     return self;
 }
 -(void)writeToAMPreferences
 {
-    [AMPreferences setPaperType:self.paperType];
-    [AMPreferences setPaperOrientation:self.paperOrientation];
-    [AMPreferences setPageMargins:[self marginsInUnits:AMMeasurementUnitsPoints]];
-    [AMPreferences setPaperMeasurementUnits:self.paperMeasurementUnits];
+    [AMUserPreferences setPaperType:self.paperType];
+    [AMUserPreferences setPaperOrientation:self.paperOrientation];
+    [AMUserPreferences setPageMargins:[self marginsInUnits:AMMeasurementUnitsPoints]];
+    [AMUserPreferences setPaperMeasurementUnits:self.paperMeasurementUnits];
 }
 -(NSString*)paperName
 {

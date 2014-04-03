@@ -1,5 +1,5 @@
 //
-//  AMPreferences.h
+//  AMUserPreferences.h
 //  Amalie
 //
 //  Created by Keith Staines on 10/07/2013.
@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
-@interface AMPreferences : NSObject
+@interface AMUserPreferences : NSObject
 
 #pragma mark - Register factory default settings -
 +(void)registerDefaultPreferences;

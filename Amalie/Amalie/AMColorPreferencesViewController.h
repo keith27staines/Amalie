@@ -6,28 +6,19 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMDocumentSettings, AMColorSettings;
+@class AMColorSettings;
 
 #import <Cocoa/Cocoa.h>
-#import "AMUserPreferencesBaseViewController.h"
+#import "AMPreferencesBaseViewController.h"
 
-typedef NS_ENUM(NSUInteger, AMColorPreferencesType) {
-    AMColorPreferencesTypeFactorySettings,
-    AMColorPreferencesTypeUserDefaults,
-    AMColorPreferencesTypeDocumentSettings,
-};
-
-@interface AMColorPreferencesViewController : AMUserPreferencesBaseViewController <NSTableViewDataSource, NSTableViewDelegate>
+@interface AMColorPreferencesViewController : AMPreferencesBaseViewController <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSButton *resetToDocumentDefaultsButton;
 @property (weak) IBOutlet NSButton *resetToFactoryDefaultsButton;
 
 @property (weak) IBOutlet NSTableView *colorPreferencesTable;
 
-
-@property AMColorPreferencesType colorPreferencesType;
-
 @property (readonly) AMColorSettings * colorSettings;
-@property AMDocumentSettings * documentSettings;
+
 
 @end

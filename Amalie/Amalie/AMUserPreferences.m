@@ -1,23 +1,23 @@
 //
-//  AMPreferences.m
+//  AMUserPreferences.m
 //  Amalie
 //
 //  Created by Keith Staines on 10/07/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMAppController.h"
 #import "AMFontAttributes.h"
 #import "AMColorSettings.h"
 
 static NSMutableDictionary * AMFonts;
 
-@interface AMPreferences()
+@interface AMUserPreferences()
 
 @end
 
-@implementation AMPreferences
+@implementation AMUserPreferences
 
 +(NSUserDefaults*)defaults
 {

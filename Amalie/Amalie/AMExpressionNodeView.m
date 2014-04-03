@@ -14,7 +14,7 @@
 #import "AMExpressionLayout.h"
 #import "AMNameProviding.h"
 
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMContentViewDataSource.h"
 #import "AMConstants.h"
 

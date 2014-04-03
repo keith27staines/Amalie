@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMUserPreferencesBaseView.h"
+#import "AMPreferencesBaseView.h"
 
-@interface AMColorPreferencesView : AMUserPreferencesBaseView
+@interface AMColorPreferencesView : AMPreferencesBaseView
 
 @end

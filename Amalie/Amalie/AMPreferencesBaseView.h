@@ -1,5 +1,5 @@
 //
-//  AMFontUserPreferencesView.h
+//  AMPreferencesBaseView.h
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
@@ -7,8 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMUserPreferencesBaseView.h"
 
-@interface AMFontUserPreferencesView : AMUserPreferencesBaseView
+@interface AMPreferencesBaseView : NSView
 
 @end

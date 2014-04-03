@@ -1,18 +1,18 @@
 //
-//  AMPageUserPreferencesViewController.m
+//  AMPagePreferencesViewController.m
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMPageUserPreferencesViewController.h"
+#import "AMPagePreferencesViewController.h"
 #import "AMPageSetupViewController.h"
 #import "AMPageSetupView.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMPaper.h"
 
-@interface AMPageUserPreferencesViewController ()
+@interface AMPagePreferencesViewController ()
 {
 
 }
@@ -20,12 +20,12 @@
 @property AMPageSetupView * pageSetupView;
 @end
 
-@implementation AMPageUserPreferencesViewController
+@implementation AMPagePreferencesViewController
 
 #pragma mark - NSViewController -
 -(NSString *)nibName
 {
-    return @"AMPageUserPreferencesViewController";
+    return @"AMPagePreferencesViewController";
 }
 
 -(void)awakeFromNib
@@ -55,6 +55,20 @@
         [view setNeedsDisplay:YES];
     }
     return view;
+}
+
+-(void)saveSettings
+{
+    if (self.settingsType == AMSettingsTypeFactoryDefaults) {
+        // Can't save factory defaults so nothing to do here
+    } else if (self.settingsType == AMSettingsTypeUserDefaults) {
+        // Save to NSUserDefaults via AMPreferences
+    } else if (self.settingsType == AMSettingsTypeCurrentDocument) {
+        if (self.documentSettings) {
+        }
+    } else {
+        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsType);
+    }
 }
 
 #pragma mark - AMUserPreferencesViewControlling -

@@ -1,5 +1,5 @@
 //
-//  AMPreferencesWindowController.h
+//  AMUserPreferencesWindowController.h
 //  Amalie
 //
 //  Created by Keith Staines on 07/07/2013.
@@ -7,14 +7,14 @@
 //
 
 @class AMColorPreferencesViewController;
-@class AMFontUserPreferencesViewController;
-@class AMPageUserPreferencesViewController;
-@class AMMathUserPreferencesViewController;
+@class AMFontPreferencesViewController;
+@class AMPagePreferencesViewController;
+@class AMMathPreferencesViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMLibraryDatasource.h"
 
-@interface AMPreferencesWindowController : NSWindowController <NSToolbarDelegate,NSWindowDelegate>
+@interface AMUserPreferencesWindowController : NSWindowController <NSToolbarDelegate,NSWindowDelegate>
 
 - (IBAction)showColorsView:(id)sender;
 - (IBAction)showFontsView:(id)sender;
@@ -30,11 +30,11 @@
 
 @property (weak) IBOutlet AMColorPreferencesViewController *colorPreferencesViewController;
 
-@property (weak) IBOutlet AMFontUserPreferencesViewController *fontPreferencesViewController;
+@property (weak) IBOutlet AMFontPreferencesViewController *fontPreferencesViewController;
 
-@property (weak) IBOutlet AMPageUserPreferencesViewController *pagePreferencesViewController;
+@property (weak) IBOutlet AMPagePreferencesViewController *pagePreferencesViewController;
 
-@property (weak) IBOutlet AMMathUserPreferencesViewController * mathPreferencesViewController;
+@property (weak) IBOutlet AMMathPreferencesViewController * mathPreferencesViewController;
 
 
 @end

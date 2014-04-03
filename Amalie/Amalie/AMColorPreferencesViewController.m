@@ -10,15 +10,13 @@
 #import "AMDocumentSettings.h"
 #import "AMColorSettings.h"
 #import "AMColorPreference.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMLibraryItem.h"
 #import "AMColorPreferenceTableCellView.h"
 
 @interface AMColorPreferencesViewController ()
 {
-    AMColorPreferencesType _colorPreferencesType;
     AMColorSettings * _colorSettings;
-    AMDocumentSettings * _documentSettings;
     NSMutableArray * _colorPrefsArray;
 }
 
@@ -43,20 +41,20 @@
     NSView * view = [super view];
     if (!_colorSettings) {
         [self colorSettings];
-        switch (self.colorPreferencesType) {
-            case AMColorPreferencesTypeFactorySettings:
+        switch (self.settingsType) {
+            case AMSettingsTypeFactoryDefaults:
             {
                 [self.resetToFactoryDefaultsButton setHidden:YES];
                 [self.resetToDocumentDefaultsButton setHidden:YES];
             }
                 break;
-            case AMColorPreferencesTypeUserDefaults:
+            case AMSettingsTypeUserDefaults:
             {
                 [self.resetToFactoryDefaultsButton setHidden:NO];
                 [self.resetToDocumentDefaultsButton setHidden:YES];
                 break;
             }
-            case AMColorPreferencesTypeDocumentSettings:
+            case AMSettingsTypeCurrentDocument:
             {
                 [self.resetToDocumentDefaultsButton setHidden:NO];
                 [self.resetToFactoryDefaultsButton setHidden:NO];
@@ -66,47 +64,23 @@
     }
     return view;
 }
-
--(AMDocumentSettings *)documentSettings
-{
-    return _documentSettings;
-}
--(void)setDocumentSettings:(AMDocumentSettings *)documentSettings
-{
-    if (documentSettings == _documentSettings) {
-        return;
-    }
-    if (_documentSettings) {
-        [self saveColorSettings];
-    }
-    _documentSettings = documentSettings;
-}
--(AMColorPreferencesType)colorPreferencesType
-{
-    return _colorPreferencesType;
-}
--(void)setColorPreferencesType:(AMColorPreferencesType)colorPreferencesType
-{
-    [self saveColorSettings];
-    _colorPreferencesType = colorPreferencesType;
-}
--(void)saveColorSettings
+-(void)saveSettings
 {
     if (!_colorSettings) {
         // Nothing to save
         return;
     }
-    if (_colorPreferencesType == AMColorPreferencesTypeFactorySettings) {
+    if (self.settingsType == AMSettingsTypeFactoryDefaults) {
         // Can't save factory defaults so nothing to do here
-    } else if (_colorPreferencesType == AMColorPreferencesTypeUserDefaults) {
+    } else if (self.settingsType == AMSettingsTypeUserDefaults) {
         // Save to NSUserDefaults via AMPreferences
-        [AMPreferences setColorSettings:_colorSettings];
-    } else if (_colorPreferencesType == AMColorPreferencesTypeDocumentSettings) {
+        [AMUserPreferences setColorSettings:_colorSettings];
+    } else if (self.settingsType == AMSettingsTypeCurrentDocument) {
         if (self.documentSettings) {
             self.documentSettings.colorSettings = _colorSettings;
         }
     } else {
-        NSAssert(NO, @"No saving mechanism for color preference type %li",_colorPreferencesType);
+        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsType);
     }
 }
 -(AMColorSettings*)colorSettings
@@ -114,14 +88,14 @@
     if (_colorSettings) {
         return _colorSettings;
     }
-    switch (self.colorPreferencesType) {
-        case AMColorPreferencesTypeFactorySettings:
+    switch (self.settingsType) {
+        case AMSettingsTypeFactoryDefaults:
             _colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
             break;
-        case AMColorPreferencesTypeUserDefaults:
+        case AMSettingsTypeUserDefaults:
             _colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
             break;
-        case AMColorPreferencesTypeDocumentSettings:
+        case AMSettingsTypeCurrentDocument:
             NSAssert(self.documentSettings, @"Document settings must exist");
             _colorSettings = self.documentSettings.colorSettings;
             break;
@@ -129,7 +103,6 @@
     [self makeColorPreferenceDictionary];
     return _colorSettings;
 }
-
 -(void)makeColorPreferenceDictionary
 {
     _colorPrefsArray = [NSMutableArray array];

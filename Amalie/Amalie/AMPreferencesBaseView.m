@@ -1,14 +1,14 @@
 //
-//  AMUserPreferencesBaseView.m
+//  AMPreferencesBaseView.m
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMUserPreferencesBaseView.h"
+#import "AMPreferencesBaseView.h"
 
-@implementation AMUserPreferencesBaseView
+@implementation AMPreferencesBaseView
 
 -(void)awakeFromNib
 {

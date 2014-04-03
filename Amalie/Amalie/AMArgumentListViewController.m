@@ -10,7 +10,7 @@
 #import "AMDArgumentList+Methods.h"
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMArgumentsNameProvider.h"
 #import "AMAmalieDocument.h"
 

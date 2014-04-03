@@ -1,30 +1,30 @@
 //
-//  AMFontUserPreferencesViewController.m
+//  AMFontPreferencesViewController.m
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMFontUserPreferencesViewController.h"
-#import "AMPreferences.h"
+#import "AMFontPreferencesViewController.h"
+#import "AMUserPreferences.h"
 #import "AMFontChoiceView.h"
 #import "AMConstants.h"
 #import "AMFontAttributes.h"
 #import "AMFontText.h"
 #import "AMFontSelectionViewController.h"
 
-@interface AMFontUserPreferencesViewController ()
+@interface AMFontPreferencesViewController ()
 
 @property (strong) IBOutlet NSPopover *fontSelectionViewController;
 
 @end
 
-@implementation AMFontUserPreferencesViewController
+@implementation AMFontPreferencesViewController
 
 -(NSString *)nibName
 {
-    return @"AMFontUserPreferencesViewController";
+    return @"AMFontPreferencesViewController";
 }
 
 -(void)awakeFromNib
@@ -36,7 +36,7 @@
     NSPopUpButton * btn = self.fontSizeSelector;
     [btn removeAllItems];
     NSMenu * menu = btn.menu;
-    for (int i = (int)[AMPreferences smallestFontSize]; i < 21; i++) {
+    for (int i = (int)[AMUserPreferences smallestFontSize]; i < 21; i++) {
         [self addFontsizeMenuItemForSize:i toMenu:menu];
     }
     for (int i = 22; i < 42; i += 2) {
@@ -60,20 +60,36 @@
     [self synchronizeMasterFontSizeControl];
 }
 
+-(void)saveSettings
+{
+    if (self.settingsType == AMSettingsTypeFactoryDefaults) {
+        // Can't save factory defaults so nothing to do here
+    } else if (self.settingsType == AMSettingsTypeUserDefaults) {
+        // Save to NSUserDefaults via AMPreferences
+
+    } else if (self.settingsType == AMSettingsTypeCurrentDocument) {
+        if (self.documentSettings) {
+
+        }
+    } else {
+        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsType);
+    }
+}
+
 -(void)synchronizeMasterFontSizeControl
 {
     NSPopUpButton * btn = self.fontSizeSelector;
-    [btn selectItemWithTag:(int)[AMPreferences fontSize]];
+    [btn selectItemWithTag:(int)[AMUserPreferences fontSize]];
 }
 
 #pragma mark - Preferences updates
 - (IBAction)fontSizeChanged:(NSPopUpButton*)sender {
-    [AMPreferences setFontSize:sender.selectedTag];
+    [AMUserPreferences setFontSize:sender.selectedTag];
 }
 
 -(IBAction)restoreToFactoryDefaults:(NSButton *)button
 {
-    [AMPreferences resetAll];
+    [AMUserPreferences resetAll];
     [self reloadData];
 }
 
@@ -97,15 +113,15 @@
 
 -(AMFontAttributes*)fontAttributesForFontChoiceView:(AMFontChoiceView*)view
 {
-    return [AMPreferences fontAttributesForFontType:view.fontType];
+    return [AMUserPreferences fontAttributesForFontType:view.fontType];
 }
 -(void)attributesUpdatedForFontChoiceView:(AMFontChoiceView*)view
 {
-    [AMPreferences setFontAttributes:view.fontAttributes forFontType:view.fontType];
+    [AMUserPreferences setFontAttributes:view.fontAttributes forFontType:view.fontType];
 }
 -(void)restoreFactoryDefaultsForFontChoiceView:(AMFontChoiceView*)view
 {
-    [AMPreferences resetFontAttributesForFontType:view.fontType];
+    [AMUserPreferences resetFontAttributesForFontType:view.fontType];
 }
 -(NSString *)localizedFontUsageDescriptionForFontChoiceView:(AMFontChoiceView *)view
 {

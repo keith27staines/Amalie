@@ -7,7 +7,7 @@
 //
 
 #import "AMNameProviderBase.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMDInsertedObject+Methods.h"
 #import "AMDataStore.h"
 #import "AMConstants.h"
@@ -121,12 +121,12 @@ typedef enum AMCharacterType : NSUInteger {
 
 -(NSUInteger)minimumFontSize
 {
-    return fminf([AMPreferences smallestFontSize], [self baseFontSize]);
+    return fminf([AMUserPreferences smallestFontSize], [self baseFontSize]);
 }
 
 -(CGFloat)superscriptingFraction
 {
-    return [AMPreferences superscriptingFraction];
+    return [AMUserPreferences superscriptingFraction];
 }
 
 -(CGFloat)fontSizeForSuperscriptLevel:(NSInteger)level

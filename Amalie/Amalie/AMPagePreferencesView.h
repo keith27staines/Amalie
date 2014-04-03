@@ -1,5 +1,5 @@
 //
-//  AMPageUserPreferencesView.h
+//  AMPagePreferencesView.h
 //  Amalie
 //
 //  Created by Keith Staines on 03/03/2014.
@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "AMUserPreferencesBaseView.h"
+#import "AMPreferencesBaseView.h"
 
-@interface AMPageUserPreferencesView : AMUserPreferencesBaseView
+@interface AMPagePreferencesView : AMPreferencesBaseView
 
 @end

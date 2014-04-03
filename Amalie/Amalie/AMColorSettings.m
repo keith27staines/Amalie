@@ -8,7 +8,7 @@
 
 #import "AMColorSettings.h"
 #import "AMDocumentSettings.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 
 @interface AMColorSettings()
 {
@@ -130,7 +130,7 @@
 {
     self = [super init];
     if (self) {
-        self = [AMPreferences colorSettings];
+        self = [AMUserPreferences colorSettings];
     }
     return self;
 }

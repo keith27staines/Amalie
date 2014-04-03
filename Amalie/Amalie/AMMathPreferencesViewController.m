@@ -6,17 +6,17 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMMathUserPreferencesViewController.h"
+#import "AMMathPreferencesViewController.h"
 
-@interface AMMathUserPreferencesViewController ()
+@interface AMMathPreferencesViewController ()
 
 @end
 
-@implementation AMMathUserPreferencesViewController
+@implementation AMMathPreferencesViewController
 
 -(NSString *)nibName
 {
-    return @"AMMathUserPreferencesViewController";
+    return @"AMMathPreferencesViewController";
 }
 
 @end

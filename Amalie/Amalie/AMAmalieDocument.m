@@ -21,7 +21,7 @@
 #import "AMDInsertedObject.h"
 #import "AMToolboxView.h"
 #import "AMKeyboardContainerView.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject+Methods.h"
 #import "AMDocumentSettings.h"
@@ -378,7 +378,7 @@
 }
 -(CGFloat)verticalSpacing
 {
-    NSFont * font = [AMPreferences fontForFontType:AMFontTypeAlgebra];
+    NSFont * font = [AMUserPreferences fontForFontType:AMFontTypeAlgebra];
     CGFloat lineSpacing = font.ascender - font.descender + font.leading;
     return lineSpacing;
 }

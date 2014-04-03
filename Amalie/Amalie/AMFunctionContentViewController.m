@@ -18,7 +18,7 @@
 #import "AMEquationContentViewController.h"
 #import "AMFunctionContentView.h"
 #import "AMExpressionNodeView.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMAmalieDocument.h"
 #import "AMTextView.h"
 #import "AMFunctionEditorViewController.h"

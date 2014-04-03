@@ -11,7 +11,7 @@
 @class NSManagedObjectContext;
 @class AMInsertableView;
 @class AMAppController;
-@class AMPreferences;
+@class AMUserPreferences;
 @class KSMWorksheet;
 @class AMDInsertedObject;
 
@@ -134,6 +134,6 @@
 /*!
  preferences
  */
-@property (readonly) AMPreferences * preferenceController;
+@property (readonly) AMUserPreferences * preferenceController;
 
 @end

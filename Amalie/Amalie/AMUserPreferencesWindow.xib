@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AMPreferencesWindowController">
+        <customObject id="-2" userLabel="File's Owner" customClass="AMUserPreferencesWindowController">
             <connections>
                 <outlet property="colorPreferencesViewController" destination="4GF-5y-UCe" id="XWq-Aq-ZDQ"/>
                 <outlet property="fontPreferencesViewController" destination="nWp-gA-8KJ" id="FwN-lk-jeC"/>
@@ -26,7 +26,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" unifiedTitleAndToolbar="YES"/>
             <rect key="contentRect" x="815" y="391" width="916" height="625"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <view key="contentView" id="2" customClass="AMPreferencesWindowContentView">
+            <view key="contentView" id="2" customClass="AMUserPreferencesWindowContentView">
                 <rect key="frame" x="0.0" y="0.0" width="916" height="625"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
@@ -114,9 +114,9 @@
             </connections>
         </window>
         <viewController id="4GF-5y-UCe" customClass="AMColorPreferencesViewController"/>
-        <viewController id="nWp-gA-8KJ" customClass="AMFontUserPreferencesViewController"/>
-        <viewController id="PWI-XG-deY" customClass="AMPageUserPreferencesViewController"/>
-        <viewController id="V6L-CC-FCy" customClass="AMMathUserPreferencesViewController"/>
+        <viewController id="nWp-gA-8KJ" customClass="AMFontPreferencesViewController"/>
+        <viewController id="PWI-XG-deY" customClass="AMPagePreferencesViewController"/>
+        <viewController id="V6L-CC-FCy" customClass="AMMathPreferencesViewController"/>
     </objects>
     <resources>
         <image name="NSColorPanel" width="32" height="32"/>

@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class AMPreferencesWindowController;
-@class AMPreferences;
+@class AMUserPreferencesWindowController;
+@class AMUserPreferences;
 
 /*!
  * Manages the main menu items not related to the current document. 

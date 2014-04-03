@@ -1,5 +1,5 @@
 //
-//  AMPreferencesWindowContentView.h
+//  AMUserPreferencesWindowContentView.h
 //  Amalie
 //
 //  Created by Keith Staines on 30/03/2014.
@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AMPreferencesWindowContentView : NSView
+@interface AMUserPreferencesWindowContentView : NSView
 
 @end

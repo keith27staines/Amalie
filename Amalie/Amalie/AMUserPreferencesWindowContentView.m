@@ -1,19 +1,19 @@
 //
-//  AMPreferencesWindowContentView.m
+//  AMUserPreferencesWindowContentView.m
 //  Amalie
 //
 //  Created by Keith Staines on 30/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMPreferencesWindowContentView.h"
+#import "AMUserPreferencesWindowContentView.h"
 
-@implementation AMPreferencesWindowContentView
+@implementation AMUserPreferencesWindowContentView
 
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    NSRect insetRect = NSInsetRect(self.bounds, 20, 20);
+    NSRect insetRect = NSInsetRect(self.bounds, 19, 19);
     [[NSColor whiteColor] set];
     NSRectFill(insetRect);
     [[NSColor darkGrayColor] set];

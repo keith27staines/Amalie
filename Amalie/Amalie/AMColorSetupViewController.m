@@ -48,7 +48,7 @@
 -(NSView*)colorPreferencesView
 {
     self.colorPreferenceViewController.documentSettings = self.document.documentSettings;
-    self.colorPreferenceViewController.colorPreferencesType = AMColorPreferencesTypeDocumentSettings;
+    self.colorPreferenceViewController.settingsType = AMSettingsTypeCurrentDocument;
     NSView * view = self.colorPreferenceViewController.view;
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     return view;

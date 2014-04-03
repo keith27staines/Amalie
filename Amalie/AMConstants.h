@@ -214,6 +214,12 @@ extern NSString * const kAMImageToolbarRightSidePanelClosedKey;
 
 #pragma mark - Other -
 
+typedef NS_ENUM(NSInteger, AMSettingsType){
+    AMSettingsTypeFactoryDefaults = 0,
+    AMSettingsTypeUserDefaults    = 1,
+    AMSettingsTypeCurrentDocument = 2,
+};
+
 typedef NS_ENUM(NSUInteger, AMMeasurementUnits) {
     AMMeasurementUnitsPoints      = 0,
     AMMeasurementUnitsMillimeters = 1,

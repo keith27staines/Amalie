@@ -10,7 +10,7 @@
 #import "AMPaper.h"
 #import "AMMeasurement.h"
 #import "AMPageOrientationView.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 
 @interface AMPageSetupViewController ()
 {

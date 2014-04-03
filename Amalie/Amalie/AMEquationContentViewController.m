@@ -12,7 +12,7 @@
 //#import "AMEquationContentView.h"
 #import "AMDInsertedObject.h"
 #import "AMExpressionNodeView.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 #import "AMAmalieDocument.h"
 #import "AMArgumentsNameProvider.h"
 

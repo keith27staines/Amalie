@@ -7,20 +7,20 @@
 //
 
 #import "AMAppController.h"
-#import "AMPreferences.h"
-#import "AMPreferencesWindowController.h"
+#import "AMUserPreferences.h"
+#import "AMUserPreferencesWindowController.h"
 #import "AMConstants.h"
 #import "AMLibraryItem.h"
 #import "AMInsertableView.h"
 
-NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
+NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 
 @interface AMAppController()
 {
-    AMPreferencesWindowController * _preferencesWindowController;
+    AMUserPreferencesWindowController * _preferencesWindowController;
 }
 
-@property (strong,readonly) AMPreferencesWindowController * preferencesWindowController;
+@property (strong,readonly) AMUserPreferencesWindowController * preferencesWindowController;
 
 @end
 
@@ -29,7 +29,7 @@ NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
 - (IBAction)showPreferencesPanel:(id)sender {
     
     if (!_preferencesWindowController) {
-        _preferencesWindowController = [[AMPreferencesWindowController alloc] initWithWindowNibName:kAMPreferencesWindowNibName];
+        _preferencesWindowController = [[AMUserPreferencesWindowController alloc] initWithWindowNibName:kAMPreferencesWindowNibName];
     }
     [_preferencesWindowController showWindow:self];
 }
@@ -46,7 +46,7 @@ NSString * const kAMPreferencesWindowNibName = @"AMPreferencesWindow";
 // Called before any other method of this class
 +(void)initialize
 {
-    [AMPreferences registerDefaultPreferences];
+    [AMUserPreferences registerDefaultPreferences];
 }
 
 -(void)applicationWillTerminateNotification:(NSNotification*)notification

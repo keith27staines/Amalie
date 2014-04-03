@@ -1,25 +1,25 @@
 //
-//  AMPreferencesWindowController.m
+//  AMUserPreferencesWindowController.m
 //  Amalie
 //
 //  Created by Keith Staines on 07/07/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "AMPreferencesWindowController.h"
+#import "AMUserPreferencesWindowController.h"
 #import "AMConstants.h"
-#import "AMPreferences.h"
+#import "AMUserPreferences.h"
 
 #import "AMColorPreferencesViewController.h"
-#import "AMFontUserPreferencesViewController.h"
-#import "AMMathUserPreferencesViewController.h"
-#import "AMPageUserPreferencesViewController.h"
-#import "AMUserPreferencesBaseViewController.h"
+#import "AMFontPreferencesViewController.h"
+#import "AMMathPreferencesViewController.h"
+#import "AMPagePreferencesViewController.h"
+#import "AMPreferencesBaseViewController.h"
 
 static CGFloat const kAMMINPREFERENCEPANEWIDTH = 900;  // minimum pane width in points
 
-@interface AMPreferencesWindowController ()
-@property (strong, readonly) AMPreferences * preferences;
+@interface AMUserPreferencesWindowController ()
+@property (strong, readonly) AMUserPreferences * preferences;
 
 @end
 
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     AMUserPreferencesViewMath,
 };
 
-@implementation AMPreferencesWindowController
+@implementation AMUserPreferencesWindowController
 
 -(void)awakeFromNib
 {
@@ -41,7 +41,6 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 -(void)showColorsView:(id)sender
 {
     self.window.title = NSLocalizedString(@"Amalie colors", @"Window title for user preferences panel dedicated to the colors of various displayed objects");
-    self.colorPreferencesViewController.colorPreferencesType = AMColorPreferencesTypeUserDefaults;
     [self displayViewController:self.colorPreferencesViewController];
 }
 -(void)showFontsView:(id)sender
@@ -60,8 +59,9 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     [self displayViewController:self.pagePreferencesViewController];
 }
 
--(void)displayViewController:(AMUserPreferencesBaseViewController*)vc
+-(void)displayViewController:(AMPreferencesBaseViewController*)vc
 {
+    vc.settingsType = AMSettingsTypeUserDefaults;
     NSView * contentView = self.window.contentView;
     NSWindow * window = self.window;
     NSRect oldWindowFrame = window.frame;
