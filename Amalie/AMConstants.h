@@ -81,6 +81,18 @@ extern NSUInteger const kAMPageHeightUSLetter;
 extern NSUInteger const kAMPageWidthUSLegal;
 extern NSUInteger const kAMPageHeightUSLegal;
 
+#pragma mark - Settings sections -
+typedef NS_ENUM(NSUInteger, AMSettingsSectionType) {
+    AMSettingsSectionPaper      = 0,
+    AMSettingsSectionColors     = 1,
+    AMSettingsSectionFonts      = 2,
+    AMSettingsSectionMathsStyle = 3,
+};
+extern NSString * const kAMAllColorSettingsKey;
+extern NSString * const kAMAllFontSettingsKey;
+extern NSString * const kAMAllPaperSettingsKey;
+extern NSString * const KAMAllMathsStyleSettingsKey;
+
 #pragma mark - Font -
 typedef NS_ENUM(NSUInteger, AMFontType){
     AMFontTypeLiteral    = 0,
@@ -92,6 +104,7 @@ typedef NS_ENUM(NSUInteger, AMFontType){
     AMFontTypeFixedWidth = 6,
     AMFontTypeMax        = 6,
 };
+
 // Keys
 extern NSString * const kAMFontAttributesForLiteralsKey;
 extern NSString * const kAMFontAttributesForAlgebraKey;

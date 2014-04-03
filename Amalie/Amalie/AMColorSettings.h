@@ -8,13 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
+#import "AMSettingsSection.h"
 
-@interface AMColorSettings : NSObject <NSCoding, NSCopying>
+@interface AMColorSettings : AMSettingsSection <NSCoding, NSCopying>
 
-+(id)colorSettingsWithUserDefaults;
-+(id)colorSettingsWithFactoryDefaults;
-
-+(id)colorSettingsWithDataDictionaries:(NSDictionary*)dataDictionaries;
++(id)settingsWithDataDictionaries:(NSDictionary*)dataDictionaries;
 
 -(NSColor*)backColorForInsertableObjectType:(AMInsertableType)objectType;
 

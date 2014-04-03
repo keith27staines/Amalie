@@ -9,17 +9,17 @@
 #import "AMDocumentSettings.h"
 #import "AMDDocumentSettings+Methods.h"
 #import "AMUserPreferences.h"
-#import "AMDFontAttributes+Methods.h"
-#import "AMFontAttributes.h"
+
 #import "AMPaper.h"
 #import "AMColorSettings.h"
+#import "AMFontSettings.h"
+#import "AMMathStyleSettings.h"
 
 @interface AMDocumentSettings()
 {
     AMDDocumentSettings * _dataObject;
     AMPaper * _paper;
 }
-
 @property (readonly) AMDDocumentSettings * dataObject;
 @end
 
@@ -34,7 +34,6 @@
     }
     return self;
 }
-
 -(AMDDocumentSettings *)dataObject
 {
     if (!_dataObject) {
@@ -43,7 +42,6 @@
     }
     return _dataObject;
 }
-
 -(void)createDataObject
 {
     _dataObject = [AMDDocumentSettings fetchDocumentSettings];
@@ -52,12 +50,10 @@
         [self resetToUserDefaults];
     }
 }
-
 -(AMPaper*)paper
 {
     return [NSKeyedUnarchiver unarchiveObjectWithData:self.dataObject.pageSetup];
 }
-
 -(void)setPaper:(AMPaper *)paper
 {
     _dataObject.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:paper];
@@ -70,7 +66,7 @@
     if (colorsData) {
         colorSettings = [NSKeyedUnarchiver unarchiveObjectWithData:colorsData];
     } else {
-        colorSettings = [AMColorSettings colorSettingsWithUserDefaults];
+        colorSettings = [AMColorSettings settingsWithUserDefaults];
         [self setColorSettings:colorSettings];
     }
     return colorSettings;
@@ -79,26 +75,43 @@
 {
     _dataObject.colorSettings = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
 }
-
+-(AMFontSettings *)fontSettings
+{
+    AMFontSettings * fontSettings;
+    NSData * fontData = _dataObject.fontSettings;
+    if (fontData) {
+        fontSettings = [NSKeyedUnarchiver unarchiveObjectWithData:fontData];
+    } else {
+        fontSettings = [AMFontSettings settingsWithUserDefaults];
+        [self setFontSettings:fontSettings];
+    }
+    return fontSettings;
+}
+-(void)setFontSettings:(AMFontSettings*)fontSettings
+{
+    _dataObject.fontSettings = [NSKeyedArchiver archivedDataWithRootObject:fontSettings];
+}
+-(AMMathStyleSettings *)mathsStyleSettings
+{
+    AMMathStyleSettings * mathStyleSettings;
+    NSData * data = _dataObject.fontSettings;
+    if (data) {
+        mathStyleSettings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    } else {
+        mathStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];
+        [self setMathStyleSettings:mathStyleSettings];
+    }
+    return mathStyleSettings;
+}
+-(void)setMathStyleSettings:(AMMathStyleSettings*)mathStyleSettings
+{
+    _dataObject.mathStyleSettings = [NSKeyedArchiver archivedDataWithRootObject:mathStyleSettings];
+}
 -(void)resetToUserDefaults
 {
-    // Paper
-    [self setPaper:[[AMPaper alloc] init]];  // using init, paper is constructed from NSUserDefaults
-    
-    // Fonts
-    for ( NSNumber * fontTypeNumber in [self arrayOfFontTypes] ) {
-        NSInteger fontType = fontTypeNumber.integerValue;
-        AMFontAttributes * fa = [AMUserPreferences fontAttributesForFontType:fontType];
-        [self setFontAttributes:fa forFontType:fontType];
-    }
-    
-    // Math Typography
-    [self setSmallestFontSize:[AMUserPreferences smallestFontSize]];
-    [self setFontSize:[AMUserPreferences fontSize]];
-    [self setFixedWidthFontSize:[AMUserPreferences fixedWidthFontSize]];
-    [self setSuperscriptingFraction:[AMUserPreferences superscriptingFraction]];
-    [self setSuperscriptOffset:[AMUserPreferences superscriptOffset]];
-    [self setSubscriptOffset:[AMUserPreferences subscriptOffset]];
+    self.fontSettings = [AMFontSettings settingsWithUserDefaults];
+    self.colorSettings = [AMColorSettings settingsWithUserDefaults];
+    self.mathsStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];
 }
 
 -(CGFloat)smallestFontSize
@@ -108,14 +121,6 @@
 -(void)setSmallestFontSize:(CGFloat)smallestFontSize
 {
     self.dataObject.smallestFontSize = @(smallestFontSize);
-}
--(CGFloat)fontSize
-{
-    return self.dataObject.baseFontSize.floatValue;
-}
--(void)setFontSize:(CGFloat)fontSize
-{
-    self.dataObject.baseFontSize = @(fontSize);
 }
 -(CGFloat)superscriptingFraction
 {
@@ -141,86 +146,6 @@
 {
     self.dataObject.subscriptOffset = @(subscriptOffset);
 }
-
--(NSArray *)arrayOfFontTypes
-{
-    return @[
-    @(AMFontTypeLiteral),
-    @(AMFontTypeAlgebra),
-    @(AMFontTypeVector),
-    @(AMFontTypeMatrix),
-    @(AMFontTypeSymbol),
-    @(AMFontTypeText),
-    @(AMFontTypeFixedWidth),
-    ];
-}
-
--(void)setFontAttributes:(AMFontAttributes *)attributes forFontType:(AMFontType)fontType
-{
-    AMDFontAttributes * cdfa = [self dataObjectForFontType:fontType];
-    if (!cdfa) {
-        cdfa = [AMDFontAttributes makeFontAttributes];
-        [self setDataObject:cdfa forFontType:fontType];
-    }
-    [attributes copyToCoreDataFontAttributes:cdfa];
-}
-
--(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType
-{
-    AMDFontAttributes * dfa = [self dataObjectForFontType:fontType];
-    return [AMFontAttributes fontAttributesWithName:dfa.fontFamilyName
-                                               size:dfa.size.floatValue
-                                               bold:dfa.isBold.boolValue
-                                             italic:dfa.isItalic.boolValue
-                                     allowSynthesis:dfa.allowSynthesis.boolValue];
-}
-
--(AMDFontAttributes*)dataObjectForFontType:(AMFontType)fontType
-{
-    switch (fontType) {
-        case AMFontTypeLiteral:
-            return self.dataObject.fontForLiterals;
-        case AMFontTypeAlgebra:
-            return self.dataObject.fontForAlgebra;
-        case AMFontTypeVector:
-            return self.dataObject.fontForVectors;
-        case AMFontTypeMatrix:
-            return self.dataObject.fontForMatrices;
-        case AMFontTypeSymbol:
-            return self.dataObject.fontForSymbols;
-        case AMFontTypeText:
-            return self.dataObject.fontForText;
-        case AMFontTypeFixedWidth:
-            return self.dataObject.fontForFixedWidthText;
-    }
-}
--(void)setDataObject:(AMDFontAttributes *)fontAttributes forFontType:(AMFontType)fontType
-{
-    switch (fontType) {
-        case AMFontTypeLiteral:
-            self.dataObject.fontForLiterals = fontAttributes;
-            break;
-        case AMFontTypeAlgebra:
-            self.dataObject.fontForAlgebra = fontAttributes;
-            break;
-        case AMFontTypeVector:
-            self.dataObject.fontForVectors = fontAttributes;
-            break;
-        case AMFontTypeMatrix:
-            self.dataObject.fontForMatrices = fontAttributes;
-            break;
-        case AMFontTypeSymbol:
-            self.dataObject.fontForSymbols = fontAttributes;
-            break;
-        case AMFontTypeText:
-            self.dataObject.fontForText = fontAttributes;
-            break;
-        case AMFontTypeFixedWidth:
-            self.dataObject.fontForFixedWidthText = fontAttributes;
-            break;
-    }
-}
-
 
 
 

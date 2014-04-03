@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMFontAttributes, AMColorSettings;
+@class AMFontSettings;
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
@@ -39,15 +39,9 @@
 +(AMMeasurementUnits)paperMeasurementUnits;
 +(void)setPaperMeasurementUnits:(AMMeasurementUnits)units;
 
-#pragma mark - Fonts
-+(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType;
-+(void)setFontAttributes:(AMFontAttributes*)attributes forFontType:(AMFontType)fontType;
-+(NSUInteger)fontSize;
-+(void)setFontSize:(NSUInteger)size;
+#pragma mark - Math Style
 +(NSUInteger)smallestFontSize;
 +(void)setSmallestFontSize:(NSUInteger)size;
-+(NSUInteger)fixedWidthFontSize;
-+(void)setFixedWidthFontSize:(NSUInteger)size;
 +(CGFloat)superscriptingFraction;
 +(void)setSuperscriptingFraction:(CGFloat)superscriptingFraction;
 +(CGFloat)superscriptOffset;
@@ -55,17 +49,14 @@
 +(CGFloat)subscriptOffset;
 +(void)setSubscriptOffset:(CGFloat)offset;
 
-+(BOOL)allowFontSynthesis;
-+(void)setAllowFontSynthesis:(BOOL)yn;
-
 #pragma mark - Misc  -
 +(NSSize)pageSize;
 +(void)setPageSize:(NSSize)size;
 +(NSFont*)fontForFontType:(AMFontType)fontType;
 
-#pragma mark - Colors
-+(AMColorSettings*)colorSettings;
-+(void)setColorSettings:(AMColorSettings*)colorSettings;
-+(void)resetColorSettings;
+#pragma mark - Getters and setters for entre settings section
++(NSData*)dataForSettingsSection:(AMSettingsSectionType)section;
++(void)setDataForSettingsSection:(AMSettingsSectionType)section;
++(void)resetSettingsForSection:(AMSettingsSectionType)section;
 
 @end

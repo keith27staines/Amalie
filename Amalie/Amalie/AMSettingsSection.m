@@ -1,14 +1,17 @@
 //
-//  AMMathStyleSettings.m
+//  AMSettingsSection.m
 //  Amalie
 //
-//  Created by Keith Staines on 02/04/2014.
+//  Created by Keith Staines on 03/04/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMMathStyleSettings.h"
+#import "AMSettingsSection.h"
+#import "AMUserPreferences.h"
 
-@implementation AMMathStyleSettings
+@implementation AMSettingsSection
+
+#pragma mark - Abstract methods that must be overridden in subclasses
 /*! Subclasses must override */
 -(instancetype)initWithFactoryDefaults
 {
@@ -35,5 +38,28 @@
 {
     [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
 }
+#pragma mark - Default implementations that should not be overridden in subclasses
++(id)settingsWithUserDefaults
+{
+    return [[self.class alloc] initWithUserDefaults];
+}
++(id)settingsWithFactoryDefaults
+{
+    return [[self.class alloc] initWithFactoryDefaults];
+}
+-(id)init
+{
+    return [self initWithFactoryDefaults];
+}
+- (instancetype)initWithUserDefaults
+{
+    self = [super init];
+    if (self) {
+        NSData * data = [AMUserPreferences dataForSettingsSection:[self section]];
+        self = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    return self;
+}
+
 
 @end

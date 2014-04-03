@@ -70,7 +70,7 @@
 -(AMColorSettings *)colorSettings
 {
     if (!_colorSettings) {
-        _colorSettings = [AMColorSettings colorSettingsWithUserDefaults];
+        _colorSettings = [AMColorSettings settingsWithUserDefaults];
     }
     return _colorSettings;
 }

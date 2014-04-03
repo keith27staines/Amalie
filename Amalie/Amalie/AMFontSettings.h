@@ -9,18 +9,15 @@
 @class AMFontAttributes;
 
 #import <Foundation/Foundation.h>
-#import "AMConstants.h"
+#import "AMSettingsSection.h"
 
-@interface AMFontSettings : NSObject <NSCoding, NSCopying>
-
-+(id)settingsWithUserDefaults;
-+(id)settingsWithFactoryDefaults;
-
+@interface AMFontSettings : AMSettingsSection <NSCoding, NSCopying>
 
 -(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType;
 -(void)setFontAttributes:(AMFontAttributes*)attributes forFontType:(AMFontType)fontType;
 
 @property CGFloat fontSize;
 @property CGFloat fixedWidthFontSize;
+@property BOOL    allowFontSynthesis;
 
 @end

@@ -9,49 +9,33 @@
 #import "AMPageSettings.h"
 
 @implementation AMPageSettings
-+(id)settingsWithUserDefaults
-{
-    return [[self.class alloc] initWithUserDefaults];
-}
-+(id)settingsWithFactoryDefaults
-{
-    return [[self.class alloc] initWithFactoryDefaults];
-}
--(id)init
-{
-    return [self initWithFactoryDefaults];
-}
-- (instancetype)initWithFactoryDefaults
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-- (instancetype)initWithUserDefaults
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
 
-#pragma mark - NSCopying -
+/*! Subclasses must override */
+-(instancetype)initWithFactoryDefaults
+{
+    [NSException raise:@"Missing implemetation" format:@"Derived classes must override this method"];
+    return nil;
+}
+/*! Subclasses must override */
+-(AMSettingsSectionType)section
+{
+    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+    return 0;
+}
 -(id)copyWithZone:(NSZone *)zone
 {
-    return [[self.class alloc] init];
-}
-
-#pragma mark - NSCoding -
--(void)encodeWithCoder:(NSCoder *)aCoder
-{
-    
+    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+    return nil;
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    return self;
+    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+    return nil;
 }
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+}
+
 
 @end

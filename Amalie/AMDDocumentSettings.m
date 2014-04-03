@@ -7,25 +7,13 @@
 //
 
 #import "AMDDocumentSettings.h"
-#import "AMDFontAttributes.h"
-
 
 @implementation AMDDocumentSettings
 
 @dynamic pageSetup;
-@dynamic superscriptingFraction;
-@dynamic superscriptOffset;
-@dynamic subscriptOffset;
-@dynamic smallestFontSize;
-@dynamic baseFontSize;
-@dynamic fixedWidthFontSize;
-@dynamic fontForAlgebra;
-@dynamic fontForFixedWidthText;
-@dynamic fontForLiterals;
-@dynamic fontForMatrices;
-@dynamic fontForSymbols;
-@dynamic fontForText;
-@dynamic fontForVectors;
 @dynamic colorSettings;
+@dynamic fontSettings;
+@dynamic mathStyleSettings;
+@dynamic pageSettings;
 
 @end

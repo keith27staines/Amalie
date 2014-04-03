@@ -23,33 +23,10 @@
 
 @implementation AMColorSettings
 
-#pragma mark - Initializers -
-
-+(id)colorSettingsWithUserDefaults
+#pragma mark - Overrides -
+-(AMSettingsSectionType)section
 {
-    return [[AMColorSettings alloc] initWithUserDefaults];
-}
-+(id)colorSettingsWithFactoryDefaults
-{
-    return [[AMColorSettings alloc] initWithFactoryDefaults];
-}
-+(id)colorSettingsWithDataDictionaries:(NSDictionary *)dataDictionaries
-{
-    return [[AMColorSettings alloc] initWithDataDictionaries:dataDictionaries];
-}
-
--(id)init
-{
-    return [self initWithFactoryDefaults];
-}
--(instancetype)initWithDataDictionaries:(NSDictionary*)dataDictionaries
-{
-    self = [super init];
-    if (self) {
-        _libraryColorDataDictionary = dataDictionaries[kAMLibraryObjectsKey];
-        _otherColorDataDictionary = dataDictionaries[kAMNonLibraryObjectsKey];
-    }
-    return self;
+    return AMSettingsSectionColors;
 }
 - (instancetype)initWithFactoryDefaults
 {
@@ -106,7 +83,7 @@
     NSDictionary * graph2DDictionary    = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingGraph2DBackColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingGraph2DFontColor]};
     [dictionary setObject:[graph2DDictionary mutableCopy] forKey:kAMGraph2DKey];
-
+    
     _libraryColorDataDictionary = dictionary;
     
     // Different dictionary for non-library objects
@@ -121,16 +98,24 @@
     NSDictionary * paperColor           = @{kAMBackColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingPaperColor],
                                             kAMFontColorKey : [AMColorSettings colorDataFromName:kAMFactorySettingPaperFontColor]};
     [dictionary setObject:[paperColor mutableCopy] forKey:kAMPaperKey];
-
+    
     _otherColorDataDictionary = dictionary;
     
     return self;
 }
-- (instancetype)initWithUserDefaults
+
+#pragma mark - Extra initializers -
++(id)settingsWithDataDictionaries:(NSDictionary *)dataDictionaries
+{
+    return [[self.class alloc] initWithDataDictionaries:dataDictionaries];
+}
+
+-(instancetype)initWithDataDictionaries:(NSDictionary*)dataDictionaries
 {
     self = [super init];
     if (self) {
-        self = [AMUserPreferences colorSettings];
+        _libraryColorDataDictionary = dataDictionaries[kAMLibraryObjectsKey];
+        _otherColorDataDictionary = dataDictionaries[kAMNonLibraryObjectsKey];
     }
     return self;
 }
@@ -517,11 +502,11 @@
 #pragma mark - NSCoding
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:@{kAMNonLibraryObjectsKey: _otherColorDataDictionary, kAMLibraryObjectsKey: _libraryColorDataDictionary } forKey:kAMAllColorSettingsKey];
+    [aCoder encodeObject:@{kAMNonLibraryObjectsKey: _otherColorDataDictionary, kAMLibraryObjectsKey: _libraryColorDataDictionary } forKey:@"kAMDataDictionariesKey"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    NSDictionary * allColorData = [aDecoder decodeObjectForKey:kAMAllColorSettingsKey];
+    NSDictionary * allColorData = [aDecoder decodeObjectForKey:@"kAMDataDictionariesKey"];
     return [self initWithDataDictionaries:allColorData];
 }
 
@@ -529,7 +514,7 @@
 -(id)copyWithZone:(NSZone *)zone
 {
     AMColorSettings * aCopy = [[AMColorSettings alloc] init];
-    aCopy.libraryColorDataDictionary = self.libraryColorDataDictionary;
+    aCopy.libraryColorDataDictionary = [self.libraryColorDataDictionary copy];
     [aCopy setBackColorForDocumentBackground:self.backColorForDocumentBackground];
     [aCopy setBackColorForPaper:self.backColorForPaper];
     [aCopy setFontColorForDocumentBackground:self.fontColorForDocumentBackground];

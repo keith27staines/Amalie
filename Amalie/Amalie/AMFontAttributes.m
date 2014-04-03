@@ -7,7 +7,6 @@
 //
 
 #import "AMFontAttributes.h"
-#import "AMDFontAttributes+Methods.h"
 
 @implementation AMFontAttributes
 

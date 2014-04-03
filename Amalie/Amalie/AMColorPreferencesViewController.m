@@ -90,10 +90,10 @@
     }
     switch (self.settingsType) {
         case AMSettingsTypeFactoryDefaults:
-            _colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
+            _colorSettings = [AMColorSettings settingsWithFactoryDefaults];
             break;
         case AMSettingsTypeUserDefaults:
-            _colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
+            _colorSettings = [AMColorSettings settingsWithFactoryDefaults];
             break;
         case AMSettingsTypeCurrentDocument:
             NSAssert(self.documentSettings, @"Document settings must exist");
@@ -161,12 +161,12 @@
 }
 
 - (IBAction)resetToFactoryDefaults:(NSButton *)sender {
-    AMColorSettings * colorSettings = [AMColorSettings colorSettingsWithFactoryDefaults];
+    AMColorSettings * colorSettings = [AMColorSettings settingsWithFactoryDefaults];
     [self resetSelectedRowsToColorSettings:colorSettings];
     [self enableColorwellsBySelection];
 }
 - (IBAction)resetToDocumentDefaults:(NSButton *)sender {
-    AMColorSettings * colorSettings = [AMColorSettings colorSettingsWithUserDefaults];
+    AMColorSettings * colorSettings = [AMColorSettings settingsWithUserDefaults];
     [self resetSelectedRowsToColorSettings:colorSettings];
     [self enableColorwellsBySelection];
 }

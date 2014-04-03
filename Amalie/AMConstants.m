@@ -91,7 +91,7 @@ NSString * const kAMFontAttributesForSymbolsKey        = @"kAMFontAttributesForS
 NSString * const kAMFontAttributesForFixedWidthTextKey = @"kAMFontAttributesForFixedWidthTextKey";
 NSString * const kAMFontAttributesForTextKey           = @"kAMFontAttributesForTextKey";
 
-// Keys for specific font attributes in a dictionary
+// Keys for specific attributes of a font in a dictionary
 NSString * const kAMFontNameKey                       = @"kAMFontNameKey";
 NSString * const kAMMinFontSizeKey                    = @"kAMMinFontSizeKey";
 NSString * const kAMFontSizeKey                       = @"kAMFontSizeKey";
@@ -164,8 +164,11 @@ NSString * const kAMIconKey                           = @"kAMIconKey";
 NSString * const kAMTitleKey                          = @"kAMTitleKey";
 NSString * const kAMInfoKey                           = @"kAMInfoKey";
 
-#pragma mark - Key for all color settings
+#pragma mark - Keys for settings sections
 NSString * const kAMAllColorSettingsKey               = @"kAMAllColorSettingsKey";
+NSString * const kAMAllFontSettingsKey                = @"kAMAllFontSettingsKey";
+NSString * const kAMAllPaperSettingsKey               = @"kAMAllPaperSettingsKey";
+NSString * const KAMAllMathsStyleSettingsKey          = @"KAMAllMathsStyleSettingsKey";
 
 #pragma mark - Key for library of insertable objects
 NSString * const kAMLibraryObjectsKey                 = @"kAMLibraryObjectsKey";

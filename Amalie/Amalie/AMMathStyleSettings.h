@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMSettingsSection.h"
 
-@interface AMMathStyleSettings : NSObject <NSCoding, NSCopying>
-+(id)mathsStyleSettingsWithUserDefaults;
-+(id)mathsStyleSettingsWithFactoryDefaults;
+@interface AMMathStyleSettings : AMSettingsSection <NSCoding, NSCopying>
 
 @end

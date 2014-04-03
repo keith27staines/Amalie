@@ -11,7 +11,6 @@
 #import "NSManagedObject+SharedDataStore.h"
 #import "AMConstants.h"
 #import "AMDataStore.h"
-#import "AMDFontAttributes.h"
 
 static NSString * const kAMDENTITYNAME = @"AMDDocumentSettings";
 

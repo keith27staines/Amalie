@@ -8,17 +8,26 @@
 
 #import "AMFontSettings.h"
 #import "AMFontAttributes.h"
+#import "AMUserPreferences.h"
 
 @interface AMFontSettings()
 {
+    BOOL    _allowFontSynthesis;
     CGFloat _fontSize;
     CGFloat _fixedWidthFontSize;
-    NSMutableDictionary * _fontAttributes;
+    NSMutableDictionary * _fontAttributesDictionary;
 }
-@property (readonly) NSMutableDictionary * fontAttributes;
+@property NSMutableDictionary * fontAttributesDictionary;
 @end
 
 @implementation AMFontSettings
+
+#pragma mark - Overrides -
+-(AMSettingsSectionType)section
+{
+    return AMSettingsSectionFonts;
+}
+
 
 +(id)settingsWithUserDefaults
 {
@@ -37,36 +46,54 @@
     self = [super init];
     if (self) {
         
-    }
-    return self;
-}
-- (instancetype)initWithUserDefaults
-{
-    self = [super init];
-    if (self) {
+        AMFontAttributes * literalsAtts   = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForLiterals       size:kAMFactorySettingFontSize bold:NO  italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+        AMFontAttributes * algebraAtts    = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForAlgebra        size:kAMFactorySettingFontSize bold:NO  italic:YES allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+        AMFontAttributes * vectorAtts     = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForVectors        size:kAMFactorySettingFontSize bold:YES italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+        AMFontAttributes * matricesAtts   = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForMatrices       size:kAMFactorySettingFontSize bold:YES italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+        AMFontAttributes * symbolsAtts    = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForSymbols        size:kAMFactorySettingFontSize bold:NO  italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+        AMFontAttributes * textAtts       = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForText           size:kAMFactorySettingFontSize bold:NO  italic:NO  allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+        AMFontAttributes * fixedWidthAtts = [AMFontAttributes fontAttributesWithName:kAMFactorySettingFontNameForFixedWidthText size:kAMFactorySettingFixedWidthFontSize bold:NO italic:NO allowSynthesis:kAMFactorySettingAllowFontSynthesis];
+
+        NSMutableDictionary * dictionary = self.fontAttributesDictionary;
         
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:literalsAtts]   forKey:kAMFontAttributesForLiteralsKey];
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:algebraAtts]    forKey:kAMFontAttributesForAlgebraKey];
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:vectorAtts]     forKey:kAMFontAttributesForVectorsKey];
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:matricesAtts]   forKey:kAMFontAttributesForMatricesKey];
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:symbolsAtts]    forKey:kAMFontAttributesForSymbolsKey];
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:textAtts]       forKey:kAMFontAttributesForTextKey];
+        [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:fixedWidthAtts] forKey:kAMFontAttributesForFixedWidthTextKey];
+        
+        // Font sizes
+        self.fontSize = kAMFactorySettingFontSize;
+        self.fixedWidthFontSize = kAMFactorySettingFixedWidthFontSize;
+        self.allowFontSynthesis = kAMFactorySettingAllowFontSynthesis;
     }
     return self;
 }
 
 #pragma mark - getters and setters -
--(NSMutableDictionary *)fontAttributes
+-(void)setFontAttributesDictionary:(NSMutableDictionary *)fontAttributesDictionary
 {
-    if (!_fontAttributes) {
-        _fontAttributes = [NSMutableDictionary dictionary];
+    _fontAttributesDictionary = fontAttributesDictionary;
+}
+-(NSMutableDictionary *)fontAttributesDictionary
+{
+    if (!_fontAttributesDictionary) {
+        _fontAttributesDictionary = [NSMutableDictionary dictionary];
         for ( NSString * key in [self.class arrayOfFontTypeKeys] ) {
-            _fontAttributes[key] = [[AMFontAttributes alloc] init];
+            _fontAttributesDictionary[key] = [[AMFontAttributes alloc] init];
         }
     }
-    return _fontAttributes;
+    return _fontAttributesDictionary;
 }
 -(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType
 {
-    return self.fontAttributes[[self keyForFontType:fontType]];
+    return self.fontAttributesDictionary[[self keyForFontType:fontType]];
 }
 -(void)setFontAttributes:(AMFontAttributes*)attributes forFontType:(AMFontType)fontType
 {
-    self.fontAttributes[[self keyForFontType:fontType]] = attributes;
+    self.fontAttributesDictionary[[self keyForFontType:fontType]] = attributes;
 }
 
 #pragma mark - Keys for types and types for keys -
@@ -126,17 +153,26 @@
 #pragma mark - NSCopying -
 -(id)copyWithZone:(NSZone *)zone
 {
-    return [[self.class alloc] init];
+    AMFontSettings * copy = [[self.class alloc] init];
+    copy.fixedWidthFontSize = self.fixedWidthFontSize;
+    copy.fontSize = self.fontSize;
+    copy.fontAttributesDictionary = [self.fontAttributesDictionary copy];
+    return copy;
 }
 
 #pragma mark - NSCoding -
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    
+    [aCoder encodeFloat:self.fixedWidthFontSize forKey:kAMFixedWidthFontSizeKey];
+    [aCoder encodeFloat:self.fontSize forKey:kAMFontSizeKey];
+    [aCoder encodeObject:self.fontAttributesDictionary forKey:@"kAMFontAttributesKey"];
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    return [[self.class alloc] init];
+    self.fixedWidthFontSize = [aDecoder decodeFloatForKey:kAMFixedWidthFontSizeKey];
+    self.fontSize = [aDecoder decodeFloatForKey:kAMFontSizeKey];
+    self.fontAttributesDictionary = [aDecoder decodeObjectForKey:@"kAMFontAttributesKey"];
+    return self;
 }
 
 static NSArray * _arrayOfFontTypes;

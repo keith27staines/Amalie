@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMSettingsSection.h"
 
-@interface AMPageSettings : NSObject
-+(id)settingsWithUserDefaults;
-+(id)settingsWithFactoryDefaults;
+@interface AMPageSettings : AMSettingsSection <NSCopying, NSCoding>
+
+
 @end
