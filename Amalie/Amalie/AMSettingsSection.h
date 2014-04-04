@@ -23,6 +23,7 @@
 @interface AMSettingsSection : NSObject <NSCoding, NSCopying>
 
 #pragma mark - Abstract methods that must be overridden in subclasses
+/*! Designated initializer */
 - (instancetype)initWithFactoryDefaults;
 -(AMSettingsSectionType)section;
 

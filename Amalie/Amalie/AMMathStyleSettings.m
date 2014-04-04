@@ -13,33 +13,39 @@
 #pragma mark - AMSettingsSection essential overrides -
 -(instancetype)initWithFactoryDefaults
 {
+    self = [super initWithFactoryDefaults];
+    if (!self) {
+        return nil;
+    }
 //    // Mathematical typography style
 //    [defaults setObject:@(kAMFactorySettingMinFontSize) forKey:kAMMinFontSizeKey];
 //    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFractionKey];
 //    [defaults setObject:@(kAMFactorySettingSuperscriptOffset) forKey:kAMSuperscriptOffsetKey];
 //    [defaults setObject:@(kAMFactorySettingSubscriptOffset) forKey:kAMSubscriptOffsetKey];
 //    [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
-    [NSException raise:@"Missing implemetation" format:@"Derived classes must override this method"];
-    return nil;
+    return self;
 }
 -(AMSettingsSectionType)section
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return 0;
+    return AMSettingsSectionMathsStyle;
 }
 -(id)copyWithZone:(NSZone *)zone
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return nil;
+    AMMathStyleSettings * copy = [super copyWithZone:zone];
+    return copy;
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return nil;
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // TODO: extend
+    }
+    return self;
 }
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+    [super encodeWithCoder:aCoder];
+    // TODO: extend
 }
 
 #pragma mark - Added behaviour -

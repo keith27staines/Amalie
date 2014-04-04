@@ -12,8 +12,6 @@
 
 @interface AMColorSettings : AMSettingsSection <NSCoding, NSCopying>
 
-+(id)settingsWithDataDictionaries:(NSDictionary*)dataDictionaries;
-
 -(NSColor*)backColorForInsertableObjectType:(AMInsertableType)objectType;
 
 -(NSColor*)fontColorForInsertableObjectType:(AMInsertableType)objectType;

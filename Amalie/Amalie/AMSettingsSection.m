@@ -19,8 +19,7 @@
 /*! Subclasses must override */
 -(instancetype)initWithFactoryDefaults
 {
-    [NSException raise:@"Missing implemetation" format:@"Derived classes must override this method"];
-    return nil;
+    return [super init];
 }
 /*! Subclasses must override */
 -(AMSettingsSectionType)section
@@ -30,17 +29,16 @@
 }
 -(id)copyWithZone:(NSZone *)zone
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return nil;
+    AMSettingsSection * settingsSection = [self initWithFactoryDefaults];
+    return settingsSection;
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return nil;
+    return [self initWithFactoryDefaults];
 }
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+    // Nothing to do in this base class implementation
 }
 #pragma mark - Default implementations that should not be overridden in subclasses
 +(id)settingsWithFactoryDefaultsOfType:(AMSettingsSectionType)sectionType
@@ -77,13 +75,9 @@
 {
     return [[self.class alloc] initWithFactoryDefaults];
 }
--(id)init
-{
-    return [self initWithFactoryDefaults];
-}
 - (instancetype)initWithUserDefaults
 {
-    self = [super init];
+    self = [self initWithFactoryDefaults];
     if (self) {
         NSData * data = [AMUserPreferences dataForSettingsSection:[self section]];
         self = [NSKeyedUnarchiver unarchiveObjectWithData:data];

@@ -13,6 +13,10 @@
 /*! Subclasses must override */
 -(instancetype)initWithFactoryDefaults
 {
+    self = [super initWithFactoryDefaults];
+    if (!self) {
+        return nil;
+    }
 //    // Paper size and margins
 //    [defaults setObject:@(AMPaperTypeA4) forKey:kAMPaperSizeKey];
 //    [defaults setObject:@(kAMPageWidthA4) forKey:kAMPageWidthCustomKey];
@@ -23,28 +27,30 @@
 //    AMMargins margins = AMMarginsMake(72, 72, 72, 72);
 //    [defaults setObject:[self NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
 
-    [NSException raise:@"Missing implemetation" format:@"Derived classes must override this method"];
-    return nil;
+    return self;
 }
 /*! Subclasses must override */
 -(AMSettingsSectionType)section
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return 0;
+    return AMSettingsSectionPaper;
 }
 -(id)copyWithZone:(NSZone *)zone
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return nil;
+    AMPageSettings * copy = [super copyWithZone:zone];
+    return copy;
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
-    return nil;
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // TODO: extend
+    }
+    return self;
 }
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [NSException raise:@"Missing implementation" format:@"Derived classes must override this method"];
+    [super encodeWithCoder:aCoder];
+    // TODO: extend
 }
 
 

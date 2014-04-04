@@ -30,7 +30,7 @@
 }
 - (instancetype)initWithFactoryDefaults
 {
-    self = [super init];
+    self = [super initWithFactoryDefaults];
     if (!self) {
         return nil;
     }
@@ -104,20 +104,33 @@
     return self;
 }
 
-#pragma mark - Extra initializers -
-+(id)settingsWithDataDictionaries:(NSDictionary *)dataDictionaries
+#pragma mark - NSCoding
+-(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    return [[self.class alloc] initWithDataDictionaries:dataDictionaries];
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:@{kAMNonLibraryObjectsKey: _otherColorDataDictionary, kAMLibraryObjectsKey: _libraryColorDataDictionary } forKey:@"kAMDataDictionariesKey"];
 }
-
--(instancetype)initWithDataDictionaries:(NSDictionary*)dataDictionaries
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super init];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        _libraryColorDataDictionary = dataDictionaries[kAMLibraryObjectsKey];
-        _otherColorDataDictionary = dataDictionaries[kAMNonLibraryObjectsKey];
+        NSDictionary * allColorData = [aDecoder decodeObjectForKey:@"kAMDataDictionariesKey"];
+        _libraryColorDataDictionary = allColorData[kAMLibraryObjectsKey];
+        _otherColorDataDictionary = allColorData[kAMNonLibraryObjectsKey];
     }
     return self;
+}
+
+#pragma mark - NSCopying
+-(id)copyWithZone:(NSZone *)zone
+{
+    AMColorSettings * aCopy = [[AMColorSettings alloc] init];
+    aCopy.libraryColorDataDictionary = [self.libraryColorDataDictionary copy];
+    [aCopy setBackColorForDocumentBackground:self.backColorForDocumentBackground];
+    [aCopy setBackColorForPaper:self.backColorForPaper];
+    [aCopy setFontColorForDocumentBackground:self.fontColorForDocumentBackground];
+    [aCopy setFontColorForPaper:self.fontColorForPaper];
+    return aCopy;
 }
 
 #pragma mark - Color accessors by key -
@@ -498,31 +511,6 @@
 {
     return [self.otherColorDataDictionary copy];
 }
-
-#pragma mark - NSCoding
--(void)encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:@{kAMNonLibraryObjectsKey: _otherColorDataDictionary, kAMLibraryObjectsKey: _libraryColorDataDictionary } forKey:@"kAMDataDictionariesKey"];
-}
--(id)initWithCoder:(NSCoder *)aDecoder
-{
-    NSDictionary * allColorData = [aDecoder decodeObjectForKey:@"kAMDataDictionariesKey"];
-    return [self initWithDataDictionaries:allColorData];
-}
-
-#pragma mark - NSCopying
--(id)copyWithZone:(NSZone *)zone
-{
-    AMColorSettings * aCopy = [[AMColorSettings alloc] init];
-    aCopy.libraryColorDataDictionary = [self.libraryColorDataDictionary copy];
-    [aCopy setBackColorForDocumentBackground:self.backColorForDocumentBackground];
-    [aCopy setBackColorForPaper:self.backColorForPaper];
-    [aCopy setFontColorForDocumentBackground:self.fontColorForDocumentBackground];
-    [aCopy setFontColorForPaper:self.fontColorForPaper];
-    
-    return aCopy;
-}
-
 
 
 
