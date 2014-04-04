@@ -83,7 +83,7 @@ NSUInteger const kAMPageHeightUSLegal         = 1008;
 
 #pragma mark - Font -
 //Keys for particular fonts
-NSString * const kAMFontAttributesForLiteralsKey       = @"kAMFactorySettingFontNameForLiteralsKey";
+NSString * const kAMFontAttributesForLiteralsKey       = @"kAMFontAttributesForLiteralsKey";
 NSString * const kAMFontAttributesForAlgebraKey        = @"kAMFontAttributesForAlgebraKey";
 NSString * const kAMFontAttributesForVectorsKey        = @"kAMFontAttributesForVectorsKey";
 NSString * const kAMFontAttributesForMatricesKey       = @"kAMFontAttributesForMatricesKey";

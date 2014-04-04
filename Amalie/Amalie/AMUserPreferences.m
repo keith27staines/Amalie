@@ -264,13 +264,13 @@ AMMargins AMMarginsMake(CGFloat left, CGFloat right, CGFloat top, CGFloat bottom
     settings = [AMColorSettings settingsWithFactoryDefaults];
     [defaults setObject:[settings data] forKey:kAMAllColorSettingsKey];
 
-    // Font settings
-    settings = [AMFontSettings settingsWithFactoryDefaults];
-    [defaults setObject:[settings data] forKey:kAMAllFontSettingsKey];
+    // Math style settings
+    settings = [AMMathStyleSettings settingsWithFactoryDefaults];
+    [defaults setObject:[settings data] forKey:KAMAllMathsStyleSettingsKey];
     
     // Page settings
     settings = [AMPageSettings settingsWithFactoryDefaults];
-    [defaults setObject:[settings data] forKey:kAMAllColorSettingsKey];
+    [defaults setObject:[settings data] forKey:kAMAllPaperSettingsKey];
 
     // register everything
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];

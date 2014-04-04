@@ -45,15 +45,15 @@
     
     NSMutableDictionary * dictionary = self.fontAttributesDictionary;
     
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:literalsAtts]   forKey:kAMFontAttributesForLiteralsKey];
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:algebraAtts]    forKey:kAMFontAttributesForAlgebraKey];
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:vectorAtts]     forKey:kAMFontAttributesForVectorsKey];
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:matricesAtts]   forKey:kAMFontAttributesForMatricesKey];
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:symbolsAtts]    forKey:kAMFontAttributesForSymbolsKey];
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:textAtts]       forKey:kAMFontAttributesForTextKey];
-    [dictionary setObject:[NSKeyedArchiver archivedDataWithRootObject:fixedWidthAtts] forKey:kAMFontAttributesForFixedWidthTextKey];
+    [dictionary setObject:literalsAtts   forKey:kAMFontAttributesForLiteralsKey];
+    [dictionary setObject:algebraAtts    forKey:kAMFontAttributesForAlgebraKey];
+    [dictionary setObject:vectorAtts     forKey:kAMFontAttributesForVectorsKey];
+    [dictionary setObject:matricesAtts   forKey:kAMFontAttributesForMatricesKey];
+    [dictionary setObject:symbolsAtts    forKey:kAMFontAttributesForSymbolsKey];
+    [dictionary setObject:textAtts       forKey:kAMFontAttributesForTextKey];
+    [dictionary setObject:fixedWidthAtts forKey:kAMFontAttributesForFixedWidthTextKey];
     
-    // Font sizes
+    // Non-AMFontAttributes properties
     self.fontSize = kAMFactorySettingFontSize;
     self.fixedWidthFontSize = kAMFactorySettingFixedWidthFontSize;
     self.allowFontSynthesis = kAMFactorySettingAllowFontSynthesis;
@@ -107,7 +107,8 @@
 }
 -(AMFontAttributes*)fontAttributesForFontType:(AMFontType)fontType
 {
-    return self.fontAttributesDictionary[[self keyForFontType:fontType]];
+    AMFontAttributes * attrs = self.fontAttributesDictionary[[self keyForFontType:fontType]];
+    return attrs;
 }
 -(void)setFontAttributes:(AMFontAttributes*)attributes forFontType:(AMFontType)fontType
 {
