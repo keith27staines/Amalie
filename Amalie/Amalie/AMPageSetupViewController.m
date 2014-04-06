@@ -306,7 +306,7 @@
     return NO;
 }
 
-#pragma mark - Inform AMPaper Delegate that paper did update-
+#pragma mark - Inform delegate that paper did update-
 -(void)pageDidUpdate
 {
     [self.delegate pageSetupViewController:self didUpdate:self.pageSettings];

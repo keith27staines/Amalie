@@ -24,7 +24,6 @@
 #import "AMLibraryDatasource.h"
 #import "AMInsertableViewDelegate.h"
 #import "AMInsertableViewDataSource.h"
-//#import "AMNameProviderBase.h"
 #import "AMNameProviderDelegate.h"
 
 @interface AMAmalieDocument : NSPersistentDocument <

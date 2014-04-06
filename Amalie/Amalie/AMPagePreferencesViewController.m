@@ -63,10 +63,10 @@
     return AMSettingsSectionPage;
 }
 
-#pragma mark - AMPaperDelegate -
+#pragma mark - AMPageSetupViewControllerDelegate -
 -(void)pageSetupViewController:(AMPageSetupViewController *)vc didUpdate:(AMPageSettings *)settings
 {
     // TODO: add implementation
-    NSAssert(NO, @"Missing implementation");
+    //NSAssert(NO, @"Missing implementation");
 }
 @end

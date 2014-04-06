@@ -65,7 +65,6 @@
     KSMWorksheet                * _mathSheet;
     NSEntityDescription         * _amdInsertedObjectsEntity;
     AMDocumentSettings          * _documentSettings;
-    AMPaper                     * _paper;
 }
 
 /*!
@@ -367,17 +366,17 @@
 -(NSSize)pageSizeInPoints
 {
     AMDocumentSettings * documentSettings = self.documentSettings;
-    AMPaper * paper = documentSettings.paper;
-    NSSize size = documentSettings.paper.paperSize;
-    if (paper.paperOrientation == AMPaperOrientationLandscape) {
+    AMPageSettings * pageSettings = documentSettings.pageSettings;
+    NSSize size = pageSettings.paperSize;
+    if (pageSettings.paperOrientation == AMPaperOrientationLandscape) {
         size = NSMakeSize(size.height, size.width);
     }
-    size = [AMMeasurement convertSize:size fromUnits:paper.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
+    size = [AMMeasurement convertSize:size fromUnits:pageSettings.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
     return size;
 }
 -(AMMargins)pageMargins
 {
-    return [self.documentSettings.paper marginsInUnits:AMMeasurementUnitsPoints];
+    return [self.documentSettings.pageSettings marginsInUnits:AMMeasurementUnitsPoints];
 }
 -(CGFloat)verticalSpacing
 {
@@ -604,7 +603,7 @@
     NSPopover * popover = self.pageSetupPopover;
     popover.behavior = NSPopoverBehaviorTransient;
     AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-    vc.paper = self.documentSettings.paper;
+    vc.pageSettings = self.documentSettings.pageSettings;
     [self.pageSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     [[self.worksheetView window] makeFirstResponder:nil];
 }
@@ -635,7 +634,7 @@
 {
     if (notification.object == self.pageSetupPopover) {
         AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-        [self savePaperToPersistentStore:vc.paper];
+        [self savePageSettingsToPersistentStore:vc.pageSettings];
         [self loadDocumentIntoView];
         return;
     }
@@ -683,9 +682,9 @@
 }
 
 #pragma mark - Misc -
--(void)savePaperToPersistentStore:(AMPaper*)paper
+-(void)savePageSettingsToPersistentStore:(AMPageSettings*)pageSettings
 {
-    self.documentSettings.paper = paper;
+    self.documentSettings.pageSettings = pageSettings;
 }
 -(NSString *)defaultDraftName
 {

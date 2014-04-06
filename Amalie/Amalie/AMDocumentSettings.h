@@ -19,7 +19,6 @@
 -(void)setSettings:(AMSettingsSection*)settings;
 
 #pragma mark - Settings for paper, fonts and colors
-@property (copy) AMPaper * paper;
 @property (copy) AMFontSettings * fontSettings;
 @property (copy) AMColorSettings * colorSettings;
 @property (copy) AMPageSettings * pageSettings;

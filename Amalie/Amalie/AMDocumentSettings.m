@@ -18,7 +18,6 @@
 @interface AMDocumentSettings()
 {
     AMDDocumentSettings * _dataObject;
-    AMPaper * _paper;
 }
 @property (readonly) AMDDocumentSettings * dataObject;
 @end
@@ -76,15 +75,6 @@
             self.mathStyleSettings = (AMMathStyleSettings*)settings;
     }
 }
--(AMPaper*)paper
-{
-    return [NSKeyedUnarchiver unarchiveObjectWithData:self.dataObject.pageSetup];
-}
--(void)setPaper:(AMPaper *)paper
-{
-    _dataObject.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:paper];
-}
-
 -(AMPageSettings *)pageSettings
 {
     AMPageSettings * pageSettings;

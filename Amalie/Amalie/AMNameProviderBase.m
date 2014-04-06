@@ -18,6 +18,7 @@
 #import "AMDName+Methods.h"
 #import "AMError.h"
 #import "AMFontAttributes.h"
+#import "AMMathStyleSettings.h"
 
 typedef enum AMCharacterType : NSUInteger {
     amCharacterTypeLatin,
@@ -121,12 +122,12 @@ typedef enum AMCharacterType : NSUInteger {
 
 -(NSUInteger)minimumFontSize
 {
-    return fminf([AMUserPreferences smallestFontSize], [self baseFontSize]);
+    return fminf([self.delegate smallestFontSize], [self baseFontSize]);
 }
 
 -(CGFloat)superscriptingFraction
 {
-    return [AMUserPreferences superscriptingFraction];
+    return [self.delegate superscriptingFraction];
 }
 
 -(CGFloat)fontSizeForSuperscriptLevel:(NSInteger)level

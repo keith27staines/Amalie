@@ -15,11 +15,13 @@
 #import "AMMathPreferencesViewController.h"
 #import "AMPagePreferencesViewController.h"
 #import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesBaseView.h"
 
 static CGFloat const kAMMINPREFERENCEPANEWIDTH = 900;  // minimum pane width in points
 
 @interface AMUserPreferencesWindowController ()
 @property (strong, readonly) AMUserPreferences * preferences;
+@property (weak) AMPreferencesBaseViewController * displayedViewController;
 
 @end
 
@@ -61,6 +63,13 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 
 -(void)displayViewController:(AMPreferencesBaseViewController*)vc
 {
+    if (vc == self.displayedViewController) {
+        return;
+    }
+    if (self.displayedViewController) {
+        [self.displayedViewController saveSettingsSection];
+    }
+    self.displayedViewController = vc;
     vc.settingsStorageLocationType = AMSettingsStorageLocationTypeUserDefaults;
     NSView * contentView = self.window.contentView;
     NSWindow * window = self.window;
@@ -73,7 +82,8 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     newWindowFrame.origin.x = oldWindowFrame.origin.x;
     newWindowFrame.origin.y = oldWindowFrame.origin.y + oldWindowFrame.size.height - newWindowFrame.size.height;
     while (contentView.subviews.count > 0) {
-        [contentView.subviews[0] removeFromSuperview];
+        NSView * view = contentView.subviews[0];
+        [view removeFromSuperview];
     }
     [self.window setFrame:newWindowFrame display:YES animate:YES];
 
