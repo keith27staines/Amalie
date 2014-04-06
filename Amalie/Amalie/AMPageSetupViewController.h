@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMPageOrientationView, AMPaper, AMPaper;
+@class AMPageOrientationView, AMPageSettings;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
 
 @interface AMPageSetupViewController : NSViewController <AMPageSetupDatasource, NSControlTextEditingDelegate>
 @property id<AMPageSetupViewControllerDelegate>delegate;
-@property AMPaper * paper;
+@property AMPageSettings * pageSettings;
 
 #pragma mark - Page orientation
 - (IBAction)orientationChanged:(NSPopUpButton *)sender;

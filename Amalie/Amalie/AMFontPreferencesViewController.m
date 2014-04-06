@@ -62,13 +62,13 @@
     NSPopUpButton * btn = self.fontSizeSelector;
     [btn removeAllItems];
     NSMenu * menu = btn.menu;
-    for (int i = (int)[AMUserPreferences smallestFontSize]; i < 21; i++) {
+    for (int i = 4; i < 20; i++) {
         [self addFontsizeMenuItemForSize:i toMenu:menu];
     }
-    for (int i = 22; i < 42; i += 2) {
+    for (int i = 20; i < 40; i += 2) {
         [self addFontsizeMenuItemForSize:i toMenu:menu];
     }
-    for (int i = 45; i < 75; i += 5) {
+    for (int i = 40; i < 75; i += 5) {
         [self addFontsizeMenuItemForSize:i toMenu:menu];
     }
 }

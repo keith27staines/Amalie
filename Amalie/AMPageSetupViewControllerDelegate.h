@@ -12,6 +12,6 @@
 
 @protocol AMPageSetupViewControllerDelegate <NSObject>
 
--(void)pageSetupViewController:(AMPageSetupViewController*)vc didUpdatePaper:(AMPaper*)paper;
+-(void)pageSetupViewController:(AMPageSetupViewController*)vc didUpdate:(AMPageSettings*)settings;
 
 @end

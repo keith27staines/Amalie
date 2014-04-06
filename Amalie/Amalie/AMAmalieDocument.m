@@ -31,7 +31,6 @@
 #import "AMArgumentsNameProvider.h"
 #import "AMDocumentView.h"
 #import "AMFontAttributes.h"
-#import "AMPaper.h"
 #import "AMPageSetupViewController.h"
 #import "AMFontSetupViewController.h"
 #import "AMColorSetupViewController.h"

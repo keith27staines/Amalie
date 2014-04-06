@@ -10,7 +10,6 @@
 #import "AMDDocumentSettings+Methods.h"
 #import "AMUserPreferences.h"
 
-#import "AMPaper.h"
 #import "AMColorSettings.h"
 #import "AMFontSettings.h"
 #import "AMMathStyleSettings.h"
@@ -58,7 +57,7 @@
             return self.fontSettings;
         case AMSettingsSectionColors:
             return self.colorSettings;
-        case AMSettingsSectionPaper:
+        case AMSettingsSectionPage:
             return self.pageSettings;
         case AMSettingsSectionMathsStyle:
             return self.mathStyleSettings;
@@ -71,7 +70,7 @@
             self.fontSettings = (AMFontSettings*)settings;
         case AMSettingsSectionColors:
             self.colorSettings = (AMColorSettings*)settings;
-        case AMSettingsSectionPaper:
+        case AMSettingsSectionPage:
             self.pageSettings = (AMPageSettings*)settings;
         case AMSettingsSectionMathsStyle:
             self.mathStyleSettings = (AMMathStyleSettings*)settings;
@@ -86,6 +85,22 @@
     _dataObject.pageSetup = [NSKeyedArchiver archivedDataWithRootObject:paper];
 }
 
+-(AMPageSettings *)pageSettings
+{
+    AMPageSettings * pageSettings;
+    NSData * data = _dataObject.pageSettings;
+    if (data) {
+        pageSettings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    } else {
+        pageSettings = [AMPageSettings settingsWithUserDefaults];
+        [self setPageSettings:pageSettings];
+    }
+    return pageSettings;
+}
+-(void)setPageSettings:(AMPageSettings *)pageSettings
+{
+    _dataObject.pageSettings = [pageSettings data];
+}
 -(AMColorSettings *)colorSettings
 {
     AMColorSettings * colorSettings;
@@ -100,7 +115,7 @@
 }
 -(void)setColorSettings:(AMColorSettings*)colorSettings
 {
-    _dataObject.colorSettings = [NSKeyedArchiver archivedDataWithRootObject:colorSettings];
+    _dataObject.colorSettings = [colorSettings data];
 }
 -(AMFontSettings *)fontSettings
 {
@@ -116,7 +131,7 @@
 }
 -(void)setFontSettings:(AMFontSettings*)fontSettings
 {
-    _dataObject.fontSettings = [NSKeyedArchiver archivedDataWithRootObject:fontSettings];
+    _dataObject.fontSettings = [fontSettings data];
 }
 -(AMMathStyleSettings *)mathStyleSettings
 {
@@ -132,10 +147,11 @@
 }
 -(void)setMathStyleSettings:(AMMathStyleSettings*)mathStyleSettings
 {
-    _dataObject.mathStyleSettings = [NSKeyedArchiver archivedDataWithRootObject:mathStyleSettings];
+    _dataObject.mathStyleSettings = [mathStyleSettings data];
 }
 -(void)resetToUserDefaults
 {
+    self.pageSettings = [AMPageSettings settingsWithUserDefaults];
     self.fontSettings = [AMFontSettings settingsWithUserDefaults];
     self.colorSettings = [AMColorSettings settingsWithUserDefaults];
     self.mathStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];

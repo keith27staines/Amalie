@@ -7,14 +7,14 @@
 //
 
 #import "AMPageSetupViewController.h"
-#import "AMPaper.h"
+#import "AMPageSettings.h"
 #import "AMMeasurement.h"
 #import "AMPageOrientationView.h"
 #import "AMUserPreferences.h"
 
 @interface AMPageSetupViewController ()
 {
-    AMPaper * _paper;
+    AMPageSettings * _pageSettings;
 }
 @end
 
@@ -127,13 +127,13 @@
     [btn removeAllItems];
     NSUInteger counter = 0;
     NSString * name;
-    NSString * customSizeDescription = [AMPaper paperSizeDescriptionForPaperWithPortraitSize:self.paperSize inOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
-    for ( NSString * paperName in [AMPaper paperNames] ) {
+    NSString * customSizeDescription = [AMPageSettings paperSizeDescriptionForPaperWithPortraitSize:self.paperSize inOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits];
+    for ( NSString * paperName in [AMPageSettings paperNames] ) {
         name = [paperName stringByAppendingString:@" "];
         if (counter == AMPaperTypeCustom) {
             name = [name stringByAppendingString:customSizeDescription];
         } else {
-            name = [name stringByAppendingString:[AMPaper paperSizeDescriptionForPaperType:counter withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits]];
+            name = [name stringByAppendingString:[AMPageSettings paperSizeDescriptionForPaperType:counter withOrientation:self.paperOrientation inUnits:self.paperMeasurementUnits]];
         }
         [btn addItemWithTitle:name];
         [btn itemAtIndex:counter].tag = counter;
@@ -147,7 +147,7 @@
     [btn removeAllItems];
     NSUInteger counter = 0;
     NSString * name;
-    for ( NSString * orientationName in [AMPaper paperOrientationNames] ) {
+    for ( NSString * orientationName in [AMPageSettings paperOrientationNames] ) {
         name = [orientationName capitalizedString];
         [btn addItemWithTitle:name];
         [btn itemAtIndex:counter].tag = counter;
@@ -157,7 +157,7 @@
 }
 -(void)populateMarginTextFields
 {
-    AMMargins margins = [self.paper marginsInUnits:self.paperMeasurementUnits];
+    AMMargins margins = [self.pageSettings marginsInUnits:self.paperMeasurementUnits];
     self.leftMarginTextField.floatValue    = margins.left;
     self.rightMarginTextField.floatValue   = margins.right;
     self.topMarginTextField.floatValue     = margins.top;
@@ -166,58 +166,58 @@
 #pragma mark - AMPageOrientationViewDatasource -
 -(AMPaperType)paperType
 {
-    return self.paper.paperType;
+    return self.pageSettings.paperType;
 }
 -(NSString *)paperName
 {
-    return self.paper.paperName;
+    return self.pageSettings.paperName;
 }
 -(NSString*)paperDescription
 {
-    return self.paper.paperDescription;
+    return self.pageSettings.paperDescription;
 }
 -(NSString *)paperWidthDescription
 {
-    return self.paper.paperWidthDescription;
+    return self.pageSettings.paperWidthDescription;
 }
 -(NSString*)paperHeightDescription
 {
-    return self.paper.paperHeightDescription;
+    return self.pageSettings.paperHeightDescription;
 }
 -(NSString*)paperSizeDescription
 {
-    return self.paper.paperSizeDescription;
+    return self.pageSettings.paperSizeDescription;
 }
 -(NSSize)paperSize
 {
-    return self.paper.paperSize;
+    return self.pageSettings.paperSize;
 }
 -(AMPaperOrientation)paperOrientation
 {
-    return self.paper.paperOrientation;
+    return self.pageSettings.paperOrientation;
 }
 -(NSString*)paperOrientationName
 {
-    return self.paper.paperOrientationName;
+    return self.pageSettings.paperOrientationName;
 }
 -(AMMeasurementUnits)paperMeasurementUnits
 {
-    return self.paper.paperMeasurementUnits;
+    return self.pageSettings.paperMeasurementUnits;
 }
 -(AMMargins)paperMargins
 {
-    return [self.paper marginsInUnits:self.paperMeasurementUnits];
+    return [self.pageSettings marginsInUnits:self.paperMeasurementUnits];
 }
--(AMPaper *)paper
+-(AMPageSettings *)pageSettings
 {
-    if (!_paper) {
-        _paper = [[AMPaper alloc] init];
+    if (!_pageSettings) {
+        _pageSettings = [[AMPageSettings alloc] initWithFactoryDefaults];
     }
-    return _paper;
+    return _pageSettings;
 }
--(void)setPaper:(AMPaper *)paper
+-(void)setPageSettings:(AMPageSettings *)pageSettings
 {
-    _paper = paper;
+    _pageSettings = pageSettings;
 }
 -(void)enableCustomSizeControls
 {
@@ -240,35 +240,35 @@
         return;
     }
     if (paperType == AMPaperTypeCustom) {
-        [self setCustomSize:[AMPaper paperSizeForPaperType:self.paperType withOrientation:AMPaperOrientationPortrait inUnits:AMMeasurementUnitsPoints]];
+        [self setCustomSize:[AMPageSettings paperSizeForPaperType:self.paperType withOrientation:AMPaperOrientationPortrait inUnits:AMMeasurementUnitsPoints]];
     } else {
-        self.paper.paperType = paperType;
+        self.pageSettings.paperType = paperType;
     }
-    [self paperDidUpdate];
+    [self pageDidUpdate];
     [self updateDisplay];
 }
 -(void)setCustomSize:(NSSize)size
 {
-    [self paperDidUpdate];
-    [self.paper makeCustomPortraitWidth:size.width portraitHeight:size.height];
+    [self pageDidUpdate];
+    [self.pageSettings makeCustomPortraitWidth:size.width portraitHeight:size.height];
 }
 -(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
 {
-    self.paper.paperOrientation = paperOrientation;
-    [self paperDidUpdate];
+    self.pageSettings.paperOrientation = paperOrientation;
+    [self pageDidUpdate];
     [self updateDisplay];
 }
 -(void)setPaperMeasurementUnits:(AMMeasurementUnits)units
 {
-    self.paper.paperMeasurementUnits = units;
-    [self paperDidUpdate];
+    self.pageSettings.paperMeasurementUnits = units;
+    [self pageDidUpdate];
     [self updateDisplay];
 }
 -(void)setMargins
 {
     AMMargins margins = [self marginsFromView];
-    [self.paper setMargins:margins inUnits:self.paperMeasurementUnits];
-    [self paperDidUpdate];
+    [self.pageSettings setMargins:margins inUnits:self.paperMeasurementUnits];
+    [self pageDidUpdate];
     [self updateDisplay];
 }
 -(AMMargins)marginsFromView
@@ -307,8 +307,8 @@
 }
 
 #pragma mark - Inform AMPaper Delegate that paper did update-
--(void)paperDidUpdate
+-(void)pageDidUpdate
 {
-    [self.delegate pageSetupViewController:self didUpdatePaper:self.paper];
+    [self.delegate pageSetupViewController:self didUpdate:self.pageSettings];
 }
 @end

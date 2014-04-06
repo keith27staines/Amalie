@@ -43,7 +43,6 @@
 		784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */; };
 		7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5CD185769F400719EF3 /* AMNameProviderBase.m */; };
 		7848E5D1185770A300719EF3 /* AMArgumentsNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5D0185770A300719EF3 /* AMArgumentsNameProvider.m */; };
-		784ACC1018BB7918009268B3 /* AMPaper.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC0F18BB7918009268B3 /* AMPaper.m */; };
 		784ACC1318BBAF89009268B3 /* AMMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC1218BBAF89009268B3 /* AMMeasurement.m */; };
 		784ACC1718BE313C009268B3 /* AMMeasuredLengthFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC1618BE313C009268B3 /* AMMeasuredLengthFormatter.m */; };
 		784ACC1D18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC1C18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m */; };
@@ -273,8 +272,6 @@
 		7848E5CD185769F400719EF3 /* AMNameProviderBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameProviderBase.m; sourceTree = "<group>"; };
 		7848E5CF185770A300719EF3 /* AMArgumentsNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentsNameProvider.h; sourceTree = "<group>"; };
 		7848E5D0185770A300719EF3 /* AMArgumentsNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentsNameProvider.m; sourceTree = "<group>"; };
-		784ACC0E18BB7917009268B3 /* AMPaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPaper.h; sourceTree = "<group>"; };
-		784ACC0F18BB7918009268B3 /* AMPaper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPaper.m; sourceTree = "<group>"; };
 		784ACC1118BBAF89009268B3 /* AMMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMeasurement.h; sourceTree = "<group>"; };
 		784ACC1218BBAF89009268B3 /* AMMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMeasurement.m; sourceTree = "<group>"; };
 		784ACC1518BE313C009268B3 /* AMMeasuredLengthFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMeasuredLengthFormatter.h; sourceTree = "<group>"; };
@@ -767,8 +764,6 @@
 			isa = PBXGroup;
 			children = (
 				782859F31886D57000523121 /* AMGraphics.h */,
-				784ACC0E18BB7917009268B3 /* AMPaper.h */,
-				784ACC0F18BB7918009268B3 /* AMPaper.m */,
 				782859F41886D57000523121 /* AMGraphics.m */,
 				782859F71886D5A200523121 /* AMTextMetric.h */,
 				782859FA1886D6B900523121 /* AMTextMetric.m */,
@@ -1483,7 +1478,6 @@
 				78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */,
 				785826AA18C4750C00612651 /* AMColorPreferencesView.m in Sources */,
 				7811D2CF17A257710024839B /* AMReferencedObjectHolder.m in Sources */,
-				784ACC1018BB7918009268B3 /* AMPaper.m in Sources */,
 				78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */,
 				782DA259189B99E400F66E23 /* AMLibraryViewController.m in Sources */,
 				787B305F178361BC001851C0 /* AMDocument.xcdatamodeld in Sources */,

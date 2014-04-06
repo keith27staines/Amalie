@@ -10,7 +10,7 @@
 #import "AMPageSetupViewController.h"
 #import "AMPageSetupView.h"
 #import "AMUserPreferences.h"
-#import "AMPaper.h"
+#import "AMPageSettings.h"
 
 @interface AMPagePreferencesViewController ()
 {
@@ -32,8 +32,8 @@
     NSView * view = [super view];
     if (!self.pageSetupView) {
         AMPageSetupViewController * vc = self.pageSetupViewController;
-        AMPaper * paper = [[AMPaper alloc] init];
-        vc.paper = paper;
+        AMPageSettings * pageSettings = [[AMPageSettings alloc] initWithFactoryDefaults];
+        vc.pageSettings = pageSettings;
         vc.delegate = self;
         self.pageSetupView = (AMPageSetupView*)vc.view;
         NSView * pageSetupView = self.pageSetupView;
@@ -60,12 +60,13 @@
 
 -(AMSettingsSectionType)sectionType
 {
-    return AMSettingsSectionPaper;
+    return AMSettingsSectionPage;
 }
 
 #pragma mark - AMPaperDelegate -
--(void)pageSetupViewController:(AMPageSetupViewController *)vc didUpdatePaper:(AMPaper *)paper
+-(void)pageSetupViewController:(AMPageSetupViewController *)vc didUpdate:(AMPageSettings *)settings
 {
-    [paper writeToAMPreferences];
+    // TODO: add implementation
+    NSAssert(NO, @"Missing implementation");
 }
 @end

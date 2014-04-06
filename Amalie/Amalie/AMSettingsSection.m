@@ -48,7 +48,7 @@
             return [AMFontSettings settingsWithFactoryDefaults];
         case AMSettingsSectionColors:
             return [AMColorSettings settingsWithFactoryDefaults];
-        case AMSettingsSectionPaper:
+        case AMSettingsSectionPage:
             return [AMPageSettings settingsWithFactoryDefaults];
         case AMSettingsSectionMathsStyle:
             return [AMMathStyleSettings settingsWithFactoryDefaults];
@@ -61,7 +61,7 @@
             return [AMFontSettings settingsWithUserDefaults];
         case AMSettingsSectionColors:
             return [AMColorSettings settingsWithUserDefaults];
-        case AMSettingsSectionPaper:
+        case AMSettingsSectionPage:
             return [AMPageSettings settingsWithUserDefaults];
         case AMSettingsSectionMathsStyle:
             return [AMMathStyleSettings settingsWithUserDefaults];
