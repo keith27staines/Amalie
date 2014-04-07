@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMAmalieDocument;
 
 #import <Cocoa/Cocoa.h>
+#import "AMDocumentSettingsBaseViewController.h"
 
-@interface AMMathStyleViewController : NSViewController
+@interface AMMathStyleViewController : AMDocumentSettingsBaseViewController
 
-@property (weak) AMAmalieDocument * document;
 
 @end

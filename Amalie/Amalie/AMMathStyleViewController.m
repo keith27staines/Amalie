@@ -14,14 +14,6 @@
 
 @implementation AMMathStyleViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
 -(NSString *)nibName
 {
     return @"AMMathStyleViewController";

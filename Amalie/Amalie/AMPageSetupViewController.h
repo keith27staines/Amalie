@@ -6,16 +6,10 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMAmalieDocument, AMPagePreferencesViewController;
-
 #import <Cocoa/Cocoa.h>
+#import "AMDocumentSettingsBaseViewController.h"
 
-
-@interface AMPageSetupViewController : NSViewController
-
-@property (weak) AMAmalieDocument * document;
-
-@property (weak) IBOutlet AMPagePreferencesViewController *pagePreferencesViewController;
+@interface AMPageSetupViewController : AMDocumentSettingsBaseViewController
 
 
 

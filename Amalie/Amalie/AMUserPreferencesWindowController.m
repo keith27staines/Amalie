@@ -103,6 +103,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 #pragma mark - NSWindow delegate
 -(void)windowWillClose:(NSNotification *)notification
 {
+    [self.displayedViewController saveSettingsSection];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

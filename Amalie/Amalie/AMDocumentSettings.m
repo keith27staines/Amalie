@@ -67,12 +67,16 @@
     switch (settings.section) {
         case AMSettingsSectionFonts:
             self.fontSettings = (AMFontSettings*)settings;
+            break;
         case AMSettingsSectionColors:
             self.colorSettings = (AMColorSettings*)settings;
+            break;
         case AMSettingsSectionPage:
             self.pageSettings = (AMPageSettings*)settings;
+            break;
         case AMSettingsSectionMathsStyle:
             self.mathStyleSettings = (AMMathStyleSettings*)settings;
+            break;
     }
 }
 -(AMPageSettings *)pageSettings
@@ -141,9 +145,9 @@
 }
 -(void)resetToUserDefaults
 {
-    self.pageSettings = [AMPageSettings settingsWithUserDefaults];
-    self.fontSettings = [AMFontSettings settingsWithUserDefaults];
-    self.colorSettings = [AMColorSettings settingsWithUserDefaults];
+    self.pageSettings      = [AMPageSettings settingsWithUserDefaults];
+    self.fontSettings      = [AMFontSettings settingsWithUserDefaults];
+    self.colorSettings     = [AMColorSettings settingsWithUserDefaults];
     self.mathStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];
 }
 

@@ -10,6 +10,7 @@
 		5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316847D18EDABFD00A29B36 /* AMSettingsSection.m */; };
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
+		5379FBD818F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */; };
 		53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */; };
 		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
 		780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68AD18EC62AE003CC00A /* AMFontSettings.m */; };
@@ -216,6 +217,8 @@
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
+		5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettingsBaseViewController.h; sourceTree = "<group>"; };
+		5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettingsBaseViewController.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
 		53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesWindowContentView.m; sourceTree = "<group>"; };
 		78007E02189CEA0B007CFF77 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
@@ -1117,6 +1120,8 @@
 				788EAE0B18B61C1000D3EBD3 /* AMPageSetupViewController.xib */,
 				788EAE0F18B61C5500D3EBD3 /* AMPageSetupView.h */,
 				788EAE1018B61C5500D3EBD3 /* AMPageSetupView.m */,
+				5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */,
+				5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */,
 			);
 			name = "Page setup view controller and view";
 			sourceTree = "<group>";
@@ -1376,6 +1381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				782859FB1886D6B900523121 /* AMTextMetric.m in Sources */,
+				5379FBD818F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m in Sources */,
 				78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */,
 				784ACC1D18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m in Sources */,
 				781D180D17F31DE70008758D /* AMDataStore.m in Sources */,

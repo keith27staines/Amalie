@@ -6,14 +6,9 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMAmalieDocument,AMColorPreferencesViewController;
-
 #import <Cocoa/Cocoa.h>
+#import "AMDocumentSettingsBaseViewController.h"
 
-@interface AMColorSetupViewController : NSViewController
-
-@property (weak) AMAmalieDocument * document;
-
-@property (weak) IBOutlet AMColorPreferencesViewController *colorPreferenceViewController;
+@interface AMColorSetupViewController : AMDocumentSettingsBaseViewController
 
 @end

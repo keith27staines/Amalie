@@ -209,7 +209,6 @@ static AMFontSelectionViewController * _fontSelectionViewController;
 -(void)popoverDidShow:(NSNotification *)notification
 {
     AMFontSelectionViewController * vc = [self fontSelectionViewController];
-    vc = (AMFontSelectionViewController*)[self.fontSelectionPopover contentViewController];
     vc.fontFamilyToSelect = _fontAttributes.name;
 }
 
