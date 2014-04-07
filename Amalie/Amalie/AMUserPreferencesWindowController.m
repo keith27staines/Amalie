@@ -37,27 +37,27 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
 -(void)awakeFromNib
 {
     // First call setup goes here
-    [self displayViewController:self.pagePreferencesViewController];
+    [self showPageView:nil];
 }
 
 -(void)showColorsView:(id)sender
 {
-    self.window.title = NSLocalizedString(@"Amalie colors", @"Window title for user preferences panel dedicated to the colors of various displayed objects");
+    self.window.title = NSLocalizedString(@"Color preferences for new documents", @"Window title for user preferences panel dedicated to the colors of various displayed objects");
     [self displayViewController:self.colorPreferencesViewController];
 }
 -(void)showFontsView:(id)sender
 {
-    self.window.title = NSLocalizedString(@"Amalie worksheet fonts", @"Window title for user preferences panel dedicated to font settings");
+    self.window.title = NSLocalizedString(@"Font preferences for new documents", @"Window title for user preferences panel dedicated to font settings");
     [self displayViewController:self.fontPreferencesViewController];
 }
 -(void)showMathView:(id)sender
 {
-    self.window.title = NSLocalizedString(@"Amalie mathematical style preferences",@"Window title for user preferences panel dedicated to mathematical style settings");
+    self.window.title = NSLocalizedString(@"Mathematical style preferences for new documents",@"Window title for user preferences panel dedicated to mathematical style settings");
     [self displayViewController:self.mathPreferencesViewController];
 }
 -(void)showPageView:(id)sender
 {
-    self.window.title = NSLocalizedString(@"Amalie page size, orientation and margins",@"Window title for user preferences panel dedicated to page setup");
+    self.window.title = NSLocalizedString(@"Page settings for new documents",@"Window title for user preferences panel dedicated to page setup");
     [self displayViewController:self.pagePreferencesViewController];
 }
 
