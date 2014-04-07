@@ -38,7 +38,7 @@ static NSMutableDictionary * AMFonts;
             data = [[NSUserDefaults standardUserDefaults] objectForKey:kAMAllPageSettingsKey];
             break;
         case AMSettingsSectionMathsStyle:
-            data = [[NSUserDefaults standardUserDefaults] objectForKey:KAMAllMathsStyleSettingsKey];
+            data = [[NSUserDefaults standardUserDefaults] objectForKey:KAMAllMathStyleSettingsKey];
             break;
     }
     return data;
@@ -56,7 +56,7 @@ static NSMutableDictionary * AMFonts;
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:kAMAllPageSettingsKey];
             break;
         case AMSettingsSectionMathsStyle:
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:KAMAllMathsStyleSettingsKey];
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:KAMAllMathStyleSettingsKey];
             break;
     }
 }
@@ -73,7 +73,7 @@ static NSMutableDictionary * AMFonts;
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAMAllPageSettingsKey];
             break;
         case AMSettingsSectionMathsStyle:
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:KAMAllMathsStyleSettingsKey];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:KAMAllMathStyleSettingsKey];
             break;
     }
 }
@@ -94,7 +94,7 @@ static NSMutableDictionary * AMFonts;
 
     // Math style settings
     settings = [AMMathStyleSettings settingsWithFactoryDefaults];
-    [defaults setObject:[settings data] forKey:KAMAllMathsStyleSettingsKey];
+    [defaults setObject:[settings data] forKey:KAMAllMathStyleSettingsKey];
     
     // Page settings
     settings = [AMPageSettings settingsWithFactoryDefaults];

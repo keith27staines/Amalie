@@ -31,16 +31,11 @@
     if (!self) {
         return nil;
     }
-    NSMutableDictionary * defaults;
-    [defaults setObject:@(AMPaperTypeA4) forKey:kAMPaperSizeKey];
-    [defaults setObject:@(kAMPageWidthA4) forKey:kAMPageWidthCustomKey];
-    [defaults setObject:@(kAMPageHeightA4) forKey:kAMPageHeightCustomKey];
-    [defaults setObject:@(AMPaperOrientationPortrait) forKey:kAMPageOrientationKey];
-    [defaults setObject:@(AMMeasurementUnitsPoints) forKey:kAMPaperMeasurementUnitsKey];
-    
-    AMMargins margins = AMMarginsMake(72, 72, 72, 72);
-    [defaults setObject:[AMPageSettings NSStringFromAMMargins:margins] forKey:kAMPageMarginsKey];
-
+    _paperType = AMPaperTypeA4;
+    _customSize = NSMakeSize(kAMPageWidthA4, kAMPageHeightA4);
+    _paperOrientation = AMPaperOrientationPortrait;
+    _paperMeasurementUnits = AMMeasurementUnitsPoints;
+    _margins = AMMarginsMake(72, 72, 72, 72);
     return self;
 }
 -(AMSettingsSectionType)section

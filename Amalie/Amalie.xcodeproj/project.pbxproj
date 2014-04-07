@@ -839,6 +839,8 @@
 				785826BD18C4D20100612651 /* AMPagePreferencesViewController.xib */,
 				785826C018C4D22000612651 /* AMPagePreferencesView.h */,
 				785826C118C4D22000612651 /* AMPagePreferencesView.m */,
+				788EAE1218B6684700D3EBD3 /* AMPageOrientationView.h */,
+				788EAE1318B6684700D3EBD3 /* AMPageOrientationView.m */,
 			);
 			name = "Page setup Preferences";
 			sourceTree = "<group>";
@@ -1115,8 +1117,6 @@
 				788EAE0B18B61C1000D3EBD3 /* AMPageSetupViewController.xib */,
 				788EAE0F18B61C5500D3EBD3 /* AMPageSetupView.h */,
 				788EAE1018B61C5500D3EBD3 /* AMPageSetupView.m */,
-				788EAE1218B6684700D3EBD3 /* AMPageOrientationView.h */,
-				788EAE1318B6684700D3EBD3 /* AMPageOrientationView.m */,
 			);
 			name = "Page setup view controller and view";
 			sourceTree = "<group>";

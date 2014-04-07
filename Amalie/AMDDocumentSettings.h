@@ -13,10 +13,9 @@
 
 @interface AMDDocumentSettings : NSManagedObject
 
-@property (nonatomic, retain) NSData * pageSetup;
-@property (nonatomic, retain) NSData * colorSettings;
-@property (nonatomic, retain) NSData * fontSettings;
-@property (nonatomic, retain) NSData * pageSettings;
-@property (nonatomic, retain) NSData * mathStyleSettings;
+@property (nonatomic, retain) NSData * colorSettingsData;
+@property (nonatomic, retain) NSData * fontSettingsData;
+@property (nonatomic, retain) NSData * pageSettingsData;
+@property (nonatomic, retain) NSData * mathStyleSettingsData;
 
 @end

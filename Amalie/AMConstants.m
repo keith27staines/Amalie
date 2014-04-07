@@ -168,7 +168,7 @@ NSString * const kAMInfoKey                           = @"kAMInfoKey";
 NSString * const kAMAllColorSettingsKey               = @"kAMAllColorSettingsKey";
 NSString * const kAMAllFontSettingsKey                = @"kAMAllFontSettingsKey";
 NSString * const kAMAllPageSettingsKey               = @"kAMAllPaperSettingsKey";
-NSString * const KAMAllMathsStyleSettingsKey          = @"KAMAllMathsStyleSettingsKey";
+NSString * const KAMAllMathStyleSettingsKey          = @"KAMAllMathsStyleSettingsKey";
 
 #pragma mark - Key for library of insertable objects
 NSString * const kAMLibraryObjectsKey                 = @"kAMLibraryObjectsKey";

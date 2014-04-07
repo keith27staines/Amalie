@@ -10,10 +10,9 @@
 
 @implementation AMDDocumentSettings
 
-@dynamic pageSetup;
-@dynamic colorSettings;
-@dynamic fontSettings;
-@dynamic mathStyleSettings;
-@dynamic pageSettings;
+@dynamic colorSettingsData;
+@dynamic fontSettingsData;
+@dynamic mathStyleSettingsData;
+@dynamic pageSettingsData;
 
 @end

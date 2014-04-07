@@ -20,6 +20,6 @@
 
 - (IBAction)showPreferencesPanel:(id)sender;
 
-
+- (IBAction)resetAllUserPreferences:(id)sender;
 
 @end

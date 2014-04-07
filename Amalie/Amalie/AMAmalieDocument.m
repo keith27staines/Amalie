@@ -603,7 +603,7 @@
     NSPopover * popover = self.pageSetupPopover;
     popover.behavior = NSPopoverBehaviorTransient;
     AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-    vc.pageSettings = self.documentSettings.pageSettings;
+    vc.document = self;
     [self.pageSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     [[self.worksheetView window] makeFirstResponder:nil];
 }
@@ -611,6 +611,7 @@
     NSPopover * popover = self.fontSetupPopover;
     popover.behavior = NSPopoverBehaviorTransient;
     AMFontSetupViewController * vc = (AMFontSetupViewController*)self.fontSetupPopover.contentViewController;
+    vc.document = self;
     [self.fontSetupPopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     [[self.worksheetView window] makeFirstResponder:nil];
 }
@@ -626,6 +627,7 @@
     NSPopover * popover = self.mathStylePopover;
     popover.behavior = NSPopoverBehaviorTransient;
     AMMathStyleViewController * vc = (AMMathStyleViewController*)self.mathStylePopover.contentViewController;
+    vc.document = self;
     [self.mathStylePopover showRelativeToRect:sender.bounds ofView:sender preferredEdge:NSMaxYEdge];
     [[self.worksheetView window] makeFirstResponder:nil];
 }
@@ -634,8 +636,6 @@
 {
     if (notification.object == self.pageSetupPopover) {
         AMPageSetupViewController * vc = (AMPageSetupViewController*)self.pageSetupPopover.contentViewController;
-        [self savePageSettingsToPersistentStore:vc.pageSettings];
-        [self loadDocumentIntoView];
         return;
     }
     if (notification.object == self.fontSetupPopover) {

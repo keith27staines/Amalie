@@ -8,6 +8,16 @@
 
 #import "AMMathStyleSettings.h"
 
+@interface AMMathStyleSettings()
+{
+    CGFloat _superscriptingFraction;
+    CGFloat _superscriptOffset;
+    CGFloat _subscriptOffset;
+    CGFloat _smallestFontSize;
+}
+
+@end
+
 @implementation AMMathStyleSettings
 
 #pragma mark - AMSettingsSection essential overrides -
@@ -17,12 +27,10 @@
     if (!self) {
         return nil;
     }
-//    // Mathematical typography style
-//    [defaults setObject:@(kAMFactorySettingMinFontSize) forKey:kAMMinFontSizeKey];
-//    [defaults setObject:@(kAMFactorySettingSuperscriptingFraction) forKey:kAMSuperscriptingFractionKey];
-//    [defaults setObject:@(kAMFactorySettingSuperscriptOffset) forKey:kAMSuperscriptOffsetKey];
-//    [defaults setObject:@(kAMFactorySettingSubscriptOffset) forKey:kAMSubscriptOffsetKey];
-//    [defaults setObject:@(YES) forKey:kAMAllowFontSynthesisKey];
+    self.smallestFontSize = kAMFactorySettingMinFontSize;
+    self.superscriptingFraction = kAMFactorySettingSuperscriptingFraction;
+    self.subscriptOffset = kAMFactorySettingSuperscriptOffset;
+    self.superscriptOffset = kAMFactorySettingSuperscriptOffset;
     return self;
 }
 -(AMSettingsSectionType)section
@@ -31,43 +39,34 @@
 }
 -(id)copyWithZone:(NSZone *)zone
 {
-    AMMathStyleSettings * copy = [super copyWithZone:zone];
+    AMMathStyleSettings * copy  = [super copyWithZone:zone];
+    copy.superscriptingFraction = self.superscriptingFraction;
+    copy.smallestFontSize       = self.smallestFontSize;
+    copy.superscriptOffset      = self.superscriptOffset;
+    copy.subscriptOffset        = self.subscriptOffset;
     return copy;
 }
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // TODO: extend
+        self.superscriptOffset = [aDecoder decodeFloatForKey:kAMSuperscriptOffsetKey];
+        self.subscriptOffset   = [aDecoder decodeFloatForKey:kAMSubscriptOffsetKey];
+        self.smallestFontSize  = [aDecoder decodeIntegerForKey:kAMMinFontSizeKey];
+        self.superscriptingFraction = [aDecoder decodeFloatForKey:kAMSuperscriptingFractionKey];
     }
     return self;
 }
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
     [super encodeWithCoder:aCoder];
-    // TODO: extend
+    [aCoder encodeFloat:self.superscriptOffset forKey:kAMSuperscriptOffsetKey];
+    [aCoder encodeFloat:self.subscriptOffset forKey:kAMSubscriptOffsetKey];
+    [aCoder encodeInteger:self.smallestFontSize forKey:kAMMinFontSizeKey];
+    [aCoder encodeFloat:self.superscriptingFraction forKey:kAMSuperscriptingFractionKey];
 }
 
-#pragma mark - Added behaviour -
--(CGFloat)superscriptingFraction
-{
-    // TODO
-    return 0;
-}
--(CGFloat)superscriptOffset
-{
-    // TODO
-    return 0;
-}
--(CGFloat)subscriptOffset
-{
-    // TODO
-    return 0;
-}
--(CGFloat)smallestFontSize
-{
-    // TODO
-    return 0;
-}
+#pragma mark - AMMathStyleSettings -
+
 
 @end

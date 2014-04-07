@@ -11,9 +11,9 @@
 
 @interface AMMathStyleSettings : AMSettingsSection <NSCoding, NSCopying>
 
--(CGFloat)superscriptingFraction;
--(CGFloat)superscriptOffset;
--(CGFloat)subscriptOffset;
--(CGFloat)smallestFontSize;
+@property CGFloat superscriptingFraction;
+@property CGFloat superscriptOffset;
+@property CGFloat subscriptOffset;
+@property CGFloat smallestFontSize;
 
 @end

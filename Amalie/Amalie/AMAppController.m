@@ -12,6 +12,7 @@
 #import "AMConstants.h"
 #import "AMLibraryItem.h"
 #import "AMInsertableView.h"
+#import "AMUserPreferences.h"
 
 NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 
@@ -25,6 +26,11 @@ NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 @end
 
 @implementation AMAppController
+
+- (IBAction)resetAllUserPreferences:(id)sender
+{
+    [AMUserPreferences resetSettingsForSection:AMSettingsSectionPage];
+}
 
 - (IBAction)showPreferencesPanel:(id)sender {
     

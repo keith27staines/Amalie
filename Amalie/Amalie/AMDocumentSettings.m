@@ -78,7 +78,7 @@
 -(AMPageSettings *)pageSettings
 {
     AMPageSettings * pageSettings;
-    NSData * data = _dataObject.pageSettings;
+    NSData * data = _dataObject.pageSettingsData;
     if (data) {
         pageSettings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     } else {
@@ -89,12 +89,12 @@
 }
 -(void)setPageSettings:(AMPageSettings *)pageSettings
 {
-    _dataObject.pageSettings = [pageSettings data];
+    _dataObject.pageSettingsData = [pageSettings data];
 }
 -(AMColorSettings *)colorSettings
 {
     AMColorSettings * colorSettings;
-    NSData * colorsData = _dataObject.colorSettings;
+    NSData * colorsData = _dataObject.colorSettingsData;
     if (colorsData) {
         colorSettings = [NSKeyedUnarchiver unarchiveObjectWithData:colorsData];
     } else {
@@ -105,12 +105,12 @@
 }
 -(void)setColorSettings:(AMColorSettings*)colorSettings
 {
-    _dataObject.colorSettings = [colorSettings data];
+    _dataObject.colorSettingsData = [colorSettings data];
 }
 -(AMFontSettings *)fontSettings
 {
     AMFontSettings * fontSettings;
-    NSData * fontData = _dataObject.fontSettings;
+    NSData * fontData = _dataObject.fontSettingsData;
     if (fontData) {
         fontSettings = [NSKeyedUnarchiver unarchiveObjectWithData:fontData];
     } else {
@@ -121,12 +121,12 @@
 }
 -(void)setFontSettings:(AMFontSettings*)fontSettings
 {
-    _dataObject.fontSettings = [fontSettings data];
+    _dataObject.fontSettingsData = [fontSettings data];
 }
 -(AMMathStyleSettings *)mathStyleSettings
 {
     AMMathStyleSettings * mathStyleSettings;
-    NSData * data = _dataObject.fontSettings;
+    NSData * data = _dataObject.mathStyleSettingsData;
     if (data) {
         mathStyleSettings = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     } else {
@@ -137,7 +137,7 @@
 }
 -(void)setMathStyleSettings:(AMMathStyleSettings*)mathStyleSettings
 {
-    _dataObject.mathStyleSettings = [mathStyleSettings data];
+    _dataObject.mathStyleSettingsData = [mathStyleSettings data];
 }
 -(void)resetToUserDefaults
 {
