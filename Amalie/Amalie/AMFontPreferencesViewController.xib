@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13D28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13D33" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
@@ -10,7 +10,7 @@
                 <outlet property="fontChoiceTable" destination="mpn-YQ-aGC" id="AcF-wf-HT2"/>
                 <outlet property="fontSelectionViewController" destination="upg-av-rb6" id="aiZ-VW-uWC"/>
                 <outlet property="fontSizeSelector" destination="HMw-0R-B1u" id="eIO-a1-wdk"/>
-                <outlet property="restoreToFactoryDefaults" destination="I5t-VF-jFx" id="UAZ-uM-hPR"/>
+                <outlet property="resetButton" destination="I5t-VF-jFx" id="F4n-fw-VIJ"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -167,17 +167,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fhQ-0h-INJ">
-                    <rect key="frame" x="172" y="720" width="65" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Font size:" id="jcA-kP-sUg">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HMw-0R-B1u">
-                    <rect key="frame" x="241" y="714" width="145" height="26"/>
+                    <rect key="frame" x="93" y="714" width="145" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="EUP-eX-XGp"/>
@@ -198,40 +189,38 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f1u-y1-Wzd">
-                    <rect key="frame" x="28" y="720" width="98" height="17"/>
+                    <rect key="frame" x="28" y="720" width="61" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Font selections" id="ljZ-cD-71V">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Font size" id="ljZ-cD-71V">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I5t-VF-jFx">
-                    <rect key="frame" x="430" y="709" width="206" height="32"/>
+                    <rect key="frame" x="562" y="710" width="74" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Restore to factory defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hjB-J8-PrI">
+                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hjB-J8-PrI">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="restoreToFactoryDefaults:" target="-2" id="RbY-1e-xqS"/>
+                        <action selector="resetButtonClicked:" target="-2" id="FYW-Df-saS"/>
                     </connections>
                 </button>
             </subviews>
             <constraints>
+                <constraint firstItem="I5t-VF-jFx" firstAttribute="baseline" secondItem="f1u-y1-Wzd" secondAttribute="baseline" id="1M5-bE-wu5"/>
                 <constraint firstItem="zkT-TV-rzx" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="55" id="1QC-kK-dFg"/>
                 <constraint firstItem="f1u-y1-Wzd" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="4VW-BS-811"/>
-                <constraint firstItem="HMw-0R-B1u" firstAttribute="leading" secondItem="fhQ-0h-INJ" secondAttribute="trailing" constant="8" id="7i3-xa-3cB"/>
-                <constraint firstItem="fhQ-0h-INJ" firstAttribute="leading" secondItem="f1u-y1-Wzd" secondAttribute="trailing" constant="50" id="Ap5-2Q-rhC"/>
                 <constraint firstItem="zkT-TV-rzx" firstAttribute="top" secondItem="f1u-y1-Wzd" secondAttribute="bottom" constant="18" id="LhG-Fi-uxU"/>
-                <constraint firstItem="I5t-VF-jFx" firstAttribute="top" secondItem="fhQ-0h-INJ" secondAttribute="top" id="LnD-rH-stv"/>
                 <constraint firstAttribute="trailing" secondItem="zkT-TV-rzx" secondAttribute="trailing" constant="20" id="aTm-fr-VQb"/>
                 <constraint firstItem="I5t-VF-jFx" firstAttribute="trailing" secondItem="zkT-TV-rzx" secondAttribute="trailing" id="dvx-BF-bzM"/>
                 <constraint firstItem="f1u-y1-Wzd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="30" id="gch-tH-OP5"/>
-                <constraint firstItem="fhQ-0h-INJ" firstAttribute="baseline" secondItem="f1u-y1-Wzd" secondAttribute="baseline" id="o6q-Wm-qcT"/>
-                <constraint firstItem="fhQ-0h-INJ" firstAttribute="baseline" secondItem="HMw-0R-B1u" secondAttribute="baseline" id="pcL-eA-j9A"/>
+                <constraint firstItem="f1u-y1-Wzd" firstAttribute="baseline" secondItem="HMw-0R-B1u" secondAttribute="baseline" id="hxU-6u-CnD"/>
                 <constraint firstAttribute="bottom" secondItem="zkT-TV-rzx" secondAttribute="bottom" constant="20" id="tl3-yy-jzE"/>
                 <constraint firstItem="zkT-TV-rzx" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="30" id="wEt-xE-O7E"/>
+                <constraint firstItem="HMw-0R-B1u" firstAttribute="leading" secondItem="f1u-y1-Wzd" secondAttribute="trailing" constant="8" symbolic="YES" id="ysf-7v-0CP"/>
             </constraints>
         </customView>
         <viewController id="OAR-if-Lls" userLabel="Font selection Popover View Controller"/>

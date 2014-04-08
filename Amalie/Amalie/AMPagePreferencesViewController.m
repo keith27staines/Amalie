@@ -31,7 +31,18 @@
 
 -(void)reloadData
 {
-    // do nothing
+    [self populateUnitsButton];
+    [self populatePaperTypeButton];
+    [self populatePaperOrientationButton];
+    [self populateMarginTextFields];
+    [self enableCustomSizeControls];
+    [self.orientationView reloadData];
+    [self enableCustomSizeControls];
+    [self.customWidthTextField setFloatValue:self.paperSize.width];
+    [self.customHeightTextField setFloatValue:self.paperSize.height];
+    [self configureFormatters];
+    [self.view.window endEditingFor:nil];
+    [self.view.window makeFirstResponder:self.view.window];
 }
 
 -(AMSettingsSectionType)sectionType
@@ -53,25 +64,10 @@
 
 #pragma mark - AMPagePreferencesViewController -
 
--(void)updateDisplay
-{
-    [self populateUnitsButton];
-    [self populatePaperTypeButton];
-    [self populatePaperOrientationButton];
-    [self populateMarginTextFields];
-    [self enableCustomSizeControls];
-    [self.orientationView reloadData];
-    [self enableCustomSizeControls];
-    [self.customWidthTextField setFloatValue:self.paperSize.width];
-    [self.customHeightTextField setFloatValue:self.paperSize.height];
-    [self configureFormatters];
-    [self.view.window endEditingFor:nil];
-    [self.view.window makeFirstResponder:self.view.window];
-}
 -(void)loadView
 {
     [super loadView];
-    [self updateDisplay];
+    [self reloadData];
 }
 
 -(NSArray*)numberFormatters
@@ -254,7 +250,7 @@
         self.pageSettings.paperType = paperType;
     }
     [self pageDidUpdate];
-    [self updateDisplay];
+    [self reloadData];
 }
 -(void)setCustomSize:(NSSize)size
 {
@@ -265,20 +261,20 @@
 {
     self.pageSettings.paperOrientation = paperOrientation;
     [self pageDidUpdate];
-    [self updateDisplay];
+    [self reloadData];
 }
 -(void)setPaperMeasurementUnits:(AMMeasurementUnits)units
 {
     self.pageSettings.paperMeasurementUnits = units;
     [self pageDidUpdate];
-    [self updateDisplay];
+    [self reloadData];
 }
 -(void)setMargins
 {
     AMMargins margins = [self marginsFromView];
     [self.pageSettings setMargins:margins inUnits:self.paperMeasurementUnits];
     [self pageDidUpdate];
-    [self updateDisplay];
+    [self reloadData];
 }
 -(AMMargins)marginsFromView
 {

@@ -91,12 +91,6 @@
     [self.fontSettings setFontSize:sender.selectedTag];
 }
 
--(IBAction)restoreToFactoryDefaults:(NSButton *)button
-{
-    [AMUserPreferences resetSettingsForSection:AMSettingsSectionFonts];
-    [self reloadData];
-}
-
 #pragma mark - NSTableView datasource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {

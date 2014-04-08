@@ -24,8 +24,6 @@
 - (IBAction)fontSizeChanged:(NSPopUpButton*)sender;
 
 
-- (IBAction)restoreToFactoryDefaults:(NSButton*)button;
-
 
 
 

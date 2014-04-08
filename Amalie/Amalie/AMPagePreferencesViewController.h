@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
     AMUnitsMillimeters = 2,
 };
 
-@interface AMPagePreferencesViewController : AMPreferencesBaseViewController //<AMPageSetupViewControllerDelegate>
+@interface AMPagePreferencesViewController : AMPreferencesBaseViewController
 
 #pragma mark - Page orientation
 - (IBAction)orientationChanged:(NSPopUpButton *)sender;

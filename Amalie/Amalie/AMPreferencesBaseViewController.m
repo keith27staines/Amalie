@@ -26,7 +26,29 @@
 
 @implementation AMPreferencesBaseViewController
 
-
+-(IBAction)resetButtonClicked:(NSButton *)sender
+{
+    switch (self.settingsStorageLocationType) {
+        case AMSettingsStorageLocationTypeFactoryDefaults:
+        {
+            // We can't reset factory defaults to anything deeper
+            break;
+        }
+        case AMSettingsStorageLocationTypeUserDefaults:
+        {
+            // We are resetting defaults for new documents to "factory settings"
+            _settingsSection = [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
+            break;
+        }
+        case AMSettingsStorageLocationTypeCurrentDocument:
+        {
+            // We are resetting current document settings to defaults for a new document
+            _settingsSection = [AMSettingsSection settingsWithUserDefaultsOfType:self.sectionType];
+            break;
+        }
+    }
+    [self reloadData];
+}
 -(void)saveSettingsSection
 {
     if (!_settingsSection) {
@@ -46,16 +68,6 @@
         }
     }
 }
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
-
 -(AMSettingsSectionType)sectionType
 {
     [NSException raise:@"Missing implementation" format:@"Subclasses must override this method"];
@@ -63,9 +75,8 @@
 }
 -(void)reloadData
 {
-    // Base implementation is to do nothing
+    [self setResetButtonTitle];
 }
-
 -(void)setSettingsSection:(AMSettingsSection *)settingsSection
 {
     _settingsSection = settingsSection;
@@ -75,7 +86,6 @@
     if (_settingsSection) {
         return _settingsSection;
     }
-
     switch (self.settingsStorageLocationType) {
         case AMSettingsStorageLocationTypeFactoryDefaults:
             _settingsSection = [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
@@ -90,12 +100,10 @@
     }
     return _settingsSection;
 }
-
 -(AMDocumentSettings *)documentSettings
 {
     return _documentSettings;
 }
-
 -(void)setDocumentSettings:(AMDocumentSettings *)documentSettings
 {
     if (documentSettings == _documentSettings) {
@@ -113,10 +121,31 @@
 }
 -(void)setSettingsStorageLocationType:(AMSettingsStorageLocationType)settingsType
 {
-    [self saveSettingsSection];
+    //[self saveSettingsSection];
     _settingsStorageLocationType = settingsType;
 }
-    
+-(void)setResetButtonTitle
+{
+    switch (self.settingsStorageLocationType) {
+        case AMSettingsStorageLocationTypeFactoryDefaults:
+        {
+            [self.resetButton setHidden:YES];
+            break;
+        }
+        case AMSettingsStorageLocationTypeUserDefaults:
+        {
+            [self.resetButton setHidden:NO];
+            self.resetButton.title = NSLocalizedString(@"Reset to factory settings", @"The reset button has two possible titles, one for resetting to the defaults for new documents, the other for resetting to factory defaults. This option is for factory defaults");
+            break;
+        }
+        case AMSettingsStorageLocationTypeCurrentDocument:
+        {
+            [self.resetButton setHidden:NO];
+            self.resetButton.title = NSLocalizedString(@"Reset to defaults for new documents", @"The reset button has two possible titles, one for resetting to the defaults for new documents, the other for resetting to factory defaults. This option is for new document defaults");
+            break;
+        }
+    }
+}
 
 @end
 

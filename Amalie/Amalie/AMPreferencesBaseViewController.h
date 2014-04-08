@@ -12,12 +12,10 @@
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
 
-@protocol AMUserPreferencesViewControlling <NSObject>
+@interface AMPreferencesBaseViewController : NSViewController
 
-
-@end
-
-@interface AMPreferencesBaseViewController : NSViewController <AMUserPreferencesViewControlling>
+@property IBOutlet NSButton * resetButton;
+-(IBAction)resetButtonClicked:(NSButton*)sender;
 
 /*! Subclasses must override (default implementation raises exception) */
 -(AMSettingsSectionType)sectionType;
