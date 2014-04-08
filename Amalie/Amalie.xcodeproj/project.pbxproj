@@ -735,6 +735,8 @@
 		7832526B18AF4CF100B148DA /* Preferences - View controllers for current document */ = {
 			isa = PBXGroup;
 			children = (
+				5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */,
+				5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */,
 				788EAE0E18B61C1B00D3EBD3 /* Page setup view controller and view */,
 				78803C0B18DC76DD008FBDE1 /* Font setup view controller and view */,
 				78803C1118DC7723008FBDE1 /* Color setup view controller and view */,
@@ -1120,8 +1122,6 @@
 				788EAE0B18B61C1000D3EBD3 /* AMPageSetupViewController.xib */,
 				788EAE0F18B61C5500D3EBD3 /* AMPageSetupView.h */,
 				788EAE1018B61C5500D3EBD3 /* AMPageSetupView.m */,
-				5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */,
-				5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */,
 			);
 			name = "Page setup view controller and view";
 			sourceTree = "<group>";

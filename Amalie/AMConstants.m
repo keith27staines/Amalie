@@ -133,7 +133,7 @@ CGFloat    const kAMFactorySettingSuperscriptOffset          = 0.8;
 CGFloat    const kAMFactorySettingSubscriptOffset            = 0.8;
 BOOL       const kAMFactorySettingAllowFontSynthesis         = YES;
 
-// Factory default colors
+// Factory default colors for library objects
 AMNamedColor kAMFactorySettingConstantsBackColor      = AMNamedColorPaleRed;
 AMNamedColor kAMFactorySettingVariablesBackColor      = AMNamedColorPaleGreen;
 AMNamedColor kAMFactorySettingExpressionsBackColor    = AMNamedColorPaleBlue;
@@ -153,11 +153,12 @@ AMNamedColor kAMFactorySettingMatricesFontColor       = AMNamedColorBlack;
 AMNamedColor kAMFactorySettingSetsFontColor           = AMNamedColorBlack;
 AMNamedColor kAMFactorySettingGraph2DFontColor        = AMNamedColorBlack;
 
-AMNamedColor kAMFactorySettingDocumentBackgroundColor = AMNamedColorPaleRed;
-AMNamedColor kAMFactorySettingPaperColor              = AMNamedColorWhite;
-AMNamedColor kAMFactorySettingDocumentBackgroundFontColor = AMNamedColorPaleRed;
-AMNamedColor kAMFactorySettingPaperFontColor          = AMNamedColorBlack;
-AMNamedColor kAMFactorySettingFontColor               = AMNamedColorBlack;
+// Factory default colors for non-library objects
+AMNamedColor kAMFactorySettingDocumentBackgroundColor     = AMNamedColorPaleRed;
+AMNamedColor kAMFactorySettingDocumentBackgroundFontColor = AMNamedColorBlack;
+AMNamedColor kAMFactorySettingPaperColor                  = AMNamedColorWhite;
+AMNamedColor kAMFactorySettingPaperFontColor              = AMNamedColorBlack;
+AMNamedColor kAMFactorySettingFontColor                   = AMNamedColorBlack;
 
 #pragma mark - Icon and title -
 NSString * const kAMIconKey                           = @"kAMIconKey";
@@ -167,8 +168,8 @@ NSString * const kAMInfoKey                           = @"kAMInfoKey";
 #pragma mark - Keys for settings sections
 NSString * const kAMAllColorSettingsKey               = @"kAMAllColorSettingsKey";
 NSString * const kAMAllFontSettingsKey                = @"kAMAllFontSettingsKey";
-NSString * const kAMAllPageSettingsKey               = @"kAMAllPaperSettingsKey";
-NSString * const KAMAllMathStyleSettingsKey          = @"KAMAllMathsStyleSettingsKey";
+NSString * const kAMAllPageSettingsKey                = @"kAMAllPaperSettingsKey";
+NSString * const KAMAllMathStyleSettingsKey           = @"KAMAllMathsStyleSettingsKey";
 
 #pragma mark - Key for library of insertable objects
 NSString * const kAMLibraryObjectsKey                 = @"kAMLibraryObjectsKey";

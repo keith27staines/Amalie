@@ -32,6 +32,7 @@
     self.preferencesViewController.documentSettings = self.document.documentSettings;
     self.preferencesViewController.settingsStorageLocationType = AMSettingsStorageLocationTypeCurrentDocument;
     NSView * view = self.preferencesViewController.view;
+    [self.preferencesViewController reloadData];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     return view;
 }

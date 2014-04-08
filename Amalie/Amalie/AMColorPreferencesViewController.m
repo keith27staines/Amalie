@@ -41,7 +41,8 @@
 -(void)reloadData
 {
     [super reloadData];
-    [self resetSelectedRowsToColorSettings:self.colorSettings];
+    [self.colorPreferencesTable reloadData];
+    [self.colorPreferencesTable deselectAll:nil];
     [self enableColorwellsBySelection];
     [self makeColorPreferenceDictionary];
     switch (self.settingsStorageLocationType) {
@@ -110,9 +111,11 @@
         NSDictionary * dataDictionary = source[key];
         if ([key isEqualToString:kAMDocumentBackgroundKey]) {
             colorPreference.title = NSLocalizedString(@"Background for document", @"Name for the area that frames the document - not the color of the document itself");
+            colorPreference.icon = [NSImage imageNamed:@"Paper"];
         }
         if ([key isEqualToString:kAMPaperKey]) {
             colorPreference.title = NSLocalizedString(@"Paper color", @"Paper color - the color for the paper on which the document is to appear");
+            colorPreference.icon = [NSImage imageNamed:@"Paper"];
         }
         colorPreference.backColor = colorFromData(dataDictionary[kAMBackColorKey]);
         colorPreference.fontColor = colorFromData(dataDictionary[kAMFontColorKey]);
