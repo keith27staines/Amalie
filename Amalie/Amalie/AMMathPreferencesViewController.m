@@ -18,5 +18,13 @@
 {
     return @"AMMathPreferencesViewController";
 }
+-(AMSettingsSectionType)sectionType
+{
+    return AMSettingsSectionMathsStyle;
+}
+-(void)reloadData
+{
+    [super reloadData];
+}
 
 @end

@@ -16,7 +16,6 @@
 
 @interface AMColorPreferencesViewController ()
 {
-    AMColorSettings * _colorSettings;
     NSMutableArray * _colorPrefsArray;
 }
 
@@ -35,73 +34,40 @@
 {
     return @"AMColorPreferencesViewController";
 }
-
--(NSView *)view
+-(AMSettingsSectionType)sectionType
 {
-    NSView * view = [super view];
-    if (!_colorSettings) {
-        [self colorSettings];
-        switch (self.settingsStorageLocationType) {
-            case AMSettingsStorageLocationTypeFactoryDefaults:
-            {
-                [self.resetToFactoryDefaultsButton setHidden:YES];
-                [self.resetToDocumentDefaultsButton setHidden:YES];
-            }
-                break;
-            case AMSettingsStorageLocationTypeUserDefaults:
-            {
-                [self.resetToFactoryDefaultsButton setHidden:NO];
-                [self.resetToDocumentDefaultsButton setHidden:YES];
-                break;
-            }
-            case AMSettingsStorageLocationTypeCurrentDocument:
-            {
-                [self.resetToDocumentDefaultsButton setHidden:NO];
-                [self.resetToFactoryDefaultsButton setHidden:NO];
-                break;
-            }
-        }
-    }
-    return view;
+    return AMSettingsSectionColors;
 }
--(void)saveSettings
+-(void)reloadData
 {
-    if (!_colorSettings) {
-        // Nothing to save
-        return;
-    }
-    if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeFactoryDefaults) {
-        // Can't save factory defaults so nothing to do here
-    } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeUserDefaults) {
-        // Save to NSUserDefaults via AMPreferences
-        [AMUserPreferences setData:self.colorSettings.data forSettingsSection:self.colorSettings.section];
-    } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeCurrentDocument) {
-        if (self.documentSettings) {
-            self.documentSettings.colorSettings = _colorSettings;
+    [super reloadData];
+    [self resetSelectedRowsToColorSettings:self.colorSettings];
+    [self enableColorwellsBySelection];
+    [self makeColorPreferenceDictionary];
+    switch (self.settingsStorageLocationType) {
+        case AMSettingsStorageLocationTypeFactoryDefaults:
+        {
+            [self.resetToFactoryDefaultsButton setHidden:YES];
+            [self.resetToDocumentDefaultsButton setHidden:YES];
         }
-    } else {
-        NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsStorageLocationType);
+            break;
+        case AMSettingsStorageLocationTypeUserDefaults:
+        {
+            [self.resetToFactoryDefaultsButton setHidden:NO];
+            [self.resetToDocumentDefaultsButton setHidden:YES];
+            break;
+        }
+        case AMSettingsStorageLocationTypeCurrentDocument:
+        {
+            [self.resetToDocumentDefaultsButton setHidden:NO];
+            [self.resetToFactoryDefaultsButton setHidden:NO];
+            break;
+        }
     }
 }
 -(AMColorSettings*)colorSettings
 {
-    if (_colorSettings) {
-        return _colorSettings;
-    }
-    switch (self.settingsStorageLocationType) {
-        case AMSettingsStorageLocationTypeFactoryDefaults:
-            _colorSettings = [AMColorSettings settingsWithFactoryDefaults];
-            break;
-        case AMSettingsStorageLocationTypeUserDefaults:
-            _colorSettings = [AMColorSettings settingsWithUserDefaults];
-            break;
-        case AMSettingsStorageLocationTypeCurrentDocument:
-            NSAssert(self.documentSettings, @"Document settings must exist");
-            _colorSettings = self.documentSettings.colorSettings;
-            break;
-    }
-    [self makeColorPreferenceDictionary];
-    return _colorSettings;
+    return (AMColorSettings*)self.settingsSection;
 }
 -(void)makeColorPreferenceDictionary
 {

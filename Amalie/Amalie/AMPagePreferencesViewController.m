@@ -31,6 +31,7 @@
 
 -(void)reloadData
 {
+    [super reloadData];
     [self populateUnitsButton];
     [self populatePaperTypeButton];
     [self populatePaperOrientationButton];

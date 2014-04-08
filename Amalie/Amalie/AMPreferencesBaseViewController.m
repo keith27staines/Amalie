@@ -121,7 +121,6 @@
 }
 -(void)setSettingsStorageLocationType:(AMSettingsStorageLocationType)settingsType
 {
-    //[self saveSettingsSection];
     _settingsStorageLocationType = settingsType;
 }
 -(void)setResetButtonTitle

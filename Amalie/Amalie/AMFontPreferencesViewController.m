@@ -40,6 +40,7 @@
 
 -(void)reloadData
 {
+    [super reloadData];
     [self.fontChoiceTable reloadData];
     [self synchronizeMasterFontSizeControl];
 }
