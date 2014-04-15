@@ -712,15 +712,15 @@
 }
 -(CGFloat)superscriptOffset
 {
-    return [self.documentSettings.mathStyleSettings superscriptOffset];
+    return [self.documentSettings.mathStyleSettings superscriptOffsetFraction];
 }
 -(CGFloat)subscriptOffset
 {
-    return [self.documentSettings.mathStyleSettings subscriptOffset];
+    return [self.documentSettings.mathStyleSettings subscriptOffsetFraction];
 }
 -(CGFloat)smallestFontSize
 {
-    return [self.documentSettings.mathStyleSettings smallestFontSize];
+    return [self.documentSettings.mathStyleSettings smallestFontSizeFraction]*[self baseFontSize];
 }
 -(CGFloat)baseFontSize
 {

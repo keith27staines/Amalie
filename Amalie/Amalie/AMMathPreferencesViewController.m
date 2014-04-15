@@ -10,18 +10,44 @@
 #import "AMMathStyleSettings.h"
 
 @interface AMMathPreferencesViewController ()
+{
 
+}
 @property (readonly) AMMathStyleSettings * mathStyleSettings;
 
 @end
 
+
 @implementation AMMathPreferencesViewController
 
+- (void)configureNumberFormatters
+{
+    if (!self.smallestFontTextField) {
+        return;
+    }
+    NSArray * numberFormatters = @[self.smallestFontTextField.formatter,
+                                   self.subscriptOffsetTextField.formatter,
+                                   self.superscriptOffsetTextField.formatter,
+                                   self.subscriptSizeTextField.formatter];
+    
+    for (NSNumberFormatter * formatter in numberFormatters) {
+        [formatter setNumberStyle:NSNumberFormatterPercentStyle];
+        [formatter setMaximumFractionDigits:0];
+        [formatter setLenient:YES];
+    }
+}
+
+- (void)configureSliders
+{
+    [self.smallestFontSlider      setContinuous:YES];
+    [self.superscriptOffsetSlider setContinuous:YES];
+    [self.subscriptOffsetSlider   setContinuous:YES];
+    [self.subscriptSizeSlider     setContinuous:YES];
+}
 -(void)awakeFromNib
 {
-    [self.smallestFontSlider setContinuous:YES];
-    [self.superscriptOffsetSlider setContinuous:YES];
-    [self.subscriptOffsetSlider setContinuous:YES];
+    [self configureSliders];
+    [self configureNumberFormatters];
     [self reloadData];
 }
 -(NSString *)nibName
@@ -36,35 +62,39 @@
 {
     [super reloadData];
     AMMathStyleSettings * style = self.mathStyleSettings;
-    self.smallestFontSlider.floatValue = [self pointSizeAsPercentage:style.smallestFontSize];
-    self.superscriptOffsetSlider.floatValue = style.superscriptOffset * 100;
-    self.subscriptOffsetSlider.floatValue = style.subscriptOffset * 100;
+    self.smallestFontSlider.floatValue         = style.smallestFontSizeFraction  * 100.0;
+    self.superscriptOffsetSlider.floatValue    = style.superscriptOffsetFraction * 100.0;
+    self.subscriptOffsetSlider.floatValue      = style.subscriptOffsetFraction   * 100.0;
+    self.subscriptSizeSlider.floatValue        = style.superscriptingFraction    * 100.0;
     
-    self.smallestFontTextField.floatValue = [self pointSizeAsPercentage:style.smallestFontSize];;
-    self.subscriptOffsetTextField.floatValue = style.subscriptOffset * 100;
-    self.superscriptOffsetTextField.floatValue = style.superscriptOffset * 100;
+    self.smallestFontTextField.floatValue      = style.smallestFontSizeFraction;
+    self.subscriptOffsetTextField.floatValue   = style.subscriptOffsetFraction;
+    self.superscriptOffsetTextField.floatValue = style.superscriptOffsetFraction;
+    self.subscriptSizeTextField.floatValue     = style.superscriptingFraction;
 }
-
 - (IBAction)textChanged:(NSTextField *)sender {
     AMMathStyleSettings * style = self.mathStyleSettings;
     if (sender == self.smallestFontTextField) {
-        style.smallestFontSize = [self percentageToPointSize:self.smallestFontTextField.floatValue];
+        style.smallestFontSizeFraction = sender.floatValue;
     } else if (sender == self.subscriptOffsetTextField) {
-        style.subscriptOffset = sender.floatValue / 100.0;
+        style.subscriptOffsetFraction = sender.floatValue;
     } else if (sender == self.superscriptOffsetTextField) {
-        style.superscriptOffset = sender.floatValue / 100.0;
+        style.superscriptOffsetFraction = sender.floatValue;
+    } else if (sender == self.subscriptSizeTextField) {
+        style.superscriptingFraction = sender.floatValue;
     }
     [self reloadData];
 }
-
 - (IBAction)sliderChanged:(NSSlider *)sender {
     AMMathStyleSettings * style = self.mathStyleSettings;
     if (sender == self.smallestFontSlider) {
-        style.smallestFontSize = [self percentageToPointSize:self.smallestFontSlider.floatValue];
+        style.smallestFontSizeFraction = sender.floatValue /100.0;
     } else if (sender == self.subscriptOffsetSlider) {
-        style.subscriptOffset = sender.floatValue / 100.0;
+        style.subscriptOffsetFraction = sender.floatValue / 100.0;
     } else if (sender == self.superscriptOffsetSlider) {
-        style.superscriptOffset = sender.floatValue / 100;
+        style.superscriptOffsetFraction = sender.floatValue / 100.0;
+    } else if (sender == self.subscriptSizeSlider) {
+        style.superscriptingFraction = sender.floatValue / 100.0;
     }
     [self reloadData];
 }
@@ -72,18 +102,6 @@
 -(AMMathStyleSettings*)mathStyleSettings
 {
     return (AMMathStyleSettings*)self.settingsSection;
-}
--(CGFloat)baseFontSize
-{
-    return 48;
-}
--(CGFloat)pointSizeAsPercentage:(CGFloat)pointSize
-{
-    return pointSize / [self baseFontSize] * 100.0;
-}
--(CGFloat)percentageToPointSize:(CGFloat)percentage
-{
-    return percentage * [self baseFontSize] / 100.0;
 }
 
 @end

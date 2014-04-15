@@ -125,12 +125,12 @@ NSString * const kAMFactorySettingFontNameForSymbols        = @"Times New Roman"
 NSString * const kAMFactorySettingFontNameForFixedWidthText = @"Monaco";
 NSString * const kAMFactorySettingFontNameForText           = @"Times New Roman";
 
-NSUInteger const kAMFactorySettingMinFontSize                = 6;
+CGFloat    const kAMFactorySettingMinFontSizeFraction        = 0.5;
 NSUInteger const kAMFactorySettingFontSize                   = 12;
 NSUInteger const kAMFactorySettingFixedWidthFontSize         = 12;
 CGFloat    const kAMFactorySettingSuperscriptingFraction     = 0.7;
-CGFloat    const kAMFactorySettingSuperscriptOffset          = 0.8;
-CGFloat    const kAMFactorySettingSubscriptOffset            = 0.8;
+CGFloat    const kAMFactorySettingSuperscriptOffsetFraction  = 0.8;
+CGFloat    const kAMFactorySettingSubscriptOffsetFraction    = 0.8;
 BOOL       const kAMFactorySettingAllowFontSynthesis         = YES;
 
 // Factory default colors for library objects

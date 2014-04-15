@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "AMPreferencesBaseViewController.h"
 
-
 @interface AMMathPreferencesViewController : AMPreferencesBaseViewController
 
 @property (weak) IBOutlet NSView *expressionContainer;
@@ -20,14 +19,24 @@
 
 @property (weak) IBOutlet NSSlider *subscriptOffsetSlider;
 
+@property (weak) IBOutlet NSSlider *subscriptSizeSlider;
+
+
+
 @property (weak) IBOutlet NSTextField *smallestFontTextField;
 
 @property (weak) IBOutlet NSTextField *superscriptOffsetTextField;
 
 @property (weak) IBOutlet NSTextField *subscriptOffsetTextField;
 
+@property (weak) IBOutlet NSTextField *subscriptSizeTextField;
+
+
 - (IBAction)textChanged:(NSTextField *)sender;
 
 - (IBAction)sliderChanged:(NSSlider *)sender;
+
+
+
 
 @end

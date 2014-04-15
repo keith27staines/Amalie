@@ -146,12 +146,12 @@ extern NSString * const kAMFactorySettingFontNameForSymbols;
 extern NSString * const kAMFactorySettingFontNameForFixedWidthText;
 extern NSString * const kAMFactorySettingFontNameForText;
 
-extern NSUInteger const kAMFactorySettingMinFontSize;
+extern CGFloat    const kAMFactorySettingMinFontSizeFraction;
 extern NSUInteger const kAMFactorySettingFontSize;
 extern NSUInteger const kAMFactorySettingFixedWidthFontSize;
 extern CGFloat    const kAMFactorySettingSuperscriptingFraction;
-extern CGFloat    const kAMFactorySettingSuperscriptOffset;
-extern CGFloat    const kAMFactorySettingSubscriptOffset;
+extern CGFloat    const kAMFactorySettingSuperscriptOffsetFraction;
+extern CGFloat    const kAMFactorySettingSubscriptOffsetFraction;
 extern BOOL       const kAMFactorySettingAllowFontSynthesis;
 
 // Factory default colors

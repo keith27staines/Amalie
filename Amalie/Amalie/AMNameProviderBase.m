@@ -122,7 +122,7 @@ typedef enum AMCharacterType : NSUInteger {
 
 -(NSUInteger)minimumFontSize
 {
-    return fminf([self.delegate smallestFontSize], [self baseFontSize]);
+    return fminf([self.delegate smallestFontSize]*[self baseFontSize], [self baseFontSize]);
 }
 
 -(CGFloat)superscriptingFraction
