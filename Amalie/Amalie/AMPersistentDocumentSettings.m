@@ -1,21 +1,22 @@
 //
-//  AMDocumentSettings.m
+//  AMPersistentDocumentSettings.m
 //  Amalie
 //
 //  Created by Keith Staines on 07/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMDocumentSettings.h"
+#import "AMPersistentDocumentSettings.h"
 #import "AMDDocumentSettings+Methods.h"
 #import "AMUserPreferences.h"
 
+#import "AMSettingsSection.h"
 #import "AMColorSettings.h"
 #import "AMFontSettings.h"
 #import "AMMathStyleSettings.h"
 #import "AMPageSettings.h"
 
-@interface AMDocumentSettings()
+@interface AMPersistentDocumentSettings()
 {
     AMDDocumentSettings * _dataObject;
 }
@@ -23,7 +24,7 @@
 @end
 
 
-@implementation AMDocumentSettings
+@implementation AMPersistentDocumentSettings
 
 - (instancetype)init
 {
@@ -47,36 +48,6 @@
     if (!_dataObject) {
         _dataObject = [AMDDocumentSettings makeDocumentSettings];
         [self resetToUserDefaults];
-    }
-}
--(AMSettingsSection*)settingsForSection:(AMSettingsSectionType)section
-{
-    switch (section) {
-        case AMSettingsSectionFonts:
-            return self.fontSettings;
-        case AMSettingsSectionColors:
-            return self.colorSettings;
-        case AMSettingsSectionPage:
-            return self.pageSettings;
-        case AMSettingsSectionMathsStyle:
-            return self.mathStyleSettings;
-    }
-}
--(void)setSettings:(AMSettingsSection *)settings
-{
-    switch (settings.section) {
-        case AMSettingsSectionFonts:
-            self.fontSettings = (AMFontSettings*)settings;
-            break;
-        case AMSettingsSectionColors:
-            self.colorSettings = (AMColorSettings*)settings;
-            break;
-        case AMSettingsSectionPage:
-            self.pageSettings = (AMPageSettings*)settings;
-            break;
-        case AMSettingsSectionMathsStyle:
-            self.mathStyleSettings = (AMMathStyleSettings*)settings;
-            break;
     }
 }
 -(AMPageSettings *)pageSettings
@@ -142,13 +113,6 @@
 -(void)setMathStyleSettings:(AMMathStyleSettings*)mathStyleSettings
 {
     _dataObject.mathStyleSettingsData = [mathStyleSettings data];
-}
--(void)resetToUserDefaults
-{
-    self.pageSettings      = [AMPageSettings settingsWithUserDefaults];
-    self.fontSettings      = [AMFontSettings settingsWithUserDefaults];
-    self.colorSettings     = [AMColorSettings settingsWithUserDefaults];
-    self.mathStyleSettings = [AMMathStyleSettings settingsWithUserDefaults];
 }
 
 

@@ -26,7 +26,7 @@
 		781D17A517EC22010008758D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 787B3046178361BC001851C0 /* CoreData.framework */; };
 		781D180D17F31DE70008758D /* AMDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D180C17F31DE70008758D /* AMDataStore.m */; };
 		781D180E17F31DE70008758D /* AMDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 781D180C17F31DE70008758D /* AMDataStore.m */; };
-		7824F43018CA0AB0004089B9 /* AMDocumentSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7824F42F18CA0AB0004089B9 /* AMDocumentSettings.m */; };
+		7824F43018CA0AB0004089B9 /* AMPersistentDocumentSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7824F42F18CA0AB0004089B9 /* AMPersistentDocumentSettings.m */; };
 		7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7825D651180E89C40039EB67 /* AMKeyboard.m */; };
 		7825D655180E91E60039EB67 /* AMKeyboards.m in Sources */ = {isa = PBXBuildFile; fileRef = 7825D654180E91E60039EB67 /* AMKeyboards.m */; };
 		782859F51886D57000523121 /* AMGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859F41886D57000523121 /* AMGraphics.m */; };
@@ -198,6 +198,8 @@
 		78F52C6C17FABA5D0092B604 /* AMDIntervalDef.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F52C6B17FABA5D0092B604 /* AMDIntervalDef.m */; };
 		78F57D901835232A00683FFC /* AMDInsertedExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F57D8F1835232A00683FFC /* AMDInsertedExpression.m */; };
 		78F57D931835236300683FFC /* AMDInsertedExpression+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F57D921835236300683FFC /* AMDInsertedExpression+Methods.m */; };
+		78F7F36618FD675E002FD0C2 /* AMExpressionNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F7F36518FD675E002FD0C2 /* AMExpressionNodeController.m */; };
+		78F7F36918FE5B39002FD0C2 /* AMDocumentSettingsBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F7F36818FE5B39002FD0C2 /* AMDocumentSettingsBase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,8 +240,8 @@
 		781D17A317EC21EB0008758D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		781D180B17F31DE70008758D /* AMDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMDataStore.h; path = Amalie/AMDataStore.h; sourceTree = "<group>"; };
 		781D180C17F31DE70008758D /* AMDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMDataStore.m; path = Amalie/AMDataStore.m; sourceTree = "<group>"; };
-		7824F42E18CA0AB0004089B9 /* AMDocumentSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettings.h; sourceTree = "<group>"; };
-		7824F42F18CA0AB0004089B9 /* AMDocumentSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettings.m; sourceTree = "<group>"; };
+		7824F42E18CA0AB0004089B9 /* AMPersistentDocumentSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPersistentDocumentSettings.h; sourceTree = "<group>"; };
+		7824F42F18CA0AB0004089B9 /* AMPersistentDocumentSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPersistentDocumentSettings.m; sourceTree = "<group>"; };
 		7825D650180E89C30039EB67 /* AMKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboard.h; path = Amalie/AMKeyboard.h; sourceTree = "<group>"; };
 		7825D651180E89C40039EB67 /* AMKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboard.m; path = Amalie/AMKeyboard.m; sourceTree = "<group>"; };
 		7825D653180E91E60039EB67 /* AMKeyboards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboards.h; path = Amalie/AMKeyboards.h; sourceTree = "<group>"; };
@@ -528,6 +530,10 @@
 		78F57D8F1835232A00683FFC /* AMDInsertedExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDInsertedExpression.m; sourceTree = "<group>"; };
 		78F57D911835236300683FFC /* AMDInsertedExpression+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMDInsertedExpression+Methods.h"; sourceTree = "<group>"; };
 		78F57D921835236300683FFC /* AMDInsertedExpression+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMDInsertedExpression+Methods.m"; sourceTree = "<group>"; };
+		78F7F36418FD675E002FD0C2 /* AMExpressionNodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeController.h; sourceTree = "<group>"; };
+		78F7F36518FD675E002FD0C2 /* AMExpressionNodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionNodeController.m; sourceTree = "<group>"; };
+		78F7F36718FE5B39002FD0C2 /* AMDocumentSettingsBase.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettingsBase.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		78F7F36818FE5B39002FD0C2 /* AMDocumentSettingsBase.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettingsBase.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -556,8 +562,10 @@
 		5379FBD918F3C51100378A31 /* Settings model objects */ = {
 			isa = PBXGroup;
 			children = (
-				7824F42E18CA0AB0004089B9 /* AMDocumentSettings.h */,
-				7824F42F18CA0AB0004089B9 /* AMDocumentSettings.m */,
+				78F7F36718FE5B39002FD0C2 /* AMDocumentSettingsBase.h */,
+				78F7F36818FE5B39002FD0C2 /* AMDocumentSettingsBase.m */,
+				7824F42E18CA0AB0004089B9 /* AMPersistentDocumentSettings.h */,
+				7824F42F18CA0AB0004089B9 /* AMPersistentDocumentSettings.m */,
 				5316847C18EDABFD00A29B36 /* AMSettingsSection.h */,
 				5316847D18EDABFD00A29B36 /* AMSettingsSection.m */,
 				78D4C13418DF1393007AB5FF /* AMColorSettings.h */,
@@ -856,6 +864,8 @@
 				785826B318C4CCCB00612651 /* AMMathPreferencesViewController.h */,
 				785826B418C4CCCB00612651 /* AMMathPreferencesViewController.m */,
 				785826B518C4CCCB00612651 /* AMMathPreferencesViewController.xib */,
+				78F7F36418FD675E002FD0C2 /* AMExpressionNodeController.h */,
+				78F7F36518FD675E002FD0C2 /* AMExpressionNodeController.m */,
 				785826B818C4CCF200612651 /* AMMathPreferencesView.h */,
 				785826B918C4CCF200612651 /* AMMathPreferencesView.m */,
 			);
@@ -1404,6 +1414,7 @@
 				78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */,
 				7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */,
 				78D8C2FF18C76A9D001F5494 /* AMFontAttributes.m in Sources */,
+				78F7F36618FD675E002FD0C2 /* AMExpressionNodeController.m in Sources */,
 				78EF56B017CF3B2200402847 /* KSMMatrix.m in Sources */,
 				78A0472117BBEEF900B5703E /* AMOperatorView.m in Sources */,
 				788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */,
@@ -1452,7 +1463,7 @@
 				78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */,
 				788EAE1418B6684700D3EBD3 /* AMPageOrientationView.m in Sources */,
 				785826B618C4CCCB00612651 /* AMMathPreferencesViewController.m in Sources */,
-				7824F43018CA0AB0004089B9 /* AMDocumentSettings.m in Sources */,
+				7824F43018CA0AB0004089B9 /* AMPersistentDocumentSettings.m in Sources */,
 				78EF56AC17CF3B0B00402847 /* KSMVector.m in Sources */,
 				785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */,
 				78E2A9F418ACAD8D0082F4E0 /* AMDocumentContainerView.m in Sources */,
@@ -1463,6 +1474,7 @@
 				78734E231806B10F00A2EEF3 /* AMKeyboardsViewController.m in Sources */,
 				78962FE9182C0F210066BEE9 /* AMDFunctionDef+Methods.m in Sources */,
 				7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */,
+				78F7F36918FE5B39002FD0C2 /* AMDocumentSettingsBase.m in Sources */,
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				78285A011886D74400523121 /* AMExpressionLayout.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,

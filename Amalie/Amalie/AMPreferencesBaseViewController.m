@@ -7,7 +7,7 @@
 //
 
 #import "AMPreferencesBaseViewController.h"
-#import "AMDocumentSettings.h"
+#import "AMPersistentDocumentSettings.h"
 #import "AMSettingsSection.h"
 #import "AMUserPreferences.h"
 
@@ -15,7 +15,7 @@
 {
     @private
     AMSettingsStorageLocationType _settingsStorageLocationType;
-    AMDocumentSettings * _documentSettings;
+    AMPersistentDocumentSettings * _documentSettings;
     @protected
     AMSettingsSection  * _settingsSection;
 }
@@ -86,32 +86,29 @@
     if (_settingsSection) {
         return _settingsSection;
     }
-    switch (self.settingsStorageLocationType) {
-        case AMSettingsStorageLocationTypeFactoryDefaults:
-            _settingsSection = [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
-            break;
-        case AMSettingsStorageLocationTypeUserDefaults:
-            _settingsSection = [AMSettingsSection settingsWithUserDefaultsOfType:self.sectionType];
-            break;
-        case AMSettingsStorageLocationTypeCurrentDocument:
-            NSAssert(self.documentSettings, @"Document settings must exist");
-            _settingsSection = [self.documentSettings settingsForSection:self.sectionType];
-            break;
-    }
+    NSAssert(self.documentSettings, @"Document settings must exist");
+    _settingsSection = [self.documentSettings settingsForSection:self.sectionType];
     return _settingsSection;
 }
--(AMDocumentSettings *)documentSettings
+-(AMPersistentDocumentSettings *)documentSettings
 {
+    if (!_documentSettings) {
+        switch (self.settingsStorageLocationType) {
+            case AMSettingsStorageLocationTypeFactoryDefaults:
+                _documentSettings = [AMDocumentSettingsBase documentSettingsFromFactoryDefaults];
+                break;
+            case AMSettingsStorageLocationTypeUserDefaults:
+                _documentSettings = [AMDocumentSettingsBase documentSettingsFromUserDefaults];
+                break;
+            case AMSettingsStorageLocationTypeCurrentDocument:
+                NSAssert(self.documentSettings, @"Document settings must exist");
+                break;
+        }
+    }
     return _documentSettings;
 }
--(void)setDocumentSettings:(AMDocumentSettings *)documentSettings
+-(void)setDocumentSettings:(AMPersistentDocumentSettings *)documentSettings
 {
-    if (documentSettings == _documentSettings) {
-        return;
-    }
-    if (_documentSettings) {
-        [self saveSettingsSection];
-    }
     _documentSettings = documentSettings;
 }
 

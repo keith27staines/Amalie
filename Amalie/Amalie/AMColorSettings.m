@@ -7,12 +7,12 @@
 //
 
 #import "AMColorSettings.h"
-#import "AMDocumentSettings.h"
+#import "AMPersistentDocumentSettings.h"
 #import "AMUserPreferences.h"
 
 @interface AMColorSettings()
 {
-    AMDocumentSettings * _documentSettings;
+    AMPersistentDocumentSettings * _documentSettings;
     NSMutableDictionary * _libraryColorDataDictionary;
     NSMutableDictionary * _otherColorDataDictionary;
 }
@@ -379,7 +379,7 @@
 
 -(NSData*)fontColorDataForDocumentBackground
 {
-    return [self colorDataDictionaryForDocument][kAMDocumentBackgroundFontColorKey];
+    return [self colorDataDictionaryForDocument][kAMFontColorKey];
 }
 -(void)setFontColorDataForDocumentBackground:(NSData*)data
 {
@@ -387,11 +387,11 @@
 }
 -(NSData*)fontColorDataForPaper
 {
-    return [self colorDataDictionaryForPaper][kAMPaperColorKey];
+    return [self colorDataDictionaryForPaper][kAMFontColorKey];
 }
 -(void)setFontColorDataForPaper:(NSData*)data
 {
-    [self colorDataDictionaryForPaper][kAMBackColorKey] = data;
+    [self colorDataDictionaryForPaper][kAMFontColorKey] = data;
 }
 
 #pragma mark - Other background color getters and setters -
@@ -418,7 +418,7 @@
 #pragma mark - Other background color data getters and setters -
 -(NSData*)backColorDataForDocumentBackground
 {
-    return [self colorDataDictionaryForDocument][kAMDocumentBackgroundColorKey];
+    return [self colorDataDictionaryForDocument][kAMBackColorKey];
 }
 -(void)setBackColorDataForDocumentBackground:(NSData*)data
 {
@@ -426,7 +426,7 @@
 }
 -(NSData*)backColorDataForPaper
 {
-    return [self colorDataDictionaryForDocument][kAMPaperColorKey];
+    return [self colorDataDictionaryForPaper][kAMBackColorKey];
 }
 -(void)setBackColorDataForPaper:(NSData*)data
 {

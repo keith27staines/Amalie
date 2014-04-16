@@ -24,7 +24,7 @@
 #import "AMUserPreferences.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject+Methods.h"
-#import "AMDocumentSettings.h"
+#import "AMPersistentDocumentSettings.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 #import "AMNameProviderBase.h"
@@ -65,7 +65,7 @@
     NSMutableDictionary         * _contentControllers;
     KSMWorksheet                * _mathSheet;
     NSEntityDescription         * _amdInsertedObjectsEntity;
-    AMDocumentSettings          * _documentSettings;
+    AMPersistentDocumentSettings          * _documentSettings;
 }
 
 /*!
@@ -218,10 +218,10 @@
     [self.worksheetView setNeedsUpdateConstraints:YES];
     [self.worksheetView setNeedsDisplay:YES];
 }
--(AMDocumentSettings*)documentSettings
+-(AMPersistentDocumentSettings*)documentSettings
 {
     if (!_documentSettings) {
-        _documentSettings = [[AMDocumentSettings alloc] init];
+        _documentSettings = [AMPersistentDocumentSettings documentSettingsFromUserDefaults];
     }
     return _documentSettings;
 }
@@ -366,7 +366,7 @@
 #pragma mark - AMWorksheetViewDelegate -
 -(NSSize)pageSizeInPoints
 {
-    AMDocumentSettings * documentSettings = self.documentSettings;
+    AMPersistentDocumentSettings * documentSettings = self.documentSettings;
     AMPageSettings * pageSettings = documentSettings.pageSettings;
     NSSize size = pageSettings.paperSize;
     if (pageSettings.paperOrientation == AMPaperOrientationLandscape) {

@@ -8,6 +8,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMMathPreferencesViewController">
             <connections>
                 <outlet property="expressionContainer" destination="6Ix-Qg-t3v" id="bu2-oy-KtG"/>
+                <outlet property="expressionContainerView" destination="6Ix-Qg-t3v" id="VUa-ER-qKa"/>
+                <outlet property="expressionView" destination="ey8-Py-geu" id="vGC-3L-YBa"/>
                 <outlet property="resetButton" destination="ifo-Wa-BRU" id="9sv-so-OUT"/>
                 <outlet property="smallestFontSlider" destination="bxD-n3-voq" id="O6d-s8-CJS"/>
                 <outlet property="smallestFontTextField" destination="swQ-88-yrw" id="w8j-1s-e0L"/>
@@ -79,12 +81,24 @@
                         <action selector="textChanged:" target="-2" id="ogT-zD-qvo"/>
                     </connections>
                 </textField>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Ix-Qg-t3v" customClass="NSScrollView">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Ix-Qg-t3v">
                     <rect key="frame" x="372" y="113" width="250" height="250"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ey8-Py-geu" customClass="AMExpressionNodeView">
+                            <rect key="frame" x="44" y="77" width="163" height="96"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="96" placeholder="YES" id="EJU-5b-Drg"/>
+                                <constraint firstAttribute="width" constant="163" placeholder="YES" id="nOX-BY-6zA"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
                     <constraints>
+                        <constraint firstAttribute="centerX" secondItem="ey8-Py-geu" secondAttribute="centerX" id="1ih-wn-ZcX"/>
                         <constraint firstAttribute="height" constant="250" id="Oan-GK-GZb"/>
                         <constraint firstAttribute="width" constant="250" id="Z4Y-gA-2am"/>
+                        <constraint firstAttribute="centerY" secondItem="ey8-Py-geu" secondAttribute="centerY" id="vbn-6F-lTv"/>
                     </constraints>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vEb-t0-UJp">
@@ -232,5 +246,11 @@
                 <constraint firstItem="ifo-Wa-BRU" firstAttribute="top" secondItem="6Ix-Qg-t3v" secondAttribute="bottom" constant="60" id="yQt-EZ-vRJ"/>
             </constraints>
         </customView>
+        <customObject id="ugV-ej-DEK" customClass="AMExpressionNodeController">
+            <connections>
+                <outlet property="expressionNode" destination="ey8-Py-geu" id="OY2-oY-KGb"/>
+                <outlet property="nameProviderDelegate" destination="-2" id="dGC-wK-EpB"/>
+            </connections>
+        </customObject>
     </objects>
 </document>

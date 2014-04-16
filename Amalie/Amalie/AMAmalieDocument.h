@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMDocumentSettings;
+@class AMPersistentDocumentSettings;
 @class AMWorksheetView;
 @class AMAppController;
 @class KSMWorksheet;
@@ -101,6 +101,6 @@ NSPopoverDelegate>
 -(AMNameProviderBase*)baseNameProvider;
 -(AMArgumentsNameProvider*)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList;
 
-@property (readonly) AMDocumentSettings * documentSettings;
+@property (readonly) AMPersistentDocumentSettings * documentSettings;
 
 @end

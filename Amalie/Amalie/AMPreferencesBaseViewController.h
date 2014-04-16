@@ -7,7 +7,7 @@
 //
 
 
-@class AMDocumentSettings, AMSettingsSection;
+@class AMPersistentDocumentSettings, AMSettingsSection;
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
@@ -25,7 +25,7 @@
 
 
 @property AMSettingsStorageLocationType settingsStorageLocationType;
-@property AMDocumentSettings * documentSettings;
+@property AMPersistentDocumentSettings * documentSettings;
 @property (readonly) AMSettingsSection * settingsSection;
 -(void)saveSettingsSection;
 @end

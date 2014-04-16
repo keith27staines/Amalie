@@ -7,7 +7,7 @@
 //
 
 #import "AMColorPreferencesViewController.h"
-#import "AMDocumentSettings.h"
+#import "AMPersistentDocumentSettings.h"
 #import "AMColorSettings.h"
 #import "AMColorPreference.h"
 #import "AMUserPreferences.h"

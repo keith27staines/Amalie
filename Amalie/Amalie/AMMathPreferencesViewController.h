@@ -6,10 +6,14 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
+@class AMExpressionContentView;
+
 #import <Cocoa/Cocoa.h>
 #import "AMPreferencesBaseViewController.h"
+#import "AMNameProviderDelegate.h"
 
-@interface AMMathPreferencesViewController : AMPreferencesBaseViewController
+@interface AMMathPreferencesViewController : AMPreferencesBaseViewController <AMNameProviderDelegate>
+
 
 @property (weak) IBOutlet NSView *expressionContainer;
 
@@ -21,7 +25,9 @@
 
 @property (weak) IBOutlet NSSlider *subscriptSizeSlider;
 
+@property (weak) IBOutlet NSView *expressionContainerView;
 
+@property (weak) IBOutlet AMExpressionContentView *expressionView;
 
 @property (weak) IBOutlet NSTextField *smallestFontTextField;
 

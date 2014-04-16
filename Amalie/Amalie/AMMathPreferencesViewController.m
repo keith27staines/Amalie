@@ -8,6 +8,8 @@
 
 #import "AMMathPreferencesViewController.h"
 #import "AMMathStyleSettings.h"
+#import "AMPersistentDocumentSettings.h"
+#import "AMFontSettings.h"
 
 @interface AMMathPreferencesViewController ()
 {
@@ -104,4 +106,29 @@
     return (AMMathStyleSettings*)self.settingsSection;
 }
 
+#pragma mark - AMNameProviderDelegate -
+-(CGFloat)subscriptOffset
+{
+    return self.mathStyleSettings.subscriptOffsetFraction;
+}
+-(CGFloat)smallestFontSize
+{
+    return self.mathStyleSettings.smallestFontSizeFraction * [self baseFontSize];
+}
+-(AMFontAttributes *)fontAttributesForType:(AMFontType)fontType
+{
+    return [self.documentSettings.fontSettings fontAttributesForFontType:fontType];
+}
+-(CGFloat)superscriptingFraction
+{
+    return self.mathStyleSettings.superscriptingFraction;
+}
+-(CGFloat)superscriptOffset
+{
+    return self.mathStyleSettings.superscriptOffsetFraction;
+}
+-(CGFloat)baseFontSize
+{
+    return [self.documentSettings.fontSettings fontSize];
+}
 @end
