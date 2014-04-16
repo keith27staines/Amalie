@@ -15,7 +15,6 @@
 #import "AMNameProviding.h"
 
 #import "AMUserPreferences.h"
-#import "AMContentViewDataSource.h"
 #import "AMConstants.h"
 
 @interface AMExpressionNodeView()
@@ -33,7 +32,7 @@
     NSColor                           * _backColor;
     CGFloat                             _scaleFactor;
     NSString                          * _groupID;
-    __weak id<AMContentViewDataSource>  _dataSource;
+    __weak id<AMExpressionNodeViewDatasource>  _dataSource;
 
 }
 
@@ -90,7 +89,7 @@
         expression:(KSMExpression *)expression
      scriptingLevel:(NSUInteger)scriptingLevel
            delegate:(id<AMExpressionNodeViewDelegate>)delegate
-         dataSource:(id<AMContentViewDataSource>)dataSource
+         dataSource:(id<AMExpressionNodeViewDatasource>)dataSource
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
         scaleFactor:(CGFloat)scaleFactor
             contextNode:(AMExpressionContextNode*)contextNode
@@ -113,7 +112,7 @@
              expression:(KSMExpression *)expression
          scriptingLevel:(NSUInteger)scriptingLevel
                delegate:(id<AMExpressionNodeViewDelegate>)delegate
-             dataSource:(id<AMContentViewDataSource>)dataSource
+             dataSource:(id<AMExpressionNodeViewDatasource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor
             contextNode:(AMExpressionContextNode*)contextNode
@@ -151,18 +150,6 @@
         [subView removeFromSuperview];
     }
 }
-
-
-// TODO: Remove these lines once sure they are not needed
-//-(void)assignAttributesForFontType:(AMFontType)type
-//{
-//    CGFloat scale = self.scaleFactor;
-//    NSAssert(scale >0, @"Bad scale factor");
-//    _attributes = @{NSFontAttributeName:[self.displayOptions fontOfAMType:type]};
-//    NSFont * font = _attributes[NSFontAttributeName];
-//    font = [NSFont fontWithName:font.fontName size:font.pointSize * self.scaleFactor];
-//    _attributes = @{NSFontAttributeName: font};
-//}
 
 -(void)setExpression:(KSMExpression *)expression
 {
@@ -215,7 +202,6 @@
     }
     self.attributedString = [self.nameProvider attributedStringByModifying:aString toSuperscriptLevel:self.scriptingLevel];
 }
-
 
 -(void)addBinaryChildNodeViews
 {
@@ -475,7 +461,7 @@
 -(KSMExpression*)expressionForSubSymbol:(NSString*)symbol
 {
     KSMExpression * expr;
-    expr = [_dataSource view:self requiresExpressionForSymbol:symbol];
+    expr = [self.dataSource view:self requiresExpressionForSymbol:symbol];
     
     NSAssert(expr, @"No expression known for symbol %@.",symbol);
     

@@ -31,7 +31,7 @@
 #import "KSMExpression.h"
 
 // datamodel
-#import "AMArgumentsNameProvider.h"
+#import "AMPersistentArgumentsNameProvider.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMDIndexedExpression.h"
@@ -328,7 +328,7 @@
 
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 {
-    AMNameProviderBase * namer = [self.document baseNameProvider];
+    AMPersistentNameProvider * namer = [self.document baseNameProvider];
     if ( [namer validateProposedName:proposedName.string forType:AMInsertableTypeDummyVariable error:error] ) return NO;
     
     self.amdInsertedObject.name.string = proposedName.string;

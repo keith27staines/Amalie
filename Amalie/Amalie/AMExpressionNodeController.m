@@ -12,14 +12,15 @@
 #import "KSMExpression.h"
 #import "KSMWorksheet.h"
 #import "AMExpressionNodeView.h"
-#import "AMNameProviderBase.h"
+#import "AMWorksheetNameProvider.h"
 
-@interface AMExpressionNodeController() <AMExpressionNodeViewDelegate>
+@interface AMExpressionNodeController() <AMExpressionNodeViewDelegate,AMExpressionNodeViewDatasource>
 {
+    KSMWorksheet * _worksheet;
     KSMExpression * _expression;
     AMExpressionNodeView * _expressionNode;
 }
-@property KSMExpression * expression;
+@property (readonly) KSMExpression * expression;
 @end
 
 @implementation AMExpressionNodeController
@@ -33,9 +34,13 @@
 #pragma mark - AMExpressionNodeViewDelegate -
 -(id<AMNameProviding>)nameProvider
 {
-    return [AMNameProviderBase nameProviderWithDelegate:self.nameProviderDelegate];
+    return [AMWorksheetNameProvider nameProviderWithDelegate:self.nameProviderDelegate worksheet:self.worksheet];
 }
-
+#pragma mark - AMExpressionNodeViewDatasource -
+-(KSMExpression *)view:(NSView *)view requiresExpressionForSymbol:(NSString *)symbol
+{
+    return [self.worksheet expressionForSymbol:symbol];
+}
 #pragma mark - AMExpressionNodeController -
 -(AMExpressionNodeView*)expressionNode
 {
@@ -45,7 +50,7 @@
                                                            expression:self.expression
                                                        scriptingLevel:0
                                                              delegate:self
-                                                           dataSource:nil
+                                                           dataSource:self
                                                        displayOptions:nil
                                                           scaleFactor:1
                                                           contextNode:nil];
@@ -55,21 +60,24 @@
 -(void)setExpressionNode:(AMExpressionNodeView *)expressionNode
 {
     _expressionNode = expressionNode;
-    expressionNode.delegate = self;
+    expressionNode.delegate   = self;
+    expressionNode.dataSource = self;
 }
 
 -(KSMExpression*)expression
 {
     if (!_expression) {
-        _expression = [[KSMExpression alloc] initWithString:@"2*x"];
+        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:@"2*x"];
+        _expression = [self.worksheet expressionForSymbol:symbol];
     }
     return _expression;
 }
--(void)setExpression:(KSMExpression *)expression
+-(KSMWorksheet *)worksheet
 {
-    _expression = expression;
-//    [self.expressionNode setExpression:self.expression];
-//    [self.expressionNode setNeedsDisplay:YES];
+    if (!_worksheet) {
+        _worksheet = [[KSMWorksheet alloc] init];
+    }
+    return _worksheet;
 }
 
 @end

@@ -10,7 +10,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 
 #import "AMDName+Methods.h"
 #import "NSManagedObject+SharedDataStore.h"
-#import "AMNameProviderBase.h"
+#import "AMPersistentNameProvider.h"
 
 
 @implementation AMDName (Methods)
@@ -76,7 +76,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 
 +(NSAttributedString*)generateAttributedStringFromName:(NSString*)name andType:(KSMValueType)type
 {
-    id<AMNameProviding> nameProvider = [[AMNameProviderBase alloc] init];
+    id<AMNameProviding> nameProvider = [[AMPersistentNameProvider alloc] init];
     return  [nameProvider generateAttributedStringFromName:name withType:type];
 }
 

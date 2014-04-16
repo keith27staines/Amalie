@@ -11,7 +11,7 @@
 #import "AMDArgument+Methods.h"
 #import "AMDName+Methods.h"
 #import "AMUserPreferences.h"
-#import "AMArgumentsNameProvider.h"
+#import "AMPersistentArgumentsNameProvider.h"
 #import "AMAmalieDocument.h"
 
 
@@ -22,7 +22,7 @@
 }
 
 @property (weak, readonly) AMArgumentListView * argumentListView;
-@property (weak) AMArgumentsNameProvider * namer;
+@property (weak) AMPersistentArgumentsNameProvider * namer;
 @end
 
 
@@ -61,7 +61,7 @@
 
 -(NSFont*)bracesFontAtScriptingLevel:(NSUInteger)scriptingLevel
 {
-    AMNameProviderBase * namer = [[AMNameProviderBase alloc] initWithDelegate:self.document];
+    AMPersistentNameProvider * namer = [[AMPersistentNameProvider alloc] initWithDelegate:self.document];
     return [namer fontForSymbolsAtScriptinglevel:scriptingLevel];
 }
 
@@ -75,7 +75,7 @@
                             atScriptingLevel:(NSUInteger)scriptingLevel
 {
     NSAttributedString * aString = [self.argumentList argumentAtIndex:index].name.attributedString;
-    AMNameProviderBase * namer = [[AMNameProviderBase alloc] initWithDelegate:self.document];
+    AMPersistentNameProvider * namer = [[AMPersistentNameProvider alloc] initWithDelegate:self.document];
     return [namer attributedStringByModifying:aString toSuperscriptLevel:scriptingLevel];
 }
 

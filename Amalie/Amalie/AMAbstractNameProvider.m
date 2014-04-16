@@ -1,65 +1,152 @@
 //
-//  AMNameProviderBase.m
-//  Amalie
+//  AMNameProvider.m
+//  
 //
-//  Created by Keith Staines on 10/12/2013.
-//  Copyright (c) 2013 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 16/04/2014.
+//
 //
 
-#import "AMNameProviderBase.h"
-#import "AMUserPreferences.h"
-#import "AMDInsertedObject+Methods.h"
-#import "AMDataStore.h"
+#import "AMAbstractNameProvider.h"
 #import "AMConstants.h"
-#import "AMDFunctionDef+Methods.h"
-#import "AMKeyboards.h"
-#import "AMKeyboard.h"
-#import "AMKeyboardKeyModel.h"
-#import "AMDName+Methods.h"
 #import "AMError.h"
 #import "AMFontAttributes.h"
 #import "AMMathStyleSettings.h"
+#import "AMKeyboardKeyModel.h"
+#import "AMKeyboards.h"
+#import "AMKeyboard.h"
+#import "AMUserPreferences.h"
 
-typedef enum AMCharacterType : NSUInteger {
+typedef NS_ENUM(NSInteger, AMCharacterType) {
     amCharacterTypeLatin,
     amCharacterTypeGreek,
     amCharacterTypeSymbol,
-} AMCharacterType;
+};
 
-@interface AMNameProviderBase()
-{
-    __weak AMDArgumentList * _dummyArguments;
-}
-@property (readonly) CGFloat    superscriptingFraction;
-@property (readonly) NSUInteger baseFontSize;
-@property (readonly) NSUInteger minimumFontSize;
-@property (readonly) id<AMNameProviderDelegate>delegate;
-@end
+@implementation AMAbstractNameProvider
 
-
-@implementation AMNameProviderBase
-
+#pragma mark - NSObject -
 -(id)init
 {
     [NSException raise:@"Invalid initializer" format:@"Call the designated initializer"];
     return nil;
 }
 
--(id)initWithDelegate:(id<AMNameProviderDelegate>)delegate
-{
-    self = [super init];
-    if (self) {
-        NSAssert(delegate, @"Delegate must exist");
-        _delegate = delegate;
-    }
-    return self;
-}
+#pragma mark - AMNameProvider -
 
 +(id)nameProviderWithDelegate:(id<AMNameProviderDelegate>)delegate
 {
     return [[self alloc] initWithDelegate:delegate];
 }
+-(id)initWithDelegate:(id<AMNameProviderDelegate>)delegate
+{
+    self = [super init];
+    if (self) {
+        NSAssert(delegate, @"A delegate is required");
+        _delegate = delegate;
+    }
+    return self;
+}
 
+#pragma mark - AMNameProviding protocol -
+
+-(BOOL)validateProposedName:(NSString*)proposedName
+                    forType:(AMInsertableType)type
+                      error:(NSError**)error
+{
+    if (![self nameSyntaxValid:proposedName error:error]) {
+        return NO;
+    }
+    
+    if ( ![self isKnownObjectName:proposedName] ) {
+        if (error) {
+            *error = [AMError errorForNonUniqueName:proposedName];
+        }
+        return NO;
+    }
+    return YES;
+}
+-(BOOL)nameSyntaxValid:(NSString*)name error:(NSError**)error
+{
+    if (!name) {
+        if (error) * error = [AMError errorWithCode:AMErrorCodeNameIsNull userInfo:nil];
+        return NO;
+    }
+    
+    if ( [name isEqualToString:@""] ) {
+        if (error!=NULL) * error = [AMError errorWithCode:AMErrorCodeNameIsEmpty userInfo:nil];
+        return NO;
+    }
+    // TODO: other validation, invalidate names beginning with digits etc
+    return YES;
+}
+/*!
+ *  Abstract method defines the interface for determining whether a named object is known to whatever store the derived class utilises
+ *
+ *  @param name name of the object that may or may not be in the store
+ *
+ *  @return YES if the name exists in the store, otherwise NO
+ */
+-(BOOL)isKnownObjectName:(NSString *)name
+{
+    [NSException raise:@"Abstract method called" format:@"Derived classes must override this method"];
+    return NO;
+}
+/*!
+ *  Abstract method defining the interface to obtain the attributes string for a named object
+ *
+ *  @param name name of object for which an attributes string name is required
+ *
+ *  @return the object's name as a fully attributed string
+ */
+-(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
+{
+    [NSException raise:@"Abstract method called" format:@"Derived classes must override this method"];
+    return nil;
+}
+-(NSUInteger)baseFontSize
+{
+    return [self.delegate baseFontSize];
+}
+-(AMFontAttributes*)defaultFontAttributesForMainCharacter:(NSString *)ch
+                                               ofMathType:(KSMValueType)mathType
+                                     superscriptLevel:(NSInteger)superscriptLevel
+{
+    NSAssert(ch.length == 1, @"The string %@ should contain only one character",ch);
+    
+    AMFontAttributes * fontAttrs;
+    NSCharacterSet * numericSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    NSRange r = [ch rangeOfCharacterFromSet:numericSet];
+    if (r.location == NSNotFound) {
+        AMFontType fontType = [self fontTypeForMathType:mathType];
+        fontAttrs = [self.delegate fontAttributesForType:fontType];
+    } else {
+        // Character is a digit, 0,1,2,3,4,5,6,7,8, or 9
+        fontAttrs = [self.delegate fontAttributesForType:AMFontTypeLiteral];
+    }
+    fontAttrs.size = [self fontSizeForSuperscriptLevel:superscriptLevel];
+    return fontAttrs;
+}
+
+-(NSUInteger)minimumFontSize
+{
+    return fminf([self.delegate smallestFontSize]*[self baseFontSize], [self baseFontSize]);
+}
+
+-(CGFloat)superscriptingFraction
+{
+    return [self.delegate superscriptingFraction];
+}
+
+-(CGFloat)fontSizeForSuperscriptLevel:(NSInteger)level
+{
+    CGFloat size = [self.class fontSizeForSuperscriptLevel:level
+                                          withBaseFontSize:self.baseFontSize
+                                           minimumFontSize:self.minimumFontSize
+                                       superscriptFraction:self.superscriptingFraction];
+    return size;
+}
+
+#pragma mark - helpers -
 -(NSUInteger)indexOfCharacterPrecedingExponentPositionForString:(NSAttributedString*)attributedString
 {
     NSUInteger requiredIndex = 0;
@@ -115,30 +202,6 @@ typedef enum AMCharacterType : NSUInteger {
     return font;
 }
 
--(NSUInteger)baseFontSize
-{
-    return [self.delegate baseFontSize];
-}
-
--(NSUInteger)minimumFontSize
-{
-    return fminf([self.delegate smallestFontSize]*[self baseFontSize], [self baseFontSize]);
-}
-
--(CGFloat)superscriptingFraction
-{
-    return [self.delegate superscriptingFraction];
-}
-
--(CGFloat)fontSizeForSuperscriptLevel:(NSInteger)level
-{
-    CGFloat size = [self.class fontSizeForSuperscriptLevel:level
-                                          withBaseFontSize:self.baseFontSize
-                                           minimumFontSize:self.minimumFontSize
-                                       superscriptFraction:self.superscriptingFraction];
-    return size;
-}
-
 +(CGFloat)fontSizeForSuperscriptLevel:(NSInteger)level
                      withBaseFontSize:(NSUInteger)baseFontSize
                       minimumFontSize:(NSUInteger)minimumFontSize
@@ -147,26 +210,6 @@ typedef enum AMCharacterType : NSUInteger {
     CGFloat size = powf(fraction,fabs(level)) * baseFontSize;
     if (size < minimumFontSize) size = minimumFontSize;
     return size;
-}
-
--(AMFontAttributes*)defaultFontAttributesForMainCharacter:(NSString *)ch
-                                               ofMathType:(KSMValueType)mathType
-                                     superscriptLevel:(NSInteger)superscriptLevel
-{
-    NSAssert(ch.length == 1, @"The string %@ should contain only one character",ch);
-    
-    AMFontAttributes * fontAttrs;
-    NSCharacterSet * numericSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    NSRange r = [ch rangeOfCharacterFromSet:numericSet];
-    if (r.location == NSNotFound) {
-        AMFontType fontType = [self fontTypeForMathType:mathType];
-        fontAttrs = [self.delegate fontAttributesForType:fontType];
-    } else {
-        // Character is a digit, 0,1,2,3,4,5,6,7,8, or 9
-        fontAttrs = [self.delegate fontAttributesForType:AMFontTypeLiteral];
-    }
-    fontAttrs.size = [self fontSizeForSuperscriptLevel:superscriptLevel];
-    return fontAttrs;
 }
 
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name withType:(KSMValueType)mathType
@@ -200,7 +243,6 @@ typedef enum AMCharacterType : NSUInteger {
     }
     return returnString;
 }
-
 
 -(AMFontType)fontTypeForMathType:(KSMValueType)mathType
 {
@@ -249,77 +291,5 @@ typedef enum AMCharacterType : NSUInteger {
     }
     return amCharacterTypeLatin;
 }
-
--(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
-{
-    AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
-    return amdName.attributedString;
-}
-
--(KSMValueType)mathTypeForForObjectWithName:(NSString *)name
-{
-    AMDInsertedObject * insertedObject = [[AMDataStore sharedDataStore] insertedObjectWithName:name];
-    
-    if (!insertedObject) {
-        // everything not specifically defined is assumed to be of type double
-        return KSMValueDouble;
-    }
-    
-    switch ((AMInsertableType)insertedObject.insertType) {
-        case AMInsertableTypeConstant:
-        case AMInsertableTypeVariable:
-        case AMInsertableTypeFunction:
-        {
-            AMDFunctionDef * fnDef = (AMDFunctionDef*)insertedObject;
-            return (KSMValueType)fnDef.returnType.integerValue;
-            break;
-        }
-        case AMInsertableTypeVector:
-            return KSMValueVector;
-        case AMInsertableTypeMatrix:
-            return KSMValueMatrix;
-        default:
-            return KSMValueDouble;
-    }
-}
--(BOOL)isKnownObjectName:(NSString *)name
-{
-    AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
-    return (amdName) ? YES : NO;
-}
-
-#pragma mark - Name validation -
--(BOOL)validateProposedName:(NSString*)proposedName
-                    forType:(AMInsertableType)type
-                      error:(NSError**)error
-{
-    if (![self nameSyntaxValid:proposedName error:error]) {
-        return NO;
-    }
-    
-    if ( ![self isKnownObjectName:proposedName] ) {
-        if (error) {
-            *error = [AMError errorForNonUniqueName:proposedName];
-        }
-        return NO;
-    }
-    return YES;
-}
-
--(BOOL)nameSyntaxValid:(NSString*)name error:(NSError**)error
-{
-    if (!name) {
-        if (error) * error = [AMError errorWithCode:AMErrorCodeNameIsNull userInfo:nil];
-        return NO;
-    }
-    
-    if ( [name isEqualToString:@""] ) {
-        if (error!=NULL) * error = [AMError errorWithCode:AMErrorCodeNameIsEmpty userInfo:nil];
-        return NO;
-    }
-    // TODO: other validation, invalidate names beginning with digits etc
-    return YES;
-}
-
 
 @end

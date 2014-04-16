@@ -31,7 +31,6 @@
                                    self.subscriptOffsetTextField.formatter,
                                    self.superscriptOffsetTextField.formatter,
                                    self.subscriptSizeTextField.formatter];
-    
     for (NSNumberFormatter * formatter in numberFormatters) {
         [formatter setNumberStyle:NSNumberFormatterPercentStyle];
         [formatter setMaximumFractionDigits:0];

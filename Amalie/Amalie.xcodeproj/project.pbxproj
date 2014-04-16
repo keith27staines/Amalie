@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53132A3218FED5420069C7BA /* AMAbstractNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */; };
+		53132A3518FEEEA60069C7BA /* AMWorksheetNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3418FEEEA60069C7BA /* AMWorksheetNameProvider.m */; };
 		5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316847D18EDABFD00A29B36 /* AMSettingsSection.m */; };
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
@@ -42,8 +44,8 @@
 		7832744D178F1D810051290B /* AMLibraryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7832744B178F1D810051290B /* AMLibraryItem.m */; };
 		784001EC18015E6E006B00C1 /* AMDocumentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EB18015E6E006B00C1 /* AMDocumentView.m */; };
 		784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */; };
-		7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5CD185769F400719EF3 /* AMNameProviderBase.m */; };
-		7848E5D1185770A300719EF3 /* AMArgumentsNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5D0185770A300719EF3 /* AMArgumentsNameProvider.m */; };
+		7848E5CE185769F400719EF3 /* AMPersistentNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5CD185769F400719EF3 /* AMPersistentNameProvider.m */; };
+		7848E5D1185770A300719EF3 /* AMPersistentArgumentsNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7848E5D0185770A300719EF3 /* AMPersistentArgumentsNameProvider.m */; };
 		784ACC1318BBAF89009268B3 /* AMMeasurement.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC1218BBAF89009268B3 /* AMMeasurement.m */; };
 		784ACC1718BE313C009268B3 /* AMMeasuredLengthFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC1618BE313C009268B3 /* AMMeasuredLengthFormatter.m */; };
 		784ACC1D18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 784ACC1C18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m */; };
@@ -213,6 +215,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		53132A2F18FEC9440069C7BA /* AMExpressionNodeViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDatasource.h; sourceTree = "<group>"; };
+		53132A3018FED5420069C7BA /* AMAbstractNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = AMAbstractNameProvider.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = AMAbstractNameProvider.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
+		53132A3318FEEEA60069C7BA /* AMWorksheetNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetNameProvider.h; sourceTree = "<group>"; };
+		53132A3418FEEEA60069C7BA /* AMWorksheetNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetNameProvider.m; sourceTree = "<group>"; };
 		5316847C18EDABFD00A29B36 /* AMSettingsSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSettingsSection.h; sourceTree = "<group>"; };
 		5316847D18EDABFD00A29B36 /* AMSettingsSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSettingsSection.m; sourceTree = "<group>"; };
 		5329831918E576FF0040809D /* AMColorPreferenceTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreferenceTableCellView.h; sourceTree = "<group>"; };
@@ -273,10 +280,10 @@
 		784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardsAreaView.h; sourceTree = "<group>"; };
 		784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardsAreaView.m; sourceTree = "<group>"; };
 		7848E5C91857467800719EF3 /* AMNameProviding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameProviding.h; sourceTree = "<group>"; };
-		7848E5CC185769F400719EF3 /* AMNameProviderBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNameProviderBase.h; sourceTree = "<group>"; };
-		7848E5CD185769F400719EF3 /* AMNameProviderBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMNameProviderBase.m; sourceTree = "<group>"; };
-		7848E5CF185770A300719EF3 /* AMArgumentsNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentsNameProvider.h; sourceTree = "<group>"; };
-		7848E5D0185770A300719EF3 /* AMArgumentsNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentsNameProvider.m; sourceTree = "<group>"; };
+		7848E5CC185769F400719EF3 /* AMPersistentNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPersistentNameProvider.h; sourceTree = "<group>"; };
+		7848E5CD185769F400719EF3 /* AMPersistentNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPersistentNameProvider.m; sourceTree = "<group>"; };
+		7848E5CF185770A300719EF3 /* AMPersistentArgumentsNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPersistentArgumentsNameProvider.h; sourceTree = "<group>"; };
+		7848E5D0185770A300719EF3 /* AMPersistentArgumentsNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPersistentArgumentsNameProvider.m; sourceTree = "<group>"; };
 		784ACC1118BBAF89009268B3 /* AMMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMeasurement.h; sourceTree = "<group>"; };
 		784ACC1218BBAF89009268B3 /* AMMeasurement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMeasurement.m; sourceTree = "<group>"; };
 		784ACC1518BE313C009268B3 /* AMMeasuredLengthFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMeasuredLengthFormatter.h; sourceTree = "<group>"; };
@@ -692,10 +699,14 @@
 			isa = PBXGroup;
 			children = (
 				7848E5C91857467800719EF3 /* AMNameProviding.h */,
-				7848E5CF185770A300719EF3 /* AMArgumentsNameProvider.h */,
-				7848E5D0185770A300719EF3 /* AMArgumentsNameProvider.m */,
-				7848E5CC185769F400719EF3 /* AMNameProviderBase.h */,
-				7848E5CD185769F400719EF3 /* AMNameProviderBase.m */,
+				7848E5CF185770A300719EF3 /* AMPersistentArgumentsNameProvider.h */,
+				7848E5D0185770A300719EF3 /* AMPersistentArgumentsNameProvider.m */,
+				53132A3018FED5420069C7BA /* AMAbstractNameProvider.h */,
+				53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */,
+				7848E5CC185769F400719EF3 /* AMPersistentNameProvider.h */,
+				7848E5CD185769F400719EF3 /* AMPersistentNameProvider.m */,
+				53132A3318FEEEA60069C7BA /* AMWorksheetNameProvider.h */,
+				53132A3418FEEEA60069C7BA /* AMWorksheetNameProvider.m */,
 			);
 			name = AMNameProvider;
 			sourceTree = "<group>";
@@ -939,6 +950,7 @@
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
+				53132A2F18FEC9440069C7BA /* AMExpressionNodeViewDatasource.h */,
 				788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */,
 				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
@@ -1424,13 +1436,14 @@
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
 				78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
 				785826A618C474C800612651 /* AMColorPreferencesViewController.m in Sources */,
+				53132A3518FEEEA60069C7BA /* AMWorksheetNameProvider.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
 				7899B2F617AD0E6A008BDB75 /* AMGraph2DContentViewController.m in Sources */,
 				787B3056178361BC001851C0 /* AMAmalieDocument.m in Sources */,
 				788EAE0818B5310200D3EBD3 /* AMSplitView.m in Sources */,
-				7848E5D1185770A300719EF3 /* AMArgumentsNameProvider.m in Sources */,
+				7848E5D1185770A300719EF3 /* AMPersistentArgumentsNameProvider.m in Sources */,
 				780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */,
 				786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */,
 				78D8C30218C7A991001F5494 /* AMPreferencesBaseViewController.m in Sources */,
@@ -1463,6 +1476,7 @@
 				78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */,
 				788EAE1418B6684700D3EBD3 /* AMPageOrientationView.m in Sources */,
 				785826B618C4CCCB00612651 /* AMMathPreferencesViewController.m in Sources */,
+				53132A3218FED5420069C7BA /* AMAbstractNameProvider.m in Sources */,
 				7824F43018CA0AB0004089B9 /* AMPersistentDocumentSettings.m in Sources */,
 				78EF56AC17CF3B0B00402847 /* KSMVector.m in Sources */,
 				785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */,
@@ -1511,7 +1525,7 @@
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,
 				786E32F7188D12F10095443D /* AMFunctionPropertiesViewController.m in Sources */,
 				5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */,
-				7848E5CE185769F400719EF3 /* AMNameProviderBase.m in Sources */,
+				7848E5CE185769F400719EF3 /* AMPersistentNameProvider.m in Sources */,
 				785826C218C4D22000612651 /* AMPagePreferencesView.m in Sources */,
 				78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,

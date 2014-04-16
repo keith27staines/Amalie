@@ -27,8 +27,8 @@
 #import "AMPersistentDocumentSettings.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
-#import "AMNameProviderBase.h"
-#import "AMArgumentsNameProvider.h"
+#import "AMPersistentNameProvider.h"
+#import "AMPersistentArgumentsNameProvider.h"
 #import "AMDocumentView.h"
 #import "AMFontAttributes.h"
 #import "AMPageSetupViewController.h"
@@ -689,15 +689,15 @@
 - (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender {
 }
 
--(AMNameProviderBase *)baseNameProvider
+-(AMPersistentNameProvider *)baseNameProvider
 {
-    AMNameProviderBase * baseProvider = [[AMNameProviderBase alloc] initWithDelegate:self];
+    AMPersistentNameProvider * baseProvider = [[AMPersistentNameProvider alloc] initWithDelegate:self];
     return baseProvider;
 }
 
--(AMArgumentsNameProvider *)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList
+-(AMPersistentArgumentsNameProvider *)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList
 {
-    AMArgumentsNameProvider * provider = [AMArgumentsNameProvider nameProviderWithDummyVariables:argumentList delegate:self];
+    AMPersistentArgumentsNameProvider * provider = [AMPersistentArgumentsNameProvider nameProviderWithDummyVariables:argumentList delegate:self];
     return provider;
 }
 

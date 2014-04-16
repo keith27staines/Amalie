@@ -147,6 +147,14 @@
     return holder.mathValue;
 }
 
+-(BOOL)isKnownObjectName:(NSString *)name
+{
+    if ([self expressionForString:name]) return YES;
+    if ([self variableForName:name]) return YES;
+    if ([self functionForName:name]) return YES;
+    return NO;
+}
+
 -(KSMMathValue*)variableForName:(NSString*)name
 {
     for (NSString * symbol in self.variablesDictionary) {

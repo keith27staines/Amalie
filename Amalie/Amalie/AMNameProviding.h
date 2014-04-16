@@ -12,8 +12,6 @@
 
 @protocol AMNameProviding <NSObject>
 
--(KSMValueType)mathTypeForForObjectWithName:(NSString*)name;
-
 -(BOOL)isKnownObjectName:(NSString*)name;
 
 -(NSAttributedString*)attributedStringForObjectWithName:(NSString*)name;

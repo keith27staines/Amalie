@@ -11,14 +11,13 @@
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 #import "AMNameProviding.h"
+#import "AMExpressionNodeViewDatasource.h"
 
-@protocol AMContentViewDataSource <NSObject>
+@protocol AMContentViewDataSource <AMExpressionNodeViewDatasource>
 
 -(KSMExpression*)view:(NSView*)view requiresExpressionForString:(NSString*)string atIndex:(NSUInteger)index;
 
 -(KSMExpression*)view:(NSView*)view wantsExpressionAtIndex:(NSUInteger)index;
-
--(KSMExpression*)view:(NSView *)view requiresExpressionForSymbol:(NSString *)symbol;
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView*)view;
 

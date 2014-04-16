@@ -74,6 +74,7 @@
 -(KSMExpression*)expressionForOriginalString:(NSString*)string;
 -(KSMExpression*)expressionForString:(NSString*)string;
 -(KSMFunction*)functionForName:(NSString*)name;
+-(BOOL)isKnownObjectName:(NSString*)name;
 
 -(void)setValue:(KSMMathValue*)number forVariableWithSymbol:(NSString*)symbol;
 

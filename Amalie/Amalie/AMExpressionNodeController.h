@@ -5,7 +5,7 @@
 //  Created by Keith Staines on 15/04/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
-@class AMExpressionNodeView;
+@class AMExpressionNodeView,KSMWorksheet;
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 #import "AMNameProviderDelegate.h"
@@ -15,4 +15,5 @@
 
 @property IBOutlet AMExpressionNodeView * expressionNode;
 @property (weak) IBOutlet id<AMNameProviderDelegate> nameProviderDelegate;
+@property (readonly) KSMWorksheet * worksheet;
 @end
