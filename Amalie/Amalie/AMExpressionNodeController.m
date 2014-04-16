@@ -67,7 +67,7 @@
 -(KSMExpression*)expression
 {
     if (!_expression) {
-        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:@"2*x"];
+        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:@"2*xi^2"];
         _expression = [self.worksheet expressionForSymbol:symbol];
     }
     return _expression;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D38" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D33" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -203,6 +203,14 @@
                         <action selector="textChanged:" target="-2" id="PTM-l7-6kQ"/>
                     </connections>
                 </textField>
+                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKZ-PF-cHO">
+                    <rect key="frame" x="370" y="76" width="254" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="iC3-OB-pYE"/>
+                    <connections>
+                        <action selector="zoom:" target="-2" id="M77-zh-BBv"/>
+                    </connections>
+                </slider>
             </subviews>
             <constraints>
                 <constraint firstItem="z56-D0-CiX" firstAttribute="width" secondItem="Olz-Ed-Jtb" secondAttribute="width" id="2sI-Hg-v87"/>

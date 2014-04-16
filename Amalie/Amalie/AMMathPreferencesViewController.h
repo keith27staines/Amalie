@@ -14,6 +14,7 @@
 
 @interface AMMathPreferencesViewController : AMPreferencesBaseViewController <AMNameProviderDelegate>
 
+- (IBAction)zoom:(NSSlider *)sender;
 
 @property (weak) IBOutlet NSView *expressionContainer;
 
