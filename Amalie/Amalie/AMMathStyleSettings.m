@@ -52,7 +52,7 @@
     if (self) {
         self.superscriptOffsetFraction = [aDecoder decodeFloatForKey:kAMSuperscriptOffsetKey];
         self.subscriptOffsetFraction   = [aDecoder decodeFloatForKey:kAMSubscriptOffsetKey];
-        self.smallestFontSizeFraction  = [aDecoder decodeIntegerForKey:kAMMinFontSizeKey];
+        self.smallestFontSizeFraction  = [aDecoder decodeFloatForKey:kAMMinFontSizeKey];
         self.superscriptingFraction    = [aDecoder decodeFloatForKey:kAMSuperscriptingFractionKey];
     }
     return self;
@@ -62,7 +62,7 @@
     [super encodeWithCoder:aCoder];
     [aCoder encodeFloat:self.superscriptOffsetFraction forKey:kAMSuperscriptOffsetKey];
     [aCoder encodeFloat:self.subscriptOffsetFraction forKey:kAMSubscriptOffsetKey];
-    [aCoder encodeInteger:self.smallestFontSizeFraction forKey:kAMMinFontSizeKey];
+    [aCoder encodeFloat:self.smallestFontSizeFraction forKey:kAMMinFontSizeKey];
     [aCoder encodeFloat:self.superscriptingFraction forKey:kAMSuperscriptingFractionKey];
 }
 

@@ -129,7 +129,7 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
 
 -(NSUInteger)minimumFontSize
 {
-    return fminf([self.delegate smallestFontSize]*[self baseFontSize], [self baseFontSize]);
+    return fminf([self.delegate smallestFontSizeFraction]*[self baseFontSize], [self baseFontSize]);
 }
 
 -(CGFloat)superscriptingFraction

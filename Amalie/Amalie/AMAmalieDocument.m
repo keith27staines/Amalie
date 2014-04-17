@@ -718,9 +718,9 @@
 {
     return [self.documentSettings.mathStyleSettings subscriptOffsetFraction];
 }
--(CGFloat)smallestFontSize
+-(CGFloat)smallestFontSizeFraction
 {
-    return [self.documentSettings.mathStyleSettings smallestFontSizeFraction]*[self baseFontSize];
+    return [self.documentSettings.mathStyleSettings smallestFontSizeFraction];
 }
 -(CGFloat)baseFontSize
 {

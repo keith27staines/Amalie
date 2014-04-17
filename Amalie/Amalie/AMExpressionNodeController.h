@@ -10,10 +10,13 @@
 #import "AMConstants.h"
 #import "AMNameProviderDelegate.h"
 
+extern NSString * const kAMDemoExpressionMathStyle;
 
 @interface AMExpressionNodeController : NSObject
 
 @property IBOutlet AMExpressionNodeView * expressionNode;
 @property (weak) IBOutlet id<AMNameProviderDelegate> nameProviderDelegate;
 @property (readonly) KSMWorksheet * worksheet;
+
+@property (copy) NSString * expressionString;
 @end

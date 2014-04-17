@@ -153,7 +153,7 @@
 
 -(void)setExpression:(KSMExpression *)expression
 {
-    if (expression == _expression) return;
+    //if (expression == _expression) return;
     
     [self prepareForExpressionSet];
     _expression = expression;

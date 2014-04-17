@@ -14,11 +14,14 @@
 #import "AMExpressionNodeView.h"
 #import "AMWorksheetNameProvider.h"
 
+NSString * const kAMDemoExpressionMathStyle = @"2*xi^2";
+
 @interface AMExpressionNodeController() <AMExpressionNodeViewDelegate,AMExpressionNodeViewDatasource>
 {
     KSMWorksheet * _worksheet;
     KSMExpression * _expression;
     AMExpressionNodeView * _expressionNode;
+    NSString * _expressionString;
 }
 @property (readonly) KSMExpression * expression;
 @end
@@ -67,10 +70,32 @@
 -(KSMExpression*)expression
 {
     if (!_expression) {
-        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:@"2*xi^2"];
+        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:self.expressionString];
         _expression = [self.worksheet expressionForSymbol:symbol];
     }
     return _expression;
+}
+
+-(NSString *)expressionString
+{
+    if (!_expressionString) {
+        _expressionString = kAMDemoExpressionMathStyle;
+    }
+    return _expressionString;
+}
+-(void)setExpressionString:(NSString *)expressionString
+{
+    _expressionString = expressionString;
+    _expression = nil;  // force expression to be remade
+    [self.expressionNode resetWithgroupID:@""
+                               expression:self.expression
+                           scriptingLevel:0
+                                 delegate:self
+                               dataSource:self
+                           displayOptions:nil
+                              scaleFactor:1
+                              contextNode:nil];
+    [self.expressionNode setNeedsDisplay:YES];
 }
 -(KSMWorksheet *)worksheet
 {

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMExpressionContentView;
+@class AMExpressionNodeController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMPreferencesViewControllerBase.h"
@@ -14,9 +14,9 @@
 
 @interface AMMathPreferencesViewController : AMPreferencesViewControllerBase <AMNameProviderDelegate>
 
-- (IBAction)zoom:(NSSlider *)sender;
+@property (weak) IBOutlet AMExpressionNodeController * expressionController;
 
-@property (weak) IBOutlet NSView *expressionContainer;
+- (IBAction)zoom:(NSSlider *)sender;
 
 @property (weak) IBOutlet NSSlider *smallestFontSlider;
 
@@ -27,8 +27,6 @@
 @property (weak) IBOutlet NSSlider *subscriptSizeSlider;
 
 @property (weak) IBOutlet NSView *expressionContainerView;
-
-@property (weak) IBOutlet AMExpressionContentView *expressionView;
 
 @property (weak) IBOutlet NSTextField *smallestFontTextField;
 
@@ -42,8 +40,6 @@
 - (IBAction)textChanged:(NSTextField *)sender;
 
 - (IBAction)sliderChanged:(NSSlider *)sender;
-
-
 
 
 @end

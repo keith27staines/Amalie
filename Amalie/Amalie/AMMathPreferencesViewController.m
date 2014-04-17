@@ -10,7 +10,7 @@
 #import "AMMathStyleSettings.h"
 #import "AMPersistentDocumentSettings.h"
 #import "AMFontSettings.h"
-#import "AMExpressionContentView.h"
+#import "AMExpressionNodeController.h"
 
 @interface AMMathPreferencesViewController ()
 {
@@ -71,6 +71,8 @@
     self.subscriptOffsetTextField.floatValue   = style.subscriptOffsetFraction;
     self.superscriptOffsetTextField.floatValue = style.superscriptOffsetFraction;
     self.subscriptSizeTextField.floatValue     = style.superscriptingFraction;
+
+    [self.expressionController setExpressionString:kAMDemoExpressionMathStyle];
 }
 - (IBAction)textChanged:(NSTextField *)sender {
     AMMathStyleSettings * style = self.mathStyleSettings;
@@ -109,9 +111,9 @@
 {
     return self.mathStyleSettings.subscriptOffsetFraction;
 }
--(CGFloat)smallestFontSize
+-(CGFloat)smallestFontSizeFraction
 {
-    return self.mathStyleSettings.smallestFontSizeFraction * [self baseFontSize];
+    return self.mathStyleSettings.smallestFontSizeFraction;
 }
 -(AMFontAttributes *)fontAttributesForType:(AMFontType)fontType
 {

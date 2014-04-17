@@ -18,7 +18,7 @@
 -(CGFloat)superscriptingFraction;
 -(CGFloat)superscriptOffset;
 -(CGFloat)subscriptOffset;
--(CGFloat)smallestFontSize;
+-(CGFloat)smallestFontSizeFraction;
 -(CGFloat)baseFontSize;
 
 @end

@@ -29,6 +29,9 @@ NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 
 - (IBAction)resetAllUserPreferences:(id)sender
 {
+    [AMUserPreferences resetSettingsForSection:AMSettingsSectionColors];
+    [AMUserPreferences resetSettingsForSection:AMSettingsSectionFonts];
+    [AMUserPreferences resetSettingsForSection:AMSettingsSectionMathsStyle];
     [AMUserPreferences resetSettingsForSection:AMSettingsSectionPage];
 }
 
