@@ -53,7 +53,7 @@
 /* Just a helpful cast */
 -(AMFontSettings*)fontSettings
 {
-    return (AMFontSettings*)self.settingsSection;
+    return (AMFontSettings*)self.controlledSettingsSection;
 }
 
 #pragma mark - data loading helpers -

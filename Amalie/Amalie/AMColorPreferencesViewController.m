@@ -68,7 +68,7 @@
 }
 -(AMColorSettings*)colorSettings
 {
-    return (AMColorSettings*)self.settingsSection;
+    return (AMColorSettings*)self.controlledSettingsSection;
 }
 -(void)makeColorPreferenceDictionary
 {

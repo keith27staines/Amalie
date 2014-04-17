@@ -8,7 +8,7 @@
 
 #import "AMDocumentSettingsBaseViewController.h"
 #import "AMAmalieDocument.h"
-#import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesViewControllerBase.h"
 
 @implementation AMDocumentSettingsBaseViewController
 

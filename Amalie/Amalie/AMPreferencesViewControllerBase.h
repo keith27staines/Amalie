@@ -1,5 +1,5 @@
 //
-//  AMPreferencesBaseViewController.h
+//  AMPreferencesViewControllerBase.h
 //  Amalie
 //
 //  Created by Keith Staines on 05/03/2014.
@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
 
-@interface AMPreferencesBaseViewController : NSViewController
+@interface AMPreferencesViewControllerBase : NSViewController
 
 @property IBOutlet NSButton * resetButton;
 -(IBAction)resetButtonClicked:(NSButton*)sender;
@@ -26,6 +26,6 @@
 
 @property AMSettingsStorageLocationType settingsStorageLocationType;
 @property AMDocumentSettingsBase * documentSettings;
-@property (readonly) AMSettingsSection * settingsSection;
+@property (readonly) AMSettingsSection * controlledSettingsSection;
 -(void)saveSettingsSection;
 @end

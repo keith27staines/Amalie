@@ -53,24 +53,10 @@
 /* Just a helpful cast */
 -(AMPageSettings*)pageSettings
 {
-    return (AMPageSettings*)self.settingsSection;
-}
-
-#pragma mark - AMPageSetupViewControllerDelegate -
--(void)pageSetupViewController:(AMPageSetupViewController *)vc didUpdate:(AMPageSettings *)settings
-{
-    // TODO: add implementation
-    //NSAssert(NO, @"Missing implementation");
+    return (AMPageSettings*)self.controlledSettingsSection;
 }
 
 #pragma mark - AMPagePreferencesViewController -
-
--(void)loadView
-{
-    [super loadView];
-    [self reloadData];
-}
-
 -(NSArray*)numberFormatters
 {
     return @[self.customWidthFormatter,
@@ -250,31 +236,26 @@
     } else {
         self.pageSettings.paperType = paperType;
     }
-    [self pageDidUpdate];
     [self reloadData];
 }
 -(void)setCustomSize:(NSSize)size
 {
-    [self pageDidUpdate];
     [self.pageSettings makeCustomPortraitWidth:size.width portraitHeight:size.height];
 }
 -(void)setPaperOrientation:(AMPaperOrientation)paperOrientation
 {
     self.pageSettings.paperOrientation = paperOrientation;
-    [self pageDidUpdate];
     [self reloadData];
 }
 -(void)setPaperMeasurementUnits:(AMMeasurementUnits)units
 {
     self.pageSettings.paperMeasurementUnits = units;
-    [self pageDidUpdate];
     [self reloadData];
 }
 -(void)setMargins
 {
     AMMargins margins = [self marginsFromView];
     [self.pageSettings setMargins:margins inUnits:self.paperMeasurementUnits];
-    [self pageDidUpdate];
     [self reloadData];
 }
 -(AMMargins)marginsFromView
@@ -312,12 +293,6 @@
     return NO;
 }
 
-#pragma mark - Inform delegate that paper did update-
--(void)pageDidUpdate
-{
-    // TODO: Add implementation
-    //[self.delegate pageSetupViewController:self didUpdate:self.pageSettings];
-}
 
 
 

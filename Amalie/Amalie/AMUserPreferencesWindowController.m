@@ -14,7 +14,7 @@
 #import "AMFontPreferencesViewController.h"
 #import "AMMathPreferencesViewController.h"
 #import "AMPagePreferencesViewController.h"
-#import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesViewControllerBase.h"
 #import "AMPreferencesBaseView.h"
 #import "AMDocumentSettingsBase.h"
 
@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     AMDocumentSettingsBase * _documentSettings;
 }
 @property (readonly) AMUserPreferences * preferences;
-@property (weak) AMPreferencesBaseViewController * displayedViewController;
+@property (weak) AMPreferencesViewControllerBase * displayedViewController;
 @property (readonly) AMDocumentSettingsBase * documentSettings;
 
 @end
@@ -66,7 +66,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     [self displayViewController:self.pagePreferencesViewController];
 }
 
--(void)displayViewController:(AMPreferencesBaseViewController*)vc
+-(void)displayViewController:(AMPreferencesViewControllerBase*)vc
 {
     if (vc == self.displayedViewController) {
         return;

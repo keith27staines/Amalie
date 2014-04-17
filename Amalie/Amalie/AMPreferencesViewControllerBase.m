@@ -1,17 +1,17 @@
 //
-//  AMPreferencesBaseViewController.m
+//  AMPreferencesViewControllerBase.m
 //  Amalie
 //
 //  Created by Keith Staines on 05/03/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesViewControllerBase.h"
 #import "AMDocumentSettingsBase.h"
 #import "AMSettingsSection.h"
 #import "AMUserPreferences.h"
 
-@interface AMPreferencesBaseViewController ()
+@interface AMPreferencesViewControllerBase ()
 {
     @private
     AMSettingsStorageLocationType _settingsStorageLocationType;
@@ -20,11 +20,11 @@
     AMSettingsSection  * _settingsSection;
 }
 
-@property AMSettingsSection * settingsSection;
+@property AMSettingsSection * controlledSettingsSection;
 
 @end
 
-@implementation AMPreferencesBaseViewController
+@implementation AMPreferencesViewControllerBase
 
 -(IBAction)resetButtonClicked:(NSButton *)sender
 {
@@ -59,10 +59,10 @@
         // Can't save factory defaults so nothing to do here
     } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeUserDefaults) {
         // Save to NSUserDefaults via AMPreferences
-        [AMUserPreferences setData:self.settingsSection.data forSettingsSection:self.settingsSection.section];
+        [AMUserPreferences setData:self.controlledSettingsSection.data forSettingsSection:self.controlledSettingsSection.section];
     } else if (self.settingsStorageLocationType == AMSettingsStorageLocationTypeCurrentDocument) {
         if (self.documentSettings) {
-            [self.documentSettings setSettings:self.settingsSection];
+            [self.documentSettings setSettings:self.controlledSettingsSection];
         } else {
             NSAssert(NO, @"No saving mechanism for settings of type %li",self.settingsStorageLocationType);
         }
@@ -77,11 +77,11 @@
 {
     [self setResetButtonTitle];
 }
--(void)setSettingsSection:(AMSettingsSection *)settingsSection
+-(void)setControlledSettingsSection:(AMSettingsSection *)settingsSection
 {
     _settingsSection = settingsSection;
 }
--(AMSettingsSection*)settingsSection
+-(AMSettingsSection*)controlledSettingsSection
 {
     if (_settingsSection) {
         return _settingsSection;

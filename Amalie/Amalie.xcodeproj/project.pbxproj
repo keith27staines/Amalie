@@ -170,7 +170,7 @@
 		78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC76617B0F1F400BDC8D7 /* AMExpressionNodeView.m */; };
 		78D4C13618DF1393007AB5FF /* AMColorSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D4C13518DF1393007AB5FF /* AMColorSettings.m */; };
 		78D8C2FF18C76A9D001F5494 /* AMFontAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D8C2FE18C76A9D001F5494 /* AMFontAttributes.m */; };
-		78D8C30218C7A991001F5494 /* AMPreferencesBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D8C30118C7A991001F5494 /* AMPreferencesBaseViewController.m */; };
+		78D8C30218C7A991001F5494 /* AMPreferencesViewControllerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D8C30118C7A991001F5494 /* AMPreferencesViewControllerBase.m */; };
 		78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE597E17CB6EE5003F0181 /* KSMFunction.m */; };
 		78DE598017CB6EE5003F0181 /* KSMFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE597E17CB6EE5003F0181 /* KSMFunction.m */; };
 		78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DE598217CB6F5F003F0181 /* KSMFunctionArgumentList.m */; };
@@ -401,7 +401,6 @@
 		78803BFE18D9E120008FBDE1 /* AMFontSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSelectorView.m; sourceTree = "<group>"; };
 		78803BFF18D9E120008FBDE1 /* AMFontText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontText.h; sourceTree = "<group>"; };
 		78803C0018D9E120008FBDE1 /* AMFontText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontText.m; sourceTree = "<group>"; };
-		78803C0518DB7C1D008FBDE1 /* AMPageSetupViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPageSetupViewControllerDelegate.h; sourceTree = "<group>"; };
 		78803C0618DC76D4008FBDE1 /* AMFontSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSetupViewController.h; sourceTree = "<group>"; };
 		78803C0718DC76D4008FBDE1 /* AMFontSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSetupViewController.m; sourceTree = "<group>"; };
 		78803C0818DC76D4008FBDE1 /* AMFontSetupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFontSetupViewController.xib; sourceTree = "<group>"; };
@@ -493,8 +492,8 @@
 		78D4C13518DF1393007AB5FF /* AMColorSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorSettings.m; sourceTree = "<group>"; };
 		78D8C2FD18C76A9D001F5494 /* AMFontAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontAttributes.h; sourceTree = "<group>"; };
 		78D8C2FE18C76A9D001F5494 /* AMFontAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontAttributes.m; sourceTree = "<group>"; };
-		78D8C30018C7A991001F5494 /* AMPreferencesBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesBaseViewController.h; sourceTree = "<group>"; };
-		78D8C30118C7A991001F5494 /* AMPreferencesBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesBaseViewController.m; sourceTree = "<group>"; };
+		78D8C30018C7A991001F5494 /* AMPreferencesViewControllerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPreferencesViewControllerBase.h; sourceTree = "<group>"; };
+		78D8C30118C7A991001F5494 /* AMPreferencesViewControllerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPreferencesViewControllerBase.m; sourceTree = "<group>"; };
 		78DE597D17CB6EE5003F0181 /* KSMFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMFunction.h; sourceTree = "<group>"; };
 		78DE597E17CB6EE5003F0181 /* KSMFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMFunction.m; sourceTree = "<group>"; };
 		78DE598117CB6F5F003F0181 /* KSMFunctionArgumentList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMFunctionArgumentList.h; sourceTree = "<group>"; };
@@ -1124,8 +1123,8 @@
 		788709C0178D35CD008E093A /* Preferences Pane views */ = {
 			isa = PBXGroup;
 			children = (
-				78D8C30018C7A991001F5494 /* AMPreferencesBaseViewController.h */,
-				78D8C30118C7A991001F5494 /* AMPreferencesBaseViewController.m */,
+				78D8C30018C7A991001F5494 /* AMPreferencesViewControllerBase.h */,
+				78D8C30118C7A991001F5494 /* AMPreferencesViewControllerBase.m */,
 				785826C318C4D94300612651 /* AMPreferencesBaseView.h */,
 				785826C418C4D94300612651 /* AMPreferencesBaseView.m */,
 				785826A218C46BF000612651 /* Math Preferences */,
@@ -1191,7 +1190,6 @@
 				782DA2121897919600F66E23 /* AMExpressionDataSource.h */,
 				78C87D2618BB660F00702932 /* AMPageSetupDatasource.h */,
 				785D6EF118CF5B6500EAED75 /* AMNameProviderDelegate.h */,
-				78803C0518DB7C1D008FBDE1 /* AMPageSetupViewControllerDelegate.h */,
 			);
 			name = Protocols;
 			path = ..;
@@ -1446,7 +1444,7 @@
 				7848E5D1185770A300719EF3 /* AMPersistentArgumentsNameProvider.m in Sources */,
 				780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */,
 				786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */,
-				78D8C30218C7A991001F5494 /* AMPreferencesBaseViewController.m in Sources */,
+				78D8C30218C7A991001F5494 /* AMPreferencesViewControllerBase.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,
 				785826C818C4EA2800612651 /* AMFontChoiceView.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,

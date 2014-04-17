@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMAmalieDocument, AMPreferencesBaseViewController;
+@class AMAmalieDocument, AMPreferencesViewControllerBase;
 
 #import <Cocoa/Cocoa.h>
 
@@ -15,7 +15,7 @@
 
 @property (weak) AMAmalieDocument * document;
 
-@property (weak) IBOutlet AMPreferencesBaseViewController *preferencesViewController;
+@property (weak) IBOutlet AMPreferencesViewControllerBase *preferencesViewController;
 
 
 @end

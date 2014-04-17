@@ -9,7 +9,7 @@
 @class AMPageOrientationView;
 
 #import <Cocoa/Cocoa.h>
-#import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesViewControllerBase.h"
 #import "AMPageSetupViewController.h"
 
 typedef NS_ENUM(NSUInteger,AMMarginTags)
@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, AMUnits) {
     AMUnitsMillimeters = 2,
 };
 
-@interface AMPagePreferencesViewController : AMPreferencesBaseViewController
+@interface AMPagePreferencesViewController : AMPreferencesViewControllerBase
 
 #pragma mark - Page orientation
 - (IBAction)orientationChanged:(NSPopUpButton *)sender;

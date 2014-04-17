@@ -9,9 +9,9 @@
 @class AMColorSettings;
 
 #import <Cocoa/Cocoa.h>
-#import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesViewControllerBase.h"
 
-@interface AMColorPreferencesViewController : AMPreferencesBaseViewController <NSTableViewDataSource, NSTableViewDelegate>
+@interface AMColorPreferencesViewController : AMPreferencesViewControllerBase <NSTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSButton *resetToDocumentDefaultsButton;
 @property (weak) IBOutlet NSButton *resetToFactoryDefaultsButton;

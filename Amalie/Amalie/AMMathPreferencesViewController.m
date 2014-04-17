@@ -38,7 +38,6 @@
         [formatter setLenient:YES];
     }
 }
-
 - (void)configureSliders
 {
     [self.smallestFontSlider      setContinuous:YES];
@@ -50,7 +49,6 @@
 {
     [self configureSliders];
     [self configureNumberFormatters];
-    //[self reloadData];
 }
 -(NSString *)nibName
 {
@@ -103,7 +101,7 @@
 
 -(AMMathStyleSettings*)mathStyleSettings
 {
-    return (AMMathStyleSettings*)self.settingsSection;
+    return (AMMathStyleSettings*)self.controlledSettingsSection;
 }
 
 #pragma mark - AMNameProviderDelegate -
@@ -137,8 +135,8 @@
     CGFloat oldWidth = originalSize.width;
     CGFloat newHeight = originalSize.height / (1+sender.floatValue/25);
     CGFloat newWidth = originalSize.width  / (1+sender.floatValue/25);
-    CGFloat newX = -(newWidth - oldWidth)/2.0;
-    CGFloat newY = -(newHeight - oldHeight)/2.0;
+    CGFloat newX = (oldWidth - newWidth)/2.0;
+    CGFloat newY = (oldHeight - newHeight)/2.0;
     NSRect newBounds = NSMakeRect(newX, newY, newWidth, newHeight);
     [self.expressionContainerView setBounds:newBounds];
     [self.expressionContainerView setNeedsDisplay:YES];

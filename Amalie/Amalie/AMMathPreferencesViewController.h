@@ -9,10 +9,10 @@
 @class AMExpressionContentView;
 
 #import <Cocoa/Cocoa.h>
-#import "AMPreferencesBaseViewController.h"
+#import "AMPreferencesViewControllerBase.h"
 #import "AMNameProviderDelegate.h"
 
-@interface AMMathPreferencesViewController : AMPreferencesBaseViewController <AMNameProviderDelegate>
+@interface AMMathPreferencesViewController : AMPreferencesViewControllerBase <AMNameProviderDelegate>
 
 - (IBAction)zoom:(NSSlider *)sender;
 
