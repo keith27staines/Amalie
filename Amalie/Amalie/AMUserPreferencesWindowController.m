@@ -16,14 +16,9 @@
 #import "AMPagePreferencesViewController.h"
 #import "AMPreferencesBaseViewController.h"
 #import "AMPreferencesBaseView.h"
+#import "AMDocumentSettingsBase.h"
 
 static CGFloat const kAMMINPREFERENCEPANEWIDTH = 900;  // minimum pane width in points
-
-@interface AMUserPreferencesWindowController ()
-@property (strong, readonly) AMUserPreferences * preferences;
-@property (weak) AMPreferencesBaseViewController * displayedViewController;
-
-@end
 
 typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     AMUserPreferencesViewFonts,
@@ -31,6 +26,16 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     AMUserPreferencesViewPage,
     AMUserPreferencesViewMath,
 };
+
+@interface AMUserPreferencesWindowController()
+{
+    AMDocumentSettingsBase * _documentSettings;
+}
+@property (readonly) AMUserPreferences * preferences;
+@property (weak) AMPreferencesBaseViewController * displayedViewController;
+@property (readonly) AMDocumentSettingsBase * documentSettings;
+
+@end
 
 @implementation AMUserPreferencesWindowController
 
@@ -69,6 +74,7 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     if (self.displayedViewController) {
         [self.displayedViewController saveSettingsSection];
     }
+    vc.documentSettings = self.documentSettings;
     self.displayedViewController = vc;
     vc.settingsStorageLocationType = AMSettingsStorageLocationTypeUserDefaults;
     NSView * contentView = self.window.contentView;
@@ -95,6 +101,13 @@ typedef NS_ENUM(NSUInteger,AMUserPreferencesView) {
     [vc reloadData];
 }
 
+-(AMDocumentSettingsBase *)documentSettings
+{
+    if (!_documentSettings) {
+        _documentSettings = [AMDocumentSettingsBase documentSettingsFromUserDefaults];
+    }
+    return _documentSettings;
+}
 
 #pragma mark - NSToolbar delegate
 // Nothing to do here yet

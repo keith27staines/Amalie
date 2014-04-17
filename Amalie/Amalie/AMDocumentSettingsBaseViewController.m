@@ -29,7 +29,7 @@
 
 -(NSView*)preferencesView
 {
-    self.preferencesViewController.documentSettings = self.document.documentSettings;
+    self.preferencesViewController.documentSettings = (AMDocumentSettingsBase*)self.document.documentSettings;
     self.preferencesViewController.settingsStorageLocationType = AMSettingsStorageLocationTypeCurrentDocument;
     NSView * view = self.preferencesViewController.view;
     [self.preferencesViewController reloadData];

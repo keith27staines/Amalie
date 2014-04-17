@@ -124,13 +124,14 @@
 #pragma mark - NSCopying
 -(id)copyWithZone:(NSZone *)zone
 {
-    AMColorSettings * aCopy = [[AMColorSettings alloc] init];
-    aCopy.libraryColorDataDictionary = [self.libraryColorDataDictionary copy];
-    [aCopy setBackColorForDocumentBackground:self.backColorForDocumentBackground];
-    [aCopy setBackColorForPaper:self.backColorForPaper];
-    [aCopy setFontColorForDocumentBackground:self.fontColorForDocumentBackground];
-    [aCopy setFontColorForPaper:self.fontColorForPaper];
-    return aCopy;
+    AMColorSettings * copy = [[self.class alloc] init];
+    copy.libraryColorDataDictionary = [self.libraryColorDataDictionary copy];
+    copy.otherColorDataDictionary = [self.otherColorDataDictionary copy];
+    [copy setBackColorForDocumentBackground:self.backColorForDocumentBackground];
+    [copy setBackColorForPaper:self.backColorForPaper];
+    [copy setFontColorForDocumentBackground:self.fontColorForDocumentBackground];
+    [copy setFontColorForPaper:self.fontColorForPaper];
+    return copy;
 }
 
 #pragma mark - Color accessors by key -

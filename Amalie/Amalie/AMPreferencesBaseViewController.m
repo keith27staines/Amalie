@@ -7,7 +7,7 @@
 //
 
 #import "AMPreferencesBaseViewController.h"
-#import "AMPersistentDocumentSettings.h"
+#import "AMDocumentSettingsBase.h"
 #import "AMSettingsSection.h"
 #import "AMUserPreferences.h"
 
@@ -15,7 +15,7 @@
 {
     @private
     AMSettingsStorageLocationType _settingsStorageLocationType;
-    AMPersistentDocumentSettings * _documentSettings;
+    AMDocumentSettingsBase * _documentSettings;
     @protected
     AMSettingsSection  * _settingsSection;
 }
@@ -90,7 +90,7 @@
     _settingsSection = [self.documentSettings settingsForSection:self.sectionType];
     return _settingsSection;
 }
--(AMPersistentDocumentSettings *)documentSettings
+-(AMDocumentSettingsBase *)documentSettings
 {
     if (!_documentSettings) {
         switch (self.settingsStorageLocationType) {
@@ -107,7 +107,7 @@
     }
     return _documentSettings;
 }
--(void)setDocumentSettings:(AMPersistentDocumentSettings *)documentSettings
+-(void)setDocumentSettings:(AMDocumentSettingsBase *)documentSettings
 {
     _documentSettings = documentSettings;
 }

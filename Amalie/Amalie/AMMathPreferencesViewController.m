@@ -50,7 +50,7 @@
 {
     [self configureSliders];
     [self configureNumberFormatters];
-    [self reloadData];
+    //[self reloadData];
 }
 -(NSString *)nibName
 {

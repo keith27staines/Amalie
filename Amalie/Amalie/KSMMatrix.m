@@ -276,13 +276,7 @@
 // imutable copy
 -(id)copyWithZone:(NSZone *)zone
 {
-    return [[KSMMatrix alloc] initWithMatrix:self];
-}
-
-// imutable copy
--(id)copy
-{
-    return [self copyWithZone:nil];
+    return [[self.class alloc] initWithMatrix:self];
 }
 
 #pragma mark - NSMutableCopying protocol -
@@ -290,7 +284,7 @@
 // mutable copy
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-    return [[KSMMutableMatrix alloc] initWithMatrix:self];
+    return [[self.class alloc] initWithMatrix:self];
 }
 
 // mutable copy

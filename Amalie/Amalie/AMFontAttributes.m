@@ -61,7 +61,7 @@
 #pragma mark - NSCopying -
 -(id)copyWithZone:(NSZone *)zone
 {
-    return [AMFontAttributes fontAttributesWithAMFontAttributes:self];
+    return [self.class fontAttributesWithAMFontAttributes:self];
 }
 
 #pragma mark - NSCoding -

@@ -29,7 +29,8 @@
 }
 -(id)copyWithZone:(NSZone *)zone
 {
-    AMSettingsSection * settingsSection = [self initWithFactoryDefaults];
+    // This base class has no data so we just create need to create a new instance, which will then automatically be a copy
+    AMSettingsSection * settingsSection = [[self.class alloc] initWithFactoryDefaults];
     return settingsSection;
 }
 -(id)initWithCoder:(NSCoder *)aDecoder

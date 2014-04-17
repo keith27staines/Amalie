@@ -266,13 +266,13 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
 {
     switch (self.type) {
         case KSMValueInteger:
-            return [[KSMMathValue alloc] initWithInteger:[self valueAsInteger]];
+            return [[self.class alloc] initWithInteger:[self valueAsInteger]];
         case KSMValueDouble:
-            return [[KSMMathValue alloc] initWithDouble:[self valueAsDouble]];
+            return [[self.class alloc] initWithDouble:[self valueAsDouble]];
         case KSMValueVector:
-            return [[KSMMathValue alloc] initWithVector:[[self vectorValue] copy]];
+            return [[self.class alloc] initWithVector:[[self vectorValue] copy]];
         case KSMValueMatrix:
-            return [[KSMMathValue alloc] initWithMatrix:[[self matrixValue] copy]];
+            return [[self.class alloc] initWithMatrix:[[self matrixValue] copy]];
     }
 }
 
