@@ -8,7 +8,7 @@
 
 #import "AMExpressionNodeView.h"
 #import "KSMExpression.h"
-#import "AMExpressionContextNode.h"
+#import "AMExpressionFormatContextNode.h"
 #import "AMOperatorView.h"
 #import "AMGraphics.h"
 #import "AMExpressionLayout.h"
@@ -92,7 +92,7 @@
          dataSource:(id<AMExpressionNodeViewDataSource>)dataSource
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
         scaleFactor:(CGFloat)scaleFactor
-            contextNode:(AMExpressionContextNode*)contextNode
+            contextNode:(AMExpressionFormatContextNode*)contextNode
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -115,7 +115,7 @@
              dataSource:(id<AMExpressionNodeViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor
-            contextNode:(AMExpressionContextNode*)contextNode
+            contextNode:(AMExpressionFormatContextNode*)contextNode
 {
     _groupID = groupID;
     _scaleFactor = scaleFactor;

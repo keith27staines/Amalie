@@ -14,7 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KSMWorksheet.h"
 #import "KSMExpression.h"
-#import "AMExpressionContextNode.h"
+#import "AMExpressionFormatContextNode.h"
 #import "AMEquationContentViewController.h"
 #import "AMFunctionContentView.h"
 #import "AMExpressionNodeView.h"
@@ -43,10 +43,10 @@ static NSUInteger const kAMIndexRHS;
     __weak NSTextField                  * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
     NSMutableDictionary                 * _viewDictionary;
-    AMExpressionContextNode             * _contextNode;
+    AMExpressionFormatContextNode             * _contextNode;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
-@property (strong) AMExpressionContextNode * contextNode;
+@property (strong) AMExpressionFormatContextNode * contextNode;
 
 @property (readonly) AMArgumentListView * argumentListView;
 @end
@@ -238,7 +238,7 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)resetExpressionViewWithExpression:(KSMExpression*)expr
 {
-    self.contextNode = [[AMExpressionContextNode alloc]
+    self.contextNode = [[AMExpressionFormatContextNode alloc]
                         initWithExpression:expr
                         parent:nil
                         asLeftNode:NO

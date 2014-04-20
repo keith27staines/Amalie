@@ -13,7 +13,7 @@
 #import "KSMWorksheet.h"
 #import "AMExpressionNodeView.h"
 #import "AMWorksheetNameProvider.h"
-#import "AMExpressionContextNode.h"
+#import "AMExpressionFormatContextNode.h"
 #import "AMExpressionDataSource.h"
 
 NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
@@ -50,7 +50,7 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 -(AMExpressionNodeView*)expressionNode
 {
     if (!_expressionNode) {
-        AMExpressionContextNode * context = [self makeExpressionContextNodeWithExpression:self.expression];
+        AMExpressionFormatContextNode * context = [self makeExpressionContextNodeWithExpression:self.expression];
         _expressionNode = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
                                                               groupID:@""
                                                            expression:self.expression
@@ -63,9 +63,9 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
     }
     return _expressionNode;
 }
--(AMExpressionContextNode*)makeExpressionContextNodeWithExpression:(KSMExpression*)expr
+-(AMExpressionFormatContextNode*)makeExpressionContextNodeWithExpression:(KSMExpression*)expr
 {
-    return [[AMExpressionContextNode alloc] initWithExpression:expr parent:nil asLeftNode:NO asRightNode:NO dataSource:self hideRedundantBrackets:YES cascadeBracketHiding:YES];
+    return [[AMExpressionFormatContextNode alloc] initWithExpression:expr parent:nil asLeftNode:NO asRightNode:NO dataSource:self hideRedundantBrackets:YES cascadeBracketHiding:YES];
 }
 -(void)setExpressionNode:(AMExpressionNodeView *)expressionNode
 {

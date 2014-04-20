@@ -37,7 +37,7 @@
 		782859FB1886D6B900523121 /* AMTextMetric.m in Sources */ = {isa = PBXBuildFile; fileRef = 782859FA1886D6B900523121 /* AMTextMetric.m */; };
 		78285A011886D74400523121 /* AMExpressionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A001886D74400523121 /* AMExpressionLayout.m */; };
 		78285A041886D9EE00523121 /* KSMConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 78285A031886D9EE00523121 /* KSMConstants.m */; };
-		782DA2111896AA0900F66E23 /* AMExpressionContextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA2101896AA0900F66E23 /* AMExpressionContextNode.m */; };
+		782DA2111896AA0900F66E23 /* AMExpressionFormatContextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA2101896AA0900F66E23 /* AMExpressionFormatContextNode.m */; };
 		782DA259189B99E400F66E23 /* AMLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA257189B99E400F66E23 /* AMLibraryViewController.m */; };
 		782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 782DA258189B99E400F66E23 /* AMLibraryViewController.xib */; };
 		782DA25E189BABB200F66E23 /* AMLibraryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 782DA25D189BABB200F66E23 /* AMLibraryView.m */; };
@@ -267,8 +267,8 @@
 		78285A021886D9EE00523121 /* KSMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMConstants.h; sourceTree = "<group>"; };
 		78285A031886D9EE00523121 /* KSMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMConstants.m; sourceTree = "<group>"; };
 		78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDelegate.h; sourceTree = "<group>"; };
-		782DA20F1896AA0900F66E23 /* AMExpressionContextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionContextNode.h; sourceTree = "<group>"; };
-		782DA2101896AA0900F66E23 /* AMExpressionContextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionContextNode.m; sourceTree = "<group>"; };
+		782DA20F1896AA0900F66E23 /* AMExpressionFormatContextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionFormatContextNode.h; sourceTree = "<group>"; };
+		782DA2101896AA0900F66E23 /* AMExpressionFormatContextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionFormatContextNode.m; sourceTree = "<group>"; };
 		782DA2121897919600F66E23 /* AMExpressionDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMExpressionDataSource.h; sourceTree = "<group>"; };
 		782DA256189B99E400F66E23 /* AMLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMLibraryViewController.h; sourceTree = "<group>"; };
 		782DA257189B99E400F66E23 /* AMLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMLibraryViewController.m; sourceTree = "<group>"; };
@@ -797,8 +797,8 @@
 				782859F61886D5A200523121 /* AMTextView.m */,
 				782859FF1886D74400523121 /* AMExpressionLayout.h */,
 				78285A001886D74400523121 /* AMExpressionLayout.m */,
-				782DA20F1896AA0900F66E23 /* AMExpressionContextNode.h */,
-				782DA2101896AA0900F66E23 /* AMExpressionContextNode.m */,
+				782DA20F1896AA0900F66E23 /* AMExpressionFormatContextNode.h */,
+				782DA2101896AA0900F66E23 /* AMExpressionFormatContextNode.m */,
 				7832744A178F1D810051290B /* AMLibraryItem.h */,
 				7832744B178F1D810051290B /* AMLibraryItem.m */,
 				78285A061888148000523121 /* AMNameProvider */,
@@ -1503,7 +1503,7 @@
 				78962FE3182C0A990066BEE9 /* AMDIndexedExpression+Methods.m in Sources */,
 				78962FE6182C0BB00066BEE9 /* AMDInsertedObject+Methods.m in Sources */,
 				785D9A26179D716D004D39B5 /* AMInsertableViewController.m in Sources */,
-				782DA2111896AA0900F66E23 /* AMExpressionContextNode.m in Sources */,
+				782DA2111896AA0900F66E23 /* AMExpressionFormatContextNode.m in Sources */,
 				78962FD7182BD5540066BEE9 /* AMDArgument+Methods.m in Sources */,
 				78DE824B1783664400C7EE10 /* KSMPrimeDecomposition.m in Sources */,
 				78962FDD182BEF060066BEE9 /* NSManagedObject+SharedDataStore.m in Sources */,

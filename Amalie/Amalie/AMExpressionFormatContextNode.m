@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMExpressionContextNode.h"
+#import "AMExpressionFormatContextNode.h"
 #import "KSMExpression.h"
 
-@interface AMExpressionContextNode()
+@interface AMExpressionFormatContextNode()
 {
-    __weak AMExpressionContextNode * _parent;
-    AMExpressionContextNode * _leftChild;
-    AMExpressionContextNode * _rightChild;
+    __weak AMExpressionFormatContextNode * _parent;
+    AMExpressionFormatContextNode * _leftChild;
+    AMExpressionFormatContextNode * _rightChild;
     BOOL _hideRedundantBrackets;
     BOOL _cascadeRedundantBracketHiding;
     BOOL _isLeftNode;
@@ -25,10 +25,10 @@
 @property BOOL bracketStatusDetermined;
 @end
 
-@implementation AMExpressionContextNode
+@implementation AMExpressionFormatContextNode
 
 - (id)initWithExpression:(KSMExpression *)expression
-                  parent:(AMExpressionContextNode*)parent
+                  parent:(AMExpressionFormatContextNode*)parent
               asLeftNode:(BOOL)asLeftNode
              asRightNode:(BOOL)asRightNode
               dataSource:(id<AMExpressionDataSource>)dataSource
@@ -50,8 +50,8 @@
             if (cascadeRedundantBracketHiding && hideRedundantBrackets) {
                 hideChildBrackets = YES;
             }
-            _leftChild = [[AMExpressionContextNode alloc] initWithExpression:[self expressionForSymbol:expression.leftOperand] parent:self asLeftNode:YES asRightNode:NO dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
-            _rightChild = [[AMExpressionContextNode alloc] initWithExpression:[self expressionForSymbol:expression.rightOperand] parent:self asLeftNode:NO asRightNode:YES dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
+            _leftChild = [[AMExpressionFormatContextNode alloc] initWithExpression:[self expressionForSymbol:expression.leftOperand] parent:self asLeftNode:YES asRightNode:NO dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
+            _rightChild = [[AMExpressionFormatContextNode alloc] initWithExpression:[self expressionForSymbol:expression.rightOperand] parent:self asLeftNode:NO asRightNode:YES dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
         }
         [self reconstructExpressionString];
     }
@@ -185,7 +185,7 @@
 }
 
 /*! Returns the node that encloses the current node from the left - i.e, such that the current node is the right node of a binary */
--(AMExpressionContextNode*)leftEnclosing
+-(AMExpressionFormatContextNode*)leftEnclosing
 {
     if (!self.parent) {
         return nil;
@@ -196,7 +196,7 @@
     return [self.parent leftEnclosing];
 }
 /*! Returns the node that encloses the current node from the right - i.e, such that the current node is the left node of a binary */
--(AMExpressionContextNode*)rightEnclosing
+-(AMExpressionFormatContextNode*)rightEnclosing
 {
     if (!self.parent) {
         return nil;
@@ -208,7 +208,7 @@
 }
 -(KSMOperatorType)leftOperatorType
 {
-    AMExpressionContextNode * leftEnclosing = [self leftEnclosing];
+    AMExpressionFormatContextNode * leftEnclosing = [self leftEnclosing];
     if (leftEnclosing) {
         return [leftEnclosing operatorType];
     } else {
@@ -217,7 +217,7 @@
 }
 -(KSMOperatorType)rightOperatorType
 {
-    AMExpressionContextNode * rightEnclosing = [self rightEnclosing];
+    AMExpressionFormatContextNode * rightEnclosing = [self rightEnclosing];
     if (rightEnclosing) {
         return [rightEnclosing operatorType];
     } else {
@@ -228,8 +228,8 @@
 -(BOOL)isMyOperatorLowerPrecedenceThanNeighbours
 {
     BOOL returnValue;
-    AMExpressionContextNode * leftEnclosing = [self leftEnclosing];
-    AMExpressionContextNode * rightEnclosing = [self rightEnclosing];
+    AMExpressionFormatContextNode * leftEnclosing = [self leftEnclosing];
+    AMExpressionFormatContextNode * rightEnclosing = [self rightEnclosing];
     NSInteger myPrecedence = [self operatorPrecedenceForNode:self];
     NSInteger leftPrecedence = [self operatorPrecedenceForNode:leftEnclosing];
     NSInteger rightPrecedence = [self operatorPrecedenceForNode:rightEnclosing];
@@ -241,7 +241,7 @@
     return returnValue;
 }
 
--(NSInteger)operatorPrecedenceForNode:(AMExpressionContextNode*)node
+-(NSInteger)operatorPrecedenceForNode:(AMExpressionFormatContextNode*)node
 {
     if (node) {
         return [self precedenceForOperatorType:node.operatorType];
