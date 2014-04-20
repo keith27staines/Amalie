@@ -15,7 +15,7 @@
 #import "AMContentViewDataSource.h"
 #import "AMExpressionNodeViewDelegate.h"
 #import "AMNameProviding.h"
-#import "AMExpressionNodeViewDatasource.h"
+#import "AMExpressionNodeViewDataSource.h"
 
 @interface AMExpressionNodeView : AMTextView
 
@@ -24,7 +24,7 @@
 @property (readwrite)       NSUInteger      scriptingLevel;
 @property (readwrite)       CGFloat         scaleFactor;
 @property (weak, readwrite) id<AMExpressionNodeViewDelegate> delegate;
-@property (weak, readwrite) id<AMExpressionNodeViewDatasource>dataSource;
+@property (weak, readwrite) id<AMExpressionNodeViewDataSource>dataSource;
 @property (copy, readwrite) NSString      * groupID;
 @property (readwrite)       BOOL            isLogicalViewOnly;
 @property (weak,readonly)   AMExpressionContextNode * contextNode;
@@ -36,7 +36,7 @@
         expression:(KSMExpression*)expression
     scriptingLevel:(NSUInteger)scriptingLevel
           delegate:(id<AMExpressionNodeViewDelegate>)delegate
-        dataSource:(id<AMExpressionNodeViewDatasource>)dataSource
+        dataSource:(id<AMExpressionNodeViewDataSource>)dataSource
     displayOptions:(AMExpressionDisplayOptions*)displayOptions
        scaleFactor:(CGFloat)scaleFactor
        contextNode:(AMExpressionContextNode*)contextNode;
@@ -45,7 +45,7 @@
              expression:(KSMExpression *)expression
          scriptingLevel:(NSUInteger)scriptingLevel
                delegate:(id<AMExpressionNodeViewDelegate>)delegate
-             dataSource:(id<AMExpressionNodeViewDatasource>)dataSource
+             dataSource:(id<AMExpressionNodeViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor
             contextNode:(AMExpressionContextNode*)contextNode;

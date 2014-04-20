@@ -166,7 +166,7 @@
     self.topMarginTextField.floatValue     = margins.top;
     self.bottomMarginTextField.floatValue  = margins.bottom;
 }
-#pragma mark - AMPageOrientationViewDatasource -
+#pragma mark - AMPageOrientationViewDataSource -
 -(AMPaperType)paperType
 {
     return self.pageSettings.paperType;

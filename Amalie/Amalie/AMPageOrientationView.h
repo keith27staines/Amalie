@@ -9,13 +9,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMConstants.h"
-#import "AMPageSetupDatasource.h"
+#import "AMPageSetupDataSource.h"
 
 @interface AMPageOrientationView : NSView
 
 -(void)reloadData;
 
-@property IBOutlet id<AMPageSetupDatasource> datasource;
+@property IBOutlet id<AMPageSetupDataSource> dataSource;
 
 
 

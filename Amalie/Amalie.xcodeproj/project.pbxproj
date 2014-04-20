@@ -226,7 +226,7 @@
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
-		536E12F6190415D400405D2C /* AMExpressionNodeViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDatasource.h; sourceTree = "<group>"; };
+		536E12F6190415D400405D2C /* AMExpressionNodeViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDataSource.h; sourceTree = "<group>"; };
 		5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettingsBaseViewController.h; sourceTree = "<group>"; };
 		5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettingsBaseViewController.m; sourceTree = "<group>"; };
 		53963A461900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathStyleExpressionNodeContainerView.h; sourceTree = "<group>"; };
@@ -1183,7 +1183,7 @@
 		78CDC75F17AFA66000BDC8D7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				536E12F6190415D400405D2C /* AMExpressionNodeViewDatasource.h */,
+				536E12F6190415D400405D2C /* AMExpressionNodeViewDataSource.h */,
 				78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */,
 				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
 				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,

@@ -21,7 +21,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMWorksheetViewDelegate.h"
-#import "AMLibraryDatasource.h"
+#import "AMLibraryDataSource.h"
 #import "AMInsertableViewDelegate.h"
 #import "AMInsertableViewDataSource.h"
 #import "AMNameProviderDelegate.h"

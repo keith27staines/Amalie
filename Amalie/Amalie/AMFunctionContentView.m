@@ -74,9 +74,9 @@
     [self addConstraints:constraints];
 }
 
--(void)setDatasource:(id<AMContentViewDataSource>)datasource
+-(void)setDataSource:(id<AMContentViewDataSource>)dataSource
 {
-    [super setDatasource:datasource];
+    [super setDataSource:dataSource];
 }
 
 -(void)setGroupID:(NSString *)groupID

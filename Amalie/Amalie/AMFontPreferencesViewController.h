@@ -13,7 +13,7 @@
 #import "AMFontChoiceView.h"
 #import "AMPreferencesViewControllerBase.h"
 
-@interface AMFontPreferencesViewController : AMPreferencesViewControllerBase <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate, AMFontChoiceViewDatasource>
+@interface AMFontPreferencesViewController : AMPreferencesViewControllerBase <NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate, AMFontChoiceViewDataSource>
 
 @property (weak) IBOutlet NSTableView *fontChoiceTable;
 

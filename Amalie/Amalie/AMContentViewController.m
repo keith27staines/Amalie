@@ -166,7 +166,7 @@
         _insertableType = insertableType;
 
         AMContentView * contentView = (AMContentView*)[self view];
-        contentView.datasource = self;
+        contentView.dataSource = self;
         contentView.groupID = self.groupID;
         for (AMDIndexedExpression * iexpr in amdInsertedObject.indexedExpressions) {
             AMDExpression * amdExpr = iexpr.expression;
@@ -338,9 +338,9 @@
 
 -(NSColor *)backgroundColorForType:(AMInsertableType)type
 {
-    id<AMLibraryDataSource> libraryDatasource = self.document.library;
-    NSString * key = [libraryDatasource keyForType:type];
-    AMLibraryItem * libraryItem =[libraryDatasource libraryItemWithKey:key];
+    id<AMLibraryDataSource> libraryDataSource = self.document.library;
+    NSString * key = [libraryDataSource keyForType:type];
+    AMLibraryItem * libraryItem =[libraryDataSource libraryItemWithKey:key];
     return [libraryItem backgroundColor];
 }
 

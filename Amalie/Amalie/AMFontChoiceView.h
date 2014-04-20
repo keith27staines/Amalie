@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, AMFontChoiceSubviewTags) {
     AMFontChoiceViewRestoreButton       = 1005,
 };
 
-@protocol AMFontChoiceViewDatasource <NSObject>
+@protocol AMFontChoiceViewDataSource <NSObject>
 
 -(AMFontAttributes*)fontAttributesForFontChoiceView:(AMFontChoiceView*)view;
 -(void)attributesUpdatedForFontChoiceView:(AMFontChoiceView*)view;
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, AMFontChoiceSubviewTags) {
 
 @interface AMFontChoiceView : NSView <NSTextFieldDelegate, NSPopoverDelegate>
 
-@property (weak) id<AMFontChoiceViewDatasource>datasource;
+@property (weak) id<AMFontChoiceViewDataSource>dataSource;
 
 @property AMFontType fontType;
 

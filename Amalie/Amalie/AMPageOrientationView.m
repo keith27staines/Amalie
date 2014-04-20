@@ -130,20 +130,20 @@
 
 -(void)reloadData
 {
-    _title = [self.datasource paperDescription];
-    _paperName = [self.datasource paperName];
-    _orientation = [self.datasource paperOrientation];
-    _paperSize = [self.datasource paperSize];
-    _margins = [self.datasource paperMargins];
+    _title = [self.dataSource paperDescription];
+    _paperName = [self.dataSource paperName];
+    _orientation = [self.dataSource paperOrientation];
+    _paperSize = [self.dataSource paperSize];
+    _margins = [self.dataSource paperMargins];
     if (_orientation == AMPaperOrientationPortrait) {
-        _widthDescription  = [self.datasource paperWidthDescription];
-        _heightDescription = [self.datasource paperHeightDescription];
+        _widthDescription  = [self.dataSource paperWidthDescription];
+        _heightDescription = [self.dataSource paperHeightDescription];
     } else {
         CGFloat swap = _paperSize.height;
         _paperSize.height = _paperSize.width;
         _paperSize.width = swap;
-        _widthDescription  = [self.datasource paperHeightDescription];
-        _heightDescription = [self.datasource paperWidthDescription];
+        _widthDescription  = [self.dataSource paperHeightDescription];
+        _heightDescription = [self.dataSource paperWidthDescription];
     }
     CGFloat bw = self.bounds.size.width;
     CGFloat bh = self.bounds.size.height;

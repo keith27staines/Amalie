@@ -1,5 +1,5 @@
 //
-//  AMPageOrientationViewDatasource.h
+//  AMPageSetupDataSource.h
 //  Amalie
 //
 //  Created by Keith Staines on 24/02/2014.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
-@protocol AMPageSetupDatasource <NSObject>
+@protocol AMPageSetupDataSource <NSObject>
 
 -(AMPaperType)paperType;
 -(NSString*)paperName;

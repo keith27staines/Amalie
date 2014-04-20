@@ -60,7 +60,7 @@ static AMFontSelectionViewController * _fontSelectionViewController;
 
 -(void)reloadData
 {
-    _fontAttributes = [self.datasource fontAttributesForFontChoiceView:self];
+    _fontAttributes = [self.dataSource fontAttributesForFontChoiceView:self];
     self.fontFamilyNameTextField.stringValue = _fontAttributes.name;
     if (_fontAttributes.isBold) {
         [self.boldButton setState:NSOnState];
@@ -72,7 +72,7 @@ static AMFontSelectionViewController * _fontSelectionViewController;
     } else {
         [self.italicButton setState:NSOffState];
     }
-    self.fontUsageTextField.stringValue = [self.datasource localizedFontUsageDescriptionForFontChoiceView:self];
+    self.fontUsageTextField.stringValue = [self.dataSource localizedFontUsageDescriptionForFontChoiceView:self];
 }
 
 -(void)viewDidMoveToSuperview
@@ -120,7 +120,7 @@ static AMFontSelectionViewController * _fontSelectionViewController;
     } else {
         _fontAttributes.isBold = NO;
     }
-    [self.datasource attributesUpdatedForFontChoiceView:self];
+    [self.dataSource attributesUpdatedForFontChoiceView:self];
 }
 -(void)italicButtonClicked:(NSButton*)button
 {
@@ -129,11 +129,11 @@ static AMFontSelectionViewController * _fontSelectionViewController;
     } else {
         _fontAttributes.isItalic = NO;
     }
-    [self.datasource attributesUpdatedForFontChoiceView:self];
+    [self.dataSource attributesUpdatedForFontChoiceView:self];
 }
 -(void)restoreButtonClicked:(NSButton*)button
 {
-    [self.datasource restoreFactoryDefaultsForFontChoiceView:self];
+    [self.dataSource restoreFactoryDefaultsForFontChoiceView:self];
     [self reloadData];
 }
 
@@ -216,7 +216,7 @@ static AMFontSelectionViewController * _fontSelectionViewController;
 {
     AMFontSelectionViewController * vc = [self fontSelectionViewController];
     _fontAttributes.name = vc.selectedFontFamily;
-    [self.datasource attributesUpdatedForFontChoiceView:self];
+    [self.dataSource attributesUpdatedForFontChoiceView:self];
     [self reloadData];
 }
 

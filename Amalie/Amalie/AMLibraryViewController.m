@@ -142,7 +142,7 @@
     return insertableView;
 }
 
-#pragma mark - AMLibraryDatasource -
+#pragma mark - AMLibraryDataSource -
 
 -(NSString *)keyForType:(AMInsertableType)type
 {

@@ -14,7 +14,7 @@ enum AMInsertableType : NSInteger;
 
 // Importing delegate protocols
 #import "AMGroupedView.h"
-#import "AMLibraryDatasource.h"
+#import "AMLibraryDataSource.h"
 #import "AMInsertableViewDelegate.h"
 
 typedef NS_ENUM(NSInteger, AMInsertViewState) {

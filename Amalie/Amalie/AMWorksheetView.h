@@ -10,7 +10,7 @@
 @class AMAppController;
 
 #import <Cocoa/Cocoa.h>
-#import "AMLibraryDatasource.h"
+#import "AMLibraryDataSource.h"
 #import "AMWorksheetViewDelegate.h"
 
 

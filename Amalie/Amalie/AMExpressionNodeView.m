@@ -32,7 +32,7 @@
     NSColor                           * _backColor;
     CGFloat                             _scaleFactor;
     NSString                          * _groupID;
-    __weak id<AMExpressionNodeViewDatasource>  _dataSource;
+    __weak id<AMExpressionNodeViewDataSource>  _dataSource;
 
 }
 
@@ -89,7 +89,7 @@
         expression:(KSMExpression *)expression
      scriptingLevel:(NSUInteger)scriptingLevel
            delegate:(id<AMExpressionNodeViewDelegate>)delegate
-         dataSource:(id<AMExpressionNodeViewDatasource>)dataSource
+         dataSource:(id<AMExpressionNodeViewDataSource>)dataSource
      displayOptions:(AMExpressionDisplayOptions *)displayOptions
         scaleFactor:(CGFloat)scaleFactor
             contextNode:(AMExpressionContextNode*)contextNode
@@ -112,7 +112,7 @@
              expression:(KSMExpression *)expression
          scriptingLevel:(NSUInteger)scriptingLevel
                delegate:(id<AMExpressionNodeViewDelegate>)delegate
-             dataSource:(id<AMExpressionNodeViewDatasource>)dataSource
+             dataSource:(id<AMExpressionNodeViewDataSource>)dataSource
          displayOptions:(AMExpressionDisplayOptions *)displayOptions
             scaleFactor:(CGFloat)scaleFactor
             contextNode:(AMExpressionContextNode*)contextNode

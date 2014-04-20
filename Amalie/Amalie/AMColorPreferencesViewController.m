@@ -180,7 +180,7 @@
     return colorPreference.key;
 }
 
-#pragma mark - NSTableView datasource -
+#pragma mark - NSTableView dataSource -
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     return _colorPrefsArray.count;

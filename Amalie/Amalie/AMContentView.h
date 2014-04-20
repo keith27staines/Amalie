@@ -12,7 +12,7 @@
 
 @interface AMContentView : AMGroupedView
 
-@property (weak) id<AMContentViewDataSource>datasource;
+@property (weak) id<AMContentViewDataSource>dataSource;
 
 @end
 

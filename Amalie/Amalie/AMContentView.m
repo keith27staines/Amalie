@@ -11,7 +11,7 @@
 
 @interface AMContentView()
 {
-    __weak id<AMContentViewDataSource> _datasource;
+    __weak id<AMContentViewDataSource> _dataSource;
 }
 
 @end
@@ -29,14 +29,14 @@
     return YES;
 }
 
--(id<AMContentViewDataSource>)datasource
+-(id<AMContentViewDataSource>)dataSource
 {
-    return _datasource;
+    return _dataSource;
 }
 
--(void)setDatasource:(id<AMContentViewDataSource>)datasource
+-(void)setDataSource:(id<AMContentViewDataSource>)dataSource
 {
-    _datasource = datasource;
+    _dataSource = dataSource;
 }
 
 -(void)viewDidMoveToWindow
@@ -44,7 +44,7 @@
     // This is getting called unexpectedly on closing an app without saving.
     // Need to guard against trying to repopulate a no longer fully valid object
     if (self.window && self.superview) {
-        [self.datasource populateView:self];
+        [self.dataSource populateView:self];
     }
 }
 

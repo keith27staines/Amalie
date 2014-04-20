@@ -1,5 +1,5 @@
 //
-//  AMExpressionNodeViewDatasource.h
+//  AMExpressionNodeViewDataSource.h
 //  Amalie
 //
 //  Created by Keith Staines on 16/04/2014.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol AMExpressionNodeViewDatasource <NSObject>
+@protocol AMExpressionNodeViewDataSource <NSObject>
 
 -(KSMExpression*)view:(NSView *)view requiresExpressionForSymbol:(NSString *)symbol;
 

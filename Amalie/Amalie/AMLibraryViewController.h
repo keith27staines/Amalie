@@ -9,7 +9,7 @@
 @class AMAppController, AMColorSettings;
 
 #import <Cocoa/Cocoa.h>
-#import "AMLibraryDatasource.h"
+#import "AMLibraryDataSource.h"
 
 @interface AMLibraryViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate, AMLibraryDataSource>
 

@@ -92,7 +92,7 @@
     [self.fontSettings setFontSize:sender.selectedTag];
 }
 
-#pragma mark - NSTableView datasource
+#pragma mark - NSTableView dataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     return AMFontTypeMax + 1;
@@ -103,12 +103,12 @@
 {
     AMFontChoiceView * view = (AMFontChoiceView*)[self.fontChoiceTable makeViewWithIdentifier:@"fontChoiceColumn" owner:nil];
     view.fontType = row;
-    [view setDatasource:self];
+    [view setDataSource:self];
     [view reloadData];
     return view;
 }
 
-#pragma mark - AMFontChoiceView datasource
+#pragma mark - AMFontChoiceView dataSource
 
 -(AMFontAttributes*)fontAttributesForFontChoiceView:(AMFontChoiceView*)view
 {
