@@ -247,7 +247,7 @@ static NSUInteger const kAMIndexRHS;
                         hideRedundantBrackets:YES
                         cascadeBracketHiding:YES];
     
-    NSLog(@"Reconstructed string is: %@",[self.contextNode reconstructedString]);
+    NSLog(@"Reconstructed string is: %@",[self.contextNode reconstructExpressionString]);
     [self.expressionView resetWithgroupID:self.groupID
                                expression:expr
                            scriptingLevel:0
@@ -275,7 +275,7 @@ static NSUInteger const kAMIndexRHS;
         self.nameView.attributedString = funcDef.name.attributedString;
         [self setupArgumentListView];
     } else {
-        // Other views that are sub to self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
+        // Other views that are subviews of self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }
     [self.contentView setNeedsDisplay:YES];
 }

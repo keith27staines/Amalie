@@ -67,7 +67,7 @@
     AMFontSettings * copy = [super copyWithZone:zone];
     copy.fixedWidthFontSize = self.fixedWidthFontSize;
     copy.fontSize = self.fontSize;
-    copy.fontAttributesDictionary = [self.fontAttributesDictionary copy];
+    copy.fontAttributesDictionary = [self.fontAttributesDictionary mutableCopy];
     return copy;
 }
 

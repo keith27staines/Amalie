@@ -53,7 +53,7 @@
             _leftChild = [[AMExpressionContextNode alloc] initWithExpression:[self expressionForSymbol:expression.leftOperand] parent:self asLeftNode:YES asRightNode:NO dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
             _rightChild = [[AMExpressionContextNode alloc] initWithExpression:[self expressionForSymbol:expression.rightOperand] parent:self asLeftNode:NO asRightNode:YES dataSource:self.dataSource hideRedundantBrackets:hideChildBrackets cascadeBracketHiding:cascadeRedundantBracketHiding];
         }
-        [self reconstructedString];
+        [self reconstructExpressionString];
     }
     return self;
 }
@@ -98,7 +98,7 @@
     return expr;
 }
 
--(NSString*)reconstructedString
+-(NSString*)reconstructExpressionString
 {
     if (_reconstructedString) {
         return _reconstructedString;
@@ -107,8 +107,8 @@
     if (self.expression.isUnary) {
         r = self.expression.bareString;
     } else {
-        NSString * left = [self.leftChild reconstructedString];
-        NSString * right = [self.rightChild reconstructedString];
+        NSString * left = [self.leftChild reconstructExpressionString];
+        NSString * right = [self.rightChild reconstructExpressionString];
         if ([self.expression hasAddedLogicalLeadingZero]) {
             r = [NSString stringWithFormat:@"%@%@",self.operatorString,right];
         } else {

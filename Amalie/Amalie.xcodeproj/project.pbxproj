@@ -13,6 +13,7 @@
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
 		5379FBD818F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */; };
+		53963A481900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */; };
 		53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */; };
 		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
 		780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68AD18EC62AE003CC00A /* AMFontSettings.m */; };
@@ -215,7 +216,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		53132A2F18FEC9440069C7BA /* AMExpressionNodeViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDatasource.h; sourceTree = "<group>"; };
 		53132A3018FED5420069C7BA /* AMAbstractNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = AMAbstractNameProvider.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = AMAbstractNameProvider.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		53132A3318FEEEA60069C7BA /* AMWorksheetNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetNameProvider.h; sourceTree = "<group>"; };
@@ -226,8 +226,11 @@
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
+		536E12F6190415D400405D2C /* AMExpressionNodeViewDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDatasource.h; sourceTree = "<group>"; };
 		5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettingsBaseViewController.h; sourceTree = "<group>"; };
 		5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettingsBaseViewController.m; sourceTree = "<group>"; };
+		53963A461900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathStyleExpressionNodeContainerView.h; sourceTree = "<group>"; };
+		53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathStyleExpressionNodeContainerView.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
 		53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesWindowContentView.m; sourceTree = "<group>"; };
 		78007E02189CEA0B007CFF77 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
@@ -874,6 +877,8 @@
 				785826B318C4CCCB00612651 /* AMMathPreferencesViewController.h */,
 				785826B418C4CCCB00612651 /* AMMathPreferencesViewController.m */,
 				785826B518C4CCCB00612651 /* AMMathPreferencesViewController.xib */,
+				53963A461900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.h */,
+				53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */,
 				78F7F36418FD675E002FD0C2 /* AMExpressionNodeController.h */,
 				78F7F36518FD675E002FD0C2 /* AMExpressionNodeController.m */,
 				785826B818C4CCF200612651 /* AMMathPreferencesView.h */,
@@ -949,7 +954,6 @@
 		787B3036178361BC001851C0 = {
 			isa = PBXGroup;
 			children = (
-				53132A2F18FEC9440069C7BA /* AMExpressionNodeViewDatasource.h */,
 				788EAE0418B517D800D3EBD3 /* BitmaskHelpers.c */,
 				789CB121178B0BCB00B5AF58 /* AMConstants.h */,
 				789CB122178B0BCC00B5AF58 /* AMConstants.m */,
@@ -1179,6 +1183,7 @@
 		78CDC75F17AFA66000BDC8D7 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				536E12F6190415D400405D2C /* AMExpressionNodeViewDatasource.h */,
 				78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */,
 				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
 				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
@@ -1471,6 +1476,7 @@
 				782DA25E189BABB200F66E23 /* AMLibraryView.m in Sources */,
 				7899B2EC17AD0E42008BDB75 /* AMMatrixContentViewController.m in Sources */,
 				78B205C617D5D6F80059773A /* AMFunctionContentViewController.m in Sources */,
+				53963A481900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m in Sources */,
 				78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */,
 				788EAE1418B6684700D3EBD3 /* AMPageOrientationView.m in Sources */,
 				785826B618C4CCCB00612651 /* AMMathPreferencesViewController.m in Sources */,

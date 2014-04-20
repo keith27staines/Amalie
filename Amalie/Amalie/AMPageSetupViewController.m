@@ -14,7 +14,7 @@
 
 @interface AMPageSetupViewController ()
 {
-    AMPageSettings * _pageSettings;
+
 }
 @end
 
@@ -24,4 +24,5 @@
 {
     return @"AMPageSetupViewController";
 }
+
 @end

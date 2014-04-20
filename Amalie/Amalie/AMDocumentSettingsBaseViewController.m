@@ -26,15 +26,26 @@
     
     return view;
 }
-
 -(NSView*)preferencesView
 {
-    self.preferencesViewController.documentSettings = (AMDocumentSettingsBase*)self.document.documentSettings;
+    self.preferencesViewController.documentSettings = self.documentSettings;
     self.preferencesViewController.settingsStorageLocationType = AMSettingsStorageLocationTypeCurrentDocument;
     NSView * view = self.preferencesViewController.view;
     [self.preferencesViewController reloadData];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     return view;
+}
+-(AMSettingsSectionType)settingsSectionType
+{
+    return self.preferencesViewController.sectionType;
+}
+-(AMSettingsSection*)controlledSettingsSection
+{
+    return self.preferencesViewController.controlledSettingsSection;
+}
+-(void)saveControlledSettingsSection
+{
+    [self.preferencesViewController saveSettingsSection];
 }
 
 @end

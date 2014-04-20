@@ -16,8 +16,12 @@
 @interface AMDName (Methods)
 
 +(AMDName*)makeAMDNameForType:(AMInsertableType)type withNameProvider:(id<AMNameProviding>)nameProvider;
+
 +(NSArray*)fetchNames;
+
 +(AMDName*)fetchUniqueNameWithString:(NSString*)name;
+
 +(NSAttributedString*)generateAttributedStringFromName:(NSString*)name andType:(KSMValueType)type;
+
 -(void)setNameAndAttributedNameFrom:(NSString*)string andKSMType:(KSMValueType)type;
 @end

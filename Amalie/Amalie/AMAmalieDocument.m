@@ -461,13 +461,13 @@
 {
     static id<AMNameProviding> _insertedObjectNameProvider;
     if (!_insertedObjectNameProvider) {
-        _insertedObjectNameProvider = [self baseNameProvider];
+        _insertedObjectNameProvider = [self persistentNameProvider];
     }
     return _insertedObjectNameProvider;
 }
 -(AMContentView *)insertableView:(AMInsertableView *)view requiresContentViewOfType:(AMInsertableType)type
 {
-    AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view withNameProvider:self.baseNameProvider];
+    AMDInsertedObject * amdInsertedObject = [AMDInsertedObject amdInsertedObjectForInsertedView:view withNameProvider:self.persistentNameProvider];
     AMContentViewController * vc;
     vc = [AMContentViewController contentViewControllerWithAppController:self.appController
                                                                 document:self
@@ -620,30 +620,19 @@
                popover == self.mathStylePopover),
              @"Cannot show this popover using this method");
     popover.behavior = NSPopoverBehaviorTransient;
+    popover.delegate = self;
     AMDocumentSettingsBaseViewController * vc = (AMDocumentSettingsBaseViewController*)popover.contentViewController;
-    vc.document = self;
+    vc.documentSettings = self.documentSettings;
     [popover showRelativeToRect:view.bounds ofView:view preferredEdge:NSMaxYEdge];
     [[self.worksheetView window] makeFirstResponder:nil];
 }
 #pragma mark - Popover Delegate -
 -(void)popoverDidClose:(NSNotification *)notification
 {
-    if (notification.object == self.pageSetupPopover) {
-        //
-        return;
-    }
-    if (notification.object == self.fontSetupPopover) {
-        //
-        return;
-    }
-    if (notification.object == self.colorSetupPopover) {
-        //
-        return;
-    }
-    if (notification.object == self.mathStylePopover) {
-        //
-        return;
-    }
+    NSPopover * popover = (NSPopover*)notification.object;
+    AMDocumentSettingsBaseViewController * vc = (AMDocumentSettingsBaseViewController*)popover.contentViewController;
+    [vc saveControlledSettingsSection];
+    [self loadDocumentIntoView];
 }
 -(NSWindow *)detachableWindowForPopover:(NSPopover *)popover
 {
@@ -689,7 +678,7 @@
 - (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender {
 }
 
--(AMPersistentNameProvider *)baseNameProvider
+-(AMPersistentNameProvider *)persistentNameProvider
 {
     AMPersistentNameProvider * baseProvider = [[AMPersistentNameProvider alloc] initWithDelegate:self];
     return baseProvider;

@@ -125,8 +125,8 @@
 -(id)copyWithZone:(NSZone *)zone
 {
     AMColorSettings * copy = [[self.class alloc] init];
-    copy.libraryColorDataDictionary = [self.libraryColorDataDictionary copy];
-    copy.otherColorDataDictionary = [self.otherColorDataDictionary copy];
+    copy.libraryColorDataDictionary = [self.libraryColorDataDictionary mutableCopy];
+    copy.otherColorDataDictionary = [self.otherColorDataDictionary mutableCopy];
     [copy setBackColorForDocumentBackground:self.backColorForDocumentBackground];
     [copy setBackColorForPaper:self.backColorForPaper];
     [copy setFontColorForDocumentBackground:self.fontColorForDocumentBackground];

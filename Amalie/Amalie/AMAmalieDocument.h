@@ -98,7 +98,7 @@ NSPopoverDelegate>
  */
 @property (weak) IBOutlet AMAppController * appController;
 
--(AMPersistentNameProvider*)baseNameProvider;
+-(AMPersistentNameProvider*)persistentNameProvider;
 -(AMPersistentArgumentsNameProvider*)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList;
 
 @property (readonly) AMPersistentDocumentSettings * documentSettings;

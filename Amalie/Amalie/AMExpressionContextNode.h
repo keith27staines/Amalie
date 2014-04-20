@@ -27,7 +27,7 @@
 /*! Properties this class is intended to derive algorithmically from the expression */
 @property (readonly) BOOL requiresBrackets;
 @property (readonly) BOOL requiresOperator;
--(NSString*)reconstructedString;
+-(NSString*)reconstructExpressionString;
 
 /*! These properties may provide convenience, but they are also easily obtainable by interrogating the expression node iteself */
 @property (weak,readonly) KSMExpression * expression;

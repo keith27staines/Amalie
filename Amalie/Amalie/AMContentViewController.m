@@ -328,7 +328,7 @@
 
 -(BOOL)changeNameIfValid:(NSAttributedString*)proposedName error:(NSError**)error;
 {
-    AMPersistentNameProvider * namer = [self.document baseNameProvider];
+    AMPersistentNameProvider * namer = [self.document persistentNameProvider];
     if ( [namer validateProposedName:proposedName.string forType:AMInsertableTypeDummyVariable error:error] ) return NO;
     
     self.amdInsertedObject.name.string = proposedName.string;

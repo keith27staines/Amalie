@@ -35,26 +35,10 @@
 
 @implementation AMFunctionEditorViewController
 
--(id)init
+-(NSString *)nibName
 {
-    NSString *nibName = @"FunctionEditorView";
-    NSBundle *bundle = nil;
-    self = [super initWithNibName:nibName bundle:bundle];
-    if (self) {
-    
-    }
-    return self;
+    return @"FunctionEditorView";
 }
-
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:@"FunctionEditorView" bundle:nil];
-    if (self) {
-        
-    }
-    return self;
-}
-
 -(void)awakeFromNib
 {
     [self setupValuePopup:self.returnTypePopup];
@@ -190,7 +174,7 @@
     
     // Update datastore. If a row is selected (ie >= 0), we insert beneath that, otherwise we add to the end.
     if (selectedRow >=0) selectedRow++;
-    AMDArgument * argument = [self.argumentList addArgumentAtIndex:selectedRow withNameProvider:[self.document baseNameProvider]];
+    AMDArgument * argument = [self.argumentList addArgumentAtIndex:selectedRow withNameProvider:[self.document persistentNameProvider]];
     if ( argument ) {
         
         selectedRow = [argument.index integerValue];

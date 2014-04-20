@@ -13,10 +13,12 @@
 #import "KSMWorksheet.h"
 #import "AMExpressionNodeView.h"
 #import "AMWorksheetNameProvider.h"
+#import "AMExpressionContextNode.h"
+#import "AMExpressionDataSource.h"
 
-NSString * const kAMDemoExpressionMathStyle = @"2*xi^2";
+NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 
-@interface AMExpressionNodeController() <AMExpressionNodeViewDelegate,AMExpressionNodeViewDatasource>
+@interface AMExpressionNodeController() <AMExpressionNodeViewDelegate,AMExpressionNodeViewDatasource, AMExpressionDataSource>
 {
     KSMWorksheet * _worksheet;
     KSMExpression * _expression;
@@ -48,6 +50,7 @@ NSString * const kAMDemoExpressionMathStyle = @"2*xi^2";
 -(AMExpressionNodeView*)expressionNode
 {
     if (!_expressionNode) {
+        AMExpressionContextNode * context = [self makeExpressionContextNodeWithExpression:self.expression];
         _expressionNode = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
                                                               groupID:@""
                                                            expression:self.expression
@@ -56,9 +59,13 @@ NSString * const kAMDemoExpressionMathStyle = @"2*xi^2";
                                                            dataSource:self
                                                        displayOptions:nil
                                                           scaleFactor:1
-                                                          contextNode:nil];
+                                                          contextNode:context];
     }
     return _expressionNode;
+}
+-(AMExpressionContextNode*)makeExpressionContextNodeWithExpression:(KSMExpression*)expr
+{
+    return [[AMExpressionContextNode alloc] initWithExpression:expr parent:nil asLeftNode:NO asRightNode:NO dataSource:self hideRedundantBrackets:YES cascadeBracketHiding:YES];
 }
 -(void)setExpressionNode:(AMExpressionNodeView *)expressionNode
 {
@@ -103,6 +110,11 @@ NSString * const kAMDemoExpressionMathStyle = @"2*xi^2";
         _worksheet = [[KSMWorksheet alloc] init];
     }
     return _worksheet;
+}
+#pragma mark - AMExpressionDataSource
+-(KSMExpression *)expressionForSymbol:(NSString *)symbol
+{
+    return [self.worksheet expressionForSymbol:symbol];
 }
 
 @end

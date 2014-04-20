@@ -12,6 +12,9 @@
 #import "AMAmalieDocument.h"
 
 @interface AMFontSetupViewController ()
+{
+    
+}
 
 @end
 
