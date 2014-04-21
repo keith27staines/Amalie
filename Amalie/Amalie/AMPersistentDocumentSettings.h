@@ -10,5 +10,6 @@
 
 @interface AMPersistentDocumentSettings : AMDocumentSettingsBase
 
++(id)documentSettingsFromDocument;
 
 @end

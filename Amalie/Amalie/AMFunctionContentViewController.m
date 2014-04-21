@@ -45,6 +45,7 @@ static NSUInteger const kAMIndexRHS;
     __weak AMArgumentListViewController * _argumentListViewController;
     NSMutableDictionary                 * _viewDictionary;
     AMExpressionFormatContextNode             * _contextNode;
+    AMPersistedObjectWithArgumentsNameProvider * _persistedObjectNameProvider;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
 @property (strong) AMExpressionFormatContextNode * contextNode;
@@ -320,11 +321,10 @@ static NSUInteger const kAMIndexRHS;
 #pragma mark - Name provider -
 -(id<AMNameProviding>)nameProvider
 {
-    static AMPersistedObjectWithArgumentsNameProvider * _nameProvider;
-    if (!_nameProvider) {
-        _nameProvider = [self.document argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
+    if (!_persistedObjectNameProvider) {
+        _persistedObjectNameProvider = [self.document argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
     }
-    return _nameProvider;
+    return _persistedObjectNameProvider;
 }
 #pragma mark - Misc -
 

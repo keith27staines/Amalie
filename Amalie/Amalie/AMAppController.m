@@ -60,7 +60,8 @@ NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 
 -(void)applicationWillTerminateNotification:(NSNotification*)notification
 {
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    BOOL saveResult = [[NSUserDefaults standardUserDefaults] synchronize];
+    NSAssert(saveResult, @"Failed to synchronise user defaults on app exit");
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self];
 }

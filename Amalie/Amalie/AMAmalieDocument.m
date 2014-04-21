@@ -221,7 +221,7 @@
 -(AMPersistentDocumentSettings*)documentSettings
 {
     if (!_documentSettings) {
-        _documentSettings = [AMPersistentDocumentSettings documentSettingsFromUserDefaults];
+        _documentSettings = [AMPersistentDocumentSettings documentSettingsFromDocument];
     }
     return _documentSettings;
 }
