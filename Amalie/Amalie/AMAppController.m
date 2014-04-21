@@ -19,6 +19,7 @@ NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 @interface AMAppController()
 {
     AMUserPreferencesWindowController * _preferencesWindowController;
+    BOOL _doneAppClosingCleanup;
 }
 
 @property (strong,readonly) AMUserPreferencesWindowController * preferencesWindowController;
@@ -50,6 +51,7 @@ NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
            selector:@selector(applicationWillTerminateNotification:)
                name:NSApplicationWillTerminateNotification
              object:nil];
+    _doneAppClosingCleanup = NO;
 }
 
 // Called before any other method of this class
@@ -60,12 +62,25 @@ NSString * const kAMPreferencesWindowNibName = @"AMUserPreferencesWindow";
 
 -(void)applicationWillTerminateNotification:(NSNotification*)notification
 {
+    [self doAppClosingCleanup];
+}
+
+-(void)dealloc
+{
+    [self doAppClosingCleanup];
+}
+
+-(void)doAppClosingCleanup
+{
+    if (_doneAppClosingCleanup) {
+        return;
+    }
+    _doneAppClosingCleanup = YES;
     BOOL saveResult = [[NSUserDefaults standardUserDefaults] synchronize];
     NSAssert(saveResult, @"Failed to synchronise user defaults on app exit");
     NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
     [nc removeObserver:self];
 }
-
 
 
 @end
