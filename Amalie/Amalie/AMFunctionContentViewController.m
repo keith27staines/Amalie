@@ -24,7 +24,8 @@
 #import "AMFunctionEditorViewController.h"
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
-#import "AMPersistentArgumentsNameProvider.h"
+#import "AMPersistedObjectWithArgumentsNameProvider.h"
+#import "AMNameProviding.h"
 
 // core data generated objects
 #import "AMDInsertedObject.h"
@@ -272,7 +273,7 @@ static NSUInteger const kAMIndexRHS;
         KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
         self.expressionStringView.stringValue = expr.originalString;
         [self resetExpressionViewWithExpression:expr];
-        self.nameView.attributedString = funcDef.name.attributedString;
+        self.nameView.attributedString = [self.nameProvider attributedStringForObjectWithName:funcDef.name.string];
         [self setupArgumentListView];
     } else {
         // Other views that are subviews of self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
@@ -319,7 +320,7 @@ static NSUInteger const kAMIndexRHS;
 #pragma mark - Name provider -
 -(id<AMNameProviding>)nameProvider
 {
-    static AMPersistentArgumentsNameProvider * _nameProvider;
+    static AMPersistedObjectWithArgumentsNameProvider * _nameProvider;
     if (!_nameProvider) {
         _nameProvider = [self.document argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
     }

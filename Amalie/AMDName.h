@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSSet *arguments;
 @property (nonatomic, retain) AMDInsertedObject *insertedObject;
 @property (nonatomic, retain) NSNumber * mustBeUnique;
+@property (nonatomic, retain) NSNumber * formatOverridesDocumentDefaults;
 @end
 
 @interface AMDName (CoreDataGeneratedAccessors)

@@ -19,5 +19,6 @@
 @dynamic argumentList;
 @dynamic name;
 @dynamic transformedByFunction;
+@dynamic mathType;
 
 @end

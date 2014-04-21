@@ -22,6 +22,8 @@ static NSString * const kAMDENTITYNAME = @"AMDArguments";
     AMDArgument * a = [NSEntityDescription insertNewObjectForEntityForName:kAMDENTITYNAME
                                                     inManagedObjectContext:self.moc];
     a.name = [AMDName makeAMDNameForType:AMInsertableTypeDummyVariable withNameProvider:nameProvider];
+    a.mathType = @(mathType);
+    a.name.attributedString = [nameProvider generateAttributedStringFromName:a.name.string withType:mathType];
     switch (mathType) {
         case KSMValueInteger:
             a.mathValue = [KSMMathValue mathValueFromInteger:0];

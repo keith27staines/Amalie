@@ -10,7 +10,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 
 #import "AMDName+Methods.h"
 #import "NSManagedObject+SharedDataStore.h"
-#import "AMPersistentNameProvider.h"
+#import "AMPersistedObjectNameProvider.h"
 
 
 @implementation AMDName (Methods)
@@ -67,16 +67,17 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
         } else {
             aName.string = defaultName;
         }
+        // Provide an attributed string of default type (double) for safety but this should be overwritten later.
         aName.attributedString = [nameProvider generateAttributedStringFromName:aName.string withType:KSMValueDouble];
-    }
-    
+    }    
+    aName.formatOverridesDocumentDefaults = @(NO);
     aName.mustBeUnique = @(mustBeUnique);
     return aName;
 }
 
 +(NSAttributedString*)generateAttributedStringFromName:(NSString*)name andType:(KSMValueType)type
 {
-    id<AMNameProviding> nameProvider = [[AMPersistentNameProvider alloc] init];
+    id<AMNameProviding> nameProvider = [[AMPersistedObjectNameProvider alloc] init];
     return  [nameProvider generateAttributedStringFromName:name withType:type];
 }
 

@@ -14,7 +14,7 @@
 #import "AMExpressionNodeView.h"
 #import "AMUserPreferences.h"
 #import "AMAmalieDocument.h"
-#import "AMPersistentArgumentsNameProvider.h"
+#import "AMPersistedObjectWithArgumentsNameProvider.h"
 
 #import "AMDName.h"
 

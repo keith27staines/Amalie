@@ -15,8 +15,8 @@
 @class AMKeyboardsViewController;
 @class AMDocumentView;
 @class AMLibraryViewController;
-@class AMPersistentNameProvider;
-@class AMPersistentArgumentsNameProvider;
+@class AMPersistedObjectNameProvider;
+@class AMPersistedObjectWithArgumentsNameProvider;
 @class AMDArgumentList;
 
 #import <Cocoa/Cocoa.h>
@@ -98,8 +98,8 @@ NSPopoverDelegate>
  */
 @property (weak) IBOutlet AMAppController * appController;
 
--(AMPersistentNameProvider*)persistentNameProvider;
--(AMPersistentArgumentsNameProvider*)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList;
+-(AMPersistedObjectNameProvider*)persistentNameProvider;
+-(AMPersistedObjectWithArgumentsNameProvider*)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList;
 
 @property (readonly) AMPersistentDocumentSettings * documentSettings;
 

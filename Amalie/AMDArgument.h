@@ -18,5 +18,5 @@
 @property (nonatomic, retain) AMDArgumentList *argumentList;
 @property (nonatomic, retain) AMDName *name;
 @property (nonatomic, retain) AMDFunctionDef *transformedByFunction;
-
+@property (nonatomic, retain) NSNumber * mathType;
 @end

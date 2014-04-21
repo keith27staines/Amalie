@@ -19,7 +19,7 @@
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
 #import "AMAmalieDocument.h"
-#import "AMPersistentNameProvider.h"
+#import "AMPersistedObjectNameProvider.h"
 
 @interface AMFunctionEditorViewController ()
 {

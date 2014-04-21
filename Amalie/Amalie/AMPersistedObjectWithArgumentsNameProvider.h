@@ -1,5 +1,5 @@
 //
-//  AMPersistentArgumentsNameProvider.h
+//  AMPersistedObjectWithArgumentsNameProvider.h
 //  Amalie
 //
 //  Created by Keith Staines on 10/12/2013.
@@ -8,12 +8,12 @@
 
 @class AMDArgumentList, AMDArgument;
 
-#import "AMPersistentNameProvider.h"
+#import "AMPersistedObjectNameProvider.h"
 
 /*!
  This class extends the AMExclusiveNameProvider by also parsing through dummy variable names in addition to the inserted object names parsed by super.
  */
-@interface AMPersistentArgumentsNameProvider : AMPersistentNameProvider
+@interface AMPersistedObjectWithArgumentsNameProvider : AMPersistedObjectNameProvider
 
 +(id)nameProviderWithDummyVariables:(AMDArgumentList*)dummyVariables delegate:(id<AMNameProviderDelegate>)delegate;
 

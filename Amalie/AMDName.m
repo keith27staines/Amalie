@@ -18,5 +18,6 @@
 @dynamic arguments;
 @dynamic insertedObject;
 @dynamic mustBeUnique;
+@dynamic formatOverridesDocumentDefaults;
 
 @end

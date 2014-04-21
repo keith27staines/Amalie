@@ -1,5 +1,5 @@
 //
-//  AMPersistentNameProvider.h
+//  AMPersistedObjectNameProvider.h
 //  Amalie
 //
 //  Created by Keith Staines on 10/12/2013.
@@ -14,7 +14,7 @@
 
 #import "AMAbstractNameProvider.h"
 
-@interface AMPersistentNameProvider : AMAbstractNameProvider 
+@interface AMPersistedObjectNameProvider : AMAbstractNameProvider 
 
 
 
