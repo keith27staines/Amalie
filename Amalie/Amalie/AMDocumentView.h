@@ -1,5 +1,5 @@
 //
-//  AMDocuentView.h
+//  AMDocumentView.h
 //  Amalie
 //
 //  Created by Keith Staines on 06/10/2013.
@@ -19,7 +19,8 @@
 @property (readonly) NSMutableArray * worksheets;
 @property NSColor * backgroundColor;
 - (id)initWithAppController:(AMAppController*)appController amalieDocument:(AMAmalieDocument*)amalieDocument;
-
+-(void)reloadData;
+-(void)applyUserPreferences;
 -(AMWorksheetView*)addWorksheetView;
 
 @end

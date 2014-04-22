@@ -20,4 +20,6 @@
 @property (readonly) NSScrollView * scrollView;
 @property (readonly) AMDocumentView * documentView;
 
+-(void)applyUserPreferences;
+
 @end

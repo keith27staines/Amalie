@@ -29,7 +29,7 @@
 #import "AMDFunctionDef+Methods.h"
 #import "AMPersistedObjectNameProvider.h"
 #import "AMPersistedObjectWithArgumentsNameProvider.h"
-#import "AMDocumentView.h"
+#import "AMDocumentContainerView.h"
 #import "AMFontAttributes.h"
 #import "AMPageSetupViewController.h"
 #import "AMFontSetupViewController.h"
@@ -196,6 +196,7 @@
 }
 -(void)loadDocumentIntoView
 {
+    [self.documentContainerView applyUserPreferences];
     [self.worksheetView prepareForReload];
     
     [self.undoManager disableUndoRegistration];

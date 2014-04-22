@@ -13,7 +13,7 @@
 @class AMKeyboardsAreaView;
 
 @class AMKeyboardsViewController;
-@class AMDocumentView;
+@class AMDocumentContainerView;
 @class AMLibraryViewController;
 @class AMPersistedObjectNameProvider;
 @class AMPersistedObjectWithArgumentsNameProvider;
@@ -64,7 +64,7 @@ NSPopoverDelegate>
 
 @property (weak) IBOutlet NSView * inspectorContainerView;
 
-@property (weak) IBOutlet AMDocumentView *documentBackgroundView;
+@property (weak) IBOutlet AMDocumentContainerView *documentContainerView;
 
 @property (weak) IBOutlet AMWorksheetView * worksheetView;
 

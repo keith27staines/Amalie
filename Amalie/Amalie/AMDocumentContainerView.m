@@ -21,32 +21,14 @@
 
 @implementation AMDocumentContainerView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
-
 -(BOOL)isFlipped
 {
     return YES;
 }
-
-- (void)drawRect:(NSRect)dirtyRect
+-(void)applyUserPreferences
 {
-	[super drawRect:dirtyRect];
-	
-    // Drawing code here.
+    [self.documentView applyUserPreferences];
 }
-
--(void)awakeFromNib
-{
-
-}
-
 -(NSScrollView *)scrollView
 {
     if (!_scrollView) {

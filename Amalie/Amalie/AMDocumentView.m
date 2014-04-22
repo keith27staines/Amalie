@@ -10,6 +10,8 @@
 #import "AMWorksheetView.h"
 #import "AMAppController.h"
 #import "AMAmalieDocument.h"
+#import "AMPersistentDocumentSettings.h"
+#import "AMColorSettings.h"
 
 @interface AMDocumentView()
 {
@@ -27,14 +29,14 @@
     if (self) {
         _amalieDocument = amalieDocument;
         _appController = appController;
-        _backgroundColor = [NSColor colorWithCalibratedRed:0.65 green:0.72 blue:0.51 alpha:1];
-        [self addWorksheetView];
+        [self applyUserPreferences];
+        [self reloadData];
     }
     return self;
 }
 - (void)drawRect:(NSRect)dirtyRect
 {
-	[[NSColor colorWithCalibratedRed:0.65 green:0.72 blue:0.51 alpha:1] set];
+    [_backgroundColor set];
     NSRectFill(dirtyRect);
 }
 -(BOOL)isOpaque
@@ -51,6 +53,18 @@
         _worksheets = [NSMutableArray array];
     }
     return _worksheets;
+}
+-(void)applyUserPreferences
+{
+    _backgroundColor =  _amalieDocument.documentSettings.colorSettings.backColorForDocumentBackground;
+    [self setNeedsDisplay:YES];
+}
+-(void)reloadData
+{
+    if (self.worksheets.count == 0) {
+        [self addWorksheetView];
+    }
+    [self setNeedsDisplay:YES];
 }
 -(AMWorksheetView*)addWorksheetView
 {
