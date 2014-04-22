@@ -20,7 +20,7 @@
 @class AMDArgumentList;
 
 #import <Cocoa/Cocoa.h>
-#import "AMWorksheetViewDelegate.h"
+#import "AMPageViewDelegate.h"
 #import "AMLibraryDataSource.h"
 #import "AMInsertableViewDelegate.h"
 #import "AMInsertableViewDataSource.h"

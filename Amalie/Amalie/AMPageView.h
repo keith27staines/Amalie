@@ -11,7 +11,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMLibraryDataSource.h"
-#import "AMWorksheetViewDelegate.h"
+#import "AMPageViewDelegate.h"
 
 
 @interface AMPageView : NSView <NSDraggingDestination>

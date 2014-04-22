@@ -1,5 +1,5 @@
 //
-//  AMWorksheetViewDelegate.h
+//  AMPageViewDelegate.h
 //  Amalie
 //
 //  Created by Keith Staines on 16/07/2013.

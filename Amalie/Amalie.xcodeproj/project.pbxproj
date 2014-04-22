@@ -461,7 +461,7 @@
 		7899B2EF17AD0E58008BDB75 /* AMMathematicalSetContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathematicalSetContentViewController.m; sourceTree = "<group>"; };
 		7899B2F317AD0E6A008BDB75 /* AMGraph2DContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGraph2DContentViewController.h; sourceTree = "<group>"; };
 		7899B2F417AD0E6A008BDB75 /* AMGraph2DContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGraph2DContentViewController.m; sourceTree = "<group>"; };
-		789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetViewDelegate.h; sourceTree = "<group>"; };
+		789B85C717952E44005FD5C7 /* AMPageViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPageViewDelegate.h; sourceTree = "<group>"; };
 		789CB121178B0BCB00B5AF58 /* AMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMConstants.h; sourceTree = "<group>"; };
 		789CB122178B0BCC00B5AF58 /* AMConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMConstants.m; sourceTree = "<group>"; };
 		78A0471F17BBEEF900B5703E /* AMOperatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOperatorView.h; sourceTree = "<group>"; };
@@ -1185,7 +1185,7 @@
 			children = (
 				536E12F6190415D400405D2C /* AMExpressionNodeViewDataSource.h */,
 				78285A051886F4A000523121 /* AMExpressionNodeViewDelegate.h */,
-				789B85C717952E44005FD5C7 /* AMWorksheetViewDelegate.h */,
+				789B85C717952E44005FD5C7 /* AMPageViewDelegate.h */,
 				785D9A2B179D90B8004D39B5 /* AMInsertableViewDelegate.h */,
 				78327449178F14920051290B /* AMLibraryDatasource.h */,
 				78B835AF179ED1A50032B459 /* AMInsertableViewDataSource.h */,
