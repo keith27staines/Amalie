@@ -28,26 +28,28 @@
 
 -(IBAction)resetButtonClicked:(NSButton *)sender
 {
+    _settingsSection = [self defaultSettings];
+    [self reloadData];
+}
+-(AMSettingsSection*)defaultSettings
+{
     switch (self.settingsStorageLocationType) {
         case AMSettingsStorageLocationTypeFactoryDefaults:
         {
-            // We can't reset factory defaults to anything deeper
-            break;
+            // We can't reset factory defaults to anything deeper than factory defaults
+            return [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
         }
         case AMSettingsStorageLocationTypeUserDefaults:
         {
-            // We are resetting defaults for new documents to "factory settings"
-            _settingsSection = [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
-            break;
+            // Default settings for "new document defaults" are the "factory settings"
+            return [AMSettingsSection settingsWithFactoryDefaultsOfType:self.sectionType];
         }
         case AMSettingsStorageLocationTypeCurrentDocument:
         {
-            // We are resetting current document settings to defaults for a new document
-            _settingsSection = [AMSettingsSection settingsWithUserDefaultsOfType:self.sectionType];
-            break;
+            // Default settings for a document are the "new document settings" which are stored in user defaults
+            return [AMSettingsSection settingsWithUserDefaultsOfType:self.sectionType];
         }
     }
-    [self reloadData];
 }
 -(void)saveSettingsSection
 {

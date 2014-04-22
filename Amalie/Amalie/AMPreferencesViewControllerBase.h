@@ -27,5 +27,11 @@
 @property AMSettingsStorageLocationType settingsStorageLocationType;
 @property AMDocumentSettingsBase * documentSettings;
 @property (readonly) AMSettingsSection * controlledSettingsSection;
+/*!
+ *  Returns the default settings for the storage location type. Depending in context (as determined from the settingsStorageLocationType property, this can be (essentially hard-coded) factory defaults, user preferences, or the current document's own settings.
+ *
+ *  @return a settings section configured with the appropriate defaults.
+ */
+-(AMSettingsSection*)defaultSettings;
 -(void)saveSettingsSection;
 @end

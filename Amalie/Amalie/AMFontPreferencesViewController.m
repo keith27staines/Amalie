@@ -120,8 +120,9 @@
 }
 -(void)restoreFactoryDefaultsForFontChoiceView:(AMFontChoiceView*)view
 {
-    // TODO: reset font attributes for font type view.fontType
-    //[AMUserPreferences resetFontAttributesForFontType:view.fontType];
+    AMFontSettings * defaultFontSettings = (AMFontSettings*)[self defaultSettings];
+    AMFontAttributes * requiredAttributes = [defaultFontSettings fontAttributesForFontType:view.fontType];
+    [self.fontSettings setFontAttributes:requiredAttributes forFontType:view.fontType];
 }
 -(NSString *)localizedFontUsageDescriptionForFontChoiceView:(AMFontChoiceView *)view
 {
