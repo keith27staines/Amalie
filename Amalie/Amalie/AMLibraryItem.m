@@ -208,7 +208,7 @@
 {
     switch (type) {
         case AMInsertableTypeConstant:
-            return NSLocalizedString(@"Define a constant and assigns it a value. Once a constant is defined, you may refer to it anywhere on the worksheet, but you cannot change its value.", @"Full description");
+            return NSLocalizedString(@"Define a constant and assigns it a value. Once a constant is defined, you may refer to it anywhere in the document, but you cannot change its value.", @"Full description");
             break;
         case AMInsertableTypeDummyVariable:
             return NSLocalizedString(@"Defines a dummy variable.", @"Full description");
@@ -232,7 +232,7 @@
             return NSLocalizedString(@"Define a matrix.", @"Full description");
             break;
         case AMInsertableTypeVariable:
-            return NSLocalizedString(@"Define a variable and assigns it a value. Once a variable is defined, you may refer to it anywhere on the worksheet below the position where it is introduced. At any later position, you can change its value either by explicitly assiging it a new value or implicitly, by referencing it in a set or range of values.", @"Full description");
+            return NSLocalizedString(@"Define a variable and assigns it a value. Once a variable is defined, you may refer to it anywhere in the document below the position where it is introduced. At any later position, you can change its value either by explicitly assiging it a new value or implicitly, by referencing it in a set or range of values.", @"Full description");
             break;
         case AMInsertableTypeVector:
             return NSLocalizedString(@"Define a vector.", @"Full description");

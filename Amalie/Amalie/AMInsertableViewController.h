@@ -7,7 +7,7 @@
 //
 
 /*!
- The sole responsibility for this controller is to load the view from the nib. All other controlling activities are performed by the worksheet controller.
+ The sole responsibility for this controller is to load the view from the nib. All other controlling activities are performed by the document.
  */
 
 

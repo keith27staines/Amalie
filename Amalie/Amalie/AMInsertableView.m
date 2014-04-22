@@ -354,7 +354,7 @@ static CABasicAnimation * animateOrigin;
             break;
             
         case NSDragOperationMove:
-            // We've already been moved by the handler in the parent worksheetView
+            // We've already been moved by the handler in the parent document
             [self concludeDragging];
             
         case NSDragOperationNone:

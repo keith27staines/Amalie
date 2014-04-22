@@ -12,7 +12,7 @@
 @class AMInsertableView;
 @class AMAppController;
 @class AMUserPreferences;
-@class KSMWorksheet;
+@class KSMMathSheet;
 @class AMDInsertedObject;
 
 #import <Cocoa/Cocoa.h>
@@ -32,7 +32,7 @@
 @property (copy)          NSString               * groupID;
 @property (strong)        AMDInsertedObject      * amdInsertedObject;
 @property (readonly)      NSAttributedString     * attributedName;
-@property (weak,readonly) KSMWorksheet           * mathSheet;
+@property (weak,readonly) KSMMathSheet           * mathSheet;
 @property (weak)          NSManagedObjectContext * moc;
 
 @property (readonly) NSFont* fixedWidthFont;
@@ -43,7 +43,7 @@
  @Param nibNameOrNil This parameter is ignored. The receiver knows the nib to use.
  @Param nibBundleOrNil This parameter is ignored. The receiver knows the bundle to use.
  @Param appController The appController is required as the source of user default data.
- @Param worksheetController The parent worksheet controller. The receiver holds a weak reference.
+ @Param document The parent document. The receiver holds a weak reference.
  @Param contentType The type of mathematical object being inserted.
  @Param groupParentView The top level view containing all the other content in the group.
  @Param moc The managed object context that is to be used for accessing the datastore.
@@ -54,14 +54,14 @@
                bundle:(NSBundle *)nibBundleOrNil
         appController:(AMAppController*)appController
              document:(AMAmalieDocument*)document
-          contentType:(enum AMInsertableType)type
+          contentType:(enum AMInsertableType)contentType
       groupParentView:(AMInsertableView*)view
                   moc:(NSManagedObjectContext*)moc
     amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
 
 +(id)contentViewControllerWithAppController:(AMAppController*)appContoller
                                    document:(AMAmalieDocument*)document
-                                    content:(enum AMInsertableType)type
+                                    content:(enum AMInsertableType)contentType
                             groupParentView:(AMInsertableView*)groupParentview
                                         moc:(NSManagedObjectContext*)moc
                           amdInsertedObject:(AMDInsertedObject*)amdInsertedObject;
@@ -96,7 +96,7 @@
  an expression representing the y component.
  @Param string An expression string from which the expression is to be built.
  @Param index The index for the expression being set.
- @Return The new expression (already registered with the worksheet) if
+ @Return The new expression (already registered with the mathSheet) if
  successful. If the specified index is greater than expressionCount, then the
  internal state of the received is unchanged and nil is returned.
  */
@@ -105,7 +105,7 @@
 
 
 /*!
- Returns the expression that corresponds to the symbol from the worksheet. Note
+ Returns the expression that corresponds to the symbol from the mathSheet. Note
  that it is important to let the receiver manage the creation, reference
  counting of the expression. In order to prevent memory leaks, it is important
  never to retain strong references to expressions.

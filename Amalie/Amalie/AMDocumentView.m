@@ -7,7 +7,7 @@
 //
 
 #import "AMDocumentView.h"
-#import "AMWorksheetView.h"
+#import "AMPageView.h"
 #import "AMAppController.h"
 #import "AMAmalieDocument.h"
 #import "AMPersistentDocumentSettings.h"
@@ -17,7 +17,7 @@
 {
     __weak AMAppController  * _appController;
     __weak AMAmalieDocument * _amalieDocument;
-    NSMutableArray * _worksheets;
+    NSMutableArray * _pageViews;
 }
 @end
 
@@ -47,39 +47,43 @@
 {
     return YES;
 }
--(NSMutableArray *)worksheets
+-(NSMutableArray *)pageViews
 {
-    if (!_worksheets) {
-        _worksheets = [NSMutableArray array];
+    if (!_pageViews) {
+        _pageViews = [NSMutableArray array];
     }
-    return _worksheets;
+    return _pageViews;
 }
 -(void)applyUserPreferences
 {
     _backgroundColor =  _amalieDocument.documentSettings.colorSettings.backColorForDocumentBackground;
+    for ( AMPageView* view in self.pageViews) {
+        [view applyUserPreferences];
+    }
     [self setNeedsDisplay:YES];
 }
 -(void)reloadData
 {
-    if (self.worksheets.count == 0) {
-        [self addWorksheetView];
+    if (self.pageViews.count == 0) {
+        [self addPageView];
     }
     [self setNeedsDisplay:YES];
 }
--(AMWorksheetView*)addWorksheetView
+-(AMPageView*)addPageView
 {
-    AMWorksheetView * worksheet = [[AMWorksheetView alloc] init];
-    self.amalieDocument.worksheetView = worksheet;
-    worksheet.delegate = self.amalieDocument;
-    worksheet.libraryDataSource = self.appController;
-    [worksheet setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self addSubview:worksheet];
-    [self.worksheets addObject:worksheet];
-    [worksheet setNeedsUpdateConstraints:YES];
-    [worksheet setNeedsDisplay:YES];
+    AMPageView * pageView = [[AMPageView alloc] init];
+    self.amalieDocument.pageView = pageView;
+    pageView.delegate = self.amalieDocument;
+    pageView.libraryDataSource = self.appController;
+    [pageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addSubview:pageView];
+    [self.pageViews addObject:pageView];
+    [pageView applyUserPreferences];
+    [pageView setNeedsUpdateConstraints:YES];
+    [pageView setNeedsDisplay:YES];
     [self setNeedsUpdateConstraints:YES];
     [self setNeedsDisplay:YES];
-    return worksheet;
+    return pageView;
 }
 -(void)updateConstraints
 {
@@ -87,20 +91,20 @@
     [self removeConstraints:self.constraints];
     NSArray * constraints;
     NSDictionary * views;
-    AMWorksheetView * previous;
-    for (AMWorksheetView * worksheet in self.worksheets) {
+    AMPageView * previous;
+    for (AMPageView * pageView in self.pageViews) {
         if (!previous) {
-            views = NSDictionaryOfVariableBindings(worksheet);
-            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[worksheet]" options:0 metrics:nil views:views];
+            views = NSDictionaryOfVariableBindings(pageView);
+            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pageView]" options:0 metrics:nil views:views];
             [self addConstraints:constraints];
         } else {
-            views = NSDictionaryOfVariableBindings(previous,worksheet);
-            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[previous]-5-[worksheet]" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views];
+            views = NSDictionaryOfVariableBindings(previous,pageView);
+            constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[previous]-5-[pageView]" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views];
             [self addConstraints:constraints];
         }
-        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[worksheet]-(>=0)-|" options:0 metrics:nil views:views];
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[pageView]-(>=0)-|" options:0 metrics:nil views:views];
         [self addConstraints:constraints];
-        previous = worksheet;
+        previous = pageView;
     }
     views = NSDictionaryOfVariableBindings(previous);
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[previous]-(>=0)-|" options:0 metrics:nil views:views];

@@ -19,12 +19,12 @@
      argumentList:(KSMFunctionArgumentList *)argumentList
        returnType:(KSMValueType)returnType
        expression:(KSMExpression*)expression
-        worksheet:(KSMWorksheet *)worksheet
+        mathSheet:(KSMMathSheet *)mathSheet
 {
     self = [super initWithArgumentList:argumentList returnType:returnType name:name];
     if (self) {
         _expression = expression;
-        _worksheet = worksheet;
+        _mathSheet = mathSheet;
     }
     return self;
 }

@@ -8,7 +8,7 @@
 
 #import "KSMFunction.h"
 #import "KSMExpression.h"
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMFunctionArgumentList.h"
 #import "KSMSymbolProvider.h"
 #import "KSMReferenceCounter.h"

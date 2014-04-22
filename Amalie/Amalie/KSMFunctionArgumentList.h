@@ -7,7 +7,7 @@
 //
 
 @class KSMExpression;
-@class KSMWorksheet;
+@class KSMMathSheet;
 @class KSMMathValue;
 @class KSMFunctionArgument;
 
@@ -15,7 +15,7 @@
 
 @interface KSMFunctionArgumentList : NSObject
 
-@property (weak) KSMWorksheet           * worksheet;
+@property (weak) KSMMathSheet           * mathSheet;
 @property (copy, readonly) NSDictionary * argumentsDictionary;
 @property (copy, readonly) NSArray      * argumentsArray;
 @property (copy, readonly) NSArray      * namesArray;

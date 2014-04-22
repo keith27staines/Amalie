@@ -12,7 +12,7 @@
 #import "AMFunctionContentViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMExpression.h"
 #import "AMExpressionFormatContextNode.h"
 #import "AMEquationContentViewController.h"

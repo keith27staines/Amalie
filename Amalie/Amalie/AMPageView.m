@@ -1,19 +1,34 @@
 //
-//  AMWorksheetView.m
+//  AMPageView.m
 //  Amalie
 //
 //  Created by Keith Staines on 04/07/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 #import "QuartzCore/QuartzCore.h"
-#import "AMWorksheetView.h"
+#import "AMPageView.h"
 #import "AMConstants.h"
 #import "AMInsertableView.h"
 #import "AMAmalieDocument.h"
+#import "AMDocumentSettingsBase.h"
+#import "AMFontSettings.h"
+#import "AMPageSettings.h"
+#import "AMColorSettings.h"
+#import "AMMathStyleSettings.h"
+#import "AMMeasurement.h"
+#import "AMFontAttributes.h"
 
 static BOOL LOG_DRAG_OPS = NO;
 
-@implementation AMWorksheetView
+@interface AMPageView()
+{
+    NSColor * _backColor;
+}
+@property (readonly) AMDocumentSettingsBase * documentSettings;
+@end
+
+
+@implementation AMPageView
 
 
 # pragma mark - Initializers -
@@ -30,7 +45,6 @@ static BOOL LOG_DRAG_OPS = NO;
 
 -(void)awakeFromNib
 {
-    
     // Determine the class name for draggable types
     NSMutableArray * allTypes = [NSMutableArray array];
     NSArray * typesArray;
@@ -45,6 +59,12 @@ static BOOL LOG_DRAG_OPS = NO;
     [self registerForDraggedTypes:allTypes];
     
     [self setPostsFrameChangedNotifications:YES];
+}
+
+-(void)applyUserPreferences
+{
+    _backColor = self.documentSettings.colorSettings.backColorForPaper;
+    [self setNeedsDisplay:YES];
 }
 
 # pragma mark - Dragging -
@@ -140,15 +160,15 @@ static BOOL LOG_DRAG_OPS = NO;
         
         // Deal with items coming from the tray (library of insertable objects)
         if ( [[[sender draggingSource] identifier] isEqualToString:kAMLibraryObjectsKey] ) {
-            [self.delegate workheetView:self wantsViewInserted:view withOrigin:draggingLocation];
+            [self.delegate pageView:self wantsViewInserted:view withOrigin:draggingLocation];
             return YES;
         }
         
-        // Dragging source is the view itself, which is being repositioned in the worksheet
+        // Dragging source is the view itself, which is being repositioned in the document
         float topLeftX = draggingLocation.x - view.mouseDownOffsetFromOrigin.x;
         float topLeftY = draggingLocation.y + view.frame.size.height - view.mouseDownOffsetFromOrigin.y;
         NSPoint newTopLeft = NSMakePoint(topLeftX, topLeftY);
-        [self.delegate workheetView:self wantsViewMoved:view newTopLeft:newTopLeft];
+        [self.delegate pageView:self wantsViewMoved:view newTopLeft:newTopLeft];
         return YES;
     }
     return NO;
@@ -163,7 +183,7 @@ static BOOL LOG_DRAG_OPS = NO;
 
 -(void)drawRect:(NSRect)dirtyRect
 {
-    [[NSColor whiteColor] set];
+    [_backColor set];
     NSRectFill(dirtyRect);
 }
 
@@ -181,6 +201,34 @@ static BOOL LOG_DRAG_OPS = NO;
     [self addPageSizeConstraints];
     [self addConstraintsForInsertedItemSubViews];
 }
+
+-(AMDocumentSettingsBase*)documentSettings
+{
+    return [self.delegate documentSettingsForPageView:self];
+}
+-(NSSize)pageSize
+{
+    // Page size is returned in points
+    AMPageSettings * pageSettings = self.documentSettings.pageSettings;
+    NSSize size = pageSettings.paperSize;
+    if (pageSettings.paperOrientation == AMPaperOrientationLandscape) {
+        size = NSMakeSize(size.height, size.width);
+    }
+    size = [AMMeasurement convertSize:size fromUnits:pageSettings.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
+    return size;
+}
+-(AMMargins)pageMargins
+{
+    return [self.documentSettings.pageSettings marginsInUnits:AMMeasurementUnitsPoints];
+}
+-(CGFloat)verticalSpacing
+{
+    AMFontAttributes * fontAttributes = [self.documentSettings.fontSettings fontAttributesForFontType:AMFontTypeAlgebra];
+    NSFont * font = fontAttributes.font;
+    CGFloat lineSpacing = font.ascender - font.descender + font.leading;
+    return lineSpacing;
+}
+
 -(void)addConstraintsForInsertedItemSubViews
 {
     NSArray * insertedViews = [self sortInserts];
@@ -188,8 +236,8 @@ static BOOL LOG_DRAG_OPS = NO;
         return;
     }
     NSView * firstView = insertedViews[0];
-    AMMargins margins = [self.delegate pageMargins];
-    CGFloat verticalSpacing = [self.delegate verticalSpacing];
+    AMMargins margins = [self pageMargins];
+    CGFloat verticalSpacing = [self verticalSpacing];
     
     NSDictionary * viewsDictionary = NSDictionaryOfVariableBindings(firstView);
     NSDictionary * metrics = @{@"leftMargin": @(margins.left),
@@ -247,11 +295,6 @@ static BOOL LOG_DRAG_OPS = NO;
                                                      relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.pageSize.width]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight
                                                      relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:self.pageSize.height]];
-}
-
--(NSSize)pageSize
-{
-    return [self.delegate pageSizeInPoints];
 }
 
 -(NSArray*)sortInserts

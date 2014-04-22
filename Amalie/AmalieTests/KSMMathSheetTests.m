@@ -7,15 +7,15 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMExpressionEvaluator.h"
 #import "KSMExpression.h"
 
-@interface KSMWorksheetsTests : XCTestCase
+@interface KSMMathSheetTests : XCTestCase
 
 @end
 
-@implementation KSMWorksheetsTests
+@implementation KSMMathSheetTests
 
 - (void)setUp
 {
@@ -31,10 +31,9 @@
 
 - (void)testInitialize
 {
-    KSMWorksheet * worksheet = [[KSMWorksheet alloc] init];
-    worksheet.title = @"Test Worksheet";
-    KSMExpressionEvaluator * worksheetEvaluator = worksheet.evaluator;
-    XCTAssertTrue(worksheetEvaluator, @"The worksheet's expression evaluator is nil.");
+    KSMMathSheet * mathSheet = [[KSMMathSheet alloc] init];
+    KSMExpressionEvaluator * mathSheetEvaluator = mathSheet.evaluator;
+    XCTAssertTrue(mathSheetEvaluator, @"The mathsheet's expression evaluator is nil.");
 }
 
 @end

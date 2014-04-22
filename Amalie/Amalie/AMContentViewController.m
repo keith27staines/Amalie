@@ -27,7 +27,7 @@
 #import "AMLibraryItem.h"
 #import "AMLibraryViewController.h"
 
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMExpression.h"
 
 // datamodel
@@ -43,7 +43,7 @@
 @interface AMContentViewController ()
 {
     AMDInsertedObject             * _amdInsertedObject;
-    __weak KSMWorksheet           * _mathSheet;
+    __weak KSMMathSheet           * _mathSheet;
     __weak NSManagedObjectContext * _moc;
     NSMutableArray                * _expressions;
 }
@@ -198,7 +198,7 @@
     return vc;
 }
 
--(KSMWorksheet*)mathSheet
+-(KSMMathSheet*)mathSheet
 {
     return self.document.mathSheet;
 }
@@ -317,7 +317,6 @@
 
 -(KSMExpression*)view:(AMContentView *)view requiresExpressionForSymbol:(NSString *)symbol
 {
-    // Get expression for symbol from KSMWorksheet
     return [self expressionForSymbol:symbol];
 }
 

@@ -1,12 +1,12 @@
 //
-//  KSMWorksheet.m
+//  KSMMathSheet.m
 //  KSMath
 //
 //  Created by Keith Staines on 26/06/2013.
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMExpressionEvaluator.h"
 #import "KSMMathValue.h"
 #import "KSMMathValueHolder.h"
@@ -15,7 +15,7 @@
 #import "KSMUserFunction.h"
 #import "KSMStandardFunction1v.h"
 
-@interface KSMWorksheet()
+@interface KSMMathSheet()
 {
     KSMExpressionEvaluator * _expressionEvaluator;
     NSMutableDictionary    * _referenceCountedObjects;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation KSMWorksheet
+@implementation KSMMathSheet
 
 - (id)init
 {
@@ -37,7 +37,7 @@
         _expressionsDictionary = [NSMutableDictionary dictionary];
         _variablesDictionary = [NSMutableDictionary dictionary];
         _functionsDictionary = [NSMutableDictionary dictionary];
-        _evaluator = [[KSMExpressionEvaluator alloc] initWithWorksheet:self];
+        _evaluator = [[KSMExpressionEvaluator alloc] initWithMathSheet:self];
     }
     return self;
 }
@@ -212,7 +212,7 @@
                              argumentList:arguments
                                returnType:type
                                expression:expression
-                                worksheet:self];
+                                mathSheet:self];
     [self registerFunction:f];
     
     return f;

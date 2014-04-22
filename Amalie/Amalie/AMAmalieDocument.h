@@ -7,9 +7,9 @@
 //
 
 @class AMPersistentDocumentSettings;
-@class AMWorksheetView;
+@class AMPageView;
 @class AMAppController;
-@class KSMWorksheet;
+@class KSMMathSheet;
 @class AMKeyboardsAreaView;
 
 @class AMKeyboardsViewController;
@@ -27,7 +27,7 @@
 #import "AMNameProviderDelegate.h"
 
 @interface AMAmalieDocument : NSPersistentDocument <
-AMWorksheetViewDelegate,
+AMPageViewDelegate,
 AMInsertableViewDelegate,
 AMNameProviderDelegate,
 NSSplitViewDelegate,
@@ -58,7 +58,7 @@ NSPopoverDelegate>
 
 @property (weak) IBOutlet NSSplitView *rightSplitView;
 
-@property (weak) IBOutlet NSScrollView *worksheetScrollView;
+@property (weak) IBOutlet NSScrollView *documentScrollView;
 
 @property (weak) IBOutlet NSView * libraryContainerView;
 
@@ -66,7 +66,7 @@ NSPopoverDelegate>
 
 @property (weak) IBOutlet AMDocumentContainerView *documentContainerView;
 
-@property (weak) IBOutlet AMWorksheetView * worksheetView;
+@property (weak) IBOutlet AMPageView * pageView;
 
 @property (weak) IBOutlet AMLibraryViewController * library;
 
@@ -89,9 +89,9 @@ NSPopoverDelegate>
 
 # pragma mark - Uncatagorized -
 /*!
- mathSheet performs math operations for this worksheet controller
+ The mathSheet that performs math operations for this document
  */
-@property (strong, readonly) KSMWorksheet * mathSheet;
+@property (strong, readonly) KSMMathSheet * mathSheet;
 
 /*!
  appController is required by various members of the receiver

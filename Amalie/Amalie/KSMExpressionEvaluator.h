@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class KSMExpression, KSMWorksheet, KSMNumber, KSMMathValue, KSMFunctionArgumentList;
+@class KSMExpression, KSMMathSheet, KSMNumber, KSMMathValue, KSMFunctionArgumentList;
 
 #import <Foundation/Foundation.h>
 
 @interface KSMExpressionEvaluator : NSObject
 
-@property (weak) KSMWorksheet * worksheet;
+@property (weak) KSMMathSheet * mathSheet;
 
 /*!
  * This initializer will always throw an exception. Use the designated
@@ -23,14 +23,14 @@
 
 /*!
  * Designated initializer.
- * Initialises a KSMExpressionEvaluator with its parent worksheet. The expression
- * evaluator will use backing stores provided by the worksheet (to register the
+ * Initialises a KSMExpressionEvaluator with its parent mathsheet. The expression
+ * evaluator will use backing stores provided by the mathsheet (to register the
  * expressions and variables it builds).
- * @Param worksheet The parent worksheet (must not be nil or an exception will
- * be thrown). The worksheet is referenced by a weak pointer.
+ * @Param mathSheet The parent mathSheet (must not be nil or an exception will
+ * be thrown). The mathsheet is referenced by a weak pointer.
  * @Return An initialized object
  */
-- (id)initWithWorksheet:(KSMWorksheet*)worksheet;
+- (id)initWithMathSheet:(KSMMathSheet*)mathSheet;
 
 /*!
  * Returns a simplified expression obtained by evaluating and composing all

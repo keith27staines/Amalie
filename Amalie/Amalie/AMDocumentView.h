@@ -8,7 +8,7 @@
 
 @class AMAppController;
 @class AMAmalieDocument;
-@class AMWorksheetView;
+@class AMPageView;
 
 #import <Cocoa/Cocoa.h>
 
@@ -16,12 +16,12 @@
 
 @property (weak,readonly) AMAmalieDocument * amalieDocument;
 @property (weak,readonly) AMAppController * appController;
-@property (readonly) NSMutableArray * worksheets;
+@property (readonly) NSMutableArray * pageViews;
 @property NSColor * backgroundColor;
 - (id)initWithAppController:(AMAppController*)appController amalieDocument:(AMAmalieDocument*)amalieDocument;
 -(void)reloadData;
 -(void)applyUserPreferences;
--(AMWorksheetView*)addWorksheetView;
+-(AMPageView*)addPageView;
 
 @end
 

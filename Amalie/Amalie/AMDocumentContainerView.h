@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class AMDocumentView;
-@class AMWorksheetView;
+@class AMPageView;
 @class AMAmalieDocument;
 @class AMAppController;
 

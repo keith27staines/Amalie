@@ -1,58 +1,58 @@
 //
-//  AMWorksheetNameProvider.m
+//  AMMathSheetNameProvider.m
 //  Amalie
 //
 //  Created by Keith Staines on 16/04/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import "AMWorksheetNameProvider.h"
-#import "KSMWorksheet.h"
+#import "AMMathSheetNameProvider.h"
+#import "KSMMathSheet.h"
 #import "KSMMathValue.h"
 #import "KSMExpression.h"
 
-@interface AMWorksheetNameProvider()
+@interface AMMathSheetNameProvider()
 {
-    KSMWorksheet * _worksheet;
+    KSMMathSheet * _mathSheet;
 }
 
 @end
 
-@implementation AMWorksheetNameProvider
+@implementation AMMathSheetNameProvider
 
-+(id)nameProviderWithDelegate:(id<AMNameProviderDelegate>)delegate worksheet:(KSMWorksheet*)worksheet
++(id)nameProviderWithDelegate:(id<AMNameProviderDelegate>)delegate mathSheet:(KSMMathSheet*)mathSheet
 {
-    return [[self alloc] initWithDelegate:delegate worksheet:worksheet];
+    return [[self alloc] initWithDelegate:delegate mathSheet:mathSheet];
 }
 
--(instancetype)initWithDelegate:(id<AMNameProviderDelegate>)delegate worksheet:(KSMWorksheet*)worksheet
+-(instancetype)initWithDelegate:(id<AMNameProviderDelegate>)delegate mathSheet:(KSMMathSheet*)mathSheet
 {
     self = [super initWithDelegate:delegate];
-    _worksheet = worksheet;
+    _mathSheet = mathSheet;
     return self;
 }
 
--(KSMWorksheet *)worksheet
+-(KSMMathSheet *)mathSheet
 {
-    if (!_worksheet) {
-        _worksheet = [[KSMWorksheet alloc] init];
+    if (!_mathSheet) {
+        _mathSheet = [[KSMMathSheet alloc] init];
     }
-    return _worksheet;
+    return _mathSheet;
 }
--(void)setWorksheet:(KSMWorksheet *)worksheet
+-(void)setMathSheet:(KSMMathSheet *)mathSheet
 {
-    _worksheet = worksheet;
+    _mathSheet = mathSheet;
 }
 -(BOOL)isKnownObjectName:(NSString *)name
 {
-    return [self.worksheet isKnownObjectName:name];
+    return [self.mathSheet isKnownObjectName:name];
 }
 -(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
 {
     if (![self isKnownObjectName:name]) {
         return nil;
     }
-    KSMExpression * exp = [self.worksheet expressionForString:name];
+    KSMExpression * exp = [self.mathSheet expressionForString:name];
     if (exp) {
         switch (exp.expressionType) {
             case KSMExpressionTypeUnrecognized:
@@ -60,7 +60,7 @@
                 break;
             case KSMExpressionTypeVariable:
             {
-                KSMMathValue * mathValue = [self.worksheet variableForName:name];
+                KSMMathValue * mathValue = [self.mathSheet variableForName:name];
                 if (mathValue) {
                     return [self generateAttributedStringFromName:name withType:mathValue.type];
                 }

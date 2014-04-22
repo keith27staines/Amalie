@@ -8,7 +8,7 @@
 
 @class KSMFunctionArgumentList;
 @class KSMExpression;
-@class KSMWorksheet;
+@class KSMMathSheet;
 
 #import <Cocoa/Cocoa.h>
 #import "KSMReferenceCountedObject.h"

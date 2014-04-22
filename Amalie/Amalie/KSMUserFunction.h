@@ -10,7 +10,7 @@
 
 @interface KSMUserFunction : KSMFunction
 @property (weak, readonly) KSMExpression * expression;
-@property (weak, readonly) KSMWorksheet  * worksheet;
+@property (weak, readonly) KSMMathSheet  * mathSheet;
 
 /*!
  The designated initializer.
@@ -18,13 +18,13 @@
  @Param argumentList A KSMArgumentList defining the names and values of the function's inputs.
  @Param returnType The type of result that the function will return.
  @Param expression The expression that defines the function's rule.
- @Param worksheet The parent worksheet that hosts the function.
+ @Param mathSheet The parent mathSheet that hosts the function.
  @Return The initialized object.
  */
 -(id)initWithName:(NSString*)name
      argumentList:(KSMFunctionArgumentList *)argumentList
        returnType:(KSMValueType)returnType
        expression:(KSMExpression*)expression
-        worksheet:(KSMWorksheet *)worksheet;
+        mathSheet:(KSMMathSheet *)mathSheet;
 
 @end

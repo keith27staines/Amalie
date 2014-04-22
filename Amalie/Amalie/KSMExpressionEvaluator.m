@@ -7,7 +7,7 @@
 //
 
 #import "KSMExpressionEvaluator.h"
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMExpression.h"
 #import "KSMPrimes.h"
 #import "KSMPrimeDecomposition.h"
@@ -17,7 +17,7 @@
 #import "KSMMatrix.h"
 #import "KSMFunction.h"
 #import "KSMMathValue.h"
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "NSString+KSMMath.h"
 
 
@@ -43,7 +43,7 @@ enum KSMBinaryType {
 
 @interface KSMExpressionEvaluator()
 {
-    __weak KSMWorksheet * _worksheet;
+    __weak KSMMathSheet * _mathSheet;
 }
 
 @end
@@ -56,13 +56,13 @@ enum KSMBinaryType {
     return nil;
 }
 
-- (id)initWithWorksheet:(KSMWorksheet *)worksheet
+- (id)initWithMathSheet:(KSMMathSheet *)mathSheet
 {
-    if (!worksheet) [NSException raise:@"The worksheet must not be nil." format:nil];
+    if (!mathSheet) [NSException raise:@"The mathSheet must not be nil." format:nil];
     
     self = [super init];
     if (self) {
-        _worksheet = worksheet;
+        _mathSheet = mathSheet;
     }
     return self;
 }
@@ -88,7 +88,7 @@ enum KSMBinaryType {
                 mv = [fa mathValue];
             }
             if (!mv) {
-                mv = [self.worksheet variableForSymbol:expression.symbol];
+                mv = [self.mathSheet variableForSymbol:expression.symbol];
             }
             return mv;
         }
@@ -220,8 +220,8 @@ enum KSMBinaryType {
 {
     NSString * leftSymbol = expression.leftOperand;
     NSString * rightSymbol = expression.rightOperand;
-    KSMExpression * leftExpr = [self.worksheet.expressionsDictionary objectForKey:leftSymbol];
-    KSMExpression * rightExpr = [self.worksheet.expressionsDictionary objectForKey:rightSymbol];
+    KSMExpression * leftExpr = [self.mathSheet.expressionsDictionary objectForKey:leftSymbol];
+    KSMExpression * rightExpr = [self.mathSheet.expressionsDictionary objectForKey:rightSymbol];
     
     *leftExpression  = [self simplifiedExpressionFromExpression:leftExpr];
     *rightExpression = [self simplifiedExpressionFromExpression:rightExpr];
@@ -285,7 +285,7 @@ enum KSMBinaryType {
     
     // If the symbol represents a variable, we look up its value
     
-    KSMExpression * subExpression = self.worksheet.expressionsDictionary[symbol];
+    KSMExpression * subExpression = self.mathSheet.expressionsDictionary[symbol];
     NSString * substituteString = nil;
     switch (subExpression.expressionType) {
         case KSMExpressionTypeLiteral:
@@ -294,7 +294,7 @@ enum KSMBinaryType {
             
         case KSMExpressionTypeVariable:
         {
-            KSMMathValue * mathValue = [self.worksheet variableForSymbol:symbol];
+            KSMMathValue * mathValue = [self.mathSheet variableForSymbol:symbol];
             switch ( mathValue.type ) {
                 case KSMValueInteger:
                     substituteString = [NSString stringWithFormat:@"%ld",

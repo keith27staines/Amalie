@@ -9,10 +9,10 @@
 #import "QuartzCore/QuartzCore.h"
 #import "AMAmalieDocument.h"
 #import "AMConstants.h"
-#import "AMWorksheetView.h"
+#import "AMPageView.h"
 #import "AMInsertableView.h"
 #import "AMKeyboardsAreaView.h"
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMMathValue.h"
 #import "AMContentView.h"
 #import "AMGroupedView.h"
@@ -54,16 +54,16 @@
     __weak NSSplitView          * _leftSplitView;
     __weak NSSplitView          * _middleSplitView;
     __weak NSSplitView          * _rightSplitView;
-    __weak NSScrollView         * _worksheetScrollView;
+    __weak NSScrollView         * _documentScrollView;
     __weak AMDocumentView       * _documentBackgroundView;
-    __weak AMWorksheetView      * _worksheetView;
+    __weak AMPageView      * _pageView;
     __weak AMInsertableView     * _selectedView;
     
     NSMutableArray              * _insertableViewArray;
     NSMutableDictionary         * _insertableViewDictionary;
     NSMutableDictionary         * _insertedRecords;
     NSMutableDictionary         * _contentControllers;
-    KSMWorksheet                * _mathSheet;
+    KSMMathSheet                * _mathSheet;
     NSEntityDescription         * _amdInsertedObjectsEntity;
     AMPersistentDocumentSettings          * _documentSettings;
 }
@@ -141,13 +141,13 @@
 }
 -(void)notificationCenterRegistrations
 {
-    [self.worksheetScrollView setPostsFrameChangedNotifications:YES];
+    [self.documentScrollView setPostsFrameChangedNotifications:YES];
     
     SEL selector = NSSelectorFromString(@"workheetScrollViewDidMagnify");
     NSNotificationCenter * notifier = [NSNotificationCenter defaultCenter];
     [notifier addObserver:self selector:selector
                      name:NSScrollViewDidEndLiveMagnifyNotification
-                   object:self.worksheetScrollView];
+                   object:self.documentScrollView];
     
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidHide object:self.leftSplitView];
     [notifier addObserver:self selector:@selector(panelDidChangeHiddenState:) name:kAMNotificationViewDidHide object:self.rightSplitView];
@@ -192,12 +192,12 @@
     _insertableViewArray        = [NSMutableArray array];
     _insertableViewDictionary   = [NSMutableDictionary dictionary];
     _contentControllers         = [NSMutableDictionary dictionary];
-    _mathSheet                  = [[KSMWorksheet alloc] init];
+    _mathSheet                  = [[KSMMathSheet alloc] init];
 }
 -(void)loadDocumentIntoView
 {
     [self.documentContainerView applyUserPreferences];
-    [self.worksheetView prepareForReload];
+    [self.pageView prepareForReload];
     
     [self.undoManager disableUndoRegistration];
     for (AMDInsertedObject * insertedObject in [AMDInsertedObject fetchInsertedObjectsInDisplayOrder]) {
@@ -216,8 +216,8 @@
     }
     [self.managedObjectContext processPendingChanges];
     [self.undoManager enableUndoRegistration];
-    [self.worksheetView setNeedsUpdateConstraints:YES];
-    [self.worksheetView setNeedsDisplay:YES];
+    [self.pageView setNeedsUpdateConstraints:YES];
+    [self.pageView setNeedsDisplay:YES];
 }
 -(AMPersistentDocumentSettings*)documentSettings
 {
@@ -364,32 +364,16 @@
     [self showRightSidePanel:self.rightSplitView.isHidden];
 }
 
-#pragma mark - AMWorksheetViewDelegate -
--(NSSize)pageSizeInPoints
+#pragma mark - AMPageViewDelegate -
+
+-(AMDocumentSettingsBase *)documentSettingsForPageView:(AMPageView *)view
 {
-    AMPersistentDocumentSettings * documentSettings = self.documentSettings;
-    AMPageSettings * pageSettings = documentSettings.pageSettings;
-    NSSize size = pageSettings.paperSize;
-    if (pageSettings.paperOrientation == AMPaperOrientationLandscape) {
-        size = NSMakeSize(size.height, size.width);
-    }
-    size = [AMMeasurement convertSize:size fromUnits:pageSettings.paperMeasurementUnits toUnits:AMMeasurementUnitsPoints];
-    return size;
+    return self.documentSettings;
 }
--(AMMargins)pageMargins
+
+-(void)pageView:(AMPageView*)pageView wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
 {
-    return [self.documentSettings.pageSettings marginsInUnits:AMMeasurementUnitsPoints];
-}
--(CGFloat)verticalSpacing
-{
-    AMFontAttributes * fontAttributes = [self fontAttributesForType:AMFontTypeAlgebra];
-    NSFont * font = fontAttributes.font;
-    CGFloat lineSpacing = font.ascender - font.descender + font.leading;
-    return lineSpacing;
-}
--(void)workheetView:(AMWorksheetView*)worksheet wantsViewInserted:(AMInsertableView*)insertableView withOrigin:(NSPoint)origin
-{
-    self.worksheetView= worksheet;
+    self.pageView= pageView;
     NSAssert(insertableView, @"Cannot insert a nill view.");
     if (!insertableView) return;
     
@@ -397,9 +381,9 @@
     [self addInsertableView:insertableView];
     
 }
--(void)workheetView:(AMWorksheetView*)worksheet wantsViewRemoved:(AMInsertableView*)insertableView
+-(void)pageView:(AMPageView*)pageView wantsViewRemoved:(AMInsertableView*)insertableView
 {
-    self.worksheetView = worksheet;
+    self.pageView = pageView;
     [self deleteInsertableView:insertableView];
 }
 
@@ -413,10 +397,10 @@
     
     // This will be the selected view now
     [self insertableViewReceivedClick:insertableView];
-    [self.worksheetView setNeedsUpdateConstraints:YES];
+    [self.pageView setNeedsUpdateConstraints:YES];
 }
 /*!
- deleteInsertableView: first delete the data content (by calling deleteContentForGroupID) and then removes the frame view (which is just the gui container for the content) from the worksheet's subview collection.
+ deleteInsertableView: first delete the data content (by calling deleteContentForGroupID) and then removes the frame view (which is just the gui container for the content) from the page's subview collection.
  */
 -(void)deleteInsertableView:(AMInsertableView*)insertableView
 {
@@ -431,7 +415,7 @@
     [self.insertableViewDictionary removeObjectForKey:groupID];
     insertableView.delegate = nil;
     [insertableView removeFromSuperview];
-    [self.worksheetView setNeedsUpdateConstraints:YES];
+    [self.pageView setNeedsUpdateConstraints:YES];
 }
 
 /*!
@@ -444,16 +428,16 @@
     [vc deleteContent];
     [self.contentControllers removeObjectForKey:groupID];
 }
--(void)workheetView:(AMWorksheetView*)worksheet wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
+-(void)pageView:(AMPageView*)pageView wantsViewMoved:(AMInsertableView*)view newTopLeft:(NSPoint)topLeft
 {
-    self.worksheetView = worksheet;
+    self.pageView = pageView;
     
     // view will be a "shadow" object, an incomplete copy created by a drag operation, so we make sure we move the real one by obtaining it from the store
     AMInsertableView * actualView = [self actualViewFromPossibleTemporaryCopy:view];
     
     // Move it
     [actualView setFrameTopLeft:topLeft animate:NO];
-    [self.worksheetView setNeedsUpdateConstraints:YES];
+    [self.pageView setNeedsUpdateConstraints:YES];
 }
 
 #pragma mark - AMInsertableViewDelegate -
@@ -481,8 +465,8 @@
 }
 -(void)removeInsertableView:(AMInsertableView*)view
 {
-    AMWorksheetView * worksheetView = (AMWorksheetView *)view.superview;
-    [self workheetView:worksheetView wantsViewRemoved:view];
+    AMPageView * pageView = (AMPageView *)view.superview;
+    [self pageView:pageView wantsViewRemoved:view];
 }
 -(void)insertableViewWantsRemoval:(AMInsertableView*)view
 {
@@ -519,7 +503,7 @@
                               otherButton:nil
                 informativeTextWithFormat:message,messageDetail];
     
-    [alert beginSheetModalForWindow:self.worksheetView.window
+    [alert beginSheetModalForWindow:self.pageView.window
                       modalDelegate:self
                      didEndSelector:@selector(removeAlertEnded:code:context:)
                         contextInfo:(__bridge void *)(view)];
@@ -537,7 +521,7 @@
     
     [view setFrameOrigin:origin];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.worksheetView addSubview:view];
+    [self.pageView addSubview:view];
 }
 -(void)removeAlertEnded:(NSAlert * ) alert code:(NSInteger)choice context:(void*)v
 {
@@ -545,7 +529,7 @@
         AMInsertableView * view = (__bridge AMInsertableView*)v;
         if (view == self.selectedView) {
             self.selectedView = nil;
-            [self.worksheetView.window makeFirstResponder:nil];
+            [self.pageView.window makeFirstResponder:nil];
         }
         [self removeInsertableView:view];
     }
@@ -563,10 +547,10 @@
 
 #pragma - KSM maths library -
 
--(KSMWorksheet*)mathSheet
+-(KSMMathSheet*)mathSheet
 {
     if (!_mathSheet) {
-        _mathSheet = [[KSMWorksheet alloc] init];
+        _mathSheet = [[KSMMathSheet alloc] init];
     }
     return _mathSheet;
 }
@@ -576,12 +560,12 @@
 -(void)workheetScrollViewDidMagnify
 {
     NSSlider * slider = (NSSlider*)(self.scaleSliderItem.view);
-    slider.floatValue = self.worksheetScrollView.magnification;
+    slider.floatValue = self.documentScrollView.magnification;
 }
 
 - (IBAction)scaleSliderMoved:(NSSlider *)slider {
     CGFloat requiredMagnification = slider.floatValue;
-    [self.worksheetScrollView setMagnification:requiredMagnification];
+    [self.documentScrollView setMagnification:requiredMagnification];
 }
 
 #pragma mark - Selection management -
@@ -625,7 +609,7 @@
     AMDocumentSettingsBaseViewController * vc = (AMDocumentSettingsBaseViewController*)popover.contentViewController;
     vc.documentSettings = self.documentSettings;
     [popover showRelativeToRect:view.bounds ofView:view preferredEdge:NSMaxYEdge];
-    [[self.worksheetView window] makeFirstResponder:nil];
+    [[self.pageView window] makeFirstResponder:nil];
 }
 #pragma mark - Popover Delegate -
 -(void)popoverDidClose:(NSNotification *)notification

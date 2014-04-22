@@ -1,5 +1,5 @@
 //
-//  KSMWorksheet.h
+//  KSMMathSheet.h
 //  KSMath
 //
 //  Created by Keith Staines on 26/06/2013.
@@ -18,7 +18,7 @@
 #import "KSMReferenceCountedObject.h"
 #import "KSMMathValue.h"
 
-@interface KSMWorksheet : NSObject <KSMReferenceCounterDelegate>
+@interface KSMMathSheet : NSObject <KSMReferenceCounterDelegate>
 
 @property (strong, readonly) KSMExpressionBuilder   * builder;
 @property (strong, readonly) KSMExpressionEvaluator * evaluator;
@@ -40,7 +40,7 @@
  * the receiver's store.
  * @Param string The string to build into an expression.
  * @Returns The symbol now associated with the expression in the parent
- * worksheet's store.
+ * mathSheet's store.
  */
 -(NSString*)buildAndRegisterExpressionFromString:(NSString*)string;
 
@@ -56,7 +56,7 @@
  Decrements the internal reference count for the specified object. The
  object will be deleted when the reference count reaches zero. Call this
  method when a particular instance of the object is to be removed from
- the worksheet. Note that registerExpression and buildAndRegisterExpression both
+ the mathSheet. Note that registerExpression and buildAndRegisterExpression both
  automatically increment the reference count, whether or not the expression being
  registered already exists. Thus there is no need for an explicit method to 
  increment the reference count. Also note that this reference count is not the 
@@ -86,17 +86,17 @@
  @Param argumentList The named arguments that the function requires as inputs. 
  @Param returnType The type of value that the function returns.
  @Param expression The algebraic rule used to compute the function's value from
- the inputs. If the expression is not already registered with the worksheet it 
+ the inputs. If the expression is not already registered with the mathSheet it
  will be registered during the construction process. The rule can use any 
  argument from the argument list, and any other constant or variable already 
- explicitly registered with the worksheet or implicitly, as part of the expression
+ explicitly registered with the mathSheet or implicitly, as part of the expression
  rule.
  @Param error Error will only be populated if the construction of the function 
  fails. The reasons for failure are: (1) A function of the required name already
  exists; (2) The name is invalid.
  @Return The value of the function as computed using the expression rule, using 
  values currently explicitly assigned in the argument list and other constants 
- and variable values from the worksheet.
+ and variable values from the mathSheet.
  */
 -(KSMFunction*)buildAndRegisterUserFunctionWithName:(NSString*)name
                                        argumentList:(KSMFunctionArgumentList*)arguments

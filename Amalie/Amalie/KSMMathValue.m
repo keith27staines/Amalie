@@ -12,7 +12,7 @@
 #import "NSString+KSMMath.h"
 #import "KSMExpression.h"
 #import "KSMExpressionEvaluator.h"
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 
 NSInteger const KSMIntegerMax = NSIntegerMax;
 NSInteger const KSMIntegerMin = NSIntegerMin;
@@ -109,7 +109,7 @@ NSInteger const KSMIntegerMin = NSIntegerMin;
         }
         case KSMExpressionTypeVariable:
         {
-            return [evaluator.worksheet variableForSymbol:expression.symbol];
+            return [evaluator.mathSheet variableForSymbol:expression.symbol];
         }
         case KSMExpressionTypeBinary:
         {

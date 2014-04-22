@@ -8,7 +8,7 @@
 
 #import "AMDocumentContainerView.h"
 #import "AMDocumentView.h"
-#import "AMWorksheetView.h"
+#import "AMPageView.h"
 #import "AMConstants.h"
 
 @interface AMDocumentContainerView()
@@ -66,7 +66,7 @@
     NSDictionary * views = NSDictionaryOfVariableBindings(documentContainer,scrollView,clipView,documentView);
     NSArray * constraints;
     
-    // We are the document container, which contains the scroll view, which contains a clip view, which contains the document background view, which contains the worksheets).
+    // We are the document container, which contains the scroll view, which contains a clip view, which contains the document background view, which contains the page views).
 
     // position scroll view within the container (the container being us). The scroll view must fill its container entirely.
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views];

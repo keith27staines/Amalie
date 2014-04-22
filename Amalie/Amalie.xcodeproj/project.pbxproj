@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		53132A3218FED5420069C7BA /* AMAbstractNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */; };
-		53132A3518FEEEA60069C7BA /* AMWorksheetNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3418FEEEA60069C7BA /* AMWorksheetNameProvider.m */; };
+		53132A3518FEEEA60069C7BA /* AMMathSheetNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3418FEEEA60069C7BA /* AMMathSheetNameProvider.m */; };
 		5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316847D18EDABFD00A29B36 /* AMSettingsSection.m */; };
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
@@ -55,7 +55,7 @@
 		784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EF91789CC11002BE03A /* AMAppController.m */; };
 		784D6EFE1789CC97002BE03A /* AMUserPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 784D6EFC1789CC97002BE03A /* AMUserPreferencesWindowController.m */; };
 		784D6F01178A1217002BE03A /* AMUserPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 784D6F00178A1217002BE03A /* AMUserPreferencesWindow.xib */; };
-		785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C8178552A700F6A7AD /* AMWorksheetView.m */; };
+		785247C9178552A700F6A7AD /* AMPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247C8178552A700F6A7AD /* AMPageView.m */; };
 		785247CC1785532F00F6A7AD /* AMToolboxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CB1785532F00F6A7AD /* AMToolboxView.m */; };
 		785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247CE1785722700F6A7AD /* AMInsertableView.m */; };
 		785247D21786AC9300F6A7AD /* AMExpressionContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 785247D11786AC9300F6A7AD /* AMExpressionContentView.m */; };
@@ -105,7 +105,7 @@
 		787B308717836485001851C0 /* KSMPrimeDecompositionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308017836485001851C0 /* KSMPrimeDecompositionTests.m */; };
 		787B308817836485001851C0 /* NSString_KSMathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308117836485001851C0 /* NSString_KSMathTests.m */; };
 		787B308917836485001851C0 /* KSMExpressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308217836485001851C0 /* KSMExpressionTests.m */; };
-		787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308317836485001851C0 /* KSMWorksheetsTests.m */; };
+		787B308A17836485001851C0 /* KSMMathSheetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308317836485001851C0 /* KSMMathSheetTests.m */; };
 		787B308C17836485001851C0 /* KSMExpressionEvaluatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */; };
 		787B3097178364B8001851C0 /* KSMExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308E178364B8001851C0 /* KSMExpression.m */; };
 		787B3098178364B8001851C0 /* KSMExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B308E178364B8001851C0 /* KSMExpression.m */; };
@@ -113,8 +113,8 @@
 		787B309A178364B8001851C0 /* NSString+KSMMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3090178364B8001851C0 /* NSString+KSMMath.m */; };
 		787B309D178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
 		787B309E178364B8001851C0 /* KSMExpressionEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */; };
-		787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
-		787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMWorksheet.m */; };
+		787B309F178364B8001851C0 /* KSMMathsheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMMathsheet.m */; };
+		787B30A0178364B8001851C0 /* KSMMathsheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 787B3096178364B8001851C0 /* KSMMathsheet.m */; };
 		78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803BFB18D9E120008FBDE1 /* AMFontSelectionViewController.m */; };
 		78803C0218D9E120008FBDE1 /* AMFontSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78803BFC18D9E120008FBDE1 /* AMFontSelectionViewController.xib */; };
 		78803C0318D9E120008FBDE1 /* AMFontSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78803BFE18D9E120008FBDE1 /* AMFontSelectorView.m */; };
@@ -218,8 +218,8 @@
 /* Begin PBXFileReference section */
 		53132A3018FED5420069C7BA /* AMAbstractNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = AMAbstractNameProvider.h; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
 		53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = AMAbstractNameProvider.m; sourceTree = "<group>"; tabWidth = 4; usesTabs = 0; wrapsLines = 1; };
-		53132A3318FEEEA60069C7BA /* AMWorksheetNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetNameProvider.h; sourceTree = "<group>"; };
-		53132A3418FEEEA60069C7BA /* AMWorksheetNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetNameProvider.m; sourceTree = "<group>"; };
+		53132A3318FEEEA60069C7BA /* AMMathSheetNameProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathSheetNameProvider.h; sourceTree = "<group>"; };
+		53132A3418FEEEA60069C7BA /* AMMathSheetNameProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathSheetNameProvider.m; sourceTree = "<group>"; };
 		5316847C18EDABFD00A29B36 /* AMSettingsSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSettingsSection.h; sourceTree = "<group>"; };
 		5316847D18EDABFD00A29B36 /* AMSettingsSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSettingsSection.m; sourceTree = "<group>"; };
 		5329831918E576FF0040809D /* AMColorPreferenceTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreferenceTableCellView.h; sourceTree = "<group>"; };
@@ -299,8 +299,8 @@
 		784D6EFB1789CC97002BE03A /* AMUserPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowController.h; sourceTree = "<group>"; };
 		784D6EFC1789CC97002BE03A /* AMUserPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesWindowController.m; sourceTree = "<group>"; };
 		784D6F00178A1217002BE03A /* AMUserPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMUserPreferencesWindow.xib; sourceTree = "<group>"; };
-		785247C7178552A700F6A7AD /* AMWorksheetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMWorksheetView.h; sourceTree = "<group>"; };
-		785247C8178552A700F6A7AD /* AMWorksheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMWorksheetView.m; sourceTree = "<group>"; };
+		785247C7178552A700F6A7AD /* AMPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPageView.h; sourceTree = "<group>"; };
+		785247C8178552A700F6A7AD /* AMPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPageView.m; sourceTree = "<group>"; };
 		785247CA1785532F00F6A7AD /* AMToolboxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMToolboxView.h; sourceTree = "<group>"; };
 		785247CB1785532F00F6A7AD /* AMToolboxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMToolboxView.m; sourceTree = "<group>"; };
 		785247CD1785722700F6A7AD /* AMInsertableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInsertableView.h; sourceTree = "<group>"; };
@@ -387,7 +387,7 @@
 		787B308017836485001851C0 /* KSMPrimeDecompositionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMPrimeDecompositionTests.m; sourceTree = "<group>"; };
 		787B308117836485001851C0 /* NSString_KSMathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSString_KSMathTests.m; sourceTree = "<group>"; };
 		787B308217836485001851C0 /* KSMExpressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionTests.m; sourceTree = "<group>"; };
-		787B308317836485001851C0 /* KSMWorksheetsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheetsTests.m; sourceTree = "<group>"; };
+		787B308317836485001851C0 /* KSMMathSheetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMMathSheetTests.m; sourceTree = "<group>"; };
 		787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluatorTests.m; sourceTree = "<group>"; };
 		787B308D178364B8001851C0 /* KSMExpression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpression.h; sourceTree = "<group>"; };
 		787B308E178364B8001851C0 /* KSMExpression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpression.m; sourceTree = "<group>"; };
@@ -395,8 +395,8 @@
 		787B3090178364B8001851C0 /* NSString+KSMMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KSMMath.m"; sourceTree = "<group>"; };
 		787B3093178364B8001851C0 /* KSMExpressionEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMExpressionEvaluator.h; sourceTree = "<group>"; };
 		787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMExpressionEvaluator.m; sourceTree = "<group>"; };
-		787B3095178364B8001851C0 /* KSMWorksheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMWorksheet.h; sourceTree = "<group>"; };
-		787B3096178364B8001851C0 /* KSMWorksheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMWorksheet.m; sourceTree = "<group>"; };
+		787B3095178364B8001851C0 /* KSMMathsheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMMathsheet.h; sourceTree = "<group>"; };
+		787B3096178364B8001851C0 /* KSMMathsheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMMathsheet.m; sourceTree = "<group>"; };
 		78803BFA18D9E120008FBDE1 /* AMFontSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSelectionViewController.h; sourceTree = "<group>"; };
 		78803BFB18D9E120008FBDE1 /* AMFontSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSelectionViewController.m; sourceTree = "<group>"; };
 		78803BFC18D9E120008FBDE1 /* AMFontSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFontSelectionViewController.xib; sourceTree = "<group>"; };
@@ -707,8 +707,8 @@
 				53132A3118FED5420069C7BA /* AMAbstractNameProvider.m */,
 				7848E5CC185769F400719EF3 /* AMPersistedObjectNameProvider.h */,
 				7848E5CD185769F400719EF3 /* AMPersistedObjectNameProvider.m */,
-				53132A3318FEEEA60069C7BA /* AMWorksheetNameProvider.h */,
-				53132A3418FEEEA60069C7BA /* AMWorksheetNameProvider.m */,
+				53132A3318FEEEA60069C7BA /* AMMathSheetNameProvider.h */,
+				53132A3418FEEEA60069C7BA /* AMMathSheetNameProvider.m */,
 			);
 			name = AMNameProvider;
 			sourceTree = "<group>";
@@ -734,8 +734,8 @@
 				78E2A9F318ACAD8D0082F4E0 /* AMDocumentContainerView.m */,
 				784001EA18015E6E006B00C1 /* AMDocumentView.h */,
 				784001EB18015E6E006B00C1 /* AMDocumentView.m */,
-				785247C7178552A700F6A7AD /* AMWorksheetView.h */,
-				785247C8178552A700F6A7AD /* AMWorksheetView.m */,
+				785247C7178552A700F6A7AD /* AMPageView.h */,
+				785247C8178552A700F6A7AD /* AMPageView.m */,
 				784001ED1802B091006B00C1 /* AMKeyboardsAreaView.h */,
 				784001EE1802B091006B00C1 /* AMKeyboardsAreaView.m */,
 				785D9A1D179BDD19004D39B5 /* Document Insertable views */,
@@ -1036,7 +1036,7 @@
 				787B308017836485001851C0 /* KSMPrimeDecompositionTests.m */,
 				787B308117836485001851C0 /* NSString_KSMathTests.m */,
 				787B308217836485001851C0 /* KSMExpressionTests.m */,
-				787B308317836485001851C0 /* KSMWorksheetsTests.m */,
+				787B308317836485001851C0 /* KSMMathSheetTests.m */,
 				787B308517836485001851C0 /* KSMExpressionEvaluatorTests.m */,
 				787B3072178361BC001851C0 /* AmalieTests.m */,
 				787B306D178361BC001851C0 /* Supporting Files */,
@@ -1062,8 +1062,8 @@
 				787B3090178364B8001851C0 /* NSString+KSMMath.m */,
 				787B3093178364B8001851C0 /* KSMExpressionEvaluator.h */,
 				787B3094178364B8001851C0 /* KSMExpressionEvaluator.m */,
-				787B3095178364B8001851C0 /* KSMWorksheet.h */,
-				787B3096178364B8001851C0 /* KSMWorksheet.m */,
+				787B3095178364B8001851C0 /* KSMMathsheet.h */,
+				787B3096178364B8001851C0 /* KSMMathsheet.m */,
 				7899B2D117ACF596008BDB75 /* KSMReferenceCounter.h */,
 				7899B2D217ACF596008BDB75 /* KSMReferenceCounter.m */,
 				78BBB2FA17D100DA006B8F07 /* KSMFunction */,
@@ -1412,9 +1412,9 @@
 				781D180D17F31DE70008758D /* AMDataStore.m in Sources */,
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
 				785826B218C4755C00612651 /* AMFontPreferencesView.m in Sources */,
-				787B309F178364B8001851C0 /* KSMWorksheet.m in Sources */,
+				787B309F178364B8001851C0 /* KSMMathsheet.m in Sources */,
 				78803C0918DC76D4008FBDE1 /* AMFontSetupViewController.m in Sources */,
-				785247C9178552A700F6A7AD /* AMWorksheetView.m in Sources */,
+				785247C9178552A700F6A7AD /* AMPageView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
 				53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */,
 				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
@@ -1439,7 +1439,7 @@
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
 				78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
 				785826A618C474C800612651 /* AMColorPreferencesViewController.m in Sources */,
-				53132A3518FEEEA60069C7BA /* AMWorksheetNameProvider.m in Sources */,
+				53132A3518FEEEA60069C7BA /* AMMathSheetNameProvider.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
 				78CDC76717B0F1F400BDC8D7 /* AMExpressionNodeView.m in Sources */,
 				784001EF1802B091006B00C1 /* AMKeyboardsAreaView.m in Sources */,
@@ -1565,11 +1565,11 @@
 				7811D2D017A257710024839B /* AMReferencedObjectHolder.m in Sources */,
 				7811D2CC17A255380024839B /* AMRefTreeNode.m in Sources */,
 				78EF56A517CCA2E400402847 /* KSMFunctionArgument.m in Sources */,
-				787B308A17836485001851C0 /* KSMWorksheetsTests.m in Sources */,
+				787B308A17836485001851C0 /* KSMMathSheetTests.m in Sources */,
 				781D180E17F31DE70008758D /* AMDataStore.m in Sources */,
 				78DE598417CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78EF56B117CF3B2200402847 /* KSMMatrix.m in Sources */,
-				787B30A0178364B8001851C0 /* KSMWorksheet.m in Sources */,
+				787B30A0178364B8001851C0 /* KSMMathsheet.m in Sources */,
 				78BBB30217D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
 				787B308617836485001851C0 /* KSMPrimeTests.m in Sources */,
 				78AF0A6917E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */,

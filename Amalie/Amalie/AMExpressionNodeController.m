@@ -10,9 +10,9 @@
 
 #import "AMExpressionNodeController.h"
 #import "KSMExpression.h"
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "AMExpressionNodeView.h"
-#import "AMWorksheetNameProvider.h"
+#import "AMMathSheetNameProvider.h"
 #import "AMExpressionFormatContextNode.h"
 #import "AMExpressionDataSource.h"
 
@@ -20,7 +20,7 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 
 @interface AMExpressionNodeController() <AMExpressionNodeViewDelegate,AMExpressionNodeViewDataSource, AMExpressionDataSource>
 {
-    KSMWorksheet * _worksheet;
+    KSMMathSheet * _mathSheet;
     KSMExpression * _expression;
     AMExpressionNodeView * _expressionNode;
     NSString * _expressionString;
@@ -39,12 +39,12 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 #pragma mark - AMExpressionNodeViewDelegate -
 -(id<AMNameProviding>)nameProvider
 {
-    return [AMWorksheetNameProvider nameProviderWithDelegate:self.nameProviderDelegate worksheet:self.worksheet];
+    return [AMMathSheetNameProvider nameProviderWithDelegate:self.nameProviderDelegate mathSheet:self.mathSheet];
 }
 #pragma mark - AMExpressionNodeViewDataSource -
 -(KSMExpression *)view:(NSView *)view requiresExpressionForSymbol:(NSString *)symbol
 {
-    return [self.worksheet expressionForSymbol:symbol];
+    return [self.mathSheet expressionForSymbol:symbol];
 }
 #pragma mark - AMExpressionNodeController -
 -(AMExpressionNodeView*)expressionNode
@@ -77,8 +77,8 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 -(KSMExpression*)expression
 {
     if (!_expression) {
-        NSString * symbol = [self.worksheet buildAndRegisterExpressionFromString:self.expressionString];
-        _expression = [self.worksheet expressionForSymbol:symbol];
+        NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:self.expressionString];
+        _expression = [self.mathSheet expressionForSymbol:symbol];
     }
     return _expression;
 }
@@ -104,17 +104,17 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
                               contextNode:nil];
     [self.expressionNode setNeedsDisplay:YES];
 }
--(KSMWorksheet *)worksheet
+-(KSMMathSheet *)mathSheet
 {
-    if (!_worksheet) {
-        _worksheet = [[KSMWorksheet alloc] init];
+    if (!_mathSheet) {
+        _mathSheet = [[KSMMathSheet alloc] init];
     }
-    return _worksheet;
+    return _mathSheet;
 }
 #pragma mark - AMExpressionDataSource
 -(KSMExpression *)expressionForSymbol:(NSString *)symbol
 {
-    return [self.worksheet expressionForSymbol:symbol];
+    return [self.mathSheet expressionForSymbol:symbol];
 }
 
 @end

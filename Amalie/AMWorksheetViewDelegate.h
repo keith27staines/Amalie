@@ -6,29 +6,25 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
-@class AMWorksheetView;
+@class AMPageView;
 @class AMInsertableView;
+@class AMDocumentSettingsBase;
 
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 
-@protocol AMWorksheetViewDelegate <NSObject>
+@protocol AMPageViewDelegate <NSObject>
 
-- (void)workheetView:(AMWorksheetView*)worksheet
+- (void)pageView:(AMPageView*)pageView
    wantsViewInserted:(AMInsertableView*)view
           withOrigin:(NSPoint)origin;
 
-- (void)workheetView:(AMWorksheetView*)worksheet
+- (void)pageView:(AMPageView*)pageView
     wantsViewRemoved:(AMInsertableView*)view;
 
-- (void)workheetView:(AMWorksheetView*)worksheet
+- (void)pageView:(AMPageView*)pageView
       wantsViewMoved:(AMInsertableView*)view
           newTopLeft:(NSPoint)topLeft;
 
--(NSSize)pageSizeInPoints;
-
--(AMMargins)pageMargins;
-
--(CGFloat)verticalSpacing;
-
+-(AMDocumentSettingsBase*)documentSettingsForPageView:(AMPageView*)view;
 @end

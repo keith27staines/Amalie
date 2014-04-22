@@ -8,12 +8,12 @@
 
 #import <XCTest/XCTest.h>
 #import <XCTest/XCTest.h>
-#import "KSMWorksheet.h"
+#import "KSMMathSheet.h"
 #import "KSMExpressionEvaluator.h"
 #import "KSMExpression.h"
 @interface KSMExpressionEvaluatorTests : XCTestCase
 
-@property (readwrite, strong) KSMWorksheet * worksheet;
+@property (readwrite, strong) KSMMathSheet * mathSheet;
 
 @end
 
@@ -23,14 +23,14 @@
 {
     [super setUp];
     // Put setup code here; it will be run once, before the first test case.
-    self.worksheet = [[KSMWorksheet alloc] init];
+    self.mathSheet = [[KSMMathSheet alloc] init];
 }
 
 - (void)tearDown
 {
     // Put teardown code here; it will be run once, after the last test case.
     [super tearDown];
-    self.worksheet = nil;
+    self.mathSheet = nil;
 }
 
 - (void)testSimplifiedExpression
@@ -45,11 +45,11 @@
     // simple addition
     mathString = @"9+3";
     simplifiedString = @"12";
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
     
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
 
@@ -57,40 +57,40 @@
     // simple subtraction
     mathString = @"9-12";
     simplifiedString = @"0-3";
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
     
     // straightforward multiplication
     mathString = @"9*3";
     simplifiedString = @"27";
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
 
     // simple division, resulting in integer
     mathString = @"9/3";
     simplifiedString = @"3";
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
 
     // rational fraction that cannot be simplified
     mathString = @"1/7";
     simplifiedString = @"1/7";  //
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
 
@@ -98,20 +98,20 @@
     // rational fraction that can be simplified
     mathString = @"3/9";
     simplifiedString = @"1/3";  //
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
     
     // more complex example of rational fraction that can be simplified
     mathString = @"9/54";
     simplifiedString = @"1/6";
-    symbol = [self.worksheet buildAndRegisterExpressionFromString:mathString];
-    complexExpression = [self.worksheet expressionForSymbol:symbol];
-    simplifiedExpression = [self.worksheet simplifiedExpressionFromExpression:complexExpression];
-    calculatedSimplifiedString = [self.worksheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
+    symbol = [self.mathSheet buildAndRegisterExpressionFromString:mathString];
+    complexExpression = [self.mathSheet expressionForSymbol:symbol];
+    simplifiedExpression = [self.mathSheet simplifiedExpressionFromExpression:complexExpression];
+    calculatedSimplifiedString = [self.mathSheet.evaluator stringByExpandingSymbolsInExpression:simplifiedExpression];
     
     XCTAssertTrue([calculatedSimplifiedString isEqualToString:simplifiedString],@"simplified expression's string isn't correct.");
 

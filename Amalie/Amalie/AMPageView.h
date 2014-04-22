@@ -1,5 +1,5 @@
 //
-//  AMWorksheetView.h
+//  AMPageView.h
 //  Amalie
 //
 //  Created by Keith Staines on 04/07/2013.
@@ -14,20 +14,21 @@
 #import "AMWorksheetViewDelegate.h"
 
 
-@interface AMWorksheetView : NSView <NSDraggingDestination>
+@interface AMPageView : NSView <NSDraggingDestination>
 
 /*!
  A delegate from which we get all document structure and behaviour of items contained within the document.
  */
-@property (weak) IBOutlet id<AMWorksheetViewDelegate> delegate;
+@property (weak) IBOutlet id<AMPageViewDelegate> delegate;
 
 /*!
- The library data source is a delegate that allows us to load library items into a tabke
+ The library data source is a delegate that allows us to load library items into a table
  */
 @property (weak) IBOutlet AMAppController * libraryDataSource;
 
 @property (readonly) NSSize pageSize;
 
 -(void)prepareForReload;
+-(void)applyUserPreferences;
 
 @end
