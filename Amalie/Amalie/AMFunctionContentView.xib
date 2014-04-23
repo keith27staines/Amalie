@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5037" systemVersion="13C39" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D43" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMFunctionContentViewController">
             <connections>
                 <outlet property="argumentListViewController" destination="hdE-0X-eOA" id="Hma-Fb-eKw"/>
                 <outlet property="contentView" destination="1" id="166-iN-yH6"/>
-                <outlet property="editPopover" destination="7OI-z7-ogY" id="yGL-Az-LMp"/>
+                <outlet property="editPopover" destination="UQd-rM-DnY" id="5LN-hQ-ZwM"/>
                 <outlet property="expressionStringView" destination="iG3-a1-4HF" id="hjY-x2-kxt"/>
                 <outlet property="expressionView" destination="O6I-Qg-1kO" id="he2-SU-UcK"/>
                 <outlet property="nameView" destination="YNe-VI-N9B" id="vXH-hL-3KI"/>
@@ -94,16 +94,11 @@
             </connections>
         </customView>
         <viewController nibName="AMArgumentListView" id="hdE-0X-eOA" customClass="AMArgumentListViewController"/>
-        <popover behavior="t" id="7OI-z7-ogY" userLabel="Edit Popover"/>
-        <popUpButtonCell type="bevel" title="Pop Up" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="bezel" imageScaling="proportionallyDown" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="R9J-l6-CRn" id="QmM-ja-PvD">
-            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-            <font key="font" metaFont="smallSystem"/>
-            <menu key="menu" title="OtherViews" id="Bdd-IP-Nja">
-                <items>
-                    <menuItem title="Pop Up" state="on" id="R9J-l6-CRn"/>
-                </items>
-            </menu>
-        </popUpButtonCell>
-        <viewController nibName="AMArgumentListView" id="Ph3-63-S9K" userLabel="Argument List View Controller (popover)" customClass="AMArgumentListViewController"/>
+        <viewController id="7DK-HD-bEv" userLabel="AMFunctionProperties View Controller" customClass="AMFunctionPropertiesViewController"/>
+        <popover id="UQd-rM-DnY" userLabel="AMFunctionPropertiesPopover">
+            <connections>
+                <outlet property="contentViewController" destination="7DK-HD-bEv" id="WOB-0B-p99"/>
+            </connections>
+        </popover>
     </objects>
 </document>

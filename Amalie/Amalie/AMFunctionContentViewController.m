@@ -21,7 +21,7 @@
 #import "AMUserPreferences.h"
 #import "AMAmalieDocument.h"
 #import "AMTextView.h"
-#import "AMFunctionEditorViewController.h"
+#import "AMFunctionPropertiesViewController.h"
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
 #import "AMPersistedObjectWithArgumentsNameProvider.h"
@@ -68,7 +68,7 @@ static NSUInteger const kAMIndexRHS;
 {
     [super awakeFromNib];
     [self setupNotifications];
-    self.argumentListViewController.document = self.document;
+    self.argumentListViewController.nameProvider = self.nameProvider;
 }
 
 -(void)applyUserPreferences
@@ -132,7 +132,7 @@ static NSUInteger const kAMIndexRHS;
 -(void)setupArgumentListView
 {
     // Before we can do anything with the view we have to load it
-    self.argumentListViewController.document = self.document;
+    self.argumentListViewController.nameProvider = self.nameProvider;
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     AMArgumentListView * argumentsView = self.argumentListView;
     [argumentsView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -297,9 +297,11 @@ static NSUInteger const kAMIndexRHS;
 }
 
 - (IBAction)showPopover:(NSButton *)sender {
-    [self.editPopover showRelativeToRect:sender.frame ofView:self.contentView preferredEdge:NSMaxYEdge];
-    AMFunctionEditorViewController * vc = ((AMFunctionEditorViewController*)self.editPopover.contentViewController);
+    AMFunctionPropertiesViewController * vc = ((AMFunctionPropertiesViewController*)self.editPopover.contentViewController);
+    vc.functionDef = self.amdFunctionDef;
+    vc.nameProvider = self.nameProvider;
     self.editPopover.delegate = vc;
+    [self.editPopover showRelativeToRect:sender.bounds ofView:self.contentView preferredEdge:NSMaxYEdge];
 }
 
 - (IBAction)cancelPopover:(NSButton *)sender {

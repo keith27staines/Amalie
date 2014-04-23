@@ -28,24 +28,18 @@
 
 @implementation AMArgumentListViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(NSString *)nibName
 {
-    self = [super initWithNibName:@"AMArgumentListView" bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
+    return @"AMArgumentListView";
 }
 -(AMArgumentListView*)argumentListView
 {
     return (AMArgumentListView*)self.view;
 }
-
--(void)awakeFromNib
+-(void)reloadData
 {
-
+    [[self argumentListView] reloadData];
 }
-
 -(void)setArgumentList:(AMDArgumentList *)argumentList
 {
     _argumentList = argumentList;
@@ -61,8 +55,7 @@
 
 -(NSFont*)bracesFontAtScriptingLevel:(NSUInteger)scriptingLevel
 {
-    AMPersistedObjectNameProvider * namer = [[AMPersistedObjectNameProvider alloc] initWithDelegate:self.document];
-    return [namer fontForSymbolsAtScriptinglevel:scriptingLevel];
+    return [self.nameProvider fontForSymbolsAtScriptinglevel:scriptingLevel];
 }
 
 -(NSUInteger)displayStringCount
@@ -75,8 +68,7 @@
                             atScriptingLevel:(NSUInteger)scriptingLevel
 {
     NSAttributedString * aString = [self.argumentList argumentAtIndex:index].name.attributedString;
-    AMPersistedObjectNameProvider * namer = [[AMPersistedObjectNameProvider alloc] initWithDelegate:self.document];
-    return [namer attributedStringByModifying:aString toSuperscriptLevel:scriptingLevel];
+    return [self.nameProvider attributedStringByModifying:aString toSuperscriptLevel:scriptingLevel];
 }
 
 

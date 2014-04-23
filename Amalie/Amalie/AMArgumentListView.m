@@ -17,19 +17,9 @@
 
 @implementation AMArgumentListView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    return self;
-}
-
 -(void)awakeFromNib
 {
     self.readOnly = YES;
-    [self reloadData];
 }
 
 -(void)setShowEqualsSign:(BOOL)showEqualsSign
@@ -45,6 +35,7 @@
 -(void)reloadData
 {
     NSFont * bracesFont = [self.delegate bracesFontAtScriptingLevel:self.scriptingLevel];
+    NSAssert(bracesFont, @"Font for braces not set");
     NSDictionary * attributes = @{NSFontAttributeName: bracesFont};
     NSAttributedString * comma = [[NSAttributedString alloc] initWithString:@", " attributes:attributes];
     NSUInteger stringCount = self.delegate.displayStringCount;

@@ -161,6 +161,7 @@
     {
         self.moc = moc;
         self.groupID = [groupParentView.groupID copy];
+        self.amdInsertedObject = amdInsertedObject;
         _appController = appController;
         _document = document;
         _insertableType = insertableType;
@@ -173,7 +174,6 @@
             NSString * symbol = [self.mathSheet buildAndRegisterExpressionFromString:amdExpr.originalString];
             amdExpr.symbol = symbol;
         }
-        self.amdInsertedObject = amdInsertedObject;
         [self applyUserPreferences];
     }
     return self;

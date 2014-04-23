@@ -10,11 +10,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AMArgumentListView.h"
+#import "AMNameProviding.h"
 
 @interface AMArgumentListViewController : NSViewController <AMArgumentListViewDelegate>
 
 @property (weak) AMDArgumentList * argumentList;
 
-@property (weak) IBOutlet AMAmalieDocument * document;
+
+@property (weak) IBOutlet id<AMNameProviding> nameProvider;
+
+-(void)reloadData;
 
 @end
