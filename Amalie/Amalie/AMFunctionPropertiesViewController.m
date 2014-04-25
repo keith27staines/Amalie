@@ -108,7 +108,7 @@
 
     NSString * newName = ((NSTextField*)obj.object).stringValue;
     KSMValueType mathValue = ((NSNumber*)argument.mathValue).integerValue;
-    [argument.name setNameAndAttributedNameFrom:newName andKSMType:mathValue];
+    [argument.name setNameAndGenerateAttributedNameFrom:newName valueType:mathValue nameProvider:self.nameProvider];
     self.argumentListViewController.argumentList = self.argumentList;
     NSLog(@"Text changed");
 }
@@ -245,7 +245,7 @@
         NSInteger row = [self.argumentTable rowForView:sender];
         AMDArgument * argument = [self.argumentList argumentAtIndex:row];
         argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
-        [argument.name setNameAndAttributedNameFrom:argument.name.string andKSMType:sender.selectedTag];
+        [argument.name setNameAndGenerateAttributedNameFrom:argument.name.string valueType:sender.selectedTag nameProvider:self.nameProvider];
     }
 }
 

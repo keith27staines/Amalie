@@ -12,6 +12,7 @@
 #import "AMConstants.h"
 #import "KSMMathValue.h"
 #import "AMNameProviding.h"
+#import "AMNameProviding.h"
 
 @interface AMDName (Methods)
 
@@ -21,7 +22,7 @@
 
 +(AMDName*)fetchUniqueNameWithString:(NSString*)name;
 
-+(NSAttributedString*)generateAttributedStringFromName:(NSString*)name andType:(KSMValueType)type;
++(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(KSMValueType)type nameProvider:(id<AMNameProviding>)nameProvider;
 
--(void)setNameAndAttributedNameFrom:(NSString*)string andKSMType:(KSMValueType)type;
+-(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(KSMValueType)type nameProvider:(id<AMNameProviding>)nameProvider;
 @end

@@ -75,16 +75,15 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
     return aName;
 }
 
-+(NSAttributedString*)generateAttributedStringFromName:(NSString*)name andType:(KSMValueType)type
++(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(KSMValueType)valueType nameProvider:(id<AMNameProviding>)nameProvider
 {
-    id<AMNameProviding> nameProvider = [[AMPersistedObjectNameProvider alloc] init];
-    return  [nameProvider generateAttributedStringFromName:name withType:type];
+    return  [nameProvider generateAttributedStringFromName:name withType:valueType];
 }
 
--(void)setNameAndAttributedNameFrom:(NSString*)string andKSMType:(KSMValueType)type
+-(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(KSMValueType)type nameProvider:(id<AMNameProviding>)nameProvider
 {
     self.string = string;
-    self.attributedString = [AMDName generateAttributedStringFromName:string andType:type];
+    self.attributedString = [AMDName generateAttributedStringFromName:string valueType:type nameProvider:nameProvider];
 }
 
 +(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string

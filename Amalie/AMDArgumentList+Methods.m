@@ -55,7 +55,7 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     
     // give it a default name to match the index (+1)
     NSString * indexedName = [[argument.name.string KSMfirstCharacter] stringByAppendingString:[@(index+1) stringValue]];
-    [argument.name setNameAndAttributedNameFrom:indexedName andKSMType:KSMValueDouble];
+    [argument.name setNameAndGenerateAttributedNameFrom:indexedName valueType:KSMValueDouble nameProvider:nameProvider];
     
     // Update the indexes of any arguments that have been downshifted by the insertion
     for (AMDArgument * argument in argumentsToReIndex) {
