@@ -13,6 +13,8 @@
 #import <Cocoa/Cocoa.h>
 #import "AMNameProviding.h"
 
+extern NSString * const AMFunctionPropertiesDidEndEditingNotification;
+
 @interface AMFunctionPropertiesViewController : NSViewController <NSTableViewDelegate, NSControlTextEditingDelegate, NSTableViewDataSource>
 
 @property (weak) IBOutlet NSTableView *argumentTable;
@@ -26,10 +28,11 @@
 - (IBAction)addArgument:(NSButton *)sender;
 - (IBAction)removeArgument:(NSButton *)sender;
 - (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender;
+- (IBAction)editingFinishedButtonClicked:(id)sender;
 
 @property BOOL popoverShowing;
 @property (weak) AMDFunctionDef * functionDef;
-@property (readonly) BOOL isCancelled;
+
 -(void)reloadData;
 
 @end

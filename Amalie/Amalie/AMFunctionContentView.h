@@ -17,5 +17,5 @@
 @property (weak) IBOutlet AMExpressionNodeView *expressionView;
 @property (weak) IBOutlet NSTextField *expressionStringView;
 @property (weak) AMArgumentListView * argumentListView;
-
+-(void)removeDynamicConstraints;
 @end

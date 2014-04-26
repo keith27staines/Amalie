@@ -103,6 +103,7 @@ static NSString * const kAMOperatorPower    = @"^";
 -(void)setAttributedString:(NSAttributedString *)attributedString
 {
     [super setAttributedString:attributedString];
+    [self setNeedsDisplay:YES];
 }
 
 - (void)drawRect:(NSRect)dirtyRect

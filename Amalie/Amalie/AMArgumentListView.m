@@ -63,6 +63,7 @@
     }
     self.attributedString = displayString;
     [self invalidateIntrinsicContentSize];
+    [self setNeedsDisplay:YES];
 }
 
 

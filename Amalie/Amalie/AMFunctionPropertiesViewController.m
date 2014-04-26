@@ -21,17 +21,17 @@
 #import "AMAmalieDocument.h"
 #import "AMPersistedObjectNameProvider.h"
 
+NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPropertiesDidEndEditingNotification";
+
 @interface AMFunctionPropertiesViewController ()
 {
     BOOL _isSetup;
     BOOL _popoverShowing;
     NSMutableSet * _observedViews;
     __weak AMDFunctionDef * _functionDef;
-    BOOL _isCancelled;
 }
 @property (strong, readonly) NSMutableSet * observedViews;
 @property (weak, readonly) AMDArgumentList * argumentList;
-@property (readwrite) BOOL isCancelled;
 
 @end
 
@@ -62,7 +62,6 @@
     self.argumentListViewController.argumentList = self.argumentList;
     [self.argumentTable reloadData];
     [self.returnTypePopup selectItemWithTag:self.functionDef.returnType.integerValue];
-    self.isCancelled = YES;
 }
 
 -(void)popoverDidClose:(NSNotification *)notification
@@ -169,7 +168,7 @@
         
         [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
         
-        self.argumentListViewController.argumentList = self.argumentList;
+        [self.argumentListViewController reloadData];
 
     }
 }
@@ -239,14 +238,8 @@
     }
 }
 
-- (IBAction)cancelPopover:(NSButton *)sender {
-    self.isCancelled = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"AMFunctionPropertiesIsDone" object:self];
-}
-
-- (IBAction)acceptEditPopover:(id)sender {
-    self.isCancelled = NO;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"AMFunctionPropertiesViewDidClose" object:self];
+- (IBAction)editingFinishedButtonClicked:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:AMFunctionPropertiesDidEndEditingNotification object:self];
 }
 
 @end

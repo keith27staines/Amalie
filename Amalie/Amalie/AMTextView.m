@@ -81,8 +81,8 @@
 -(void)updateConstraints
 {
     [super updateConstraints];
+    [self removeConstraints:self.constraints];
     if (self.attributedString.length > 0) {
-        [self removeConstraints:self.constraints];
         [self addWidthConstraint];
         [self addHeightConstraint];
     }
@@ -151,6 +151,7 @@
         self.textMetric.attributedString = attributedstring;
         [self analyseText];
     }
+    [self setNeedsDisplay:YES];
 }
 
 #pragma mark - Drawing -

@@ -31,13 +31,13 @@
 
 @property (strong) IBOutlet NSPopover *editPopover;
 
+- (IBAction)showPopover:(NSButton *)sender;
+
 @property (strong, readonly) AMDFunctionDef * amdFunctionDef;
 
+-(void)reloadData;
 
 @property (readonly) BOOL isConstant;
 @property (readonly) BOOL isVariable;
 
-- (IBAction)cancelPopover:(id)sender;
-- (IBAction)showPopover:(NSButton *)sender;
-- (IBAction)acceptEditPopover:(id)sender;
 @end

@@ -127,6 +127,11 @@ static NSUInteger const kAMIndexRHS;
     
     callback = NSSelectorFromString(@"expressionStringDidEndEditing:");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:NSControlTextDidEndEditingNotification object:self.expressionStringView];
+    
+    // Notification from function properties editor
+    callback = @selector(functionPropertiesDidEndEditing:);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:AMFunctionPropertiesDidEndEditingNotification object:self.editPopover.contentViewController];
+
 }
 
 -(void)setupArgumentListView
@@ -265,20 +270,30 @@ static NSUInteger const kAMIndexRHS;
 {
     // populate from the top view down
     if (view == self.contentView) {
-        // Okay, we have the topmost view
-        AMDFunctionDef * funcDef = self.amdFunctionDef;
-        AMDIndexedExpression * iexpr = [self objectWithIndex:0 fromSet:funcDef.indexedExpressions];
-        AMDExpression * amdExpr = iexpr.expression;
-        
-        NSString * originalString = amdExpr.originalString;
-        KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
-        self.expressionStringView.stringValue = expr.originalString;
-        [self resetExpressionViewWithExpression:expr];
-        self.nameView.attributedString = [self.nameProvider attributedStringForObjectWithName:funcDef.name.string];
+        [self reloadData];
         [self setupArgumentListView];
     } else {
         // Other views that are subviews of self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }
+}
+
+-(void)reloadData
+{
+    [self.contentView removeDynamicConstraints];
+    AMDFunctionDef * funcDef = self.amdFunctionDef;
+    AMDIndexedExpression * iexpr = [self objectWithIndex:0 fromSet:funcDef.indexedExpressions];
+    AMDExpression * amdExpr = iexpr.expression;
+    
+    NSString * originalString = amdExpr.originalString;
+    KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
+    self.expressionStringView.stringValue = expr.originalString;
+    [self resetExpressionViewWithExpression:expr];
+    self.nameView.attributedString = [self.nameProvider attributedStringForObjectWithName:funcDef.name.string];
+    [self.argumentListViewController reloadData];
+    [self.argumentListView setNeedsUpdateConstraints:YES];
+    [self.expressionView setNeedsUpdateConstraints:YES];
+    [self.nameView setNeedsUpdateConstraints:YES];
+    [self.contentView setNeedsUpdateConstraints:YES];
     [self.contentView setNeedsDisplay:YES];
 }
 
@@ -305,20 +320,15 @@ static NSUInteger const kAMIndexRHS;
     [self.editPopover showRelativeToRect:sender.bounds ofView:self.contentView preferredEdge:NSMaxYEdge];
 }
 
-- (IBAction)cancelPopover:(NSButton *)sender {
-    [self.editPopover close];
-    [self.undoManager undoNestedGroup];
-}
-
-- (IBAction)acceptEditPopover:(id)sender {
-    [self.editPopover close];
-    self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
+- (void)functionPropertiesDidEndEditing:(NSNotification*)notification
+{
+    [self.editPopover close]; // will trigger popoverDidCloseNotifiation,where edits are processed by reloading data
 }
 
 #pragma mark - NSPopover delegate -
 -(void)popoverDidClose:(NSNotification *)notification
 {
-    AMFunctionPropertiesViewController * vc = ((AMFunctionPropertiesViewController*)self.editPopover.contentViewController);
+    [self reloadData];
 }
 
 #pragma mark - AMContentViewDataSource overrides -

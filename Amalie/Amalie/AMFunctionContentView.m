@@ -42,12 +42,15 @@
 {
     [super drawRect:dirtyRect];
 }
-
+-(void)removeDynamicConstraints
+{
+    [self removeConstraints:self.dynamicConstraints];
+    [self.dynamicConstraints removeAllObjects];
+}
 -(void)updateConstraints
 {
     [super updateConstraints];
-    [self removeConstraints:self.dynamicConstraints];
-    [self.dynamicConstraints removeAllObjects];
+    [self removeDynamicConstraints];
     
     AMTextView * nameView = self.nameView;
     AMExpressionNodeView * expressionView = self.expressionView;
