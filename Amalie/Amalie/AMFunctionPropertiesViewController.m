@@ -27,9 +27,11 @@
     BOOL _popoverShowing;
     NSMutableSet * _observedViews;
     __weak AMDFunctionDef * _functionDef;
+    BOOL _isCancelled;
 }
 @property (strong, readonly) NSMutableSet * observedViews;
 @property (weak, readonly) AMDArgumentList * argumentList;
+@property (readwrite) BOOL isCancelled;
 
 @end
 
@@ -60,19 +62,7 @@
     self.argumentListViewController.argumentList = self.argumentList;
     [self.argumentTable reloadData];
     [self.returnTypePopup selectItemWithTag:self.functionDef.returnType.integerValue];
-}
-
--(void)popoverWillShow:(NSNotification *)notification{
-
-    [self reloadData];
-    
-    // setup notifications for undo/redo
-
-    NSNotificationCenter * notificationCenter = [NSNotificationCenter defaultCenter];
-
-    SEL reloadSelector = NSSelectorFromString(@"reloadData");
-    [notificationCenter addObserver:self selector:reloadSelector name:NSUndoManagerDidUndoChangeNotification object:[self undoManager]];
-    [notificationCenter addObserver:self selector:reloadSelector name:NSUndoManagerDidRedoChangeNotification object:[self undoManager]];
+    self.isCancelled = YES;
 }
 
 -(void)popoverDidClose:(NSNotification *)notification
@@ -247,6 +237,16 @@
         argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
         [argument.name setNameAndGenerateAttributedNameFrom:argument.name.string valueType:sender.selectedTag nameProvider:self.nameProvider];
     }
+}
+
+- (IBAction)cancelPopover:(NSButton *)sender {
+    self.isCancelled = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"AMFunctionPropertiesIsDone" object:self];
+}
+
+- (IBAction)acceptEditPopover:(id)sender {
+    self.isCancelled = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"AMFunctionPropertiesViewDidClose" object:self];
 }
 
 @end

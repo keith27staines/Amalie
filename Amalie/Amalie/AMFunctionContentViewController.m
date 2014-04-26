@@ -300,7 +300,8 @@ static NSUInteger const kAMIndexRHS;
     AMFunctionPropertiesViewController * vc = ((AMFunctionPropertiesViewController*)self.editPopover.contentViewController);
     vc.functionDef = self.amdFunctionDef;
     vc.nameProvider = self.nameProvider;
-    self.editPopover.delegate = vc;
+    self.editPopover.delegate = self;
+    [vc reloadData];
     [self.editPopover showRelativeToRect:sender.bounds ofView:self.contentView preferredEdge:NSMaxYEdge];
 }
 
@@ -312,6 +313,12 @@ static NSUInteger const kAMIndexRHS;
 - (IBAction)acceptEditPopover:(id)sender {
     [self.editPopover close];
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
+}
+
+#pragma mark - NSPopover delegate -
+-(void)popoverDidClose:(NSNotification *)notification
+{
+    AMFunctionPropertiesViewController * vc = ((AMFunctionPropertiesViewController*)self.editPopover.contentViewController);
 }
 
 #pragma mark - AMContentViewDataSource overrides -

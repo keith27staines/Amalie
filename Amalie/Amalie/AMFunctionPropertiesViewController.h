@@ -13,11 +13,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AMNameProviding.h"
 
-@interface AMFunctionPropertiesViewController : NSViewController <NSPopoverDelegate, NSTableViewDelegate, NSControlTextEditingDelegate, NSTableViewDataSource>
-
-- (IBAction)addArgument:(NSButton *)sender;
-- (IBAction)removeArgument:(NSButton *)sender;
-- (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender;
+@interface AMFunctionPropertiesViewController : NSViewController <NSTableViewDelegate, NSControlTextEditingDelegate, NSTableViewDataSource>
 
 @property (weak) IBOutlet NSTableView *argumentTable;
 @property (weak) IBOutlet AMFunctionContentViewController * functionContentViewController;
@@ -27,6 +23,13 @@
 @property (weak) IBOutlet NSPopUpButton *argumentTypePopup;
 @property (weak) IBOutlet id<AMNameProviding> nameProvider;
 
+- (IBAction)addArgument:(NSButton *)sender;
+- (IBAction)removeArgument:(NSButton *)sender;
+- (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender;
+
 @property BOOL popoverShowing;
 @property (weak) AMDFunctionDef * functionDef;
+@property (readonly) BOOL isCancelled;
+-(void)reloadData;
+
 @end

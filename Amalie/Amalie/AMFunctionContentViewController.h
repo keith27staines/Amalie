@@ -16,7 +16,7 @@
 #import "AMExpressionDataSource.h"
 
 @interface AMFunctionContentViewController : AMContentViewController
-<NSTextFieldDelegate, AMExpressionNodeViewDelegate, AMExpressionDataSource>
+<NSTextFieldDelegate, NSPopoverDelegate, AMExpressionNodeViewDelegate, AMExpressionDataSource>
 
 @property (weak) IBOutlet AMAmalieDocument * document;
 
