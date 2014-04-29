@@ -279,6 +279,7 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)reloadData
 {
+    // TODO: Move some of this functionality into the view we control
     [self.contentView removeDynamicConstraints];
     AMDFunctionDef * funcDef = self.amdFunctionDef;
     AMDIndexedExpression * iexpr = [self objectWithIndex:0 fromSet:funcDef.indexedExpressions];

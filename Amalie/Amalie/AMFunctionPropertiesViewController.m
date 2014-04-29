@@ -129,7 +129,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
 
 -(void)populateTableNameView:(NSTableCellView*)view withArgument:(AMDArgument*)argument
 {
-    view.textField.stringValue = argument.name.string;
+    view.textField.attributedStringValue = argument.name.attributedString;
     
     SEL selector = NSSelectorFromString(@"controlTextDidChange:");
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -236,6 +236,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
         argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
         [argument.name setNameAndGenerateAttributedNameFrom:argument.name.string valueType:sender.selectedTag nameProvider:self.nameProvider];
     }
+    [self reloadData];
 }
 
 - (IBAction)editingFinishedButtonClicked:(id)sender {
