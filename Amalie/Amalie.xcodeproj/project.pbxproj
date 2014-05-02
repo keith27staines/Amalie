@@ -231,6 +231,7 @@
 		5371A1091907C99C00DED138 /* AMFunctionPropertiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionPropertiesView.m; sourceTree = "<group>"; };
 		5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettingsBaseViewController.h; sourceTree = "<group>"; };
 		5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettingsBaseViewController.m; sourceTree = "<group>"; };
+		539126E21912738E00A840B2 /* AMFunctionPropertiesViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionPropertiesViewDelegate.h; sourceTree = "<group>"; };
 		53963A461900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathStyleExpressionNodeContainerView.h; sourceTree = "<group>"; };
 		53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathStyleExpressionNodeContainerView.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
@@ -1195,6 +1196,7 @@
 				782DA2121897919600F66E23 /* AMExpressionDataSource.h */,
 				78C87D2618BB660F00702932 /* AMPageSetupDatasource.h */,
 				785D6EF118CF5B6500EAED75 /* AMNameProviderDelegate.h */,
+				539126E21912738E00A840B2 /* AMFunctionPropertiesViewDelegate.h */,
 			);
 			name = Protocols;
 			path = ..;

@@ -11,14 +11,16 @@
 @class AMDFunctionDef;
 
 #import <Cocoa/Cocoa.h>
+#import "AMFunctionPropertiesViewDelegate.h"
 #import "AMNameProviding.h"
 
 extern NSString * const AMFunctionPropertiesDidEndEditingNotification;
 
-@interface AMFunctionPropertiesViewController : NSViewController <NSTableViewDelegate, NSControlTextEditingDelegate, NSTableViewDataSource>
 
-@property (weak) IBOutlet NSTableView *argumentTable;
-@property (weak) IBOutlet AMFunctionContentViewController * functionContentViewController;
+@interface AMFunctionPropertiesViewController : NSViewController <AMFunctionPropertiesViewDelegate>
+
+@property (weak) IBOutlet NSTextField *nameLabel;
+
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
 
 @property (weak) IBOutlet NSPopUpButton *returnTypePopup;

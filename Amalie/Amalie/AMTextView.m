@@ -47,7 +47,7 @@
         _showBackground          = NO;
         _showBoundingBoxes       = NO;
         _showSelectionBoxes      = NO;
-        _showTextBaseline        = NO;
+        _showTextBaseline        = YES;
         _showTextBaselineOrigin  = NO;
         _showTightBoundingBox    = NO;
     }
@@ -207,7 +207,6 @@
     if (!self.showBackground) return;
 	[self.backgroundColor set];
 }
-
 
 -(void)drawBaselineOrigin
 {

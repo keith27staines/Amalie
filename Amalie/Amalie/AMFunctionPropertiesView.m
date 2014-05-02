@@ -7,40 +7,50 @@
 //
 
 #import "AMFunctionPropertiesView.h"
+#import "AMDFunctionDef+Methods.h"
+#import "AMDName.h"
 #import "AMArgumentListViewController.h"
 #import "AMArgumentListView.h"
 
+@interface AMFunctionPropertiesView()
+@property (weak, readonly) AMDFunctionDef * functionDef;
+@end
+
 @implementation AMFunctionPropertiesView
 
-
--(void)awakeFromNib
+-(void)viewDidMoveToSuperview
 {
+    [self.delegate setupValuePopup:self.returnTypePopup];
     AMArgumentListView *argView;
     argView = [self argumentListView];
-    argView.delegate = self.argumentListViewController;
     [argView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:argView];
     [self updateConstraints];
 }
 -(void)reloadData
 {
+    self.nameLabel.attributedStringValue = self.functionDef.name.attributedString;
+    self.nameField.stringValue = self.functionDef.name.string;
+    [self.returnTypePopup selectItemWithTag:self.functionDef.returnType.integerValue];
+    [self.argumentTable reloadData];
     [[self argumentListView] reloadData];
+    [self setNeedsDisplay:YES];
+}
+-(AMDFunctionDef*)functionDef
+{
+    return [self.delegate functionDef];
 }
 -(void)updateConstraints
 {
     [super updateConstraints];
     NSView * argView = [self argumentListView];
     NSView * argTable = [self argumentTableContainer];
-    NSDictionary * views = NSDictionaryOfVariableBindings(argView,argTable);
+    NSView * nameField = self.nameField;
+    NSView * nameLabel = self.nameLabel;
+    NSDictionary * views = NSDictionaryOfVariableBindings(argView,argTable,nameField,nameLabel);
     NSArray * constraints;
-    constraints =  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[argView]-25.0-[argTable]"
-                                                           options:NSLayoutFormatAlignAllLeft
-                                                           metrics:nil
-                                                             views:views];
-    
-    [self addConstraints:constraints];
-    constraints =  [NSLayoutConstraint constraintsWithVisualFormat:@"H:[argView(argTable)]"
-                                                           options:0
+    constraints =  [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameLabel]-[argView]-(>=20)-|"
+                                                           options:NSLayoutFormatAlignAllBaseline
                                                            metrics:nil
                                                              views:views];
     [self addConstraints:constraints];

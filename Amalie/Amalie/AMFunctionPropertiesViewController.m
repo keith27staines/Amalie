@@ -7,6 +7,7 @@
 //
 
 #import "AMFunctionPropertiesViewController.h"
+#import "AMFunctionPropertiesView.h"
 #import "AMDataStore.h"
 #import "AMDArgumentList+Methods.h"
 #import "AMDArgumentList.h"
@@ -27,12 +28,11 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
 {
     BOOL _isSetup;
     BOOL _popoverShowing;
-    NSMutableSet * _observedViews;
     __weak AMDFunctionDef * _functionDef;
 }
-@property (strong, readonly) NSMutableSet * observedViews;
-@property (weak, readonly) AMDArgumentList * argumentList;
 
+@property (weak, readonly) AMDArgumentList * argumentList;
+@property (weak,readonly) AMFunctionPropertiesView * functionPropertiesView;
 @end
 
 @implementation AMFunctionPropertiesViewController
@@ -46,10 +46,15 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     NSView * view = [super view]; // force nib to load early
     if (!_isSetup) {
         _isSetup = YES;
-        [self setupValuePopup:self.returnTypePopup];
+        self.functionPropertiesView.nameField.delegate = self;
+        ((AMFunctionPropertiesView*)view).delegate = self;
         [self setupArgumentListViewController];
     }
     return view;
+}
+-(AMFunctionPropertiesView*)functionPropertiesView
+{
+    return (AMFunctionPropertiesView*)self.view;
 }
 -(void)setupArgumentListViewController
 {
@@ -59,9 +64,8 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
 
 -(void)reloadData
 {
-    self.argumentListViewController.argumentList = self.argumentList;
-    [self.argumentTable reloadData];
-    [self.returnTypePopup selectItemWithTag:self.functionDef.returnType.integerValue];
+    [[self functionPropertiesView] reloadData];
+    [self.argumentListViewController reloadData];
 }
 
 -(void)popoverDidClose:(NSNotification *)notification
@@ -72,70 +76,58 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     self.popoverShowing = NO;
 }
 
--(NSMutableSet*)observedViews
+-(void)controlTextDidEndEditing:(NSNotification *)notification
 {
-    if (!_observedViews) {
-        _observedViews = [NSMutableSet setWithObjects:nil];
+    KSMValueType mathValue;
+    if (notification.object == self.functionPropertiesView.nameField) {
+        NSString * proposedName = self.functionPropertiesView.nameField.stringValue;
+        mathValue = self.functionDef.returnType.integerValue;
+        [self updateNameForFunctionWithString:proposedName returnType:mathValue];
+    } else {
+        NSInteger selectedRow = self.functionPropertiesView.argumentTable.selectedRow;
+        AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
+        NSString * newName = ((NSTextField*)notification.object).stringValue;
+        KSMValueType mathValue = ((NSNumber*)argument.mathValue).integerValue;
+        [self updateArgument:argument withName:newName type:mathValue];
+        //self.argumentListViewController.argumentList = self.argumentList;
     }
-    return _observedViews;
+    [self reloadData];
 }
-
--(void)controlTextDidBeginEditing:(NSNotification *)obj
-{
-    [[self undoManager] beginUndoGrouping];
-}
-
--(void)controlTextDidEndEditing:(NSNotification *)obj
-{
-    [[self undoManager] endUndoGrouping];
-}
-
--(void)controlTextDidChange:(NSNotification *)obj
-{
-    NSInteger selectedRow = self.argumentTable.selectedRow;
-    AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
-
-    NSString * newName = ((NSTextField*)obj.object).stringValue;
-    KSMValueType mathValue = ((NSNumber*)argument.mathValue).integerValue;
-    [argument.name setNameAndGenerateAttributedNameFrom:newName valueType:mathValue nameProvider:self.nameProvider];
-    self.argumentListViewController.argumentList = self.argumentList;
-    NSLog(@"Text changed");
-}
-
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    NSUInteger count = self.argumentList.arguments.count;
-    return count;
+    if (tableView == self.functionPropertiesView.argumentTable) {
+        NSUInteger count = self.argumentList.arguments.count;
+        return count;
+    }
+    return 0;
 }
 
 -(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    AMDArgument * argument = [self.argumentList argumentAtIndex:row];
-    NSAssert(argument, @"argument in list is nil");
-    if ( [tableColumn.identifier isEqualToString:@"NameColumn"] ) {
-        NSTableCellView * view = nil;
-        view = [tableView makeViewWithIdentifier:@"NameColumnView" owner:self];
-        [self populateTableNameView:view withArgument:argument];
-        return view;
-    } else if ([tableColumn.identifier isEqualToString:@"TypeColumn"] ) {
-        NSPopUpButton * view = nil;
-        view = [tableView makeViewWithIdentifier:@"TypeColumnView" owner:self];
-        NSPopUpButton * popupButton = (NSPopUpButton*)view;
-        [self populateTableTypeView:popupButton withArgument:argument];
-        return view;
+    NSView * returnView = nil;
+    if (tableView == self.functionPropertiesView.argumentTable) {
+        AMDArgument * argument = [self.argumentList argumentAtIndex:row];
+        NSAssert(argument, @"argument in list is nil");
+        if ( [tableColumn.identifier isEqualToString:@"NameColumn"] ) {
+            NSTableCellView * view = nil;
+            view = [tableView makeViewWithIdentifier:@"NameColumnView" owner:self];
+            [self populateTableNameView:view withArgument:argument];
+            returnView = view;
+        } else if ([tableColumn.identifier isEqualToString:@"TypeColumn"] ) {
+            NSPopUpButton * view = nil;
+            view = [tableView makeViewWithIdentifier:@"TypeColumnView" owner:self];
+            NSPopUpButton * popupButton = (NSPopUpButton*)view;
+            [self populateTableTypeView:popupButton withArgument:argument];
+            returnView = view;
+        }
     }
-    return nil;
+    return returnView;
 }
 
 -(void)populateTableNameView:(NSTableCellView*)view withArgument:(AMDArgument*)argument
 {
     view.textField.attributedStringValue = argument.name.attributedString;
-    
-    SEL selector = NSSelectorFromString(@"controlTextDidChange:");
-    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
-    if (![self.observedViews containsObject:view]) {
-        [center addObserver:self selector:selector name:NSControlTextDidChangeNotification object:view.textField];
-    }
+    view.textField.delegate = self;
 }
 
 -(void)populateTableTypeView:(NSPopUpButton*)button withArgument:(AMDArgument*)argument
@@ -146,9 +138,22 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     [button setTarget:self];
     [button setAction:NSSelectorFromString(@"valueTypePopupChanged:")];
 }
-
+-(void)setupValuePopup:(NSPopUpButton*)popup
+{
+    [popup removeAllItems];
+    [popup addItemWithTitle:@"Integer"];
+    [popup addItemWithTitle:@"Real"];
+    [popup addItemWithTitle:@"Vector"];
+    [popup addItemWithTitle:@"Matrix"];
+    [popup itemAtIndex:0].tag = KSMValueInteger;
+    [popup itemAtIndex:1].tag = KSMValueDouble;
+    [popup itemAtIndex:2].tag = KSMValueVector;
+    [popup itemAtIndex:3].tag = KSMValueMatrix;
+    [popup selectItemAtIndex:1];
+}
 - (IBAction)addArgument:(NSButton *)sender {
-    NSInteger selectedRow = self.argumentTable.selectedRow;
+    NSTableView * argumentTable = self.functionPropertiesView.argumentTable;
+    NSInteger selectedRow = argumentTable.selectedRow;
     
     // Update datastore. If a row is selected (ie >= 0), we insert beneath that, otherwise we add to the end.
     if (selectedRow >=0) selectedRow++;
@@ -158,37 +163,46 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
         selectedRow = [argument.index integerValue];
 
         // Keep the displayed table in sync
-        [self.argumentTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
+        [argumentTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
         
-        NSTableCellView * view = [self.argumentTable viewAtColumn:0 row:selectedRow makeIfNecessary:NO];
+        NSTableCellView * view = [argumentTable viewAtColumn:0 row:selectedRow makeIfNecessary:NO];
         [self populateTableNameView:view withArgument:argument];
 
         // Make sure new row is visible
-        [self.argumentTable scrollRowToVisible:selectedRow];
+        [argumentTable scrollRowToVisible:selectedRow];
         
-        [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+        [argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
         
         [self.argumentListViewController reloadData];
 
     }
 }
-
 - (IBAction)removeArgument:(NSButton *)sender {
-    NSInteger selectedRow = self.argumentTable.selectedRow;
+    NSTableView * argumentTable = self.functionPropertiesView.argumentTable;
+    NSInteger selectedRow = argumentTable.selectedRow;
     
     // Quick exit if no row is selected - we aren't just going to delete a random one!
     if (selectedRow < 0) return;
 
     if ([self.argumentList removeArgumentAtIndex:selectedRow]) {
         // Keep the displayed table in sync with the datastore
-        [self.argumentTable removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
+        [argumentTable removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
     }
-    [self.argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
+    [argumentTable selectRowIndexes:[NSIndexSet indexSetWithIndex:selectedRow] byExtendingSelection:NO];
     
     self.argumentListViewController.argumentList = self.argumentList;
-
 }
-
+-(void)updateNameForFunctionWithString:(NSString*)string returnType:(KSMValueType)returnType
+{
+    [self.functionDef.name setNameAndGenerateAttributedNameFrom:string
+                                                      valueType:returnType
+                                                   nameProvider:self.nameProvider];
+}
+-(void)updateArgument:(AMDArgument*)argument withName:(NSString*)name type:(KSMValueType)valueType
+{
+    argument.mathValue = [KSMMathValue mathValueFromValueType:valueType];
+    [argument.name setNameAndGenerateAttributedNameFrom:argument.name.string valueType:valueType nameProvider:self.nameProvider];
+}
 -(NSUndoManager*)undoManager
 {
     return [AMDataStore sharedDataStore].moc.undoManager;
@@ -213,28 +227,17 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)setupValuePopup:(NSPopUpButton*)popup
-{
-    [popup removeAllItems];
-    [popup addItemWithTitle:@"Integer"];
-    [popup addItemWithTitle:@"Real"];
-    [popup addItemWithTitle:@"Vector"];
-    [popup addItemWithTitle:@"Matrix"];
-    [popup itemAtIndex:0].tag = KSMValueInteger;
-    [popup itemAtIndex:1].tag = KSMValueDouble;
-    [popup itemAtIndex:2].tag = KSMValueVector;
-    [popup itemAtIndex:3].tag = KSMValueMatrix;
-    [popup selectItemAtIndex:1];
-}
-
 - (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender {
     if (sender == self.returnTypePopup) {
-        self.functionDef.returnType = @(sender.selectedTag);
+        NSString * proposedName = self.functionDef.name.string;
+        KSMValueType mathValue = sender.selectedTag;
+        [self updateNameForFunctionWithString:proposedName returnType:mathValue];
     } else {
-        NSInteger row = [self.argumentTable rowForView:sender];
+        NSTableView * argumentTable = self.functionPropertiesView.argumentTable;
+        NSInteger row = [argumentTable rowForView:sender];
         AMDArgument * argument = [self.argumentList argumentAtIndex:row];
-        argument.mathValue = [KSMMathValue mathValueFromValueType:sender.selectedTag];
-        [argument.name setNameAndGenerateAttributedNameFrom:argument.name.string valueType:sender.selectedTag nameProvider:self.nameProvider];
+        KSMValueType mathValue = sender.selectedTag;
+        [self updateArgument:argument withName:argument.name.string type:mathValue];
     }
     [self reloadData];
 }
