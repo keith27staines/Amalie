@@ -14,6 +14,8 @@
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
 		5371A10A1907C99C00DED138 /* AMFunctionPropertiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5371A1091907C99C00DED138 /* AMFunctionPropertiesView.m */; };
 		5379FBD818F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */; };
+		539126E51914D53D00A840B2 /* AMDataRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 539126E41914D53D00A840B2 /* AMDataRenamer.m */; };
+		539126E91914DC4B00A840B2 /* AMFunctionRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 539126E81914DC4B00A840B2 /* AMFunctionRenamer.m */; };
 		53963A481900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */; };
 		53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */; };
 		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
@@ -232,6 +234,10 @@
 		5379FBD618F2E30C00378A31 /* AMDocumentSettingsBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDocumentSettingsBaseViewController.h; sourceTree = "<group>"; };
 		5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDocumentSettingsBaseViewController.m; sourceTree = "<group>"; };
 		539126E21912738E00A840B2 /* AMFunctionPropertiesViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionPropertiesViewDelegate.h; sourceTree = "<group>"; };
+		539126E31914D53D00A840B2 /* AMDataRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMDataRenamer.h; sourceTree = "<group>"; };
+		539126E41914D53D00A840B2 /* AMDataRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMDataRenamer.m; sourceTree = "<group>"; };
+		539126E71914DC4B00A840B2 /* AMFunctionRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionRenamer.h; sourceTree = "<group>"; };
+		539126E81914DC4B00A840B2 /* AMFunctionRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionRenamer.m; sourceTree = "<group>"; };
 		53963A461900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathStyleExpressionNodeContainerView.h; sourceTree = "<group>"; };
 		53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathStyleExpressionNodeContainerView.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
@@ -590,6 +596,17 @@
 			name = "Settings model objects";
 			sourceTree = "<group>";
 		};
+		539126E61914DC1C00A840B2 /* Data object renamers */ = {
+			isa = PBXGroup;
+			children = (
+				539126E31914D53D00A840B2 /* AMDataRenamer.h */,
+				539126E41914D53D00A840B2 /* AMDataRenamer.m */,
+				539126E71914DC4B00A840B2 /* AMFunctionRenamer.h */,
+				539126E81914DC4B00A840B2 /* AMFunctionRenamer.m */,
+			);
+			name = "Data object renamers";
+			sourceTree = "<group>";
+		};
 		780F68AB18EC5375003CC00A /* Settings Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -710,6 +727,7 @@
 				7848E5CD185769F400719EF3 /* AMPersistedObjectNameProvider.m */,
 				53132A3318FEEEA60069C7BA /* AMMathSheetNameProvider.h */,
 				53132A3418FEEEA60069C7BA /* AMMathSheetNameProvider.m */,
+				539126E61914DC1C00A840B2 /* Data object renamers */,
 			);
 			name = AMNameProvider;
 			sourceTree = "<group>";
@@ -1415,6 +1433,7 @@
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
 				785826B218C4755C00612651 /* AMFontPreferencesView.m in Sources */,
 				787B309F178364B8001851C0 /* KSMMathsheet.m in Sources */,
+				539126E91914DC4B00A840B2 /* AMFunctionRenamer.m in Sources */,
 				78803C0918DC76D4008FBDE1 /* AMFontSetupViewController.m in Sources */,
 				785247C9178552A700F6A7AD /* AMPageView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
@@ -1512,6 +1531,7 @@
 				78962FDD182BEF060066BEE9 /* NSManagedObject+SharedDataStore.m in Sources */,
 				78734E2D180BE5DC00A2EEF3 /* AMKeyboardButtonView.m in Sources */,
 				787B3097178364B8001851C0 /* KSMExpression.m in Sources */,
+				539126E51914D53D00A840B2 /* AMDataRenamer.m in Sources */,
 				78962FDA182BD7E00066BEE9 /* AMDName+Methods.m in Sources */,
 				785D9A33179DFFAF004D39B5 /* AMContentView.m in Sources */,
 				78962FED182CEFD90066BEE9 /* AMArgumentListViewController.m in Sources */,
