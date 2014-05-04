@@ -289,7 +289,7 @@ static NSUInteger const kAMIndexRHS;
     KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
     self.expressionStringView.stringValue = expr.originalString;
     [self resetExpressionViewWithExpression:expr];
-    self.nameView.attributedString = [self.nameProvider attributedStringForObjectWithName:funcDef.name.string];
+    self.nameView.attributedString = [self.nameProvider attributedStringForObject:funcDef];
     [self.argumentListViewController reloadData];
     [self.argumentListView setNeedsUpdateConstraints:YES];
     [self.expressionView setNeedsUpdateConstraints:YES];

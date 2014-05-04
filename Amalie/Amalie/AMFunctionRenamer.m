@@ -14,7 +14,7 @@
 
 +(id)renamerForFunction:(AMDFunctionDef*)function nameProvider:(id<AMNameProviding>)nameProvider
 {
-    return [[AMFunctionRenamer alloc] initWithName:function.name mathType:function.returnType.integerValue nameProvider:nameProvider];
+    return [[AMFunctionRenamer alloc] initWithObject:function name:function.name mathType:function.returnType.integerValue nameProvider:nameProvider];
 }
 
 @end

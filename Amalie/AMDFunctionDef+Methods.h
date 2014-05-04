@@ -8,9 +8,11 @@
 
 #import "AMDFunctionDef.h"
 #import "AMNameProviding.h"
+#import "AMNamedAndTypedObject.h"
 
-@interface AMDFunctionDef (Methods)
+@interface AMDFunctionDef (Methods) <AMNamedAndTypedObject>
 
 +(AMDFunctionDef*)makeFunctionDefinitionWithNameProvider:(id<AMNameProviding>)nameProvider;
 
+-(void)setValueType:(KSMValueType)valueType;
 @end

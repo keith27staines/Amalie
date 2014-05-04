@@ -32,5 +32,13 @@ static NSString * const kAMDENTITYNAME = @"AMDFunctionDefs";
     
     return f;
 }
+-(void)setValueType:(KSMValueType)valueType
+{
+    self.returnType = @(valueType);
+}
+-(KSMValueType)valueType
+{
+    return self.returnType.integerValue;
+}
 
 @end

@@ -23,6 +23,26 @@
 @implementation AMPersistedObjectNameProvider
 
 #pragma mark - AMAbstractNameProvider overrides
+-(NSAttributedString *)attributedStringForObject:(id<AMNamedAndTypedObject>)object
+{
+    return [self attributedStringForObjectWithName:object.name.string mathType:object.valueType];
+}
+-(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name mathType:(KSMValueType)valueType
+{
+    AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
+    NSAssert(amdName, @"No AMDName object named %@ was found",name);
+    BOOL overrideDocDefaults = amdName.formatOverridesDocumentDefaults.boolValue;
+    if (overrideDocDefaults) {
+        NSAttributedString * attributedString = amdName.attributedString;
+        NSAssert(attributedString, @"AMDName object had no persisted attributed string");
+        if (!attributedString) {
+            attributedString = [self generateAttributedStringFromName:name withType:valueType];
+        }
+        return attributedString;
+    } else {
+        return [self generateAttributedStringFromName:name withType:valueType];
+    }
+}
 -(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
 {
     AMDName * amdName = [AMDName fetchUniqueNameWithString:name];

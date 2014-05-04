@@ -12,6 +12,7 @@
 		5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316847D18EDABFD00A29B36 /* AMSettingsSection.m */; };
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
+		5366F10D1916203F00FD6FC4 /* AMArgumentRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5366F10C1916203F00FD6FC4 /* AMArgumentRenamer.m */; };
 		5371A10A1907C99C00DED138 /* AMFunctionPropertiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5371A1091907C99C00DED138 /* AMFunctionPropertiesView.m */; };
 		5379FBD818F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379FBD718F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m */; };
 		539126E51914D53D00A840B2 /* AMDataRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 539126E41914D53D00A840B2 /* AMDataRenamer.m */; };
@@ -228,6 +229,9 @@
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
+		5366F10B1916203F00FD6FC4 /* AMArgumentRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentRenamer.h; sourceTree = "<group>"; };
+		5366F10C1916203F00FD6FC4 /* AMArgumentRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentRenamer.m; sourceTree = "<group>"; };
+		5366F10E19162FD000FD6FC4 /* AMNamedAndTypedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMNamedAndTypedObject.h; sourceTree = "<group>"; };
 		536E12F6190415D400405D2C /* AMExpressionNodeViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeViewDataSource.h; sourceTree = "<group>"; };
 		5371A1081907C99C00DED138 /* AMFunctionPropertiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionPropertiesView.h; sourceTree = "<group>"; };
 		5371A1091907C99C00DED138 /* AMFunctionPropertiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionPropertiesView.m; sourceTree = "<group>"; };
@@ -603,6 +607,8 @@
 				539126E41914D53D00A840B2 /* AMDataRenamer.m */,
 				539126E71914DC4B00A840B2 /* AMFunctionRenamer.h */,
 				539126E81914DC4B00A840B2 /* AMFunctionRenamer.m */,
+				5366F10B1916203F00FD6FC4 /* AMArgumentRenamer.h */,
+				5366F10C1916203F00FD6FC4 /* AMArgumentRenamer.m */,
 			);
 			name = "Data object renamers";
 			sourceTree = "<group>";
@@ -1215,6 +1221,7 @@
 				78C87D2618BB660F00702932 /* AMPageSetupDatasource.h */,
 				785D6EF118CF5B6500EAED75 /* AMNameProviderDelegate.h */,
 				539126E21912738E00A840B2 /* AMFunctionPropertiesViewDelegate.h */,
+				5366F10E19162FD000FD6FC4 /* AMNamedAndTypedObject.h */,
 			);
 			name = Protocols;
 			path = ..;
@@ -1450,6 +1457,7 @@
 				78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */,
 				7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */,
 				78D8C2FF18C76A9D001F5494 /* AMFontAttributes.m in Sources */,
+				5366F10D1916203F00FD6FC4 /* AMArgumentRenamer.m in Sources */,
 				78F7F36618FD675E002FD0C2 /* AMExpressionNodeController.m in Sources */,
 				78EF56B017CF3B2200402847 /* KSMMatrix.m in Sources */,
 				78A0472117BBEEF900B5703E /* AMOperatorView.m in Sources */,

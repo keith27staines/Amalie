@@ -15,6 +15,8 @@
 #import "AMKeyboards.h"
 #import "AMKeyboard.h"
 #import "AMUserPreferences.h"
+#import "AMNamedAndTypedObject.h"
+#import "AMDName.h"
 
 typedef NS_ENUM(NSInteger, AMCharacterType) {
     amCharacterTypeLatin,
@@ -103,6 +105,13 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
     [NSException raise:@"Abstract method called" format:@"Derived classes must override this method"];
     return nil;
 }
+
+-(NSAttributedString *)attributedStringForObject:(id<AMNamedAndTypedObject>)object{
+    [NSException raise:@"Abstract method called" format:@"Derived classes must override this method"];
+    return nil;
+}
+
+
 -(NSUInteger)baseFontSize
 {
     return [self.delegate baseFontSize];
@@ -210,6 +219,11 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
     CGFloat size = powf(fraction,fabs(level)) * baseFontSize;
     if (size < minimumFontSize) size = minimumFontSize;
     return size;
+}
+
+-(NSMutableAttributedString *)generateAttributedStringForObject:(id<AMNamedAndTypedObject>)object
+{
+    return [self generateAttributedStringFromName:object.name.string withType:object.valueType];
 }
 
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name withType:(KSMValueType)mathType

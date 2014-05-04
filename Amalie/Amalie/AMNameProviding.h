@@ -9,12 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "KSMMathValue.h"
 #import "AMConstants.h"
+#import "AMNamedAndTypedObject.h"
 
 @protocol AMNameProviding <NSObject>
 
 -(BOOL)isKnownObjectName:(NSString*)name;
 
 -(NSAttributedString*)attributedStringForObjectWithName:(NSString*)name;
+-(NSAttributedString*)attributedStringForObject:(id<AMNamedAndTypedObject>)object;
+
+-(NSMutableAttributedString*)generateAttributedStringForObject:(id<AMNamedAndTypedObject>)object;
 
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name
                                                      withType:(KSMValueType)mathType;
