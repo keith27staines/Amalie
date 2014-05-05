@@ -13,6 +13,7 @@
 #import "AMDArgumentList.h"
 #import "AMDArgument+Methods.h"
 #import "AMDFunctionDef.h"
+#import "AMName.h"
 #import "AMDName+Methods.h"
 #import "KSMMathValue.h"
 #import "AMFunctionContentViewController.h"
@@ -22,6 +23,7 @@
 #import "AMAmalieDocument.h"
 #import "AMPersistedObjectNameProvider.h"
 #import "AMDataRenamer.h"
+#import "AMArgument.h"
 
 NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPropertiesDidEndEditingNotification";
 
@@ -87,9 +89,9 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     } else {
         NSInteger selectedRow = self.functionPropertiesView.argumentTable.selectedRow;
         AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
-        NSString * newName = ((NSTextField*)notification.object).stringValue;
-        KSMValueType mathValue = ((NSNumber*)argument.mathValue).integerValue;
-        [self updateArgument:argument withName:newName type:mathValue];
+        AMArgument * arg = [AMArgument argumentFromDataArgument:argument];
+        arg.name.string = ((NSTextField*)notification.object).stringValue;
+        [self updateArgumentListWithArgument:arg];
     }
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -195,7 +197,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
 {
     AMDataRenamer * renamer = [AMDataRenamer renamerForObject:self.functionDef nameProvider:self.nameProvider];
     [[self undoManager] registerUndoWithTarget:self selector:@selector(updateFunctionName:) object:self.functionDef.name.string];
-    [renamer updateNameString:name];
+    [renamer updateNameString:[name copy]];
     [self reloadData];
 }
 -(void)updateFunctionReturnType:(NSNumber*)returnType
@@ -205,16 +207,22 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     [renamer updateValueType:returnType.integerValue];
     [self reloadData];
 }
--(void)updateArgument:(AMDArgument*)argument withName:(NSString*)name type:(KSMValueType)valueType
+-(void)updateArgumentListWithArgument:(AMArgument*)arg
 {
-    argument.mathValue = [KSMMathValue mathValueFromValueType:valueType];
-    [argument.name setNameAndGenerateAttributedNameFrom:argument.name.string valueType:valueType nameProvider:self.nameProvider];
+    NSInteger index = arg.index.integerValue;
+    AMDArgument * argD = [self.argumentList argumentAtIndex:index];
+    AMArgument * oldArg = [AMArgument argumentFromDataArgument:argD];
+    [[self undoManager] registerUndoWithTarget:self selector:@selector(updateArgumentListWithArgument:) object:oldArg];
+    
+    AMDataRenamer * renamer = [AMDataRenamer renamerForObject:argD nameProvider:self.nameProvider];
+    [renamer updateNameString:[arg.name.string copy]];
+    [renamer updateValueType:arg.valueType.integerValue];
+    [self reloadData];
 }
 -(NSUndoManager*)undoManager
 {
     return [AMDataStore sharedDataStore].moc.undoManager;
 }
-
 -(AMDArgumentList*)argumentList
 {
     return self.functionDef.argumentList;
@@ -241,8 +249,9 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
         NSTableView * argumentTable = self.functionPropertiesView.argumentTable;
         NSInteger row = [argumentTable rowForView:sender];
         AMDArgument * argument = [self.argumentList argumentAtIndex:row];
-        KSMValueType mathValue = sender.selectedTag;
-        [self updateArgument:argument withName:argument.name.string type:mathValue];
+        AMArgument * arg = [AMArgument argumentFromDataArgument:argument];
+        arg.valueType = @(sender.selectedTag);
+        [self updateArgumentListWithArgument:arg];
     }
 }
 

@@ -62,7 +62,7 @@
         if (amdName.formatOverridesDocumentDefaults.boolValue) {
             returnString = argument.name.attributedString;
         } else {
-            returnString = [self generateAttributedStringFromName:amdName.string withType:argument.mathType.integerValue];
+            returnString = [self generateAttributedStringFromName:amdName.string withType:argument.valueType.integerValue];
         }
     } else {
         // fall back to looking for concrete variable or object names, these being the names of inserted objects

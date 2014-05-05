@@ -25,9 +25,9 @@
 #pragma mark - AMAbstractNameProvider overrides
 -(NSAttributedString *)attributedStringForObject:(id<AMNamedAndTypedObject>)object
 {
-    return [self attributedStringForObjectWithName:object.name.string mathType:object.valueType];
+    return [self attributedStringForObjectWithName:object.name.string valueType:object.valueType.integerValue];
 }
--(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name mathType:(KSMValueType)valueType
+-(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name valueType:(KSMValueType)valueType
 {
     AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
     NSAssert(amdName, @"No AMDName object named %@ was found",name);

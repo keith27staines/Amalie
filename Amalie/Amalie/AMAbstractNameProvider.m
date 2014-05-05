@@ -223,7 +223,7 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
 
 -(NSMutableAttributedString *)generateAttributedStringForObject:(id<AMNamedAndTypedObject>)object
 {
-    return [self generateAttributedStringFromName:object.name.string withType:object.valueType];
+    return [self generateAttributedStringFromName:object.name.string withType:object.valueType.integerValue];
 }
 
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name withType:(KSMValueType)mathType

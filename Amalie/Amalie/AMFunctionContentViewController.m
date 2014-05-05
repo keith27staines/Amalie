@@ -55,15 +55,10 @@ static NSUInteger const kAMIndexRHS;
 
 @implementation AMFunctionContentViewController
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(NSString *)nibName
 {
-    self = [super initWithNibName:@"AMFunctionContentView" bundle:nil];
-    if (self) {
-        
-    }
-    return self;
+    return @"AMFunctionContentView";
 }
-
 -(void)awakeFromNib
 {
     [super awakeFromNib];
@@ -136,7 +131,6 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)setupArgumentListView
 {
-    // Before we can do anything with the view we have to load it
     self.argumentListViewController.nameProvider = self.nameProvider;
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     AMArgumentListView * argumentsView = self.argumentListView;

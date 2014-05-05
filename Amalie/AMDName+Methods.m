@@ -11,7 +11,7 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 #import "AMDName+Methods.h"
 #import "NSManagedObject+SharedDataStore.h"
 #import "AMPersistedObjectNameProvider.h"
-
+#import "AMName.h"
 
 @implementation AMDName (Methods)
 
@@ -152,6 +152,9 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
     NSArray * result = [allNames filteredArrayUsingPredicate:predicate];
     return result;
 }
-
+-(id)copyWithZone:(NSZone *)zone
+{
+    return [AMName nameFromString:self.string attributedString:self.attributedString mustBeUnique:self.mustBeUnique];
+}
 
 @end

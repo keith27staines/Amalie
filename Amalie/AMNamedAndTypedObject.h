@@ -9,11 +9,12 @@
 @class AMDName;
 
 #import <Foundation/Foundation.h>
-#import "KSMConstants.h"
+#import "KSMMathValue.h"
+#import "AMNamedObject.h"
 
-@protocol AMNamedAndTypedObject <NSObject>
+@protocol AMNamedAndTypedObject <NSObject, NSCopying>
 
-@property (readonly) AMDName * name;
-@property (readonly) KSMValueType valueType;
+@property id<AMNamedObject> name;
+@property NSNumber * valueType;
 
 @end

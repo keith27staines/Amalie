@@ -8,13 +8,14 @@
 
 #import "AMFunctionRenamer.h"
 #import "AMDFunctionDef+Methods.h"
+#import "AMDName+Methods.h"
 
 @implementation AMFunctionRenamer
 
 
 +(id)renamerForFunction:(AMDFunctionDef*)function nameProvider:(id<AMNameProviding>)nameProvider
 {
-    return [[AMFunctionRenamer alloc] initWithObject:function name:function.name mathType:function.returnType.integerValue nameProvider:nameProvider];
+    return [[AMFunctionRenamer alloc] initWithObject:function name:function.name valueType:function.returnType.integerValue nameProvider:nameProvider];
 }
 
 @end

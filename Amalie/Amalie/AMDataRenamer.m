@@ -13,13 +13,14 @@
 
 #import "AMFunctionRenamer.h"
 #import "AMArgumentRenamer.h"
+#import "AMNamedAndTypedObject.h"
 
 @interface AMDataRenamer()
 {
     
 }
 @property id<AMNameProviding> nameProvider;
-@property id dataObject;
+@property id<AMNamedAndTypedObject>dataObject;
 @property AMDName * name;
 @property KSMValueType valueType;
 
@@ -27,7 +28,7 @@
 
 @implementation AMDataRenamer
 
-+(id)renamerForObject:(id)dataObject nameProvider:(id<AMNameProviding>)nameProvider
++(id)renamerForObject:(id<AMNamedAndTypedObject>)dataObject nameProvider:(id<AMNameProviding>)nameProvider
 {
     AMDataRenamer * renamer = nil;
     if ([dataObject isKindOfClass:[AMDFunctionDef class]]) {
@@ -48,7 +49,7 @@
 {
     return [AMArgumentRenamer renamerForArgument:argument nameProvider:nameProvider];
 }
-- (instancetype)initWithObject:(id)object name:(AMDName*)name mathType:(KSMValueType)valueType nameProvider:(id<AMNameProviding>)nameProvider
+- (instancetype)initWithObject:(id)object name:(AMDName*)name valueType:(KSMValueType)valueType nameProvider:(id<AMNameProviding>)nameProvider
 {
     self = [super init];
     if (self) {
@@ -65,7 +66,7 @@
 }
 -(void)updateValueType:(KSMValueType)valueType
 {
-    [self.dataObject setValueType:valueType];
+    [self.dataObject setValueType:@(valueType)];
     [self.name setNameAndGenerateAttributedNameFrom:self.name.string valueType:valueType nameProvider:self.nameProvider];
 }
 @end

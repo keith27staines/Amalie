@@ -14,7 +14,7 @@
 #import "AMNameProviding.h"
 #import "AMNameProviding.h"
 
-@interface AMDName (Methods)
+@interface AMDName (Methods) <AMNamedObject>
 
 +(AMDName*)makeAMDNameForType:(AMInsertableType)type withNameProvider:(id<AMNameProviding>)nameProvider;
 

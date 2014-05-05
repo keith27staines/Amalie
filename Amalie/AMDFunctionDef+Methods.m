@@ -41,4 +41,11 @@ static NSString * const kAMDENTITYNAME = @"AMDFunctionDefs";
     return self.returnType.integerValue;
 }
 
+-(id)copyWithZone:(NSZone *)zone
+{
+    [NSException raise:@"Method not implemented" format:@"This method needs to be implemented"];
+    return nil;
+}
+
+
 @end

@@ -6,8 +6,8 @@
     </entity>
     <entity name="AMDArguments" representedClassName="AMDArgument" syncable="YES">
         <attribute name="index" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <attribute name="mathType" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="mathValue" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="valueType" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="argumentList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDArgumentLists" inverseName="arguments" inverseEntity="AMDArgumentLists" syncable="YES"/>
         <relationship name="name" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDNames" inverseName="arguments" inverseEntity="AMDNames" syncable="YES"/>
         <relationship name="transformedByFunction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AMDFunctionDefs" inverseName="transformsArguments" inverseEntity="AMDFunctionDefs" syncable="YES"/>
