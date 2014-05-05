@@ -14,7 +14,7 @@
 
 @interface AMDArgument (Methods)
 
-+(AMDArgument*)makeArgumentOfType:(KSMValueType)mathType withNameProvider:(id<AMNameProviding>)nameProvider;
++(AMDArgument*)makeArgumentOfType:(NSNumber*)valueType withNameProvider:(id<AMNameProviding>)nameProvider;
 
 
 @end

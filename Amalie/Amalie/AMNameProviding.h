@@ -21,7 +21,7 @@
 -(NSMutableAttributedString*)generateAttributedStringForObject:(id<AMNamedAndTypedObject>)object;
 
 -(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name
-                                                     withType:(KSMValueType)mathType;
+                                                     valueType:(NSNumber*)valueType;
 
 -(BOOL)validateProposedName:(NSString*)proposedName forType:(AMInsertableType)type error:(NSError**)error;
 

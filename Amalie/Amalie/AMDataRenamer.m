@@ -22,7 +22,7 @@
 @property id<AMNameProviding> nameProvider;
 @property id<AMNamedAndTypedObject>dataObject;
 @property AMDName * name;
-@property KSMValueType valueType;
+@property NSNumber * valueType;
 
 @end
 
@@ -49,7 +49,7 @@
 {
     return [AMArgumentRenamer renamerForArgument:argument nameProvider:nameProvider];
 }
-- (instancetype)initWithObject:(id)object name:(AMDName*)name valueType:(KSMValueType)valueType nameProvider:(id<AMNameProviding>)nameProvider
+- (instancetype)initWithObject:(id)object name:(AMDName*)name valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider
 {
     self = [super init];
     if (self) {
@@ -64,9 +64,9 @@
 {
     [self.name setNameAndGenerateAttributedNameFrom:nameString valueType:self.valueType nameProvider:self.nameProvider];
 }
--(void)updateValueType:(KSMValueType)valueType
+-(void)updateValueType:(NSNumber*)valueType
 {
-    [self.dataObject setValueType:@(valueType)];
+    [self.dataObject setValueType:valueType];
     [self.name setNameAndGenerateAttributedNameFrom:self.name.string valueType:valueType nameProvider:self.nameProvider];
 }
 @end

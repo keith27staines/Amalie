@@ -62,12 +62,12 @@
             {
                 KSMMathValue * mathValue = [self.mathSheet variableForName:name];
                 if (mathValue) {
-                    return [self generateAttributedStringFromName:name withType:mathValue.type];
+                    return [self generateAttributedStringFromName:name valueType:@(mathValue.type)];
                 }
                 break;
             }
             case KSMExpressionTypeLiteral:
-                return [self generateAttributedStringFromName:name withType:KSMValueDouble];
+                return [self generateAttributedStringFromName:name valueType:@(KSMValueDouble)];
                 break;
             case KSMExpressionTypeBinary:
                 NSAssert(NO, @"Don't know how to handle");

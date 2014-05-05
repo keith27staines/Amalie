@@ -25,20 +25,18 @@ static NSString * const kAMDENTITYNAME = @"AMDFunctionDefs";
     f = [NSEntityDescription insertNewObjectForEntityForName:kAMDENTITYNAME
                                       inManagedObjectContext:self.moc];
     f.argumentList = [AMDArgumentList makeArgumentList];
-    AMDArgument * argument = [AMDArgument makeArgumentOfType:KSMValueDouble withNameProvider:nameProvider];
+    AMDArgument * argument = [AMDArgument makeArgumentOfType:@(KSMValueDouble) withNameProvider:nameProvider];
     [f.argumentList addArgumentsObject:argument];
-    f.returnType = @(KSMValueDouble);
-    // f.transformsArguments = [NSMutableSet set];
-    
+    f.returnType = @(KSMValueDouble);    
     return f;
 }
--(void)setValueType:(KSMValueType)valueType
+-(void)setValueType:(NSNumber*)valueType
 {
-    self.returnType = @(valueType);
+    self.returnType = valueType;
 }
--(KSMValueType)valueType
+-(NSNumber*)valueType
 {
-    return self.returnType.integerValue;
+    return self.returnType;
 }
 
 -(id)copyWithZone:(NSZone *)zone

@@ -13,6 +13,6 @@
 
 +(id)renamerForArgument:(AMDArgument*)argument nameProvider:(id<AMNameProviding>)nameProvider
 {
-    return [[AMArgumentRenamer alloc] initWithObject:argument name:argument.name valueType:argument.valueType.integerValue nameProvider:nameProvider];
+    return [[AMArgumentRenamer alloc] initWithObject:argument name:argument.name valueType:argument.valueType nameProvider:nameProvider];
 }
 @end

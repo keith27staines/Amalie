@@ -22,7 +22,7 @@
 
 +(AMDName*)fetchUniqueNameWithString:(NSString*)name;
 
-+(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(KSMValueType)type nameProvider:(id<AMNameProviding>)nameProvider;
++(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider;
 
--(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(KSMValueType)type nameProvider:(id<AMNameProviding>)nameProvider;
+-(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider;
 @end

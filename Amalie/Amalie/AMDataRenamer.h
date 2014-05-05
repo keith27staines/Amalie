@@ -15,8 +15,8 @@
 
 +(id)renamerForObject:(id)dataObject nameProvider:(id<AMNameProviding>)nameProvider;
 
-- (instancetype)initWithObject:(id)object name:(AMDName*)name valueType:(KSMValueType)valueType nameProvider:(id<AMNameProviding>)nameProvider;
+- (instancetype)initWithObject:(id)object name:(AMDName*)name valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider;
 -(void)updateNameString:(NSString*)nameString;
--(void)updateValueType:(KSMValueType)valueType;
+-(void)updateValueType:(NSNumber*)valueType;
 
 @end

@@ -14,13 +14,13 @@
 
 @implementation AMArgument
 
-+(AMArgument*)argumentWithName:(id<AMNamedObject>)name valueType:(KSMValueType)valueType index:(NSNumber*)index
++(AMArgument*)argumentWithName:(id<AMNamedObject>)name valueType:(NSNumber*)valueType index:(NSNumber*)index
 {
     return [[self.class alloc] initWithName:name valueType:valueType index:index];
 }
 +(AMArgument*)argumentFromDataArgument:(AMDArgument*)dataArgument
 {
-    return [self.class argumentWithName:dataArgument.name valueType:dataArgument.valueType.integerValue index:dataArgument.index];
+    return [self.class argumentWithName:dataArgument.name valueType:dataArgument.valueType index:dataArgument.index];
 }
 
 - (instancetype)init
@@ -33,19 +33,19 @@
     }
     return self;
 }
-- (instancetype)initWithName:(id<AMNamedObject>)name valueType:(KSMValueType)valueType index:(NSNumber*)index
+- (instancetype)initWithName:(id<AMNamedObject>)name valueType:(NSNumber*)valueType index:(NSNumber*)index
 {
     self = [super init];
     if (self) {
         self.name = [name copyWithZone:nil];
         self.index = [index copy];
-        self.valueType = @(valueType);
+        self.valueType = [valueType copy];
     }
     return self;
 }
 -(id)copyWithZone:(NSZone *)zone
 {
-    return [AMArgument argumentWithName:[self.name copyWithZone:nil] valueType:self.valueType.integerValue index:[self.index copy]];
+    return [AMArgument argumentWithName:[self.name copyWithZone:nil] valueType:self.valueType index:[self.index copy]];
 }
 
 @end

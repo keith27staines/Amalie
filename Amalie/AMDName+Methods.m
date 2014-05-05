@@ -68,22 +68,22 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
             aName.string = defaultName;
         }
         // Provide an attributed string of default type (double) for safety but this should be overwritten later.
-        aName.attributedString = [nameProvider generateAttributedStringFromName:aName.string withType:KSMValueDouble];
+        aName.attributedString = [nameProvider generateAttributedStringFromName:aName.string valueType:@(KSMValueDouble)];
     }    
     aName.formatOverridesDocumentDefaults = @(NO);
     aName.mustBeUnique = @(mustBeUnique);
     return aName;
 }
 
-+(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(KSMValueType)valueType nameProvider:(id<AMNameProviding>)nameProvider
++(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider
 {
-    return  [nameProvider generateAttributedStringFromName:name withType:valueType];
+    return  [nameProvider generateAttributedStringFromName:name valueType:valueType];
 }
 
--(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(KSMValueType)type nameProvider:(id<AMNameProviding>)nameProvider
+-(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider
 {
     self.string = string;
-    self.attributedString = [AMDName generateAttributedStringFromName:string valueType:type nameProvider:nameProvider];
+    self.attributedString = [AMDName generateAttributedStringFromName:string valueType:valueType nameProvider:nameProvider];
 }
 
 +(NSString*)suggestMustBeUniqueNameBasedOn:(NSString*)string

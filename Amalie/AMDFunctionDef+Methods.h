@@ -14,5 +14,6 @@
 
 +(AMDFunctionDef*)makeFunctionDefinitionWithNameProvider:(id<AMNameProviding>)nameProvider;
 
--(void)setValueType:(KSMValueType)valueType;
+
+@property NSNumber * valueType;
 @end

@@ -62,14 +62,14 @@
         if (amdName.formatOverridesDocumentDefaults.boolValue) {
             returnString = argument.name.attributedString;
         } else {
-            returnString = [self generateAttributedStringFromName:amdName.string withType:argument.valueType.integerValue];
+            returnString = [self generateAttributedStringFromName:amdName.string valueType:argument.valueType];
         }
     } else {
         // fall back to looking for concrete variable or object names, these being the names of inserted objects
         returnString = [super attributedStringForObjectWithName:name];
         if (!returnString) {
             // Last fallback is to generate an attributed name dynamically
-            returnString = [self generateAttributedStringFromName:name withType:KSMValueDouble];
+            returnString = [self generateAttributedStringFromName:name valueType:@(KSMValueDouble)];
         }
     }
     return returnString;

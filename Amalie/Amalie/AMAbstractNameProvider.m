@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
     return [self.delegate baseFontSize];
 }
 -(AMFontAttributes*)defaultFontAttributesForMainCharacter:(NSString *)ch
-                                               ofMathType:(KSMValueType)mathType
+                                               valueType:(NSNumber*)valueType
                                      superscriptLevel:(NSInteger)superscriptLevel
 {
     NSAssert(ch.length == 1, @"The string %@ should contain only one character",ch);
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
     NSCharacterSet * numericSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
     NSRange r = [ch rangeOfCharacterFromSet:numericSet];
     if (r.location == NSNotFound) {
-        AMFontType fontType = [self fontTypeForMathType:mathType];
+        AMFontType fontType = [self fontTypeForValueType:valueType];
         fontAttrs = [self.delegate fontAttributesForType:fontType];
     } else {
         // Character is a digit, 0,1,2,3,4,5,6,7,8, or 9
@@ -223,10 +223,10 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
 
 -(NSMutableAttributedString *)generateAttributedStringForObject:(id<AMNamedAndTypedObject>)object
 {
-    return [self generateAttributedStringFromName:object.name.string withType:object.valueType.integerValue];
+    return [self generateAttributedStringFromName:object.name.string valueType:object.valueType];
 }
 
--(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name withType:(KSMValueType)mathType
+-(NSMutableAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(NSNumber*)valueType
 {
     if (!name) {
         return nil;
@@ -243,10 +243,10 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
         NSString * c = [returnString.string substringWithRange:r];
         if (i==0) {
             superscriptLevel = 0;
-            fontAttrs = [self defaultFontAttributesForMainCharacter:c ofMathType:mathType superscriptLevel:superscriptLevel];
+            fontAttrs = [self defaultFontAttributesForMainCharacter:c valueType:valueType superscriptLevel:superscriptLevel];
         } else if (i > 0 && !isNumber) {
             superscriptLevel = -1;
-            fontAttrs = [self defaultFontAttributesForMainCharacter:c ofMathType:KSMValueDouble superscriptLevel:superscriptLevel];
+            fontAttrs = [self defaultFontAttributesForMainCharacter:c valueType:valueType superscriptLevel:superscriptLevel];
         }
         font = [fontAttrs font];
         [returnString addAttribute:kAMScriptingLevelKey value:@(fabsf(superscriptLevel)) range:r];
@@ -258,9 +258,10 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
     return returnString;
 }
 
--(AMFontType)fontTypeForMathType:(KSMValueType)mathType
+-(AMFontType)fontTypeForValueType:(NSNumber*)valueType
 {
-    switch (mathType) {
+    KSMValueType value = valueType.integerValue;
+    switch (value) {
         case KSMValueInteger:
             return AMFontTypeAlgebra;
         case KSMValueDouble:

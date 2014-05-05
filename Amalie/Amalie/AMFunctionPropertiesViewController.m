@@ -204,7 +204,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
 {
     AMDataRenamer * renamer = [AMDataRenamer renamerForObject:self.functionDef nameProvider:self.nameProvider];
     [[self undoManager] registerUndoWithTarget:self selector:@selector(updateFunctionReturnType:)   object:self.functionDef.returnType];
-    [renamer updateValueType:returnType.integerValue];
+    [renamer updateValueType:returnType];
     [self reloadData];
 }
 -(void)updateArgumentListWithArgument:(AMArgument*)arg
@@ -216,7 +216,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     
     AMDataRenamer * renamer = [AMDataRenamer renamerForObject:argD nameProvider:self.nameProvider];
     [renamer updateNameString:[arg.name.string copy]];
-    [renamer updateValueType:arg.valueType.integerValue];
+    [renamer updateValueType:arg.valueType];
     [self reloadData];
 }
 -(NSUndoManager*)undoManager

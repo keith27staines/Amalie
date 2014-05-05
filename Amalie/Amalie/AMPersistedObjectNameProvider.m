@@ -25,9 +25,9 @@
 #pragma mark - AMAbstractNameProvider overrides
 -(NSAttributedString *)attributedStringForObject:(id<AMNamedAndTypedObject>)object
 {
-    return [self attributedStringForObjectWithName:object.name.string valueType:object.valueType.integerValue];
+    return [self attributedStringForObjectWithName:object.name.string valueType:object.valueType];
 }
--(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name valueType:(KSMValueType)valueType
+-(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name valueType:(NSNumber*)valueType
 {
     AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
     NSAssert(amdName, @"No AMDName object named %@ was found",name);
@@ -36,11 +36,11 @@
         NSAttributedString * attributedString = amdName.attributedString;
         NSAssert(attributedString, @"AMDName object had no persisted attributed string");
         if (!attributedString) {
-            attributedString = [self generateAttributedStringFromName:name withType:valueType];
+            attributedString = [self generateAttributedStringFromName:name valueType:valueType];
         }
         return attributedString;
     } else {
-        return [self generateAttributedStringFromName:name withType:valueType];
+        return [self generateAttributedStringFromName:name valueType:valueType];
     }
 }
 -(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
@@ -52,11 +52,11 @@
         NSAttributedString * attributedString = amdName.attributedString;
         NSAssert(attributedString, @"AMDName object had no persisted attributed string");
         if (!attributedString) {
-            attributedString = [self generateAttributedStringFromName:name withType:KSMValueDouble];
+            attributedString = [self generateAttributedStringFromName:name valueType:@(KSMValueDouble)];
         }
         return attributedString;
     } else {
-        return [self generateAttributedStringFromName:name withType:KSMValueDouble];
+        return [self generateAttributedStringFromName:name valueType:@(KSMValueDouble)];
     }
 }
 -(BOOL)isKnownObjectName:(NSString *)name
