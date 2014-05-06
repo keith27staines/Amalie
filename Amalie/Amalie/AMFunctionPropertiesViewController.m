@@ -134,8 +134,8 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
 -(void)populateTableTypeView:(NSPopUpButton*)button withArgument:(AMDArgument*)argument
 {
     [self setupValuePopup:button];
-    KSMMathValue * mathValue = argument.mathValue;
-    [button selectItemWithTag:mathValue.type];
+    KSMValueType valueType = argument.valueType.integerValue;
+    [button selectItemWithTag:valueType];
     [button setTarget:self];
     [button setAction:NSSelectorFromString(@"valueTypePopupChanged:")];
 }

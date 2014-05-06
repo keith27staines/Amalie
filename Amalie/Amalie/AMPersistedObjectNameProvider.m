@@ -46,6 +46,9 @@
 -(NSAttributedString *)attributedStringForObjectWithName:(NSString *)name
 {
     AMDName * amdName = [AMDName fetchUniqueNameWithString:name];
+    if (!amdName) {
+        return nil;
+    }
     NSAssert(amdName, @"No AMDName object named %@ was found",name);
     BOOL overrideDocDefaults = amdName.formatOverridesDocumentDefaults.boolValue;
     if (overrideDocDefaults) {
