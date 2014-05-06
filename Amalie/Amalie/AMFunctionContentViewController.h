@@ -22,6 +22,9 @@
 
 @property (weak) IBOutlet NSButton *popupButton;
 
+- (IBAction)showExpressionEditor:(id)sender;
+
+
 @property (weak) IBOutlet AMTextView *nameView;
 
 @property (weak) IBOutlet NSTextField *expressionStringView;

@@ -17,7 +17,9 @@
 @class AMLibraryViewController;
 @class AMPersistedObjectNameProvider;
 @class AMPersistedObjectWithArgumentsNameProvider;
+@class AMDExpression;
 @class AMDArgumentList;
+@class AMExpressionEditorViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMPageViewDelegate.h"
@@ -37,11 +39,9 @@ NSPopoverDelegate>
 #pragma mark -Toolbar outlets and actions-
 @property (weak) IBOutlet NSToolbarItem * toolbarLeftSidePanelButton;
 @property (weak) IBOutlet NSToolbarItem * toolbarRightSidePanelButton;
-@property (weak) IBOutlet NSToolbarItem * toolbarKeyboardButton;
 
 - (IBAction)toolbarLeftSidePanelButtonClicked:(NSToolbarItem*)sender;
 - (IBAction)toolbarRightSidePanelButtonClicked:(NSToolbarItem*)sender;
-- (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender;
 - (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender;
 - (IBAction)toolbarFontSetupButtonClicked:(NSButton *)sender;
 
@@ -69,6 +69,13 @@ NSPopoverDelegate>
 @property (weak) IBOutlet AMPageView * pageView;
 
 @property (weak) IBOutlet AMLibraryViewController * library;
+
+@property (weak) IBOutlet NSPanel * expressionEditorPanel;
+
+@property (strong) IBOutlet AMExpressionEditorViewController *expressionEditorViewController;
+
+-(void)showExpressionEditorWithExpression:(AMDExpression*)expression;
+-(void)endExpressionEditor:(id)sender;
 
 @property (weak) AMInsertableView * selectedView;
 

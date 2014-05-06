@@ -11,6 +11,9 @@
 		53132A3518FEEEA60069C7BA /* AMMathSheetNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3418FEEEA60069C7BA /* AMMathSheetNameProvider.m */; };
 		5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316847D18EDABFD00A29B36 /* AMSettingsSection.m */; };
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
+		534635FD19191B0700569927 /* AMExpressionEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534635FB19191B0700569927 /* AMExpressionEditorViewController.m */; };
+		534635FE19191B0700569927 /* AMExpressionEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */; };
+		5346360119191F1F00569927 /* AMExpressionEditorContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
 		5366F10D1916203F00FD6FC4 /* AMArgumentRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5366F10C1916203F00FD6FC4 /* AMArgumentRenamer.m */; };
 		5366F1111917771600FD6FC4 /* AMArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5366F1101917771600FD6FC4 /* AMArgument.m */; };
@@ -229,6 +232,11 @@
 		5316847D18EDABFD00A29B36 /* AMSettingsSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSettingsSection.m; sourceTree = "<group>"; };
 		5329831918E576FF0040809D /* AMColorPreferenceTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreferenceTableCellView.h; sourceTree = "<group>"; };
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
+		534635FA19191B0700569927 /* AMExpressionEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionEditorViewController.h; sourceTree = "<group>"; };
+		534635FB19191B0700569927 /* AMExpressionEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionEditorViewController.m; sourceTree = "<group>"; };
+		534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMExpressionEditorViewController.xib; sourceTree = "<group>"; };
+		534635FF19191F1F00569927 /* AMExpressionEditorContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionEditorContainerView.h; sourceTree = "<group>"; };
+		5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionEditorContainerView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
 		5366F10B1916203F00FD6FC4 /* AMArgumentRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentRenamer.h; sourceTree = "<group>"; };
@@ -586,6 +594,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534635F919191A0B00569927 /* Expression Editor */ = {
+			isa = PBXGroup;
+			children = (
+				534635FA19191B0700569927 /* AMExpressionEditorViewController.h */,
+				534635FB19191B0700569927 /* AMExpressionEditorViewController.m */,
+				534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */,
+				534635FF19191F1F00569927 /* AMExpressionEditorContainerView.h */,
+				5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */,
+			);
+			name = "Expression Editor";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		5379FBD918F3C51100378A31 /* Settings model objects */ = {
 			isa = PBXGroup;
 			children = (
@@ -723,7 +744,6 @@
 				787B305A178361BC001851C0 /* MainMenu.xib */,
 				784D6EF81789CC11002BE03A /* AMAppController.h */,
 				784D6EF91789CC11002BE03A /* AMAppController.m */,
-				7825D656180FD3B10039EB67 /* AMKeyboard */,
 			);
 			name = "App Controller and Main menu";
 			sourceTree = "<group>";
@@ -1318,6 +1338,8 @@
 		78F57D8D18350DC800683FFC /* Document */ = {
 			isa = PBXGroup;
 			children = (
+				7825D656180FD3B10039EB67 /* AMKeyboard */,
+				534635F919191A0B00569927 /* Expression Editor */,
 				787B3057178361BC001851C0 /* AMAmalieDocument.xib */,
 				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
 				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
@@ -1411,6 +1433,7 @@
 				788EAE0D18B61C1000D3EBD3 /* AMPageSetupViewController.xib in Resources */,
 				786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */,
 				78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */,
+				534635FE19191B0700569927 /* AMExpressionEditorViewController.xib in Resources */,
 				78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */,
 				78803C1618DC7747008FBDE1 /* AMMathStyleViewController.xib in Resources */,
 				787B304D178361BC001851C0 /* InfoPlist.strings in Resources */,
@@ -1479,6 +1502,7 @@
 				78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
 				78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
+				534635FD19191B0700569927 /* AMExpressionEditorViewController.m in Sources */,
 				785826A618C474C800612651 /* AMColorPreferencesViewController.m in Sources */,
 				53132A3518FEEEA60069C7BA /* AMMathSheetNameProvider.m in Sources */,
 				78F52C5A17FABA5C0092B604 /* AMDExpression.m in Sources */,
@@ -1504,6 +1528,7 @@
 				784D6EFE1789CC97002BE03A /* AMUserPreferencesWindowController.m in Sources */,
 				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
 				78734E2A180BD63B00A2EEF3 /* AMKeyboardKeyModel.m in Sources */,
+				5346360119191F1F00569927 /* AMExpressionEditorContainerView.m in Sources */,
 				5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */,
 				78F52C6317FABA5C0092B604 /* AMDFunctionDef.m in Sources */,
 				78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */,

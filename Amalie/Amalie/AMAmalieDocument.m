@@ -46,6 +46,8 @@
 #import "AMInsertableViewController.h"
 #import "AMKeyboardsViewController.h"
 #import "AMLibraryViewController.h"
+#import "AMExpressionEditorViewController.h"
+
 #import "BitmaskHelpers.h"
 
 @interface AMAmalieDocument()
@@ -659,8 +661,23 @@
 {
     return [self insertableViewForKey:shadow.groupID];
 }
-
-- (IBAction)toolbarKeyboardButtonClicked:(NSToolbarItem*)sender {
+-(void)showExpressionEditorWithExpression:(AMDExpression*)expression
+{
+    self.expressionEditorViewController.document = self;
+    self.expressionEditorViewController.expression = expression;
+    NSView * view = self.expressionEditorViewController.view;
+    [self.expressionEditorViewController reloadData];
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.expressionEditorPanel.contentView = view;
+    [NSApp beginSheet:self.expressionEditorPanel
+       modalForWindow:self.windowForSheet
+        modalDelegate:self
+       didEndSelector:nil
+          contextInfo:nil];
+}
+-(void)endExpressionEditor:(id)sender {
+    [NSApp endSheet:self.expressionEditorPanel];
+    [self.expressionEditorPanel orderOut:sender];
 }
 
 -(AMPersistedObjectNameProvider *)persistentNameProvider

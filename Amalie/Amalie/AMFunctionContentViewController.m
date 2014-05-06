@@ -276,8 +276,7 @@ static NSUInteger const kAMIndexRHS;
     // TODO: Move some of this functionality into the view we control
     [self.contentView removeDynamicConstraints];
     AMDFunctionDef * funcDef = self.amdFunctionDef;
-    AMDIndexedExpression * iexpr = [self objectWithIndex:0 fromSet:funcDef.indexedExpressions];
-    AMDExpression * amdExpr = iexpr.expression;
+    AMDExpression * amdExpr = [self expression];
     
     NSString * originalString = amdExpr.originalString;
     KSMExpression * expr = [self expressionFromString:originalString atIndex:0];
@@ -291,7 +290,16 @@ static NSUInteger const kAMIndexRHS;
     [self.contentView setNeedsUpdateConstraints:YES];
     [self.contentView setNeedsDisplay:YES];
 }
-
+-(AMDIndexedExpression*)indexedExpression
+{
+    return [self objectWithIndex:0 fromSet:self.amdFunctionDef.indexedExpressions];
+}
+-(AMDExpression*)expression
+{
+    AMDIndexedExpression * iexpr = [self indexedExpression];
+    AMDExpression * amdExpr = iexpr.expression;
+    return amdExpr;
+}
 -(AMDFunctionDef*)amdFunctionDef
 {
     return (AMDFunctionDef*)self.amdInsertedObject;
@@ -340,8 +348,9 @@ static NSUInteger const kAMIndexRHS;
     }
     return _persistedObjectNameProvider;
 }
-#pragma mark - Misc -
+#pragma mark - Show expression editor -
 
-
-
+- (IBAction)showExpressionEditor:(id)sender {
+    [self.document showExpressionEditorWithExpression:self.expression];
+}
 @end
