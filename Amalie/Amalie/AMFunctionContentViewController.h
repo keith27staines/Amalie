@@ -43,4 +43,6 @@
 @property (readonly) BOOL isConstant;
 @property (readonly) BOOL isVariable;
 
+//
+
 @end

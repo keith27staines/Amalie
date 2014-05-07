@@ -20,26 +20,36 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 
 @interface AMExpressionNodeController() <AMExpressionNodeViewDelegate,AMExpressionNodeViewDataSource, AMExpressionDataSource>
 {
-    KSMMathSheet * _mathSheet;
-    KSMExpression * _expression;
+    KSMMathSheet         * _mathSheet;
+    id<AMNameProviding>    _nameProvider;
+    KSMExpression        * _expression;
     AMExpressionNodeView * _expressionNode;
-    NSString * _expressionString;
+    NSString             * _expressionString;
 }
 @property (readonly) KSMExpression * expression;
+@property (weak) IBOutlet id<AMNameProviderDelegate> nameProviderDelegate;
+@property (readonly) KSMMathSheet * mathSheet;
+@property (readonly) id<AMNameProviding>nameProvider;
+@property (copy, readonly) NSString * expressionString;
 @end
 
 @implementation AMExpressionNodeController
 
 -(void)awakeFromNib
 {
-    self.expressionNode.expression = self.expression;
-    [self.expressionNode setNeedsDisplay:YES];
+    self.expressionNode.delegate = self;
+//    self.expressionNode.expression = self.expression;
+//    [self.expressionNode setNeedsDisplay:YES];
 }
 
 #pragma mark - AMExpressionNodeViewDelegate -
 -(id<AMNameProviding>)nameProvider
 {
-    return [AMMathSheetNameProvider nameProviderWithDelegate:self.nameProviderDelegate mathSheet:self.mathSheet];
+    _nameProvider = [self.delegate expressionNodeControllerWantsNameProvider:self];
+    if (!_nameProvider) {
+        _nameProvider = [AMMathSheetNameProvider nameProviderWithDelegate:self.nameProviderDelegate mathSheet:self.mathSheet];
+    }
+    return _nameProvider;
 }
 #pragma mark - AMExpressionNodeViewDataSource -
 -(KSMExpression *)view:(NSView *)view requiresExpressionForSymbol:(NSString *)symbol
@@ -94,6 +104,10 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 {
     _expressionString = expressionString;
     _expression = nil;  // force expression to be remade
+    [self reloadData];
+}
+-(void)reloadData
+{
     [self.expressionNode resetWithgroupID:@""
                                expression:self.expression
                            scriptingLevel:0
@@ -106,8 +120,14 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 }
 -(KSMMathSheet *)mathSheet
 {
-    if (!_mathSheet) {
-        _mathSheet = [[KSMMathSheet alloc] init];
+    if ([self.delegate respondsToSelector:@selector(expressionNodeControllerWantsMathsSheet:)]) {
+        return [self.delegate expressionNodeControllerWantsMathsSheet:self];
+    } else {
+        if (!_mathSheet) {
+            if (!_mathSheet) {
+                _mathSheet = [[KSMMathSheet alloc] init];
+            }
+        }
     }
     return _mathSheet;
 }

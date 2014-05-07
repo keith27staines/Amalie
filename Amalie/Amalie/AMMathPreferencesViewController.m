@@ -71,9 +71,12 @@
     self.subscriptOffsetTextField.floatValue   = style.subscriptOffsetFraction;
     self.superscriptOffsetTextField.floatValue = style.superscriptOffsetFraction;
     self.subscriptSizeTextField.floatValue     = style.superscriptingFraction;
-
-    [self.expressionController setExpressionString:kAMDemoExpressionMathStyle];
+    [self.expressionController reloadData];
 }
+-(NSString *)expressionNodeControllerRequiresExpressionString:(AMExpressionNodeController *)controller {
+    return kAMDemoExpressionMathStyle;
+}
+
 - (IBAction)textChanged:(NSTextField *)sender {
     AMMathStyleSettings * style = self.mathStyleSettings;
     if (sender == self.smallestFontTextField) {

@@ -6,18 +6,14 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMDExpression, AMAmalieDocument;
+@class AMExpressionNodeController, AMExpressionNodeView;
 
 #import <Cocoa/Cocoa.h>
+#import "AMExpressionNodeControllerDelegate.h"
 
-@interface AMExpressionEditorViewController : NSViewController
+@interface AMExpressionEditorViewController : NSViewController <AMExpressionNodeControllerDelegate>
 
-@property (weak) AMDExpression * expression;
-@property (weak) AMAmalieDocument * document;
-- (IBAction)close:(id)sender;
-
-@property (weak) IBOutlet NSTextField *expressionStringField;
-
--(void)reloadData;
+@property (readonly, copy) NSString * expressionString;
+-(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider completionHandler:(void (^)(void))completionHandler;
 
 @end

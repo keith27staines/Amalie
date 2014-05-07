@@ -237,6 +237,7 @@
 		534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMExpressionEditorViewController.xib; sourceTree = "<group>"; };
 		534635FF19191F1F00569927 /* AMExpressionEditorContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionEditorContainerView.h; sourceTree = "<group>"; };
 		5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionEditorContainerView.m; sourceTree = "<group>"; };
+		53463602191A24D100569927 /* AMExpressionNodeControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeControllerDelegate.h; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
 		5366F10B1916203F00FD6FC4 /* AMArgumentRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentRenamer.h; sourceTree = "<group>"; };
@@ -1254,6 +1255,7 @@
 				539126E21912738E00A840B2 /* AMFunctionPropertiesViewDelegate.h */,
 				5366F10E19162FD000FD6FC4 /* AMNamedAndTypedObject.h */,
 				5366F1151917797C00FD6FC4 /* AMNamedObject.h */,
+				53463602191A24D100569927 /* AMExpressionNodeControllerDelegate.h */,
 			);
 			name = Protocols;
 			path = ..;

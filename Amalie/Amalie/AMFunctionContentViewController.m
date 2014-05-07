@@ -215,8 +215,13 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)expressionStringWasEdited
 {
+    NSString * expressionString = self.expressionStringView.stringValue;
+    [self setExpressionString:expressionString];
+}
+-(void)setExpressionString:(NSString*)expressionString
+{
     KSMExpression * expr;
-    expr = [self expressionFromString:self.expressionStringView.stringValue atIndex:kAMIndexRHS];
+    expr = [self expressionFromString:expressionString atIndex:kAMIndexRHS];
     [self resetExpressionViewWithExpression:expr];
     [self.contentView setNeedsUpdateConstraints:YES];
     [self.contentView setNeedsDisplay:YES];
@@ -248,7 +253,6 @@ static NSUInteger const kAMIndexRHS;
                         hideRedundantBrackets:YES
                         cascadeBracketHiding:YES];
     
-    NSLog(@"Reconstructed string is: %@",[self.contextNode reconstructExpressionString]);
     [self.expressionView resetWithgroupID:self.groupID
                                expression:expr
                            scriptingLevel:0
@@ -351,6 +355,6 @@ static NSUInteger const kAMIndexRHS;
 #pragma mark - Show expression editor -
 
 - (IBAction)showExpressionEditor:(id)sender {
-    [self.document showExpressionEditorWithExpression:self.expression];
+    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider];
 }
 @end

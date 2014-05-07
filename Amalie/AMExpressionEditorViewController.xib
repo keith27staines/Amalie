@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMExpressionEditorViewController">
             <connections>
+                <outlet property="expressionNodeController" destination="yfi-w8-iQN" id="Ynx-iB-Ci1"/>
                 <outlet property="expressionStringField" destination="bZg-XA-1XI" id="pHy-Ke-iOO"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -17,8 +18,8 @@
             <rect key="frame" x="0.0" y="0.0" width="640" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gqf-8G-Kvv">
-                    <rect key="frame" x="14" y="13" width="116" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqf-8G-Kvv">
+                    <rect key="frame" x="510" y="13" width="116" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Close editor" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iFx-Cg-DQo">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -40,13 +41,46 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pm1-uw-gLx">
+                    <rect key="frame" x="20" y="148" width="600" height="104"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" id="RXo-20-uFA">
+                        <rect key="frame" x="1" y="1" width="598" height="102"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zla-ev-H8E" customClass="AMExpressionNodeView">
+                                <rect key="frame" x="-186" y="-103" width="168" height="165"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="gS7-8L-YpX">
+                        <rect key="frame" x="1" y="87" width="598" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8ht-2i-TmS">
+                        <rect key="frame" x="583" y="1" width="16" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
             <constraints>
+                <constraint firstItem="Pm1-uw-gLx" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="3g2-d9-knt"/>
                 <constraint firstItem="bZg-XA-1XI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="DJr-wg-iKP"/>
+                <constraint firstAttribute="trailing" secondItem="gqf-8G-Kvv" secondAttribute="trailing" constant="20" id="UFf-a7-c4j"/>
+                <constraint firstItem="bZg-XA-1XI" firstAttribute="top" secondItem="Pm1-uw-gLx" secondAttribute="bottom" constant="8" symbolic="YES" id="Z23-dI-isH"/>
                 <constraint firstItem="bZg-XA-1XI" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="132" id="ipk-1a-yJK"/>
+                <constraint firstAttribute="trailing" secondItem="Pm1-uw-gLx" secondAttribute="trailing" constant="20" symbolic="YES" id="qz1-CU-Baw"/>
+                <constraint firstAttribute="bottom" secondItem="gqf-8G-Kvv" secondAttribute="bottom" constant="20" id="rYa-nI-Al7"/>
+                <constraint firstItem="Pm1-uw-gLx" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="sAx-6w-1SL"/>
                 <constraint firstAttribute="trailing" secondItem="bZg-XA-1XI" secondAttribute="trailing" constant="20" id="vmz-td-jFL"/>
                 <constraint firstAttribute="bottom" secondItem="bZg-XA-1XI" secondAttribute="bottom" constant="118" id="yo7-6J-cyU"/>
             </constraints>
         </customView>
+        <customObject id="yfi-w8-iQN" customClass="AMExpressionNodeController">
+            <connections>
+                <outlet property="expressionNode" destination="zla-ev-H8E" id="QXz-bO-8Te"/>
+            </connections>
+        </customObject>
     </objects>
 </document>

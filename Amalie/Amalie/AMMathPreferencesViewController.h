@@ -11,8 +11,9 @@
 #import <Cocoa/Cocoa.h>
 #import "AMPreferencesViewControllerBase.h"
 #import "AMNameProviderDelegate.h"
+#import "AMExpressionNodeControllerDelegate.h"
 
-@interface AMMathPreferencesViewController : AMPreferencesViewControllerBase <AMNameProviderDelegate>
+@interface AMMathPreferencesViewController : AMPreferencesViewControllerBase <AMExpressionNodeControllerDelegate,AMNameProviderDelegate>
 
 @property (weak) IBOutlet AMExpressionNodeController * expressionController;
 

@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "AMConstants.h"
 #import "AMNameProviderDelegate.h"
+#import "AMNameProviding.h"
+#import "AMExpressionNodeControllerDelegate.h"
 
 extern NSString * const kAMDemoExpressionMathStyle;
 
 @interface AMExpressionNodeController : NSObject
 
 @property IBOutlet AMExpressionNodeView * expressionNode;
-@property (weak) IBOutlet id<AMNameProviderDelegate> nameProviderDelegate;
-@property (readonly) KSMMathSheet * mathSheet;
-
-@property (copy) NSString * expressionString;
+@property (weak) id<AMExpressionNodeControllerDelegate> delegate;
+-(void)reloadData;
 @end

@@ -27,6 +27,7 @@
 #import "AMPersistentDocumentSettings.h"
 #import "AMDName+Methods.h"
 #import "AMDFunctionDef+Methods.h"
+#import "AMDExpression+Methods.h"
 #import "AMPersistedObjectNameProvider.h"
 #import "AMPersistedObjectWithArgumentsNameProvider.h"
 #import "AMDocumentContainerView.h"
@@ -661,12 +662,13 @@
 {
     return [self insertableViewForKey:shadow.groupID];
 }
--(void)showExpressionEditorWithExpression:(AMDExpression*)expression
+-(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider;
 {
-    self.expressionEditorViewController.document = self;
-    self.expressionEditorViewController.expression = expression;
+    [self.expressionEditorViewController presentExpressionEditorWithExpressionString:expression.originalString nameProvider:nameProvider completionHandler:^(void){
+        [NSApp endSheet:self.expressionEditorPanel];
+        [self.expressionEditorPanel orderOut:self];
+    }];
     NSView * view = self.expressionEditorViewController.view;
-    [self.expressionEditorViewController reloadData];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     self.expressionEditorPanel.contentView = view;
     [NSApp beginSheet:self.expressionEditorPanel
@@ -674,10 +676,6 @@
         modalDelegate:self
        didEndSelector:nil
           contextInfo:nil];
-}
--(void)endExpressionEditor:(id)sender {
-    [NSApp endSheet:self.expressionEditorPanel];
-    [self.expressionEditorPanel orderOut:sender];
 }
 
 -(AMPersistedObjectNameProvider *)persistentNameProvider
