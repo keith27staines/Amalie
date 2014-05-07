@@ -27,7 +27,7 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
     NSString             * _expressionString;
 }
 @property (readonly) KSMExpression * expression;
-@property (weak) IBOutlet id<AMNameProviderDelegate> nameProviderDelegate;
+@property (weak) id<AMNameProviderDelegate> nameProviderDelegate;
 @property (readonly) KSMMathSheet * mathSheet;
 @property (readonly) id<AMNameProviding>nameProvider;
 @property (copy, readonly) NSString * expressionString;
@@ -38,14 +38,14 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 -(void)awakeFromNib
 {
     self.expressionNode.delegate = self;
-//    self.expressionNode.expression = self.expression;
-//    [self.expressionNode setNeedsDisplay:YES];
 }
 
 #pragma mark - AMExpressionNodeViewDelegate -
 -(id<AMNameProviding>)nameProvider
 {
-    _nameProvider = [self.delegate expressionNodeControllerWantsNameProvider:self];
+    if ([self.delegate respondsToSelector:@selector(expressionNodeControllerWantsNameProvider:)]) {
+            _nameProvider = [self.delegate expressionNodeControllerWantsNameProvider:self];
+    }
     if (!_nameProvider) {
         _nameProvider = [AMMathSheetNameProvider nameProviderWithDelegate:self.nameProviderDelegate mathSheet:self.mathSheet];
     }

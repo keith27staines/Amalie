@@ -34,42 +34,28 @@
 }
 -(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider completionHandler:(void (^)(void))completionHandler
 {
+    [self view]; // ensure view is loaded so all outlets are connected
+    self.expressionNodeController.delegate = self;
     self.nameProvider = nameProvider;
     self.expressionString = expressionString;
     _completionHandler = completionHandler;
+    [self reloadData];
 }
 -(void)reloadData
 {
     self.expressionStringField.stringValue = self.expressionString;
+    [self.expressionNodeController setExpressionString:self.expressionString];
 }
 - (IBAction)close:(id)sender {
     [self.view.window endEditingFor:self.expressionStringField];
     _completionHandler();
 }
 #pragma mark - AMExpressionNodeControllerDelegate -
--(id<AMNameProviding>)expressionNodeControllerWantsNameProvider{
+-(id<AMNameProviding>)expressionNodeControllerWantsNameProvider:(AMExpressionNodeController*)controller
+{
     return self.nameProvider;
 }
 -(NSString *)expressionNodeControllerRequiresExpressionString:(AMExpressionNodeController *)controller {
     return self.expressionString;
 }
-//#pragma mark - AMNameProviderDelegate -
-//-(CGFloat)baseFontSize {
-//    return [self.document baseFontSize];
-//}
-//-(CGFloat)superscriptingFraction {
-//    return [self.document superscriptingFraction];
-//}
-//-(CGFloat)superscriptOffset {
-//    return [self.document superscriptOffset];
-//}
-//-(AMFontAttributes *)fontAttributesForType:(AMFontType)fontType {
-//    return [self.document fontAttributesForType:fontType];
-//}
-//-(CGFloat)smallestFontSizeFraction {
-//    return [self.document smallestFontSizeFraction];
-//}
-//-(CGFloat)subscriptOffset {
-//    return [self.document smallestFontSizeFraction];
-//}
 @end

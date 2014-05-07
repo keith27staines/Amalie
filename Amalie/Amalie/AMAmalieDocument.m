@@ -669,8 +669,10 @@
         [self.expressionEditorPanel orderOut:self];
     }];
     NSView * view = self.expressionEditorViewController.view;
-    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    self.expressionEditorPanel.contentView = view;
+    if (!view.superview) {
+        [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+        self.expressionEditorPanel.contentView = view;
+    }
     [NSApp beginSheet:self.expressionEditorPanel
        modalForWindow:self.windowForSheet
         modalDelegate:self
