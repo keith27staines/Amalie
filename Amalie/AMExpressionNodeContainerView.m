@@ -49,12 +49,16 @@
     _expressionNodeView = expressionNodeView;
     [_expressionNodeView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:_expressionNodeView];
+    [self addConstraint: [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_expressionNodeView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self addConstraint: [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expressionNodeView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+
     NSDictionary * views = NSDictionaryOfVariableBindings(_expressionNodeView);
     NSArray * constraints;
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=20)-[_expressionNodeView]-(>=20)-|" options:0 metrics:nil views:views];
     [self addConstraints:constraints];
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=20)-[_expressionNodeView]-(>=20)-|" options:0 metrics:nil views:views];
     [self addConstraints:constraints];
+    
     
     [self setNeedsUpdateConstraints:YES];
     [self setNeedsDisplay:YES];

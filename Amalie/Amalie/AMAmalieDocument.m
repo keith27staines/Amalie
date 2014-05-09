@@ -662,11 +662,16 @@
 {
     return [self insertableViewForKey:shadow.groupID];
 }
--(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider;
+-(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action;
 {
     [self.expressionEditorViewController presentExpressionEditorWithExpressionString:expression.originalString nameProvider:nameProvider completionHandler:^(void){
         [NSApp endSheet:self.expressionEditorPanel];
         [self.expressionEditorPanel orderOut:self];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        // Prevent compiler warning related to ARC being unsure about how to hande the return value of the selector - ignoring is safe in this instance because we are ignoring the return value altogether
+        [target performSelector:action withObject:self.expressionEditorViewController.expressionString];
+#pragma clang diagnostic pop
     }];
     NSView * view = self.expressionEditorViewController.view;
     if (!view.superview) {

@@ -40,6 +40,7 @@ static NSUInteger const kAMIndexRHS;
 
 @interface AMFunctionContentViewController ()
 {
+    NSString                            * _expressionString;
     __weak NSTextField                  * _nameField;
     __weak NSTextField                  * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
@@ -49,7 +50,7 @@ static NSUInteger const kAMIndexRHS;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
 @property (strong) AMExpressionFormatContextNode * contextNode;
-
+@property (copy) NSString * expressionString;
 @property (readonly) AMArgumentListView * argumentListView;
 @end
 
@@ -220,13 +221,21 @@ static NSUInteger const kAMIndexRHS;
 }
 -(void)setExpressionString:(NSString*)expressionString
 {
+    
+    if (_expressionString && [_expressionString isEqualToString:expressionString]) {
+        return;
+    }
+    _expressionString = [expressionString copy];
     KSMExpression * expr;
     expr = [self expressionFromString:expressionString atIndex:kAMIndexRHS];
     [self resetExpressionViewWithExpression:expr];
     [self.contentView setNeedsUpdateConstraints:YES];
     [self.contentView setNeedsDisplay:YES];
 }
-
+-(NSString*)expressionString
+{
+    return [_expressionString copy];
+}
 -(void)setFocusOnView:(NSView*)view
 {
     BOOL changedFirstResponder = [self.contentView.window makeFirstResponder:view];
@@ -355,6 +364,10 @@ static NSUInteger const kAMIndexRHS;
 #pragma mark - Show expression editor -
 
 - (IBAction)showExpressionEditor:(id)sender {
-    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider];
+    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider target:self action:@selector(expressionEditorFinishedWithString:)];
+}
+-(void)expressionEditorFinishedWithString:(NSString*)string
+{
+    [self setExpressionString:string];
 }
 @end

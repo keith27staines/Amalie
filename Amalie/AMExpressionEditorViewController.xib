@@ -56,8 +56,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="579" height="102"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="102" id="Ggi-9x-EoB"/>
-                                    <constraint firstAttribute="width" constant="579" id="han-tT-g3K"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="102" id="Ggi-9x-EoB"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="579" id="han-tT-g3K"/>
                                 </constraints>
                             </customView>
                         </subviews>
