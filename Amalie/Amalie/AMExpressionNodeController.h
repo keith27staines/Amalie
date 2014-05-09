@@ -16,7 +16,7 @@ extern NSString * const kAMDemoExpressionMathStyle;
 
 @interface AMExpressionNodeController : NSObject
 
-@property IBOutlet AMExpressionNodeView * expressionNode;
+@property (readonly) AMExpressionNodeView * expressionNodeView;
 @property (weak) id<AMExpressionNodeControllerDelegate> delegate;
 -(void)setExpressionString:(NSString *)expressionString;
 -(void)reloadData;

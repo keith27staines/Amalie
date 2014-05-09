@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMExpressionEditorViewController">
             <connections>
+                <outlet property="expressionNodeContainerView" destination="zla-ev-H8E" id="8WO-kg-blE"/>
                 <outlet property="expressionNodeController" destination="yfi-w8-iQN" id="Ynx-iB-Ci1"/>
                 <outlet property="expressionStringField" destination="bZg-XA-1XI" id="pHy-Ke-iOO"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -40,6 +41,9 @@
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="VvF-MN-mzA"/>
+                    </connections>
                 </textField>
                 <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pm1-uw-gLx">
                     <rect key="frame" x="20" y="148" width="600" height="104"/>
@@ -48,9 +52,13 @@
                         <rect key="frame" x="1" y="1" width="598" height="102"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zla-ev-H8E" customClass="AMExpressionNodeView">
-                                <rect key="frame" x="-186" y="-103" width="168" height="165"/>
+                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zla-ev-H8E" customClass="AMExpressionNodeContainerView">
+                                <rect key="frame" x="0.0" y="0.0" width="579" height="102"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="102" id="Ggi-9x-EoB"/>
+                                    <constraint firstAttribute="width" constant="579" id="han-tT-g3K"/>
+                                </constraints>
                             </customView>
                         </subviews>
                     </clipView>
@@ -58,8 +66,8 @@
                         <rect key="frame" x="1" y="87" width="598" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8ht-2i-TmS">
-                        <rect key="frame" x="583" y="1" width="16" height="102"/>
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8ht-2i-TmS">
+                        <rect key="frame" x="584" y="1" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
@@ -77,10 +85,6 @@
                 <constraint firstAttribute="bottom" secondItem="bZg-XA-1XI" secondAttribute="bottom" constant="118" id="yo7-6J-cyU"/>
             </constraints>
         </customView>
-        <customObject id="yfi-w8-iQN" customClass="AMExpressionNodeController">
-            <connections>
-                <outlet property="expressionNode" destination="zla-ev-H8E" id="QXz-bO-8Te"/>
-            </connections>
-        </customObject>
+        <customObject id="yfi-w8-iQN" customClass="AMExpressionNodeController"/>
     </objects>
 </document>

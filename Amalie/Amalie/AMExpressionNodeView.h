@@ -27,7 +27,7 @@
 @property (weak, readwrite) id<AMExpressionNodeViewDataSource>dataSource;
 @property (copy, readwrite) NSString      * groupID;
 @property (readwrite)       BOOL            isLogicalViewOnly;
-@property (weak,readonly)   AMExpressionFormatContextNode * contextNode;
+@property (readonly)        AMExpressionFormatContextNode * contextNode;
 
 //@property (strong, readwrite) AMExpressionDisplayOptions * displayOptions;
 

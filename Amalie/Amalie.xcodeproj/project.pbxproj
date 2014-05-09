@@ -14,6 +14,7 @@
 		534635FD19191B0700569927 /* AMExpressionEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534635FB19191B0700569927 /* AMExpressionEditorViewController.m */; };
 		534635FE19191B0700569927 /* AMExpressionEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */; };
 		5346360119191F1F00569927 /* AMExpressionEditorContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */; };
+		53463605191B7A3E00569927 /* AMExpressionNodeContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53463604191B7A3E00569927 /* AMExpressionNodeContainerView.m */; };
 		5353CBBE18E1E7D400C9D88A /* AMColorPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */; };
 		5366F10D1916203F00FD6FC4 /* AMArgumentRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5366F10C1916203F00FD6FC4 /* AMArgumentRenamer.m */; };
 		5366F1111917771600FD6FC4 /* AMArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5366F1101917771600FD6FC4 /* AMArgument.m */; };
@@ -238,6 +239,8 @@
 		534635FF19191F1F00569927 /* AMExpressionEditorContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionEditorContainerView.h; sourceTree = "<group>"; };
 		5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionEditorContainerView.m; sourceTree = "<group>"; };
 		53463602191A24D100569927 /* AMExpressionNodeControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeControllerDelegate.h; sourceTree = "<group>"; };
+		53463603191B7A3E00569927 /* AMExpressionNodeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionNodeContainerView.h; sourceTree = "<group>"; };
+		53463604191B7A3E00569927 /* AMExpressionNodeContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionNodeContainerView.m; sourceTree = "<group>"; };
 		5353CBBC18E1E7D400C9D88A /* AMColorPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreference.h; sourceTree = "<group>"; };
 		5353CBBD18E1E7D400C9D88A /* AMColorPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreference.m; sourceTree = "<group>"; };
 		5366F10B1916203F00FD6FC4 /* AMArgumentRenamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentRenamer.h; sourceTree = "<group>"; };
@@ -603,6 +606,8 @@
 				534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */,
 				534635FF19191F1F00569927 /* AMExpressionEditorContainerView.h */,
 				5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */,
+				53463603191B7A3E00569927 /* AMExpressionNodeContainerView.h */,
+				53463604191B7A3E00569927 /* AMExpressionNodeContainerView.m */,
 			);
 			name = "Expression Editor";
 			path = ..;
@@ -1500,6 +1505,7 @@
 				78A0472117BBEEF900B5703E /* AMOperatorView.m in Sources */,
 				788EAE0518B517D800D3EBD3 /* BitmaskHelpers.c in Sources */,
 				785D9A2E179D9BED004D39B5 /* AMContentViewController.m in Sources */,
+				53463605191B7A3E00569927 /* AMExpressionNodeContainerView.m in Sources */,
 				788EAE0C18B61C1000D3EBD3 /* AMPageSetupViewController.m in Sources */,
 				78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,

@@ -123,6 +123,7 @@
     _delegate = delegate;
     _dataSource = dataSource;
     _scriptingLevel = scriptingLevel;
+    //NSAssert(contextNode, @"Context node is nill");
     _contextNode = contextNode;
     if (expression)
     {

@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AMExpressionNodeControllerDelegate.h"
 
-@interface AMExpressionEditorViewController : NSViewController <AMExpressionNodeControllerDelegate>
+@interface AMExpressionEditorViewController : NSViewController <NSTextFieldDelegate,AMExpressionNodeControllerDelegate>
 
 @property (readonly, copy) NSString * expressionString;
 

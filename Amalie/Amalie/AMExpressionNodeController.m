@@ -15,6 +15,7 @@
 #import "AMMathSheetNameProvider.h"
 #import "AMExpressionFormatContextNode.h"
 #import "AMExpressionDataSource.h"
+#import "AMExpressionFormatContextNode.h"
 
 NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 
@@ -23,7 +24,7 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
     KSMMathSheet         * _mathSheet;
     id<AMNameProviding>    _nameProvider;
     KSMExpression        * _expression;
-    AMExpressionNodeView * _expressionNode;
+    AMExpressionNodeView * _expressionNodeView;
     NSString             * _expressionString;
 }
 @property (readonly) KSMExpression * expression;
@@ -31,13 +32,14 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 @property (readonly) KSMMathSheet * mathSheet;
 @property (readonly) id<AMNameProviding>nameProvider;
 @property (copy, readonly) NSString * expressionString;
+@property (readonly) AMExpressionFormatContextNode * contextNode;
 @end
 
 @implementation AMExpressionNodeController
 
 -(void)awakeFromNib
 {
-    self.expressionNode.delegate = self;
+
 }
 
 #pragma mark - AMExpressionNodeViewDelegate -
@@ -57,11 +59,10 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
     return [self.mathSheet expressionForSymbol:symbol];
 }
 #pragma mark - AMExpressionNodeController -
--(AMExpressionNodeView*)expressionNode
+-(AMExpressionNodeView*)expressionNodeView
 {
-    if (!_expressionNode) {
-        AMExpressionFormatContextNode * context = [self makeExpressionContextNodeWithExpression:self.expression];
-        _expressionNode = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
+    if (!_expressionNodeView) {
+        _expressionNodeView = [[AMExpressionNodeView alloc] initWithFrame:NSZeroRect
                                                               groupID:@""
                                                            expression:self.expression
                                                        scriptingLevel:0
@@ -69,21 +70,14 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
                                                            dataSource:self
                                                        displayOptions:nil
                                                           scaleFactor:1
-                                                          contextNode:context];
+                                                          contextNode:self.contextNode];
     }
-    return _expressionNode;
+    return _expressionNodeView;
 }
--(AMExpressionFormatContextNode*)makeExpressionContextNodeWithExpression:(KSMExpression*)expr
+-(AMExpressionFormatContextNode*)contextNode
 {
-    return [[AMExpressionFormatContextNode alloc] initWithExpression:expr parent:nil asLeftNode:NO asRightNode:NO dataSource:self hideRedundantBrackets:YES cascadeBracketHiding:YES];
+    return [[AMExpressionFormatContextNode alloc] initWithExpression:self.expression parent:nil asLeftNode:NO asRightNode:NO dataSource:self hideRedundantBrackets:YES cascadeBracketHiding:YES];
 }
--(void)setExpressionNode:(AMExpressionNodeView *)expressionNode
-{
-    _expressionNode = expressionNode;
-    expressionNode.delegate   = self;
-    expressionNode.dataSource = self;
-}
-
 -(KSMExpression*)expression
 {
     if (!_expression) {
@@ -108,15 +102,15 @@ NSString * const kAMDemoExpressionMathStyle = @"4*Aj^2*e^(2*xi^2)";
 }
 -(void)reloadData
 {
-    [self.expressionNode resetWithgroupID:@""
+    [self.expressionNodeView resetWithgroupID:@""
                                expression:self.expression
                            scriptingLevel:0
                                  delegate:self
                                dataSource:self
                            displayOptions:nil
                               scaleFactor:1
-                              contextNode:nil];
-    [self.expressionNode setNeedsDisplay:YES];
+                              contextNode:self.contextNode];
+    [self.expressionNodeView setNeedsDisplay:YES];
 }
 -(KSMMathSheet *)mathSheet
 {

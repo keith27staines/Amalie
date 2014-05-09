@@ -11,11 +11,17 @@
 #import "AMAmalieDocument.h"
 #import "AMExpressionNodeController.h"
 #import "AMPersistedObjectWithArgumentsNameProvider.h"
+#import "AMExpressionNodeContainerView.h"
+
 @interface AMExpressionEditorViewController ()
 {
     void (^_completionHandler)(void);
 }
 - (IBAction)close:(id)sender;
+
+
+@property (weak) IBOutlet AMExpressionNodeContainerView *expressionNodeContainerView;
+
 
 @property (strong) IBOutlet AMExpressionNodeController *expressionNodeController;
 
@@ -45,10 +51,31 @@
 {
     self.expressionStringField.stringValue = self.expressionString;
     [self.expressionNodeController setExpressionString:self.expressionString];
+    self.expressionNodeContainerView.expressionNodeView = self.expressionNodeController.expressionNodeView;
 }
 - (IBAction)close:(id)sender {
     [self.view.window endEditingFor:self.expressionStringField];
     _completionHandler();
+}
+-(void)updateWithString:(NSString*)string
+{
+    self.expressionString = string;
+    [self reloadData];
+}
+
+#pragma mark - NSTextFieldDelegate -
+-(void)controlTextDidBeginEditing:(NSNotification *)obj
+{
+    
+}
+-(void)controlTextDidEndEditing:(NSNotification *)obj
+{
+    NSTextField * tf = obj.object;
+    NSString * string = tf.stringValue;
+    [self updateWithString:string];    
+}
+-(void)controlTextDidChange:(NSNotification *)obj
+{
 }
 #pragma mark - AMExpressionNodeControllerDelegate -
 -(id<AMNameProviding>)expressionNodeControllerWantsNameProvider:(AMExpressionNodeController*)controller
