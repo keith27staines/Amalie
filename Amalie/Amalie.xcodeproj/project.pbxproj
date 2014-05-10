@@ -93,7 +93,6 @@
 		786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 786E32F6188D12F10095443D /* AMFunctionPropertiesViewController.xib */; };
 		78734E231806B10F00A2EEF3 /* AMKeyboardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */; };
 		78734E241806B10F00A2EEF3 /* AMKeyboardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */; };
-		78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E261806EA0500A2EEF3 /* AMKeyboardContainerView.m */; };
 		78734E2A180BD63B00A2EEF3 /* AMKeyboardKeyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */; };
 		78734E2D180BE5DC00A2EEF3 /* AMKeyboardButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E2C180BE5DC00A2EEF3 /* AMKeyboardButtonView.m */; };
 		78734E33180D980A00A2EEF3 /* AMKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78734E32180D980A00A2EEF3 /* AMKeyboardView.m */; };
@@ -382,8 +381,6 @@
 		78734E201806B10F00A2EEF3 /* AMKeyboardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardsViewController.h; path = Amalie/AMKeyboardsViewController.h; sourceTree = "<group>"; };
 		78734E211806B10F00A2EEF3 /* AMKeyboardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardsViewController.m; path = Amalie/AMKeyboardsViewController.m; sourceTree = "<group>"; };
 		78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AMKeyboardsView.xib; path = Amalie/AMKeyboardsView.xib; sourceTree = "<group>"; };
-		78734E251806EA0500A2EEF3 /* AMKeyboardContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardContainerView.h; path = Amalie/AMKeyboardContainerView.h; sourceTree = "<group>"; };
-		78734E261806EA0500A2EEF3 /* AMKeyboardContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardContainerView.m; path = Amalie/AMKeyboardContainerView.m; sourceTree = "<group>"; };
 		78734E28180BD63B00A2EEF3 /* AMKeyboardKeyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardKeyModel.h; path = Amalie/AMKeyboardKeyModel.h; sourceTree = "<group>"; };
 		78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMKeyboardKeyModel.m; path = Amalie/AMKeyboardKeyModel.m; sourceTree = "<group>"; };
 		78734E2B180BE5DC00A2EEF3 /* AMKeyboardButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMKeyboardButtonView.h; path = Amalie/AMKeyboardButtonView.h; sourceTree = "<group>"; };
@@ -725,8 +722,6 @@
 			isa = PBXGroup;
 			children = (
 				78734E221806B10F00A2EEF3 /* AMKeyboardsView.xib */,
-				78734E251806EA0500A2EEF3 /* AMKeyboardContainerView.h */,
-				78734E261806EA0500A2EEF3 /* AMKeyboardContainerView.m */,
 				78734E31180D980A00A2EEF3 /* AMKeyboardView.h */,
 				78734E32180D980A00A2EEF3 /* AMKeyboardView.m */,
 				78734E2B180BE5DC00A2EEF3 /* AMKeyboardButtonView.h */,
@@ -1487,7 +1482,6 @@
 				785247C9178552A700F6A7AD /* AMPageView.m in Sources */,
 				78F52C6017FABA5C0092B604 /* AMDArgument.m in Sources */,
 				53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */,
-				78734E271806EA0500A2EEF3 /* AMKeyboardContainerView.m in Sources */,
 				78BFE6341817C2E300D4ADB1 /* AMError.m in Sources */,
 				78F57D901835232A00683FFC /* AMDInsertedExpression.m in Sources */,
 				7899B2D317ACF596008BDB75 /* KSMReferenceCounter.m in Sources */,

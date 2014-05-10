@@ -10,9 +10,6 @@
 @class AMPageView;
 @class AMAppController;
 @class KSMMathSheet;
-@class AMKeyboardsAreaView;
-
-@class AMKeyboardsViewController;
 @class AMDocumentContainerView;
 @class AMLibraryViewController;
 @class AMPersistedObjectNameProvider;
@@ -83,7 +80,6 @@ NSPopoverDelegate>
 - (IBAction)scaleSliderMoved:(NSSlider *)scaleSlider;
 
 # pragma mark - View Controllers for subviews -
-@property (strong) IBOutlet AMKeyboardsViewController *keyboardsViewController;
 
 @property (weak) IBOutlet NSPopover *pageSetupPopover;
 

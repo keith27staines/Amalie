@@ -10,7 +10,7 @@
 
 #import "AMKeyboardsViewController.h"
 #import "AMKeyboardKeyModel.h"
-#import "AMKeyboardContainerView.h"
+#import "AMKeyboardView.h"
 #import "AMKeyboards.h"
 #import "AMKeyboard.h"
 #import "AMKeyboardButtonView.h"
@@ -49,12 +49,15 @@
     [self.keyboardSelector selectItemAtIndex:AMKeyboardIndexGreekSmall];
     [self selectKeyboard:AMKeyboardIndexGreekSmall];
 }
-
+-(AMKeyboardView *)keyboardContainerView
+{
+    return (AMKeyboardView*)self.view;
+}
 -(void)selectKeyboard:(AMKeyboardIndex)keyboardIndex
 {
     AMKeyboard * keyboard = [[AMKeyboards sharedKeyboards] keyboardWithIndex:keyboardIndex];
     self.keyButtons = [keyboard allKeys];
-    [self.keyboardContainerView reloadKeys];
+    [self.keyboardView updateKeyLabels];
 }
 
 -(NSUInteger)numberOfKeys

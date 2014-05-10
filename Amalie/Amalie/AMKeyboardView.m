@@ -49,7 +49,7 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
             [self addSubview:keyButton];
         }
     }
-    [self setFrameSize:self.intrinsicContentSize];
+//    [self setFrameSize:self.intrinsicContentSize];
 }
 
 -(AMKeyboardsViewController *)keyboardsViewController

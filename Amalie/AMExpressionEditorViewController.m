@@ -19,9 +19,7 @@
 }
 - (IBAction)close:(id)sender;
 
-
 @property (weak) IBOutlet AMExpressionNodeContainerView *expressionNodeContainerView;
-
 
 @property (strong) IBOutlet AMExpressionNodeController *expressionNodeController;
 
@@ -29,7 +27,6 @@
 
 @property id<AMNameProviding>nameProvider;
 @property (readwrite, copy) NSString * expressionString;
-
 @end
 
 @implementation AMExpressionEditorViewController

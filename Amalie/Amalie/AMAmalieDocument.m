@@ -11,7 +11,6 @@
 #import "AMConstants.h"
 #import "AMPageView.h"
 #import "AMInsertableView.h"
-#import "AMKeyboardsAreaView.h"
 #import "KSMMathSheet.h"
 #import "KSMMathValue.h"
 #import "AMContentView.h"
@@ -20,7 +19,6 @@
 #import "AMDataStore.h"
 #import "AMDInsertedObject.h"
 #import "AMToolboxView.h"
-#import "AMKeyboardContainerView.h"
 #import "AMUserPreferences.h"
 #import "AMDataStore.h"
 #import "AMDInsertedObject+Methods.h"
@@ -45,7 +43,6 @@
 // View controllers for dynamically loaded views
 #import "AMDocumentSettingsBaseViewController.h"
 #import "AMInsertableViewController.h"
-#import "AMKeyboardsViewController.h"
 #import "AMLibraryViewController.h"
 #import "AMExpressionEditorViewController.h"
 
