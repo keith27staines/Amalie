@@ -11,6 +11,7 @@
 		53132A3518FEEEA60069C7BA /* AMMathSheetNameProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53132A3418FEEEA60069C7BA /* AMMathSheetNameProvider.m */; };
 		5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316847D18EDABFD00A29B36 /* AMSettingsSection.m */; };
 		5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */; };
+		53349D67191E869F00FA32E1 /* AMKeyboardConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 53349D66191E869F00FA32E1 /* AMKeyboardConstants.m */; };
 		534635FD19191B0700569927 /* AMExpressionEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534635FB19191B0700569927 /* AMExpressionEditorViewController.m */; };
 		534635FE19191B0700569927 /* AMExpressionEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */; };
 		5346360119191F1F00569927 /* AMExpressionEditorContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346360019191F1F00569927 /* AMExpressionEditorContainerView.m */; };
@@ -232,6 +233,8 @@
 		5316847D18EDABFD00A29B36 /* AMSettingsSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSettingsSection.m; sourceTree = "<group>"; };
 		5329831918E576FF0040809D /* AMColorPreferenceTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMColorPreferenceTableCellView.h; sourceTree = "<group>"; };
 		5329831A18E576FF0040809D /* AMColorPreferenceTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMColorPreferenceTableCellView.m; sourceTree = "<group>"; };
+		53349D65191E869F00FA32E1 /* AMKeyboardConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMKeyboardConstants.h; sourceTree = "<group>"; };
+		53349D66191E869F00FA32E1 /* AMKeyboardConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMKeyboardConstants.m; sourceTree = "<group>"; };
 		534635FA19191B0700569927 /* AMExpressionEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMExpressionEditorViewController.h; sourceTree = "<group>"; };
 		534635FB19191B0700569927 /* AMExpressionEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMExpressionEditorViewController.m; sourceTree = "<group>"; };
 		534635FC19191B0700569927 /* AMExpressionEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMExpressionEditorViewController.xib; sourceTree = "<group>"; };
@@ -734,6 +737,8 @@
 				7825D654180E91E60039EB67 /* AMKeyboards.m */,
 				78734E28180BD63B00A2EEF3 /* AMKeyboardKeyModel.h */,
 				78734E29180BD63B00A2EEF3 /* AMKeyboardKeyModel.m */,
+				53349D65191E869F00FA32E1 /* AMKeyboardConstants.h */,
+				53349D66191E869F00FA32E1 /* AMKeyboardConstants.m */,
 			);
 			name = AMKeyboard;
 			path = ..;
@@ -1504,6 +1509,7 @@
 				78DE598317CB6F5F003F0181 /* KSMFunctionArgumentList.m in Sources */,
 				78F52C5717FABA5C0092B604 /* AMDArgumentList.m in Sources */,
 				78BBB30117D106C8006B8F07 /* KSMStandardFunction1v.m in Sources */,
+				53349D67191E869F00FA32E1 /* AMKeyboardConstants.m in Sources */,
 				534635FD19191B0700569927 /* AMExpressionEditorViewController.m in Sources */,
 				785826A618C474C800612651 /* AMColorPreferencesViewController.m in Sources */,
 				53132A3518FEEEA60069C7BA /* AMMathSheetNameProvider.m in Sources */,

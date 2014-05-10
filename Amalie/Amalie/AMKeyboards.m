@@ -6,17 +6,12 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+#import "AMKeyboardConstants.h"
 #import "AMKeyboards.h"
 #import "AMKeyboard.h"
 #import "AMKeyboardKeyModel.h"
 
-NSString * const kAMKeyboardSmallGreek     = @"Greek (small)";
-NSString * const kAMKeyboardCapitalGreek   = @"Greek (capital)";
-NSString * const kAMKeyboardSmallEnglish   = @"English (small)";
-NSString * const kAMKeyboardCapitalEnglish = @"English (capital)";
-NSString * const kAMKeyboardNumeric        = @"Numeric";
-NSString * const kAMKeyboardMathOperators  = @"Mathematical operators";
-NSString * const kAMKeyboardMathSymbols    = @"Mathematical symbols";
+
 
 static AMKeyboards * _sharedKeyboards;
 
@@ -48,6 +43,7 @@ static AMKeyboards * _sharedKeyboards;
 {
     if (!_sharedKeyboards) {
         _sharedKeyboards = [[AMKeyboards alloc] init];
+        [_sharedKeyboards keyboardWithName:kAMKeyboardNone];
         [_sharedKeyboards keyboardWithName:kAMKeyboardSmallGreek];
         [_sharedKeyboards keyboardWithName:kAMKeyboardCapitalGreek];
         [_sharedKeyboards keyboardWithName:kAMKeyboardSmallEnglish];
@@ -83,6 +79,9 @@ static AMKeyboards * _sharedKeyboards;
 
 +(NSArray*)standardKeysForKeyboard:(NSString*)keyboardName
 {
+    if ([keyboardName isEqualToString:kAMKeyboardNone]) {
+        return @[]; // keyboard with no keys
+    }
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"keyboardName == %@",keyboardName];
     return [[self standardKeys] filteredArrayUsingPredicate:predicate];
 }

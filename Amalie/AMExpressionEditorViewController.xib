@@ -10,6 +10,7 @@
                 <outlet property="expressionNodeContainerView" destination="zla-ev-H8E" id="8WO-kg-blE"/>
                 <outlet property="expressionNodeController" destination="yfi-w8-iQN" id="Ynx-iB-Ci1"/>
                 <outlet property="expressionStringField" destination="bZg-XA-1XI" id="pHy-Ke-iOO"/>
+                <outlet property="keyboardSelector" destination="otH-81-wSA" id="fFP-Fv-t6x"/>
                 <outlet property="keyboardsController" destination="b9M-qV-xG8" id="FnN-bH-1kn"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -78,42 +79,53 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8ht-2i-TmS">
-                        <rect key="frame" x="583" y="1" width="16" height="102"/>
+                        <rect key="frame" x="584" y="1" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RQl-JU-MhD">
-                    <rect key="frame" x="20" y="19" width="112" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" title="Toggle Keyboard" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RsO-sc-XEY">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="toggleKeyboard:" target="Hz6-mo-xeY" id="j63-b5-jxU"/>
-                    </connections>
-                </button>
-                <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H7r-8B-5q5">
-                    <rect key="frame" x="153" y="18" width="329" height="21"/>
+                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H7r-8B-5q5">
+                    <rect key="frame" x="96" y="20" width="414" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="lay-bp-UZx"/>
                 </slider>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="otH-81-wSA">
+                    <rect key="frame" x="18" y="17" width="75" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gFj-s2-z6V" id="Yu0-sD-qbI">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" title="OtherViews" id="ulA-GH-oa2">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="gFj-s2-z6V"/>
+                                <menuItem title="Item 2" id="ZFv-i8-SZd"/>
+                                <menuItem title="Item 3" id="Rn5-rL-TRe"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="keyboardSelector:" target="Hz6-mo-xeY" id="8ZB-nL-DiN"/>
+                    </connections>
+                </popUpButton>
             </subviews>
             <constraints>
-                <constraint firstItem="RQl-JU-MhD" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Aeh-Id-hgB"/>
                 <constraint firstItem="bZg-XA-1XI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="DJr-wg-iKP"/>
-                <constraint firstItem="RQl-JU-MhD" firstAttribute="top" secondItem="bZg-XA-1XI" secondAttribute="bottom" constant="20" id="L4w-B6-p0t"/>
+                <constraint firstItem="H7r-8B-5q5" firstAttribute="leading" secondItem="otH-81-wSA" secondAttribute="trailing" constant="8" symbolic="YES" id="Khk-kB-4Sr"/>
                 <constraint firstAttribute="trailing" secondItem="Pm1-uw-gLx" secondAttribute="trailing" constant="20" id="MYG-Dm-DQz"/>
+                <constraint firstItem="gqf-8G-Kvv" firstAttribute="leading" secondItem="H7r-8B-5q5" secondAttribute="trailing" constant="8" symbolic="YES" id="NDn-Mq-SK7"/>
                 <constraint firstAttribute="trailing" secondItem="gqf-8G-Kvv" secondAttribute="trailing" constant="20" id="UFf-a7-c4j"/>
                 <constraint firstItem="Pm1-uw-gLx" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="VwE-Tw-8Vz"/>
                 <constraint firstItem="bZg-XA-1XI" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="132" id="ipk-1a-yJK"/>
-                <constraint firstAttribute="bottom" secondItem="gqf-8G-Kvv" secondAttribute="bottom" constant="20" id="rYa-nI-Al7"/>
+                <constraint firstItem="gqf-8G-Kvv" firstAttribute="top" secondItem="bZg-XA-1XI" secondAttribute="bottom" constant="20" id="off-72-qp3"/>
+                <constraint firstItem="otH-81-wSA" firstAttribute="top" secondItem="bZg-XA-1XI" secondAttribute="bottom" constant="20" id="pjJ-rT-lhD"/>
+                <constraint firstItem="H7r-8B-5q5" firstAttribute="centerY" secondItem="otH-81-wSA" secondAttribute="centerY" id="sHY-bB-cEL"/>
                 <constraint firstItem="Pm1-uw-gLx" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="twz-bs-xjx"/>
+                <constraint firstItem="otH-81-wSA" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="uhv-2P-csg"/>
                 <constraint firstAttribute="trailing" secondItem="bZg-XA-1XI" secondAttribute="trailing" constant="20" id="vmz-td-jFL"/>
             </constraints>
             <connections>
-                <outlet property="controlAboveKeyboard" destination="RQl-JU-MhD" id="lAl-x9-b7H"/>
+                <outlet property="controlAboveKeyboard" destination="otH-81-wSA" id="p8h-y9-eTm"/>
                 <outlet property="controlBelowKeyboard" destination="gqf-8G-Kvv" id="PkP-91-wSL"/>
+                <outlet property="keyboardSelector" destination="otH-81-wSA" id="05d-6G-PtI"/>
                 <outlet property="keyboardsController" destination="b9M-qV-xG8" id="ZLr-p1-Eoo"/>
             </connections>
         </customView>

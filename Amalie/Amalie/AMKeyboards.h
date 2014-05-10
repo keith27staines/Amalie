@@ -10,15 +10,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kAMKeyboardSmallGreek;
-extern NSString * const kAMKeyboardCapitalGreek;
-extern NSString * const kAMKeyboardSmallEnglish;
-extern NSString * const kAMKeyboardCapitalEnglish;
-extern NSString * const kAMKeyboardNumeric;
-extern NSString * const kAMKeyboardMathOperators;
-extern NSString * const kAMKeyboardMathSymbols;
-
-
 @interface AMKeyboards : NSObject
 
 @property (readonly, copy) NSArray * keyboards;

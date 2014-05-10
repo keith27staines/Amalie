@@ -16,30 +16,6 @@
         <customView autoresizesSubviews="NO" id="1" customClass="AMKeyboardView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="179"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cef-58-Cd9">
-                    <rect key="frame" x="439" y="135" width="144" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Greek (Small)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="RiI-jg-7td">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" title="OtherViews" id="zd5-Cq-0s8">
-                            <items>
-                                <menuItem title="Greek (Small)" state="on" id="AeE-ee-qhh"/>
-                                <menuItem title="Greek (Capital)" tag="1" id="JHv-lO-zjB"/>
-                                <menuItem title="Symbol Keyboard" tag="2" id="z40-pO-od5"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                    <connections>
-                        <action selector="keyboadSelectorChanged:" target="-2" id="Ytp-F2-KGm"/>
-                    </connections>
-                </popUpButton>
-            </subviews>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="Cef-58-Cd9" secondAttribute="trailing" constant="20" id="c2n-tt-M6O"/>
-                <constraint firstItem="Cef-58-Cd9" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" id="k6f-0T-AEd"/>
-            </constraints>
             <connections>
                 <outlet property="keyboardsViewController" destination="-2" id="vMs-3V-beV"/>
             </connections>

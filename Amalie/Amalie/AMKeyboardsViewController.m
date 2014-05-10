@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "AMKeyboardConstants.h"
 #import "AMKeyboardsViewController.h"
 #import "AMKeyboardKeyModel.h"
 #import "AMKeyboardView.h"
@@ -37,19 +38,7 @@
     return [NSBundle mainBundle];
 }
 
--(void)awakeFromNib
-{
-    [self.keyboardSelector removeAllItems];
-    
-    AMKeyboards * sharedKeyboards = [AMKeyboards sharedKeyboards];
-    for (AMKeyboard * kb in sharedKeyboards.keyboards) {
-        [self.keyboardSelector addItemWithTitle:kb.name];
-    }
-    
-    [self.keyboardSelector selectItemAtIndex:AMKeyboardIndexGreekSmall];
-    [self selectKeyboard:AMKeyboardIndexGreekSmall];
-}
--(AMKeyboardView *)keyboardContainerView
+-(AMKeyboardView *)keyboardView
 {
     return (AMKeyboardView*)self.view;
 }
@@ -57,7 +46,7 @@
 {
     AMKeyboard * keyboard = [[AMKeyboards sharedKeyboards] keyboardWithIndex:keyboardIndex];
     self.keyButtons = [keyboard allKeys];
-    [self.keyboardView updateKeyLabels];
+    [self.keyboardView reloadData];
 }
 
 -(NSUInteger)numberOfKeys
@@ -70,14 +59,9 @@
     return self.keyButtons[index];
 }
 
-- (IBAction)keyboadSelectorChanged:(NSPopUpButton *)sender
-{
-    [self selectKeyboard:sender.indexOfSelectedItem];
-}
-
 - (IBAction)keyButtonPressed:(AMKeyboardButtonView *)sender
 {
-    id firstResponder = self.keyboardContainerView.window.firstResponder;
+    id firstResponder = self.keyboardView.window.firstResponder;
     if (!firstResponder) return;
     if ( [firstResponder isKindOfClass:[NSTextView class]] ) {
         AMKeyboardKeyModel * keyboardKey = sender.keyboardKey;

@@ -49,7 +49,6 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
             [self addSubview:keyButton];
         }
     }
-//    [self setFrameSize:self.intrinsicContentSize];
 }
 
 -(AMKeyboardsViewController *)keyboardsViewController
@@ -94,7 +93,7 @@ static NSUInteger const MAX_COL_BUTTONS = 3;
     return keyButton;
 }
 
--(void)updateKeyLabels
+-(void)reloadData
 {
     NSUInteger nKeys = [self.keyboardsViewController numberOfKeys];
     

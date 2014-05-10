@@ -10,23 +10,12 @@
 @class AMKeyboardView;
 @class AMKeyboardButtonView;
 
-typedef enum AMKeyboardIndex : NSUInteger {
-    AMKeyboardIndexGreekSmall   = 0,
-    AMKeyboardIndexGreekCapital = 1,
-} AMKeyboardIndex;
-
-
 #import <Cocoa/Cocoa.h>
+#import "AMKeyboardConstants.h"
 
 @interface AMKeyboardsViewController : NSViewController
 
-
 @property (strong) NSArray * keyButtons;
-
-@property (weak) IBOutlet NSPopUpButton *keyboardSelector;
-
-- (IBAction)keyboadSelectorChanged:(NSPopUpButton *)sender;
-
 
 @property (weak,readonly) AMKeyboardView * keyboardView;
 
@@ -34,5 +23,5 @@ typedef enum AMKeyboardIndex : NSUInteger {
 
 -(NSUInteger)numberOfKeys;
 -(AMKeyboardKeyModel*)keyForIndex:(NSUInteger)index;
-
+-(void)selectKeyboard:(AMKeyboardIndex)keyboardIndex;
 @end

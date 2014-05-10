@@ -7,17 +7,22 @@
 //
 
 #import "AMExpressionEditorContainerView.h"
+#import "AMKeyboardConstants.h"
 #import "AMKeyboardsViewController.h"
+#import "AMKeyboardView.h"
+#import "AMKeyboards.h"
+#import "AMKeyboardView.h"
+#import "AMKeyboard.h"
 
 @interface AMExpressionEditorContainerView()
 {
-    NSView * _keyboardView;
+    AMKeyboardView * _keyboardView;
 }
 @property (weak) IBOutlet AMKeyboardsViewController * keyboardsController;
-@property (readonly) NSView * keyboardView;
+@property (readonly) AMKeyboardView * keyboardView;
 @property (weak) IBOutlet NSControl * controlAboveKeyboard;
-@property (weak) IBOutlet NSControl * controlBelowKeyboard;
--(IBAction)toggleKeyboard:(id)sender;
+-(IBAction)keyboardSelector:(NSPopUpButton*)sender;
+@property (weak) IBOutlet NSPopUpButton * keyboardSelector;
 
 @property NSMutableArray * dynamicallyAddedConstraints;
 @end
@@ -37,17 +42,34 @@
 {
     [super drawRect:dirtyRect];
 }
--(IBAction)toggleKeyboard:(id)sender {
-    [self.keyboardView setHidden:!self.keyboardView.isHidden];
+-(void)viewDidMoveToWindow
+{
+    [self loadKeyboardSelectorPopup];
+    [self selectKeyboard:AMKeyboardIndexNone];
+}
+-(void)loadKeyboardSelectorPopup
+{
+    [self.keyboardSelector removeAllItems];
+    AMKeyboards * sharedKeyboards = [AMKeyboards sharedKeyboards];
+    for (AMKeyboard * kb in sharedKeyboards.keyboards) {
+        [self.keyboardSelector addItemWithTitle:kb.name];
+    }
+}
+-(IBAction)keyboardSelector:(NSPopUpButton*)sender {
+    [self.keyboardsController selectKeyboard:sender.indexOfSelectedItem];
     [self updateConstraints];
 }
--(NSView *)keyboardView
+-(void)selectKeyboard:(AMKeyboardIndex)keyboardIndex
+{
+    [self.keyboardSelector selectItemAtIndex:keyboardIndex];
+    [self.keyboardView reloadData];
+}
+-(AMKeyboardView *)keyboardView
 {
     if (!_keyboardView) {
-        _keyboardView = self.keyboardsController.view;
+        _keyboardView = self.keyboardsController.keyboardView;
         [_keyboardView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self addSubview:_keyboardView];
-        [_keyboardView setHidden:YES];
     }
     return _keyboardView;
 }
@@ -57,19 +79,19 @@
     if (self.dynamicallyAddedConstraints) {
         [self removeConstraints:self.dynamicallyAddedConstraints];
     }
-
-    if (self.keyboardView.isHidden) {
+    NSView * controlAboveKB = self.controlAboveKeyboard;
+    NSView * kb = self.keyboardView;
+    NSDictionary * views = NSDictionaryOfVariableBindings(controlAboveKB,kb);
+    if ([self.keyboardSelector indexOfSelectedItem] == AMKeyboardIndexNone) {
+        [kb setHidden:YES];
         self.dynamicallyAddedConstraints = [NSMutableArray array];
-        NSView * above = self.controlAboveKeyboard;
-        NSView * below = self.controlBelowKeyboard;
-        [self.dynamicallyAddedConstraints addObject:[NSLayoutConstraint constraintWithItem:above attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:below attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+        NSView * controlAboveKB = self.controlAboveKeyboard;
+        NSDictionary * views = NSDictionaryOfVariableBindings(controlAboveKB);
+        self.dynamicallyAddedConstraints = [[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controlAboveKB]-|" options:0 metrics:nil views:views] mutableCopy];
     } else {
-        NSView * above = self.controlAboveKeyboard;
-        NSView * below = self.controlBelowKeyboard;
-        NSView * kb = self.keyboardView;
-        NSDictionary * views = NSDictionaryOfVariableBindings(above,below,kb);
-        self.dynamicallyAddedConstraints = [[NSLayoutConstraint constraintsWithVisualFormat:@"V:[above]-[kb]-[below]" options:0 metrics:nil views:views] mutableCopy];
-        [self.dynamicallyAddedConstraints addObjectsFromArray:[[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=20)-[kb]-(>=20)-|" options:0 metrics:nil views:views] mutableCopy]];
+        [kb setHidden:NO];
+        self.dynamicallyAddedConstraints = [[NSLayoutConstraint constraintsWithVisualFormat:@"V:[controlAboveKB]-[kb]-|" options:0 metrics:nil views:views] mutableCopy];
+        [self.dynamicallyAddedConstraints addObjectsFromArray:[[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[kb]-(20)-|" options:0 metrics:nil views:views] mutableCopy]];
     }
     [self addConstraints:self.dynamicallyAddedConstraints];
 }

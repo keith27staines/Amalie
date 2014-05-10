@@ -14,6 +14,6 @@
 
 @property (weak) IBOutlet AMKeyboardsViewController * keyboardsViewController;
 
--(void)updateKeyLabels;
+-(void)reloadData;
 
 @end
