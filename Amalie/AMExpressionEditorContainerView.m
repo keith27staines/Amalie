@@ -19,12 +19,21 @@
     AMKeyboardView * _keyboardView;
 }
 @property (weak) IBOutlet AMKeyboardsViewController * keyboardsController;
+
 @property (readonly) AMKeyboardView * keyboardView;
+
 @property (weak) IBOutlet NSControl * controlAboveKeyboard;
 -(IBAction)keyboardSelector:(NSPopUpButton*)sender;
+
 @property (weak) IBOutlet NSPopUpButton * keyboardSelector;
 
 @property NSMutableArray * dynamicallyAddedConstraints;
+
+- (IBAction)zoomSlider:(NSSlider *)sender;
+
+@property (weak) IBOutlet NSSlider *zoomSlider;
+@property (weak) IBOutlet NSScrollView *expressionScrollView;
+
 @end
 
 
@@ -96,4 +105,8 @@
     [self addConstraints:self.dynamicallyAddedConstraints];
 }
 
+- (IBAction)zoomSlider:(NSSlider *)sender {
+    CGFloat mag = sender.floatValue /4.0;
+    [self.expressionScrollView setMagnification:mag];
+}
 @end

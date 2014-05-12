@@ -86,7 +86,10 @@
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H7r-8B-5q5">
                     <rect key="frame" x="96" y="20" width="414" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="lay-bp-UZx"/>
+                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="12" doubleValue="4" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="lay-bp-UZx"/>
+                    <connections>
+                        <action selector="zoomSlider:" target="Hz6-mo-xeY" id="7EE-ww-hqh"/>
+                    </connections>
                 </slider>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="otH-81-wSA">
                     <rect key="frame" x="18" y="17" width="75" height="26"/>
@@ -125,8 +128,10 @@
             <connections>
                 <outlet property="controlAboveKeyboard" destination="otH-81-wSA" id="p8h-y9-eTm"/>
                 <outlet property="controlBelowKeyboard" destination="gqf-8G-Kvv" id="PkP-91-wSL"/>
+                <outlet property="expressionScrollView" destination="Pm1-uw-gLx" id="Gey-IC-P0h"/>
                 <outlet property="keyboardSelector" destination="otH-81-wSA" id="05d-6G-PtI"/>
                 <outlet property="keyboardsController" destination="b9M-qV-xG8" id="ZLr-p1-Eoo"/>
+                <outlet property="zoomSlider" destination="H7r-8B-5q5" id="AWB-6A-JIB"/>
             </connections>
         </customView>
         <customObject id="yfi-w8-iQN" customClass="AMExpressionNodeController"/>
