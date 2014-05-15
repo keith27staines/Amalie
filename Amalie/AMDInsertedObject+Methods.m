@@ -16,6 +16,7 @@
 #import "AMDExpression+Methods.h"
 #import "AMDFunctionDef+Methods.h"
 #import "AMDInsertedExpression+Methods.h"
+#import "AMDArgumentList+Methods.h"
 
 static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
 
@@ -44,13 +45,21 @@ static NSString * const kAMDENTITYNAME = @"AMDInsertedObjects";
         }
         case AMInsertableTypeConstant:
         {
-            amd = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
+            AMDFunctionDef * funcDef = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
+            AMDArgumentList * argList = funcDef.argumentList;
+            [argList removeAllArguments];
+            [funcDef setIsConstant:@(YES)];
+            amd = funcDef;
             iexpr.expression.originalString = @"0";
             break;
         }
         case AMInsertableTypeVariable:
         {
-            amd = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
+            AMDFunctionDef * funcDef = [AMDFunctionDef makeFunctionDefinitionWithNameProvider:nameProvider];
+            AMDArgumentList * argList = funcDef.argumentList;
+            [argList removeAllArguments];
+            [funcDef setIsVariable:@(YES)];
+            amd = funcDef;
             iexpr.expression.originalString = @"0";
             break;
         }

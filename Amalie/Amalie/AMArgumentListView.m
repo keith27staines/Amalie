@@ -21,7 +21,14 @@
 {
     self.readOnly = YES;
 }
-
+-(void)drawRect:(NSRect)dirtyRect
+{
+    [super drawRect:dirtyRect];
+}
+-(CGFloat)baselineOffsetFromBottom
+{
+    return [super baselineOffsetFromBottom];
+}
 -(void)setShowEqualsSign:(BOOL)showEqualsSign
 {
     _showEqualsSign = YES;
@@ -42,24 +49,38 @@
 
     // We will construct the argument list into displayString
     NSMutableAttributedString * displayString;
-
-    // initialise with left bracket
-    displayString = [[NSMutableAttributedString alloc] initWithString:@"(" attributes:attributes];
     
-    // append comma seperated list x,y,z...
-    for (NSUInteger i = 0; i < stringCount; i++) {
-        [displayString appendAttributedString:[self.delegate displayStringForIndex:i atScriptingLevel:self.scriptingLevel]];
-        
-        if (i < stringCount - 1) {
-            [displayString appendAttributedString:comma];
+    if (stringCount == 0) {
+        // append right bracket or right bracket and equals sign
+        if (!self.showEqualsSign) {
+            self.attributedString = [[NSMutableAttributedString alloc] initWithString:@" =" attributes:attributes]; // We need to do this because some string is required in order to calculate the extendedAttrs
+            NSMutableDictionary * extendedAttrs = [attributes mutableCopy];
+            // extendedAttrs are required because an equal sign by itself is misplaced vertically, with one of its horizontal bars on the actual string baseline
+            extendedAttrs[NSBaselineOffsetAttributeName] = @([self minusSignHeightAboveBaseline]);
+            displayString = [[NSMutableAttributedString alloc] initWithString:@" =" attributes:extendedAttrs]; // shifts the character up by the required displacement for a minus sign
+        } else {
+            [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"" attributes:attributes]];
         }
-    }
-    
-    // append right bracket or right bracket and equals sign
-    if (!self.showEqualsSign) {
-        [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@")" attributes:attributes]];
+
     } else {
-        [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@") =" attributes:attributes]];
+        // initialise with left bracket
+        displayString = [[NSMutableAttributedString alloc] initWithString:@"(" attributes:attributes];
+        
+        // append comma seperated list x,y,z...
+        for (NSUInteger i = 0; i < stringCount; i++) {
+            [displayString appendAttributedString:[self.delegate displayStringForIndex:i atScriptingLevel:self.scriptingLevel]];
+            
+            if (i < stringCount - 1) {
+                [displayString appendAttributedString:comma];
+            }
+        }
+        
+        // append right bracket or right bracket and equals sign
+        if (!self.showEqualsSign) {
+            [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@")" attributes:attributes]];
+        } else {
+            [displayString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@") =" attributes:attributes]];
+        }
     }
     self.attributedString = displayString;
     [self invalidateIntrinsicContentSize];

@@ -19,4 +19,6 @@
 -(AMDArgument*)addArgumentAtIndex:(NSInteger)index  withNameProvider:(id<AMNameProviding>)nameProvider;
 -(BOOL)removeArgumentAtIndex:(NSUInteger)index;
 -(AMDArgument*)argumentWithName:(NSString*)name;
+-(NSUInteger)argumentCount;
+-(void)removeAllArguments;
 @end

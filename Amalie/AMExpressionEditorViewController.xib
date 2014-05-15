@@ -64,10 +64,8 @@
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="zla-ev-H8E" secondAttribute="centerX" id="3pU-Mb-El6"/>
-                            <constraint firstAttribute="bottom" secondItem="zla-ev-H8E" secondAttribute="bottom" id="YgL-D4-19V"/>
-                            <constraint firstItem="zla-ev-H8E" firstAttribute="leading" secondItem="RXo-20-uFA" secondAttribute="leading" id="cvU-sn-a9D"/>
-                            <constraint firstAttribute="centerY" secondItem="zla-ev-H8E" secondAttribute="centerY" id="gCN-2d-q1d"/>
+                            <constraint firstAttribute="centerY" secondItem="zla-ev-H8E" secondAttribute="centerY" id="Gwl-HU-sqh"/>
+                            <constraint firstAttribute="centerX" secondItem="zla-ev-H8E" secondAttribute="centerX" id="INz-rU-7RC"/>
                         </constraints>
                     </clipView>
                     <constraints>
@@ -128,6 +126,7 @@
             <connections>
                 <outlet property="controlAboveKeyboard" destination="otH-81-wSA" id="p8h-y9-eTm"/>
                 <outlet property="controlBelowKeyboard" destination="gqf-8G-Kvv" id="PkP-91-wSL"/>
+                <outlet property="expressionNodeContainerView" destination="zla-ev-H8E" id="R7H-Qz-qC8"/>
                 <outlet property="expressionScrollView" destination="Pm1-uw-gLx" id="Gey-IC-P0h"/>
                 <outlet property="keyboardSelector" destination="otH-81-wSA" id="05d-6G-PtI"/>
                 <outlet property="keyboardsController" destination="b9M-qV-xG8" id="ZLr-p1-Eoo"/>

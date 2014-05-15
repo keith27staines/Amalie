@@ -15,15 +15,10 @@
 
 @implementation AMConstantContentViewController
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(NSString *)nibName
 {
-    self = [super initWithNibName:@"AMFunctionContentView" bundle:nil];
-    if (self) {
-        // Expression content specific initialization
-    }
-    return self;
+    return @"AMFunctionContentView";
 }
-
 -(BOOL)isConstant
 {
     return YES;

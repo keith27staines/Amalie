@@ -70,6 +70,9 @@ static CABasicAnimation * animateOrigin;
 
 -(void)viewDidMoveToWindow
 {
+    if (!self.window) {
+        return;
+    }
     // Load the content view. We need to hold onto the reference for a short time
     AMContentView * contentView = [self.delegate insertableView:self
                         requiresContentViewOfType:self.insertableType];

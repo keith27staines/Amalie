@@ -296,7 +296,7 @@
 
 -(void)populateView:(AMContentView *)view
 {
-    NSLog(@"Warning... populateContent has not been overridden.");
+    NSLog(@"Warning... populateView in AMContentViewController has not been overridden.");
 }
 
 -(NSAttributedString*)viewWantsAttributedName:(AMContentView *)view

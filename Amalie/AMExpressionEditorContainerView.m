@@ -7,6 +7,7 @@
 //
 
 #import "AMExpressionEditorContainerView.h"
+#import "AMExpressionNodeContainerView.h"
 #import "AMKeyboardConstants.h"
 #import "AMKeyboardsViewController.h"
 #import "AMKeyboardView.h"
@@ -17,6 +18,7 @@
 @interface AMExpressionEditorContainerView()
 {
     AMKeyboardView * _keyboardView;
+    BOOL _staticConstraitsAdded;
 }
 @property (weak) IBOutlet AMKeyboardsViewController * keyboardsController;
 
@@ -33,6 +35,9 @@
 
 @property (weak) IBOutlet NSSlider *zoomSlider;
 @property (weak) IBOutlet NSScrollView *expressionScrollView;
+
+
+@property (weak) IBOutlet AMExpressionNodeContainerView *expressionNodeContainerView;
 
 @end
 
@@ -53,8 +58,39 @@
 }
 -(void)viewDidMoveToWindow
 {
+    [self constrainExpressionNodeContainerView];
     [self loadKeyboardSelectorPopup];
     [self selectKeyboard:AMKeyboardIndexNone];
+}
+-(void)constrainExpressionNodeContainerView
+{
+    if (_staticConstraitsAdded) {
+        return;
+    }
+    _staticConstraitsAdded = YES;
+    NSView * view = self.expressionNodeContainerView;
+    
+    NSDictionary * views = NSDictionaryOfVariableBindings(view);
+    NSArray * constraints;
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(<=0)-[view]-(<=0)-|" options:0 metrics:nil views:views];
+    [self addConstraints:constraints];
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(<=0)-[view]-(<=0)-|" options:0 metrics:nil views:views];
+    [self addConstraints:constraints];
+
+//    NSLayoutConstraint * constraint;
+//    constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+//    [self addConstraint:constraint];
+//    
+//    constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+//    [self addConstraint:constraint];
+//    
+//    constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+//    [constraint setPriority:NSLayoutPriorityDragThatCannotResizeWindow];
+//    [self addConstraint:constraint];
+//    
+//    constraint = [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+//    [constraint setPriority:NSLayoutPriorityDragThatCannotResizeWindow];
+//    [self addConstraint:constraint];
 }
 -(void)loadKeyboardSelectorPopup
 {
@@ -103,6 +139,7 @@
         [self.dynamicallyAddedConstraints addObjectsFromArray:[[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[kb]-(20)-|" options:0 metrics:nil views:views] mutableCopy]];
     }
     [self addConstraints:self.dynamicallyAddedConstraints];
+    
 }
 
 - (IBAction)zoomSlider:(NSSlider *)sender {

@@ -286,7 +286,6 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)reloadData
 {
-    // TODO: Move some of this functionality into the view we control
     [self.contentView removeDynamicConstraints];
     AMDFunctionDef * funcDef = self.amdFunctionDef;
     AMDExpression * amdExpr = [self expression];
@@ -298,6 +297,7 @@ static NSUInteger const kAMIndexRHS;
     self.nameView.attributedString = [self.nameProvider attributedStringForObject:funcDef];
     [self.argumentListViewController reloadData];
     [self.argumentListView setNeedsUpdateConstraints:YES];
+    
     [self.expressionView setNeedsUpdateConstraints:YES];
     [self.nameView setNeedsUpdateConstraints:YES];
     [self.contentView setNeedsUpdateConstraints:YES];

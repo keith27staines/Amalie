@@ -66,10 +66,19 @@ static NSString * const kAMENTITYNAME = @"AMDArgumentLists";
     
     return argument;
 }
-
+-(NSUInteger)argumentCount
+{
+    return self.arguments.count;
+}
+-(void)removeAllArguments
+{
+    while (self.argumentCount > 0) {
+        [self removeArgumentAtIndex:0];
+    }
+}
 -(BOOL)removeArgumentAtIndex:(NSUInteger)index
 {
-    if (index > self.arguments.count -1) NO;
+    if (index > self.arguments.count - 1) NO;
     
     [[self undoManager] beginUndoGrouping];
     

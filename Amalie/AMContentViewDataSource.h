@@ -26,5 +26,4 @@
 -(void)populateView:(AMContentView*)view;
 
 -(id<AMNameProviding>)viewRequiresNameProvider:(AMContentView*)view;
-
 @end

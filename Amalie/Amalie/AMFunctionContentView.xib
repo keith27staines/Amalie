@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D55" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D61" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
@@ -62,7 +62,7 @@
                     </connections>
                 </customView>
                 <button identifier="propertiesButton" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9R0-xP-hzU">
-                    <rect key="frame" x="14" y="11" width="39" height="38"/>
+                    <rect key="frame" x="14" y="9" width="39" height="38"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="round" bezelStyle="circular" imagePosition="above" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="7xD-ro-mkW">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -89,8 +89,9 @@
             </subviews>
             <constraints>
                 <constraint firstItem="YNe-VI-N9B" firstAttribute="centerY" secondItem="O6I-Qg-1kO" secondAttribute="centerY" placeholder="YES" id="5aP-Hp-FrT"/>
-                <constraint firstItem="9R0-xP-hzU" firstAttribute="bottom" secondItem="iG3-a1-4HF" secondAttribute="bottom" id="EPE-bZ-OFm"/>
+                <constraint firstItem="9R0-xP-hzU" firstAttribute="centerY" secondItem="iG3-a1-4HF" secondAttribute="centerY" id="EPE-bZ-OFm"/>
                 <constraint firstItem="YNe-VI-N9B" firstAttribute="leading" secondItem="9R0-xP-hzU" secondAttribute="leading" id="GV2-ml-Ds2"/>
+                <constraint firstItem="sWu-S9-Iel" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9R0-xP-hzU" secondAttribute="trailing" constant="20" id="J3u-tL-ztj"/>
                 <constraint firstItem="O6I-Qg-1kO" firstAttribute="leading" secondItem="iG3-a1-4HF" secondAttribute="leading" id="OFg-gg-k7I"/>
                 <constraint firstItem="iG3-a1-4HF" firstAttribute="top" secondItem="O6I-Qg-1kO" secondAttribute="bottom" constant="22" id="V1M-tS-Kre"/>
                 <constraint firstItem="iG3-a1-4HF" firstAttribute="height" secondItem="sWu-S9-Iel" secondAttribute="height" id="WOa-Go-O5x"/>

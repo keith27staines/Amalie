@@ -44,12 +44,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-        _showBackground          = NO;
-        _showBoundingBoxes       = NO;
-        _showSelectionBoxes      = NO;
-        _showTextBaseline        = YES;
-        _showTextBaselineOrigin  = NO;
-        _showTightBoundingBox    = NO;
+        _showBackground          = YES;//NO;
+        _showBoundingBoxes       = YES;//NO;
+        _showSelectionBoxes      = YES;//NO;
+        _showTextBaseline        = YES;//NO;
+        _showTextBaselineOrigin  = YES;//NO;
+        _showTightBoundingBox    = YES;//NO;
     }
     return self;
 }

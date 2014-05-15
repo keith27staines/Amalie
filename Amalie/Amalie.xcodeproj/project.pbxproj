@@ -1291,6 +1291,11 @@
 		78E477031827AAB900DEB5FB /* Function Definition Content */ = {
 			isa = PBXGroup;
 			children = (
+				78B205C717D5DBC50059773A /* AMFunctionContentView.xib */,
+				78B205C917D5DC1D0059773A /* AMFunctionContentView.h */,
+				78B205CA17D5DC1D0059773A /* AMFunctionContentView.m */,
+				78B205C417D5D6F80059773A /* AMFunctionContentViewController.h */,
+				78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */,
 				78962FEF182CEFE50066BEE9 /* ArgumentList */,
 				786E32F9188D13070095443D /* AMFunctionPropertiesView */,
 			);
@@ -1330,11 +1335,6 @@
 		78F57D8C18350C7800683FFC /* Definitions Content */ = {
 			isa = PBXGroup;
 			children = (
-				78B205C717D5DBC50059773A /* AMFunctionContentView.xib */,
-				78B205C917D5DC1D0059773A /* AMFunctionContentView.h */,
-				78B205CA17D5DC1D0059773A /* AMFunctionContentView.m */,
-				78B205C417D5D6F80059773A /* AMFunctionContentViewController.h */,
-				78B205C517D5D6F80059773A /* AMFunctionContentViewController.m */,
 				78E477031827AAB900DEB5FB /* Function Definition Content */,
 				78F57D8918350BD900683FFC /* Constant Definition Content */,
 				78F57D8A18350BEC00683FFC /* Variable Definition Content */,
@@ -1345,11 +1345,11 @@
 		78F57D8D18350DC800683FFC /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				7825D656180FD3B10039EB67 /* AMKeyboard */,
-				534635F919191A0B00569927 /* Expression Editor */,
 				787B3057178361BC001851C0 /* AMAmalieDocument.xib */,
 				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
 				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
+				7825D656180FD3B10039EB67 /* AMKeyboard */,
+				534635F919191A0B00569927 /* Expression Editor */,
 				7832526A18AF4C5F00B148DA /* Sidebar content */,
 				7832526918AF4C4A00B148DA /* Central split content (the scrollable document) */,
 			);
