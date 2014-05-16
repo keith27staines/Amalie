@@ -13,6 +13,7 @@
 @interface AMContentView : AMGroupedView
 
 @property (weak) id<AMContentViewDataSource>dataSource;
+@property BOOL isPreparedForDynamicConstraints;
 
 @end
 

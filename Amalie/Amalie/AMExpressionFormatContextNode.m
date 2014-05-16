@@ -57,7 +57,6 @@
     }
     return self;
 }
-
 -(BOOL)hideRedundantBrackets
 {
     return _hideRedundantBrackets;
@@ -93,7 +92,7 @@
     KSMExpression * expr;
     expr = [_dataSource expressionForSymbol:symbol];
     
-    NSAssert(expr, @"No expression known for symbol %@.",symbol);
+    //NSAssert(expr, @"No expression known for symbol %@.",symbol);
     
     return expr;
 }

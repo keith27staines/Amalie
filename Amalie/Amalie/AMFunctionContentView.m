@@ -9,14 +9,21 @@
 #import "AMFunctionContentView.h"
 #import "AMExpressionNodeView.h"
 #import "AMArgumentListView.h"
+#import "AMArgumentListViewController.h"
 #import "AMDFunctionDef.h"
+#import "AMExpandingTextFieldView.h"
 
 @interface AMFunctionContentView()
 {
-    __weak AMArgumentListView * _argumentListView;
-    NSMutableArray * _dynamicConstraints;
+    AMExpressionNodeView * _expressionView;
+    AMExpandingTextFieldView          * _expressionStringView;
+    AMArgumentListView   * _argumentListView;
+    AMTextView           * _nameView;
+    NSButton             * _propertiesButton;
+    NSButton             * _expressionEditorButton;
+    NSMutableArray       * _dynamicConstraints;
 }
-@property (readonly) NSMutableArray * dynamicConstraints;
+
 @end
 
 
@@ -26,56 +33,150 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code here.
+
     }
     return self;
+}
+-(void)awakeFromNib
+{
+    // Expression content view stuff - refactor to super
+    _expressionView = [[AMExpressionNodeView alloc] init];
+    _expressionStringView = [[AMExpandingTextFieldView alloc] init];
+    [_expressionView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [_expressionStringView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addSubview:_expressionStringView];
+    [self addSubview:_expressionView];
+    [self addExpressionEditorButton];
+    
+    // function content additions
+    _nameView = [[AMTextView alloc] init];
+    _argumentListView = (AMArgumentListView*)self.argumentListViewController.view;
+    [_nameView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [_argumentListView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addSubview:_nameView];
+    [self addSubview:_argumentListView];
+    [self addFunctionPropertiesButton];
+}
+-(NSMutableDictionary*)metricsDictionary
+{
+    CGFloat nameWidth   = fmaxf(self.nameView.intrinsicContentSize.width,12);
+    CGFloat nameHeight  = fmaxf(self.nameView.intrinsicContentSize.height, 12);
+    CGFloat argsWidth   = fmaxf(self.argumentListView.intrinsicContentSize.width,12);
+    CGFloat argsHeight  = fmaxf(self.argumentListView.intrinsicContentSize.height,12);
+    CGFloat space       = self.expressionView.standardSpace;
+    CGFloat narrowSpace = self.expressionView.narrowSpace;
+    return [@{@"argsWidth"      : @(argsWidth),
+              @"argsHeight"     : @(argsHeight),
+              @"nameWidth"      : @(nameWidth),
+              @"nameHeight"     : @(nameHeight),
+              @"space"          : @(space) ,
+              @"narrowSpace"    : @(narrowSpace)} mutableCopy];
+
+}
+/*!
+ *  Returns a dictionary of variable bindings suitable for use in autlolayout visual format language
+ *  The bindings are:
+ *  expression       = self.expressionView
+ *  expressionString = self.expressionStringView
+ *  name             = self.nameView
+ *  args             = self.argumentListView
+ *  expressionEditorButton = self.expressionEditorButton
+ *  propertiesButton       = self.propertiesButton
+ *  @return a dictionary of variable bindings
+ */
+-(NSMutableDictionary*)viewsDictionary
+{
+    NSView * expression = self.expressionView;
+    expression.identifier = @"expression";
+    NSView * expressionString = self.expressionStringView;
+    expressionString.identifier = @"expressionString";
+    NSView * name = self.nameView;
+    name.identifier = @"name";
+    NSView * args = self.argumentListView;
+    args.identifier = @"args";
+    NSView * expressionEditorButton = self.expressionEditorButton;
+    expressionEditorButton.identifier = @"expressionEditorButton";
+    NSView * propertiesButton = self.propertiesButton;
+    propertiesButton.identifier = @"propertiesButton";
+    return [NSDictionaryOfVariableBindings(expression,
+                                           expressionString,
+                                           name,
+                                           args,
+                                           expressionEditorButton,
+                                           propertiesButton) mutableCopy];
+}
+-(void)setNeedsUpdateConstraints:(BOOL)flag
+{
+    [super setNeedsUpdateConstraints:flag];
+}
+-(void)updateConstraints
+{
+    [super updateConstraints];
+    if (!self.isPreparedForDynamicConstraints) {
+        return;
+    }
+    if (!_dynamicConstraints) {
+        _dynamicConstraints = [NSMutableArray array];
+    }
+    if (_dynamicConstraints.count > 0) {
+        [self removeConstraints:_dynamicConstraints];
+    }
+    // Expression constraints... (refactor to super?)
+    NSDictionary * views = [self viewsDictionary];
+    NSDictionary * metrics = [self metricsDictionary];
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20@750)-[expression]-(>=20@1000)-|" options:0 metrics:metrics views:views]];
+
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[expression]-(<=20@750)-|" options:0 metrics:metrics views:views]];
+    
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20@750)-[expressionString][expressionEditorButton]-(>=20@1000)-|" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
+    
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[expressionEditorButton]-(<=20@750)-|" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
+    
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20@750)-[expression]-[expressionString]-(20@750)-|" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
+
+    // function content specific constraints
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[name]-(narrowSpace)-[args(argsWidth)]-[expression]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views]];
+    
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[name]" options:0 metrics:metrics views:views]];
+    
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[propertiesButton]-(>=8)-[expressionString]" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
+    
+    [self addConstraints:_dynamicConstraints];
+}
+-(void)addExpressionEditorButton
+{
+    NSButton * button = [[NSButton alloc] init];
+    button.title = @"...";
+    [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [button setButtonType:NSMomentaryPushButton]; // button clicks in and out but doesn't change image
+    [button setBordered:YES];
+    [button setBezelStyle:NSSmallSquareBezelStyle];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(22)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(22)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(button)]];
+    [self addSubview:button];
+    _expressionEditorButton = button;
+}
+-(void)addFunctionPropertiesButton
+{
+    NSButton * button = [[NSButton alloc] init];
+    button.title = @"";
+    [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [button setButtonType:NSMomentaryPushButton]; // button clicks in and out but doesn't change image
+    [button setBordered:YES];
+    [button setBezelStyle:NSCircularBezelStyle];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(22)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(22)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(button)]];
+    [self addSubview:button];
+    _propertiesButton = button;
 }
 -(void)drawRect:(NSRect)dirtyRect
 {
     [super drawRect:dirtyRect];
 }
--(void)removeDynamicConstraints
-{
-    if (_dynamicConstraints) {
-        [self removeConstraints:_dynamicConstraints];
-        [_dynamicConstraints removeAllObjects];
-    }
-}
--(void)updateConstraints
-{
-    [super updateConstraints];
-    [self removeDynamicConstraints];
-    [self addConstraints:[self dynamicConstraints]];
-}
 -(BOOL)isFlipped
 {
     return YES;
 }
--(NSArray*)dynamicConstraints{
-    if (!_dynamicConstraints) {
-        _dynamicConstraints = [NSMutableArray array];
-        AMTextView * nameView = self.nameView;
-        AMExpressionNodeView * expressionView = self.expressionView;
-        AMArgumentListView * argumentsView = self.argumentListView;
-        NSDictionary * views;
-        NSDictionary * metrics;
-        CGFloat nameWidth = fmaxf(nameView.intrinsicContentSize.width,12);
-        CGFloat argsWidth = fmaxf(argumentsView.intrinsicContentSize.width,12);
-        CGFloat space     = expressionView.standardSpace;
-        CGFloat narrowSpace = expressionView.narrowSpace;
-        views = NSDictionaryOfVariableBindings(nameView, argumentsView, expressionView);
-        metrics = @{ @"argsWidth": @(argsWidth),
-                     @"nameWidth": @(nameWidth),
-                     @"space"    : @(space) ,
-                     @"narrow"   : @(narrowSpace)};
-        NSArray * constraints;
-        [argumentsView setHidden:NO];
-        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameView(nameWidth)]-narrow-[argumentsView(argsWidth)]-(space@750)-[expressionView]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views];
-        [_dynamicConstraints addObjectsFromArray:constraints];
-    }
-    return _dynamicConstraints;
-}
-
 -(void)setDataSource:(id<AMContentViewDataSource>)dataSource
 {
     [super setDataSource:dataSource];

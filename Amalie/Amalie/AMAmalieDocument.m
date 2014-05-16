@@ -461,7 +461,9 @@
                                                                      moc:self.managedObjectContext
                                                        amdInsertedObject:amdInsertedObject];
     [self.contentControllers setObject:vc forKey:vc.groupID];
-    return (AMContentView*)vc.view;
+    AMContentView * contentView = (AMContentView*)vc.view;
+    [contentView setIsPreparedForDynamicConstraints:YES];
+    return contentView;
 }
 -(void)removeInsertableView:(AMInsertableView*)view
 {

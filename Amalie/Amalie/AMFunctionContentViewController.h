@@ -10,6 +10,7 @@
 @class AMExpressionNodeView;
 @class AMFunctionContentView;
 @class AMTextView;
+@class AMExpandingTextFieldView;
 
 #import "AMContentViewController.h"
 #import "AMExpressionNodeViewDelegate.h"
@@ -19,22 +20,11 @@
 <NSTextFieldDelegate, NSPopoverDelegate, AMExpressionNodeViewDelegate, AMExpressionDataSource>
 
 @property (weak) IBOutlet AMAmalieDocument * document;
+@property (strong) IBOutlet NSPopover * editPopover;
+@property (weak) AMExpandingTextFieldView * expressionStringView;
+@property (weak) AMExpressionNodeView * expressionView;
 
-@property (weak) IBOutlet NSButton *popupButton;
-
-- (IBAction)showExpressionEditor:(id)sender;
-
-
-@property (weak) IBOutlet AMTextView *nameView;
-
-@property (weak) IBOutlet NSTextField *expressionStringView;
-@property (weak) IBOutlet AMExpressionNodeView * expressionView;
-
-@property (weak) IBOutlet AMFunctionContentView *contentView;
-
-@property (strong) IBOutlet NSPopover *editPopover;
-
-- (IBAction)showPopover:(NSButton *)sender;
+@property (weak) AMFunctionContentView *contentView;
 
 @property (strong, readonly) AMDFunctionDef * amdFunctionDef;
 

@@ -26,6 +26,7 @@
 #import "AMArgumentListView.h"
 #import "AMPersistedObjectWithArgumentsNameProvider.h"
 #import "AMNameProviding.h"
+#import "AMExpandingTextFieldView.h"
 
 // core data generated objects
 #import "AMDInsertedObject.h"
@@ -42,16 +43,18 @@ static NSUInteger const kAMIndexRHS;
 {
     NSString                            * _expressionString;
     __weak NSTextField                  * _nameField;
-    __weak NSTextField                  * _expressionStringView;
+    __weak AMExpandingTextFieldView     * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
     NSMutableDictionary                 * _viewDictionary;
     AMExpressionFormatContextNode             * _contextNode;
     AMPersistedObjectWithArgumentsNameProvider * _persistedObjectNameProvider;
+    BOOL                                  _viewPrepared;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
 @property (strong) AMExpressionFormatContextNode * contextNode;
 @property (copy) NSString * expressionString;
-@property (readonly) AMArgumentListView * argumentListView;
+@property (weak,readonly) AMArgumentListView * argumentListView;
+@property (weak) AMTextView * nameView;
 @end
 
 @implementation AMFunctionContentViewController
@@ -129,18 +132,13 @@ static NSUInteger const kAMIndexRHS;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:callback name:AMFunctionPropertiesDidEndEditingNotification object:self.editPopover.contentViewController];
 
 }
-
 -(void)setupArgumentListView
 {
     self.argumentListViewController.nameProvider = self.nameProvider;
     self.argumentListViewController.argumentList = self.amdFunctionDef.argumentList;
     AMArgumentListView * argumentsView = self.argumentListView;
-    [argumentsView setTranslatesAutoresizingMaskIntoConstraints:NO];
     argumentsView.showEqualsSign = YES;
     argumentsView.scriptingLevel = 0;
-    [self.contentView addSubview:argumentsView];
-    AMFunctionContentView * fv = (AMFunctionContentView *)self.contentView;
-    fv.argumentListView = argumentsView;
 }
 
 -(void)nameStringDidBeginEditing:(NSNotification*)notification
@@ -228,9 +226,11 @@ static NSUInteger const kAMIndexRHS;
     _expressionString = [expressionString copy];
     KSMExpression * expr;
     expr = [self expressionFromString:expressionString atIndex:kAMIndexRHS];
-    [self resetExpressionViewWithExpression:expr];
-    [self.contentView setNeedsUpdateConstraints:YES];
-    [self.contentView setNeedsDisplay:YES];
+    [self reloadData];
+//    [self.expressionStringView setStringValue:expressionString];
+//    [self resetExpressionViewWithExpression:expr];
+//    [self.view setNeedsUpdateConstraints:YES];
+//    [self.view setNeedsDisplay:YES];
 }
 -(NSString*)expressionString
 {
@@ -238,7 +238,7 @@ static NSUInteger const kAMIndexRHS;
 }
 -(void)setFocusOnView:(NSView*)view
 {
-    BOOL changedFirstResponder = [self.contentView.window makeFirstResponder:view];
+    BOOL changedFirstResponder = [self.view.window makeFirstResponder:view];
     if (changedFirstResponder) {
         [self putInsertionPointAtEndOfField];
     }
@@ -249,6 +249,27 @@ static NSUInteger const kAMIndexRHS;
     NSText* textEditor = [self.nameView.window fieldEditor:YES forObject:self.nameView];
     NSRange range = NSMakeRange(textEditor.string.length, 0);
     [textEditor setSelectedRange:range];
+}
+-(NSView *)view
+{
+    NSView * view = [super view];
+    if (!_viewPrepared) {
+        _viewPrepared = YES;
+        AMFunctionContentView * fview = (AMFunctionContentView*)view;
+        self.expressionView = fview.expressionView;
+        self.expressionStringView = fview.expressionStringView;
+        self.expressionView.delegate = self;
+        self.expressionView.dataSource = self;
+        self.expressionStringView.delegate = self;
+        self.nameView = fview.nameView;
+        fview.propertiesButton.target = self;
+        fview.propertiesButton.action = @selector(showPopover:);
+        fview.expressionEditorButton.target = self;
+        fview.expressionEditorButton.action = @selector(showExpressionEditor:);
+        [self setupArgumentListView];
+        [self reloadData];
+    }
+    return view;
 }
 
 -(void)resetExpressionViewWithExpression:(KSMExpression*)expr
@@ -276,9 +297,8 @@ static NSUInteger const kAMIndexRHS;
 -(void)populateView:(AMContentView *)view
 {
     // populate from the top view down
-    if (view == self.contentView) {
+    if (view == self.view) {
         [self reloadData];
-        [self setupArgumentListView];
     } else {
         // Other views that are subviews of self.functionView, but these might arrive out of order and need to be populated from the top down, so we do nothing here.
     }
@@ -286,7 +306,6 @@ static NSUInteger const kAMIndexRHS;
 
 -(void)reloadData
 {
-    [self.contentView removeDynamicConstraints];
     AMDFunctionDef * funcDef = self.amdFunctionDef;
     AMDExpression * amdExpr = [self expression];
     
@@ -300,8 +319,8 @@ static NSUInteger const kAMIndexRHS;
     
     [self.expressionView setNeedsUpdateConstraints:YES];
     [self.nameView setNeedsUpdateConstraints:YES];
-    [self.contentView setNeedsUpdateConstraints:YES];
-    [self.contentView setNeedsDisplay:YES];
+    [self.view setNeedsUpdateConstraints:YES];
+    [self.view setNeedsDisplay:YES];
 }
 -(AMDIndexedExpression*)indexedExpression
 {
@@ -333,7 +352,7 @@ static NSUInteger const kAMIndexRHS;
     vc.nameProvider = self.nameProvider;
     self.editPopover.delegate = self;
     [vc reloadData];
-    [self.editPopover showRelativeToRect:sender.bounds ofView:self.contentView preferredEdge:NSMaxYEdge];
+    [self.editPopover showRelativeToRect:sender.bounds ofView:self.view preferredEdge:NSMaxYEdge];
 }
 
 - (void)functionPropertiesDidEndEditing:(NSNotification*)notification

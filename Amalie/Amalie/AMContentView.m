@@ -13,7 +13,6 @@
 {
     __weak id<AMContentViewDataSource> _dataSource;
 }
-
 @end
 
 @implementation AMContentView

@@ -9,13 +9,36 @@
 @class AMExpressionNodeView;
 @class AMTextView;
 @class AMArgumentListView;
+@class AMArgumentListViewController;
+@class AMExpandingTextFieldView;
 
 #import "AMContentView.h"
 
 @interface AMFunctionContentView : AMContentView
-@property (weak) IBOutlet AMTextView *nameView;
-@property (weak) IBOutlet AMExpressionNodeView *expressionView;
-@property (weak) IBOutlet NSTextField *expressionStringView;
-@property (weak) AMArgumentListView * argumentListView;
--(void)removeDynamicConstraints;
+/*!
+ *  The view showing the name of the function
+ */
+@property AMTextView *nameView;
+
+/*!
+ *  The view showing the expression
+ */
+@property AMExpressionNodeView *expressionView;
+
+/*!
+ *  The view showing the ascii representation of the expression
+ */
+@property AMExpandingTextFieldView *expressionStringView;
+
+/*!
+ *  The view showing the function's argument list
+ */
+@property AMArgumentListView * argumentListView;
+
+@property NSButton * expressionEditorButton;
+
+@property NSButton * propertiesButton;
+
+@property IBOutlet AMArgumentListViewController * argumentListViewController;
+
 @end
