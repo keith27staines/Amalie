@@ -25,8 +25,13 @@
 		539126E51914D53D00A840B2 /* AMDataRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 539126E41914D53D00A840B2 /* AMDataRenamer.m */; };
 		539126E91914DC4B00A840B2 /* AMFunctionRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 539126E81914DC4B00A840B2 /* AMFunctionRenamer.m */; };
 		53963A481900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */; };
+		53A8E8F919288F4400A28E91 /* AMInspectorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E8F719288F4400A28E91 /* AMInspectorsViewController.m */; };
+		53A8E8FA19288F4400A28E91 /* AMInspectorsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A8E8F819288F4400A28E91 /* AMInspectorsViewController.xib */; };
+		53A8E8FE1928909200A28E91 /* AMInspectorsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E8FD1928909200A28E91 /* AMInspectorsView.m */; };
+		53A8E90219289E1100A28E91 /* AMFunctionInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E90019289E1100A28E91 /* AMFunctionInspectorViewController.m */; };
+		53A8E90319289E1100A28E91 /* AMFunctionInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */; };
+		53A8E9071928AAF900A28E91 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E9061928AAF900A28E91 /* AMContainerView.m */; };
 		53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */; };
-		78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78007E03189CEA0B007CFF77 /* AMContainerView.m */; };
 		780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68AD18EC62AE003CC00A /* AMFontSettings.m */; };
 		780F68B118EC62DA003CC00A /* AMPageSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68B018EC62DA003CC00A /* AMPageSettings.m */; };
 		780F68B418EC62F0003CC00A /* AMMathStyleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68B318EC62F0003CC00A /* AMMathStyleSettings.m */; };
@@ -265,10 +270,18 @@
 		539126E81914DC4B00A840B2 /* AMFunctionRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionRenamer.m; sourceTree = "<group>"; };
 		53963A461900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMathStyleExpressionNodeContainerView.h; sourceTree = "<group>"; };
 		53963A471900FBB3005B194F /* AMMathStyleExpressionNodeContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMathStyleExpressionNodeContainerView.m; sourceTree = "<group>"; };
+		53A8E8F619288F4400A28E91 /* AMInspectorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInspectorsViewController.h; sourceTree = "<group>"; };
+		53A8E8F719288F4400A28E91 /* AMInspectorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInspectorsViewController.m; sourceTree = "<group>"; };
+		53A8E8F819288F4400A28E91 /* AMInspectorsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMInspectorsViewController.xib; sourceTree = "<group>"; };
+		53A8E8FC1928909200A28E91 /* AMInspectorsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInspectorsView.h; sourceTree = "<group>"; };
+		53A8E8FD1928909200A28E91 /* AMInspectorsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInspectorsView.m; sourceTree = "<group>"; };
+		53A8E8FF19289E1100A28E91 /* AMFunctionInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionInspectorViewController.h; sourceTree = "<group>"; };
+		53A8E90019289E1100A28E91 /* AMFunctionInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionInspectorViewController.m; sourceTree = "<group>"; };
+		53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFunctionInspectorViewController.xib; sourceTree = "<group>"; };
+		53A8E9051928AAF900A28E91 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
+		53A8E9061928AAF900A28E91 /* AMContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContainerView.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
 		53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesWindowContentView.m; sourceTree = "<group>"; };
-		78007E02189CEA0B007CFF77 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
-		78007E03189CEA0B007CFF77 /* AMContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContainerView.m; sourceTree = "<group>"; };
 		780F68AC18EC62AE003CC00A /* AMFontSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSettings.h; sourceTree = "<group>"; };
 		780F68AD18EC62AE003CC00A /* AMFontSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFontSettings.m; sourceTree = "<group>"; };
 		780F68AF18EC62DA003CC00A /* AMPageSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPageSettings.h; sourceTree = "<group>"; };
@@ -647,6 +660,29 @@
 			name = "Data object renamers";
 			sourceTree = "<group>";
 		};
+		53A8E8FB1928905E00A28E91 /* Inspectors */ = {
+			isa = PBXGroup;
+			children = (
+				53A8E8F619288F4400A28E91 /* AMInspectorsViewController.h */,
+				53A8E8F719288F4400A28E91 /* AMInspectorsViewController.m */,
+				53A8E8F819288F4400A28E91 /* AMInspectorsViewController.xib */,
+				53A8E8FC1928909200A28E91 /* AMInspectorsView.h */,
+				53A8E8FD1928909200A28E91 /* AMInspectorsView.m */,
+				53A8E90419289E1B00A28E91 /* Function Inspector */,
+			);
+			name = Inspectors;
+			sourceTree = "<group>";
+		};
+		53A8E90419289E1B00A28E91 /* Function Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				53A8E8FF19289E1100A28E91 /* AMFunctionInspectorViewController.h */,
+				53A8E90019289E1100A28E91 /* AMFunctionInspectorViewController.m */,
+				53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */,
+			);
+			name = "Function Inspector";
+			sourceTree = "<group>";
+		};
 		780F68AB18EC5375003CC00A /* Settings Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,9 +840,8 @@
 		7832526A18AF4C5F00B148DA /* Sidebar content */ = {
 			isa = PBXGroup;
 			children = (
-				78007E02189CEA0B007CFF77 /* AMContainerView.h */,
-				78007E03189CEA0B007CFF77 /* AMContainerView.m */,
 				782DA25B189BA0BB00F66E23 /* Library and toolbox */,
+				53A8E8FB1928905E00A28E91 /* Inspectors */,
 			);
 			name = "Sidebar content";
 			sourceTree = "<group>";
@@ -1348,6 +1383,8 @@
 				787B3057178361BC001851C0 /* AMAmalieDocument.xib */,
 				787B3054178361BC001851C0 /* AMAmalieDocument.h */,
 				787B3055178361BC001851C0 /* AMAmalieDocument.m */,
+				53A8E9051928AAF900A28E91 /* AMContainerView.h */,
+				53A8E9061928AAF900A28E91 /* AMContainerView.m */,
 				7825D656180FD3B10039EB67 /* AMKeyboard */,
 				534635F919191A0B00569927 /* Expression Editor */,
 				7832526A18AF4C5F00B148DA /* Sidebar content */,
@@ -1433,12 +1470,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53A8E90319289E1100A28E91 /* AMFunctionInspectorViewController.xib in Resources */,
 				78803C0218D9E120008FBDE1 /* AMFontSelectionViewController.xib in Resources */,
 				787B3059178361BC001851C0 /* AMAmalieDocument.xib in Resources */,
 				787B3061178361BC001851C0 /* Images.xcassets in Resources */,
 				782DA25A189B99E400F66E23 /* AMLibraryViewController.xib in Resources */,
 				788EAE0D18B61C1000D3EBD3 /* AMPageSetupViewController.xib in Resources */,
 				786E32F8188D12F10095443D /* AMFunctionPropertiesViewController.xib in Resources */,
+				53A8E8FA19288F4400A28E91 /* AMInspectorsViewController.xib in Resources */,
 				78962FEE182CEFD90066BEE9 /* AMArgumentListView.xib in Resources */,
 				534635FE19191B0700569927 /* AMExpressionEditorViewController.xib in Resources */,
 				78B205C817D5DBC50059773A /* AMFunctionContentView.xib in Resources */,
@@ -1474,9 +1513,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53A8E9071928AAF900A28E91 /* AMContainerView.m in Sources */,
 				782859FB1886D6B900523121 /* AMTextMetric.m in Sources */,
 				5379FBD818F2E30C00378A31 /* AMDocumentSettingsBaseViewController.m in Sources */,
-				78007E04189CEA0B007CFF77 /* AMContainerView.m in Sources */,
 				784ACC1D18BE6ECA009268B3 /* AMDDocumentSettings+Methods.m in Sources */,
 				781D180D17F31DE70008758D /* AMDataStore.m in Sources */,
 				78F52C5D17FABA5C0092B604 /* AMDIndexedExpression.m in Sources */,
@@ -1497,6 +1536,7 @@
 				7899B2E717AD0E26008BDB75 /* AMVectorContentViewController.m in Sources */,
 				78803C0118D9E120008FBDE1 /* AMFontSelectionViewController.m in Sources */,
 				7899B2DD17AD0DFC008BDB75 /* AMVariableContentViewController.m in Sources */,
+				53A8E8F919288F4400A28E91 /* AMInspectorsViewController.m in Sources */,
 				78D8C2FF18C76A9D001F5494 /* AMFontAttributes.m in Sources */,
 				5366F10D1916203F00FD6FC4 /* AMArgumentRenamer.m in Sources */,
 				78F7F36618FD675E002FD0C2 /* AMExpressionNodeController.m in Sources */,
@@ -1569,6 +1609,7 @@
 				78962FE9182C0F210066BEE9 /* AMDFunctionDef+Methods.m in Sources */,
 				7811D2CB17A255380024839B /* AMRefTreeNode.m in Sources */,
 				78F7F36918FE5B39002FD0C2 /* AMDocumentSettingsBase.m in Sources */,
+				53A8E90219289E1100A28E91 /* AMFunctionInspectorViewController.m in Sources */,
 				787B3099178364B8001851C0 /* NSString+KSMMath.m in Sources */,
 				78285A011886D74400523121 /* AMExpressionLayout.m in Sources */,
 				78DE82451783664400C7EE10 /* KSMPrimes.m in Sources */,
@@ -1602,6 +1643,7 @@
 				780F68B418EC62F0003CC00A /* AMMathStyleSettings.m in Sources */,
 				78AF0A6817E8FB4B00C018DB /* KSMSymbolProvider.m in Sources */,
 				784D6EFA1789CC11002BE03A /* AMAppController.m in Sources */,
+				53A8E8FE1928909200A28E91 /* AMInspectorsView.m in Sources */,
 				785826C518C4D94300612651 /* AMPreferencesBaseView.m in Sources */,
 				78E477021827A52200DEB5FB /* AMFunctionPropertiesViewController.m in Sources */,
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,

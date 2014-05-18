@@ -120,6 +120,7 @@
     }
     if (_dynamicConstraints.count > 0) {
         [self removeConstraints:_dynamicConstraints];
+        [_dynamicConstraints removeAllObjects];
     }
     // Expression constraints... (refactor to super?)
     NSDictionary * views = [self viewsDictionary];
@@ -128,14 +129,15 @@
 
     [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[expression]-(<=20@750)-|" options:0 metrics:metrics views:views]];
     
-    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20@750)-[expressionString][expressionEditorButton]-(>=20@1000)-|" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20@750)-[expressionString(>=40)][expressionEditorButton]-(>=20@1000)-|" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
     
     [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[expressionEditorButton]-(<=20@750)-|" options:NSLayoutFormatAlignAllCenterY metrics:metrics views:views]];
     
     [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20@750)-[expression]-[expressionString]-(20@750)-|" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
 
     // function content specific constraints
-    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[name]-(narrowSpace)-[args(argsWidth)]-[expression]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views]];
+    NSLog(@"Args width = %@",metrics[@"argsWidth"]);
+    [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(20)-[name]-(narrowSpace)-[args]-[expression]" options:NSLayoutFormatAlignAllBaseline metrics:metrics views:views]];
     
     [_dynamicConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[name]" options:0 metrics:metrics views:views]];
     

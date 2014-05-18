@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D61" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
         <development version="5000" identifier="xcode"/>
@@ -16,6 +16,7 @@
                 <outlet property="expressionEditorViewController" destination="w1D-2U-xah" id="2TT-4y-Ss0"/>
                 <outlet property="fontSetupPopover" destination="aWB-Gs-Wak" id="yeS-yL-or5"/>
                 <outlet property="inspectorContainerView" destination="wwf-5u-UwN" id="PZr-uV-xrZ"/>
+                <outlet property="inspectors" destination="eA3-sq-6gJ" id="yag-BX-56w"/>
                 <outlet property="leftSplitView" destination="QRA-5r-iih" id="oSV-XV-QGc"/>
                 <outlet property="library" destination="INn-ob-cZC" id="z1D-5X-62u"/>
                 <outlet property="libraryContainerView" destination="FbB-mP-o5T" id="sdZ-zB-v0Q"/>
@@ -92,7 +93,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="163" height="445"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </customView>
-                                    <customView fixedFrame="YES" id="tEs-Of-n2l" customClass="AMContainerView">
+                                    <customView fixedFrame="YES" id="tEs-Of-n2l" customClass="AMContentView">
                                         <rect key="frame" x="0.0" y="446" width="163" height="467"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </customView>
@@ -284,6 +285,12 @@
                 <autoresizingMask key="autoresizingMask"/>
             </view>
         </window>
+        <customObject id="hNu-a5-via"/>
+        <customObject id="eA3-sq-6gJ" customClass="AMInspectorsViewController">
+            <connections>
+                <outlet property="document" destination="-2" id="1wy-H8-8Ib"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="LeftSidebarOpenBtn" width="32" height="32"/>

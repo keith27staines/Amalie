@@ -12,6 +12,7 @@
 @class KSMMathSheet;
 @class AMDocumentContainerView;
 @class AMLibraryViewController;
+@class AMInspectorsViewController;
 @class AMPersistedObjectNameProvider;
 @class AMPersistedObjectWithArgumentsNameProvider;
 @class AMDExpression;
@@ -66,6 +67,8 @@ NSPopoverDelegate>
 @property (weak) IBOutlet AMPageView * pageView;
 
 @property (weak) IBOutlet AMLibraryViewController * library;
+
+@property (weak) IBOutlet AMInspectorsViewController * inspectors;
 
 @property (weak) IBOutlet NSPanel * expressionEditorPanel;
 

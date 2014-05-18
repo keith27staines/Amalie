@@ -44,6 +44,7 @@
 #import "AMDocumentSettingsBaseViewController.h"
 #import "AMInsertableViewController.h"
 #import "AMLibraryViewController.h"
+#import "AMInspectorsViewController.h"
 #import "AMExpressionEditorViewController.h"
 
 #import "BitmaskHelpers.h"
@@ -256,15 +257,26 @@
 -(void)addInspectorView
 {
     NSView * container = self.inspectorContainerView;
-    NSDictionary * views = NSDictionaryOfVariableBindings(container);
+    self.inspectors.document = self;
+    NSView * inspectorsView = self.inspectors.view;
+    [inspectorsView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [container addSubview:inspectorsView];
+    
+    NSDictionary * views = NSDictionaryOfVariableBindings(container,inspectorsView);
+    
     NSArray * constraints;
     NSDictionary * metrics = @{@"inspectorWidth": @(kAMNominalWidthRightSidepanelView)};
     constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[container(inspectorWidth)]|"
                                                           options:0
                                                           metrics:metrics
                                                             views:views];
-    // TODO: change this constraint to act on the container's contents and add the constraint to the container. The code here so far is just a placeholder that enforces the right width
-    [container.superview addConstraints:constraints];
+    [container addConstraints:constraints];
+    
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[inspectorsView]|"
+                                                          options:0
+                                                          metrics:metrics
+                                                            views:views];
+    [container addConstraints:constraints];
 }
 -(void)panelDidChangeHiddenState:(NSNotification*)notification
 {
@@ -583,6 +595,7 @@
     _selectedView.viewState = AMInsertViewStateNormal;
     _selectedView = view;
     _selectedView.viewState = AMInsertViewStateSelected;
+    [self.inspectors presentInspectorForObject:view.contentView];
 }
 
 #pragma mark - Toolbar actions -
