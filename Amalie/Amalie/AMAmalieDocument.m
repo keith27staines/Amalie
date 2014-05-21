@@ -266,7 +266,7 @@
     
     NSArray * constraints;
     NSDictionary * metrics = @{@"inspectorWidth": @(kAMNominalWidthRightSidepanelView)};
-    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[container(inspectorWidth)]|"
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[inspectorsView(inspectorWidth)]|"
                                                           options:0
                                                           metrics:metrics
                                                             views:views];
@@ -595,9 +595,22 @@
     _selectedView.viewState = AMInsertViewStateNormal;
     _selectedView = view;
     _selectedView.viewState = AMInsertViewStateSelected;
-    [self.inspectors presentInspectorForObject:view.contentView];
+    [self.inspectors presentInspectorForContentViewController:[self viewControllerForSelectedInsertedView]];
 }
-
+-(AMDInsertedObject*)amdObjectForSelectedInsertedView
+{
+    AMContentViewController * vc = [self viewControllerForSelectedInsertedView];
+    return [vc amdInsertedObject];
+}
+-(AMContentViewController*)viewControllerForSelectedInsertedView
+{
+    return [self viewControllerForInsertedView:self.selectedView];
+}
+-(AMContentViewController*)viewControllerForInsertedView:(AMInsertableView*)insertedView
+{
+    NSString * groupID = insertedView.groupID;
+    return self.contentControllers[groupID];
+}
 #pragma mark - Toolbar actions -
 - (IBAction)toolbarPageSetupButtonClicked:(NSButton*)sender
 {

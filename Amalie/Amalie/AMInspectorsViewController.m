@@ -7,16 +7,24 @@
 //
 
 #import "AMInspectorsViewController.h"
-#import "AMDFunctionDef+Methods.h"
+#import "AMAmalieDocument.h"
+#import "AMInspectorsView.h"
+#import "AMInspectorView.h"
+#import "AMContentViewController.h"
+#import "AMFunctionContentViewController.h"
+#import "AMInspectorViewController.h"
 #import "AMFunctionInspectorViewController.h"
+#import "AMNameProviding.h"
+#import "AMPersistedObjectWithArgumentsNameProvider.h"
 
 @interface AMInspectorsViewController ()
 {
-    __weak                 id _object;
+    __weak AMContentViewController * _contentViewController;
     NSMutableDictionary     * _viewControllers;
 }
-@property (weak,readwrite) id object;
-@property (weak,readonly) NSViewController * currentViewController;
+@property (weak,readwrite) AMContentViewController  * contentViewController;
+@property (weak,readonly) AMInspectorViewController * inspectorViewController;
+@property (readonly) AMInspectorsView * inspectorsView;
 @property (weak,readonly) NSView * currentView;
 @end
 
@@ -25,63 +33,78 @@
 -(NSString *)nibName {
     return @"AMInspectorsViewController";
 }
--(void)presentInspectorForObject:(id)object
+-(void)presentInspectorForContentViewController:(AMContentViewController*)contentViewController;
 {
-    self.object = object;
+    if (contentViewController) {
+        self.contentViewController = contentViewController;
+    } else {
+        [self clearInspector];
+    }
 }
 
--(void)presentInspectorView:(NSView *)view
+-(void)presentInspectorView:(AMInspectorView *)inspectorView
 {
-    if (view != self.currentViewController.view) {
-        [self clearInspectorView];
-        [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.view addSubview:view];
+    if (inspectorView) {
+        [self.inspectorsView presentInspector:inspectorView];
+    } else {
+        [self clearInspector];
     }
+}
+-(id<AMNameProviding>)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList
+{
+    return [self.document argumentsNameProviderWithArguments:argumentList];
 }
 
 -(void)endEditing
 {
-    if (!self.object) {
+    if (!self.inspectorViewController) {
         return;
     }
     // TODO: tell the object to end editing
 }
--(void)clearInspectorView
+-(void)clearInspector
 {
-    if (self.currentViewController) {
-        [self.currentViewController.view removeFromSuperview];
-    }
+    [self.inspectorsView clearInspector];
 }
--(id)object
+-(AMInspectorsView*)inspectorsView
 {
-    return _object;
+    return ((AMInspectorsView*)self.view);
 }
--(void)setObject:(id)object
+-(AMContentViewController*)contentViewController
 {
-    if (_object == object) {
+    return _contentViewController;
+}
+-(void)setContentViewController:(id)contentViewController
+{
+    if (_contentViewController == contentViewController) {
         return;
     }
     [self endEditing];
-    [self clearInspectorView];
-    _object = object;
-    NSView * view = self.currentViewController.view;
+    _contentViewController = contentViewController;
+    AMInspectorView * view = self.inspectorViewController.inspectorView;
     [self presentInspectorView:view];
     [self reloadData];
 }
+-(AMDInsertedObject *)amdObject
+{
+    return [self.contentViewController amdInsertedObject];
+}
 -(void)reloadData
 {
-    if (!self.object) {
+    if (!self.contentViewController) {
         return;
     }
-    NSViewController * vc = self.currentViewController;
-    vc.representedObject = self.object;
+    AMInspectorViewController * vc = self.inspectorViewController;
+    vc.delegate = self;
+    vc.representedObject = self.contentViewController;
+    [vc reloadData];
 }
--(NSViewController*)currentViewController
+-(AMInspectorViewController*)inspectorViewController
 {
-    NSObject * object = self.object;
+    NSObject * object = self.contentViewController;
     NSString * className = NSStringFromClass([object class]);
     if (!self.viewControllers[className]) {
-        if (object.class == [AMDFunctionDef class]) {
+        if (object.class == [AMFunctionContentViewController class]) {
             self.viewControllers[className] = [[AMFunctionInspectorViewController alloc] init];
         }
     }

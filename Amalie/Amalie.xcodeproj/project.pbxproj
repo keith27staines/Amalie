@@ -31,6 +31,9 @@
 		53A8E90219289E1100A28E91 /* AMFunctionInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E90019289E1100A28E91 /* AMFunctionInspectorViewController.m */; };
 		53A8E90319289E1100A28E91 /* AMFunctionInspectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */; };
 		53A8E9071928AAF900A28E91 /* AMContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E9061928AAF900A28E91 /* AMContainerView.m */; };
+		53A8E90A1929E1E600A28E91 /* AMFunctionInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E9091929E1E600A28E91 /* AMFunctionInspectorView.m */; };
+		53A8E90D1929EBAC00A28E91 /* AMInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E90C1929EBAC00A28E91 /* AMInspectorView.m */; };
+		53A8E9101929ED1000A28E91 /* AMInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E90F1929ED1000A28E91 /* AMInspectorViewController.m */; };
 		53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */; };
 		780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68AD18EC62AE003CC00A /* AMFontSettings.m */; };
 		780F68B118EC62DA003CC00A /* AMPageSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68B018EC62DA003CC00A /* AMPageSettings.m */; };
@@ -280,6 +283,12 @@
 		53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMFunctionInspectorViewController.xib; sourceTree = "<group>"; };
 		53A8E9051928AAF900A28E91 /* AMContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMContainerView.h; sourceTree = "<group>"; };
 		53A8E9061928AAF900A28E91 /* AMContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMContainerView.m; sourceTree = "<group>"; };
+		53A8E9081929E1E600A28E91 /* AMFunctionInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFunctionInspectorView.h; sourceTree = "<group>"; };
+		53A8E9091929E1E600A28E91 /* AMFunctionInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFunctionInspectorView.m; sourceTree = "<group>"; };
+		53A8E90B1929EBAC00A28E91 /* AMInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInspectorView.h; sourceTree = "<group>"; };
+		53A8E90C1929EBAC00A28E91 /* AMInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInspectorView.m; sourceTree = "<group>"; };
+		53A8E90E1929ED1000A28E91 /* AMInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInspectorViewController.h; sourceTree = "<group>"; };
+		53A8E90F1929ED1000A28E91 /* AMInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInspectorViewController.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
 		53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesWindowContentView.m; sourceTree = "<group>"; };
 		780F68AC18EC62AE003CC00A /* AMFontSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSettings.h; sourceTree = "<group>"; };
@@ -660,7 +669,7 @@
 			name = "Data object renamers";
 			sourceTree = "<group>";
 		};
-		53A8E8FB1928905E00A28E91 /* Inspectors */ = {
+		53A8E8FB1928905E00A28E91 /* Inspectors View */ = {
 			isa = PBXGroup;
 			children = (
 				53A8E8F619288F4400A28E91 /* AMInspectorsViewController.h */,
@@ -668,9 +677,9 @@
 				53A8E8F819288F4400A28E91 /* AMInspectorsViewController.xib */,
 				53A8E8FC1928909200A28E91 /* AMInspectorsView.h */,
 				53A8E8FD1928909200A28E91 /* AMInspectorsView.m */,
-				53A8E90419289E1B00A28E91 /* Function Inspector */,
+				53A8E9111929ED3E00A28E91 /* Inspector views */,
 			);
-			name = Inspectors;
+			name = "Inspectors View";
 			sourceTree = "<group>";
 		};
 		53A8E90419289E1B00A28E91 /* Function Inspector */ = {
@@ -679,8 +688,22 @@
 				53A8E8FF19289E1100A28E91 /* AMFunctionInspectorViewController.h */,
 				53A8E90019289E1100A28E91 /* AMFunctionInspectorViewController.m */,
 				53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */,
+				53A8E9081929E1E600A28E91 /* AMFunctionInspectorView.h */,
+				53A8E9091929E1E600A28E91 /* AMFunctionInspectorView.m */,
 			);
 			name = "Function Inspector";
+			sourceTree = "<group>";
+		};
+		53A8E9111929ED3E00A28E91 /* Inspector views */ = {
+			isa = PBXGroup;
+			children = (
+				53A8E90E1929ED1000A28E91 /* AMInspectorViewController.h */,
+				53A8E90F1929ED1000A28E91 /* AMInspectorViewController.m */,
+				53A8E90B1929EBAC00A28E91 /* AMInspectorView.h */,
+				53A8E90C1929EBAC00A28E91 /* AMInspectorView.m */,
+				53A8E90419289E1B00A28E91 /* Function Inspector */,
+			);
+			name = "Inspector views";
 			sourceTree = "<group>";
 		};
 		780F68AB18EC5375003CC00A /* Settings Management */ = {
@@ -841,7 +864,7 @@
 			isa = PBXGroup;
 			children = (
 				782DA25B189BA0BB00F66E23 /* Library and toolbox */,
-				53A8E8FB1928905E00A28E91 /* Inspectors */,
+				53A8E8FB1928905E00A28E91 /* Inspectors View */,
 			);
 			name = "Sidebar content";
 			sourceTree = "<group>";
@@ -1563,6 +1586,7 @@
 				780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */,
 				786E32F3188BC2C10095443D /* AMExpandingTextFieldView.m in Sources */,
 				78D8C30218C7A991001F5494 /* AMPreferencesViewControllerBase.m in Sources */,
+				53A8E9101929ED1000A28E91 /* AMInspectorViewController.m in Sources */,
 				78F52C6617FABA5C0092B604 /* AMDInsertedObject.m in Sources */,
 				785826C818C4EA2800612651 /* AMFontChoiceView.m in Sources */,
 				785247CF1785722700F6A7AD /* AMInsertableView.m in Sources */,
@@ -1575,10 +1599,12 @@
 				78DE597F17CB6EE5003F0181 /* KSMFunction.m in Sources */,
 				784D6EFE1789CC97002BE03A /* AMUserPreferencesWindowController.m in Sources */,
 				7899B2F117AD0E58008BDB75 /* AMMathematicalSetContentViewController.m in Sources */,
+				53A8E90D1929EBAC00A28E91 /* AMInspectorView.m in Sources */,
 				78734E2A180BD63B00A2EEF3 /* AMKeyboardKeyModel.m in Sources */,
 				5346360119191F1F00569927 /* AMExpressionEditorContainerView.m in Sources */,
 				5329831B18E576FF0040809D /* AMColorPreferenceTableCellView.m in Sources */,
 				78F52C6317FABA5C0092B604 /* AMDFunctionDef.m in Sources */,
+				53A8E90A1929E1E600A28E91 /* AMFunctionInspectorView.m in Sources */,
 				78CDC75817AF843A00BDC8D7 /* AMGroupedView.m in Sources */,
 				78803C0418D9E120008FBDE1 /* AMFontText.m in Sources */,
 				78CDC75E17AFA30700BDC8D7 /* AMViewHelper.m in Sources */,

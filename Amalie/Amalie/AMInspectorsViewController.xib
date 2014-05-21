@@ -15,6 +15,23 @@
         <customView id="Hz6-mo-xeY" customClass="AMInspectorsView">
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="31T-Nq-rI0">
+                    <rect key="frame" x="0.0" y="236" width="480" height="36"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="qWL-Jo-6ls"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="31T-Nq-rI0" secondAttribute="trailing" id="2Ry-Fm-dUA"/>
+                <constraint firstItem="31T-Nq-rI0" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="Ebu-bh-h1v"/>
+                <constraint firstItem="31T-Nq-rI0" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="WcN-P1-Qfm"/>
+            </constraints>
+            <connections>
+                <outlet property="headerView" destination="31T-Nq-rI0" id="07b-BF-hgu"/>
+            </connections>
         </customView>
     </objects>
 </document>

@@ -6,8 +6,33 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+@class AMFunctionContentViewController;
+@class AMArgumentListViewController;
+@class AMDFunctionDef;
 
-@interface AMFunctionInspectorViewController : NSViewController
+#import <Cocoa/Cocoa.h>
+#import "AMInspectorViewController.h"
+#import "AMFunctionPropertiesViewDelegate.h"
+
+@interface AMFunctionInspectorViewController : AMInspectorViewController
+<AMFunctionPropertiesViewDelegate>
+
+@property (weak) IBOutlet NSPopUpButton *argumentTypePopup;
+@property (readonly) id<AMNameProviding> nameProvider;
+
+- (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender;
+
+@property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
+
+@property (weak, readonly) AMDFunctionDef * functionDef;
+
+- (IBAction)showNameEditor:(id)sender;
+
+- (IBAction)addArgument:(id)sender;
+
+- (IBAction)removeArgument:(id)sender;
+
+- (IBAction)showExpressionEditor:(id)sender;
+
 
 @end

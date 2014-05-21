@@ -60,6 +60,9 @@
 {
     // Base implementation does nothing but is designed to be overridden
 }
+-(void)reloadData {
+    // Base implementation does nothing but is designed to be overridden
+}
 
 -(NSFont *)fixedWidthFont
 {

@@ -69,7 +69,10 @@
 
 -(void)deleteContent;
 
-/*! */
+/*! Causes the controlled view to be repopulated from the existing datasources. Should be overridden because the base class implementation does nothing */
+-(void)reloadData;
+
+/*!  Causes the controlled view to redraw following changes to user preferences. Should be overridden because the base class implementation does nothing */
 -(void)applyUserPreferences;
 
 /*! Change the receiver's name if the proposed name is valid and unique 

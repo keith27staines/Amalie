@@ -6,15 +6,23 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMAmalieDocument;
+@class AMAmalieDocument, AMContentViewController, AMDArgumentList, AMDInsertedObject;
 
 #import <Cocoa/Cocoa.h>
+#import "AMNameProviding.h"
 
 @interface AMInspectorsViewController : NSViewController
 
 @property (weak) IBOutlet AMAmalieDocument * document;
 
--(void)presentInspectorForObject:(id)object;
+-(void)presentInspectorForContentViewController:(AMContentViewController*)contentViewController;
+
+-(id<AMNameProviding>)argumentsNameProviderWithArguments:(AMDArgumentList*)argumentList;
+
+@property (weak,readonly) AMDInsertedObject * amdObject;
+@property (weak,readonly) AMContentViewController * contentViewController;
+
 -(void)reloadData;
-@property (weak,readonly) id object;
+
+-(void)clearInspector;
 @end
