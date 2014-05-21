@@ -6,6 +6,11 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+/*!
+ *  Notification emitted when an expression string was edited
+ */
+extern NSString * const AMNotificationExpressionStringWasEdited;
+
 @class AMAmalieDocument;
 @class AMDInsertedObject;
 @class NSManagedObjectContext;

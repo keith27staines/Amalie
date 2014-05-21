@@ -8,6 +8,7 @@
 
 #import "AMFunctionInspectorView.h"
 #import "AMFunctionInspectorViewController.h"
+#import "AMDFunctionDef+methods.h"
 #import "AMNamedObject.h"
 
 @implementation AMFunctionInspectorView
@@ -16,12 +17,16 @@
 {
     [self.delegate setupValuePopup:self.returnTypePopup];
 }
-
+-(void)expressionStringWasEdited
+{
+    [self reloadData];
+}
 -(void)reloadData
 {
     AMDFunctionDef * functionDef = [self.delegate functionDef];
     self.nameField.stringValue = [functionDef.name string];
     [self.returnTypePopup selectItemWithTag:functionDef.returnType.integerValue];
     [self.argumentTable reloadData];
+    self.expressionString.stringValue = self.delegate.expressionString;
 }
 @end

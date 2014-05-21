@@ -388,5 +388,6 @@ static NSUInteger const kAMIndexRHS;
 -(void)expressionEditorFinishedWithString:(NSString*)string
 {
     [self setExpressionString:string];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AMNotificationExpressionStringWasEdited object:self];
 }
 @end

@@ -74,16 +74,27 @@
 {
     return _contentViewController;
 }
--(void)setContentViewController:(id)contentViewController
+-(void)setContentViewController:(AMContentViewController*)contentViewController
 {
     if (_contentViewController == contentViewController) {
         return;
     }
-    [self endEditing];
+    [self endController];
+    [self beginController:contentViewController];
+}
+-(void)endController
+{
+    if (_contentViewController) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AMNotificationExpressionStringWasEdited object:self.contentViewController];
+    }
+}
+-(void)beginController:(AMContentViewController*)contentViewController
+{
     _contentViewController = contentViewController;
     AMInspectorView * view = self.inspectorViewController.inspectorView;
     [self presentInspectorView:view];
     [self reloadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:AMNotificationExpressionStringWasEdited object:self.contentViewController];
 }
 -(AMDInsertedObject *)amdObject
 {
@@ -94,10 +105,10 @@
     if (!self.contentViewController) {
         return;
     }
-    AMInspectorViewController * vc = self.inspectorViewController;
-    vc.delegate = self;
-    vc.representedObject = self.contentViewController;
-    [vc reloadData];
+    AMInspectorViewController * inspector = self.inspectorViewController;
+    inspector.delegate = self;
+    inspector.representedObject = self.contentViewController;
+    [inspector reloadData];
 }
 -(AMInspectorViewController*)inspectorViewController
 {

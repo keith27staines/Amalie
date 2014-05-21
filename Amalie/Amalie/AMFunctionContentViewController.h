@@ -33,6 +33,6 @@
 @property (readonly) BOOL isConstant;
 @property (readonly) BOOL isVariable;
 
-//
+- (IBAction)showExpressionEditor:(id)sender;
 
 @end

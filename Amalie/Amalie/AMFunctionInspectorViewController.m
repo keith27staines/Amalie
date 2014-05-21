@@ -7,6 +7,7 @@
 //
 
 #import "AMFunctionInspectorViewController.h"
+#import "AMFunctionContentViewController.h"
 #import "AMFunctionInspectorView.h"
 #import "AMInspectorsViewController.h"
 #import "AMInspectorView.h"
@@ -19,6 +20,7 @@
 #import "AMDName.h"
 #import "AMDataStore.h"
 #import "AMNameProviding.h"
+#import "KSMExpression.h"
 
 @interface AMFunctionInspectorViewController ()
 {
@@ -36,7 +38,6 @@
 }
 - (IBAction)showNameEditor:(id)sender {
 }
-
 - (IBAction)addArgument:(NSButton *)sender {
     NSTableView * argumentTable = self.functionInspectorView.argumentTable;
     NSInteger selectedRow = argumentTable.selectedRow;
@@ -81,6 +82,8 @@
     [self dataWasUpdated];
 }
 - (IBAction)showExpressionEditor:(id)sender {
+    AMFunctionContentViewController* vc = (AMFunctionContentViewController*)self.delegate.contentViewController;
+    [vc showExpressionEditor:self];
 }
 
 -(id<AMNameProviding>)nameProvider
@@ -131,6 +134,11 @@
 -(AMDFunctionDef*)functionDef
 {
     return (AMDFunctionDef*)[self amdObject];
+}
+-(NSString*)expressionString
+{
+    KSMExpression * expr = [self.delegate.contentViewController expressionForIndex:0];
+    return [expr.originalString copy];
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {

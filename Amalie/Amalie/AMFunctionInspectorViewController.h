@@ -19,7 +19,7 @@
 
 @property (weak) IBOutlet NSPopUpButton *argumentTypePopup;
 @property (readonly) id<AMNameProviding> nameProvider;
-
+@property (copy,readonly) NSString * expressionString;
 - (IBAction)valueTypePopupChanged:(NSPopUpButton *)sender;
 
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;

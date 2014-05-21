@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Keith Staines. All rights reserved.
 //
 
+NSString * const AMNotificationExpressionStringWasEdited = @"AMNotificationExpressionStringWasEdited";
+
+
 #import <QuartzCore/QuartzCore.h>
 #import "AMContentViewController.h"
 #import "AMConstantContentViewController.h"
