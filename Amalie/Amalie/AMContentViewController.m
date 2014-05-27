@@ -361,5 +361,9 @@ NSString * const AMNotificationExpressionStringWasEdited = @"AMNotificationExpre
 {
     NSLog(@"Dealloc AMContentViewController %@",self);
 }
+-(NSUndoManager *)undoManager
+{
+    return self.moc.undoManager;
+}
 
 @end

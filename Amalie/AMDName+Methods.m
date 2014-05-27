@@ -12,6 +12,9 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 #import "NSManagedObject+SharedDataStore.h"
 #import "AMPersistedObjectNameProvider.h"
 #import "AMName.h"
+#import "KSMExpression.h"
+#import "AMError.h"
+#import "NSString+KSMMath.h"
 
 @implementation AMDName (Methods)
 
@@ -155,6 +158,46 @@ static NSString * const kAMDENTITYNAME = @"AMDNames";
 -(id)copyWithZone:(NSZone *)zone
 {
     return [AMName nameFromString:self.string attributedString:self.attributedString mustBeUnique:self.mustBeUnique];
+}
+-(BOOL)isValidNameString:(NSString *)nameString
+{
+    NSAssert(nameString, @"The name is a null string");
+    if (nameString.length == 0) {
+        return NO;
+    }
+    KSMExpression * k = [[KSMExpression alloc] initWithString:nameString];
+    if (k.expressionType == KSMExpressionTypeVariable) {
+        return YES;
+    }
+    return NO;
+}
+-(BOOL)isValidNameString:(NSString*)nameString error:(NSError**)error
+{
+    if ([self isValidNameString:nameString]) {
+        return YES;
+    }
+    if (nameString.length == 0) {
+        if (error) {
+            * error = [AMError errorNameIsEmptyString];
+        }
+        return NO;
+    }
+    KSMExpression * k = [[KSMExpression alloc] initWithString:nameString];
+    if (k.expressionType == KSMExpressionTypeVariable) {
+        if (error) *error = nil;
+        return YES;
+    }
+    if (k.expressionType == KSMExpressionTypeBinary) {
+        if (error) * error = [AMError errorNameIsCompoundExpression:nameString];
+    }
+    if (k.expressionType == KSMExpressionTypeLiteral) {
+        if (error) * error = [AMError errorNameIsNumeric:nameString];
+    }
+    if ([nameString KSMIsFirstCharacterNumeric]) {
+        if (error) * error = [AMError errorNameBeginsWithIllegalCharacter:nameString];
+    }
+    if (error) * error = [AMError errorNameContainsIllegalCharacter:nameString];
+    return NO;
 }
 
 @end

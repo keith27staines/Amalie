@@ -46,13 +46,12 @@ static NSUInteger const kAMIndexRHS;
     __weak AMExpandingTextFieldView     * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
     NSMutableDictionary                 * _viewDictionary;
-    AMExpressionFormatContextNode             * _contextNode;
+    AMExpressionFormatContextNode       * _contextNode;
     AMPersistedObjectWithArgumentsNameProvider * _persistedObjectNameProvider;
     BOOL                                  _viewPrepared;
 }
 @property (weak) IBOutlet AMArgumentListViewController * argumentListViewController;
 @property (strong) AMExpressionFormatContextNode * contextNode;
-@property (copy) NSString * expressionString;
 @property (weak,readonly) AMArgumentListView * argumentListView;
 @property (weak) AMTextView * nameView;
 @end
@@ -219,18 +218,19 @@ static NSUInteger const kAMIndexRHS;
 }
 -(void)setExpressionString:(NSString*)expressionString
 {
-    
+    if (!expressionString) {
+        expressionString = @"";
+    }
     if (_expressionString && [_expressionString isEqualToString:expressionString]) {
         return;
     }
+    [self.undoManager registerUndoWithTarget:self selector:@selector(setExpressionString:) object:_expressionString];
     _expressionString = [expressionString copy];
     KSMExpression * expr;
     expr = [self expressionFromString:expressionString atIndex:kAMIndexRHS];
     [self reloadData];
-//    [self.expressionStringView setStringValue:expressionString];
-//    [self resetExpressionViewWithExpression:expr];
-//    [self.view setNeedsUpdateConstraints:YES];
-//    [self.view setNeedsDisplay:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AMNotificationExpressionStringWasEdited object:self];
+
 }
 -(NSString*)expressionString
 {
@@ -388,6 +388,5 @@ static NSUInteger const kAMIndexRHS;
 -(void)expressionEditorFinishedWithString:(NSString*)string
 {
     [self setExpressionString:string];
-    [[NSNotificationCenter defaultCenter] postNotificationName:AMNotificationExpressionStringWasEdited object:self];
 }
 @end

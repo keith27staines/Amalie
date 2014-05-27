@@ -29,6 +29,17 @@ static NSMutableString * _validFirstCharacters;
     }
     return _validFirstCharacters;
 }
+-(BOOL)KSMIsFirstCharacterNumeric
+{
+    NSString * first = [self KSMfirstCharacter];
+    if (!first) {
+        return NO;
+    }
+    if ([first KSMpureNumber]) {
+        return YES;
+    }
+    return NO;
+}
 
 -(BOOL)KSMcontainsCharactersInSet:(NSCharacterSet*)set
 {

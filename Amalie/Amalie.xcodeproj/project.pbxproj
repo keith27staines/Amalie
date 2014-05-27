@@ -34,6 +34,9 @@
 		53A8E90A1929E1E600A28E91 /* AMFunctionInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E9091929E1E600A28E91 /* AMFunctionInspectorView.m */; };
 		53A8E90D1929EBAC00A28E91 /* AMInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E90C1929EBAC00A28E91 /* AMInspectorView.m */; };
 		53A8E9101929ED1000A28E91 /* AMInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E90F1929ED1000A28E91 /* AMInspectorViewController.m */; };
+		53A8E913192DDD9300A28E91 /* AMArgumentTableRowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53A8E912192DDD9300A28E91 /* AMArgumentTableRowViewController.xib */; };
+		53A8E916192DDDED00A28E91 /* AMArgumentTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E915192DDDED00A28E91 /* AMArgumentTableRowView.m */; };
+		53A8E919192DE77F00A28E91 /* AMArgumentTableRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A8E918192DE77F00A28E91 /* AMArgumentTableRowViewController.m */; };
 		53F5976918E83105002FB9E1 /* AMUserPreferencesWindowContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */; };
 		780F68AE18EC62AE003CC00A /* AMFontSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68AD18EC62AE003CC00A /* AMFontSettings.m */; };
 		780F68B118EC62DA003CC00A /* AMPageSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 780F68B018EC62DA003CC00A /* AMPageSettings.m */; };
@@ -289,6 +292,11 @@
 		53A8E90C1929EBAC00A28E91 /* AMInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInspectorView.m; sourceTree = "<group>"; };
 		53A8E90E1929ED1000A28E91 /* AMInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMInspectorViewController.h; sourceTree = "<group>"; };
 		53A8E90F1929ED1000A28E91 /* AMInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMInspectorViewController.m; sourceTree = "<group>"; };
+		53A8E912192DDD9300A28E91 /* AMArgumentTableRowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMArgumentTableRowViewController.xib; sourceTree = "<group>"; };
+		53A8E914192DDDED00A28E91 /* AMArgumentTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentTableRowView.h; sourceTree = "<group>"; };
+		53A8E915192DDDED00A28E91 /* AMArgumentTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentTableRowView.m; sourceTree = "<group>"; };
+		53A8E917192DE77F00A28E91 /* AMArgumentTableRowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMArgumentTableRowViewController.h; sourceTree = "<group>"; };
+		53A8E918192DE77F00A28E91 /* AMArgumentTableRowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMArgumentTableRowViewController.m; sourceTree = "<group>"; };
 		53F5976718E83105002FB9E1 /* AMUserPreferencesWindowContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMUserPreferencesWindowContentView.h; sourceTree = "<group>"; };
 		53F5976818E83105002FB9E1 /* AMUserPreferencesWindowContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMUserPreferencesWindowContentView.m; sourceTree = "<group>"; };
 		780F68AC18EC62AE003CC00A /* AMFontSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFontSettings.h; sourceTree = "<group>"; };
@@ -690,6 +698,11 @@
 				53A8E90119289E1100A28E91 /* AMFunctionInspectorViewController.xib */,
 				53A8E9081929E1E600A28E91 /* AMFunctionInspectorView.h */,
 				53A8E9091929E1E600A28E91 /* AMFunctionInspectorView.m */,
+				53A8E912192DDD9300A28E91 /* AMArgumentTableRowViewController.xib */,
+				53A8E914192DDDED00A28E91 /* AMArgumentTableRowView.h */,
+				53A8E915192DDDED00A28E91 /* AMArgumentTableRowView.m */,
+				53A8E917192DE77F00A28E91 /* AMArgumentTableRowViewController.h */,
+				53A8E918192DE77F00A28E91 /* AMArgumentTableRowViewController.m */,
 			);
 			name = "Function Inspector";
 			sourceTree = "<group>";
@@ -1511,6 +1524,7 @@
 				78734E241806B10F00A2EEF3 /* AMKeyboardsView.xib in Resources */,
 				787B3053178361BC001851C0 /* Credits.rtf in Resources */,
 				784D6F01178A1217002BE03A /* AMUserPreferencesWindow.xib in Resources */,
+				53A8E913192DDD9300A28E91 /* AMArgumentTableRowViewController.xib in Resources */,
 				785826BF18C4D20100612651 /* AMPagePreferencesViewController.xib in Resources */,
 				785826A718C474C800612651 /* AMColorPreferencesViewController.xib in Resources */,
 				785826AF18C4753700612651 /* AMFontPreferencesViewController.xib in Resources */,
@@ -1620,6 +1634,7 @@
 				78B205CB17D5DC1D0059773A /* AMFunctionContentView.m in Sources */,
 				788EAE1418B6684700D3EBD3 /* AMPageOrientationView.m in Sources */,
 				5371A10A1907C99C00DED138 /* AMFunctionPropertiesView.m in Sources */,
+				53A8E916192DDDED00A28E91 /* AMArgumentTableRowView.m in Sources */,
 				785826B618C4CCCB00612651 /* AMMathPreferencesViewController.m in Sources */,
 				53132A3218FED5420069C7BA /* AMAbstractNameProvider.m in Sources */,
 				7824F43018CA0AB0004089B9 /* AMPersistentDocumentSettings.m in Sources */,
@@ -1675,6 +1690,7 @@
 				7825D652180E89C40039EB67 /* AMKeyboard.m in Sources */,
 				5316847E18EDABFD00A29B36 /* AMSettingsSection.m in Sources */,
 				7848E5CE185769F400719EF3 /* AMPersistedObjectNameProvider.m in Sources */,
+				53A8E919192DE77F00A28E91 /* AMArgumentTableRowViewController.m in Sources */,
 				785826C218C4D22000612651 /* AMPagePreferencesView.m in Sources */,
 				78962FF2182CF0CC0066BEE9 /* AMArgumentListView.m in Sources */,
 				787B304F178361BC001851C0 /* main.m in Sources */,

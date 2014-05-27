@@ -25,4 +25,9 @@
 +(NSAttributedString*)generateAttributedStringFromName:(NSString*)name valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider;
 
 -(void)setNameAndGenerateAttributedNameFrom:(NSString*)string valueType:(NSNumber*)valueType nameProvider:(id<AMNameProviding>)nameProvider;
+
+-(BOOL)isValidNameString:(NSString*)nameString error:(NSError**)error;
+
+-(BOOL)isValidNameString:(NSString *)nameString;
+
 @end

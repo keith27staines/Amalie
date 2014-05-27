@@ -77,7 +77,7 @@
 }
 -(BOOL)isBinary
 {
-    return !self.isUnary;
+    return ((self.expression.validityType == KSMExpressionValidityValid) && !self.isUnary);
 }
 -(KSMOperatorType)operatorType
 {
@@ -100,6 +100,10 @@
 -(NSString*)reconstructExpressionString
 {
     if (_reconstructedString) {
+        return _reconstructedString;
+    }
+    if (!self.expression.validityType == KSMExpressionValidityValid) {
+        _reconstructedString = self.expression.originalString;
         return _reconstructedString;
     }
     NSString * r;

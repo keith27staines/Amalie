@@ -493,7 +493,7 @@ NSString * const kScalarMultiply        = @"∘";
     if ( [self.string KSMpureNumber]) return YES;
     if ( [self.string KSMvalidName]) return YES;
     
-    /* Having elimintated other possibilites, the format should now be 
+    /* Having elimintated other possibilites, the format we are expecting is
      * a1 . a2 . a3...  * aN where . stands for ANY
      * operator and ai represents any expression that is either a valid 
      * algebraic variable name or else a purely numerical quantity
@@ -525,7 +525,10 @@ NSString * const kScalarMultiply        = @"∘";
         
         index+=[token length];
     }
-    
+    if (!operatorExpected) {
+        // next expected token is a variable or number, therefore the expression ends in an operator and so can't be valid
+        return NO;
+    }
     // looks like a good expression
     return YES;
 }

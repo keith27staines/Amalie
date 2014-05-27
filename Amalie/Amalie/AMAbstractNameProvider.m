@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
     
     if ( ![self isKnownObjectName:proposedName] ) {
         if (error) {
-            *error = [AMError errorForNonUniqueName:proposedName];
+            *error = [AMError errorNameAlreadyExists:proposedName];
         }
         return NO;
     }

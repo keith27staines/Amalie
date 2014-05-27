@@ -17,16 +17,26 @@
 {
     [self.delegate setupValuePopup:self.returnTypePopup];
 }
--(void)expressionStringWasEdited
-{
-    [self reloadData];
-}
 -(void)reloadData
 {
-    AMDFunctionDef * functionDef = [self.delegate functionDef];
-    self.nameField.stringValue = [functionDef.name string];
-    [self.returnTypePopup selectItemWithTag:functionDef.returnType.integerValue];
+    [self reloadFunctionName];
+    [self reloadReturnType];
+    [self reloadArgumentTable];
+    [self reloadExpressionString];
+}
+-(void)reloadFunctionName {
+    self.nameField.stringValue = [self.functionDef.name string];
+}
+-(AMDFunctionDef*)functionDef {
+    return [self.delegate functionDef];
+}
+-(void)reloadReturnType {
+    [self.returnTypePopup selectItemWithTag:self.functionDef.returnType.integerValue];
+}
+-(void)reloadArgumentTable {
     [self.argumentTable reloadData];
+}
+-(void)reloadExpressionString {
     self.expressionString.stringValue = self.delegate.expressionString;
 }
 @end

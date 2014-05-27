@@ -69,6 +69,9 @@
  */
 -(BOOL)KSMpureNumber;
 
-
+/*!
+ *  Determines whether the first character in the string is numeric 0 - 9
+ */
+-(BOOL)KSMIsFirstCharacterNumeric;
 
 @end

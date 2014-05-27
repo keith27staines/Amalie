@@ -17,10 +17,13 @@
 #import "AMArgument.h"
 #import "AMDArgumentList+Methods.h"
 #import "AMDFunctionDef+Methods.h"
-#import "AMDName.h"
+#import "AMDName+Methods.h"
 #import "AMDataStore.h"
 #import "AMNameProviding.h"
 #import "KSMExpression.h"
+#import "AMArgumentTableRowViewController.h"
+#import "AMArgumentTableRowView.h"
+#import "AMNamedAndTypedObject.h"
 
 @interface AMFunctionInspectorViewController ()
 {
@@ -53,7 +56,7 @@
         [argumentTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:selectedRow] withAnimation:NSTableViewAnimationSlideDown];
         
         NSTableCellView * view = [argumentTable viewAtColumn:0 row:selectedRow makeIfNecessary:NO];
-        [self populateTableNameView:view withArgument:argument];
+        [self populateTableNameView:(AMArgumentTableRowView*)view withArgument:argument];
         
         // Make sure new row is visible
         [argumentTable scrollRowToVisible:selectedRow];
@@ -82,10 +85,11 @@
     [self dataWasUpdated];
 }
 - (IBAction)showExpressionEditor:(id)sender {
-    AMFunctionContentViewController* vc = (AMFunctionContentViewController*)self.delegate.contentViewController;
-    [vc showExpressionEditor:self];
+    [[self functionContentViewController] showExpressionEditor:self];
 }
-
+-(AMFunctionContentViewController*)functionContentViewController {
+    return (AMFunctionContentViewController*)self.delegate.contentViewController;
+}
 -(id<AMNameProviding>)nameProvider
 {
     if (!_nameProvider) {
@@ -151,33 +155,30 @@
 
 -(NSView*)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    NSView * returnView = nil;
+    AMArgumentTableRowView * returnView = nil;
     if (tableView == self.functionInspectorView.argumentsTable) {
         AMDArgument * argument = [self.argumentList argumentAtIndex:row];
         NSAssert(argument, @"argument in list is nil");
-        if ( [tableColumn.identifier isEqualToString:@"NameColumn"] ) {
-            NSTableCellView * view = nil;
-            view = [tableView makeViewWithIdentifier:@"NameColumnView" owner:self];
-            [self populateTableNameView:view withArgument:argument];
-            returnView = view;
-        } else if ([tableColumn.identifier isEqualToString:@"TypeColumn"] ) {
-            NSPopUpButton * view = nil;
-            view = [tableView makeViewWithIdentifier:@"TypeColumnView" owner:self];
-            NSPopUpButton * popupButton = (NSPopUpButton*)view;
-            [self populateTableTypeView:popupButton withArgument:argument];
-            returnView = view;
-        }
+        returnView = [self makeArgumentTableRowView];
+        [self populateTableNameView:returnView withArgument:argument];
     }
     return returnView;
 }
-
--(void)populateTableNameView:(NSTableCellView*)view withArgument:(AMDArgument*)argument
+-(AMArgumentTableRowView*)makeArgumentTableRowView
 {
-    view.textField.attributedStringValue = argument.name.attributedString;
-    view.textField.delegate = self;
+    AMArgumentTableRowViewController * vc = [[AMArgumentTableRowViewController alloc] init];
+    AMArgumentTableRowView * rowView = vc.rowView;
+    [rowView.showNameEditor setTarget:self];
+    [rowView.showNameEditor setAction:@selector(showNameEditor:)];
+    [self setupValuePopup:rowView.valueTypePopup];
+    return rowView;
+}
+-(void)populateTableNameView:(AMArgumentTableRowView*)view withArgument:(AMDArgument*)argument
+{
+    view.argumentName.attributedString = argument.name.attributedString;
 }
 
--(void)populateTableTypeView:(NSPopUpButton*)button withArgument:(AMDArgument*)argument
+-(void)populateTableTypePopupButton:(NSPopUpButton*)button withArgument:(AMDArgument*)argument
 {
     [self setupValuePopup:button];
     KSMValueType valueType = argument.valueType.integerValue;
@@ -189,13 +190,33 @@
 {
     return (AMFunctionInspectorView*)self.inspectorView;
 }
+-(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    NSString * proposedName = fieldEditor.string;
+    if (control == self.functionInspectorView.nameField) {
+        return [self isValidFunctionName:proposedName];
+    }
+    return YES;
+}
+-(void)controlTextDidChange:(NSNotification *)obj
+{
+    if (obj.object == self.functionInspectorView.nameField) {
+        [self updateFunctionName:self.functionInspectorView.nameField.stringValue];
+    }
+}
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
     KSMValueType mathValue;
     if (notification.object == self.functionInspectorView.nameField) {
         NSString * proposedName = self.functionInspectorView.nameField.stringValue;
         mathValue = self.functionDef.returnType.integerValue;
-        [self updateFunctionName:proposedName];
+        if (![self updateFunctionName:proposedName]) {
+            //
+            NSError * error = [self validationErrorForProposedFunctionName:proposedName];
+            
+        }
+    } else if (notification.object == self.functionInspectorView.expressionString) {
+        [[self functionContentViewController] setExpressionString:self.functionInspectorView.expressionString.stringValue];
     } else {
         NSInteger selectedRow = self.functionInspectorView.argumentTable.selectedRow;
         AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
@@ -206,13 +227,29 @@
 }
 
 #pragma mark - Update methods and undo manager -
--(void)updateFunctionName:(NSString*)name
+-(BOOL)updateFunctionName:(NSString*)name
 {
+    if ( ![self isValidFunctionName:name] ) {
+        return NO;
+    }
     AMDataRenamer * renamer = [AMDataRenamer renamerForObject:self.functionDef nameProvider:self.nameProvider];
     [[self undoManager] registerUndoWithTarget:self selector:@selector(updateFunctionName:) object:self.functionDef.name.string];
     [renamer updateNameString:[name copy]];
     [self reloadData];
     [self dataWasUpdated];
+    return YES;
+}
+-(BOOL)isValidFunctionName:(NSString*)string
+{
+    AMDName * name = self.functionDef.name;
+    return [name isValidNameString:string];
+}
+-(NSError*)validationErrorForProposedFunctionName:(NSString*)proposedName
+{
+    NSError * error;
+    AMDName * name = self.functionDef.name;
+    [name isValidNameString:proposedName error:&error];
+    return error;
 }
 -(void)updateFunctionReturnType:(NSNumber*)returnType
 {

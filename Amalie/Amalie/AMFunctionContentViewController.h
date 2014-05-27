@@ -34,5 +34,6 @@
 @property (readonly) BOOL isVariable;
 
 - (IBAction)showExpressionEditor:(id)sender;
+@property (copy) NSString * expressionString;
 
 @end
