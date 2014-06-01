@@ -22,6 +22,7 @@
                 <outlet property="libraryContainerView" destination="FbB-mP-o5T" id="sdZ-zB-v0Q"/>
                 <outlet property="mathStylePopover" destination="eO5-AM-bsz" id="45F-7t-4hG"/>
                 <outlet property="middleSplitView" destination="5BN-Z6-wHO" id="C5E-so-XKW"/>
+                <outlet property="nameEditorViewController" destination="hNu-a5-via" id="aPO-Al-Que"/>
                 <outlet property="pageSetupPopover" destination="XWM-t0-OLB" id="zS4-ka-Jdb"/>
                 <outlet property="rightSplitView" destination="Pt1-IB-gk6" id="S65-9r-6UO"/>
                 <outlet property="scaleSliderItem" destination="mk5-T9-xbF" id="nZF-Gq-wQd"/>
@@ -285,7 +286,7 @@
                 <autoresizingMask key="autoresizingMask"/>
             </view>
         </window>
-        <customObject id="hNu-a5-via"/>
+        <customObject id="hNu-a5-via" customClass="AMNameEditorViewController"/>
         <customObject id="eA3-sq-6gJ" customClass="AMInspectorsViewController">
             <connections>
                 <outlet property="document" destination="-2" id="1wy-H8-8Ib"/>

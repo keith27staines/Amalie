@@ -15,9 +15,8 @@
 
 @interface AMExpressionEditorViewController ()
 {
-    void (^_completionHandler)(void);
+
 }
-- (IBAction)close:(id)sender;
 
 @property (weak) IBOutlet AMExpressionNodeContainerView *expressionNodeContainerView;
 
@@ -25,7 +24,6 @@
 
 @property (weak) IBOutlet NSTextField *expressionStringField;
 
-@property id<AMNameProviding>nameProvider;
 @property (readwrite, copy) NSString * expressionString;
 @end
 
@@ -41,7 +39,7 @@
     self.expressionNodeController.delegate = self;
     self.nameProvider = nameProvider;
     self.expressionString = expressionString;
-    _completionHandler = completionHandler;
+    self.completionHandler = completionHandler;
     [self reloadData];
 }
 -(void)reloadData
@@ -49,10 +47,6 @@
     self.expressionStringField.stringValue = self.expressionString;
     [self.expressionNodeController setExpressionString:self.expressionString];
     self.expressionNodeContainerView.expressionNodeView = self.expressionNodeController.expressionNodeView;
-}
-- (IBAction)close:(id)sender {
-    [self.view.window endEditingFor:self.expressionStringField];
-    _completionHandler();
 }
 -(void)updateWithString:(NSString*)string
 {

@@ -18,6 +18,7 @@
 @class AMDExpression;
 @class AMDArgumentList;
 @class AMExpressionEditorViewController;
+@class AMNameEditorViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMPageViewDelegate.h"
@@ -72,9 +73,13 @@ NSPopoverDelegate>
 
 @property (weak) IBOutlet NSPanel * expressionEditorPanel;
 
-@property (strong) IBOutlet AMExpressionEditorViewController *expressionEditorViewController;
+@property (weak) IBOutlet AMExpressionEditorViewController *expressionEditorViewController;
+
+@property (weak) IBOutlet AMNameEditorViewController * nameEditorViewController;
 
 -(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action;
+
+-(void)showNameEditorWithName:(AMDName*)name nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action;
 
 @property (weak) AMInsertableView * selectedView;
 

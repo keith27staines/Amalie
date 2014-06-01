@@ -9,9 +9,10 @@
 @class AMExpressionNodeController, AMExpressionNodeView;
 
 #import <Cocoa/Cocoa.h>
+#import "AMKeyboardEditorViewController.h"
 #import "AMExpressionNodeControllerDelegate.h"
 
-@interface AMExpressionEditorViewController : NSViewController <NSTextFieldDelegate,AMExpressionNodeControllerDelegate>
+@interface AMExpressionEditorViewController : AMKeyboardEditorViewController <NSTextFieldDelegate,AMExpressionNodeControllerDelegate>
 
 @property (readonly, copy) NSString * expressionString;
 

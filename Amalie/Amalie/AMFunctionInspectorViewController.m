@@ -39,8 +39,6 @@
 {
     return @"AMFunctionInspectorViewController";
 }
-- (IBAction)showNameEditor:(id)sender {
-}
 - (IBAction)addArgument:(NSButton *)sender {
     NSTableView * argumentTable = self.functionInspectorView.argumentTable;
     NSInteger selectedRow = argumentTable.selectedRow;
@@ -83,6 +81,9 @@
     
     self.argumentListViewController.argumentList = self.argumentList;
     [self dataWasUpdated];
+}
+- (IBAction)showNameEditor:(id)sender {
+    [[self functionContentViewController] showNameEditorForFunctionName:self];
 }
 - (IBAction)showExpressionEditor:(id)sender {
     [[self functionContentViewController] showExpressionEditor:self];

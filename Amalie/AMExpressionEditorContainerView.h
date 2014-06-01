@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AMKeyboardEditorContainerView.h"
 
-@interface AMExpressionEditorContainerView : NSView
+@interface AMExpressionEditorContainerView : AMKeyboardEditorContainerView
 
 @end

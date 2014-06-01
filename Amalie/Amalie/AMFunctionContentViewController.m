@@ -42,6 +42,7 @@ static NSUInteger const kAMIndexRHS;
 @interface AMFunctionContentViewController ()
 {
     NSString                            * _expressionString;
+    NSString                            * _nameString;
     __weak NSTextField                  * _nameField;
     __weak AMExpandingTextFieldView     * _expressionStringView;
     __weak AMArgumentListViewController * _argumentListViewController;
@@ -216,6 +217,27 @@ static NSUInteger const kAMIndexRHS;
     NSString * expressionString = self.expressionStringView.stringValue;
     [self setExpressionString:expressionString];
 }
+
+-(NSString *)nameString
+{
+    return [_nameString copy];
+}
+-(void)setNameString:(NSString *)nameString
+{
+    if (!_nameString) {
+        _nameString = @"";
+    }
+    if ([nameString isEqualToString:_nameString]) {
+        return;
+    }
+    AMPersistedObjectNameProvider * namer = [self.document persistentNameProvider];
+    if ( [namer validateProposedName:nameString forType:AMInsertableTypeFunction error:nil] ) {
+        [self.undoManager registerUndoWithTarget:self selector:@selector(setNameString:) object:self.nameString];
+        self.amdInsertedObject.name.string = nameString;
+        self.amdInsertedObject.name.attributedString = nameString;
+        _nameString = nameString;
+    }
+}
 -(void)setExpressionString:(NSString*)expressionString
 {
     if (!expressionString) {
@@ -380,13 +402,13 @@ static NSUInteger const kAMIndexRHS;
     }
     return _persistedObjectNameProvider;
 }
-#pragma mark - Show expression editor -
+#pragma mark - Show expression and name editors -
 
-- (IBAction)showExpressionEditor:(id)sender {
-    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider target:self action:@selector(expressionEditorFinishedWithString:)];
+- (void)showExpressionEditor:(id)sender {
+    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider target:self action:@selector(setExpressionString:)];
 }
--(void)expressionEditorFinishedWithString:(NSString*)string
-{
-    [self setExpressionString:string];
+- (void)showNameEditorForFunctionName:(id)sender {
+    [self.document showNameEditorWithName:self.amdFunctionDef.name nameProvider:self.nameProvider target:self action:@selector(setNameString:)];
 }
+
 @end

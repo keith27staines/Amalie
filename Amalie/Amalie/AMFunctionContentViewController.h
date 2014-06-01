@@ -33,7 +33,9 @@
 @property (readonly) BOOL isConstant;
 @property (readonly) BOOL isVariable;
 
-- (IBAction)showExpressionEditor:(id)sender;
+- (void)showExpressionEditor:(id)sender;
+- (void)showNameEditorForFunctionName:(id)sender;
 @property (copy) NSString * expressionString;
+@property (copy) NSString * nameString;
 
 @end
