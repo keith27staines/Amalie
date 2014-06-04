@@ -60,7 +60,6 @@
 
 -(NSUInteger)displayStringCount
 {
-
     return self.argumentList.arguments.count;
 }
 

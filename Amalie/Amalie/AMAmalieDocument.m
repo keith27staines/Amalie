@@ -677,26 +677,17 @@
     }
     return NO;
 }
-
-#pragma mark - Misc -
--(NSString *)defaultDraftName
+#pragma mark - Show editors -
+-(void)showNameEditorWithName:(AMDName*)name nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action
 {
-    return @"Mathsheet";
-}
-
--(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
-{
-    return [self insertableViewForKey:shadow.groupID];
-}
--(void)showNameEditorWithName:(AMDName*)name nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action
-{
+    self.nameEditorViewController.context = context;
     [self.nameEditorViewController presentNameEditorWithName:name nameProvider:nameProvider completionHandler:^(void){
         [NSApp endSheet:self.expressionEditorPanel];
         [self.expressionEditorPanel orderOut:self];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         // Prevent compiler warning related to ARC being unsure about how to hande the return value of the selector - ignoring is safe in this instance because we are ignoring the return value altogether
-        [target performSelector:action withObject:self.expressionEditorViewController.expressionString];
+        [target performSelector:action withObject:self.nameEditorViewController];
 #pragma clang diagnostic pop
     }];
     NSView * view = self.nameEditorViewController.view;
@@ -711,15 +702,16 @@
           contextInfo:nil];
     
 }
--(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action
+-(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action
 {
-    [self.expressionEditorViewController presentExpressionEditorWithExpressionString:expression.originalString nameProvider:nameProvider completionHandler:^(void){
+    self.expressionEditorViewController.context = context;
+    [self.expressionEditorViewController presentExpressionEditorWithExpressionString:expression.originalString nameProvider:nameProvider context:context  completionHandler:^(void){
         [NSApp endSheet:self.expressionEditorPanel];
         [self.expressionEditorPanel orderOut:self];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         // Prevent compiler warning related to ARC being unsure about how to hande the return value of the selector - ignoring is safe in this instance because we are ignoring the return value altogether
-        [target performSelector:action withObject:self.expressionEditorViewController.expressionString];
+        [target performSelector:action withObject:self.expressionEditorViewController];
 #pragma clang diagnostic pop
     }];
     NSView * view = self.expressionEditorViewController.view;
@@ -732,6 +724,17 @@
         modalDelegate:self
        didEndSelector:nil
           contextInfo:nil];
+}
+
+#pragma mark - Misc -
+-(NSString *)defaultDraftName
+{
+    return @"Mathsheet";
+}
+
+-(AMInsertableView*)actualViewFromPossibleTemporaryCopy:(AMInsertableView*)shadow
+{
+    return [self insertableViewForKey:shadow.groupID];
 }
 
 -(AMPersistedObjectNameProvider *)persistentNameProvider

@@ -77,9 +77,9 @@ NSPopoverDelegate>
 
 @property (weak) IBOutlet AMNameEditorViewController * nameEditorViewController;
 
--(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action;
+-(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action;
 
--(void)showNameEditorWithName:(AMDName*)name nameProvider:(id<AMNameProviding>)nameProvider target:(id)target action:(SEL)action;
+-(void)showNameEditorWithName:(AMDName*)name nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action;
 
 @property (weak) AMInsertableView * selectedView;
 

@@ -27,13 +27,15 @@
 #import "AMPersistedObjectWithArgumentsNameProvider.h"
 #import "AMNameProviding.h"
 #import "AMExpandingTextFieldView.h"
+#import "AMKeyboardEditorViewController.h"
 
 // core data generated objects
 #import "AMDInsertedObject.h"
 #import "AMDFunctionDef.h"
 #import "AMDIndexedExpression.h"
 #import "AMDExpression.h"
-#import "AMDName.h"
+#import "AMDArgument+Methods.h"
+#import "AMDName+Methods.h"
 #import "AMDataStore.h"
 #import "AMDArgumentList+Methods.h"
 
@@ -224,19 +226,40 @@ static NSUInteger const kAMIndexRHS;
 }
 -(void)setNameString:(NSString *)nameString
 {
-    if (!_nameString) {
-        _nameString = @"";
+    if (!nameString) {
+        nameString = @"";
     }
     if ([nameString isEqualToString:_nameString]) {
         return;
     }
-    AMPersistedObjectNameProvider * namer = [self.document persistentNameProvider];
+    AMPersistedObjectNameProvider * namer = self.nameProvider;
     if ( [namer validateProposedName:nameString forType:AMInsertableTypeFunction error:nil] ) {
         [self.undoManager registerUndoWithTarget:self selector:@selector(setNameString:) object:self.nameString];
-        self.amdInsertedObject.name.string = nameString;
-        self.amdInsertedObject.name.attributedString = nameString;
+        [self.amdInsertedObject.name setNameAndGenerateAttributedNameFrom:nameString valueType:KSMValueInteger nameProvider:namer];
         _nameString = nameString;
     }
+}
+-(void)setArgumentString:(AMDArgument*)argument string:(NSString*)string
+{
+    NSAssert(argument && string, @"Cannot set a null argument or object");
+    if (!string) {
+        string = @"";
+    }
+    if ([argument.name.string isEqualToString:string]) {
+        return;
+    }
+    NSMutableDictionary * dictionary;
+    dictionary = [@{@"argument": argument, @"string":argument.name.string} mutableCopy];
+    [self.undoManager registerUndoWithTarget:self selector:@selector(setArgumentStringFromDictionary:) object:dictionary];
+    dictionary[@"string"] = string;
+    [self setArgumentStringFromDictionary:dictionary];
+    [self reloadData];
+}
+-(void)setArgumentStringFromDictionary:(NSDictionary*)dictionary
+{
+    AMDArgument * argument = dictionary[@"argument"];
+    NSString * string = dictionary[@"string"];
+    argument.name.string = string;
 }
 -(void)setExpressionString:(NSString*)expressionString
 {
@@ -287,7 +310,7 @@ static NSUInteger const kAMIndexRHS;
         fview.propertiesButton.target = self;
         fview.propertiesButton.action = @selector(showPopover:);
         fview.expressionEditorButton.target = self;
-        fview.expressionEditorButton.action = @selector(showExpressionEditor:);
+        //fview.expressionEditorButton.action = @selector(showExpressionEditor:);
         [self setupArgumentListView];
         [self reloadData];
     }
@@ -400,15 +423,7 @@ static NSUInteger const kAMIndexRHS;
     if (!_persistedObjectNameProvider) {
         _persistedObjectNameProvider = [self.document argumentsNameProviderWithArguments:self.amdFunctionDef.argumentList];
     }
+    NSAssert(_persistedObjectNameProvider, @"Failed to return a name provider");
     return _persistedObjectNameProvider;
 }
-#pragma mark - Show expression and name editors -
-
-- (void)showExpressionEditor:(id)sender {
-    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider target:self action:@selector(setExpressionString:)];
-}
-- (void)showNameEditorForFunctionName:(id)sender {
-    [self.document showNameEditorWithName:self.amdFunctionDef.name nameProvider:self.nameProvider target:self action:@selector(setNameString:)];
-}
-
 @end

@@ -14,8 +14,6 @@
 
 @interface AMExpressionEditorViewController : AMKeyboardEditorViewController <NSTextFieldDelegate,AMExpressionNodeControllerDelegate>
 
-@property (readonly, copy) NSString * expressionString;
-
--(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider completionHandler:(void (^)(void))completionHandler;
+-(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider context:(id)context completionHandler:(void (^)(void))completionHandler;
 
 @end

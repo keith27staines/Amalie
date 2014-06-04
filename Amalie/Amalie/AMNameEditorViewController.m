@@ -12,8 +12,6 @@
 
 @interface AMNameEditorViewController ()
 
-@property (readwrite, copy) NSString * nameString;
-
 @end
 
 @implementation AMNameEditorViewController
@@ -27,19 +25,14 @@
     [self view]; // ensure view is loaded so all outlets are connected
     //self.expressionNodeController.delegate = self;
     self.nameProvider = nameProvider;
-    self.nameString = amdName.string;
+    self.stringValue = amdName.string;
     self.completionHandler = completionHandler;
     [self reloadData];
 }
 -(void)reloadData
 {
-    self.nameField.stringValue = self.nameString;
-    self.nameDisplay.attributedString = [self.nameProvider attributedStringForObjectWithName:self.nameString];
-}
--(void)updateWithString:(NSString*)name
-{
-    self.nameString = name;
-    [self reloadData];
+    self.nameField.stringValue = self.stringValue;
+    self.nameDisplay.attributedString = [self.nameProvider attributedStringForObjectWithName:self.stringValue];
 }
 
 #pragma mark - NSTextFieldDelegate -
@@ -50,8 +43,7 @@
 -(void)controlTextDidEndEditing:(NSNotification *)obj
 {
     NSTextField * tf = obj.object;
-    NSString * string = tf.stringValue;
-    [self updateWithString:string];
+    self.stringValue = tf.stringValue;
 }
 -(void)controlTextDidChange:(NSNotification *)obj
 {

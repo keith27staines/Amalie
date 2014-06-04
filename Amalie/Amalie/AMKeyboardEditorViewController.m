@@ -10,14 +10,20 @@
 
 @interface AMKeyboardEditorViewController()
 {
+    NSString * _stringValue;
+    __weak id _constext;
 }
-
 @end
 
 @implementation AMKeyboardEditorViewController
 
-
-
+-(NSString *)stringValue {
+    return [_stringValue copy];
+}
+-(void)setStringValue:(NSString *)stringValue {
+    _stringValue = [stringValue copy];
+    [self reloadData];
+}
 - (IBAction)close:(id)sender {
     [self endEditing];
     self.completionHandler();

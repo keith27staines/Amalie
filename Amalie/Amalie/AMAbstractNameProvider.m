@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, AMCharacterType) {
         return NO;
     }
     
-    if ( ![self isKnownObjectName:proposedName] ) {
+    if ( [self isKnownObjectName:proposedName] ) {
         if (error) {
             *error = [AMError errorNameAlreadyExists:proposedName];
         }

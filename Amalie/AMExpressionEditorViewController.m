@@ -24,7 +24,7 @@
 
 @property (weak) IBOutlet NSTextField *expressionStringField;
 
-@property (readwrite, copy) NSString * expressionString;
+
 @end
 
 @implementation AMExpressionEditorViewController
@@ -33,25 +33,20 @@
 {
     return @"AMExpressionEditorViewController";
 }
--(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider completionHandler:(void (^)(void))completionHandler
+-(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider context:(id)context completionHandler:(void (^)(void))completionHandler
 {
     [self view]; // ensure view is loaded so all outlets are connected
     self.expressionNodeController.delegate = self;
     self.nameProvider = nameProvider;
-    self.expressionString = expressionString;
+    self.stringValue = expressionString;
     self.completionHandler = completionHandler;
     [self reloadData];
 }
 -(void)reloadData
 {
-    self.expressionStringField.stringValue = self.expressionString;
-    [self.expressionNodeController setExpressionString:self.expressionString];
+    self.expressionStringField.stringValue = self.stringValue;
+    [self.expressionNodeController setExpressionString:self.stringValue];
     self.expressionNodeContainerView.expressionNodeView = self.expressionNodeController.expressionNodeView;
-}
--(void)updateWithString:(NSString*)string
-{
-    self.expressionString = string;
-    [self reloadData];
 }
 
 #pragma mark - NSTextFieldDelegate -
@@ -62,8 +57,7 @@
 -(void)controlTextDidEndEditing:(NSNotification *)obj
 {
     NSTextField * tf = obj.object;
-    NSString * string = tf.stringValue;
-    [self updateWithString:string];    
+    self.stringValue = tf.stringValue;
 }
 -(void)controlTextDidChange:(NSNotification *)obj
 {
@@ -74,6 +68,6 @@
     return self.nameProvider;
 }
 -(NSString *)expressionNodeControllerRequiresExpressionString:(AMExpressionNodeController *)controller {
-    return self.expressionString;
+    return self.stringValue;
 }
 @end

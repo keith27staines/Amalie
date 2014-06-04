@@ -16,7 +16,8 @@
 - (IBAction)close:(id)sender;
 
 @property id<AMNameProviding>nameProvider;
-
+@property (copy) NSString * stringValue;
+@property (weak) id context;
 - (void)reloadData;
 
 @end

@@ -11,6 +11,7 @@
 @class AMFunctionContentView;
 @class AMTextView;
 @class AMExpandingTextFieldView;
+@class AMDExpression;
 
 #import "AMContentViewController.h"
 #import "AMExpressionNodeViewDelegate.h"
@@ -33,9 +34,8 @@
 @property (readonly) BOOL isConstant;
 @property (readonly) BOOL isVariable;
 
-- (void)showExpressionEditor:(id)sender;
-- (void)showNameEditorForFunctionName:(id)sender;
 @property (copy) NSString * expressionString;
 @property (copy) NSString * nameString;
+@property (readonly) AMDExpression * expression;
 
 @end

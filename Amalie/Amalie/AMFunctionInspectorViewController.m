@@ -7,12 +7,14 @@
 //
 
 #import "AMFunctionInspectorViewController.h"
+#import "AMAmalieDocument.h"
 #import "AMFunctionContentViewController.h"
 #import "AMFunctionInspectorView.h"
 #import "AMInspectorsViewController.h"
 #import "AMInspectorView.h"
 #import "AMDataRenamer.h"
 #import "AMArgumentListViewController.h"
+#import "AMDExpression.h"
 #import "AMDArgument.h"
 #import "AMArgument.h"
 #import "AMDArgumentList+Methods.h"
@@ -24,13 +26,16 @@
 #import "AMArgumentTableRowViewController.h"
 #import "AMArgumentTableRowView.h"
 #import "AMNamedAndTypedObject.h"
+#import "AMKeyboardEditorViewController.h"
 
 @interface AMFunctionInspectorViewController ()
 {
     id<AMNameProviding>     _nameProvider;
 }
 
-@property (weak,readonly) AMFunctionInspectorView * functionInspectorView;
+@property (weak, readonly) AMFunctionInspectorView * functionInspectorView;
+@property (weak, readonly) AMAmalieDocument * document;
+@property (weak, readonly) AMFunctionContentViewController * functionContentViewController;
 @end
 
 @implementation AMFunctionInspectorViewController
@@ -83,10 +88,14 @@
     [self dataWasUpdated];
 }
 - (IBAction)showNameEditor:(id)sender {
-    [[self functionContentViewController] showNameEditorForFunctionName:self];
+    [self showNameEditorForFunctionName:self];
 }
-- (IBAction)showExpressionEditor:(id)sender {
-    [[self functionContentViewController] showExpressionEditor:self];
+- (IBAction)showNameEditorForargumentSubView:(id)sender {
+    NSTableView * argumentTable = self.functionInspectorView.argumentTable;
+    NSInteger rowIndex = [argumentTable rowForView:sender];
+    if (rowIndex >= 0) {
+        [self showNameEditorForArgumentAtIndex:rowIndex];
+    }
 }
 -(AMFunctionContentViewController*)functionContentViewController {
     return (AMFunctionContentViewController*)self.delegate.contentViewController;
@@ -170,7 +179,7 @@
     AMArgumentTableRowViewController * vc = [[AMArgumentTableRowViewController alloc] init];
     AMArgumentTableRowView * rowView = vc.rowView;
     [rowView.showNameEditor setTarget:self];
-    [rowView.showNameEditor setAction:@selector(showNameEditor:)];
+    [rowView.showNameEditor setAction:@selector(showNameEditorForargumentSubView:)];
     [self setupValuePopup:rowView.valueTypePopup];
     return rowView;
 }
@@ -208,16 +217,17 @@
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
     KSMValueType mathValue;
+    NSError * error;
     if (notification.object == self.functionInspectorView.nameField) {
         NSString * proposedName = self.functionInspectorView.nameField.stringValue;
         mathValue = self.functionDef.returnType.integerValue;
         if (![self updateFunctionName:proposedName]) {
             //
-            NSError * error = [self validationErrorForProposedFunctionName:proposedName];
+            error = [self validationErrorForProposedFunctionName:proposedName];
             
         }
     } else if (notification.object == self.functionInspectorView.expressionString) {
-        [[self functionContentViewController] setExpressionString:self.functionInspectorView.expressionString.stringValue];
+        [self updateExpression:self.functionInspectorView.expressionString.stringValue];
     } else {
         NSInteger selectedRow = self.functionInspectorView.argumentTable.selectedRow;
         AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
@@ -228,6 +238,10 @@
 }
 
 #pragma mark - Update methods and undo manager -
+-(BOOL)updateExpression:(NSString*)expressionString
+{
+    return YES;
+}
 -(BOOL)updateFunctionName:(NSString*)name
 {
     if ( ![self isValidFunctionName:name] ) {
@@ -239,18 +253,6 @@
     [self reloadData];
     [self dataWasUpdated];
     return YES;
-}
--(BOOL)isValidFunctionName:(NSString*)string
-{
-    AMDName * name = self.functionDef.name;
-    return [name isValidNameString:string];
-}
--(NSError*)validationErrorForProposedFunctionName:(NSString*)proposedName
-{
-    NSError * error;
-    AMDName * name = self.functionDef.name;
-    [name isValidNameString:proposedName error:&error];
-    return error;
 }
 -(void)updateFunctionReturnType:(NSNumber*)returnType
 {
@@ -273,10 +275,61 @@
     [self reloadData];
     [self dataWasUpdated];
 }
-
+-(BOOL)isValidFunctionName:(NSString*)string
+{
+    AMDName * name = self.functionDef.name;
+    return [name isValidNameString:string];
+}
+-(NSError*)validationErrorForProposedFunctionName:(NSString*)proposedName
+{
+    NSError * error;
+    AMDName * name = self.functionDef.name;
+    [name isValidNameString:proposedName error:&error];
+    return error;
+}
 -(NSUndoManager*)undoManager
 {
     return [AMDataStore sharedDataStore].moc.undoManager;
+}
+-(AMAmalieDocument*)document
+{
+    return self.functionContentViewController.document;
+}
+-(AMDExpression*)expression
+{
+    return self.functionContentViewController.expression;
+}
+
+#pragma mark - Show expression and name editors -
+- (IBAction)showExpressionEditor:(id)sender {
+    [self.document showExpressionEditorWithExpression:self.expression nameProvider:self.nameProvider context:[self expression] target:self action:@selector(expressionEditorDidFinish:)];
+}
+- (void)showNameEditorForFunctionName:(id)sender {
+    [self.document showNameEditorWithName:self.functionDef.name nameProvider:self.nameProvider context:self.functionDef target:self action:@selector(nameEditorDidFinish:)];
+}
+- (void)showNameEditorForArgumentAtIndex:(NSUInteger)index {
+    AMDArgument * argument = [self.functionDef.argumentList argumentAtIndex:index];
+    AMDName * amdName = argument.name;
+    [self.document showNameEditorWithName:amdName nameProvider:self.nameProvider context:argument target:self action:@selector(nameEditorDidFinish:)];
+}
+-(void)expressionEditorDidFinish:(AMKeyboardEditorViewController*)editor
+{
+    
+}
+-(void)nameEditorDidFinish:(AMKeyboardEditorViewController*)editor
+{
+    id context = editor.context;
+    if ([context isKindOfClass:[AMDFunctionDef class]]) {
+        [self updateFunctionName:editor.stringValue];
+        [self reloadData];
+        return;
+    } else if ([context isKindOfClass:[AMDArgument class]]) {
+        AMArgument * arg = [AMArgument argumentFromDataArgument:context];
+        arg.name.string = editor.stringValue;
+        [self updateArgumentListWithArgument:arg];
+        return;
+    }
+    NSAssert(NO, @"The context was not recognised so we can't work out what to do");
 }
 
 
