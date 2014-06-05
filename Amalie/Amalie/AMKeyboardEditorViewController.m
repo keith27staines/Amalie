@@ -11,8 +11,9 @@
 @interface AMKeyboardEditorViewController()
 {
     NSString * _stringValue;
-    __weak id _constext;
+    __weak id _context;
 }
+@property (weak,readwrite) id context;
 @end
 
 @implementation AMKeyboardEditorViewController
@@ -40,7 +41,16 @@
         [self.view.window endEditingFor:nil];
     }
 }
-
+-(void)presentEditorWithString:(NSString*)string nameProvider:(id<AMNameProviding>)nameProvider context:(id)context completionHandler:(void (^)(void))completionHandler;
+{
+    [self view]; // ensure view is loaded so all outlets are connected
+    //self.expressionNodeController.delegate = self;
+    self.nameProvider = nameProvider;
+    self.stringValue = [string copy];
+    self.completionHandler = completionHandler;
+    self.context = context;
+    [self reloadData];
+}
 -(void)reloadData
 {
     

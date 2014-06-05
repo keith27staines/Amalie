@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMDName;
 @class AMTextView;
 
 #import <Cocoa/Cocoa.h>
@@ -20,8 +19,5 @@
 
 @property (weak) IBOutlet NSTextField *nameField;
 
-
-
--(void)presentNameEditorWithName:(AMDName*)amdName nameProvider:(id<AMNameProviding>)nameProvider completionHandler:(void (^)(void))completionHandler;
 
 @end

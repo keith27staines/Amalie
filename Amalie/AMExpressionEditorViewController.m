@@ -33,14 +33,10 @@
 {
     return @"AMExpressionEditorViewController";
 }
--(void)presentExpressionEditorWithExpressionString:(NSString*)expressionString nameProvider:(id<AMNameProviding>)nameProvider context:(id)context completionHandler:(void (^)(void))completionHandler
+-(void)presentEditorWithString:(NSString *)string nameProvider:(id<AMNameProviding>)nameProvider context:(id)context completionHandler:(void (^)(void))completionHandler
 {
-    [self view]; // ensure view is loaded so all outlets are connected
     self.expressionNodeController.delegate = self;
-    self.nameProvider = nameProvider;
-    self.stringValue = expressionString;
-    self.completionHandler = completionHandler;
-    [self reloadData];
+    [super presentEditorWithString:string nameProvider:nameProvider context:context completionHandler:completionHandler];
 }
 -(void)reloadData
 {

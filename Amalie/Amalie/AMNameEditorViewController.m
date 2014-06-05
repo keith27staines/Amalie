@@ -19,16 +19,6 @@
 -(NSString *)nibName {
     return @"AMNameEditorViewController";
 }
-
--(void)presentNameEditorWithName:(AMDName*)amdName nameProvider:(id<AMNameProviding>)nameProvider completionHandler:(void (^)(void))completionHandler
-{
-    [self view]; // ensure view is loaded so all outlets are connected
-    //self.expressionNodeController.delegate = self;
-    self.nameProvider = nameProvider;
-    self.stringValue = amdName.string;
-    self.completionHandler = completionHandler;
-    [self reloadData];
-}
 -(void)reloadData
 {
     self.nameField.stringValue = self.stringValue;

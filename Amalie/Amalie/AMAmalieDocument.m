@@ -680,41 +680,27 @@
 #pragma mark - Show editors -
 -(void)showNameEditorWithName:(AMDName*)name nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action
 {
-    self.nameEditorViewController.context = context;
-    [self.nameEditorViewController presentNameEditorWithName:name nameProvider:nameProvider completionHandler:^(void){
-        [NSApp endSheet:self.expressionEditorPanel];
-        [self.expressionEditorPanel orderOut:self];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        // Prevent compiler warning related to ARC being unsure about how to hande the return value of the selector - ignoring is safe in this instance because we are ignoring the return value altogether
-        [target performSelector:action withObject:self.nameEditorViewController];
-#pragma clang diagnostic pop
-    }];
-    NSView * view = self.nameEditorViewController.view;
-    if (!view.superview) {
-        [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.expressionEditorPanel.contentView = view;
-    }
-    [NSApp beginSheet:self.expressionEditorPanel
-       modalForWindow:self.windowForSheet
-        modalDelegate:self
-       didEndSelector:nil
-          contextInfo:nil];
-    
+    AMKeyboardEditorViewController * editor = self.nameEditorViewController;
+    [self showEditor:editor withString:name.string nameProvider:nameProvider context:context target:target action:action];
 }
 -(void)showExpressionEditorWithExpression:(AMDExpression*)expression nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action
 {
-    self.expressionEditorViewController.context = context;
-    [self.expressionEditorViewController presentExpressionEditorWithExpressionString:expression.originalString nameProvider:nameProvider context:context  completionHandler:^(void){
+    AMKeyboardEditorViewController * editor = self.expressionEditorViewController;
+    [self showEditor:editor withString:expression.originalString nameProvider:nameProvider context:context target:target action:action];
+}
+
+-(void)showEditor:(AMKeyboardEditorViewController*)editor withString:(NSString*)string nameProvider:(id<AMNameProviding>)nameProvider context:(id)context target:(id)target action:(SEL)action
+{
+    [editor presentEditorWithString:string nameProvider:nameProvider context:context completionHandler:^(void){
         [NSApp endSheet:self.expressionEditorPanel];
         [self.expressionEditorPanel orderOut:self];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         // Prevent compiler warning related to ARC being unsure about how to hande the return value of the selector - ignoring is safe in this instance because we are ignoring the return value altogether
-        [target performSelector:action withObject:self.expressionEditorViewController];
+        [target performSelector:action withObject:editor];
 #pragma clang diagnostic pop
     }];
-    NSView * view = self.expressionEditorViewController.view;
+    NSView * view = editor.view;
     if (!view.superview) {
         [view setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.expressionEditorPanel.contentView = view;
@@ -725,7 +711,6 @@
        didEndSelector:nil
           contextInfo:nil];
 }
-
 #pragma mark - Misc -
 -(NSString *)defaultDraftName
 {

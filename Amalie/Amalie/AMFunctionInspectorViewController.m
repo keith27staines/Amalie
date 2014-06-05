@@ -180,6 +180,8 @@
     AMArgumentTableRowView * rowView = vc.rowView;
     [rowView.showNameEditor setTarget:self];
     [rowView.showNameEditor setAction:@selector(showNameEditorForargumentSubView:)];
+    [rowView.valueTypePopup setTarget:self];
+    [rowView.valueTypePopup setAction:@selector(valueTypePopupChanged:)];
     [self setupValuePopup:rowView.valueTypePopup];
     return rowView;
 }
@@ -216,27 +218,33 @@
 }
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
-    KSMValueType mathValue;
-    NSError * error;
-    if (notification.object == self.functionInspectorView.nameField) {
+    NSError * error = nil;
+    NSTextField * textField = notification.object;
+    if (textField == self.functionInspectorView.nameField) {
         NSString * proposedName = self.functionInspectorView.nameField.stringValue;
-        mathValue = self.functionDef.returnType.integerValue;
         if (![self updateFunctionName:proposedName]) {
-            //
             error = [self validationErrorForProposedFunctionName:proposedName];
-            
         }
-    } else if (notification.object == self.functionInspectorView.expressionString) {
-        [self updateExpression:self.functionInspectorView.expressionString.stringValue];
+    } else if (textField == self.functionInspectorView.expressionString) {
+        NSString * expString = self.functionInspectorView.expressionString.stringValue;
+        if ( [self updateExpression:expString] ) {
+            error = [self validationErrorForProposedExpressionString:expString];
+        }
     } else {
         NSInteger selectedRow = self.functionInspectorView.argumentTable.selectedRow;
         AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
         AMArgument * arg = [AMArgument argumentFromDataArgument:argument];
         arg.name.string = ((NSTextField*)notification.object).stringValue;
-        [self updateArgumentListWithArgument:arg];
+        if ([self updateArgumentListWithArgument:arg]) {
+            error = [self validationErrorForProposedArgument:arg];
+        }
     }
+    [self processError:error forTextField:textField];
 }
-
+-(void)processError:(NSError*)error forTextField:(NSTextField*)textField
+{
+    
+}
 #pragma mark - Update methods and undo manager -
 -(BOOL)updateExpression:(NSString*)expressionString
 {
@@ -254,15 +262,19 @@
     [self dataWasUpdated];
     return YES;
 }
--(void)updateFunctionReturnType:(NSNumber*)returnType
+-(BOOL)updateFunctionReturnType:(NSNumber*)returnType
 {
+    if (![self isValidReturnType:returnType]) {
+        return NO;
+    }
     AMDataRenamer * renamer = [AMDataRenamer renamerForObject:self.functionDef nameProvider:self.nameProvider];
     [[self undoManager] registerUndoWithTarget:self selector:@selector(updateFunctionReturnType:)   object:self.functionDef.returnType];
     [renamer updateValueType:returnType];
     [self reloadData];
     [self dataWasUpdated];
+    return YES;
 }
--(void)updateArgumentListWithArgument:(AMArgument*)arg
+-(BOOL)updateArgumentListWithArgument:(AMArgument*)arg
 {
     NSInteger index = arg.index.integerValue;
     AMDArgument * argD = [self.argumentList argumentAtIndex:index];
@@ -274,11 +286,21 @@
     [renamer updateValueType:arg.valueType];
     [self reloadData];
     [self dataWasUpdated];
+    return YES;
 }
 -(BOOL)isValidFunctionName:(NSString*)string
 {
     AMDName * name = self.functionDef.name;
     return [name isValidNameString:string];
+}
+-(BOOL)isValidReturnType:(NSNumber*)number {
+    return YES;
+}
+-(BOOL)isValidArgument:(AMArgument*)argument {
+    return YES;
+}
+-(BOOL)isValidExpressionString:(NSString*)string {
+    return YES;
 }
 -(NSError*)validationErrorForProposedFunctionName:(NSString*)proposedName
 {
@@ -287,6 +309,13 @@
     [name isValidNameString:proposedName error:&error];
     return error;
 }
+-(NSError*)validationErrorForProposedArgument:(AMArgument*)argument {
+    return nil;
+}
+-(NSError*)validationErrorForProposedExpressionString:(NSString*)string {
+    return nil;
+}
+
 -(NSUndoManager*)undoManager
 {
     return [AMDataStore sharedDataStore].moc.undoManager;

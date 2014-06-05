@@ -207,7 +207,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     [renamer updateValueType:returnType];
     [self reloadData];
 }
--(void)updateArgumentListWithArgument:(AMArgument*)arg
+-(BOOL)updateArgumentListWithArgument:(AMArgument*)arg
 {
     NSInteger index = arg.index.integerValue;
     AMDArgument * argD = [self.argumentList argumentAtIndex:index];
@@ -218,6 +218,7 @@ NSString * const AMFunctionPropertiesDidEndEditingNotification = @"AMFunctionPro
     [renamer updateNameString:[arg.name.string copy]];
     [renamer updateValueType:arg.valueType];
     [self reloadData];
+    return YES;
 }
 -(NSUndoManager*)undoManager
 {

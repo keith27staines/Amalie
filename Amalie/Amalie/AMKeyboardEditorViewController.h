@@ -17,7 +17,10 @@
 
 @property id<AMNameProviding>nameProvider;
 @property (copy) NSString * stringValue;
-@property (weak) id context;
+@property (weak,readonly) id context;
+
+-(void)presentEditorWithString:(NSString*)string nameProvider:(id<AMNameProviding>)nameProvider context:(id)context completionHandler:(void (^)(void))completionHandler;
+
 - (void)reloadData;
 
 @end
