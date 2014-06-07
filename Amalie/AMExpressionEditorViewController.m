@@ -41,6 +41,7 @@
 -(void)reloadData
 {
     self.expressionStringField.stringValue = self.stringValue;
+    self.expressionNodeController.delegate = self;
     [self.expressionNodeController setExpressionString:self.stringValue];
     self.expressionNodeContainerView.expressionNodeView = self.expressionNodeController.expressionNodeView;
 }

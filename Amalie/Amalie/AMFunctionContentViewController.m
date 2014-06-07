@@ -269,7 +269,6 @@ static NSUInteger const kAMIndexRHS;
     if (_expressionString && [_expressionString isEqualToString:expressionString]) {
         return;
     }
-    [self.undoManager registerUndoWithTarget:self selector:@selector(setExpressionString:) object:_expressionString];
     _expressionString = [expressionString copy];
     KSMExpression * expr;
     expr = [self expressionFromString:expressionString atIndex:kAMIndexRHS];

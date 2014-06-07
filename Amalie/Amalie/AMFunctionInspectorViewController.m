@@ -188,6 +188,7 @@
 -(void)populateTableNameView:(AMArgumentTableRowView*)view withArgument:(AMDArgument*)argument
 {
     view.argumentName.attributedString = argument.name.attributedString;
+    [view.valueTypePopup selectItemAtIndex:argument.valueType.integerValue];
 }
 
 -(void)populateTableTypePopupButton:(NSPopUpButton*)button withArgument:(AMDArgument*)argument
@@ -210,34 +211,38 @@
     }
     return YES;
 }
--(void)controlTextDidChange:(NSNotification *)obj
+-(void)controlTextDidChange:(NSNotification *)notification
 {
-    if (obj.object == self.functionInspectorView.nameField) {
-        [self updateFunctionName:self.functionInspectorView.nameField.stringValue];
+    NSTextField * textField = notification.object;
+    if (textField == self.functionInspectorView.nameField) {
+        NSString * proposedName = self.functionInspectorView.nameField.stringValue;
+        [self updateFunctionName:proposedName];
+    } else if (textField == self.functionInspectorView.expressionString) {
+        NSString * expString = self.functionInspectorView.expressionString.stringValue;
+        [self updateExpression:expString];
+    } else {
+        NSInteger selectedRow = self.functionInspectorView.argumentTable.selectedRow;
+        AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
+        AMArgument * arg = [AMArgument argumentFromDataArgument:argument];
+        arg.name.string = ((NSTextField*)notification.object).stringValue;
+        [self updateArgumentListWithArgument:arg];
     }
 }
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
     NSError * error = nil;
     NSTextField * textField = notification.object;
+    NSString * string = textField.stringValue;
     if (textField == self.functionInspectorView.nameField) {
-        NSString * proposedName = self.functionInspectorView.nameField.stringValue;
-        if (![self updateFunctionName:proposedName]) {
-            error = [self validationErrorForProposedFunctionName:proposedName];
-        }
+        error = [self validationErrorForProposedFunctionName:string];
     } else if (textField == self.functionInspectorView.expressionString) {
-        NSString * expString = self.functionInspectorView.expressionString.stringValue;
-        if ( [self updateExpression:expString] ) {
-            error = [self validationErrorForProposedExpressionString:expString];
-        }
+        error = [self validationErrorForProposedExpressionString:string];
     } else {
         NSInteger selectedRow = self.functionInspectorView.argumentTable.selectedRow;
         AMDArgument * argument = [self.argumentList argumentAtIndex:selectedRow];
         AMArgument * arg = [AMArgument argumentFromDataArgument:argument];
-        arg.name.string = ((NSTextField*)notification.object).stringValue;
-        if ([self updateArgumentListWithArgument:arg]) {
-            error = [self validationErrorForProposedArgument:arg];
-        }
+        arg.name.string = string;
+        error = [self validationErrorForProposedArgument:arg];
     }
     [self processError:error forTextField:textField];
 }
@@ -248,6 +253,14 @@
 #pragma mark - Update methods and undo manager -
 -(BOOL)updateExpression:(NSString*)expressionString
 {
+    if (![self isValidExpressionString:expressionString]) {
+        return NO;
+    }
+    [self.undoManager registerUndoWithTarget:self selector:@selector(updateExpression:) object:self.expressionString];
+    AMFunctionContentViewController * fvc = (AMFunctionContentViewController*)self.delegate.contentViewController;
+    [fvc setExpressionString:expressionString];
+    [self reloadData];
+    [self dataWasUpdated];
     return YES;
 }
 -(BOOL)updateFunctionName:(NSString*)name
@@ -343,7 +356,7 @@
 }
 -(void)expressionEditorDidFinish:(AMKeyboardEditorViewController*)editor
 {
-    
+    [self updateExpression:editor.stringValue];
 }
 -(void)nameEditorDidFinish:(AMKeyboardEditorViewController*)editor
 {
